@@ -2,6 +2,10 @@
 
 # Messenger
 
+The goal of this project is to create an SMS/MMS app that has full support for all of the features that users love, is based on material design, and supports a strong-encryption version of a tablet messenger that sends messages through your phone.
+
+The project will be separate from my previous messaging experience with Sliding Messaging and EvolveSMS and will be completely rewritten from scratch for performance and consistency. The designs themselves are loosely based off of Google Inbox and adapted as a messenger instead of email client.
+
 ## License
 
     Copyright (C) 2016 Jake Klinker
