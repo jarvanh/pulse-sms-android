@@ -18,6 +18,7 @@
 <resources>
 
     <color name="background">#374248</color>
+    <color name="drawerBackground">#202B30</color>
     <color name="primaryText">#FFFFFFFF</color>
     <color name="secondaryText">#B2FFFFFF</color>
 
