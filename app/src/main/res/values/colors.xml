@@ -28,4 +28,8 @@
     <color name="primaryText">#E2000000</color>
     <color name="secondaryText">#8C000000</color>
 
+    <color name="emptyIconTint">@android:color/white</color>
+    <color name="emptyTextPrimary">#FFFFFFFF</color>
+    <color name="emptyTextSecondary">#B2FFFFFF</color>
+
 </resources>

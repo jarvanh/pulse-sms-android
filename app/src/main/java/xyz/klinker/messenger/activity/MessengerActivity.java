@@ -19,6 +19,8 @@ package xyz.klinker.messenger.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -29,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.fragment.ConversationListFragment;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -152,7 +155,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
-        return true;
+        return displayFragment(ConversationListFragment.newInstance());
     }
 
     private boolean displayScheduledMessages() {
@@ -176,6 +179,15 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayAbout() {
+        return true;
+    }
+
+    private boolean displayFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+
         return true;
     }
 

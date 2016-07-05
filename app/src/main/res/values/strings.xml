@@ -30,4 +30,8 @@
     <string name="menu_search">Search</string>
     <string name="menu_snooze">Snooze Notifications</string>
 
+    <!-- Empty Screen -->
+    <string name="no_messages">No messages</string>
+    <string name="no_messages_summary">Start a new conversation or just enjoy your day!</string>
+
 </resources>
