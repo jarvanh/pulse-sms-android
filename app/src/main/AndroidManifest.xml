@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.DayNight">
 
         <activity android:name=".activity.MessengerActivity">
             <intent-filter>
