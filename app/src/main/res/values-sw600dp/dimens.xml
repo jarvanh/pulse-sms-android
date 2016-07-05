@@ -17,14 +17,8 @@
 
 <resources>
 
-    <color name="background">#374248</color>
-    <color name="drawerBackground">#202B30</color>
-    <color name="primaryText">#FFFFFFFF</color>
-    <color name="secondaryText">#B2FFFFFF</color>
-    <color name="divider">#33FFFFFF</color>
-
-    <color name="emptyIconTint">@color/background</color>
-    <color name="emptyTextPrimary">#E2374248</color>
-    <color name="emptyTextSecondary">#8C000000</color>
+    <dimen name="conversation_list_padding">104dp</dimen>
+    <dimen name="top_extra_padding">2dp</dimen>
+    <dimen name="conversation_list_header_padding">32dp</dimen>
 
 </resources>

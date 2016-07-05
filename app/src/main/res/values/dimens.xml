@@ -18,5 +18,8 @@
 <resources>
 
     <dimen name="fab_margin">24dp</dimen>
+    <dimen name="conversation_list_padding">0dp</dimen>
+    <dimen name="top_extra_padding">0dp</dimen>
+    <dimen name="conversation_list_header_padding">16dp</dimen>
 
 </resources>

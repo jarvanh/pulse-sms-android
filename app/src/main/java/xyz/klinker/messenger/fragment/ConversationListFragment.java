@@ -16,14 +16,20 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.data.Conversation;
 
 /**
  * Fragment for displaying the conversation list or an empty screen if there are currently no
@@ -33,6 +39,7 @@ public class ConversationListFragment extends Fragment {
 
     private View empty;
     private RecyclerView recyclerView;
+    private List<Conversation> conversations;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -44,7 +51,36 @@ public class ConversationListFragment extends Fragment {
         empty = view.findViewById(R.id.empty_view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
+        setConversations(Conversation.getFakeConversations(getResources()));
+
         return view;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
+
+        if (recyclerView == null) {
+            throw new RuntimeException("RecyclerView not yet initialized");
+        }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new ConversationListAdapter(conversations));
+        recyclerView.addItemDecoration(new PaddingItemDecoration());
+
+        if (conversations.size() > 0) {
+            empty.setVisibility(View.GONE);
+        }
+    }
+
+    public class PaddingItemDecoration extends RecyclerView.ItemDecoration {
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.top = parent.getContext().getResources()
+                        .getDimensionPixelSize(R.dimen.top_extra_padding);
+            }
+        }
     }
 
 }

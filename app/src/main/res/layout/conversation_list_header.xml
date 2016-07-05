@@ -15,16 +15,15 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <color name="background">#374248</color>
-    <color name="drawerBackground">#202B30</color>
-    <color name="primaryText">#FFFFFFFF</color>
-    <color name="secondaryText">#B2FFFFFF</color>
-    <color name="divider">#33FFFFFF</color>
-
-    <color name="emptyIconTint">@color/background</color>
-    <color name="emptyTextPrimary">#E2374248</color>
-    <color name="emptyTextSecondary">#8C000000</color>
-
-</resources>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/conversation_list_header_padding"
+    android:layout_marginEnd="@dimen/conversation_list_header_padding"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:textSize="12sp"
+    android:textColor="@color/secondaryText"
+    android:id="@+id/header"
+    android:paddingStart="@dimen/conversation_list_padding"
+    android:paddingEnd="@dimen/conversation_list_padding"/>

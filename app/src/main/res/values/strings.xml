@@ -34,4 +34,10 @@
     <string name="no_messages">No messages</string>
     <string name="no_messages_summary">Start a new conversation or just enjoy your day!</string>
 
+    <!-- Conversation Screen -->
+    <string name="pinned">Pinned</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="older">Older</string>
+
 </resources>
