@@ -92,9 +92,11 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
             init(recyclerView.getContext());
         }
 
+        int right = Math.min(itemView.getLeft() + (int) dX,
+                itemView.getLeft() + itemView.getWidth());
+
         // draw background
-        background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX,
-                itemView.getBottom());
+        background.setBounds(itemView.getLeft(), itemView.getTop(), right, itemView.getBottom());
         background.draw(c);
 
         // draw trash can mark

@@ -34,7 +34,10 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.util.ConversationExpandedListener;
+import xyz.klinker.messenger.util.OnBackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
@@ -43,11 +46,13 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
  * Fragment for displaying the conversation list or an empty screen if there are currently no
  * open conversations.
  */
-public class ConversationListFragment extends Fragment implements SwipeToDeleteListener {
+public class ConversationListFragment extends Fragment
+        implements SwipeToDeleteListener, ConversationExpandedListener, OnBackPressedListener {
 
     private View empty;
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
+    private ConversationViewHolder expandedConversation;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -80,7 +85,8 @@ public class ConversationListFragment extends Fragment implements SwipeToDeleteL
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
         } else {
-            ConversationListAdapter adapter = new ConversationListAdapter(conversations, this);
+            ConversationListAdapter adapter =
+                    new ConversationListAdapter(conversations, this, this);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(adapter);
@@ -140,6 +146,26 @@ public class ConversationListFragment extends Fragment implements SwipeToDeleteL
             }
         }, 500);
 
+    }
+
+    @Override
+    public void onConversationExpanded(ConversationViewHolder viewHolder) {
+        expandedConversation = viewHolder;
+    }
+
+    @Override
+    public void onConversationContracted(ConversationViewHolder viewHolder) {
+        expandedConversation = null;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (expandedConversation != null) {
+            expandedConversation.itemView.performClick();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -30,8 +30,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.util.OnBackPressedListener;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -51,6 +54,21 @@ public class MessengerActivity extends AppCompatActivity
         initToolbar();
         initDrawer();
         initFab();
+    }
+
+    @Override
+    public void onBackPressed() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof OnBackPressedListener) {
+                if (((OnBackPressedListener) fragment).onBackPressed()) {
+                    return;
+                }
+            }
+        }
+
+        super.onBackPressed();
     }
 
     private void initToolbar() {

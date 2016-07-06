@@ -31,6 +31,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
 import xyz.klinker.messenger.data.SectionType;
+import xyz.klinker.messenger.util.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
@@ -41,11 +42,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
+    private ConversationExpandedListener conversationExpandedListener;
     private List<SectionType> sectionCounts;
 
     public ConversationListAdapter(List<Conversation> conversations,
-                                   SwipeToDeleteListener listener) {
-        this.swipeToDeleteListener = listener;
+                                   SwipeToDeleteListener swipeToDeleteListener,
+                                   ConversationExpandedListener conversationExpandedListener) {
+        this.swipeToDeleteListener = swipeToDeleteListener;
+        this.conversationExpandedListener = conversationExpandedListener;
         setConversations(conversations);
     }
 
@@ -125,7 +129,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 .inflate(viewType == VIEW_TYPE_HEADER ?
                         R.layout.conversation_list_header : R.layout.conversation_list_item,
                         parent, false);
-        return new ConversationViewHolder(view);
+        return new ConversationViewHolder(view, conversationExpandedListener);
     }
 
     public void removeItem(int position) {
