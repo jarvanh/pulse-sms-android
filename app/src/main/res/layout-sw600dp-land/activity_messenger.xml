@@ -29,7 +29,9 @@
         android:background="@drawable/status_bar"
         android:fitsSystemWindows="true"
         android:id="@+id/status_bar"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTintMode="multiply"/>
 
     <LinearLayout
         android:layout_width="match_parent"
