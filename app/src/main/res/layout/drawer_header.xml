@@ -33,6 +33,7 @@
         android:layout_alignParentBottom="true"
         android:background="?attr/colorPrimaryDark"
         android:id="@+id/header"
+        android:visibility="visible"
         tools:ignore="UselessParent">
 
         <LinearLayout
@@ -44,6 +45,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/drawer_header_my_name"
                 android:text="@string/my_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="16sp"
@@ -52,6 +54,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/drawer_header_my_phone_number"
                 android:text="@string/my_phone_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:fontFamily="sans-serif-light"/>
@@ -81,7 +84,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/name"
+            android:id="@+id/drawer_header_reveal_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="16sp"
             android:textStyle="bold"/>
@@ -89,7 +92,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/phone_number"
+            android:id="@+id/drawer_header_reveal_phone_number"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:fontFamily="sans-serif-light"/>
 

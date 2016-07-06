@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,8 +95,9 @@ public class MessageListFragment extends Fragment {
             });
         }
 
-        TextView nameView = (TextView) getActivity().findViewById(R.id.name);
-        TextView phoneNumberView = (TextView) getActivity().findViewById(R.id.phone_number);
+        TextView nameView = (TextView) getActivity().findViewById(R.id.drawer_header_reveal_name);
+        TextView phoneNumberView = (TextView) getActivity()
+                .findViewById(R.id.drawer_header_reveal_phone_number);
         nameView.setText(name);
         phoneNumberView.setText(phoneNumber);
 

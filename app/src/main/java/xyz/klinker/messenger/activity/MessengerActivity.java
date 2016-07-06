@@ -91,7 +91,7 @@ public class MessengerActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
-        
+
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
         for (Fragment fragment : fragments) {
