@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -88,7 +90,17 @@ public class ConversationListFragment extends Fragment implements SwipeToDeleteL
             touchHelper.attachToRecyclerView(recyclerView);
         }
 
-        if (conversations.size() > 0) {
+        checkEmptyViewDisplay();
+    }
+
+    private void checkEmptyViewDisplay() {
+        if (recyclerView.getAdapter().getItemCount() == 0 &&
+                empty.getVisibility() == View.GONE) {
+            empty.setAlpha(0);
+            empty.setVisibility(View.VISIBLE);
+
+            empty.animate().alpha(1f).setDuration(250).setListener(null);
+        } else if (empty.getVisibility() == View.VISIBLE) {
             empty.setVisibility(View.GONE);
         }
     }
@@ -124,12 +136,7 @@ public class ConversationListFragment extends Fragment implements SwipeToDeleteL
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (recyclerView.getAdapter().getItemCount() == 0 &&
-                        empty.getVisibility() == View.GONE) {
-                    empty.setVisibility(View.VISIBLE);
-                } else if (empty.getVisibility() == View.VISIBLE) {
-                    empty.setVisibility(View.GONE);
-                }
+                checkEmptyViewDisplay();
             }
         }, 500);
 

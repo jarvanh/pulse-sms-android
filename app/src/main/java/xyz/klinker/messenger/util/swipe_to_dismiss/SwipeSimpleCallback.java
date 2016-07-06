@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
@@ -65,6 +66,16 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         adapter.removeItem(viewHolder.getAdapterPosition());
+    }
+
+    @Override
+    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        // if it is a header, don't allow swiping. if it is an item, swipe to right.
+        if (viewHolder.itemView instanceof FrameLayout) {
+            return 0;
+        } else {
+            return ItemTouchHelper.END;
+        }
     }
 
     @Override
