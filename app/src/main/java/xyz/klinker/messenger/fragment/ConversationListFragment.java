@@ -176,8 +176,9 @@ public class ConversationListFragment extends Fragment
                 .commit();
         messageListFragment = null;
 
-        ColorUtil.adjustStatusBarColor(getResources().getColor(R.color.colorPrimaryDark),
-                getActivity());
+        int color = getResources().getColor(R.color.colorPrimaryDark);
+        ColorUtil.adjustStatusBarColor(color, getActivity());
+        ColorUtil.adjustDrawerColor(color, getActivity());
     }
 
     @Override

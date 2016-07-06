@@ -29,6 +29,11 @@
     <string name="menu_about">About</string>
     <string name="menu_search">Search</string>
     <string name="menu_snooze">Snooze Notifications</string>
+    <string name="menu_call">Call Contact</string>
+    <string name="menu_view_contact">View Contact</string>
+    <string name="menu_delete_conversation">Delete Conversation</string>
+    <string name="menu_conversation_information">Conversation Information</string>
+    <string name="menu_contact_settings">Contact Settings</string>
 
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>

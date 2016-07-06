@@ -83,7 +83,7 @@
         android:layout_gravity="start"
         android:background="@color/drawerBackground"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/navigation_drawer"
+        app:menu="@menu/navigation_drawer_conversations"
         app:itemTextColor="@drawable/drawer_text_selector"
         app:itemIconTint="@drawable/drawer_icon_selector"/>
 

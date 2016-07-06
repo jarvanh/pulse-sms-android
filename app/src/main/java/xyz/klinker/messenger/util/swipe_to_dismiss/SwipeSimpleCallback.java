@@ -18,7 +18,6 @@ package xyz.klinker.messenger.util.swipe_to_dismiss;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -46,7 +45,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     private void init(Context context) {
         background = new ColorDrawable(context.getResources().getColor(R.color.colorPrimaryLight));
-        xMark = context.getDrawable(R.drawable.ic_delete);
+        xMark = context.getDrawable(R.drawable.ic_delete_sweep);
         xMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
         xMarkMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);
         initiated = true;

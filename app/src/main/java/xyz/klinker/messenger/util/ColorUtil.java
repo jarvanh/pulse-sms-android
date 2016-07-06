@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -34,7 +35,7 @@ import xyz.klinker.messenger.R;
 public class ColorUtil {
 
     public static int getRandomMaterialColor(Context context) {
-        int num = (int) (Math.random() * (18 + 1));
+        int num = (int) (Math.random() * (17 + 1));
 
         switch (num) {
             case 0:     return context.getResources().getColor(R.color.materialRed);
@@ -45,21 +46,26 @@ public class ColorUtil {
             case 5:     return context.getResources().getColor(R.color.materialBlue);
             case 6:     return context.getResources().getColor(R.color.materialLightBlue);
             case 7:     return context.getResources().getColor(R.color.materialCyan);
-            case 8:     return context.getResources().getColor(R.color.materialTeal);
-            case 9:     return context.getResources().getColor(R.color.materialGreen);
-            case 10:    return context.getResources().getColor(R.color.materialLightGreen);
-            case 11:    return context.getResources().getColor(R.color.materialLime);
-            case 12:    return context.getResources().getColor(R.color.materialYellow);
-            case 13:    return context.getResources().getColor(R.color.materialAmber);
-            case 14:    return context.getResources().getColor(R.color.materialOrange);
-            case 15:    return context.getResources().getColor(R.color.materialDeepOrange);
-            case 16:    return context.getResources().getColor(R.color.materialBrown);
-            case 17:    return context.getResources().getColor(R.color.materialGrey);
-            case 18:    return context.getResources().getColor(R.color.materialBlueGrey);
+            case 8:     return context.getResources().getColor(R.color.materialGreen);
+            case 9:     return context.getResources().getColor(R.color.materialLightGreen);
+            case 10:    return context.getResources().getColor(R.color.materialLime);
+            case 11:    return context.getResources().getColor(R.color.materialYellow);
+            case 12:    return context.getResources().getColor(R.color.materialAmber);
+            case 13:    return context.getResources().getColor(R.color.materialOrange);
+            case 14:    return context.getResources().getColor(R.color.materialDeepOrange);
+            case 15:    return context.getResources().getColor(R.color.materialBrown);
+            case 16:    return context.getResources().getColor(R.color.materialGrey);
+            case 17:    return context.getResources().getColor(R.color.materialBlueGrey);
             default:    throw new RuntimeException("Invalid random color: " + num);
         }
     }
 
+    /**
+     * Adjusts the status bar color depending on whether you are on a phone or tablet.
+     *
+     * @param color the color to change to.
+     * @param activity the activity to find the views in.
+     */
     public static void adjustStatusBarColor(final int color, final Activity activity) {
         if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
             final DrawerLayout drawerLayout = (DrawerLayout) activity
@@ -73,15 +79,25 @@ public class ColorUtil {
                     .setBackgroundTintList(new ColorStateList(states, colors));
         }
 
-        // have a nice reveal animation to change the drawer header background
+
+    }
+
+    /**
+     * Adjusts the drawer colors and menu items to be correct depending on current state.
+     *
+     * @param color the color for the header.
+     * @param activity the activity to find the views in.
+     */
+    public static void adjustDrawerColor(int color, Activity activity) {
         final View revealView = activity.findViewById(R.id.header_reveal);
         final View headerView = activity.findViewById(R.id.header);
+        NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
 
         int cx = revealView.getMeasuredWidth() / 2;
         int cy = revealView.getMeasuredHeight() / 2;
         int radius = (int) Math.sqrt((cx*cx) + (cy*cy));
 
-        if (color == activity.getResources().getColor(R.color.colorPrimaryDark)) {
+        if (revealView.getVisibility() == View.VISIBLE) {
             Animator anim =
                     ViewAnimationUtils.createCircularReveal(revealView, cx, cy, radius, 0);
             anim.addListener(new AnimatorListenerAdapter() {
@@ -95,6 +111,10 @@ public class ColorUtil {
 
             headerView.setVisibility(View.VISIBLE);
             anim.start();
+
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.navigation_drawer_conversations);
+            navView.getMenu().getItem(0).setChecked(true);
         } else {
             revealView.setBackgroundColor(color);
             Animator anim =
@@ -110,8 +130,10 @@ public class ColorUtil {
 
             revealView.setVisibility(View.VISIBLE);
             anim.start();
-        }
 
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.navigation_drawer_messages);
+        }
     }
 
 }

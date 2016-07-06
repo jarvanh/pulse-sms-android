@@ -76,6 +76,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void changeExpandedState() {
+        if (header != null) {
+            return;
+        }
+
         if (expanded) {
             collapseConversation();
         } else {
