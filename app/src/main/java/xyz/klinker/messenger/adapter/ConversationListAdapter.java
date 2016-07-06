@@ -112,6 +112,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                                  int absolutePosition) {
         Conversation conversation = conversations.get(absolutePosition);
 
+        holder.contact = conversation.contact;
         holder.image.setImageDrawable(new ColorDrawable(conversation.contact.color));
         holder.name.setText(conversation.contact.name);
         holder.summary.setText(conversation.snippet);

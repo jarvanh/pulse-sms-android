@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Contact;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
 
@@ -37,6 +38,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView image;
     public TextView name;
     public TextView summary;
+    public Contact contact;
 
     private boolean expanded = false;
     private ConversationExpandedListener listener;

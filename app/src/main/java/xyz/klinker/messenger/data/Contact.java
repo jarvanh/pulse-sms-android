@@ -22,11 +22,15 @@ package xyz.klinker.messenger.data;
 public class Contact {
 
     public String name;
+    public String phoneNumber;
     public int color;
+    public int colorDarker;
 
-    public Contact(String name, int color) {
+    public Contact(String name, String phoneNumber, int color, int colorDarker) {
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.color = color;
+        this.colorDarker = colorDarker;
     }
 
 }

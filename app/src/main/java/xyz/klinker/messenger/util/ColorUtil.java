@@ -16,7 +16,15 @@
 
 package xyz.klinker.messenger.util;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import xyz.klinker.messenger.R;
 
@@ -25,7 +33,7 @@ import xyz.klinker.messenger.R;
  */
 public class ColorUtil {
 
-    public int getRandomMaterialColor(Context context) {
+    public static int getRandomMaterialColor(Context context) {
         int num = (int) (Math.random() * (18 + 1));
 
         switch (num) {
@@ -51,4 +59,59 @@ public class ColorUtil {
             default:    throw new RuntimeException("Invalid random color: " + num);
         }
     }
+
+    public static void adjustStatusBarColor(final int color, final Activity activity) {
+        if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
+            final DrawerLayout drawerLayout = (DrawerLayout) activity
+                    .findViewById(R.id.drawer_layout);
+            drawerLayout.setStatusBarBackgroundColor(color);
+        } else {
+            int[][] states = new int[][] { new int[] { } };
+            int[] colors = new int[] { color };
+
+            activity.findViewById(R.id.status_bar)
+                    .setBackgroundTintList(new ColorStateList(states, colors));
+        }
+
+        // have a nice reveal animation to change the drawer header background
+        final View revealView = activity.findViewById(R.id.header_reveal);
+        final View headerView = activity.findViewById(R.id.header);
+
+        int cx = revealView.getMeasuredWidth() / 2;
+        int cy = revealView.getMeasuredHeight() / 2;
+        int radius = (int) Math.sqrt((cx*cx) + (cy*cy));
+
+        if (color == activity.getResources().getColor(R.color.colorPrimaryDark)) {
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(revealView, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    revealView.setVisibility(View.INVISIBLE);
+                }
+            });
+            anim.setDuration(200);
+
+            headerView.setVisibility(View.VISIBLE);
+            anim.start();
+        } else {
+            revealView.setBackgroundColor(color);
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(revealView, cx, cy, 0, radius);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    headerView.setVisibility(View.INVISIBLE);
+                }
+            });
+            anim.setDuration(200);
+
+            revealView.setVisibility(View.VISIBLE);
+            anim.start();
+        }
+
+    }
+
 }

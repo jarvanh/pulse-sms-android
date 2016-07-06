@@ -22,30 +22,38 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Contact;
+import xyz.klinker.messenger.util.ColorUtil;
 
 /**
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment {
 
-    private static final String ARG_TITLE = "title";
+    private static final String ARG_NAME = "name";
+    private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_COLOR = "color";
+    private static final String ARG_COLOR_DARKER = "color_darker";
 
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
 
-    public static MessageListFragment newInstance(String title, int color) {
+    public static MessageListFragment newInstance(Contact contact) {
         MessageListFragment fragment = new MessageListFragment();
+
         Bundle args = new Bundle();
-        args.putString(ARG_TITLE, title);
-        args.putInt(ARG_COLOR, color);
+        args.putString(ARG_NAME, contact.name);
+        args.putString(ARG_PHONE_NUMBER, contact.phoneNumber);
+        args.putInt(ARG_COLOR, contact.color);
+        args.putInt(ARG_COLOR_DARKER, contact.colorDarker);
         fragment.setArguments(args);
 
         return fragment;
@@ -67,20 +75,34 @@ public class MessageListFragment extends Fragment {
     }
 
     private void initToolbar() {
-        toolbar.setTitle(getArguments().getString(ARG_TITLE));
-        toolbar.setBackgroundColor(getArguments().getInt(ARG_COLOR));
+        String name = getArguments().getString(ARG_NAME);
+        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
+        int color = getArguments().getInt(ARG_COLOR);
+        int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
+
+        Log.v("MessageListFragment", name + ": " + phoneNumber);
+
+        toolbar.setTitle(name);
+        toolbar.setBackgroundColor(color);
 
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
+            final DrawerLayout drawerLayout = (DrawerLayout) getActivity()
+                    .findViewById(R.id.drawer_layout);
             toolbar.setNavigationIcon(R.drawable.ic_menu);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DrawerLayout drawerLayout = (DrawerLayout) getActivity()
-                            .findViewById(R.id.drawer_layout);
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
             });
         }
+
+        TextView nameView = (TextView) getActivity().findViewById(R.id.name);
+        TextView phoneNumberView = (TextView) getActivity().findViewById(R.id.phone_number);
+        nameView.setText(name);
+        phoneNumberView.setText(phoneNumber);
+
+        ColorUtil.adjustStatusBarColor(colorDarker, getActivity());
     }
 
 }

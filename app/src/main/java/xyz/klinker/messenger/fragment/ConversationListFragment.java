@@ -39,6 +39,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
 import xyz.klinker.messenger.util.AnimationUtil;
+import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
 import xyz.klinker.messenger.util.OnBackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -143,6 +144,8 @@ public class ConversationListFragment extends Fragment
                 })
                 .show();
 
+        // for some reason, if this is done immediately then the final snackbar will not be
+        // displayed
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -157,9 +160,7 @@ public class ConversationListFragment extends Fragment
         expandedConversation = viewHolder;
         AnimationUtil.expandActivityForConversation(getActivity());
 
-        messageListFragment = MessageListFragment.newInstance(
-                viewHolder.name.getText().toString(),
-                ((ColorDrawable) viewHolder.image.getDrawable()).getColor());
+        messageListFragment = MessageListFragment.newInstance(viewHolder.contact);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();
@@ -174,6 +175,9 @@ public class ConversationListFragment extends Fragment
                 .remove(messageListFragment)
                 .commit();
         messageListFragment = null;
+
+        ColorUtil.adjustStatusBarColor(getResources().getColor(R.color.colorPrimaryDark),
+                getActivity());
     }
 
     @Override

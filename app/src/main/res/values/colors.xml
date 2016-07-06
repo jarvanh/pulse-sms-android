@@ -18,32 +18,50 @@
 <resources>
 
     <!-- Main App Colors -->
-    <color name="colorPrimary">#23B3A6</color>
-    <color name="colorPrimaryDark">#1D9187</color>
-    <color name="colorPrimaryDarker">#17746c</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00695C</color>
     <color name="colorPrimaryLight">#80CBC4</color>
     <color name="colorAccent">#FF4081</color>
 
     <!-- Material Design Colors -->
     <color name="materialRed">#F44336</color>
+    <color name="materialRedDark">#C62828</color>
     <color name="materialPink">#E91E63</color>
+    <color name="materialPinkDark">#AD1457</color>
     <color name="materialPurple">#9C27B0</color>
+    <color name="materialPurpleDark">#6A1B9A</color>
     <color name="materialDeepPurple">#673AB7</color>
+    <color name="materialDeepPurpleDark">#4527A0</color>
     <color name="materialIndigo">#3F51B5</color>
+    <color name="materialIndigoDark">#283593</color>
     <color name="materialBlue">#2196F3</color>
+    <color name="materialBlueDark">#1565C0</color>
     <color name="materialLightBlue">#03A9F4</color>
+    <color name="materialLightBlueDark">#0277BD</color>
     <color name="materialCyan">#00BCD4</color>
+    <color name="materialCyanDark">#00838F</color>
     <color name="materialTeal">#009688</color>
+    <color name="materialTealDark">#00695C</color>
     <color name="materialGreen">#4CAF50</color>
+    <color name="materialGreenDark">#2E7D32</color>
     <color name="materialLightGreen">#8BC34A</color>
+    <color name="materialLightGreenDark">#558B2F</color>
     <color name="materialLime">#CDDC39</color>
+    <color name="materialLimeDark">#9E9D24</color>
     <color name="materialYellow">#FFEB3B</color>
+    <color name="materialYellowDark">#F9A825</color>
     <color name="materialAmber">#FFC107</color>
+    <color name="materialAmberDark">#FF8F00</color>
     <color name="materialOrange">#FF9800</color>
+    <color name="materialOrangeDark">#EF6C00</color>
     <color name="materialDeepOrange">#FF5722</color>
+    <color name="materialDeepOrangeDark">#D84315</color>
     <color name="materialBrown">#795548</color>
+    <color name="materialBrownDark">#4E342E</color>
     <color name="materialGrey">#9E9E9E</color>
+    <color name="materialGreyDark">#424242</color>
     <color name="materialBlueGrey">#607D8B</color>
+    <color name="materialBlueGreyDark">#37474F</color>
 
     <!-- Other Global Colors (not day or night specific) -->
     <color name="statusBarDarker">#C5C5C5</color>
