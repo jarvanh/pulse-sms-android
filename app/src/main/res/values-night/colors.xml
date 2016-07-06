@@ -26,5 +26,6 @@
     <color name="emptyIconTint">@color/background</color>
     <color name="emptyTextPrimary">#E2374248</color>
     <color name="emptyTextSecondary">#8C000000</color>
+    <color name="deleteIcon">@color/background</color>
 
 </resources>

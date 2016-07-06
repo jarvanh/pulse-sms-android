@@ -55,5 +55,6 @@
     <color name="emptyIconTint">@android:color/white</color>
     <color name="emptyTextPrimary">#FFFFFFFF</color>
     <color name="emptyTextSecondary">#B2FFFFFF</color>
+    <color name="deleteIcon">@android:color/white</color>
 
 </resources>

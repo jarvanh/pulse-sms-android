@@ -47,7 +47,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     private void init(Context context) {
         background = new ColorDrawable(context.getResources().getColor(R.color.colorPrimaryLight));
         xMark = context.getDrawable(R.drawable.ic_delete);
-        xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        xMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
         xMarkMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);
         initiated = true;
     }
