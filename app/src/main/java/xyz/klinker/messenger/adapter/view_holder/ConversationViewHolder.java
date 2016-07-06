@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -32,7 +33,6 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView image;
     public TextView name;
     public TextView summary;
-    public View card;
 
     public ConversationViewHolder(View itemView) {
         super(itemView);
@@ -41,7 +41,20 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
-        card = itemView.findViewById(R.id.card);
+    }
+
+    public boolean isBold() {
+        return name.getTypeface() != null && name.getTypeface().isBold();
+    }
+
+    public void setBold(boolean bold) {
+        if (bold) {
+            name.setTypeface(Typeface.DEFAULT_BOLD);
+            summary.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            name.setTypeface(Typeface.DEFAULT);
+            summary.setTypeface(Typeface.DEFAULT);
+        }
     }
 
 }

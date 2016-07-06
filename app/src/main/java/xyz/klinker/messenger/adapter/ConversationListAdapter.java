@@ -18,7 +18,6 @@ package xyz.klinker.messenger.adapter;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,8 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.data.SectionType;
+import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
  * Adapter for displaying conversation items in a list. The adapter splits items into different
@@ -38,15 +39,17 @@ import xyz.klinker.messenger.data.Conversation;
  */
 public class ConversationListAdapter extends SectionedRecyclerViewAdapter<ConversationViewHolder> {
 
-    private static final int SECTION_PINNED = 0;
-    private static final int SECTION_TODAY = 1;
-    private static final int SECTION_YESTERDAY = 2;
-    private static final int SECTION_OLDER = 3;
-
     private List<Conversation> conversations;
-    private List<Integer> sectionCounts;
+    private SwipeToDeleteListener swipeToDeleteListener;
+    private List<SectionType> sectionCounts;
 
-    public ConversationListAdapter(List<Conversation> conversations) {
+    public ConversationListAdapter(List<Conversation> conversations,
+                                   SwipeToDeleteListener listener) {
+        this.swipeToDeleteListener = listener;
+        setConversations(conversations);
+    }
+
+    public void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
         this.sectionCounts = new ArrayList<>();
 
@@ -58,20 +61,23 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
             // TODO improve logic here, it is checking for within 24 hours for the same day, but this isn't right.
             // TODO should this be expanded beyond just today, yesterday and older?
-            if ((currentSection == SECTION_PINNED && conversation.pinned) ||
-                    (currentSection == SECTION_TODAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 24)) ||
-                    (currentSection == SECTION_YESTERDAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 48)) ||
-                    (currentSection == SECTION_OLDER)) {
+            if ((currentSection == SectionType.PINNED && conversation.pinned) ||
+                    (currentSection == SectionType.TODAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 24)) ||
+                    (currentSection == SectionType.YESTERDAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 48)) ||
+                    (currentSection == SectionType.OLDER)) {
                 currentCount++;
             } else {
-                sectionCounts.add(currentCount);
+                if (currentCount != 0) {
+                    sectionCounts.add(new SectionType(currentSection, currentCount));
+                }
+
                 currentSection++;
                 currentCount = 0;
                 i--;
             }
         }
 
-        sectionCounts.add(currentCount);
+        sectionCounts.add(new SectionType(currentSection, currentCount));
     }
 
     @Override
@@ -81,16 +87,16 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     @Override
     public int getItemCount(int section) {
-        return sectionCounts.get(section);
+        return sectionCounts.get(section).count;
     }
 
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
-        if (section == SECTION_PINNED) {
+        if (sectionCounts.get(section).type == SectionType.PINNED) {
             holder.header.setText(R.string.pinned);
-        } else if (section == SECTION_TODAY) {
+        } else if (sectionCounts.get(section).type == SectionType.TODAY) {
             holder.header.setText(R.string.today);
-        } else if (section == SECTION_YESTERDAY) {
+        } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
             holder.header.setText(R.string.yesterday);
         } else {
             holder.header.setText(R.string.older);
@@ -98,19 +104,18 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     @Override
-    public void onBindViewHolder(ConversationViewHolder holder, int section, int relativePosition, int absolutePosition) {
+    public void onBindViewHolder(ConversationViewHolder holder, int section, int relativePosition,
+                                 int absolutePosition) {
         Conversation conversation = conversations.get(absolutePosition);
 
         holder.image.setImageDrawable(new ColorDrawable(conversation.contact.color));
         holder.name.setText(conversation.contact.name);
         holder.summary.setText(conversation.snippet);
 
-        if (conversation.read && holder.name.getTypeface().isBold()) {
-            holder.name.setTypeface(null, Typeface.NORMAL);
-            holder.summary.setTypeface(null, Typeface.NORMAL);
-        } else if (!conversation.read && !holder.name.getTypeface().isBold()) {
-            holder.name.setTypeface(null, Typeface.BOLD);
-            holder.summary.setTypeface(null, Typeface.BOLD);
+        if (conversation.read && holder.isBold()) {
+            holder.setBold(false);
+        } else if (!conversation.read && !holder.isBold()) {
+            holder.setBold(true);
         }
     }
 
@@ -121,6 +126,43 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                         R.layout.conversation_list_header : R.layout.conversation_list_item,
                         parent, false);
         return new ConversationViewHolder(view);
+    }
+
+    public void removeItem(int position) {
+        // The logic here can get a little tricky because we are removing items from the adapter
+        // but need to account for the headers taking up a position as well. On top of that, if all
+        // the items in a section are gone, then there shouldn't be a header for that section.
+
+        int originalPosition = position;
+        int headersAbove = 1;
+        int currentTotal = 0;
+
+        for (SectionType type : sectionCounts) {
+            currentTotal += type.count + 1; // +1 for the header above the section
+
+            if (position < currentTotal) {
+                position -= headersAbove;
+
+                SectionType section = sectionCounts.get(headersAbove - 1);
+                section.count -= 1;
+
+                sectionCounts.set(headersAbove - 1, section);
+                Conversation deletedConversation = conversations.remove(position);
+
+                if (section.count == 0) {
+                    sectionCounts.remove(headersAbove - 1);
+                    notifyItemRangeRemoved(originalPosition - 1, 2);
+                } else {
+                    notifyItemRemoved(originalPosition);
+                }
+
+                swipeToDeleteListener.onSwipeToDelete(deletedConversation);
+
+                break;
+            } else {
+                headersAbove++;
+            }
+        }
     }
 
 }

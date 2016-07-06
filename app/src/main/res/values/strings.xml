@@ -39,5 +39,10 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="older">Older</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d conversation deleted</item>
+        <item quantity="other">%1$d conversations deleted</item>
+    </plurals>
+    <string name="undo">Undo</string>
 
 </resources>

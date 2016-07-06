@@ -16,30 +16,36 @@
 
 package xyz.klinker.messenger.fragment;
 
-import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
+import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
+import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
 
 /**
  * Fragment for displaying the conversation list or an empty screen if there are currently no
  * open conversations.
  */
-public class ConversationListFragment extends Fragment {
+public class ConversationListFragment extends Fragment implements SwipeToDeleteListener {
 
     private View empty;
     private RecyclerView recyclerView;
-    private List<Conversation> conversations;
+    private List<Conversation> pendingDelete;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -51,36 +57,82 @@ public class ConversationListFragment extends Fragment {
         empty = view.findViewById(R.id.empty_view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        setConversations(Conversation.getFakeConversations(getResources()));
+        loadConversations();
 
         return view;
     }
 
-    public void setConversations(List<Conversation> conversations) {
-        this.conversations = conversations;
+    private void loadConversations() {
+        setConversations(Conversation.getFakeConversations(getResources()));
+    }
+
+    private void setConversations(List<Conversation> conversations) {
+        this.pendingDelete = new ArrayList<>();
 
         if (recyclerView == null) {
             throw new RuntimeException("RecyclerView not yet initialized");
         }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new ConversationListAdapter(conversations));
-        recyclerView.addItemDecoration(new PaddingItemDecoration());
+        if (recyclerView.getAdapter() != null) {
+            ConversationListAdapter adapter = (ConversationListAdapter) recyclerView.getAdapter();
+            adapter.setConversations(conversations);
+            adapter.notifyDataSetChanged();
+        } else {
+            ConversationListAdapter adapter = new ConversationListAdapter(conversations, this);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(adapter);
+            recyclerView.addItemDecoration(new SwipeItemDecoration());
+
+            ItemTouchHelper touchHelper = new SwipeTouchHelper(adapter);
+            touchHelper.attachToRecyclerView(recyclerView);
+        }
 
         if (conversations.size() > 0) {
             empty.setVisibility(View.GONE);
         }
     }
 
-    public class PaddingItemDecoration extends RecyclerView.ItemDecoration {
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            if (parent.getChildAdapterPosition(view) == 0) {
-                outRect.top = parent.getContext().getResources()
-                        .getDimensionPixelSize(R.dimen.top_extra_padding);
+    @Override
+    public void onSwipeToDelete(final Conversation conversation) {
+        pendingDelete.add(conversation);
+        final int currentSize = pendingDelete.size();
+
+        String plural = getResources().getQuantityString(R.plurals.conversations_deleted,
+                pendingDelete.size(), pendingDelete.size());
+
+        Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loadConversations();
+                    }
+                })
+                .setCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        super.onDismissed(snackbar, event);
+
+                        if (pendingDelete.size() == currentSize) {
+                            // TODO delete pending conversations
+                            pendingDelete = new ArrayList<>();
+                        }
+                    }
+                })
+                .show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (recyclerView.getAdapter().getItemCount() == 0 &&
+                        empty.getVisibility() == View.GONE) {
+                    empty.setVisibility(View.VISIBLE);
+                } else if (empty.getVisibility() == View.VISIBLE) {
+                    empty.setVisibility(View.GONE);
+                }
             }
-        }
+        }, 500);
+
     }
 
 }
