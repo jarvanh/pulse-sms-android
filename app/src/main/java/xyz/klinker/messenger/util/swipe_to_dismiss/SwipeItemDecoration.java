@@ -46,6 +46,9 @@ public class SwipeItemDecoration extends RecyclerView.ItemDecoration {
         if (parent.getChildAdapterPosition(view) == 0) {
             outRect.top = parent.getContext().getResources()
                     .getDimensionPixelSize(R.dimen.top_extra_padding);
+        } else if (parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() - 1) {
+            outRect.bottom = parent.getContext().getResources()
+                    .getDimensionPixelSize(R.dimen.bottom_extra_padding);
         }
     }
 

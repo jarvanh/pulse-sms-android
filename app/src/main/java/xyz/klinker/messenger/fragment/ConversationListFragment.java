@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -36,6 +37,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
 import xyz.klinker.messenger.util.OnBackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -53,6 +55,7 @@ public class ConversationListFragment extends Fragment
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
     private ConversationViewHolder expandedConversation;
+    private MessageListFragment messageListFragment;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -151,11 +154,23 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onConversationExpanded(ConversationViewHolder viewHolder) {
         expandedConversation = viewHolder;
+        AnimationUtil.expandActivityForConversation(getActivity());
+
+        messageListFragment = MessageListFragment.newInstance();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.message_list_container, messageListFragment)
+                .commit();
     }
 
     @Override
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
+        AnimationUtil.contractActivityFromConversation(getActivity());
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .remove(messageListFragment)
+                .commit();
+        messageListFragment = null;
     }
 
     @Override

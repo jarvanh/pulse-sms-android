@@ -56,21 +56,6 @@ public class MessengerActivity extends AppCompatActivity
         initFab();
     }
 
-    @Override
-    public void onBackPressed() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof OnBackPressedListener) {
-                if (((OnBackPressedListener) fragment).onBackPressed()) {
-                    return;
-                }
-            }
-        }
-
-        super.onBackPressed();
-    }
-
     private void initToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,6 +86,21 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof OnBackPressedListener) {
+                if (((OnBackPressedListener) fragment).onBackPressed()) {
+                    return;
+                }
+            }
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         closeDrawer();
 
@@ -122,12 +122,6 @@ public class MessengerActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.drawer_conversation:  return displayConversations();
-            case R.id.drawer_schedule:      return displayScheduledMessages();
-            case R.id.drawer_contacts:      return displayContacts();
-            case R.id.drawer_invite:        return displayInviteFriends();
-            case R.id.drawer_settings:      return displaySettings();
-            case R.id.drawer_help:          return displayHelp();
-            case R.id.drawer_about:         return displayAbout();
             default:                        return true;
         }
     }
@@ -173,37 +167,9 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
-        return displayFragment(ConversationListFragment.newInstance());
-    }
-
-    private boolean displayScheduledMessages() {
-        return true;
-    }
-
-    private boolean displayContacts() {
-        return true;
-    }
-
-    private boolean displayInviteFriends() {
-        return true;
-    }
-
-    private boolean displaySettings() {
-        return true;
-    }
-
-    private boolean displayHelp() {
-        return true;
-    }
-
-    private boolean displayAbout() {
-        return true;
-    }
-
-    private boolean displayFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.conversation_list_container, ConversationListFragment.newInstance())
                 .commit();
 
         return true;

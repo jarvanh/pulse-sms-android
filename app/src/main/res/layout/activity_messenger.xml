@@ -39,7 +39,8 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:id="@+id/app_bar_layout">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -52,7 +53,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/fragment_container"/>
+                android:id="@+id/conversation_list_container"/>
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -66,6 +68,11 @@
             app:pressedTranslationZ="12dp"
             app:fabSize="normal"
             app:borderWidth="0dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/message_list_container"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
