@@ -6,6 +6,10 @@ The goal of this project is to create an SMS/MMS app that has full support for a
 
 The project will be separate from my previous messaging experience with Sliding Messaging and EvolveSMS and will be completely rewritten from scratch for performance and consistency. The designs themselves are loosely based off of Google Inbox and adapted as a messenger instead of email client.
 
+# APIs
+
+The project will include APIs that allow any SMS app to use the online service and hook up to the tablet app. This will be important for EvolveSMS so that support can be there and our userbase can be larger. This app will also be very different from EvolveSMS, so the users can have their preference on which they like more.
+
 ## License
 
     Copyright (C) 2016 Jake Klinker
