@@ -87,6 +87,11 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
         for (Fragment fragment : fragments) {
