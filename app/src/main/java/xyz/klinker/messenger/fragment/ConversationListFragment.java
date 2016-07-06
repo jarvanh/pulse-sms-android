@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -156,7 +157,9 @@ public class ConversationListFragment extends Fragment
         expandedConversation = viewHolder;
         AnimationUtil.expandActivityForConversation(getActivity());
 
-        messageListFragment = MessageListFragment.newInstance();
+        messageListFragment = MessageListFragment.newInstance(
+                viewHolder.name.getText().toString(),
+                ((ColorDrawable) viewHolder.image.getDrawable()).getColor());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();
