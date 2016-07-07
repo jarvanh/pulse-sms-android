@@ -29,10 +29,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
@@ -66,6 +68,7 @@ public class MessageListFragment extends Fragment {
     private ImageButton attach;
     private FloatingActionButton send;
     private RecyclerView messageList;
+    private MessageListAdapter adapter;
 
     public static MessageListFragment newInstance(Contact contact) {
         MessageListFragment fragment = new MessageListFragment();
@@ -144,7 +147,29 @@ public class MessageListFragment extends Fragment {
         String hint = getResources().getString(R.string.type_message_to, firstName);
         messageEntry.setHint(hint);
 
+        messageEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
+                        actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMessage();
+                    handled = true;
+                }
+
+                return handled;
+            }
+        });
+
         send.setBackgroundTintList(ColorStateList.valueOf(getArguments().getInt(ARG_COLOR_ACCENT)));
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage();
+            }
+        });
     }
 
     private void initRecycler() {
@@ -192,11 +217,21 @@ public class MessageListFragment extends Fragment {
         manager.setStackFromEnd(true);
         messageList.setLayoutManager(manager);
 
-        MessageListAdapter adapter = new MessageListAdapter(Message.getFakeMessages(),
-                getArguments().getInt(ARG_COLOR));
+        adapter = new MessageListAdapter(Message.getFakeMessages(),
+                getArguments().getInt(ARG_COLOR), manager);
         messageList.setAdapter(adapter);
 
         messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
+    }
+
+    private void sendMessage() {
+        String message = messageEntry.getText().toString().trim();
+
+        if (message.length() > 0) {
+            Message m = new Message(Message.TYPE_SENT, message, System.currentTimeMillis());
+            adapter.addMessage(m);
+            messageEntry.setText(null);
+        }
     }
 
 }

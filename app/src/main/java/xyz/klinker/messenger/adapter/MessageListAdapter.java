@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,10 +36,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     private List<Message> messages;
     private int receivedColor;
+    private LinearLayoutManager manager;
 
-    public MessageListAdapter(List<Message> messages, int receivedColor) {
+    public MessageListAdapter(List<Message> messages, int receivedColor,
+                              LinearLayoutManager manager) {
         this.messages = messages;
         this.receivedColor = receivedColor;
+        this.manager = manager;
     }
 
     @Override
@@ -95,4 +99,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         return messages.get(position).type;
     }
 
+    public void addMessage(Message message) {
+        messages.add(message);
+        notifyItemInserted(messages.size() - 1);
+        manager.scrollToPosition(messages.size() - 1);
+    }
 }
