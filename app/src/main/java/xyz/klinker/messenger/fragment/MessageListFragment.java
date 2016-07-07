@@ -16,8 +16,10 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
@@ -42,9 +46,14 @@ public class MessageListFragment extends Fragment {
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_COLOR = "color";
     private static final String ARG_COLOR_DARKER = "color_darker";
+    private static final String ARG_COLOR_ACCENT = "color_accent";
 
-    private AppBarLayout appBarLayout;
+    private View appBarLayout;
     private Toolbar toolbar;
+    private View sendBar;
+    private EditText messageEntry;
+    private ImageButton attach;
+    private FloatingActionButton send;
 
     public static MessageListFragment newInstance(Contact contact) {
         MessageListFragment fragment = new MessageListFragment();
@@ -54,6 +63,7 @@ public class MessageListFragment extends Fragment {
         args.putString(ARG_PHONE_NUMBER, contact.phoneNumber);
         args.putInt(ARG_COLOR, contact.color);
         args.putInt(ARG_COLOR_DARKER, contact.colorDarker);
+        args.putInt(ARG_COLOR_ACCENT, contact.colorAccent);
         fragment.setArguments(args);
 
         return fragment;
@@ -63,15 +73,25 @@ public class MessageListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_message_list, parent, false);
 
-        appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
+        appBarLayout = view.findViewById(R.id.app_bar_layout);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        sendBar = view.findViewById(R.id.send_bar);
+        messageEntry = (EditText) view.findViewById(R.id.message_entry);
+        attach = (ImageButton) view.findViewById(R.id.attach);
+        send = (FloatingActionButton) view.findViewById(R.id.send);
 
         initToolbar();
+        initSendbar();
 
-        appBarLayout.animate().alpha(1f).translationY(0).setDuration(250)
-                .setStartDelay(75).setInterpolator(new DecelerateInterpolator()).setListener(null);
+        animateViewIn(appBarLayout);
+        animateViewIn(sendBar);
 
         return view;
+    }
+
+    private void animateViewIn(View view) {
+        view.animate().alpha(1f).translationY(0).setDuration(250)
+                .setStartDelay(75).setInterpolator(new DecelerateInterpolator()).setListener(null);
     }
 
     private void initToolbar() {
@@ -103,6 +123,14 @@ public class MessageListFragment extends Fragment {
 
         ColorUtil.adjustStatusBarColor(colorDarker, getActivity());
         ColorUtil.adjustDrawerColor(colorDarker, getActivity());
+    }
+
+    private void initSendbar() {
+        String firstName = getArguments().getString(ARG_NAME).split(" ")[0];
+        String hint = getResources().getString(R.string.type_message_to, firstName);
+        messageEntry.setHint(hint);
+
+        send.setBackgroundTintList(ColorStateList.valueOf(getArguments().getInt(ARG_COLOR_ACCENT)));
     }
 
 }

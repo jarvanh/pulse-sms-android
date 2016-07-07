@@ -35,9 +35,10 @@ public class Conversation {
     public long timestamp;
     public String snippet;
 
-    public Conversation(String name, String phoneNumber, int color, int colorDarker, boolean pinned,
-                        boolean read, long timestamp, String snippet) {
-        this(new Contact(name, phoneNumber, color, colorDarker), pinned, read, timestamp, snippet);
+    public Conversation(String name, String phoneNumber, int color, int colorDarker, int colorAccent,
+                        boolean pinned, boolean read, long timestamp, String snippet) {
+        this(new Contact(name, phoneNumber, color, colorDarker, colorAccent),
+                pinned, read, timestamp, snippet);
     }
 
     public Conversation(Contact contact, boolean pinned, boolean read, long timestamp,
@@ -57,6 +58,7 @@ public class Conversation {
                 "(515) 991-1493",
                 resources.getColor(R.color.materialIndigo),
                 resources.getColor(R.color.materialIndigoDark),
+                resources.getColor(R.color.materialGreenAccent),
                 true,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60),
@@ -68,6 +70,7 @@ public class Conversation {
                 "(708) 928-0846",
                 resources.getColor(R.color.materialRed),
                 resources.getColor(R.color.materialRedDark),
+                resources.getColor(R.color.materialBlueAccent),
                 true,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 12),
@@ -79,6 +82,7 @@ public class Conversation {
                 "(515) 419-6726",
                 resources.getColor(R.color.materialPink),
                 resources.getColor(R.color.materialPinkDark),
+                resources.getColor(R.color.materialOrangeAccent),
                 false,
                 false,
                 System.currentTimeMillis() - (1000 * 60 * 20),
@@ -90,6 +94,7 @@ public class Conversation {
                 "(515) 991-8235",
                 resources.getColor(R.color.materialBlue),
                 resources.getColor(R.color.materialBlueDark),
+                resources.getColor(R.color.materialRedAccent),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 26),
@@ -101,6 +106,7 @@ public class Conversation {
                 "(515) 556-7749",
                 resources.getColor(R.color.materialGreen),
                 resources.getColor(R.color.materialGreenDark),
+                resources.getColor(R.color.materialIndigoAccent),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 32),
@@ -112,6 +118,7 @@ public class Conversation {
                 "(515) 480-8532",
                 resources.getColor(R.color.materialBrown),
                 resources.getColor(R.color.materialBrownDark),
+                resources.getColor(R.color.materialDeepOrangeAccent),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 55),
@@ -123,6 +130,7 @@ public class Conversation {
                 "(847) 609-0939",
                 resources.getColor(R.color.materialPurple),
                 resources.getColor(R.color.materialPurpleDark),
+                resources.getColor(R.color.materialTealAccent),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 78),

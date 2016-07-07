@@ -25,12 +25,14 @@ public class Contact {
     public String phoneNumber;
     public int color;
     public int colorDarker;
+    public int colorAccent;
 
-    public Contact(String name, String phoneNumber, int color, int colorDarker) {
+    public Contact(String name, String phoneNumber, int color, int colorDarker, int colorAccent) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.color = color;
         this.colorDarker = colorDarker;
+        this.colorAccent = colorAccent;
     }
 
 }

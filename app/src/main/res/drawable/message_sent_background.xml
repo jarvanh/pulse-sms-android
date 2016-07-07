@@ -15,11 +15,9 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/ripple">
 
-    <dimen name="fab_margin">32dp</dimen>
-    <dimen name="conversation_list_padding">120dp</dimen>
-    <dimen name="message_list_padding">96dp</dimen>
-    <dimen name="max_message_width">248dp</dimen>
+    <item android:drawable="@drawable/message_sent" />
 
-</resources>
+</ripple>

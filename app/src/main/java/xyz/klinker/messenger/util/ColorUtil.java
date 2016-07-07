@@ -72,11 +72,8 @@ public class ColorUtil {
                     .findViewById(R.id.drawer_layout);
             drawerLayout.setStatusBarBackgroundColor(color);
         } else {
-            int[][] states = new int[][] { new int[] { } };
-            int[] colors = new int[] { color };
-
             activity.findViewById(R.id.status_bar)
-                    .setBackgroundTintList(new ColorStateList(states, colors));
+                    .setBackgroundTintList(ColorStateList.valueOf(color));
         }
 
 

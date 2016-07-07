@@ -88,10 +88,6 @@ android {
         xmlReport false
         htmlReport true
     }
-
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
-    }
 }
 
 dependencies {

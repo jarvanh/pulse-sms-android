@@ -39,7 +39,7 @@
     <string name="no_messages">No messages</string>
     <string name="no_messages_summary">Start a new conversation or just enjoy your day!</string>
 
-    <!-- Conversation Screen -->
+    <!-- Conversation List Screen -->
     <string name="pinned">Pinned</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
@@ -49,5 +49,9 @@
         <item quantity="other">%1$d conversations deleted</item>
     </plurals>
     <string name="undo">Undo</string>
+
+    <!-- Message List Screen -->
+    <string name="type_message_to">Type message to %1$s</string>
+    <string name="attach">Attach</string>
 
 </resources>

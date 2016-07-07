@@ -43,7 +43,7 @@ public class SwipeInterceptLinearLayout extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        return true;
+        return false;
     }
 
 }
