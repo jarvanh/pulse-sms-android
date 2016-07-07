@@ -20,6 +20,6 @@
     <dimen name="fab_margin">32dp</dimen>
     <dimen name="conversation_list_padding">120dp</dimen>
     <dimen name="message_list_padding">96dp</dimen>
-    <dimen name="max_message_width">372dp</dimen>
+    <dimen name="max_message_width">436dp</dimen>
 
 </resources>

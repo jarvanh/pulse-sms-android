@@ -99,9 +99,7 @@ public class AnimationUtil {
         final ViewGroup.MarginLayoutParams recyclerParams = (ViewGroup.MarginLayoutParams)
                 recyclerView.getLayoutParams();
 
-        if (originalRecyclerHeight == -1) {
-            originalRecyclerHeight = recyclerView.getHeight();
-        }
+        originalRecyclerHeight = recyclerView.getHeight();
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -192,9 +190,7 @@ public class AnimationUtil {
         final ViewGroup.MarginLayoutParams containerParams = (ViewGroup.MarginLayoutParams)
                 fragmentContainer.getLayoutParams();
 
-        if (originalFragmentContainerHeight == -1) {
-            originalFragmentContainerHeight = fragmentContainer.getHeight();
-        }
+        originalFragmentContainerHeight = fragmentContainer.getHeight();
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
