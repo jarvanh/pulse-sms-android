@@ -17,24 +17,35 @@
 package xyz.klinker.messenger.fragment;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.EdgeEffectCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AbsListView;
+import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.Contact;
+import xyz.klinker.messenger.data.Message;
 import xyz.klinker.messenger.util.ColorUtil;
 
 /**
@@ -54,6 +65,7 @@ public class MessageListFragment extends Fragment {
     private EditText messageEntry;
     private ImageButton attach;
     private FloatingActionButton send;
+    private RecyclerView messageList;
 
     public static MessageListFragment newInstance(Contact contact) {
         MessageListFragment fragment = new MessageListFragment();
@@ -79,9 +91,11 @@ public class MessageListFragment extends Fragment {
         messageEntry = (EditText) view.findViewById(R.id.message_entry);
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
+        messageList = (RecyclerView) view.findViewById(R.id.message_list);
 
         initToolbar();
         initSendbar();
+        initRecycler();
 
         animateViewIn(appBarLayout);
         animateViewIn(sendBar);
@@ -131,6 +145,58 @@ public class MessageListFragment extends Fragment {
         messageEntry.setHint(hint);
 
         send.setBackgroundTintList(ColorStateList.valueOf(getArguments().getInt(ARG_COLOR_ACCENT)));
+    }
+
+    private void initRecycler() {
+        messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private boolean invoked = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                // only invoke this once
+                if (invoked) {
+                    return;
+                } else {
+                    invoked = true;
+                }
+
+                try {
+                    int color = getArguments().getInt(ARG_COLOR);
+                    final Class<?> clazz = RecyclerView.class;
+
+                    for (final String name : new String[] {"ensureTopGlow", "ensureBottomGlow"}) {
+                        Method method = clazz.getDeclaredMethod(name);
+                        method.setAccessible(true);
+                        method.invoke(messageList);
+                    }
+
+                    for (final String name : new String[] {"mTopGlow", "mBottomGlow"}) {
+                        final Field field = clazz.getDeclaredField(name);
+                        field.setAccessible(true);
+                        final Object edge = field.get(messageList);
+                        final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
+                        fEdgeEffect.setAccessible(true);
+                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(color);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setStackFromEnd(true);
+        messageList.setLayoutManager(manager);
+
+        MessageListAdapter adapter = new MessageListAdapter(Message.getFakeMessages(),
+                getArguments().getInt(ARG_COLOR));
+        messageList.setAdapter(adapter);
+
+        messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
     }
 
 }

@@ -21,6 +21,6 @@
     <dimen name="top_extra_padding">2dp</dimen>
     <dimen name="conversation_list_header_padding">32dp</dimen>
     <dimen name="message_list_padding">24dp</dimen>
-    <dimen name="max_message_width">248dp</dimen>
+    <dimen name="max_message_width">310dp</dimen>
 
 </resources>
