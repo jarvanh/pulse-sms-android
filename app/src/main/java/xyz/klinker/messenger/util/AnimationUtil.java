@@ -33,7 +33,7 @@ import xyz.klinker.messenger.R;
  */
 public class AnimationUtil {
 
-    private static final int EXPAND_CONVERSATION_DURATION = 150;
+    private static final int EXPAND_CONVERSATION_DURATION = 250;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
 
     private static int originalRecyclerHeight = -1;
@@ -99,7 +99,9 @@ public class AnimationUtil {
         final ViewGroup.MarginLayoutParams recyclerParams = (ViewGroup.MarginLayoutParams)
                 recyclerView.getLayoutParams();
 
-        originalRecyclerHeight = recyclerView.getHeight();
+	if (originalRecyclerHeight == -1) {
+        	originalRecyclerHeight = recyclerView.getHeight();
+	}
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -190,7 +192,9 @@ public class AnimationUtil {
         final ViewGroup.MarginLayoutParams containerParams = (ViewGroup.MarginLayoutParams)
                 fragmentContainer.getLayoutParams();
 
-        originalFragmentContainerHeight = fragmentContainer.getHeight();
+	if (originalFragmentContainerHeight == -1) {
+            originalFragmentContainerHeight = fragmentContainer.getHeight();
+        }
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -210,6 +214,18 @@ public class AnimationUtil {
                 .setDuration(PERIPHERAL_DURATION)
                 .setInterpolator(interpolator)
                 .setListener(null);
+    }
+
+    /**
+     * Animates peripherals onto the screen when opening a conversation. This includes the
+     * sandbar and the toolbar. The message list will be animated separately after the
+     * list has been loaded from the database.
+     *
+     * @param view the view to be animated in.
+     */
+    public static void animateConversationPeripheralIn(View view) {
+        view.animate().alpha(1f).translationY(0).setDuration(EXPAND_CONVERSATION_DURATION)
+                .setInterpolator(new DecelerateInterpolator()).setListener(null);
     }
 
 }

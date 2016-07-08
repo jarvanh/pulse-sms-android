@@ -21,11 +21,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.lang.reflect.Field;
 
 import xyz.klinker.messenger.R;
 
@@ -130,6 +136,35 @@ public class ColorUtil {
 
             navView.getMenu().clear();
             navView.inflateMenu(R.menu.navigation_drawer_messages);
+        }
+    }
+
+    /**
+     * Sets the cursor color for an edit text to the supplied color. Reflection is required here,
+     * unfortunately.
+     *
+     * @param editText the edit text to change.
+     * @param color the color of the new cursor.
+     */
+    public static void setCursorDrawableColor(EditText editText, int color) {
+        try {
+            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            fCursorDrawableRes.setAccessible(true);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(editText);
+            Field fEditor = TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
+            Object editor = fEditor.get(editText);
+            Class<?> clazz = editor.getClass();
+            Field fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
+            fCursorDrawable.setAccessible(true);
+            Drawable[] drawables = new Drawable[2];
+            drawables[0] = editText.getContext().getResources().getDrawable(mCursorDrawableRes);
+            drawables[1] = editText.getContext().getResources().getDrawable(mCursorDrawableRes);
+            drawables[0].setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            drawables[1].setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            fCursorDrawable.set(editor, drawables);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
     }
 

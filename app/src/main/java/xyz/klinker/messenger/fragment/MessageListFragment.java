@@ -48,6 +48,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.Contact;
 import xyz.klinker.messenger.data.Message;
+import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 
 /**
@@ -100,15 +101,10 @@ public class MessageListFragment extends Fragment {
         initSendbar();
         initRecycler();
 
-        animateViewIn(appBarLayout);
-        animateViewIn(sendBar);
+        AnimationUtil.animateConversationPeripheralIn(appBarLayout);
+        AnimationUtil.animateConversationPeripheralIn(sendBar);
 
         return view;
-    }
-
-    private void animateViewIn(View view) {
-        view.animate().alpha(1f).translationY(0).setDuration(250)
-                .setStartDelay(75).setInterpolator(new DecelerateInterpolator()).setListener(null);
     }
 
     private void initToolbar() {
@@ -116,6 +112,7 @@ public class MessageListFragment extends Fragment {
         String phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
         int color = getArguments().getInt(ARG_COLOR);
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
+        int colorAccent = getArguments().getInt(ARG_COLOR_ACCENT);
 
         toolbar.setTitle(name);
         toolbar.setBackgroundColor(color);
@@ -140,6 +137,7 @@ public class MessageListFragment extends Fragment {
 
         ColorUtil.adjustStatusBarColor(colorDarker, getActivity());
         ColorUtil.adjustDrawerColor(colorDarker, getActivity());
+        ColorUtil.setCursorDrawableColor(messageEntry, colorAccent);
     }
 
     private void initSendbar() {
@@ -210,7 +208,6 @@ public class MessageListFragment extends Fragment {
                 }
             }
         });
-
 
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
