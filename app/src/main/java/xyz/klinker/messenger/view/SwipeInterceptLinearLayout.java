@@ -17,8 +17,13 @@
 package xyz.klinker.messenger.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 
 /**
@@ -28,6 +33,10 @@ import android.widget.LinearLayout;
  * go back to the main list.
  */
 public class SwipeInterceptLinearLayout extends LinearLayout {
+
+    private static final int MAX_CHANGE = 100;
+
+    private float initialY;
 
     public SwipeInterceptLinearLayout(Context context) {
         super(context);
@@ -43,7 +52,44 @@ public class SwipeInterceptLinearLayout extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+//        for (int i = 0; i < getChildCount(); i++) {
+//            View view = getChildAt(i);
+//            if (view instanceof RecyclerView) {
+//                if (((LinearLayoutManager) ((RecyclerView) view).getLayoutManager())
+//                        .findFirstCompletelyVisibleItemPosition() == 0) {
+//                    return true;
+//                }
+//            }
+//        }
+
         return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        calcTranslation(ev);
+        return super.onTouchEvent(ev);
+    }
+
+    private void calcTranslation(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            initialY = ev.getY();
+        } else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            animate().translationY(calcDepreciation(ev.getY() - initialY)).setDuration(0).setListener(null);
+        } else if (ev.getAction() == MotionEvent.ACTION_UP) {
+            setTranslationY(0);
+            initialY = -1;
+        }
+    }
+
+    private int calcDepreciation(float delta) {
+        if (delta > MAX_CHANGE) {
+            return MAX_CHANGE;
+        } else if (delta < -1 * MAX_CHANGE) {
+            return -1 * MAX_CHANGE;
+        } else {
+            return (int) (MAX_CHANGE * Math.sin(Math.PI / (2 * MAX_CHANGE) * delta));
+        }
     }
 
 }
