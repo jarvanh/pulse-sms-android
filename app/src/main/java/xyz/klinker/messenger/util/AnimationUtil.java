@@ -36,8 +36,8 @@ public class AnimationUtil {
     private static final int EXPAND_CONVERSATION_DURATION = 250;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
 
-    private static int originalRecyclerHeight = -1;
-    private static int originalFragmentContainerHeight = -1;
+    public static int originalRecyclerHeight = -1;
+    public static int originalFragmentContainerHeight = -1;
 
     /**
      * Animates a lines item to the full height of the view.

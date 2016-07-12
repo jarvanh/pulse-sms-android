@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -129,15 +130,27 @@ public class MessageListFragment extends Fragment {
             });
         }
 
-        TextView nameView = (TextView) getActivity().findViewById(R.id.drawer_header_reveal_name);
-        TextView phoneNumberView = (TextView) getActivity()
-                .findViewById(R.id.drawer_header_reveal_phone_number);
-        nameView.setText(name);
-        phoneNumberView.setText(phoneNumber);
-
-        ColorUtil.adjustStatusBarColor(colorDarker, getActivity());
-        ColorUtil.adjustDrawerColor(colorDarker, getActivity());
+        setNameAndDrawerColor(getActivity());
         ColorUtil.setCursorDrawableColor(messageEntry, colorAccent);
+    }
+
+    public void setNameAndDrawerColor(Activity activity) {
+        String name = getArguments().getString(ARG_NAME);
+        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
+        int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
+
+        TextView nameView = (TextView) activity.findViewById(R.id.drawer_header_reveal_name);
+        TextView phoneNumberView = (TextView) activity
+                .findViewById(R.id.drawer_header_reveal_phone_number);
+
+        // could be null when rotating the device
+        if (nameView != null) {
+            nameView.setText(name);
+            phoneNumberView.setText(phoneNumber);
+
+            ColorUtil.adjustStatusBarColor(colorDarker, activity);
+            ColorUtil.adjustDrawerColor(colorDarker, activity);
+        }
     }
 
     private void initSendbar() {

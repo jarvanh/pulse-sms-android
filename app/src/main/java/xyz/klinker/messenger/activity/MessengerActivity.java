@@ -26,14 +26,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.OnBackPressedListener;
 
 /**
@@ -45,6 +49,8 @@ public class MessengerActivity extends AppCompatActivity
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ConversationListFragment conversationListFragment;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private void initFab() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +108,15 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        super.onBackPressed();
+        if (conversationListFragment == null) {
+            Fragment messageListFragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
+            getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
+            displayConversations();
+            fab.show();
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -172,12 +186,39 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
+        conversationListFragment = ConversationListFragment.newInstance();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .replace(R.id.conversation_list_container, ConversationListFragment.newInstance())
+                .replace(R.id.conversation_list_container, conversationListFragment)
                 .commit();
 
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        AnimationUtil.originalRecyclerHeight = -1;
+        AnimationUtil.originalFragmentContainerHeight = -1;
+
+        // if we rotate twice in a row while expanded, conversationListFragment will still be null
+        if (conversationListFragment == null || conversationListFragment.isExpanded()) {
+            outState.putBoolean("expanded", true);
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null && savedInstanceState.getBoolean("expanded", false)) {
+            fab.hide();
+            Fragment fragment = getSupportFragmentManager()
+                    .findFragmentById(R.id.conversation_list_container);
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            conversationListFragment = null;
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
     }
 
 }

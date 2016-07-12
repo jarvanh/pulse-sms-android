@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -152,7 +153,6 @@ public class ConversationListFragment extends Fragment
                 checkEmptyViewDisplay();
             }
         }, 500);
-
     }
 
     @Override
@@ -189,6 +189,10 @@ public class ConversationListFragment extends Fragment
         } else {
             return false;
         }
+    }
+
+    public boolean isExpanded() {
+        return expandedConversation != null;
     }
 
 }
