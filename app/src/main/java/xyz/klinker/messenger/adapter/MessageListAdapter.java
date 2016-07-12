@@ -108,5 +108,5 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         notifyItemInserted(messages.size() - 1);
         manager.scrollToPosition(messages.size() - 1);
     }
-    
+
 }
