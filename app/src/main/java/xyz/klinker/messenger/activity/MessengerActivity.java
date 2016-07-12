@@ -113,7 +113,9 @@ public class MessengerActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
             displayConversations();
             fab.show();
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            if (drawerLayout != null) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
         } else {
             super.onBackPressed();
         }
@@ -217,7 +219,10 @@ public class MessengerActivity extends AppCompatActivity
                     .findFragmentById(R.id.conversation_list_container);
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             conversationListFragment = null;
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+            if (drawerLayout != null) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
         }
     }
 

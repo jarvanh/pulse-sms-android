@@ -67,7 +67,7 @@ public class SwipeInterceptLinearLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        calcTranslation(ev);
+        //calcTranslation(ev);
         return super.onTouchEvent(ev);
     }
 
