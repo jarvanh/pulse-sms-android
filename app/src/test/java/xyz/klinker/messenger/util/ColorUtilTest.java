@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.data;
+package xyz.klinker.messenger.util;
 
-/**
- * Holds information about a contact.
- */
-public class Contact {
+import org.junit.Test;
+import org.robolectric.RuntimeEnvironment;
 
-    public String name;
-    public String phoneNumber;
-    public int color;
-    public int colorDarker;
-    public int colorAccent;
+import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-    public Contact(String name, String phoneNumber, int color, int colorDarker, int colorAccent) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.color = color;
-        this.colorDarker = colorDarker;
-        this.colorAccent = colorAccent;
+public class ColorUtilTest extends MessengerRobolectricSuite {
+
+    @Test
+    public void noRandomOutOfBounds() {
+        for (int i = 0; i < 100; i++) {
+            ColorUtil.getRandomMaterialColor(RuntimeEnvironment.application);
+        }
     }
 
 }

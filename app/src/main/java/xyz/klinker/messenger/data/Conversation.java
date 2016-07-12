@@ -29,36 +29,32 @@ import xyz.klinker.messenger.R;
  */
 public class Conversation {
 
-    public Contact contact;
+    public ColorSet colors;
     public boolean pinned;
     public boolean read;
     public long timestamp;
+    public String title;
+    public String phoneNumbers;
     public String snippet;
 
-    public Conversation(String name, String phoneNumber, int color, int colorDarker, int colorAccent,
+    public Conversation(String name, String phoneNumbers, ColorSet colors,
                         boolean pinned, boolean read, long timestamp, String snippet) {
-        this(new Contact(name, phoneNumber, color, colorDarker, colorAccent),
-                pinned, read, timestamp, snippet);
-    }
-
-    public Conversation(Contact contact, boolean pinned, boolean read, long timestamp,
-                        String snippet) {
-        this.contact = contact;
+        this.title = name;
+        this.phoneNumbers = phoneNumbers;
+        this.colors = colors;
         this.pinned = pinned;
         this.read = read;
         this.timestamp = timestamp;
         this.snippet = snippet;
     }
 
-    public static List<Conversation> getFakeConversations(Resources resources) {
+    public static List<Conversation> getFakeConversations(Context context) {
         List<Conversation> conversations = new ArrayList<>();
 
         conversations.add(new Conversation(
                 "Luke Klinker",
                 "(515) 991-1493",
-                resources.getColor(R.color.materialIndigo),
-                resources.getColor(R.color.materialIndigoDark),
-                resources.getColor(R.color.materialGreenAccent),
+                ColorSet.INDIGO(context),
                 true,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60),
@@ -68,9 +64,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Matt Swiontek",
                 "(708) 928-0846",
-                resources.getColor(R.color.materialRed),
-                resources.getColor(R.color.materialRedDark),
-                resources.getColor(R.color.materialBlueAccent),
+                ColorSet.RED(context),
                 true,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 12),
@@ -80,9 +74,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Kris Klinker",
                 "(515) 419-6726",
-                resources.getColor(R.color.materialPink),
-                resources.getColor(R.color.materialPinkDark),
-                resources.getColor(R.color.materialOrangeAccent),
+                ColorSet.PINK(context),
                 false,
                 false,
                 System.currentTimeMillis() - (1000 * 60 * 20),
@@ -92,9 +84,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Andrew Klinker",
                 "(515) 991-8235",
-                resources.getColor(R.color.materialBlue),
-                resources.getColor(R.color.materialBlueDark),
-                resources.getColor(R.color.materialRedAccent),
+                ColorSet.BLUE(context),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 26),
@@ -104,9 +94,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Aaron Klinker",
                 "(515) 556-7749",
-                resources.getColor(R.color.materialGreen),
-                resources.getColor(R.color.materialGreenDark),
-                resources.getColor(R.color.materialIndigoAccent),
+                ColorSet.GREEN(context),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 32),
@@ -116,9 +104,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Mike Klinker",
                 "(515) 480-8532",
-                resources.getColor(R.color.materialBrown),
-                resources.getColor(R.color.materialBrownDark),
-                resources.getColor(R.color.materialDeepOrangeAccent),
+                ColorSet.BROWN(context),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 55),
@@ -128,9 +114,7 @@ public class Conversation {
         conversations.add(new Conversation(
                 "Ben Madden",
                 "(847) 609-0939",
-                resources.getColor(R.color.materialPurple),
-                resources.getColor(R.color.materialPurpleDark),
-                resources.getColor(R.color.materialTealAccent),
+                ColorSet.PURPLE(context),
                 false,
                 true,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 78),

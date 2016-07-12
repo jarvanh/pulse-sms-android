@@ -34,34 +34,35 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.ColorSet;
 
 /**
  * Helper class for working with colors.
  */
 public class ColorUtil {
 
-    public static int getRandomMaterialColor(Context context) {
+    public static ColorSet getRandomMaterialColor(Context context) {
         int num = (int) (Math.random() * (17 + 1));
 
         switch (num) {
-            case 0:     return context.getResources().getColor(R.color.materialRed);
-            case 1:     return context.getResources().getColor(R.color.materialPink);
-            case 2:     return context.getResources().getColor(R.color.materialPurple);
-            case 3:     return context.getResources().getColor(R.color.materialDeepPurple);
-            case 4:     return context.getResources().getColor(R.color.materialIndigo);
-            case 5:     return context.getResources().getColor(R.color.materialBlue);
-            case 6:     return context.getResources().getColor(R.color.materialLightBlue);
-            case 7:     return context.getResources().getColor(R.color.materialCyan);
-            case 8:     return context.getResources().getColor(R.color.materialGreen);
-            case 9:     return context.getResources().getColor(R.color.materialLightGreen);
-            case 10:    return context.getResources().getColor(R.color.materialLime);
-            case 11:    return context.getResources().getColor(R.color.materialYellow);
-            case 12:    return context.getResources().getColor(R.color.materialAmber);
-            case 13:    return context.getResources().getColor(R.color.materialOrange);
-            case 14:    return context.getResources().getColor(R.color.materialDeepOrange);
-            case 15:    return context.getResources().getColor(R.color.materialBrown);
-            case 16:    return context.getResources().getColor(R.color.materialGrey);
-            case 17:    return context.getResources().getColor(R.color.materialBlueGrey);
+            case 0:     return ColorSet.RED(context);
+            case 1:     return ColorSet.PINK(context);
+            case 2:     return ColorSet.PURPLE(context);
+            case 3:     return ColorSet.DEEP_PURPLE(context);
+            case 4:     return ColorSet.INDIGO(context);
+            case 5:     return ColorSet.BLUE(context);
+            case 6:     return ColorSet.LIGHT_BLUE(context);
+            case 7:     return ColorSet.CYAN(context);
+            case 8:     return ColorSet.GREEN(context);
+            case 9:     return ColorSet.LIGHT_GREEN(context);
+            case 10:    return ColorSet.LIME(context);
+            case 11:    return ColorSet.YELLOW(context);
+            case 12:    return ColorSet.AMBER(context);
+            case 13:    return ColorSet.ORANGE(context);
+            case 14:    return ColorSet.DEEP_ORANGE(context);
+            case 15:    return ColorSet.BROWN(context);
+            case 16:    return ColorSet.GREY(context);
+            case 17:    return ColorSet.BLUE_GREY(context);
             default:    throw new RuntimeException("Invalid random color: " + num);
         }
     }

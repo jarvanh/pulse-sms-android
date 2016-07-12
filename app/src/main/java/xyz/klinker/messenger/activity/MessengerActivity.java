@@ -200,13 +200,18 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        AnimationUtil.originalRecyclerHeight = -1;
-        AnimationUtil.originalFragmentContainerHeight = -1;
 
         // if we rotate twice in a row while expanded, conversationListFragment will still be null
         if (conversationListFragment == null || conversationListFragment.isExpanded()) {
             outState.putBoolean("expanded", true);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AnimationUtil.originalRecyclerHeight = -1;
+        AnimationUtil.originalFragmentContainerHeight = -1;
     }
 
     @Override

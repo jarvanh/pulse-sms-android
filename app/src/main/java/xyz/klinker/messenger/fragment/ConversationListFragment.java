@@ -76,7 +76,7 @@ public class ConversationListFragment extends Fragment
     }
 
     private void loadConversations() {
-        setConversations(Conversation.getFakeConversations(getResources()));
+        setConversations(Conversation.getFakeConversations(getContext()));
     }
 
     private void setConversations(List<Conversation> conversations) {
@@ -160,7 +160,7 @@ public class ConversationListFragment extends Fragment
         expandedConversation = viewHolder;
         AnimationUtil.expandActivityForConversation(getActivity());
 
-        messageListFragment = MessageListFragment.newInstance(viewHolder.contact);
+        messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();

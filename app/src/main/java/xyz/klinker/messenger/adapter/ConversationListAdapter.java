@@ -32,6 +32,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Conversation;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
+import xyz.klinker.messenger.util.TimeUtil;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
@@ -63,11 +64,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         for (int i = 0; i < conversations.size(); i++) {
             Conversation conversation = conversations.get(i);
 
-            // TODO improve logic here, it is checking for within 24 hours for the same day, but this isn't right.
-            // TODO should this be expanded beyond just today, yesterday and older?
             if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                    (currentSection == SectionType.TODAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 24)) ||
-                    (currentSection == SectionType.YESTERDAY && conversation.timestamp > System.currentTimeMillis() - (1000 * 60 * 60 * 48)) ||
+                    (currentSection == SectionType.TODAY && TimeUtil.isToday(conversation.timestamp)) ||
+                    (currentSection == SectionType.YESTERDAY && TimeUtil.isYesterday(conversation.timestamp)) ||
                     (currentSection == SectionType.OLDER)) {
                 currentCount++;
             } else {
@@ -112,9 +111,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                                  int absolutePosition) {
         Conversation conversation = conversations.get(absolutePosition);
 
-        holder.contact = conversation.contact;
-        holder.image.setImageDrawable(new ColorDrawable(conversation.contact.color));
-        holder.name.setText(conversation.contact.name);
+        holder.conversation = conversation;
+        holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+        holder.name.setText(conversation.title);
         holder.summary.setText(conversation.snippet);
 
         if (conversation.read && holder.isBold()) {

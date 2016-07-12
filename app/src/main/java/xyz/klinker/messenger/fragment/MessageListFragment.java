@@ -18,25 +18,19 @@ package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.EdgeEffectCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AbsListView;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -47,7 +41,7 @@ import java.lang.reflect.Method;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
-import xyz.klinker.messenger.data.Contact;
+import xyz.klinker.messenger.data.Conversation;
 import xyz.klinker.messenger.data.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
@@ -57,8 +51,8 @@ import xyz.klinker.messenger.util.ColorUtil;
  */
 public class MessageListFragment extends Fragment {
 
-    private static final String ARG_NAME = "name";
-    private static final String ARG_PHONE_NUMBER = "phone_number";
+    private static final String ARG_TITLE = "title";
+    private static final String ARG_PHONE_NUMBERS = "phone_numbers";
     private static final String ARG_COLOR = "color";
     private static final String ARG_COLOR_DARKER = "color_darker";
     private static final String ARG_COLOR_ACCENT = "color_accent";
@@ -72,15 +66,15 @@ public class MessageListFragment extends Fragment {
     private RecyclerView messageList;
     private MessageListAdapter adapter;
 
-    public static MessageListFragment newInstance(Contact contact) {
+    public static MessageListFragment newInstance(Conversation conversation) {
         MessageListFragment fragment = new MessageListFragment();
 
         Bundle args = new Bundle();
-        args.putString(ARG_NAME, contact.name);
-        args.putString(ARG_PHONE_NUMBER, contact.phoneNumber);
-        args.putInt(ARG_COLOR, contact.color);
-        args.putInt(ARG_COLOR_DARKER, contact.colorDarker);
-        args.putInt(ARG_COLOR_ACCENT, contact.colorAccent);
+        args.putString(ARG_TITLE, conversation.title);
+        args.putString(ARG_PHONE_NUMBERS, conversation.phoneNumbers);
+        args.putInt(ARG_COLOR, conversation.colors.color);
+        args.putInt(ARG_COLOR_DARKER, conversation.colors.colorDark);
+        args.putInt(ARG_COLOR_ACCENT, conversation.colors.colorAccent);
         fragment.setArguments(args);
 
         return fragment;
@@ -109,8 +103,8 @@ public class MessageListFragment extends Fragment {
     }
 
     private void initToolbar() {
-        String name = getArguments().getString(ARG_NAME);
-        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
+        String name = getArguments().getString(ARG_TITLE);
+        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBERS);
         int color = getArguments().getInt(ARG_COLOR);
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         int colorAccent = getArguments().getInt(ARG_COLOR_ACCENT);
@@ -135,8 +129,8 @@ public class MessageListFragment extends Fragment {
     }
 
     public void setNameAndDrawerColor(Activity activity) {
-        String name = getArguments().getString(ARG_NAME);
-        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
+        String name = getArguments().getString(ARG_TITLE);
+        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBERS);
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
 
         TextView nameView = (TextView) activity.findViewById(R.id.drawer_header_reveal_name);
@@ -154,7 +148,7 @@ public class MessageListFragment extends Fragment {
     }
 
     private void initSendbar() {
-        String firstName = getArguments().getString(ARG_NAME).split(" ")[0];
+        String firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
         String hint = getResources().getString(R.string.type_message_to, firstName);
         messageEntry.setHint(hint);
 

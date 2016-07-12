@@ -19,13 +19,11 @@ package xyz.klinker.messenger.adapter.view_holder;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.Contact;
+import xyz.klinker.messenger.data.Conversation;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
 
@@ -38,7 +36,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView image;
     public TextView name;
     public TextView summary;
-    public Contact contact;
+    public Conversation conversation;
 
     private boolean expanded = false;
     private ConversationExpandedListener listener;
