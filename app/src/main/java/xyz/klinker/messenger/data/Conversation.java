@@ -29,6 +29,7 @@ import xyz.klinker.messenger.R;
  */
 public class Conversation {
 
+    public long id;
     public ColorSet colors;
     public boolean pinned;
     public boolean read;

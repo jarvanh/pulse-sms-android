@@ -68,7 +68,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         Message message = messages.get(position);
 
-        holder.message.setText(message.text);
+        if (message.mimetype.equals("text/plain")) {
+            holder.message.setText(message.data);
+        } else {
+            // handle other mime types here
+        }
 
         long nextTimestamp;
         if (position != getItemCount() - 1) {
@@ -104,4 +108,5 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         notifyItemInserted(messages.size() - 1);
         manager.scrollToPosition(messages.size() - 1);
     }
+    
 }

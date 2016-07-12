@@ -29,14 +29,21 @@ public class Message {
     public static final int TYPE_SENDING = 2;
     public static final int TYPE_ERROR = 3;
 
+    public long id;
+    public long conversationId;
     public int type;
-    public String text;
+    public String data;
     public long timestamp;
+    public String mimetype;
+    public boolean read;
+    public boolean seen;
+    public String from;
 
     public Message(int type, String text, long timestamp) {
         this.type = type;
-        this.text = text;
+        this.data = text;
         this.timestamp = timestamp;
+        this.mimetype = "text/plain";
     }
 
     public static List<Message> getFakeMessages() {
