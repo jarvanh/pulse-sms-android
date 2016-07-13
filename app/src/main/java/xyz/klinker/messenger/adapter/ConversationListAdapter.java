@@ -18,11 +18,14 @@ package xyz.klinker.messenger.adapter;
 
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +126,15 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         Conversation conversation = conversations.get(absolutePosition);
 
         holder.conversation = conversation;
-        holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+
+        if (conversation.imageUri == null) {
+            holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+        } else {
+            Glide.with(holder.image.getContext())
+                    .load(Uri.parse(conversation.imageUri))
+                    .into(holder.image);
+        }
+
         holder.name.setText(conversation.title);
         holder.summary.setText(conversation.snippet);
 

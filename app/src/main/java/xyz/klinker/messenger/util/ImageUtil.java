@@ -33,19 +33,16 @@ import xyz.klinker.messenger.data.ColorSet;
 public class ImageUtil {
 
     /**
-     * Extracts a color set from a contact photo uri.
+     * Gets a bitmap from a contact URI.
      *
-     * @param context the current application context.
-     * @param uri the image uri.
-     * @return the color set.
+     * @param imageUri the contact uri to get an image for.
+     * @param context the application context.
+     * @return the image bitmap.
      */
-    public static ColorSet extractContactColorSet(Context context, String uri) {
-        return extractColorSet(context, ContactsContract.Contacts.openContactPhotoInputStream(
-                context.getContentResolver(), Uri.parse(uri), true));
-    }
-
-    private static ColorSet extractColorSet(Context context, InputStream inputStream) {
-        return extractColorSet(context, BitmapFactory.decodeStream(inputStream));
+    public static Bitmap getContactImage(String imageUri, Context context) {
+        InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
+                context.getContentResolver(), Uri.parse(imageUri), true);
+        return BitmapFactory.decodeStream(stream);
     }
 
     /**
@@ -70,7 +67,7 @@ public class ImageUtil {
 
             return colors;
         } catch (Exception e) {
-            return defaults;
+            return null;
         }
     }
 

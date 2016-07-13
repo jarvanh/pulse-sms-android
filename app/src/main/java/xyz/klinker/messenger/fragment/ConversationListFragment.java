@@ -80,15 +80,17 @@ public class ConversationListFragment extends Fragment
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
-                DataSource source = DataSource.getInstance(getActivity());
+                final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
                 final Cursor conversations = source.getConversations();
-                Log.v("conversation_load", "load took " + (System.currentTimeMillis() - startTime) + " ms");
+                Log.v("conversation_load", "load took " + (
+                        System.currentTimeMillis() - startTime) + " ms");
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         setConversations(conversations);
+                        source.close();
                     }
                 });
             }
@@ -154,7 +156,14 @@ public class ConversationListFragment extends Fragment
                         super.onDismissed(snackbar, event);
 
                         if (pendingDelete.size() == currentSize) {
-                            // TODO delete pending conversations
+                            DataSource dataSource = DataSource.getInstance(getActivity());
+                            dataSource.open();
+
+                            for (Conversation conversation : pendingDelete) {
+                                dataSource.deleteConversation(conversation);
+                            }
+
+                            dataSource.close();
                             pendingDelete = new ArrayList<>();
                         }
                     }

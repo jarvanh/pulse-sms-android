@@ -18,12 +18,17 @@ package xyz.klinker.messenger.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.model.Conversation;
 
 public class SmsMmsUtil {
@@ -68,8 +73,19 @@ public class SmsMmsUtil {
                 if (conversation.imageUri == null) {
                     conversation.colors = ColorUtil.getRandomMaterialColor(context);
                 } else {
-                    conversation.colors = ImageUtil
-                            .extractContactColorSet(context, conversation.imageUri);
+                    Bitmap bitmap = ImageUtil.getContactImage(conversation.imageUri, context);
+                    ColorSet colors = ImageUtil.extractColorSet(context, bitmap);
+
+                    if (colors != null) {
+                        conversation.colors = colors;
+                        conversation.imageUri = Uri
+                                .withAppendedPath(Uri.parse(conversation.imageUri),
+                                        ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
+                                .toString();
+                    } else {
+                        conversation.colors = ColorUtil.getRandomMaterialColor(context);
+                        conversation.imageUri = null;
+                    }
                 }
 
                 conversations.add(conversation);

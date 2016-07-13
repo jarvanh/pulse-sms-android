@@ -203,4 +203,23 @@ public class DataSource {
         );
     }
 
+    /**
+     * Deletes a conversation from the database.
+     *
+     * @param conversation the conversation to delete.
+     */
+    public void deleteConversation(Conversation conversation) {
+        deleteConversation(conversation.id);
+    }
+
+    /**
+     * Deletes a conversation from the database.
+     *
+     * @param conversationId the conversation id to delete.
+     */
+    public void deleteConversation(long conversationId) {
+        database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
+                new String[] { Long.toString(conversationId) });
+    }
+
 }
