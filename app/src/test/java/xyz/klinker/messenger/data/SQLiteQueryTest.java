@@ -141,6 +141,15 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
                 .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
     }
 
+    @Test
+    public void readConversation() {
+        assertEquals(1, source.getUnseenMessages().getCount());
+        assertEquals(2, source.getUnreadMessages().getCount());
+        source.readConversation(3);
+        assertEquals(1, source.getUnseenMessages().getCount());
+        assertEquals(1, source.getUnreadMessages().getCount());
+    }
+
     private void insertData() throws Exception {
         SQLiteDatabase database = source.getDatabase();
         FixtureLoader loader = new FixtureLoader();

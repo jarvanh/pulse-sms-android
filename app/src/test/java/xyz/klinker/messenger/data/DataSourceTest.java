@@ -150,4 +150,30 @@ public class DataSourceTest extends MessengerRobolectricSuite {
                 any(String[].class));
     }
 
+    @Test
+    public void readConversation() {
+        source.readConversation(3);
+
+        verify(database).update(eq("message"), any(ContentValues.class),
+                eq("conversation_id=? AND (read=? OR seen=?)"), eq(new String[] {"3", "0", "0"}));
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[] {"3"}));
+    }
+
+    @Test
+    public void getUnreadMessages() {
+        when(database.query("message", null, "read=0", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+
+        assertEquals(cursor, source.getUnreadMessages());
+    }
+
+    @Test
+    public void getUnseenMessages() {
+        when(database.query("message", null, "seen=0", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+
+        assertEquals(cursor, source.getUnseenMessages());
+    }
+
 }

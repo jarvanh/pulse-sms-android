@@ -299,4 +299,45 @@ public class DataSource {
                 new String[] { Long.toString(message.conversationId) });
     }
 
+    /**
+     * Marks a conversation and all messages inside of it as read and seen.
+     *
+     * @param conversationId the conversation id to mark.
+     */
+    public void readConversation(long conversationId) {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_READ, 1);
+        values.put(Message.COLUMN_SEEN, 1);
+
+        database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
+                Message.COLUMN_READ + "=? OR " + Message.COLUMN_SEEN + "=?)",
+                new String[] {Long.toString(conversationId), "0", "0"});
+
+        values = new ContentValues(1);
+        values.put(Conversation.COLUMN_READ, 1);
+
+        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[] { Long.toString(conversationId) });
+    }
+
+    /**
+     * Gets all messages in the database not marked as read.
+     *
+     * @return a cursor of all unread messages.
+     */
+    public Cursor getUnreadMessages() {
+        return database.query(Message.TABLE, null, Message.COLUMN_READ + "=0", null, null, null,
+                Message.COLUMN_TIMESTAMP + " desc");
+    }
+
+    /**
+     * Gets all message in the database not marked as seen.
+     *
+     * @return a cursor of all unseen messages.
+     */
+    public Cursor getUnseenMessages() {
+        return database.query(Message.TABLE, null, Message.COLUMN_SEEN + "=0", null, null, null,
+                Message.COLUMN_TIMESTAMP + " desc");
+    }
+
 }
