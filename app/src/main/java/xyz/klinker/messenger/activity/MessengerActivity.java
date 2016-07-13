@@ -35,10 +35,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.OnBackPressedListener;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding

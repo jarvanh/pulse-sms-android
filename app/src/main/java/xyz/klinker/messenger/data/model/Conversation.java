@@ -44,6 +44,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_PHONE_NUMBERS = "phone_numbers";
     public static final String COLUMN_SNIPPET = "snippet";
     public static final String COLUMN_RINGTONE = "ringtone";
+    public static final String COLUMN_IMAGE_URI = "image_uri";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -58,7 +59,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_TITLE + " text not null, " +
             COLUMN_PHONE_NUMBERS + " text not null, " +
             COLUMN_SNIPPET + " text not null, " +
-            COLUMN_RINGTONE + " text" +
+            COLUMN_RINGTONE + " text, " +
+            COLUMN_IMAGE_URI + " text" +
             ");";
 
     public long id;
@@ -70,6 +72,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public String phoneNumbers;
     public String snippet;
     public String ringtoneUri;
+    public String imageUri;
 
     public static Cursor getFakeConversations(Context context) {
         MatrixCursor cursor = new MatrixCursor(new String[] {
@@ -84,7 +87,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 COLUMN_TITLE,
                 COLUMN_PHONE_NUMBERS,
                 COLUMN_SNIPPET,
-                COLUMN_RINGTONE
+                COLUMN_RINGTONE,
+                COLUMN_IMAGE_URI
         });
 
         cursor.addRow(new Object[] {
@@ -99,6 +103,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Luke Klinker",
                 "(515) 991-1493",
                 "So maybe not going to be able to get platinum huh?",
+                null,
                 null
         });
 
@@ -114,6 +119,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Matt Swiontek",
                 "(708) 928-0846",
                 "Whoops ya idk what happened but anysho drive safe",
+                null,
                 null
         });
 
@@ -129,6 +135,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Kris Klinker",
                 "(515) 419-6726",
                 "Will probably be there from 6:30-9, just stop by when you can!",
+                null,
                 null
         });
 
@@ -144,6 +151,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Andrew Klinker",
                 "(515) 991-8235",
                 "Just finished, it was a lot of fun",
+                null,
                 null
         });
 
@@ -159,6 +167,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Aaron Klinker",
                 "(515) 556-7749",
                 "Yeah I'll do it when I get home",
+                null,
                 null
         });
 
@@ -174,6 +183,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Mike Klinker",
                 "(515) 480-8532",
                 "Yeah so hiking around in some place called beaver meadows now.",
+                null,
                 null
         });
 
@@ -189,6 +199,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 "Ben Madden",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
+                null,
                 null
         });
 
@@ -239,6 +250,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                  this.snippet = cursor.getString(i);
              } else if (column.equals(COLUMN_RINGTONE)) {
                  this.ringtoneUri = cursor.getString(i);
+             } else if (column.equals(COLUMN_IMAGE_URI)) {
+                 this.imageUri = cursor.getString(i);
              }
         }
     }
