@@ -107,8 +107,8 @@ public class MessageListFragment extends Fragment {
         send = (FloatingActionButton) view.findViewById(R.id.send);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
 
-        initToolbar();
         initSendbar();
+        initToolbar();
         initRecycler();
 
         AnimationUtil.animateConversationPeripheralIn(appBarLayout);
@@ -163,6 +163,7 @@ public class MessageListFragment extends Fragment {
             if (!name.equals(phoneNumber)) {
                 nameView.setText(name);
             } else {
+                messageEntry.setHint(R.string.type_message);
                 nameView.setText("");
             }
 
@@ -175,8 +176,12 @@ public class MessageListFragment extends Fragment {
 
     private void initSendbar() {
         String firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
-        String hint = getResources().getString(R.string.type_message_to, firstName);
-        messageEntry.setHint(hint);
+        if (!getArguments().getBoolean(ARG_IS_GROUP)) {
+            String hint = getResources().getString(R.string.type_message_to, firstName);
+            messageEntry.setHint(hint);
+        } else {
+            messageEntry.setHint(R.string.type_message);
+        }
 
         messageEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

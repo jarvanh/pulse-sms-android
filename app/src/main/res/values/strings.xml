@@ -53,6 +53,7 @@
     <string name="undo">Undo</string>
 
     <!-- Message List Screen -->
+    <string name="type_message">Type message</string>
     <string name="type_message_to">Type message to %1$s</string>
     <string name="attach">Attach</string>
 
