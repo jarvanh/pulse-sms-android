@@ -47,7 +47,8 @@
             android:textSize="16sp"
             android:textColor="@color/primaryText"
             android:id="@+id/name"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -54,4 +54,8 @@
     <string name="type_message_to">Type message to %1$s</string>
     <string name="attach">Attach</string>
 
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">The app can\'t work without those permissions! You need to
+        accept them before we can continue.</string>
+
 </resources>

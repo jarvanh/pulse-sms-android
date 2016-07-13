@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +37,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.MessageListFragment;
@@ -58,10 +61,20 @@ public class MessengerActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (checkInitialStart()) {
+            startActivity(new Intent(this, InitialLoadActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_messenger);
         initToolbar();
         initDrawer();
         initFab();
+    }
+
+    private boolean checkInitialStart() {
+        return Settings.getPrefs(this).getBoolean(Settings.FIRST_START, true);
     }
 
     private void initToolbar() {

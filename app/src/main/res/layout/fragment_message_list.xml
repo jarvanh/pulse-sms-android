@@ -47,7 +47,8 @@
         android:id="@+id/message_list"
         android:layout_marginStart="@dimen/message_list_padding"
         android:layout_marginEnd="@dimen/message_list_padding"
-        android:alpha="0"/>
+        android:alpha="0"
+        android:scrollbars="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"

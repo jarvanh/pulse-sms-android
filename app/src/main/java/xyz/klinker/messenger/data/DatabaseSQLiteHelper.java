@@ -56,7 +56,6 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (DatabaseTable table : tables) {
-            Log.v(TAG, "creating database table: " + table.getCreateStatement());
             db.execSQL(table.getCreateStatement());
 
             for (String index : table.getIndexStatements()) {

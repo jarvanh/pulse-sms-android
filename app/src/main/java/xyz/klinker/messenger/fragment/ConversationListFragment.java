@@ -19,11 +19,13 @@ package xyz.klinker.messenger.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
@@ -72,7 +75,24 @@ public class ConversationListFragment extends Fragment
     }
 
     private void loadConversations() {
-        setConversations(Conversation.getFakeConversations(getContext()));
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                DataSource source = DataSource.getInstance(getActivity());
+                source.open();
+                final Cursor conversations = source.getConversations();
+                Log.v("conversation_load", "load took " + (System.currentTimeMillis() - startTime) + " ms");
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setConversations(conversations);
+                    }
+                });
+            }
+        }).start();
     }
 
     private void setConversations(Cursor conversations) {

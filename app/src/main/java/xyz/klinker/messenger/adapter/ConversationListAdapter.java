@@ -85,6 +85,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+
         sectionCounts.add(new SectionType(currentSection, currentCount));
     }
 

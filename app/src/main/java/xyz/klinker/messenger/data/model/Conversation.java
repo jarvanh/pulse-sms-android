@@ -58,7 +58,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_TIMESTAMP + " integer not null, " +
             COLUMN_TITLE + " text not null, " +
             COLUMN_PHONE_NUMBERS + " text not null, " +
-            COLUMN_SNIPPET + " text not null, " +
+            COLUMN_SNIPPET + " text, " +
             COLUMN_RINGTONE + " text, " +
             COLUMN_IMAGE_URI + " text" +
             ");";

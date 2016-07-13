@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,6 +64,8 @@ public class ContactUtil {
                     numbers.add("0");
                 }
             }
+
+            Collections.sort(numbers);
 
             StringBuilder number = new StringBuilder();
             for (String n : numbers) {

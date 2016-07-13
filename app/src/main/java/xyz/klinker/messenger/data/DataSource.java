@@ -16,13 +16,17 @@
 
 package xyz.klinker.messenger.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import xyz.klinker.messenger.data.model.Conversation;
 
 /**
  * Handles interactions with database models.
@@ -160,6 +164,43 @@ public class DataSource {
      */
     public void endTransaction() {
         database.endTransaction();
+    }
+
+    /**
+     * Writes the initial list of conversations to the database. These are the conversations that
+     * will come from your phones internal SMS database.
+     *
+     * @param conversations the list of conversations. See SmsMmsUtil.queryConversations().
+     */
+    public void writeConversations(List<Conversation> conversations) {
+        for (Conversation conversation : conversations) {
+            ContentValues values = new ContentValues(12);
+            values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
+            values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
+            values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
+            values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+            values.put(Conversation.COLUMN_PINNED, conversation.pinned);
+            values.put(Conversation.COLUMN_READ, conversation.read);
+            values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp);
+            values.put(Conversation.COLUMN_TITLE, conversation.title);
+            values.put(Conversation.COLUMN_PHONE_NUMBERS, conversation.phoneNumbers);
+            values.put(Conversation.COLUMN_SNIPPET, conversation.snippet);
+            values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
+            values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
+
+            database.insert(Conversation.TABLE, null, values);
+        }
+    }
+
+    /**
+     * Gets all conversations in the database.
+     *
+     * @return a list of conversations.
+     */
+    public Cursor getConversations() {
+        return database.query(Conversation.TABLE, null, null, null, null, null,
+                Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
+        );
     }
 
 }

@@ -43,7 +43,13 @@ public class PhoneNumberUtil {
      * @return the formatted number.
      */
     public static String format(String number) {
-        return PhoneNumberUtils.formatNumber(number, Locale.getDefault().getISO3Country());
+        String formatted = PhoneNumberUtils.formatNumber(number, Locale.getDefault().getISO3Country());
+
+        if (formatted == null) {
+            return number;
+        } else {
+            return formatted;
+        }
     }
 
 }

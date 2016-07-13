@@ -40,6 +40,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.InitialLoadActivity"/>
+
     </application>
 
 </manifest>

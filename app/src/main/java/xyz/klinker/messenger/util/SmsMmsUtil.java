@@ -55,6 +55,7 @@ public class SmsMmsUtil {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Conversation conversation = new Conversation();
+                conversation.id = cursor.getLong(0);
                 conversation.pinned = false;
                 conversation.read = cursor.getInt(5) == 1;
                 conversation.timestamp = cursor.getLong(1);
