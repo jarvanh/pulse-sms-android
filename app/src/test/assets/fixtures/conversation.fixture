@@ -1,1 +1,4 @@
-| _id   | color     | color_dark    | color_light   | color_accent  | pinned    | read  | timestamp | title             | phone_numbers         | snippet                                   | ringtone          |
+| _id   | color     | color_dark    | color_light   | color_accent  | pinned    | read  | timestamp | title             | phone_numbers         | snippet                                   | ringtone          | image_uri |
+| 1     | 0         | 0             | 0             | 0             | 0         | 1     | 1000      | Luke Klinker      | 1                     | Hey, what's up?                           | null              | null      |
+| 2     | 1         | 1             | 1             | 1             | 1         | 1     | 500       | Andrew Klinker    | 2                     | How are you?                              | null              | null      |
+| 3     | 2         | 2             | 2             | 2             | 0         | 0     | 750       | Aaron Klinker     | 3                     | How is the new app coming?                | null              | null      |

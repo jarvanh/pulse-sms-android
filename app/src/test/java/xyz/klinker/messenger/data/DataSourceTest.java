@@ -18,6 +18,7 @@ package xyz.klinker.messenger.data;
 
 import static org.junit.Assert.*;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -28,7 +29,12 @@ import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.activity.InitialLoadActivity;
+import xyz.klinker.messenger.data.model.Conversation;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,45 +63,71 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void test_realConstructor() {
+    public void realConstructor() {
         DataSource dataSource = DataSource.getInstance(RuntimeEnvironment.application);
         dataSource.open();
         dataSource.close();
     }
 
     @Test
-    public void test_getDatabase() {
+    public void getDatabase() {
         assertEquals(database, source.getDatabase());
     }
 
     @Test
-    public void test_beginTransaction() {
+    public void beginTransaction() {
         source.beginTransaction();
         verify(database).beginTransaction();
     }
 
     @Test
-    public void test_setTransactionSuccessful() {
+    public void setTransactionSuccessful() {
         source.setTransactionSuccessful();
         verify(database).setTransactionSuccessful();
     }
 
     @Test
-    public void test_endTransaction() {
+    public void endTransaction() {
         source.endTransaction();
         verify(database).endTransaction();
     }
 
     @Test
-    public void test_execSql() {
+    public void execSql() {
         source.execSql("test sql");
         verify(database).execSQL("test sql");
     }
 
     @Test
-    public void test_rawQuery() {
+    public void rawQuery() {
         source.rawQuery("test sql");
         verify(database).rawQuery("test sql", null);
+    }
+
+    @Test
+    public void insertConversations() {
+        source.insertConversations(InitialLoadActivity
+                .getFakeConversations(RuntimeEnvironment.application.getResources()));
+
+        verify(database, times(7)).insert(eq("conversation"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void getConversations() {
+        when(database.query("conversation", null, null, null, null, null,
+                "pinned desc, timestamp desc")).thenReturn(cursor);
+
+        assertEquals(cursor, source.getConversations());
+    }
+
+    @Test
+    public void deleteConversation() {
+        Conversation conversation = new Conversation();
+        conversation.id = 1;
+        source.deleteConversation(conversation);
+
+        verify(database).delete("conversation", "_id=?", new String[] {"1"});
     }
 
 }

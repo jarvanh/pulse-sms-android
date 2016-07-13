@@ -102,7 +102,7 @@ public class InitialLoadActivity extends AppCompatActivity {
         source.open();
         source.beginTransaction();
 
-        source.writeConversations(conversations);
+        source.insertConversations(conversations);
 
         source.setTransactionSuccessful();
         source.endTransaction();

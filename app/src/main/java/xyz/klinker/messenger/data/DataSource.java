@@ -172,7 +172,7 @@ public class DataSource {
      *
      * @param conversations the list of conversations. See SmsMmsUtil.queryConversations().
      */
-    public void writeConversations(List<Conversation> conversations) {
+    public void insertConversations(List<Conversation> conversations) {
         for (Conversation conversation : conversations) {
             ContentValues values = new ContentValues(12);
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color);

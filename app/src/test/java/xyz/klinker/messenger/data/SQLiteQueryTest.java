@@ -23,9 +23,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.activity.InitialLoadActivity;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.FixtureLoader;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -44,7 +50,7 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void test_databaseCreated() {
+    public void databaseCreated() {
         assertNotNull(source.getDatabase());
 
         int numTables = 0;
@@ -57,6 +63,43 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         }
 
         assertTrue(numTables > 0);
+    }
+
+    @Test
+    public void insertConversations() {
+        int initialSize = source.getConversations().getCount();
+        source.insertConversations(InitialLoadActivity
+                .getFakeConversations(RuntimeEnvironment.application.getResources()));
+        int newSize = source.getConversations().getCount();
+
+        assertEquals(7, newSize - initialSize);
+    }
+
+    @Test
+    public void getConversations() {
+        List<String> titles = new ArrayList<>();
+        Cursor cursor = source.getConversations();
+
+        if (cursor.moveToFirst()) {
+            do {
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        assertEquals("Andrew Klinker", titles.get(0));
+        assertEquals("Luke Klinker", titles.get(1));
+        assertEquals("Aaron Klinker", titles.get(2));
+    }
+
+    @Test
+    public void deleteConversation() {
+        int initialSize = source.getConversations().getCount();
+        source.deleteConversation(1);
+        int newSize = source.getConversations().getCount();
+
+        assertEquals(-1, newSize - initialSize);
     }
 
     private void insertData() throws Exception {
