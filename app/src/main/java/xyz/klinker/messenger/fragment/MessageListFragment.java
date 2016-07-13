@@ -300,6 +300,12 @@ public class MessageListFragment extends Fragment {
             source.insertMessage(m);
             loadMessages();
             messageEntry.setText(null);
+
+            ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                    .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+            if (fragment != null) {
+                fragment.notifyOfSentMessage(m);
+            }
         }
     }
 

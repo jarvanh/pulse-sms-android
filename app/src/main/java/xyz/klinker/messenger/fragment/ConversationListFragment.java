@@ -38,6 +38,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
@@ -218,6 +219,13 @@ public class ConversationListFragment extends Fragment
 
     public boolean isExpanded() {
         return expandedConversation != null;
+    }
+
+    public void notifyOfSentMessage(Message m) {
+        expandedConversation.conversation.snippet = m.data;
+        expandedConversation.conversation.timestamp = m.timestamp;
+        expandedConversation.conversation.read = m.read;
+        expandedConversation.summary.setText(m.data);
     }
 
 }
