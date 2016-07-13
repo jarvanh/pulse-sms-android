@@ -39,6 +39,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_READ = "read";
     public static final String COLUMN_SEEN = "seen";
     public static final String COLUMN_FROM = "from";
+    public static final String COLUMN_COLOR = "color";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -50,7 +51,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_MIME_TYPE + " text not null, " +
             COLUMN_READ + " integer not null, " +
             COLUMN_SEEN + " integer not null, " +
-            COLUMN_FROM + " text" +
+            COLUMN_FROM + " text, " +
+            COLUMN_COLOR + " integer" +
             ");";
 
     private static final String[] INDEXES = {
@@ -72,6 +74,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean read;
     public boolean seen;
     public String from;
+    public Integer color;
 
     public Message() {
 
@@ -87,7 +90,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 COLUMN_MIME_TYPE,
                 COLUMN_READ,
                 COLUMN_SEEN,
-                COLUMN_FROM
+                COLUMN_FROM,
+                COLUMN_COLOR
         });
 
         cursor.addRow(new Object[] {
@@ -99,7 +103,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
-                "(515) 991-1493"
+                "Luke Klinker",
+                null
         });
 
         cursor.addRow(new Object[] {
@@ -111,6 +116,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -128,6 +134,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -140,7 +147,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
-                "(515) 991-1493"
+                "Luke Klinker",
+                null
         });
 
         cursor.addRow(new Object[] {
@@ -152,6 +160,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -165,6 +174,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -177,7 +187,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
-                "(515) 991-1493"
+                "Luke Klinker",
+                null
         });
 
         cursor.addRow(new Object[] {
@@ -189,6 +200,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -201,7 +213,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
-                "(515) 991-1493"
+                "Luke Klinker",
+                null
         });
 
         cursor.addRow(new Object[] {
@@ -214,6 +227,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -226,7 +240,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
-                "(515) 991-1493"
+                "Luke Klinker",
+                null
         });
 
         cursor.addRow(new Object[] {
@@ -240,6 +255,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 "text/plain",
                 1,
                 1,
+                null,
                 null
         });
 
@@ -289,6 +305,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 this.seen = cursor.getInt(i) == 1;
             } else if (column.equals(COLUMN_FROM)) {
                 this.from = cursor.getString(i);
+            } else if (column.equals(COLUMN_COLOR)) {
+                try { this.color = cursor.getInt(i); } catch (NullPointerException e) { }
             }
         }
     }
