@@ -47,6 +47,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         assertEquals("Luke Klinker", conversation.title);
         assertEquals("So maybe not going to be able to get platinum huh?", conversation.snippet);
         assertEquals("uri", conversation.ringtoneUri);
+        assertEquals("image_uri", conversation.imageUri);
     }
 
     private Cursor createCursor() {
@@ -62,7 +63,8 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_TITLE,
                 Conversation.COLUMN_PHONE_NUMBERS,
                 Conversation.COLUMN_SNIPPET,
-                Conversation.COLUMN_RINGTONE
+                Conversation.COLUMN_RINGTONE,
+                Conversation.COLUMN_IMAGE_URI
         });
 
         cursor.addRow(new Object[] {
@@ -77,7 +79,8 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 "Luke Klinker",
                 "(515) 991-1493",
                 "So maybe not going to be able to get platinum huh?",
-                "uri"
+                "uri",
+                "image_uri"
         });
 
         return cursor;

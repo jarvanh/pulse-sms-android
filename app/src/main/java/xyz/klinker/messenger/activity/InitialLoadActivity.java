@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +29,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
@@ -92,6 +94,9 @@ public class InitialLoadActivity extends AppCompatActivity {
         long startTime = System.currentTimeMillis();
 
         List<Conversation> conversations = SmsMmsUtil.queryConversations(this);
+        if (conversations.size() == 0) {
+            conversations = getFakeConversations(getResources());
+        }
 
         DataSource source = DataSource.getInstance(this);
         source.open();
@@ -108,6 +113,96 @@ public class InitialLoadActivity extends AppCompatActivity {
         finish();
 
         Log.v("initial_load", "load took " + (System.currentTimeMillis() - startTime) + " ms");
+    }
+
+    public static List<Conversation> getFakeConversations(Resources resources) {
+        List<Conversation> conversations = new ArrayList<>();
+
+        Conversation conversation = new Conversation();
+        conversation.title = "Luke Klinker";
+        conversation.phoneNumbers = "(515) 991-1493";
+        conversation.colors.color = resources.getColor(R.color.materialIndigo);
+        conversation.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
+        conversation.pinned = true;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60);
+        conversation.snippet = "So maybe not going to be able to get platinum huh?";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Matt Swiontek";
+        conversation.phoneNumbers = "(708) 928-0846";
+        conversation.colors.color = resources.getColor(R.color.materialRed);
+        conversation.colors.colorDark = resources.getColor(R.color.materialRedDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
+        conversation.pinned = true;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 12);
+        conversation.snippet = "Whoops ya idk what happened but anysho drive safe";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Kris Klinker";
+        conversation.phoneNumbers = "(515) 419-6726";
+        conversation.colors.color = resources.getColor(R.color.materialPink);
+        conversation.colors.colorDark = resources.getColor(R.color.materialPinkDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
+        conversation.pinned = false;
+        conversation.read = false;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 20);
+        conversation.snippet = "Will probably be there from 6:30-9, just stop by when you can!";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Andrew Klinker";
+        conversation.phoneNumbers = "(515) 991-8235";
+        conversation.colors.color = resources.getColor(R.color.materialBlue);
+        conversation.colors.colorDark = resources.getColor(R.color.materialBlueDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 26);
+        conversation.snippet = "Just finished, it was a lot of fun";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Aaron Klinker";
+        conversation.phoneNumbers = "(515) 556-7749";
+        conversation.colors.color = resources.getColor(R.color.materialGreen);
+        conversation.colors.colorDark = resources.getColor(R.color.materialGreenDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 32);
+        conversation.snippet = "Yeah I'll do it when I get home";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Mike Klinker";
+        conversation.phoneNumbers = "(515) 480-8532";
+        conversation.colors.color = resources.getColor(R.color.materialBrown);
+        conversation.colors.colorDark = resources.getColor(R.color.materialBrownDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 55);
+        conversation.snippet = "Yeah so hiking around in some place called beaver meadows now.";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Ben Madden";
+        conversation.phoneNumbers = "(847) 609-0939";
+        conversation.colors.color = resources.getColor(R.color.materialPurple);
+        conversation.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 78);
+        conversation.snippet = "Maybe they'll run into each other on the way back... idk";
+        conversations.add(conversation);
+
+        return conversations;
     }
 
 }
