@@ -261,7 +261,8 @@ public class MessageListFragment extends Fragment {
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
-                final Cursor cursor = source.getMessages(getArguments().getLong(ARG_CONVERSATION_ID));
+                long conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
+                final Cursor cursor = source.getMessages(conversationId);
                 Log.v("message_load", "load took " + (
                         System.currentTimeMillis() - startTime) + " ms");
 
@@ -271,6 +272,8 @@ public class MessageListFragment extends Fragment {
                         setMessages(cursor);
                     }
                 });
+
+                source.readConversation(conversationId);
             }
         }).start();
     }
