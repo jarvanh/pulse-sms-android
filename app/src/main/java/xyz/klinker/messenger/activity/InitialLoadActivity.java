@@ -22,8 +22,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -100,12 +103,7 @@ public class InitialLoadActivity extends AppCompatActivity {
 
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.beginTransaction();
-
-        source.insertConversations(conversations);
-
-        source.setTransactionSuccessful();
-        source.endTransaction();
+        source.insertConversations(conversations, this);
         source.close();
 
         Settings.getPrefs(this).edit().putBoolean(Settings.FIRST_START, false).apply();
@@ -203,6 +201,162 @@ public class InitialLoadActivity extends AppCompatActivity {
         conversations.add(conversation);
 
         return conversations;
+    }
+
+    public static Cursor getFakeMessages() {
+        MatrixCursor cursor = new MatrixCursor(new String[] {
+                Telephony.MmsSms._ID,
+                Telephony.Sms.BODY,
+                Telephony.Sms.DATE,
+                Telephony.Sms.READ,
+                Telephony.Sms.TYPE,
+                Telephony.Mms.MESSAGE_BOX,
+                Telephony.Mms.MESSAGE_TYPE,
+                Telephony.Sms.STATUS
+        });
+
+        cursor.addRow(new Object[] {
+                1,
+                "Do you want to go to summerfest this weekend?",
+                System.currentTimeMillis() - (1000 * 60 * 60 * 12) - (1000 * 60 * 30),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                2,
+                "Yeah, I'll probably go on Friday.",
+                System.currentTimeMillis() - (1000 * 60 * 60 * 12),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_INBOX,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                3,
+                "I started working on the designs for a new messaging app today... I'm thinking " +
+                        "that it could be somewhere along the lines of a compliment to Evolve. " +
+                        "The main app will be focused on tablet design and so Evolve could " +
+                        "support hooking up to the same backend and the two could be used " +
+                        "together. Or, users could just use this app on their phone as well... " +
+                        "up to them which they prefer.",
+                System.currentTimeMillis() - (1000 * 60 * 60 * 8) - (1000 * 60 * 6),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                4,
+                "Are you going to make this into an actual app?",
+                System.currentTimeMillis() - (1000 * 60 * 60 * 8),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_INBOX,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                5,
+                "dunno",
+                System.currentTimeMillis() - (1000 * 60 * 60 * 7) - (1000 * 60 * 55),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                6,
+                "I got to build some Legos, plus get 5 extra character packs and 3 level packs " +
+                        "with the deluxe edition lol",
+                System.currentTimeMillis() - (1000 * 60 * 38),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                7,
+                "woah nice one haha",
+                System.currentTimeMillis() - (1000 * 60 * 37),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_INBOX,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                8,
+                "Already shaping up to be a better deal than battlefront!",
+                System.currentTimeMillis() - (1000 * 60 * 23),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                9,
+                "is it fun?",
+                System.currentTimeMillis() - (1000 * 60 * 22),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_INBOX,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                10,
+                "So far! Looks like a lot of content in the game too. Based on the trophies " +
+                        "required at least",
+                System.currentTimeMillis() - (1000 * 60 * 20),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                11,
+                "so maybe not going to be able to get platinum huh? haha",
+                System.currentTimeMillis() - (1000 * 60 * 16),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_INBOX,
+                null,
+                null,
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                12,
+                "Oh, I will definitely get it! Just might take 24+ hours to do it... and when " +
+                        "those 24 hours are in a single week, things get to be a little tedious. " +
+                        "Hopefully I don't absolutely hate the game once I finish!",
+                System.currentTimeMillis() - (1000 * 60),
+                1,
+                Telephony.Sms.MESSAGE_TYPE_SENT,
+                null,
+                null,
+                null
+        });
+
+        return cursor;
     }
 
 }

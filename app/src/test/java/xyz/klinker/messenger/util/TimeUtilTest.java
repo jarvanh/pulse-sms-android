@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import xyz.klinker.messenger.MessengerSuite;
 
@@ -30,10 +31,10 @@ import static org.junit.Assert.*;
 
 public class TimeUtilTest extends MessengerSuite {
 
-    private static final int SECOND = 1000;
-    private static final int MINUTE = SECOND * 60;
-    private static final int HOUR = MINUTE * 60;
-    private static final int DAY = HOUR * 24;
+    private static final long SECOND = 1000;
+    private static final long MINUTE = SECOND * 60;
+    private static final long HOUR = MINUTE * 60;
+    private static final long DAY = HOUR * 24;
 
     private long current = System.currentTimeMillis();
 
@@ -73,8 +74,17 @@ public class TimeUtilTest extends MessengerSuite {
     @Test
     public void displayTimeAsLong() {
         long time = current - (8*DAY);
-        assertEquals(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date(time)),
-                TimeUtil.formatTimestamp(time));
+        String expected = new SimpleDateFormat("MMM d").format(new Date(time)) + ", " +
+                DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
+        assertEquals(expected, TimeUtil.formatTimestamp(time));
+    }
+
+    @Test
+    public void displayTimeAsExtraLong() {
+        long time = current - (400*DAY);
+        String expected = new SimpleDateFormat("MMM d, yyyy").format(new Date(time)) + ", " +
+                DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
+        assertEquals(expected, TimeUtil.formatTimestamp(time));
     }
 
     @Test
@@ -98,7 +108,15 @@ public class TimeUtilTest extends MessengerSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (8*HOUR) - (8*DAY);
 
-        assertEquals("7/5/16 12:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
+        assertEquals("Jul 5, 12:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
+    }
+
+    @Test
+    public void displayTimeAsExtraLongActual() {
+        long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
+        long timestamp = currentTime - (400 * DAY);
+
+        assertEquals("Jun 9, 2015, 8:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
     }
 
     @Test

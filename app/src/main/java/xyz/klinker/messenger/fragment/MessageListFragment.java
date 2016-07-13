@@ -18,8 +18,10 @@ package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +29,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +45,12 @@ import java.lang.reflect.Method;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtil;
 
 /**
  * Fragment for displaying messages for a certain conversation.
@@ -58,6 +63,7 @@ public class MessageListFragment extends Fragment {
     private static final String ARG_COLOR_DARKER = "color_darker";
     private static final String ARG_COLOR_ACCENT = "color_accent";
     private static final String ARG_IS_GROUP = "is_group";
+    private static final String ARG_CONVERSATION_ID = "conversation_id";
 
     private View appBarLayout;
     private Toolbar toolbar;
@@ -66,6 +72,7 @@ public class MessageListFragment extends Fragment {
     private ImageButton attach;
     private FloatingActionButton send;
     private RecyclerView messageList;
+    private LinearLayoutManager manager;
     private MessageListAdapter adapter;
 
     public static MessageListFragment newInstance(Conversation conversation) {
@@ -78,6 +85,7 @@ public class MessageListFragment extends Fragment {
         args.putInt(ARG_COLOR_DARKER, conversation.colors.colorDark);
         args.putInt(ARG_COLOR_ACCENT, conversation.colors.colorAccent);
         args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
+        args.putLong(ARG_CONVERSATION_ID, conversation.id);
         fragment.setArguments(args);
 
         return fragment;
@@ -107,9 +115,7 @@ public class MessageListFragment extends Fragment {
 
     private void initToolbar() {
         String name = getArguments().getString(ARG_TITLE);
-        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBERS);
         int color = getArguments().getInt(ARG_COLOR);
-        int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         int colorAccent = getArguments().getInt(ARG_COLOR_ACCENT);
 
         toolbar.setTitle(name);
@@ -133,7 +139,7 @@ public class MessageListFragment extends Fragment {
 
     public void setNameAndDrawerColor(Activity activity) {
         String name = getArguments().getString(ARG_TITLE);
-        String phoneNumber = getArguments().getString(ARG_PHONE_NUMBERS);
+        String phoneNumber = PhoneNumberUtil.format(getArguments().getString(ARG_PHONE_NUMBERS));
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         boolean isGroup = getArguments().getBoolean(ARG_IS_GROUP);
 
@@ -143,7 +149,12 @@ public class MessageListFragment extends Fragment {
 
         // could be null when rotating the device
         if (nameView != null) {
-            nameView.setText(name);
+            if (!name.equals(phoneNumber)) {
+                nameView.setText(name);
+            } else {
+                nameView.setText("");
+            }
+
             phoneNumberView.setText(phoneNumber);
 
             ColorUtil.adjustStatusBarColor(colorDarker, activity);
@@ -221,15 +232,45 @@ public class MessageListFragment extends Fragment {
         });
 
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager = new LinearLayoutManager(getActivity());
         manager.setStackFromEnd(true);
         messageList.setLayoutManager(manager);
 
-        adapter = new MessageListAdapter(Message.getFakeMessages(),
-                getArguments().getInt(ARG_COLOR), manager);
-        messageList.setAdapter(adapter);
+        loadMessages();
+    }
 
-        messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
+    private void loadMessages() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                DataSource source = DataSource.getInstance(getContext());
+                source.open();
+                final Cursor cursor = source.getMessages(getArguments().getLong(ARG_CONVERSATION_ID));
+                Log.v("message_load", "load took " + (
+                        System.currentTimeMillis() - startTime) + " ms");
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMessages(cursor);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void setMessages(Cursor messages) {
+        if (adapter != null) {
+            adapter.addMessage(messages);
+        } else {
+            adapter = new MessageListAdapter(messages,
+                    getArguments().getInt(ARG_COLOR), manager);
+            messageList.setAdapter(adapter);
+
+            messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
+        }
     }
 
     private void sendMessage() {

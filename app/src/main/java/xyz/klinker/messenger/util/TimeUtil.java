@@ -29,10 +29,11 @@ import java.util.Locale;
  */
 public class TimeUtil {
 
-    private static final int SECOND = 1000;
-    private static final int MINUTE = SECOND * 60;
-    private static final int HOUR = MINUTE * 60;
-    private static final int DAY = HOUR * 24;
+    private static final long SECOND = 1000;
+    private static final long MINUTE = SECOND * 60;
+    private static final long HOUR = MINUTE * 60;
+    private static final long DAY = HOUR * 24;
+    private static final long YEAR = DAY * 365;
 
     /**
      * If the next timestamp is more than 15 minutes away, we will display it on the message.
@@ -126,9 +127,12 @@ public class TimeUtil {
         } else if (timestamp > currentTime - (7*DAY)) {
             formatted = new SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
                     DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+        } else if (timestamp > currentTime - YEAR) {
+            formatted = new SimpleDateFormat("MMM d", Locale.getDefault()).format(date) + ", " +
+                    DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         } else {
-            formatted = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-                    .format(date);
+            formatted = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date) + ", " +
+                    DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         }
 
         return formatted;

@@ -26,7 +26,10 @@ import android.util.Log;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Handles interactions with database models.
@@ -168,11 +171,15 @@ public class DataSource {
 
     /**
      * Writes the initial list of conversations to the database. These are the conversations that
-     * will come from your phones internal SMS database.
+     * will come from your phones internal SMS database. It will then find all messages in each
+     * of these conversations and insert them as well, during the same transaction.
      *
      * @param conversations the list of conversations. See SmsMmsUtil.queryConversations().
+     * @param context the application context.
      */
-    public void insertConversations(List<Conversation> conversations) {
+    public void insertConversations(List<Conversation> conversations, Context context) {
+        beginTransaction();
+
         for (Conversation conversation : conversations) {
             ContentValues values = new ContentValues(12);
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
@@ -188,8 +195,30 @@ public class DataSource {
             values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
             values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
 
-            database.insert(Conversation.TABLE, null, values);
+            long conversationId = database.insert(Conversation.TABLE, null, values);
+
+            if (conversationId != -1) {
+                Cursor messages = SmsMmsUtil.queryConversation(conversation.id, context);
+
+                if (messages.getCount() == 0) {
+                    messages = InitialLoadActivity.getFakeMessages();
+                }
+
+                if (messages.moveToFirst()) {
+                    do {
+                        ContentValues message = SmsMmsUtil.processMessage(messages, conversationId);
+                        if (message != null) {
+                            database.insert(Message.TABLE, null, message);
+                        }
+                    } while (messages.moveToNext());
+
+                    messages.close();
+                }
+            }
         }
+
+        setTransactionSuccessful();
+        endTransaction();
     }
 
     /**
@@ -220,6 +249,12 @@ public class DataSource {
     public void deleteConversation(long conversationId) {
         database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+    }
+
+    public Cursor getMessages(long conversationId) {
+        return database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
+                new String[] { Long.toString(conversationId) }, null, null,
+                Message.COLUMN_TIMESTAMP + " asc");
     }
 
 }
