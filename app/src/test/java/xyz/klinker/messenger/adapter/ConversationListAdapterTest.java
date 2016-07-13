@@ -46,6 +46,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
@@ -68,6 +69,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     public void setUp() {
         adapter = new ConversationListAdapter(getFakeConversations(RuntimeEnvironment.application),
                 swipeToDeleteListener, conversationExpandedListener);
+
+        when(header.getContext()).thenReturn(RuntimeEnvironment.application);
     }
 
     @Test
@@ -112,25 +115,25 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     @Test
     public void bindHeaderPinned() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 0);
-        verify(header).setText(R.string.pinned);
+        verify(header).setText("Pinned");
     }
 
     @Test
     public void bindHeaderToday() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 1);
-        verify(header).setText(R.string.today);
+        verify(header).setText("Today");
     }
 
     @Test
     public void bindHeaderYesterday() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 2);
-        verify(header).setText(R.string.yesterday);
+        verify(header).setText("Yesterday");
     }
 
     @Test
     public void bindHeaderOlder() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 3);
-        verify(header).setText(R.string.older);
+        verify(header).setText("Older");
     }
 
     @Test

@@ -110,13 +110,13 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
         if (sectionCounts.get(section).type == SectionType.PINNED) {
-            holder.header.setText(R.string.pinned);
+            holder.header.setText(holder.header.getContext().getString(R.string.pinned));
         } else if (sectionCounts.get(section).type == SectionType.TODAY) {
-            holder.header.setText(R.string.today);
+            holder.header.setText(holder.header.getContext().getString(R.string.today));
         } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
-            holder.header.setText(R.string.yesterday);
+            holder.header.setText(holder.header.getContext().getString(R.string.yesterday));
         } else {
-            holder.header.setText(R.string.older);
+            holder.header.setText(holder.header.getContext().getString(R.string.older));
         }
     }
 
