@@ -16,7 +16,7 @@
 
 package xyz.klinker.messenger.util.swipe_to_dismiss;
 
-import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.data.model.Conversation;
 
 /**
  * Interface for listening for swipe to delete actions.

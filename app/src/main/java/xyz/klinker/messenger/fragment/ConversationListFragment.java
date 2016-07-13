@@ -16,15 +16,11 @@
 
 package xyz.klinker.messenger.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -38,7 +34,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
@@ -79,7 +75,7 @@ public class ConversationListFragment extends Fragment
         setConversations(Conversation.getFakeConversations(getContext()));
     }
 
-    private void setConversations(List<Conversation> conversations) {
+    private void setConversations(Cursor conversations) {
         this.pendingDelete = new ArrayList<>();
 
         if (recyclerView == null) {

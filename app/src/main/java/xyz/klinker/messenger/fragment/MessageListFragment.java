@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -41,8 +42,8 @@ import java.lang.reflect.Method;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
-import xyz.klinker.messenger.data.Conversation;
-import xyz.klinker.messenger.data.Message;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 
@@ -232,8 +233,20 @@ public class MessageListFragment extends Fragment {
         String message = messageEntry.getText().toString().trim();
 
         if (message.length() > 0) {
-            Message m = new Message(Message.TYPE_SENT, message, System.currentTimeMillis());
-            adapter.addMessage(m);
+            MatrixCursor cursor = (MatrixCursor) adapter.getMessages();
+            cursor.addRow(new Object[] {
+                    1,
+                    1,
+                    Message.TYPE_SENT,
+                    message,
+                    System.currentTimeMillis(),
+                    "text/plain",
+                    1,
+                    1,
+                    null
+            });
+
+            adapter.addMessage(cursor);
             messageEntry.setText(null);
         }
     }

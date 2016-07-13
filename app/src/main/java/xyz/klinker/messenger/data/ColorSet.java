@@ -41,6 +41,10 @@ public class ColorSet {
         this.colorAccent = getColor(context, colorAccent);
     }
 
+    public ColorSet() {
+
+    }
+
     private int getColor(Context context, @ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getColor(color);

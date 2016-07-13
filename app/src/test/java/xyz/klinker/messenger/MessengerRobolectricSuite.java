@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -29,6 +30,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import xyz.klinker.messenger.data.DataSource;
+
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
 public abstract class MessengerRobolectricSuite {
@@ -36,6 +39,11 @@ public abstract class MessengerRobolectricSuite {
     @Before
     public final void setup() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @After
+    public final void teardown() {
+        DataSource.forceCloseImmediate();
     }
 
     /**

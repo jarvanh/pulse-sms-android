@@ -16,7 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
-import android.graphics.Typeface;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.Conversation;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.util.ConversationExpandedListener;
 import xyz.klinker.messenger.util.TimeUtil;
@@ -46,7 +46,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     private ConversationExpandedListener conversationExpandedListener;
     private List<SectionType> sectionCounts;
 
-    public ConversationListAdapter(List<Conversation> conversations,
+    public ConversationListAdapter(Cursor conversations,
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.swipeToDeleteListener = swipeToDeleteListener;
@@ -54,30 +54,35 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         setConversations(conversations);
     }
 
-    public void setConversations(List<Conversation> conversations) {
-        this.conversations = conversations;
+    public void setConversations(Cursor cursor) {
+        this.conversations = new ArrayList<>();
         this.sectionCounts = new ArrayList<>();
 
         int currentSection = 0;
         int currentCount = 0;
 
-        for (int i = 0; i < conversations.size(); i++) {
-            Conversation conversation = conversations.get(i);
+        if (cursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(cursor);
+                conversations.add(conversation);
 
-            if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                    (currentSection == SectionType.TODAY && TimeUtil.isToday(conversation.timestamp)) ||
-                    (currentSection == SectionType.YESTERDAY && TimeUtil.isYesterday(conversation.timestamp)) ||
-                    (currentSection == SectionType.OLDER)) {
-                currentCount++;
-            } else {
-                if (currentCount != 0) {
-                    sectionCounts.add(new SectionType(currentSection, currentCount));
+                if ((currentSection == SectionType.PINNED && conversation.pinned) ||
+                        (currentSection == SectionType.TODAY && TimeUtil.isToday(conversation.timestamp)) ||
+                        (currentSection == SectionType.YESTERDAY && TimeUtil.isYesterday(conversation.timestamp)) ||
+                        (currentSection == SectionType.OLDER)) {
+                    currentCount++;
+                } else {
+                    if (currentCount != 0) {
+                        sectionCounts.add(new SectionType(currentSection, currentCount));
+                    }
+
+                    currentSection++;
+                    currentCount = 0;
+                    cursor.moveToPrevious();
+                    conversations.remove(conversation);
                 }
-
-                currentSection++;
-                currentCount = 0;
-                i--;
-            }
+            } while (cursor.moveToNext());
         }
 
         sectionCounts.add(new SectionType(currentSection, currentCount));
