@@ -26,7 +26,8 @@
         android:id="@+id/empty_view"
         android:orientation="vertical"
         android:background="@color/colorPrimaryLight"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="196dp"
