@@ -200,6 +200,10 @@ public class DataSource {
             if (conversationId != -1) {
                 Cursor messages = SmsMmsUtil.queryConversation(conversation.id, context);
 
+                if (messages == null) {
+                    continue;
+                }
+
                 if (messages.getCount() == 0) {
                     messages = InitialLoadActivity.getFakeMessages();
                 }
@@ -249,12 +253,50 @@ public class DataSource {
     public void deleteConversation(long conversationId) {
         database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+
+        database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
+                new String[] { Long.toString(conversationId) });
     }
 
+    /**
+     * Gets all messages for a given conversation.
+     *
+     * @param conversationId the conversation id to find messages for.
+     * @return a cursor with all messages.
+     */
     public Cursor getMessages(long conversationId) {
         return database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
                 new String[] { Long.toString(conversationId) }, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
+    }
+
+    /**
+     * Inserts a new message into the database. This also updates the conversation with the latest
+     * data.
+     *
+     * @param message the message to insert.
+     */
+    public void insertMessage(Message message) {
+        ContentValues values = new ContentValues(9);
+        values.put(Message.COLUMN_CONVERSATION_ID, message.conversationId);
+        values.put(Message.COLUMN_TYPE, message.type);
+        values.put(Message.COLUMN_DATA, message.data);
+        values.put(Message.COLUMN_TIMESTAMP, message.timestamp);
+        values.put(Message.COLUMN_MIME_TYPE, message.mimeType);
+        values.put(Message.COLUMN_READ, message.read);
+        values.put(Message.COLUMN_SEEN, message.seen);
+        values.put(Message.COLUMN_FROM, message.from);
+        values.put(Message.COLUMN_COLOR, message.color);
+
+        database.insert(Message.TABLE, null, values);
+
+        values = new ContentValues(3);
+        values.put(Conversation.COLUMN_READ, message.read);
+        values.put(Conversation.COLUMN_SNIPPET, message.data);
+        values.put(Conversation.COLUMN_TIMESTAMP, message.timestamp);
+
+        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[] { Long.toString(message.conversationId) });
     }
 
 }

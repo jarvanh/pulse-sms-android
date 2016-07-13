@@ -29,10 +29,12 @@ import java.util.List;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.FixtureLoader;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 
 public class SQLiteQueryTest extends MessengerRobolectricSuite {
@@ -69,7 +71,8 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     public void insertConversations() {
         int initialSize = source.getConversations().getCount();
         source.insertConversations(InitialLoadActivity
-                .getFakeConversations(RuntimeEnvironment.application.getResources()));
+                .getFakeConversations(RuntimeEnvironment.application.getResources()),
+                RuntimeEnvironment.application);
         int newSize = source.getConversations().getCount();
 
         assertEquals(7, newSize - initialSize);
@@ -95,11 +98,47 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
 
     @Test
     public void deleteConversation() {
-        int initialSize = source.getConversations().getCount();
+        assertNotSame(0, source.getMessages(1).getCount());
+        int initialConversationSize = source.getConversations().getCount();
         source.deleteConversation(1);
-        int newSize = source.getConversations().getCount();
+        int newConversationSize = source.getConversations().getCount();
+        int newMessageSize = source.getMessages(1).getCount();
 
-        assertEquals(-1, newSize - initialSize);
+        assertEquals(-1, newConversationSize - initialConversationSize);
+        assertEquals(0, newMessageSize);
+    }
+
+    @Test
+    public void getMessages() {
+        assertNotSame(0, source.getMessages(1).getCount());
+        assertNotSame(0, source.getMessages(2).getCount());
+        assertNotSame(0, source.getMessages(3).getCount());
+    }
+
+    @Test
+    public void insertMessage() {
+        int initialSize = source.getMessages(2).getCount();
+
+        Message m = new Message();
+        m.conversationId = 2;
+        m.type = Message.TYPE_SENT;
+        m.data = "test message";
+        m.timestamp = System.currentTimeMillis();
+        m.mimeType = "text/plain";
+        m.read = true;
+        m.seen = true;
+        m.from = null;
+        m.color = null;
+        source.insertMessage(m);
+
+        int newSize = source.getMessages(2).getCount();
+
+        assertEquals(1, newSize - initialSize);
+
+        Cursor conversation = source.getConversations();
+        conversation.moveToFirst();
+        assertEquals("test message", conversation
+                .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
     }
 
     private void insertData() throws Exception {

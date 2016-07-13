@@ -65,6 +65,7 @@ public class MessageListFragment extends Fragment {
     private static final String ARG_IS_GROUP = "is_group";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
 
+    private DataSource source;
     private View appBarLayout;
     private Toolbar toolbar;
     private View sendBar;
@@ -93,6 +94,9 @@ public class MessageListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
+        source = DataSource.getInstance(getContext());
+        source.open();
+
         View view = inflater.inflate(R.layout.fragment_message_list, parent, false);
 
         appBarLayout = view.findViewById(R.id.app_bar_layout);
@@ -111,6 +115,13 @@ public class MessageListFragment extends Fragment {
         AnimationUtil.animateConversationPeripheralIn(sendBar);
 
         return view;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        adapter.getMessages().close();
+        source.close();
     }
 
     private void initToolbar() {
@@ -245,8 +256,6 @@ public class MessageListFragment extends Fragment {
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
-                DataSource source = DataSource.getInstance(getContext());
-                source.open();
                 final Cursor cursor = source.getMessages(getArguments().getLong(ARG_CONVERSATION_ID));
                 Log.v("message_load", "load took " + (
                         System.currentTimeMillis() - startTime) + " ms");
@@ -277,20 +286,19 @@ public class MessageListFragment extends Fragment {
         String message = messageEntry.getText().toString().trim();
 
         if (message.length() > 0) {
-            MatrixCursor cursor = (MatrixCursor) adapter.getMessages();
-            cursor.addRow(new Object[] {
-                    1,
-                    1,
-                    Message.TYPE_SENT,
-                    message,
-                    System.currentTimeMillis(),
-                    "text/plain",
-                    1,
-                    1,
-                    null
-            });
+            Message m = new Message();
+            m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
+            m.type = Message.TYPE_SENT;
+            m.data = message;
+            m.timestamp = System.currentTimeMillis();
+            m.mimeType = "text/plain";
+            m.read = true;
+            m.seen = true;
+            m.from = null;
+            m.color = null;
 
-            adapter.addMessage(cursor);
+            source.insertMessage(m);
+            loadMessages();
             messageEntry.setText(null);
         }
     }

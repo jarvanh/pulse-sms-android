@@ -31,6 +31,7 @@ import org.robolectric.RuntimeEnvironment;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -107,7 +108,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertConversations() {
         source.insertConversations(InitialLoadActivity
-                .getFakeConversations(RuntimeEnvironment.application.getResources()));
+                .getFakeConversations(RuntimeEnvironment.application.getResources()),
+                RuntimeEnvironment.application);
 
         verify(database, times(7)).insert(eq("conversation"), eq((String) null),
                 any(ContentValues.class));
@@ -128,6 +130,24 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         source.deleteConversation(conversation);
 
         verify(database).delete("conversation", "_id=?", new String[] {"1"});
+        verify(database).delete("message", "conversation_id=?", new String[] {"1"});
+    }
+
+    @Test
+    public void getMessages() {
+        when(database.query("message", null, "conversation_id=?", new String[] {"1"}, null, null,
+                "timestamp asc")).thenReturn(cursor);
+
+        assertEquals(cursor, source.getMessages(1));
+    }
+
+    @Test
+    public void insertMessage() {
+        source.insertMessage(new Message());
+
+        verify(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                any(String[].class));
     }
 
 }
