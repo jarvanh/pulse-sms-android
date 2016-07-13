@@ -25,6 +25,7 @@ import android.util.Log;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 
 /**
  * Handles creating and updating databases.
@@ -39,7 +40,8 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
     private DatabaseTable[] tables = {
             new Conversation(),
             new Message(),
-            new Draft()
+            new Draft(),
+            new ScheduledMessage()
     };
 
     /**
