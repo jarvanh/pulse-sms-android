@@ -22,6 +22,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
+import xyz.klinker.messenger.data.model.Message;
+
 /**
  * Handles creating and updating databases.
  */
@@ -33,7 +37,9 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private DatabaseTable[] tables = {
-
+            new Conversation(),
+            new Message(),
+            new Draft()
     };
 
     /**
@@ -53,10 +59,6 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
             for (String index : table.getIndexStatements()) {
                 db.execSQL(index);
-            }
-
-            for (String defaultData : table.getDefaultDataStatements()) {
-                db.execSQL(defaultData);
             }
         }
     }
@@ -90,7 +92,6 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         String getCreateStatement();
         String getTableName();
         String[] getIndexStatements();
-        String[] getDefaultDataStatements();
         void fillFromCursor(Cursor cursor);
 
     }

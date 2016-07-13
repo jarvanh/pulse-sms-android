@@ -56,7 +56,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
             ");";
 
     private static final String[] INDEXES = {
-            "create index if not exists conversation_id_index on " + TABLE +
+            "create index if not exists conversation_id_message_index on " + TABLE +
                     " (" + COLUMN_CONVERSATION_ID + ");"
     };
 
@@ -75,10 +75,6 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean seen;
     public String from;
     public Integer color;
-
-    public Message() {
-
-    }
 
     public static Cursor getFakeMessages() {
         MatrixCursor cursor = new MatrixCursor(new String[] {
@@ -275,11 +271,6 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     @Override
     public String[] getIndexStatements() {
         return INDEXES;
-    }
-
-    @Override
-    public String[] getDefaultDataStatements() {
-        return new String[0];
     }
 
     @Override

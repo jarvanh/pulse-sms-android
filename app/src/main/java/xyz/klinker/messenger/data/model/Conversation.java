@@ -71,10 +71,6 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public String snippet;
     public String ringtoneUri;
 
-    public Conversation() {
-
-    }
-
     public static Cursor getFakeConversations(Context context) {
         MatrixCursor cursor = new MatrixCursor(new String[] {
                 COLUMN_ID,
@@ -211,11 +207,6 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
 
     @Override
     public String[] getIndexStatements() {
-        return new String[0];
-    }
-
-    @Override
-    public String[] getDefaultDataStatements() {
         return new String[0];
     }
 
