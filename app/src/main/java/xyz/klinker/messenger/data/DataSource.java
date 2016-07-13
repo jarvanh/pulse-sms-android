@@ -298,7 +298,7 @@ public class DataSource {
         } else {
             values.put(Conversation.COLUMN_SNIPPET, "");
         }
-        
+
         values.put(Conversation.COLUMN_TIMESTAMP, message.timestamp);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",

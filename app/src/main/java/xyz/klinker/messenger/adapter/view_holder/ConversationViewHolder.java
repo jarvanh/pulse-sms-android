@@ -54,7 +54,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setBold(false);
+                if (header == null) {
+                    setBold(false);
+                }
+                
                 changeExpandedState();
             }
         });
