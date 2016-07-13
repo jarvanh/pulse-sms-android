@@ -20,6 +20,7 @@ import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -74,6 +75,30 @@ public class TimeUtilTest extends MessengerSuite {
         long time = current - (8*DAY);
         assertEquals(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date(time)),
                 TimeUtil.formatTimestamp(time));
+    }
+
+    @Test
+    public void displayTimeAsShortActual() {
+        long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
+        long timestamp = currentTime - (8*HOUR);
+
+        assertEquals("12:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
+    }
+
+    @Test
+    public void displayTimeAsMediumActual() {
+        long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
+        long timestamp = currentTime - (8*HOUR) - (3*DAY);
+
+        assertEquals("Sun, 12:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
+    }
+
+    @Test
+    public void displayTimeAsLongActual() {
+        long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
+        long timestamp = currentTime - (8*HOUR) - (8*DAY);
+
+        assertEquals("7/5/16 12:23 AM", TimeUtil.formatTimestamp(timestamp, currentTime));
     }
 
     @Test

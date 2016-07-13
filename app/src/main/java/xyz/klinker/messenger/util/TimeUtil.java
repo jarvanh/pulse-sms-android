@@ -113,12 +113,17 @@ public class TimeUtil {
      * @return the formatted string.
      */
     public static String formatTimestamp(long timestamp) {
+        return formatTimestamp(timestamp, System.currentTimeMillis());
+    }
+
+    @VisibleForTesting
+    static String formatTimestamp(long timestamp, long currentTime) {
         Date date = new Date(timestamp);
         String formatted;
 
-        if (timestamp > System.currentTimeMillis() - DAY) {
+        if (timestamp > currentTime - DAY) {
             formatted = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-        } else if (timestamp > System.currentTimeMillis() - (7*DAY)) {
+        } else if (timestamp > currentTime - (7*DAY)) {
             formatted = new SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
                     DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         } else {

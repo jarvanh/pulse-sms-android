@@ -37,7 +37,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);
 
-        if (color != -1) {
+        if (color != -1 && message != null) {
             message.setBackgroundTintList(ColorStateList.valueOf(color));
         }
     }

@@ -88,6 +88,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         sectionCounts.add(new SectionType(currentSection, currentCount));
     }
 
+    public List<SectionType> getSections() {
+        return sectionCounts;
+    }
+
     @Override
     public int getSectionCount() {
         return sectionCounts.size();

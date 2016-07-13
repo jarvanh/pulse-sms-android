@@ -110,8 +110,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     public void addMessage(Cursor newMessages) {
         messages = newMessages;
-        notifyItemInserted(messages.getCount() - 1);
-        manager.scrollToPosition(messages.getCount() - 1);
+
+        if (newMessages != null) {
+            notifyItemInserted(messages.getCount() - 1);
+            manager.scrollToPosition(messages.getCount() - 1);
+        }
     }
 
     public Cursor getMessages() {
