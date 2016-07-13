@@ -50,7 +50,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -59,7 +60,8 @@
                 android:text="@string/my_phone_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:fontFamily="sans-serif-light"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
         </LinearLayout>
 
@@ -90,7 +92,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -98,7 +101,8 @@
             android:id="@+id/drawer_header_reveal_phone_number"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:fontFamily="sans-serif-light"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
     </LinearLayout>
 

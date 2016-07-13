@@ -31,9 +31,11 @@
     <string name="menu_snooze">Snooze Notifications</string>
     <string name="menu_call">Call Contact</string>
     <string name="menu_view_contact">View Contact</string>
+    <string name="menu_view_contacts">View Contacts</string>
     <string name="menu_delete_conversation">Delete Conversation</string>
     <string name="menu_conversation_information">Conversation Information</string>
     <string name="menu_contact_settings">Contact Settings</string>
+    <string name="menu_group_settings">Group Settings</string>
 
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>

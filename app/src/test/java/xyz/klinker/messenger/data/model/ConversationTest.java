@@ -45,4 +45,16 @@ public class ConversationTest {
         assertEquals("conversation", conversation.getTableName());
     }
 
+    @Test
+    public void isGroup() {
+        conversation.phoneNumbers = "1, 2, 3";
+        assertTrue(conversation.isGroup());
+    }
+
+    @Test
+    public void isNotGroup() {
+        conversation.phoneNumbers = "1";
+        assertFalse(conversation.isGroup());
+    }
+
 }

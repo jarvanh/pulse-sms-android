@@ -82,8 +82,6 @@ public class ColorUtil {
             activity.findViewById(R.id.status_bar)
                     .setBackgroundTintList(ColorStateList.valueOf(color));
         }
-
-
     }
 
     /**
@@ -93,6 +91,18 @@ public class ColorUtil {
      * @param activity the activity to find the views in.
      */
     public static void adjustDrawerColor(int color, Activity activity) {
+        adjustDrawerColor(color, false, activity);
+    }
+
+    /**
+     * Adjusts the drawer colors and menu items to be correct depending on current state.
+     *
+     * @param color the color for the header.
+     * @param isGroup whether we are adjusting the drawer for a group conversation or not. If so,
+     *                some of the text will be changed and the call option will be hidden.
+     * @param activity the activity to find the views in.
+     */
+    public static void adjustDrawerColor(int color, boolean isGroup, Activity activity) {
         final View revealView = activity.findViewById(R.id.header_reveal);
         final View headerView = activity.findViewById(R.id.header);
         NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
@@ -136,7 +146,12 @@ public class ColorUtil {
             anim.start();
 
             navView.getMenu().clear();
-            navView.inflateMenu(R.menu.navigation_drawer_messages);
+
+            if (isGroup) {
+                navView.inflateMenu(R.menu.navigation_drawer_messages_group);
+            } else {
+                navView.inflateMenu(R.menu.navigation_drawer_messages);
+            }
         }
     }
 

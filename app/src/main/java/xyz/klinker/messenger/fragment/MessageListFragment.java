@@ -57,6 +57,7 @@ public class MessageListFragment extends Fragment {
     private static final String ARG_COLOR = "color";
     private static final String ARG_COLOR_DARKER = "color_darker";
     private static final String ARG_COLOR_ACCENT = "color_accent";
+    private static final String ARG_IS_GROUP = "is_group";
 
     private View appBarLayout;
     private Toolbar toolbar;
@@ -76,6 +77,7 @@ public class MessageListFragment extends Fragment {
         args.putInt(ARG_COLOR, conversation.colors.color);
         args.putInt(ARG_COLOR_DARKER, conversation.colors.colorDark);
         args.putInt(ARG_COLOR_ACCENT, conversation.colors.colorAccent);
+        args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
         fragment.setArguments(args);
 
         return fragment;
@@ -133,6 +135,7 @@ public class MessageListFragment extends Fragment {
         String name = getArguments().getString(ARG_TITLE);
         String phoneNumber = getArguments().getString(ARG_PHONE_NUMBERS);
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
+        boolean isGroup = getArguments().getBoolean(ARG_IS_GROUP);
 
         TextView nameView = (TextView) activity.findViewById(R.id.drawer_header_reveal_name);
         TextView phoneNumberView = (TextView) activity
@@ -144,7 +147,7 @@ public class MessageListFragment extends Fragment {
             phoneNumberView.setText(phoneNumber);
 
             ColorUtil.adjustStatusBarColor(colorDarker, activity);
-            ColorUtil.adjustDrawerColor(colorDarker, activity);
+            ColorUtil.adjustDrawerColor(colorDarker, isGroup, activity);
         }
     }
 

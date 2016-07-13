@@ -124,4 +124,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
         }
     }
 
+    public boolean isGroup() {
+        return phoneNumbers.split(", ").length > 1;
+    }
+
 }
