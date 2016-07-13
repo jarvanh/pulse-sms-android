@@ -16,44 +16,26 @@
 
 package xyz.klinker.messenger.activity;
 
-import android.content.Intent;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
-import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.data.Settings;
 
 import static org.junit.Assert.*;
-import static org.robolectric.Shadows.shadowOf;
 
-public class MessengerActivityTest extends MessengerRobolectricSuite {
+public class InitialLoadActivityTest extends MessengerRobolectricSuite {
 
-    private MessengerActivity activity;
+    private InitialLoadActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.setupActivity(MessengerActivity.class);
+        activity = Robolectric.setupActivity(InitialLoadActivity.class);
     }
 
     @Test
-    public void startedCorrectly() {
+    public void notNull() {
         assertNotNull(activity);
     }
-
-    @Test
-    public void nextStartedActivity() {
-        Intent intent = new Intent(activity, InitialLoadActivity.class);
-        assertEquals(intent, shadowOf(activity).getNextStartedActivity());
-    }
-
-//    @Test
-//    public void dontStartInitialLoad() {
-//        Settings.getPrefs(RuntimeEnvironment.application).edit().putBoolean(Settings.FIRST_START, false).commit();
-//        activity = Robolectric.setupActivity(MessengerActivity.class);
-//        assertNull(shadowOf(activity).getNextStartedActivity());
-//    }
 
 }

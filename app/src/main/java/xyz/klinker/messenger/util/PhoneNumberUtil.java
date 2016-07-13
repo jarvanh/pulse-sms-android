@@ -33,7 +33,7 @@ public class PhoneNumberUtil {
      * @return the plain phone number.
      */
     public static String clearFormatting(String number) {
-        return number.replace("-", "").replace(")", "").replace("(", "").replace(" ", "");
+        return PhoneNumberUtils.stripSeparators(number);
     }
 
     /**
@@ -43,7 +43,7 @@ public class PhoneNumberUtil {
      * @return the formatted number.
      */
     public static String format(String number) {
-        String formatted = PhoneNumberUtils.formatNumber(number, Locale.getDefault().getISO3Country());
+        String formatted = PhoneNumberUtils.formatNumber(number, Locale.getDefault().getCountry());
 
         if (formatted == null) {
             return number;
