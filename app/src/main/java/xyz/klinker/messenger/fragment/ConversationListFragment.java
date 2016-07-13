@@ -222,10 +222,13 @@ public class ConversationListFragment extends Fragment
     }
 
     public void notifyOfSentMessage(Message m) {
-        expandedConversation.conversation.snippet = m.data;
         expandedConversation.conversation.timestamp = m.timestamp;
         expandedConversation.conversation.read = m.read;
-        expandedConversation.summary.setText(m.data);
+
+        if (m.mimeType.equals("text/plain")) {
+            expandedConversation.conversation.snippet = m.data;
+            expandedConversation.summary.setText(m.data);
+        }
     }
 
 }

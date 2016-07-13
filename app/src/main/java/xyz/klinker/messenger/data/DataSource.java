@@ -292,7 +292,13 @@ public class DataSource {
 
         values = new ContentValues(3);
         values.put(Conversation.COLUMN_READ, message.read);
-        values.put(Conversation.COLUMN_SNIPPET, message.data);
+
+        if (message.mimeType.equals("text/plain")) {
+            values.put(Conversation.COLUMN_SNIPPET, message.data);
+        } else {
+            values.put(Conversation.COLUMN_SNIPPET, "");
+        }
+        
         values.put(Conversation.COLUMN_TIMESTAMP, message.timestamp);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
