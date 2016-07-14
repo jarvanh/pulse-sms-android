@@ -37,12 +37,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     private Cursor messages;
     private int receivedColor;
+    private boolean isGroup;
     private LinearLayoutManager manager;
 
-    public MessageListAdapter(Cursor messages, int receivedColor,
+    public MessageListAdapter(Cursor messages, int receivedColor, boolean isGroup,
                               LinearLayoutManager manager) {
         this.messages = messages;
         this.receivedColor = receivedColor;
+        this.isGroup = isGroup;
         this.manager = manager;
     }
 
@@ -90,6 +92,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             holder.timestamp.setText(TimeUtil.formatTimestamp(message.timestamp));
         } else {
             holder.timestamp.setVisibility(View.GONE);
+        }
+
+        if (isGroup && holder.contact != null && message.from != null) {
+            if (holder.contact.getVisibility() == View.GONE) {
+                holder.contact.setVisibility(View.VISIBLE);
+            }
+
+            int label = holder.timestamp.getVisibility() == View.VISIBLE ?
+                    R.string.message_from_bullet : R.string.message_from;
+            holder.contact.setText(holder.contact.getResources().getString(label, message.from));
         }
     }
 

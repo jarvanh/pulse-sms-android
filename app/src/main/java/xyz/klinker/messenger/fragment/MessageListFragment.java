@@ -282,8 +282,8 @@ public class MessageListFragment extends Fragment {
         if (adapter != null) {
             adapter.addMessage(messages);
         } else {
-            adapter = new MessageListAdapter(messages,
-                    getArguments().getInt(ARG_COLOR), manager);
+            adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
+                    getArguments().getBoolean(ARG_IS_GROUP), manager);
             messageList.setAdapter(adapter);
 
             messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);

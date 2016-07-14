@@ -52,7 +52,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, manager);
+        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, false, manager);
     }
 
     @Test

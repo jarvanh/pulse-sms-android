@@ -210,9 +210,12 @@ public class DataSource {
 
                 if (messages.moveToFirst()) {
                     do {
-                        ContentValues message = SmsMmsUtil.processMessage(messages, conversationId);
-                        if (message != null) {
-                            database.insert(Message.TABLE, null, message);
+                        List<ContentValues> valuesList =
+                                SmsMmsUtil.processMessage(messages, conversationId, context);
+                        if (valuesList != null) {
+                            for (ContentValues value : valuesList) {
+                                database.insert(Message.TABLE, null, value);
+                            }
                         }
                     } while (messages.moveToNext());
 
