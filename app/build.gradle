@@ -102,7 +102,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.klinkerapps:android-smsmms:3.0.0'
+    compile 'com.klinkerapps:android-smsmms:3.1.0'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.0"
