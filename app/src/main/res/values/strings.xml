@@ -63,5 +63,8 @@
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to
         accept them before we can continue.</string>
+    <string name="loading_messages">Optimizing…</string>
+    <string name="loading_messages_summary">Just working on getting your messages into the app, it
+        won\'t take long!</string>
 
 </resources>

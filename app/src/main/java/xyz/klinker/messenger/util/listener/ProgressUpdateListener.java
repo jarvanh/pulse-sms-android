@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
+package xyz.klinker.messenger.util.listener;
 
 /**
- * Listener for getting notifications when the back button is pressed.
+ * Listener for progress updates.
  */
-public interface OnBackPressedListener {
+public interface ProgressUpdateListener {
 
-    boolean onBackPressed();
+    void onProgressUpdate(int current, int max);
 
 }

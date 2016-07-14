@@ -26,24 +26,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
-import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.util.AnimationUtil;
-import xyz.klinker.messenger.util.OnBackPressedListener;
-import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.listener.BackPressedListener;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -116,8 +110,8 @@ public class MessengerActivity extends AppCompatActivity
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
         for (Fragment fragment : fragments) {
-            if (fragment instanceof OnBackPressedListener) {
-                if (((OnBackPressedListener) fragment).onBackPressed()) {
+            if (fragment instanceof BackPressedListener) {
+                if (((BackPressedListener) fragment).onBackPressed()) {
                     return;
                 }
             }

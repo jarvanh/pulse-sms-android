@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
-
-import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+package xyz.klinker.messenger.util.listener;
 
 /**
- * Listener for notifying an object when a conversation has been expanded or contracted.
+ * Listener for getting notifications when the back button is pressed.
  */
-public interface ConversationExpandedListener {
+public interface BackPressedListener {
 
-    void onConversationExpanded(ConversationViewHolder viewHolder);
-    void onConversationContracted(ConversationViewHolder viewHolder);
+    boolean onBackPressed();
 
 }

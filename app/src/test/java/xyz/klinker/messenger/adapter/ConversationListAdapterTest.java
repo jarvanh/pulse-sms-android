@@ -20,7 +20,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
@@ -34,12 +33,11 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.ConversationExpandedListener;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 import static org.junit.Assert.*;

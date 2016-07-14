@@ -18,12 +18,14 @@ package xyz.klinker.messenger.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Telephony;
@@ -31,6 +33,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,21 +43,27 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
  * Activity for onboarding and initial database load.
  */
-public class InitialLoadActivity extends AppCompatActivity {
+public class InitialLoadActivity extends AppCompatActivity implements ProgressUpdateListener {
 
     private static final int REQUEST_PERMISSIONS = 1;
 
     private Handler handler;
+    private ProgressBar progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_initial_load);
+
         handler = new Handler();
         requestPermissions();
+
+        progress = (ProgressBar) findViewById(R.id.loading_progress);
     }
 
     private void requestPermissions() {
@@ -94,23 +103,36 @@ public class InitialLoadActivity extends AppCompatActivity {
     }
 
     private void startDatabaseSync() {
-        long startTime = System.currentTimeMillis();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Context context = getApplicationContext();
+                long startTime = System.currentTimeMillis();
 
-        List<Conversation> conversations = SmsMmsUtil.queryConversations(this);
-        if (conversations.size() == 0) {
-            conversations = getFakeConversations(getResources());
-        }
+                List<Conversation> conversations = SmsMmsUtil.queryConversations(context);
+                if (conversations.size() == 0) {
+                    conversations = getFakeConversations(getResources());
+                }
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        source.insertConversations(conversations, this);
-        source.close();
+                DataSource source = DataSource.getInstance(context);
+                source.open();
+                source.insertConversations(conversations, context, InitialLoadActivity.this);
+                source.close();
 
-        Settings.getPrefs(this).edit().putBoolean(Settings.FIRST_START, false).apply();
-        startActivity(new Intent(this, MessengerActivity.class));
-        finish();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Settings.getPrefs(context)
+                                .edit().putBoolean(Settings.FIRST_START, false).apply();
+                        startActivity(new Intent(context, MessengerActivity.class));
+                        finish();
+                    }
+                });
 
-        Log.v("initial_load", "load took " + (System.currentTimeMillis() - startTime) + " ms");
+                Log.v("initial_load", "load took " +
+                        (System.currentTimeMillis() - startTime) + " ms");
+            }
+        }).start();
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {
@@ -357,6 +379,23 @@ public class InitialLoadActivity extends AppCompatActivity {
         });
 
         return cursor;
+    }
+
+    @Override
+    public void onProgressUpdate(final int current, final int max) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                progress.setIndeterminate(false);
+                progress.setMax(max);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    progress.setProgress(current, true);
+                } else {
+                    progress.setProgress(current);
+                }
+            }
+        });
     }
 
 }

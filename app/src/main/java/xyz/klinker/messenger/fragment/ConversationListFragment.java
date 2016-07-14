@@ -19,7 +19,6 @@ package xyz.klinker.messenger.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,8 +40,8 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
-import xyz.klinker.messenger.util.ConversationExpandedListener;
-import xyz.klinker.messenger.util.OnBackPressedListener;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
@@ -52,7 +51,7 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
  * open conversations.
  */
 public class ConversationListFragment extends Fragment
-        implements SwipeToDeleteListener, ConversationExpandedListener, OnBackPressedListener {
+        implements SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener {
 
     private View empty;
     private RecyclerView recyclerView;

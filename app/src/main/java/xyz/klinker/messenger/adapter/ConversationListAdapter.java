@@ -19,7 +19,6 @@ package xyz.klinker.messenger.adapter;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.util.ConversationExpandedListener;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.TimeUtil;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 

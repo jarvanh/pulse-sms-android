@@ -30,6 +30,7 @@ import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
  * Handles interactions with database models.
@@ -177,10 +178,13 @@ public class DataSource {
      * @param conversations the list of conversations. See SmsMmsUtil.queryConversations().
      * @param context the application context.
      */
-    public void insertConversations(List<Conversation> conversations, Context context) {
+    public void insertConversations(List<Conversation> conversations, Context context,
+                                    ProgressUpdateListener listener) {
         beginTransaction();
 
-        for (Conversation conversation : conversations) {
+        for (int i = 0; i < conversations.size(); i++) {
+            Conversation conversation = conversations.get(i);
+
             ContentValues values = new ContentValues(12);
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
             values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
@@ -222,6 +226,8 @@ public class DataSource {
                     messages.close();
                 }
             }
+
+            listener.onProgressUpdate(i + 1, conversations.size());
         }
 
         setTransactionSuccessful();

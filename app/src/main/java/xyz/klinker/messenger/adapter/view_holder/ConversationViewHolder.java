@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtil;
-import xyz.klinker.messenger.util.ConversationExpandedListener;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 
 /**
  * View holder for recycling inflated conversations.
