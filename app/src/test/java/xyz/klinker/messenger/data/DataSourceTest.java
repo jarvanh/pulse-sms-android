@@ -109,10 +109,16 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void insertConversations() {
         source.insertConversations(InitialLoadActivity
                 .getFakeConversations(RuntimeEnvironment.application.getResources()),
-                RuntimeEnvironment.application);
+                RuntimeEnvironment.application, null);
 
         verify(database, times(7)).insert(eq("conversation"), eq((String) null),
                 any(ContentValues.class));
+    }
+
+    @Test
+    public void insertConversation() {
+        source.insertConversation(new Conversation());
+        verify(database).insert(eq("conversation"), eq((String) null), any(ContentValues.class));
     }
 
     @Test
@@ -143,7 +149,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertMessage() {
-        source.insertMessage(new Message());
+        source.insertMessage(new Message(), 1);
 
         verify(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),

@@ -31,6 +31,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.TimeUtil;
 
@@ -77,7 +78,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         Message message = new Message();
         message.fillFromCursor(messages);
 
-        if (message.mimeType.equals("text/plain")) {
+        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
 
             if (holder.image.getVisibility() == View.VISIBLE) {

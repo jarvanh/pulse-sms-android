@@ -32,9 +32,7 @@ import xyz.klinker.messenger.data.model.ScheduledMessage;
  */
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "DatabaseSQLiteHelper";
-
-    private static final String DATABASE_NAME = "zonebeacon.db";
+    private static final String DATABASE_NAME = "messenger.db";
     private static final int DATABASE_VERSION = 1;
 
     private DatabaseTable[] tables = {

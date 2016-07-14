@@ -26,6 +26,7 @@ import android.support.v7.graphics.Palette;
 import java.io.InputStream;
 
 import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.data.model.Conversation;
 
 /**
  * Helper for working with images.
@@ -43,6 +44,32 @@ public class ImageUtil {
         InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
                 context.getContentResolver(), Uri.parse(imageUri), true);
         return BitmapFactory.decodeStream(stream);
+    }
+
+    /**
+     * Gets the correct colors for a conversation based on its image.
+     *
+     * @param conversation the conversation to fill colors for.
+     * @param context the current context.
+     */
+    public static void fillConversationColors(Conversation conversation, Context context) {
+        if (conversation.imageUri == null) {
+            conversation.colors = ColorUtil.getRandomMaterialColor(context);
+        } else {
+            Bitmap bitmap = ImageUtil.getContactImage(conversation.imageUri, context);
+            ColorSet colors = ImageUtil.extractColorSet(context, bitmap);
+
+            if (colors != null) {
+                conversation.colors = colors;
+                conversation.imageUri = Uri
+                        .withAppendedPath(Uri.parse(conversation.imageUri),
+                                ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
+                        .toString();
+            } else {
+                conversation.colors = ColorUtil.getRandomMaterialColor(context);
+                conversation.imageUri = null;
+            }
+        }
     }
 
     /**

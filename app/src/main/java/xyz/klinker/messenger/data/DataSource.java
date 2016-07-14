@@ -20,6 +20,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
@@ -29,6 +32,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ColorUtil;
+import xyz.klinker.messenger.util.ContactUtil;
+import xyz.klinker.messenger.util.ImageUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -198,6 +204,7 @@ public class DataSource {
             values.put(Conversation.COLUMN_SNIPPET, conversation.snippet);
             values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
             values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
+            values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
 
             long conversationId = database.insert(Conversation.TABLE, null, values);
 
@@ -227,11 +234,38 @@ public class DataSource {
                 }
             }
 
-            listener.onProgressUpdate(i + 1, conversations.size());
+            if (listener != null) {
+                listener.onProgressUpdate(i + 1, conversations.size());
+            }
         }
 
         setTransactionSuccessful();
         endTransaction();
+    }
+
+    /**
+     * Inserts a conversation into the database.
+     *
+     * @param conversation the conversation to insert.
+     * @return the conversation id after insertion.
+     */
+    public long insertConversation(Conversation conversation) {
+        ContentValues values = new ContentValues(12);
+        values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
+        values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
+        values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
+        values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+        values.put(Conversation.COLUMN_PINNED, conversation.pinned);
+        values.put(Conversation.COLUMN_READ, conversation.read);
+        values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp);
+        values.put(Conversation.COLUMN_TITLE, conversation.title);
+        values.put(Conversation.COLUMN_PHONE_NUMBERS, conversation.phoneNumbers);
+        values.put(Conversation.COLUMN_SNIPPET, conversation.snippet);
+        values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
+        values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
+        values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
+
+        return database.insert(Conversation.TABLE, null, values);
     }
 
     /**
@@ -280,14 +314,71 @@ public class DataSource {
     }
 
     /**
+     * Inserts a new message into the database without previously having a conversation id. This
+     * will be slightly slower than if you were to have an id since we will need to find the
+     * appropriate one in the database or create a new conversation entry.
+     *
+     * @param message the message to insert.
+     * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
+     */
+    public void insertMessage(Message message, String phoneNumbers, Context context) {
+        insertMessage(message, findOrCreateConversationId(phoneNumbers, message, context));
+    }
+
+    /**
+     * Gets a current conversation id if one exists for the phone number, or inserts a new
+     * conversation and returns that id if one does not exist.
+     *
+     * @param phoneNumbers the phone number to match the conversation with.
+     * @param message the message to use to initialize a conversation if needed.
+     * @return the conversation id to use.
+     */
+    private long findOrCreateConversationId(String phoneNumbers, Message message, Context context) {
+        String matcher = SmsMmsUtil.createIdMatcher(phoneNumbers);
+        Cursor cursor = database.query(Conversation.TABLE,
+                new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
+                Conversation.COLUMN_ID_MATCHER + "=?", new String[] {matcher}, null, null, null);
+
+        long conversationId;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            conversationId = cursor.getLong(0);
+            cursor.close();
+        } else {
+            Conversation conversation = new Conversation();
+            conversation.pinned = false;
+            conversation.read = message.read;
+            conversation.timestamp = message.timestamp;
+
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                conversation.snippet = message.data;
+            } else {
+                conversation.snippet = "";
+            }
+
+            conversation.ringtoneUri = null;
+            conversation.phoneNumbers = phoneNumbers;
+            conversation.title = ContactUtil.findContactNames(phoneNumbers, context);
+            conversation.imageUri = ContactUtil.findImageUri(phoneNumbers, context);
+            conversation.idMatcher = matcher;
+            ImageUtil.fillConversationColors(conversation, context);
+
+            conversationId = insertConversation(conversation);
+        }
+
+        return conversationId;
+    }
+
+    /**
      * Inserts a new message into the database. This also updates the conversation with the latest
      * data.
      *
      * @param message the message to insert.
+     * @param conversationId the conversation to insert the message into.
      */
-    public void insertMessage(Message message) {
+    public void insertMessage(Message message, long conversationId) {
         ContentValues values = new ContentValues(9);
-        values.put(Message.COLUMN_CONVERSATION_ID, message.conversationId);
+        values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
         values.put(Message.COLUMN_DATA, message.data);
         values.put(Message.COLUMN_TIMESTAMP, message.timestamp);

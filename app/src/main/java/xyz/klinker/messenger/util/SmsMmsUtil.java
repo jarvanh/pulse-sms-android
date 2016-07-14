@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import xyz.klinker.messenger.data.ColorSet;
@@ -80,24 +81,8 @@ public class SmsMmsUtil {
                 conversation.phoneNumbers = ContactUtil.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtil.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtil.findImageUri(conversation.phoneNumbers, context);
-
-                if (conversation.imageUri == null) {
-                    conversation.colors = ColorUtil.getRandomMaterialColor(context);
-                } else {
-                    Bitmap bitmap = ImageUtil.getContactImage(conversation.imageUri, context);
-                    ColorSet colors = ImageUtil.extractColorSet(context, bitmap);
-
-                    if (colors != null) {
-                        conversation.colors = colors;
-                        conversation.imageUri = Uri
-                                .withAppendedPath(Uri.parse(conversation.imageUri),
-                                        ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
-                                .toString();
-                    } else {
-                        conversation.colors = ColorUtil.getRandomMaterialColor(context);
-                        conversation.imageUri = null;
-                    }
-                }
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
+                ImageUtil.fillConversationColors(conversation, context);
 
                 conversations.add(conversation);
             } while (cursor.moveToNext());
@@ -106,6 +91,34 @@ public class SmsMmsUtil {
         }
 
         return conversations;
+    }
+
+    /**
+     * Creates a column that we can use later on for a findOrCreateConversationId method on my
+     * database. It will take all of the comma, space separated numbers and combine them together
+     * by taking the last 5 digits of each number, sorting them and then recombining them into a
+     * single string. We can then do the same process for any string of phone numbers later on
+     * and search for that string in the data source to see if it exists yet.
+     *
+     * @param phoneNumbers the phone numbers to look for.
+     * @return the combined string.
+     */
+    public static String createIdMatcher(String phoneNumbers) {
+        String[] numbers = phoneNumbers.split(", ");
+
+        List<String> matchers = new ArrayList<>();
+        for (String n : numbers) {
+            matchers.add(n.substring(n.length() - 5));
+        }
+
+        Collections.sort(matchers);
+
+        StringBuilder builder = new StringBuilder();
+        for (String m : matchers) {
+            builder.append(m);
+        }
+
+        return builder.toString();
     }
 
     /**

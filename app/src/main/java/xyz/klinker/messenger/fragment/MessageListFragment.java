@@ -305,7 +305,7 @@ public class MessageListFragment extends Fragment {
             m.from = null;
             m.color = null;
 
-            source.insertMessage(m);
+            source.insertMessage(m, m.conversationId);
             loadMessages();
             messageEntry.setText(null);
 

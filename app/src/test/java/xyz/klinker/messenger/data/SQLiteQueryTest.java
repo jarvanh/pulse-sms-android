@@ -19,6 +19,7 @@ package xyz.klinker.messenger.data;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
@@ -30,7 +31,9 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ContactUtil;
 import xyz.klinker.messenger.util.FixtureLoader;
+import xyz.klinker.messenger.util.ImageUtil;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -72,10 +75,30 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         int initialSize = source.getConversations().getCount();
         source.insertConversations(InitialLoadActivity
                 .getFakeConversations(RuntimeEnvironment.application.getResources()),
-                RuntimeEnvironment.application);
+                RuntimeEnvironment.application, null);
         int newSize = source.getConversations().getCount();
 
         assertEquals(7, newSize - initialSize);
+    }
+
+    @Test
+    public void insertConversation() {
+        Conversation conversation = new Conversation();
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis();
+        conversation.snippet = "test conversation";
+        conversation.ringtoneUri = null;
+        conversation.phoneNumbers = "5154224558";
+        conversation.title = "test";
+        conversation.imageUri = null;
+        conversation.idMatcher = "24558";
+
+        int initialSize = source.getConversations().getCount();
+        source.insertConversation(conversation);
+        int newSize = source.getConversations().getCount();
+
+        Assert.assertEquals(1, newSize - initialSize);
     }
 
     @Test
@@ -116,9 +139,68 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void insertMessageExistingConversation() {
+        int initialMessageSize = source.getMessages(1).getCount();
+        int initialConversationSize = source.getConversations().getCount();
+        source.insertMessage(getFakeMessage(), "1111111", RuntimeEnvironment.application);
+        int newMessageSize = source.getMessages(1).getCount();
+        int newConversationSize = source.getConversations().getCount();
+
+        assertEquals(initialConversationSize, newConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
+    public void insertMessageExistingGroupConversation() {
+        int initialMessageSize = source.getMessages(4).getCount();
+        int initialConversationSize = source.getConversations().getCount();
+        source.insertMessage(getFakeMessage(), "1111111, 3333333", RuntimeEnvironment.application);
+        int newMessageSize = source.getMessages(4).getCount();
+        int newConversationSize = source.getConversations().getCount();
+
+        assertEquals(initialConversationSize, newConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
+    public void insertMessageNewConversation() {
+        int initialMessageSize = source.getMessages(5).getCount();
+        int initialConversationSize = source.getConversations().getCount();
+        source.insertMessage(getFakeMessage(), "4444444", RuntimeEnvironment.application);
+        int newMessageSize = source.getMessages(5).getCount();
+        int newConversationSize = source.getConversations().getCount();
+
+        assertEquals(1, newConversationSize - initialConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
+    public void insertMessageNewGroupConversation() {
+        int initialMessageSize = source.getMessages(5).getCount();
+        int initialConversationSize = source.getConversations().getCount();
+        source.insertMessage(getFakeMessage(), "1111111, 2222222", RuntimeEnvironment.application);
+        int newMessageSize = source.getMessages(5).getCount();
+        int newConversationSize = source.getConversations().getCount();
+
+        assertEquals(1, newConversationSize - initialConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
     public void insertMessage() {
         int initialSize = source.getMessages(2).getCount();
+        source.insertMessage(getFakeMessage(), 2);
+        int newSize = source.getMessages(2).getCount();
 
+        assertEquals(1, newSize - initialSize);
+
+        Cursor conversation = source.getConversations();
+        conversation.moveToFirst();
+        assertEquals("test message", conversation
+                .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
+    }
+
+    private Message getFakeMessage() {
         Message m = new Message();
         m.conversationId = 2;
         m.type = Message.TYPE_SENT;
@@ -129,16 +211,7 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         m.seen = true;
         m.from = null;
         m.color = null;
-        source.insertMessage(m);
-
-        int newSize = source.getMessages(2).getCount();
-
-        assertEquals(1, newSize - initialSize);
-
-        Cursor conversation = source.getConversations();
-        conversation.moveToFirst();
-        assertEquals("test message", conversation
-                .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
+        return m;
     }
 
     @Test
