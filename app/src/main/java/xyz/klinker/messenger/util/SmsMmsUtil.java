@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
@@ -176,7 +177,7 @@ public class SmsMmsUtil {
                     String partId = query.getString(0);
                     String mimeType = query.getString(1);
 
-                    if (mimeType != null && MimeTypeUtil.isSupported(mimeType)) {
+                    if (mimeType != null && MimeType.isSupported(mimeType)) {
                         ContentValues message = new ContentValues(9);
                         message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
                         message.put(Message.COLUMN_TYPE, type);

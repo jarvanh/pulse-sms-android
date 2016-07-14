@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -49,6 +50,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private TextView message;
     @Mock
     private TextView timestamp;
+    @Mock
+    private ImageView image;
 
     @Before
     public void setUp() {
@@ -113,6 +116,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 Color.RED);
         holder.message = message;
         holder.timestamp = timestamp;
+        holder.image = image;
 
         return holder;
     }

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
+package xyz.klinker.messenger.data;
 
 /**
  * Holds the current mime types that the app supports.
  */
-public class MimeTypeUtil {
+public class MimeType {
 
     public static final String TEXT_PLAIN = "text/plain";
+    public static final String TEXT_HTML = "text/html";
     public static final String IMAGE_JPEG = "image/jpeg";
     public static final String IMAGE_BMP = "image/bmp";
     public static final String IMAGE_JPG = "image/jpg";
@@ -30,6 +31,10 @@ public class MimeTypeUtil {
     public static final String VIDEO_MPEG = "video/mpeg";
     public static final String VIDEO_3GPP = "video/3gpp";
     public static final String VIDEO_MP4 = "video/mp4";
+    public static final String AUDIO_MP3 = "audio/mpeg";
+    public static final String AUDIO_MP4 = "audio/mp4";
+    public static final String AUDIO_OGG = "audio/ogg";
+    public static final String AUDIO_WAV = "audio/vnd.wav";
 
     /**
      * Checks whether the provided mime type is supported.
@@ -42,8 +47,7 @@ public class MimeTypeUtil {
                 mimeType.equals(IMAGE_JPEG) ||
                 mimeType.equals(IMAGE_BMP) ||
                 mimeType.equals(IMAGE_JPG) ||
-                mimeType.equals(IMAGE_PNG) ||
-                mimeType.equals(IMAGE_GIF);
+                mimeType.equals(IMAGE_PNG);
     }
 
 }

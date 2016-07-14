@@ -296,7 +296,7 @@ public class DataSource {
         values = new ContentValues(3);
         values.put(Conversation.COLUMN_READ, message.read);
 
-        if (message.mimeType.equals("text/plain")) {
+        if (message.mimeType != null && message.mimeType.equals("text/plain")) {
             values.put(Conversation.COLUMN_SNIPPET, message.data);
         } else {
             values.put(Conversation.COLUMN_SNIPPET, "");
