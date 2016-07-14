@@ -38,6 +38,14 @@
         android:clickable="true"
         android:id="@+id/message_holder">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/max_message_width"
+            android:scaleType="centerInside"
+            android:id="@+id/image"
+            android:contentDescription="@string/mms_image"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

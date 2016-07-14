@@ -58,6 +58,7 @@
     <string name="attach">Attach</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s  •</string>
+    <string name="mms_image">MMS Image</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

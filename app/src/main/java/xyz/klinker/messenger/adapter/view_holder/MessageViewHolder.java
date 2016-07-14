@@ -19,6 +19,7 @@ package xyz.klinker.messenger.adapter.view_holder;
 import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
@@ -31,6 +32,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public TextView message;
     public TextView timestamp;
     public TextView contact;
+    public ImageView image;
     public View messageHolder;
 
     public MessageViewHolder(View itemView, int color) {
@@ -39,6 +41,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);
         contact = (TextView) itemView.findViewById(R.id.contact);
+        image = (ImageView) itemView.findViewById(R.id.image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
         if (color != -1 && messageHolder != null) {

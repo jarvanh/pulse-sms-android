@@ -17,11 +17,15 @@
 package xyz.klinker.messenger.adapter;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -75,8 +79,33 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
         if (message.mimeType.equals("text/plain")) {
             holder.message.setText(message.data);
+
+            if (holder.image.getVisibility() == View.VISIBLE) {
+                holder.image.setVisibility(View.GONE);
+            }
+
+            if (holder.message.getVisibility() == View.GONE) {
+                holder.message.setVisibility(View.VISIBLE);
+            }
         } else {
-            // handle other mime types here
+            if (message.mimeType.startsWith("image/")) {
+                Glide.with(holder.image.getContext())
+                        .load(Uri.parse(message.data))
+                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                        .fitCenter()
+                        .into(holder.image);
+            } else {
+                Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
+                // TODO video and audio, etc.
+            }
+
+            if (holder.message.getVisibility() == View.VISIBLE) {
+                holder.message.setVisibility(View.GONE);
+            }
+
+            if (holder.image.getVisibility() == View.GONE) {
+                holder.image.setVisibility(View.VISIBLE);
+            }
         }
 
         long nextTimestamp;
