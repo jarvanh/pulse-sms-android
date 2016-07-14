@@ -17,12 +17,14 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/empty_view"
     android:orientation="vertical"
     android:background="@color/colorPrimaryLight"
-    android:gravity="center">
+    android:gravity="center"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:layout_width="196dp"
