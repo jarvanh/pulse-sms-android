@@ -65,8 +65,6 @@ public class ContactUtil {
                 }
             }
 
-            Collections.sort(numbers);
-
             StringBuilder number = new StringBuilder();
             for (String n : numbers) {
                 number.append(", ");
