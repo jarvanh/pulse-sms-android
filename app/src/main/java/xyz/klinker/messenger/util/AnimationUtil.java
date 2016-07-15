@@ -18,6 +18,7 @@ package xyz.klinker.messenger.util;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;

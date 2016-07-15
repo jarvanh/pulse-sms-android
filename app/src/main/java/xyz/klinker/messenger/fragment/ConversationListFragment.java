@@ -58,6 +58,7 @@ public class ConversationListFragment extends Fragment
     private List<Conversation> pendingDelete;
     private ConversationViewHolder expandedConversation;
     private MessageListFragment messageListFragment;
+    private Snackbar deleteSnackbar;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -143,7 +144,7 @@ public class ConversationListFragment extends Fragment
         String plural = getResources().getQuantityString(R.plurals.conversations_deleted,
                 pendingDelete.size(), pendingDelete.size());
 
-        Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
+        deleteSnackbar = Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -154,6 +155,7 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
+                        deleteSnackbar = null;
 
                         if (pendingDelete.size() == currentSize) {
                             DataSource dataSource = DataSource.getInstance(getActivity());
@@ -167,8 +169,8 @@ public class ConversationListFragment extends Fragment
                             pendingDelete = new ArrayList<>();
                         }
                     }
-                })
-                .show();
+                });
+        deleteSnackbar.show();
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -182,6 +184,10 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public void onConversationExpanded(ConversationViewHolder viewHolder) {
+    	if (deleteSnackbar != null && deleteSnackbar.isShown()) {
+    		deleteSnackbar.dismiss();
+    	}
+    	
         expandedConversation = viewHolder;
         AnimationUtil.expandActivityForConversation(getActivity());
 
