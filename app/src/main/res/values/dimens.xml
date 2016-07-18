@@ -20,6 +20,7 @@
     <dimen name="bottom_extra_padding">8dp</dimen>
     <dimen name="delete_margin">16dp</dimen>
     <dimen name="extra_expand_distance">8dp</dimen>
+    <dimen name="drag_down_dismiss_distance">128dp</dimen>
 
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="conversation_list_padding">0dp</dimen>

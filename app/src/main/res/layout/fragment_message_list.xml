@@ -15,90 +15,94 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout
+<xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/app_bar_layout"
-        android:alpha="0"
-        android:translationY="32dp">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/message_list"
-        android:layout_marginStart="@dimen/message_list_padding"
-        android:layout_marginEnd="@dimen/message_list_padding"
-        android:alpha="0"
-        android:scrollbars="vertical"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/message_list_padding"
-        android:layout_marginEnd="@dimen/message_list_padding"
-        android:padding="8dp"
-        android:gravity="center_vertical"
-        android:clipToPadding="false"
-        android:id="@+id/send_bar"
-        android:alpha="0"
-        android:translationY="-32dp">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_attach"
-            android:background="?android:attr/selectableItemBackground"
-            android:tint="@color/secondaryText"
-            android:id="@+id/attach"
-            android:clickable="true"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/attach"/>
-
-        <EditText
-            android:layout_width="0dp"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:id="@+id/app_bar_layout"
+            android:alpha="0"
+            android:translationY="32dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="@string/type_message_to"
-            android:background="@drawable/message_sent"
-            android:backgroundTint="@color/drawerBackground"
+            android:id="@+id/message_list"
+            android:layout_marginStart="@dimen/message_list_padding"
+            android:layout_marginEnd="@dimen/message_list_padding"
+            android:alpha="0"
+            android:scrollbars="vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/message_list_padding"
+            android:layout_marginEnd="@dimen/message_list_padding"
             android:padding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="18dp"
-            android:id="@+id/message_entry"
-            android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
-            android:imeOptions="actionSend"
-            android:maxLines="5"/>
+            android:gravity="center_vertical"
+            android:clipToPadding="false"
+            android:id="@+id/send_bar"
+            android:alpha="0"
+            android:translationY="-32dp">
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_send"
-            android:id="@+id/send"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:elevation="0dp"
-            app:fabSize="mini"/>
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_attach"
+                android:background="?android:attr/selectableItemBackground"
+                android:tint="@color/secondaryText"
+                android:id="@+id/attach"
+                android:clickable="true"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/attach"/>
 
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/type_message_to"
+                android:background="@drawable/message_sent"
+                android:backgroundTint="@color/drawerBackground"
+                android:padding="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="18dp"
+                android:id="@+id/message_entry"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                android:imeOptions="actionSend"
+                android:maxLines="5"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_send"
+                android:id="@+id/send"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:elevation="0dp"
+                app:fabSize="mini"/>
+
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</xyz.klinker.messenger.view.ElasticDragDismissFrameLayout>

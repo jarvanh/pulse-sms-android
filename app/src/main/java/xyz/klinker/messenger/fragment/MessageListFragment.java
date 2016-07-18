@@ -51,6 +51,8 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
+import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 
 /**
  * Fragment for displaying messages for a certain conversation.
@@ -106,6 +108,14 @@ public class MessageListFragment extends Fragment {
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
+
+        ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
+        frame.addListener(new ElasticDragDismissCallback() {
+            @Override
+            public void onDragDismissed() {
+                getActivity().onBackPressed();
+            }
+        });
 
         initSendbar();
         initToolbar();
