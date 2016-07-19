@@ -16,16 +16,21 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.klinker.android.link_builder.Link;
+import com.klinker.android.link_builder.LinkBuilder;
+import com.klinker.android.link_builder.TouchableMovementMethod;
 
 import java.util.List;
 
@@ -42,13 +47,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     private Cursor messages;
     private int receivedColor;
+    private int accentColor;
     private boolean isGroup;
     private LinearLayoutManager manager;
 
-    public MessageListAdapter(Cursor messages, int receivedColor, boolean isGroup,
+    public MessageListAdapter(Cursor messages, int receivedColor, int accentColor, boolean isGroup,
                               LinearLayoutManager manager) {
         this.messages = messages;
         this.receivedColor = receivedColor;
+        this.accentColor = accentColor;
         this.isGroup = isGroup;
         this.manager = manager;
     }
@@ -73,13 +80,30 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MessageViewHolder holder, int position) {
+    public void onBindViewHolder(final MessageViewHolder holder, int position) {
         messages.moveToPosition(position);
         Message message = new Message();
         message.fillFromCursor(messages);
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
+
+            Link urls = new Link(Patterns.WEB_URL);
+            urls.setTextColor(accentColor);
+            urls.setHighlightAlpha(.4f);
+            urls.setOnClickListener(new Link.OnClickListener() {
+                @Override
+                public void onClick(String clickedText) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(clickedText));
+                    holder.message.getContext().startActivity(browserIntent);
+                }
+            });
+
+            if (holder.message.getMovementMethod() == null) {
+                holder.message.setMovementMethod(new TouchableMovementMethod());
+            }
+            
+            LinkBuilder.on(holder.message).addLink(urls).build();
 
             if (holder.image.getVisibility() == View.VISIBLE) {
                 holder.image.setVisibility(View.GONE);

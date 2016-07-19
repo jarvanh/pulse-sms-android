@@ -294,6 +294,7 @@ public class MessageListFragment extends Fragment {
             adapter.addMessage(messages);
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
+                    getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager);
             messageList.setAdapter(adapter);
 
