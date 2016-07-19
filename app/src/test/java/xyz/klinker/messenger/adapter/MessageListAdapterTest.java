@@ -39,6 +39,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
@@ -117,6 +118,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         holder.message = message;
         holder.timestamp = timestamp;
         holder.image = image;
+
+        when(message.getText()).thenReturn("test text");
 
         return holder;
     }

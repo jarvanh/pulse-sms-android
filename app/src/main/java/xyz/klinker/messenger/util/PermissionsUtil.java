@@ -74,7 +74,12 @@ public class PermissionsUtil {
     }
 
     public static boolean isDefaultSmsApp(Context context) {
-        return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
+        try {
+            return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
+        } catch (NullPointerException e) {
+            // thrown by robolectric...
+            return true;
+        }
     }
 
     /**

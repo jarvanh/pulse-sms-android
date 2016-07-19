@@ -78,13 +78,15 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.MmsSentReceiver">
+        <receiver android:name=".receiver.MmsSentReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.klinker.android.messaging.MMS_SENT" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.MmsReceivedReceiver">
+        <receiver android:name=".receiver.MmsReceivedReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.klinker.android.messaging.MMS_RECEIVED" />
             </intent-filter>
