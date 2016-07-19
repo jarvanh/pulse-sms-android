@@ -46,12 +46,14 @@ import java.lang.reflect.Method;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.util.SendUtil;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 
@@ -311,12 +313,12 @@ public class MessageListFragment extends Fragment {
             String message = messageEntry.getText().toString().trim();
 
             if (message.length() > 0) {
-                Message m = new Message();
+                final Message m = new Message();
                 m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
-                m.type = Message.TYPE_SENT;
+                m.type = Message.TYPE_SENDING;
                 m.data = message;
                 m.timestamp = System.currentTimeMillis();
-                m.mimeType = "text/plain";
+                m.mimeType = MimeType.TEXT_PLAIN;
                 m.read = true;
                 m.seen = true;
                 m.from = null;
@@ -331,6 +333,14 @@ public class MessageListFragment extends Fragment {
                 if (fragment != null) {
                     fragment.notifyOfSentMessage(m);
                 }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SendUtil.send(getContext(), m.data,
+                                getArguments().getString(ARG_PHONE_NUMBERS));
+                    }
+                }).start();
             }
         }
     }
