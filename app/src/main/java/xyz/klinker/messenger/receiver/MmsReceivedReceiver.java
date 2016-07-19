@@ -16,8 +16,17 @@
 
 package xyz.klinker.messenger.receiver;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+
+import java.util.List;
+
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Receiver for notifying us when a new MMS has been received by the device. By default it will
@@ -30,7 +39,30 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        // TODO persist to our own database and give notification.
+        Cursor lastMessage = SmsMmsUtil.getLastMmsMessage(context);
+
+        if (lastMessage != null && lastMessage.moveToFirst()) {
+            Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
+            final String from = SmsMmsUtil.getMmsFrom(uri, context);
+            List<ContentValues> values = SmsMmsUtil.processMessage(lastMessage, -1L, context);
+
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+
+            for (ContentValues value : values) {
+                Message message = new Message();
+                message.type = value.getAsInteger(Message.COLUMN_TYPE);
+                message.data = value.getAsString(Message.COLUMN_DATA);
+                message.timestamp = value.getAsLong(Message.COLUMN_TIMESTAMP);
+                message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE);
+                message.read = false;
+                message.seen = false;
+                message.from = from;
+                source.insertMessage(message, from, context);
+            }
+
+            source.close();
+        }
     }
 
 }

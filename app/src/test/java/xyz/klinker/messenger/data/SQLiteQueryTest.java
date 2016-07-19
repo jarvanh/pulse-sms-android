@@ -38,6 +38,7 @@ import xyz.klinker.messenger.util.ImageUtil;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 public class SQLiteQueryTest extends MessengerRobolectricSuite {
@@ -120,6 +121,18 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getConversation() {
+        Conversation conversation = source.getConversation(1L);
+        assertEquals("Luke Klinker", conversation.title);
+    }
+
+    @Test
+    public void getConversationNull() {
+        Conversation conversation = source.getConversation(10L);
+        assertNull(conversation);
+    }
+
+    @Test
     public void deleteConversation() {
         assertNotSame(0, source.getMessages(1).getCount());
         int initialConversationSize = source.getConversations().getCount();
@@ -129,6 +142,22 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
 
         assertEquals(-1, newConversationSize - initialConversationSize);
         assertEquals(0, newMessageSize);
+    }
+
+    @Test
+    public void updateConversation() {
+        source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
+                MimeType.TEXT_PLAIN);
+        Conversation conversation = source.getConversation(1);
+        assertEquals("test updated message", conversation.snippet);
+    }
+
+    @Test
+    public void updateConversationImage() {
+        source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
+                MimeType.IMAGE_PNG);
+        Conversation conversation = source.getConversation(1);
+        assertEquals("", conversation.snippet);
     }
 
     @Test
@@ -218,7 +247,7 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     public void readConversation() {
         assertEquals(1, source.getUnseenMessages().getCount());
         assertEquals(2, source.getUnreadMessages().getCount());
-        source.readConversation(3);
+        source.readConversation(RuntimeEnvironment.application, 3);
         assertEquals(1, source.getUnseenMessages().getCount());
         assertEquals(1, source.getUnreadMessages().getCount());
     }

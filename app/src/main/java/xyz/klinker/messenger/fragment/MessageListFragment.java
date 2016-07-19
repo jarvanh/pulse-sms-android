@@ -284,7 +284,7 @@ public class MessageListFragment extends Fragment {
                     }
                 });
 
-                source.readConversation(conversationId);
+                source.readConversation(getContext(), conversationId);
             }
         }).start();
     }

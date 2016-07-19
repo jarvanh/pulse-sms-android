@@ -20,11 +20,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.VisibleForTesting;
-import android.util.Log;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,7 +28,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.ContactUtil;
 import xyz.klinker.messenger.util.ImageUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
@@ -280,6 +275,25 @@ public class DataSource {
     }
 
     /**
+     * Gets a conversation by its id.
+     *
+     * @param conversationId the conversation's id to find.
+     * @return the conversation.
+     */
+    public Conversation getConversation(long conversationId) {
+        Cursor cursor = database.query(Conversation.TABLE, null, Conversation.COLUMN_ID + "=?",
+                new String[] { Long.toString(conversationId) }, null, null, null);
+        if (cursor.moveToFirst()) {
+            Conversation conversation = new Conversation();
+            conversation.fillFromCursor(cursor);
+            cursor.close();
+            return conversation;
+        }
+
+        return null;
+    }
+
+    /**
      * Deletes a conversation from the database.
      *
      * @param conversation the conversation to delete.
@@ -298,6 +312,32 @@ public class DataSource {
                 new String[] { Long.toString(conversationId) });
 
         database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
+                new String[] { Long.toString(conversationId) });
+    }
+
+    /**
+     * Updates the conversation with given values.
+     *
+     * @param conversationId the conversation to update.
+     * @param read whether the conversation is read or not.
+     * @param timestamp the new timestamp for the conversation
+     * @param snippet the snippet to display for appropriate mime types.
+     * @param snippetMime the snippet's mime type.
+     */
+    public void updateConversation(long conversationId, boolean read, long timestamp,
+                                   String snippet, String snippetMime) {
+        ContentValues values = new ContentValues(3);
+        values.put(Conversation.COLUMN_READ, read);
+
+        if (snippetMime != null && snippetMime.equals(MimeType.TEXT_PLAIN)) {
+            values.put(Conversation.COLUMN_SNIPPET, snippet);
+        } else {
+            values.put(Conversation.COLUMN_SNIPPET, "");
+        }
+
+        values.put(Conversation.COLUMN_TIMESTAMP, timestamp);
+
+        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
     }
 
@@ -322,7 +362,7 @@ public class DataSource {
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
      */
     public void insertMessage(Message message, String phoneNumbers, Context context) {
-        insertMessage(message, findOrCreateConversationId(phoneNumbers, message, context));
+        insertMessage(message, updateOrCreateConversation(phoneNumbers, message, context));
     }
 
     /**
@@ -333,7 +373,7 @@ public class DataSource {
      * @param message the message to use to initialize a conversation if needed.
      * @return the conversation id to use.
      */
-    private long findOrCreateConversationId(String phoneNumbers, Message message, Context context) {
+    private long updateOrCreateConversation(String phoneNumbers, Message message, Context context) {
         String matcher = SmsMmsUtil.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
                 new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
@@ -343,6 +383,8 @@ public class DataSource {
 
         if (cursor != null && cursor.moveToFirst()) {
             conversationId = cursor.getLong(0);
+            updateConversation(conversationId, message.read, message.timestamp, message.data,
+                    message.mimeType);
             cursor.close();
         } else {
             Conversation conversation = new Conversation();
@@ -390,19 +432,8 @@ public class DataSource {
 
         database.insert(Message.TABLE, null, values);
 
-        values = new ContentValues(3);
-        values.put(Conversation.COLUMN_READ, message.read);
-
-        if (message.mimeType != null && message.mimeType.equals("text/plain")) {
-            values.put(Conversation.COLUMN_SNIPPET, message.data);
-        } else {
-            values.put(Conversation.COLUMN_SNIPPET, "");
-        }
-
-        values.put(Conversation.COLUMN_TIMESTAMP, message.timestamp);
-
-        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(message.conversationId) });
+        updateConversation(conversationId, message.read, message.timestamp, message.data,
+                message.mimeType);
     }
 
     /**
@@ -410,7 +441,7 @@ public class DataSource {
      *
      * @param conversationId the conversation id to mark.
      */
-    public void readConversation(long conversationId) {
+    public void readConversation(Context context, long conversationId) {
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_READ, 1);
         values.put(Message.COLUMN_SEEN, 1);
@@ -424,6 +455,12 @@ public class DataSource {
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+
+        try {
+            SmsMmsUtil.markConversationRead(context, getConversation(conversationId).phoneNumbers);
+        } catch (NullPointerException e) {
+            // thrown in robolectric tests
+        }
     }
 
     /**

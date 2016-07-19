@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.util;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,9 +27,12 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.text.TextUtils;
 
+import com.android.mms.transaction.MmsMessageSender;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
+import com.klinker.android.logger.Log;
+import com.klinker.android.send_message.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -165,7 +169,7 @@ public class SmsMmsUtil {
             message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
             message.put(Message.COLUMN_DATA, messages.getString(1));
             message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2));
-            message.put(Message.COLUMN_MIME_TYPE, "text/plain");
+            message.put(Message.COLUMN_MIME_TYPE, MimeType.TEXT_PLAIN);
             message.put(Message.COLUMN_READ, messages.getInt(3));
             message.put(Message.COLUMN_SEEN, true);
             message.put(Message.COLUMN_FROM, (String) null);
@@ -180,7 +184,12 @@ public class SmsMmsUtil {
             int type = getMmsMessageType(messages);
 
             Cursor query = context.getContentResolver().query(Uri.parse("content://mms/part"),
-                    new String[]{"_id", "ct", "_data", "text"},
+                    new String[]{
+                            Telephony.Mms.Part._ID,
+                            Telephony.Mms.Part.CONTENT_TYPE,
+                            Telephony.Mms.Part._DATA,
+                            Telephony.Mms.Part.TEXT
+                    },
                     mId,
                     null,
                     null);
@@ -195,13 +204,15 @@ public class SmsMmsUtil {
                         message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
                         message.put(Message.COLUMN_TYPE, type);
                         message.put(Message.COLUMN_MIME_TYPE, mimeType);
-                        message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2) * 1000);
-                        message.put(Message.COLUMN_READ, messages.getInt(3));
+                        message.put(Message.COLUMN_TIMESTAMP, messages
+                                .getLong(messages.getColumnIndex(Telephony.Sms.DATE)) * 1000);
+                        message.put(Message.COLUMN_READ, messages
+                                .getInt(messages.getColumnIndex(Telephony.Sms.READ)));
                         message.put(Message.COLUMN_SEEN, true);
                         message.put(Message.COLUMN_FROM, from);
                         message.put(Message.COLUMN_COLOR, (Integer) null);
 
-                        if (mimeType.equals("text/plain")) {
+                        if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                             String data = query.getString(2);
                             String text;
                             if (data != null) {
@@ -236,7 +247,7 @@ public class SmsMmsUtil {
      * @return true for sms, false for mms.
      */
     private static boolean isSms(Cursor message) {
-        return message.getString(5) == null;
+        return message.getString(message.getColumnIndex(Telephony.Mms.MESSAGE_BOX)) == null;
     }
 
     /**
@@ -247,19 +258,32 @@ public class SmsMmsUtil {
      * @return the Message.TYPE_ value.
      */
     private static int getSmsMessageType(Cursor message) {
-        int internalType = message.getInt(4);
+        int internalType = message.getInt(message.getColumnIndex(Telephony.Sms.TYPE));
+        int status = message.getInt(message.getColumnIndex(Telephony.Sms.STATUS));
 
-        if (internalType == Telephony.Sms.MESSAGE_TYPE_INBOX) {
-            return Message.TYPE_RECEIVED;
-        } else if (internalType == Telephony.Sms.MESSAGE_TYPE_FAILED) {
-            return Message.TYPE_ERROR;
-        } else if (internalType == Telephony.Sms.MESSAGE_TYPE_OUTBOX) {
-            return Message.TYPE_SENDING;
-        } else if (internalType == Telephony.Sms.MESSAGE_TYPE_SENT) {
-            return Message.TYPE_SENT;
+        if (status == Telephony.Sms.STATUS_NONE ||
+                internalType == Telephony.Sms.MESSAGE_TYPE_INBOX) {
+            if (internalType == Telephony.Sms.MESSAGE_TYPE_INBOX) {
+                return Message.TYPE_RECEIVED;
+            } else if (internalType == Telephony.Sms.MESSAGE_TYPE_FAILED) {
+                return Message.TYPE_ERROR;
+            } else if (internalType == Telephony.Sms.MESSAGE_TYPE_OUTBOX) {
+                return Message.TYPE_SENDING;
+            } else if (internalType == Telephony.Sms.MESSAGE_TYPE_SENT) {
+                return Message.TYPE_SENT;
+            } else {
+                return Message.TYPE_SENT;
+            }
         } else {
-            // TODO process delivery status here
-            return Message.TYPE_SENT;
+            if (status == Telephony.Sms.STATUS_COMPLETE) {
+                return Message.TYPE_DELIVERED;
+            } else if (status == Telephony.Sms.STATUS_PENDING) {
+                return Message.TYPE_SENT;
+            } else if (status == Telephony.Sms.STATUS_FAILED) {
+                return Message.TYPE_ERROR;
+            } else {
+                return Message.TYPE_SENT;
+            }
         }
     }
 
@@ -271,7 +295,7 @@ public class SmsMmsUtil {
      * @return the Message.TYPE_ value.
      */
     private static int getMmsMessageType(Cursor message) {
-        int internalType = message.getInt(5);
+        int internalType = message.getInt(message.getColumnIndex(Telephony.Mms.MESSAGE_BOX));
 
         if (internalType == Telephony.Mms.MESSAGE_BOX_INBOX) {
             return Message.TYPE_RECEIVED;
@@ -282,12 +306,11 @@ public class SmsMmsUtil {
         } else if (internalType == Telephony.Mms.MESSAGE_BOX_SENT) {
             return Message.TYPE_SENT;
         } else {
-            // TODO process delivery status here
             return Message.TYPE_SENT;
         }
     }
 
-    private static String getMmsFrom(Uri uri, Context context) {
+    public static String getMmsFrom(Uri uri, Context context) {
         String msgId = uri.getLastPathSegment();
         Uri.Builder builder = Telephony.Mms.CONTENT_URI.buildUpon();
 
@@ -343,6 +366,124 @@ public class SmsMmsUtil {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Gets the last sms message that was inserted into the database.
+     *
+     * @param context the context to get the content provider with.
+     * @return the cursor for a single mms message.
+     */
+    public static Cursor getLastSmsMessage(Context context) {
+        String[] projection = new String[] {
+                Telephony.MmsSms._ID,
+                Telephony.Sms.BODY,
+                Telephony.Sms.DATE,
+                Telephony.Sms.READ,
+                Telephony.Sms.TYPE,
+                Telephony.Sms.STATUS
+        };
+
+        Uri uri = Uri.parse("content://sms");
+        String sortOrder = "date desc limit 1";
+
+        return context.getContentResolver().query(uri, projection, null, null, sortOrder);
+    }
+
+    /**
+     * Gets the last mms message that was inserted into the database.
+     *
+     * @param context the context to get the content provider with.
+     * @return the cursor for a single mms message.
+     */
+    public static Cursor getLastMmsMessage(Context context) {
+        String[] projection = new String[] {
+                Telephony.MmsSms._ID,
+                Telephony.Sms.DATE,
+                Telephony.Sms.READ,
+                Telephony.Mms.MESSAGE_BOX,
+                Telephony.Mms.MESSAGE_TYPE
+        };
+
+        Uri uri = Uri.parse("content://mms");
+        String sortOrder = "date desc limit 1";
+
+        return context.getContentResolver().query(uri, projection, null, null, sortOrder);
+    }
+
+    /**
+     * Marks a conversation as read in the internal database.
+     *
+     * @param context the context to get the content provider with.
+     * @param phoneNumbers the phone numbers to find the conversation with.
+     */
+    public static void markConversationRead(Context context, String phoneNumbers) {
+        long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
+        markConversationRead(context,
+                ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
+    }
+
+    private static void markConversationRead(final Context context, final Uri threadUri,
+                                             long threadId) {
+        // If we have no Uri to mark (as in the case of a conversation that
+        // has not yet made its way to disk), there's nothing to do.
+        if (threadUri != null) {
+            // Check the read flag first. It's much faster to do a query than
+            // to do an update. Timing this function show it's about 10x faster to
+            // do the query compared to the update, even when there's nothing to
+            // update.
+            boolean needUpdate = true;
+
+            Cursor c = context.getContentResolver().query(threadUri,
+                    new String[] {"_id", "read"}, "(read=0 OR seen=0)", null, null);
+            if (c != null) {
+                try {
+                    needUpdate = c.getCount() > 0;
+                } finally {
+                    c.close();
+                }
+            }
+
+            if (needUpdate) {
+                ContentValues values = new ContentValues(2);
+                values.put("read", 1);
+                values.put("seen", 1);
+
+                sendReadReport(context, threadId, PduHeaders.READ_STATUS_READ);
+                context.getContentResolver().update(threadUri, values,
+                        "(read=0 OR seen=0)", null);
+            }
+        }
+    }
+
+    private static void sendReadReport(final Context context,
+                                       final long threadId,
+                                       final int status) {
+        String selection = Telephony.Mms.MESSAGE_TYPE + " = " + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
+                + " AND " + Telephony.Mms.READ + " = 0"
+                + " AND " + Telephony.Mms.READ_REPORT + " = " + PduHeaders.VALUE_YES;
+
+        if (threadId != -1) {
+            selection = selection + " AND " + Telephony.Mms.THREAD_ID + " = " + threadId;
+        }
+
+        final Cursor c = com.google.android.mms.util_alt.SqliteWrapper.query(context, context.getContentResolver(),
+                Telephony.Mms.Inbox.CONTENT_URI, new String[]{Telephony.Mms._ID, Telephony.Mms.MESSAGE_ID},
+                selection, null, null);
+
+        try {
+            if (c != null && c.moveToFirst()) {
+                do {
+                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
+                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
+                            c.getString(1), status);
+                } while (c.moveToNext());
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
     }
 
 }

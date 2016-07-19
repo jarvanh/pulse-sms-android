@@ -62,7 +62,7 @@
         <service android:name="com.android.mms.transaction.TransactionService" />
 
         <receiver
-            android:name=".receiver.SmsReceiver"
+            android:name=".receiver.SmsReceivedReceiver"
             android:permission="android.permission.BROADCAST_SMS" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
@@ -70,7 +70,7 @@
         </receiver>
 
         <receiver
-            android:name=".receiver.MmsReceiver"
+            android:name="com.android.mms.transaction.PushReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />

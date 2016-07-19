@@ -158,7 +158,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void readConversation() {
-        source.readConversation(3);
+        source.readConversation(RuntimeEnvironment.application, 3);
 
         verify(database).update(eq("message"), any(ContentValues.class),
                 eq("conversation_id=? AND (read=? OR seen=?)"), eq(new String[] {"3", "0", "0"}));
