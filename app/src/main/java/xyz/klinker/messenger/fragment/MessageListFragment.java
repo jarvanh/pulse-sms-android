@@ -304,6 +304,8 @@ public class MessageListFragment extends Fragment {
     private void sendMessage() {
         if (PermissionsUtil.checkRequestMainPermissions(getActivity())) {
             PermissionsUtil.startMainPermissionRequest(getActivity());
+        } else if (!PermissionsUtil.isDefaultSmsApp(getActivity())) {
+            PermissionsUtil.setDefaultSmsApp(getActivity());
         } else {
             String message = messageEntry.getText().toString().trim();
 

@@ -19,8 +19,11 @@ package xyz.klinker.messenger.util;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
@@ -69,5 +72,22 @@ public class PermissionsUtil {
 
         return false;
     }
+
+    public static boolean isDefaultSmsApp(Context context) {
+        return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
+    }
+
+    /**
+     * Sets the app as the default on the device if it isn't already. If it is, then we don't need
+     * to do anything.
+     *
+     * @param context the current application context.
+     */
+    public static void setDefaultSmsApp(Context context) {
+        Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
+        context.startActivity(intent);
+    }
+
 
 }
