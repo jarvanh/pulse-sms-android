@@ -50,6 +50,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
+import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
@@ -301,28 +302,32 @@ public class MessageListFragment extends Fragment {
     }
 
     private void sendMessage() {
-        String message = messageEntry.getText().toString().trim();
+        if (PermissionsUtil.checkRequestMainPermissions(getActivity())) {
+            PermissionsUtil.startMainPermissionRequest(getActivity());
+        } else {
+            String message = messageEntry.getText().toString().trim();
 
-        if (message.length() > 0) {
-            Message m = new Message();
-            m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
-            m.type = Message.TYPE_SENT;
-            m.data = message;
-            m.timestamp = System.currentTimeMillis();
-            m.mimeType = "text/plain";
-            m.read = true;
-            m.seen = true;
-            m.from = null;
-            m.color = null;
+            if (message.length() > 0) {
+                Message m = new Message();
+                m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
+                m.type = Message.TYPE_SENT;
+                m.data = message;
+                m.timestamp = System.currentTimeMillis();
+                m.mimeType = "text/plain";
+                m.read = true;
+                m.seen = true;
+                m.from = null;
+                m.color = null;
 
-            source.insertMessage(m, m.conversationId);
-            loadMessages();
-            messageEntry.setText(null);
+                source.insertMessage(m, m.conversationId);
+                loadMessages();
+                messageEntry.setText(null);
 
-            ConversationListFragment fragment = (ConversationListFragment) getActivity()
-                    .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
-            if (fragment != null) {
-                fragment.notifyOfSentMessage(m);
+                ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                        .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+                if (fragment != null) {
+                    fragment.notifyOfSentMessage(m);
+                }
             }
         }
     }

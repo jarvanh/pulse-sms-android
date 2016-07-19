@@ -16,12 +16,8 @@
 
 package xyz.klinker.messenger.activity;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -29,8 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Telephony;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -42,6 +36,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -67,38 +62,18 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void requestPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS},
-                    REQUEST_PERMISSIONS);
+        if (PermissionsUtil.checkRequestMainPermissions(this)) {
+            PermissionsUtil.startMainPermissionRequest(this);
         } else {
             startDatabaseSync();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSIONS) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                startDatabaseSync();
-            } else {
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.permissions_needed)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                requestPermissions();
-                            }
-                        })
-                        .show();
-            }
+        if (PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults)) {
+            startDatabaseSync();
         }
     }
 

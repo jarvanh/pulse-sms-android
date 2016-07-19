@@ -37,6 +37,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.util.AnimationUtil;
+import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 
 /**
@@ -65,6 +66,24 @@ public class MessengerActivity extends AppCompatActivity
         initToolbar();
         initDrawer();
         initFab();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requestPermissions();
+    }
+
+    private void requestPermissions() {
+        if (PermissionsUtil.checkRequestMainPermissions(this)) {
+            PermissionsUtil.startMainPermissionRequest(this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults);
     }
 
     private boolean checkInitialStart() {
