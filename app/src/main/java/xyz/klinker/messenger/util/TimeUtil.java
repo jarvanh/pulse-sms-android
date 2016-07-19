@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.util;
 
+import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import java.text.DateFormat;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import xyz.klinker.messenger.R;
 
 /**
  * Helper for working with timestamps on messages.
@@ -113,16 +116,18 @@ public class TimeUtil {
      * @param timestamp the timestamp to format.
      * @return the formatted string.
      */
-    public static String formatTimestamp(long timestamp) {
-        return formatTimestamp(timestamp, System.currentTimeMillis());
+    public static String formatTimestamp(Context context, long timestamp) {
+        return formatTimestamp(context, timestamp, System.currentTimeMillis());
     }
 
     @VisibleForTesting
-    static String formatTimestamp(long timestamp, long currentTime) {
+    static String formatTimestamp(Context context, long timestamp, long currentTime) {
         Date date = new Date(timestamp);
         String formatted;
 
-        if (timestamp > currentTime - DAY) {
+        if (timestamp > currentTime - (2*MINUTE)) {
+            formatted = context.getString(R.string.now);
+        } else if (timestamp > currentTime - DAY) {
             formatted = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         } else if (timestamp > currentTime - (7*DAY)) {
             formatted = new SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +

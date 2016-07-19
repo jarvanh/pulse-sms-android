@@ -119,7 +119,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
         if (TimeUtil.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
             holder.timestamp.setVisibility(View.VISIBLE);
-            holder.timestamp.setText(TimeUtil.formatTimestamp(message.timestamp));
+            holder.timestamp.setText(TimeUtil.formatTimestamp(holder.timestamp.getContext(),
+                    message.timestamp));
         } else {
             holder.timestamp.setVisibility(View.GONE);
         }
