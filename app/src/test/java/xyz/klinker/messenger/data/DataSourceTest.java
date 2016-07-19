@@ -148,6 +148,21 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void searchMessages() {
+        when(database.query("message", null, "data LIKE '%test%'", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+
+        assertEquals(cursor, source.searchMessages("test"));
+    }
+
+    @Test
+    public void updateMessageType() {
+        source.updateMessageType(1, Message.TYPE_SENT);
+        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[] {"1"}));
+    }
+
+    @Test
     public void insertMessage() {
         source.insertMessage(new Message(), 1);
 

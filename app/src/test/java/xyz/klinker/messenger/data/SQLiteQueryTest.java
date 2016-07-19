@@ -168,6 +168,20 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void searchMessages() {
+        Cursor messages = source.searchMessages("How is");
+        assertEquals(2, messages.getCount());
+    }
+
+    @Test
+    public void updateMessageType() {
+        source.updateMessageType(1, Message.TYPE_SENT);
+        Cursor messages = source.getMessages(1);
+        messages.moveToLast();
+        assertEquals(Message.TYPE_SENT, messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE)));
+    }
+
+    @Test
     public void insertMessageExistingConversation() {
         int initialMessageSize = source.getMessages(1).getCount();
         int initialConversationSize = source.getConversations().getCount();

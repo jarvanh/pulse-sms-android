@@ -16,8 +16,18 @@
 
 package xyz.klinker.messenger.receiver;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.Telephony;
+
+import java.util.List;
+
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Receiver which gets a notification when an MMS message has finished sending. It will mark the
@@ -30,7 +40,28 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        // TODO mark message as sent in our database
+        Uri uri = Uri.parse(intent.getStringExtra(EXTRA_CONTENT_URI));
+        Cursor message = SmsMmsUtil.getMmsMessage(context, uri, null);
+
+        if (message != null && message.moveToFirst()) {
+            List<ContentValues> mmsParts = SmsMmsUtil.processMessage(message, -1, context);
+            message.close();
+
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+
+            for (ContentValues values : mmsParts) {
+                Cursor messages = source.searchMessages(values.getAsString(Message.COLUMN_DATA));
+
+                if (messages != null && messages.moveToFirst()) {
+                    long id = messages.getLong(0);
+                    source.updateMessageType(id, Message.TYPE_SENT);
+                    messages.close();
+                }
+            }
+
+            source.close();
+        }
     }
 
 }

@@ -69,13 +69,15 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SmsSentReceiver">
+        <receiver android:name=".receiver.SmsSentReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.SMS_SENT" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SmsDeliveredReceiver">
+        <receiver android:name=".receiver.SmsDeliveredReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.SMS_DELIVERED" />
             </intent-filter>

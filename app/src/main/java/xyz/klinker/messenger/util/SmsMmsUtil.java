@@ -375,6 +375,20 @@ public class SmsMmsUtil {
      * @return the cursor for a single mms message.
      */
     public static Cursor getLastSmsMessage(Context context) {
+        Uri uri = Uri.parse("content://sms");
+        String sortOrder = "date desc limit 1";
+        return getSmsMessage(context, uri, sortOrder);
+    }
+
+    /**
+     * Get an SMS message(s) from the provided URI.
+     *
+     * @param context the context for the content provider.
+     * @param uri the sms message uri.
+     * @param sortOrder the sort order to apply.
+     * @return the cursor for the messages that match.
+     */
+    public static Cursor getSmsMessage(Context context, Uri uri, String sortOrder) {
         String[] projection = new String[] {
                 Telephony.MmsSms._ID,
                 Telephony.Sms.BODY,
@@ -383,9 +397,6 @@ public class SmsMmsUtil {
                 Telephony.Sms.TYPE,
                 Telephony.Sms.STATUS
         };
-
-        Uri uri = Uri.parse("content://sms");
-        String sortOrder = "date desc limit 1";
 
         return context.getContentResolver().query(uri, projection, null, null, sortOrder);
     }
@@ -397,6 +408,20 @@ public class SmsMmsUtil {
      * @return the cursor for a single mms message.
      */
     public static Cursor getLastMmsMessage(Context context) {
+        Uri uri = Uri.parse("content://mms");
+        String sortOrder = "date desc limit 1";
+        return getMmsMessage(context, uri, sortOrder);
+    }
+
+    /**
+     * Get an MMS message(s) from the provided URI.
+     *
+     * @param context the context for the content provider.
+     * @param uri the mms message uri.
+     * @param sortOrder the sort order to apply.
+     * @return the cursor for the messages that match.
+     */
+    public static Cursor getMmsMessage(Context context, Uri uri, String sortOrder) {
         String[] projection = new String[] {
                 Telephony.MmsSms._ID,
                 Telephony.Sms.DATE,
@@ -404,9 +429,6 @@ public class SmsMmsUtil {
                 Telephony.Mms.MESSAGE_BOX,
                 Telephony.Mms.MESSAGE_TYPE
         };
-
-        Uri uri = Uri.parse("content://mms");
-        String sortOrder = "date desc limit 1";
 
         return context.getContentResolver().query(uri, projection, null, null, sortOrder);
     }

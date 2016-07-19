@@ -354,6 +354,31 @@ public class DataSource {
     }
 
     /**
+     * Gets all messages that contain the query text.
+     *
+     * @param query the text to look for.
+     * @return a cursor with all messages matching that query.
+     */
+    public Cursor searchMessages(String query) {
+        return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" + query + "%'",
+                null, null, null, Message.COLUMN_TIMESTAMP + " desc");
+    }
+
+    /**
+     * Updates the message with the given id to the given type.
+     *
+     * @param messageId the message to update.
+     * @param type the type to change it to.
+     */
+    public void updateMessageType(long messageId, int type) {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_TYPE, type);
+
+        database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
+                new String[] { Long.toString(messageId) });
+    }
+
+    /**
      * Inserts a new message into the database without previously having a conversation id. This
      * will be slightly slower than if you were to have an id since we will need to find the
      * appropriate one in the database or create a new conversation entry.

@@ -18,8 +18,16 @@ package xyz.klinker.messenger.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.Telephony;
+import android.telephony.SmsManager;
 
 import com.klinker.android.send_message.SentReceiver;
+
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Receiver for getting notifications of when an SMS has finished sending. By default it's super
@@ -31,6 +39,48 @@ public class SmsSentReceiver extends SentReceiver {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        // TODO mark as sent in my database
+        Uri uri = Uri.parse(intent.getStringExtra("message_uri"));
+
+        switch (getResultCode()) {
+            case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+            case SmsManager.RESULT_ERROR_NO_SERVICE:
+            case SmsManager.RESULT_ERROR_NULL_PDU:
+            case SmsManager.RESULT_ERROR_RADIO_OFF:
+                markMessageError(context, uri);
+                break;
+            default:
+                markMessageSent(context, uri);
+                break;
+        }
     }
+
+    private void markMessageSent(Context context, Uri uri) {
+        markMessage(context, uri, false);
+    }
+
+    private void markMessageError(Context context, Uri uri) {
+        markMessage(context, uri, true);
+    }
+
+    private void markMessage(Context context, Uri uri, boolean error) {
+        Cursor message = SmsMmsUtil.getSmsMessage(context, uri, null);
+
+        if (message != null && message.moveToFirst()) {
+            String body = message.getString(message.getColumnIndex(Telephony.Sms.BODY));
+            message.close();
+
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+            Cursor messages = source.searchMessages(body);
+
+            if (messages != null && messages.moveToFirst()) {
+                long id = messages.getLong(0);
+                source.updateMessageType(id, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
+                messages.close();
+            }
+
+            source.close();
+        }
+    }
+
 }

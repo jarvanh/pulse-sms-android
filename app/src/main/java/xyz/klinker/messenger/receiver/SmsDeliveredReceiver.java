@@ -16,10 +16,18 @@
 
 package xyz.klinker.messenger.receiver;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.Telephony;
 
 import com.klinker.android.send_message.DeliveredReceiver;
+
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
  * Receiver for getting notifications of when an SMS has been delivered. By default it's super
@@ -31,6 +39,45 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        // TODO mark as delivered in my database
+        Uri uri = Uri.parse(intent.getStringExtra("message_uri"));
+
+        switch (getResultCode()) {
+            case Activity.RESULT_OK:
+                markMessageDelivered(context, uri);
+                break;
+            case Activity.RESULT_CANCELED:
+                markMessageError(context, uri);
+                break;
+        }
     }
+
+    private void markMessageDelivered(Context context, Uri uri) {
+        markMessage(context, uri, false);
+    }
+
+    private void markMessageError(Context context, Uri uri) {
+        markMessage(context, uri, true);
+    }
+
+    private void markMessage(Context context, Uri uri, boolean error) {
+        Cursor message = SmsMmsUtil.getSmsMessage(context, uri, null);
+
+        if (message != null && message.moveToFirst()) {
+            String body = message.getString(message.getColumnIndex(Telephony.Sms.BODY));
+            message.close();
+
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+            Cursor messages = source.searchMessages(body);
+
+            if (messages != null && messages.moveToFirst()) {
+                long id = messages.getLong(0);
+                source.updateMessageType(id, error ? Message.TYPE_ERROR : Message.TYPE_DELIVERED);
+                messages.close();
+            }
+
+            source.close();
+        }
+    }
+
 }
