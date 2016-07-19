@@ -38,6 +38,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.TimeUtil;
 
 /**
@@ -99,11 +100,23 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 }
             });
 
+            Link phoneNumbers = new Link(Patterns.PHONE);
+            phoneNumbers.setTextColor(accentColor);
+            phoneNumbers.setHighlightAlpha(.4f);
+            phoneNumbers.setOnClickListener(new Link.OnClickListener() {
+                @Override
+                public void onClick(String clickedText) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + PhoneNumberUtil.clearFormatting(clickedText)));
+                    holder.message.getContext().startActivity(intent);
+                }
+            });
+
             if (holder.message.getMovementMethod() == null) {
                 holder.message.setMovementMethod(new TouchableMovementMethod());
             }
-            
-            LinkBuilder.on(holder.message).addLink(urls).build();
+
+            LinkBuilder.on(holder.message).addLink(urls).addLink(phoneNumbers).build();
 
             if (holder.image.getVisibility() == View.VISIBLE) {
                 holder.image.setVisibility(View.GONE);
