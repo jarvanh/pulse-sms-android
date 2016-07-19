@@ -60,6 +60,8 @@
     <string name="message_from_bullet">%1$s  •</string>
     <string name="mms_image">MMS Image</string>
     <string name="now">Now</string>
+    <string name="sending">Sending…</string>
+    <string name="delivered">Message delivered</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

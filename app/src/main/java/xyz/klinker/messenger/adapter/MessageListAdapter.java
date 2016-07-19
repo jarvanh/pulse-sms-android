@@ -70,8 +70,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             layoutId = R.layout.message_received;
             color = receivedColor;
         } else {
-            layoutId = R.layout.message_sent;
             color = -1;
+
+            if (viewType == Message.TYPE_SENDING) {
+                layoutId = R.layout.message_sending;
+            } else if (viewType == Message.TYPE_ERROR) {
+                layoutId = R.layout.message_error;
+            } else if (viewType == Message.TYPE_DELIVERED) {
+                layoutId = R.layout.message_delivered;
+            } else {
+                layoutId = R.layout.message_sent;
+            }
         }
 
         View view = LayoutInflater.from(parent.getContext())
