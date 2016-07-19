@@ -69,6 +69,18 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.SmsSentReceiver">
+            <intent-filter>
+                <action android:name="${applicationId}.SMS_SENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.SmsDeliveredReceiver">
+            <intent-filter>
+                <action android:name="${applicationId}.SMS_DELIVERED" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="com.android.mms.transaction.PushReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH" >
