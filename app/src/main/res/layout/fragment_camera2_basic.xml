@@ -35,20 +35,21 @@
         android:id="@+id/picture"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_gravity="bottom|center_horizontal"
         android:contentDescription="@string/take_picture"
         android:background="?android:attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_done"/>
 
     <ImageButton
         android:layout_width="72dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:padding="16dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/flip_picture"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_gravity="bottom|end"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/flip_picture"
         android:src="@drawable/ic_flip_camera"/>

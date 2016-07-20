@@ -44,6 +44,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,7 +96,7 @@ public class MessageListFragment extends Fragment implements
     private MessageListAdapter adapter;
     private View attachLayout;
     private FrameLayout attachHolder;
-    private View attachButtonHolder;
+    private LinearLayout attachButtonHolder;
     private ImageButton attachImage;
     private ImageButton captureImage;
     private ImageButton attachGif;
@@ -140,7 +141,7 @@ public class MessageListFragment extends Fragment implements
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
         attachLayout = view.findViewById(R.id.attach_layout);
         attachHolder = (FrameLayout) view.findViewById(R.id.attach_holder);
-        attachButtonHolder = view.findViewById(R.id.attach_button_holder);
+        attachButtonHolder = (LinearLayout) view.findViewById(R.id.attach_button_holder);
         attachImage = (ImageButton) view.findViewById(R.id.attach_image);
         captureImage = (ImageButton) view.findViewById(R.id.capture_image);
         attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
@@ -474,12 +475,12 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachImage() {
-        prepareAttachHolder();
+        prepareAttachHolder(0);
         attachHolder.addView(new AttachImageView(getActivity()));
     }
 
     private void captureImage() {
-        prepareAttachHolder();
+        prepareAttachHolder(1);
 
         Camera2BasicFragment fragment = Camera2BasicFragment.newInstance();
         getFragmentManager().beginTransaction().add(R.id.attach_holder, fragment).commit();
@@ -487,23 +488,31 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachGif() {
-        prepareAttachHolder();
+        prepareAttachHolder(2);
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordVideo() {
-        prepareAttachHolder();
+        prepareAttachHolder(3);
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordAudio() {
-        prepareAttachHolder();
+        prepareAttachHolder(4);
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
-    private void prepareAttachHolder() {
+    private void prepareAttachHolder(int positionToBold) {
         dismissKeyboard();
         attachHolder.removeAllViews();
+
+        for (int i = 0; i < attachButtonHolder.getChildCount(); i++) {
+            if (positionToBold == i) {
+                attachButtonHolder.getChildAt(i).setAlpha(1.0f);
+            } else {
+                attachButtonHolder.getChildAt(i).setAlpha(0.5f);
+            }
+        }
     }
 
     private void clearAttachedData() {
