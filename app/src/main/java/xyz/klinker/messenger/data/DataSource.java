@@ -360,8 +360,9 @@ public class DataSource {
      * @return a cursor with all messages matching that query.
      */
     public Cursor searchMessages(String query) {
-        return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" + query + "%'",
-                null, null, null, Message.COLUMN_TIMESTAMP + " desc");
+        return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
+                query.replace("'", "''") + "%'", null, null, null,
+                Message.COLUMN_TIMESTAMP + " desc");
     }
 
     /**

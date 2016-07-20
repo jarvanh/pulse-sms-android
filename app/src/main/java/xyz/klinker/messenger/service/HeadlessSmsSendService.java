@@ -30,7 +30,7 @@ import xyz.klinker.messenger.util.SendUtil;
 
 /**
  * Service for sending messages to a conversation without a UI present. These messages could come
- * from something like Google Now.
+ * from something like Phone.
  */
 public class HeadlessSmsSendService extends Service {
 

@@ -46,10 +46,12 @@ public class SendUtil {
         Transaction transaction = new Transaction(context, new Settings());
         Message message = new Message(text, addresses);
 
-        try {
-            message.addMedia(getBytes(context, data), mimeType);
-        } catch (IOException e) {
-            Log.e("Sending Exception", "Could not attach media", e);
+        if (data != null) {
+            try {
+                message.addMedia(getBytes(context, data), mimeType);
+            } catch (IOException e) {
+                Log.e("Sending Exception", "Could not attach media", e);
+            }
         }
 
         transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);

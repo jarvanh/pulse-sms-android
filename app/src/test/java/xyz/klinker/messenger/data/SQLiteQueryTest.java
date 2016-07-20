@@ -174,6 +174,12 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void searchMessagesWithApostrophe() {
+        Cursor messages = source.searchMessages("How's");
+        assertEquals(0, messages.getCount());
+    }
+
+    @Test
     public void updateMessageType() {
         source.updateMessageType(1, Message.TYPE_SENT);
         Cursor messages = source.getMessages(1);
