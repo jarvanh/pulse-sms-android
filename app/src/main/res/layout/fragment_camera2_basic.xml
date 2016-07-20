@@ -24,6 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
     <ImageButton
         android:id="@+id/picture"
         android:layout_width="48dp"

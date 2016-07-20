@@ -848,6 +848,17 @@ public class Camera2BasicFragment extends Fragment
             if (null == activity || null == mCameraDevice) {
                 return;
             }
+
+            // display a loading bar
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.picture).setVisibility(View.GONE);
+                    getView().findViewById(R.id.flip_picture).setVisibility(View.GONE);
+                }
+            });
+
             // This is the CaptureRequest.Builder that we use to take a picture.
             final CaptureRequest.Builder captureBuilder =
                     mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
