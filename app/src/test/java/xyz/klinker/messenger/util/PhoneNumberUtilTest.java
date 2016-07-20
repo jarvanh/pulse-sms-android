@@ -40,6 +40,12 @@ public class PhoneNumberUtilTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void clearFormattingMultipleNumbers() {
+        assertEquals("5154224558,5159911493",
+                PhoneNumberUtil.clearFormatting("(515) 422-4558, (515) 991-1493"));
+    }
+
+    @Test
     public void format() {
         assertEquals("+1 515-422-4558", PhoneNumberUtil.format("+15154224558"));
     }

@@ -182,6 +182,15 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void insertSentMessage() {
+        int initialMessageSize = source.getMessages(1).getCount();
+        source.insertSentMessage("1111111", "test", MimeType.TEXT_PLAIN, RuntimeEnvironment.application);
+        int newMessageSize = source.getMessages(1).getCount();
+
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
     public void insertMessageExistingConversation() {
         int initialMessageSize = source.getMessages(1).getCount();
         int initialConversationSize = source.getConversations().getCount();

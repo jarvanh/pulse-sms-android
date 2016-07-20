@@ -379,6 +379,28 @@ public class DataSource {
     }
 
     /**
+     * Inserts a new sent message after finding the conversation id.
+     *
+     * @param addresses the comma, space separated addresses.
+     * @param data the message data.
+     * @param mimeType the message mimeType.
+     * @param context the application context.
+     */
+    public void insertSentMessage(String addresses, String data, String mimeType, Context context) {
+        final Message m = new Message();
+        m.type = Message.TYPE_SENDING;
+        m.data = data;
+        m.timestamp = System.currentTimeMillis();
+        m.mimeType = mimeType;
+        m.read = true;
+        m.seen = true;
+        m.from = null;
+        m.color = null;
+
+        insertMessage(m, addresses, context);
+    }
+
+    /**
      * Inserts a new message into the database without previously having a conversation id. This
      * will be slightly slower than if you were to have an id since we will need to find the
      * appropriate one in the database or create a new conversation entry.

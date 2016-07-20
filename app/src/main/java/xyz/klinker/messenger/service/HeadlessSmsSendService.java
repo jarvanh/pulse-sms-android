@@ -18,8 +18,15 @@ package xyz.klinker.messenger.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.util.SendUtil;
 
 /**
  * Service for sending messages to a conversation without a UI present. These messages could come
@@ -33,6 +40,41 @@ public class HeadlessSmsSendService extends Service {
         return null;
     }
 
-    // TODO actually implement this functionality
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String[] addresses = parseAddress(Uri.decode(intent.getDataString()));
+        String text = getText(intent);
+
+        SendUtil.send(this, text, addresses);
+
+        StringBuilder phoneNumbers = new StringBuilder();
+        for (int i = 0; i < addresses.length; i++) {
+            phoneNumbers.append(addresses[i]);
+            if (i != addresses.length - 1) {
+                phoneNumbers.append(", ");
+            }
+        }
+
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
+        source.close();
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private String[] parseAddress(String address) {
+        return PhoneNumberUtil.clearFormatting(address).replace("sms:", "")
+                .replace("smsto:", "").replace("mms:", "").replace("mmsto:", "").split(",");
+    }
+
+    private String getText(Intent intent) {
+        CharSequence text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
+        if (text == null) {
+            return intent.getStringExtra(Intent.EXTRA_TEXT);
+        } else {
+            return text.toString();
+        }
+    }
 
 }

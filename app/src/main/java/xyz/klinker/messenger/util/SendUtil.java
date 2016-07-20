@@ -17,28 +17,55 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
 import com.klinker.android.send_message.Transaction;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Utility for helping to send messages.
  */
 public class SendUtil {
 
-    /**
-     * Sends a new sms message.
-     *
-     * @param context the application context.
-     * @param text the message to send.
-     * @param address the address to send to. The comma will be removed from any comma, space
-     *                separated addresses.
-     */
     public static void send(Context context, String text, String address) {
+        send(context, text, address.split(", "));
+    }
+
+    public static void send(Context context, String text, String[] addresses) {
+        send(context, text, addresses, null, null);
+    }
+
+    public static void send(Context context, String text, String[] addresses, Uri data,
+                            String mimeType) {
         Transaction transaction = new Transaction(context, new Settings());
-        Message message = new Message(text, address.replace(",", ""));
+        Message message = new Message(text, addresses);
+
+        try {
+            message.addMedia(getBytes(context, data), mimeType);
+        } catch (IOException e) {
+            Log.e("Sending Exception", "Could not attach media", e);
+        }
+
         transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+    }
+
+    private static byte[] getBytes(Context context, Uri data) throws IOException {
+        InputStream stream = context.getContentResolver().openInputStream(data);
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = stream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 
 }
