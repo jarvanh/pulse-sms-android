@@ -71,6 +71,7 @@
         pictures!</string>
     <string name="take_picture">Snap Picture</string>
     <string name="flip_picture">Flip Camera</string>
+    <string name="attached_image">Attached Image</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

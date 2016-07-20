@@ -54,6 +54,13 @@
             android:alpha="0"
             android:scrollbars="vertical"/>
 
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/attached_image"
+            android:visibility="gone"
+            android:contentDescription="@string/attached_image"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

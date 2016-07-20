@@ -49,6 +49,7 @@ import android.support.v13.app.FragmentCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -95,6 +96,9 @@ public class Camera2BasicFragment extends Fragment
      * Tag for the {@link Log}.
      */
     private static final String TAG = "Camera2BasicFragment";
+
+    private static final String ARG_RANDOM_INT = "random_int";
+    private static final String PREF_FRONT_FACING = "use_front_facing_camera";
 
     /**
      * Camera state: Showing camera preview.
@@ -246,7 +250,8 @@ public class Camera2BasicFragment extends Fragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
+            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile, callback,
+                    Camera2BasicFragment.this));
         }
 
     };
@@ -287,6 +292,16 @@ public class Camera2BasicFragment extends Fragment
      * Orientation of the camera sensor
      */
     private int mSensorOrientation;
+
+    /**
+     * Callback for notifying someone when an image has been saved.
+     */
+    private ImageSavedCallback callback;
+
+    /**
+     * Handler for posting back to UI thread after image is saved.
+     */
+    private Handler uiHandler;
 
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
@@ -426,9 +441,19 @@ public class Camera2BasicFragment extends Fragment
         return new Camera2BasicFragment();
     }
 
+    public void attachImageSavedCallback(ImageSavedCallback callback) {
+        this.callback = callback;
+    }
+
+    private Handler getUiHandler() {
+        return uiHandler;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        uiHandler = new Handler();
+        mUseFrontFacing = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(PREF_FRONT_FACING, false);
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
     }
 
@@ -442,7 +467,8 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+        mFile = new File(getActivity().getFilesDir(), ((int) (Math.random() * Integer.MAX_VALUE))
+                + ".jpg");
     }
 
     @Override
@@ -523,7 +549,7 @@ public class Camera2BasicFragment extends Fragment
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
-                        ImageFormat.JPEG, /*maxImages*/2);
+                        ImageFormat.JPEG, 1);
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
 
@@ -843,7 +869,6 @@ public class Camera2BasicFragment extends Fragment
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
-                    showToast("Saved: " + mFile);
                     Log.d(TAG, mFile.toString());
                     unlockFocus();
                 }
@@ -901,6 +926,8 @@ public class Camera2BasicFragment extends Fragment
             case R.id.flip_picture: {
                 closeCamera();
                 mUseFrontFacing = !mUseFrontFacing;
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                        .putBoolean(PREF_FRONT_FACING, mUseFrontFacing).apply();
                 openCamera(mTextureView.getWidth(), mTextureView.getHeight());
                 break;
             }
@@ -927,10 +954,19 @@ public class Camera2BasicFragment extends Fragment
          * The file we save the image into.
          */
         private final File mFile;
+        /**
+         * The callback to call once saving is done.
+         */
+        private final ImageSavedCallback mCallback;
 
-        public ImageSaver(Image image, File file) {
+        private final Camera2BasicFragment mFragment;
+
+        public ImageSaver(Image image, File file, ImageSavedCallback callback,
+                          Camera2BasicFragment fragment) {
             mImage = image;
             mFile = file;
+            mCallback = callback;
+            mFragment = fragment;
         }
 
         @Override
@@ -953,6 +989,15 @@ public class Camera2BasicFragment extends Fragment
                         e.printStackTrace();
                     }
                 }
+
+                mFragment.closeCamera();
+
+                mFragment.getUiHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCallback.onImageSaved(mFile);
+                    }
+                });
             }
         }
 
@@ -1032,6 +1077,13 @@ public class Camera2BasicFragment extends Fragment
                             })
                     .create();
         }
+    }
+
+    /**
+     * Callback for easily notifying the caller when an image has been saved so we can act on it.
+     */
+    public interface ImageSavedCallback {
+        void onImageSaved(File file);
     }
 
 }

@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -40,9 +41,13 @@ import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -57,6 +62,7 @@ import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SendUtil;
+import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
@@ -64,7 +70,8 @@ import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismi
 /**
  * Fragment for displaying messages for a certain conversation.
  */
-public class MessageListFragment extends Fragment {
+public class MessageListFragment extends Fragment implements
+        Camera2BasicFragment.ImageSavedCallback, BackPressedListener {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -92,6 +99,7 @@ public class MessageListFragment extends Fragment {
     private ImageButton attachGif;
     private ImageButton recordVideo;
     private ImageButton recordAudio;
+    private ImageView attachedImage;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         MessageListFragment fragment = new MessageListFragment();
@@ -131,6 +139,7 @@ public class MessageListFragment extends Fragment {
         attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
         recordVideo = (ImageButton) view.findViewById(R.id.record_video);
         recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
+        attachedImage = (ImageView) view.findViewById(R.id.attached_image);
 
         ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
         frame.addListener(new ElasticDragDismissCallback() {
@@ -425,8 +434,9 @@ public class MessageListFragment extends Fragment {
     private void captureImage() {
         attachHolder.removeAllViews();
 
-        getFragmentManager().beginTransaction().add(R.id.attach_holder,
-                Camera2BasicFragment.newInstance()).commit();
+        Camera2BasicFragment fragment = Camera2BasicFragment.newInstance();
+        getFragmentManager().beginTransaction().add(R.id.attach_holder, fragment).commit();
+        fragment.attachImageSavedCallback(this);
     }
 
     private void attachGif() {
@@ -442,6 +452,26 @@ public class MessageListFragment extends Fragment {
     private void recordAudio() {
         attachHolder.removeAllViews();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onImageSaved(final File file) {
+        onBackPressed();
+
+        attachedImage.setVisibility(View.VISIBLE);
+        Glide.with(getContext())
+                .load(file)
+                .into(attachedImage);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (attachLayout.getVisibility() == View.VISIBLE) {
+            attach.performClick();
+            return true;
+        }
+
+        return false;
     }
 
 }

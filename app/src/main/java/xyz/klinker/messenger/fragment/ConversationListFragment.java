@@ -214,7 +214,9 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public boolean onBackPressed() {
-        if (expandedConversation != null) {
+        if (messageListFragment != null && messageListFragment.onBackPressed()) {
+            return true;
+        } else if (expandedConversation != null) {
             expandedConversation.itemView.performClick();
             return true;
         } else {
