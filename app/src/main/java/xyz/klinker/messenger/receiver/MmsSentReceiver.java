@@ -26,6 +26,7 @@ import android.provider.Telephony;
 import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 
@@ -40,7 +41,7 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        Uri uri = Uri.parse(intent.getStringExtra(EXTRA_CONTENT_URI));
+        Uri uri = Uri.parse(intent.getStringExtra(EXTRA_CONTENT_URI).replace("/outbox", ""));
         Cursor message = SmsMmsUtil.getMmsMessage(context, uri, null);
 
         if (message != null && message.moveToFirst()) {
@@ -51,11 +52,13 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
             source.open();
 
             for (ContentValues values : mmsParts) {
-                Cursor messages = source.searchMessages(values.getAsString(Message.COLUMN_DATA));
+                Cursor messages = source.searchMessages(values.getAsLong(Message.COLUMN_TIMESTAMP));
 
                 if (messages != null && messages.moveToFirst()) {
-                    long id = messages.getLong(0);
-                    source.updateMessageType(id, Message.TYPE_SENT);
+                    do {
+                        long id = messages.getLong(0);
+                        source.updateMessageType(id, Message.TYPE_SENT);
+                    } while (messages.moveToNext());
                     messages.close();
                 }
             }

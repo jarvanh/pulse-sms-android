@@ -41,6 +41,11 @@ public class SendUtil {
         send(context, text, addresses, null, null);
     }
 
+    public static void send(Context context, String text, String addresses, Uri data,
+                            String mimeType) {
+        send(context, text, addresses.split(", "), data, mimeType);
+    }
+
     public static void send(Context context, String text, String[] addresses, Uri data,
                             String mimeType) {
         Transaction transaction = new Transaction(context, new Settings());
@@ -48,7 +53,10 @@ public class SendUtil {
 
         if (data != null) {
             try {
-                message.addMedia(getBytes(context, data), mimeType);
+                // TODO do we need to resize the messages here before transfering to carrier app?
+                byte[] bytes = getBytes(context, data);
+                Log.v("Sending MMS", "size: " + bytes.length + " bytes, mime type: " + mimeType);
+                message.addMedia(bytes, mimeType);
             } catch (IOException e) {
                 Log.e("Sending Exception", "Could not attach media", e);
             }

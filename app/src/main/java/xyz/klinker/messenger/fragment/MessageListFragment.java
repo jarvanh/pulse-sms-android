@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -37,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -102,6 +104,9 @@ public class MessageListFragment extends Fragment implements
     private View attachedImageHolder;
     private ImageView attachedImage;
     private View removeImage;
+
+    private Uri attachedUri;
+    private String attachedMimeType;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         MessageListFragment fragment = new MessageListFragment();
@@ -246,6 +251,15 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
+        messageEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (attachLayout.getVisibility() == View.VISIBLE) {
+                    attach.performClick();
+                }
+            }
+        });
+
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
         send.setBackgroundTintList(ColorStateList.valueOf(accent));
         send.setOnClickListener(new View.OnClickListener() {
@@ -259,8 +273,7 @@ public class MessageListFragment extends Fragment implements
         removeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attachedImageHolder.setVisibility(View.GONE);
-                attachedImage.setImageDrawable(null);
+                clearAttachedData();
             }
         });
     }
@@ -405,9 +418,11 @@ public class MessageListFragment extends Fragment implements
         } else if (!PermissionsUtil.isDefaultSmsApp(getActivity())) {
             PermissionsUtil.setDefaultSmsApp(getActivity());
         } else {
-            String message = messageEntry.getText().toString().trim();
+            final String message = messageEntry.getText().toString().trim();
+            final Uri uri = attachedUri;
+            final String mimeType = attachedMimeType;
 
-            if (message.length() > 0) {
+            if (message.length() > 0 || attachedUri != null) {
                 final Message m = new Message();
                 m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
                 m.type = Message.TYPE_SENDING;
@@ -419,12 +434,30 @@ public class MessageListFragment extends Fragment implements
                 m.from = null;
                 m.color = null;
 
-                source.insertMessage(m, m.conversationId);
-                loadMessages();
+                if (message != null && message.length() != 0) {
+                    source.insertMessage(m, m.conversationId);
+                    loadMessages();
+                }
+
                 messageEntry.setText(null);
 
                 ConversationListFragment fragment = (ConversationListFragment) getActivity()
                         .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+
+                if (fragment != null) {
+                    fragment.notifyOfSentMessage(m);
+                }
+
+                if (uri != null) {
+                    m.data = uri.toString();
+                    m.mimeType = mimeType;
+
+                    source.insertMessage(m, m.conversationId);
+                    loadMessages();
+                }
+
+                clearAttachedData();
+
                 if (fragment != null) {
                     fragment.notifyOfSentMessage(m);
                 }
@@ -432,8 +465,8 @@ public class MessageListFragment extends Fragment implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SendUtil.send(getContext(), m.data,
-                                getArguments().getString(ARG_PHONE_NUMBERS));
+                        SendUtil.send(getContext(), message,
+                                getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                     }
                 }).start();
             }
@@ -441,12 +474,12 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachImage() {
-        attachHolder.removeAllViews();
+        prepareAttachHolder();
         attachHolder.addView(new AttachImageView(getActivity()));
     }
 
     private void captureImage() {
-        attachHolder.removeAllViews();
+        prepareAttachHolder();
 
         Camera2BasicFragment fragment = Camera2BasicFragment.newInstance();
         getFragmentManager().beginTransaction().add(R.id.attach_holder, fragment).commit();
@@ -454,23 +487,45 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachGif() {
-        attachHolder.removeAllViews();
+        prepareAttachHolder();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordVideo() {
-        attachHolder.removeAllViews();
+        prepareAttachHolder();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordAudio() {
-        attachHolder.removeAllViews();
+        prepareAttachHolder();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    private void prepareAttachHolder() {
+        dismissKeyboard();
+        attachHolder.removeAllViews();
+    }
+
+    private void clearAttachedData() {
+        attachedImageHolder.setVisibility(View.GONE);
+        attachedImage.setImageDrawable(null);
+        attachedUri = null;
+        attachedMimeType = null;
+    }
+
+    private void dismissKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
     }
 
     @Override
     public void onImageSaved(final File file) {
         onBackPressed();
+
+        clearAttachedData();
+        attachedUri = Uri.fromFile(file);
+        attachedMimeType = MimeType.IMAGE_JPG;
 
         attachedImageHolder.setVisibility(View.VISIBLE);
         Glide.with(getContext())

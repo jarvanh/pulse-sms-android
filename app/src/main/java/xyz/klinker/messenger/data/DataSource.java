@@ -366,6 +366,18 @@ public class DataSource {
     }
 
     /**
+     * Gets all messages that are within 5 seconds of the given timestamp.
+     *
+     * @param timestamp the message timestamp.
+     * @return the cursor of messages.
+     */
+    public Cursor searchMessages(long timestamp) {
+        return database.query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + " BETWEEN " +
+                (timestamp - 5000) + " AND " + (timestamp + 5000), null, null, null,
+                Message.COLUMN_TIMESTAMP + " desc");
+    }
+
+    /**
      * Updates the message with the given id to the given type.
      *
      * @param messageId the message to update.
