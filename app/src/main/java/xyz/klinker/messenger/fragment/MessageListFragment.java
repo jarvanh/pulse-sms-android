@@ -57,6 +57,7 @@ import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SendUtil;
+import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 
@@ -417,22 +418,29 @@ public class MessageListFragment extends Fragment {
     }
 
     private void attachImage() {
-
+        attachHolder.removeAllViews();
+        attachHolder.addView(new AttachImageView(getActivity()));
     }
 
     private void captureImage() {
+        attachHolder.removeAllViews();
 
+        getFragmentManager().beginTransaction().add(R.id.attach_holder,
+                Camera2BasicFragment.newInstance()).commit();
     }
 
     private void attachGif() {
+        attachHolder.removeAllViews();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordVideo() {
+        attachHolder.removeAllViews();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
     private void recordAudio() {
+        attachHolder.removeAllViews();
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
