@@ -99,7 +99,9 @@ public class MessageListFragment extends Fragment implements
     private ImageButton attachGif;
     private ImageButton recordVideo;
     private ImageButton recordAudio;
+    private View attachedImageHolder;
     private ImageView attachedImage;
+    private View removeImage;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         MessageListFragment fragment = new MessageListFragment();
@@ -139,7 +141,9 @@ public class MessageListFragment extends Fragment implements
         attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
         recordVideo = (ImageButton) view.findViewById(R.id.record_video);
         recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
+        attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
+        removeImage = (ImageView) view.findViewById(R.id.remove_image);
 
         ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
         frame.addListener(new ElasticDragDismissCallback() {
@@ -242,11 +246,21 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        send.setBackgroundTintList(ColorStateList.valueOf(getArguments().getInt(ARG_COLOR_ACCENT)));
+        int accent = getArguments().getInt(ARG_COLOR_ACCENT);
+        send.setBackgroundTintList(ColorStateList.valueOf(accent));
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
+            }
+        });
+
+        removeImage.setBackgroundColor(accent);
+        removeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attachedImageHolder.setVisibility(View.GONE);
+                attachedImage.setImageDrawable(null);
             }
         });
     }
@@ -458,7 +472,7 @@ public class MessageListFragment extends Fragment implements
     public void onImageSaved(final File file) {
         onBackPressed();
 
-        attachedImage.setVisibility(View.VISIBLE);
+        attachedImageHolder.setVisibility(View.VISIBLE);
         Glide.with(getContext())
                 .load(file)
                 .into(attachedImage);

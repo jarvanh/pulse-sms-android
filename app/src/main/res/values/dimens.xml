@@ -28,5 +28,6 @@
     <dimen name="conversation_list_header_padding">16dp</dimen>
     <dimen name="message_list_padding">0dp</dimen>
     <dimen name="max_message_width">310dp</dimen>
+    <dimen name="attached_image_size">96dp</dimen>
 
 </resources>
