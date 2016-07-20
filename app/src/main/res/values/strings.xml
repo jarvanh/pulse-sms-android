@@ -62,6 +62,11 @@
     <string name="now">Now</string>
     <string name="sending">Sending…</string>
     <string name="delivered">Message delivered</string>
+    <string name="attach_image">Attach Image</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="attach_gif">Attach GIF</string>
+    <string name="record_video">Record Video</string>
+    <string name="record_audio">Record Audio</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

@@ -55,6 +55,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (header == null && isBold()) {
+                    conversation.read = true;
                     setBold(false);
                 }
 

@@ -23,6 +23,7 @@ import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,8 +38,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -80,6 +83,14 @@ public class MessageListFragment extends Fragment {
     private RecyclerView messageList;
     private LinearLayoutManager manager;
     private MessageListAdapter adapter;
+    private View attachLayout;
+    private FrameLayout attachHolder;
+    private View attachButtonHolder;
+    private ImageButton attachImage;
+    private ImageButton captureImage;
+    private ImageButton attachGif;
+    private ImageButton recordVideo;
+    private ImageButton recordAudio;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         MessageListFragment fragment = new MessageListFragment();
@@ -111,6 +122,14 @@ public class MessageListFragment extends Fragment {
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
+        attachLayout = view.findViewById(R.id.attach_layout);
+        attachHolder = (FrameLayout) view.findViewById(R.id.attach_holder);
+        attachButtonHolder = view.findViewById(R.id.attach_button_holder);
+        attachImage = (ImageButton) view.findViewById(R.id.attach_image);
+        captureImage = (ImageButton) view.findViewById(R.id.capture_image);
+        attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
+        recordVideo = (ImageButton) view.findViewById(R.id.record_video);
+        recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
 
         ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
         frame.addListener(new ElasticDragDismissCallback() {
@@ -121,6 +140,7 @@ public class MessageListFragment extends Fragment {
         });
 
         initSendbar();
+        initAttachHolder();
         initToolbar();
         initRecycler();
 
@@ -161,7 +181,7 @@ public class MessageListFragment extends Fragment {
         ColorUtil.setCursorDrawableColor(messageEntry, colorAccent);
     }
 
-    public void setNameAndDrawerColor(Activity activity) {
+    private void setNameAndDrawerColor(Activity activity) {
         String name = getArguments().getString(ARG_TITLE);
         String phoneNumber = PhoneNumberUtil.format(getArguments().getString(ARG_PHONE_NUMBERS));
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
@@ -217,6 +237,57 @@ public class MessageListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sendMessage();
+            }
+        });
+    }
+
+    private void initAttachHolder() {
+        attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
+        attach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (attachLayout.getVisibility() == View.VISIBLE) {
+                    attachHolder.removeAllViews();
+                    attachLayout.setVisibility(View.GONE);
+                } else {
+                    attachImage();
+                    attachLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        attachImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attachImage();
+            }
+        });
+
+        captureImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureImage();
+            }
+        });
+
+        attachGif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attachGif();
+            }
+        });
+
+        recordVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recordVideo();
+            }
+        });
+
+        recordAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recordAudio();
             }
         });
     }
@@ -343,6 +414,26 @@ public class MessageListFragment extends Fragment {
                 }).start();
             }
         }
+    }
+
+    private void attachImage() {
+
+    }
+
+    private void captureImage() {
+
+    }
+
+    private void attachGif() {
+        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    private void recordVideo() {
+        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    private void recordAudio() {
+        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
 }

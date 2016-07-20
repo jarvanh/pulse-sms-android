@@ -104,5 +104,86 @@
                 app:fabSize="mini"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="288dp"
+            android:orientation="vertical"
+            android:id="@+id/attach_layout"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/attach_holder"
+                android:background="@color/drawerBackground"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:id="@+id/attach_button_holder"
+                android:gravity="center_horizontal"
+                android:background="@color/colorPrimary">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/attach_image"
+                    android:contentDescription="@string/attach_image"
+                    android:src="@drawable/ic_image"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/capture_image"
+                    android:contentDescription="@string/capture_image"
+                    android:src="@drawable/ic_capture_photo"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/attach_gif"
+                    android:contentDescription="@string/attach_gif"
+                    android:src="@drawable/ic_gif"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/record_video"
+                    android:contentDescription="@string/record_video"
+                    android:src="@drawable/ic_record_video"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/record_audio"
+                    android:contentDescription="@string/record_audio"
+                    android:src="@drawable/ic_record_audio"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </xyz.klinker.messenger.view.ElasticDragDismissFrameLayout>
