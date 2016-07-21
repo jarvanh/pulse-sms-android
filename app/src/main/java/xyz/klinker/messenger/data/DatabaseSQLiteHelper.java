@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -39,7 +40,8 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
             new Conversation(),
             new Message(),
             new Draft(),
-            new ScheduledMessage()
+            new ScheduledMessage(),
+            new Blacklist()
     };
 
     /**
