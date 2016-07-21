@@ -47,6 +47,8 @@ import xyz.klinker.messenger.util.listener.BackPressedListener;
 public class MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String EXTRA_CONVERSATION_ID = "conversation_id";
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
@@ -119,7 +121,7 @@ public class MessengerActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // TODO start compose activity
             }
         });
     }
@@ -221,7 +223,15 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
-        conversationListFragment = ConversationListFragment.newInstance();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
+            conversationListFragment = ConversationListFragment
+                    .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0));
+            getIntent().getExtras().remove(EXTRA_CONVERSATION_ID);
+        } else {
+            conversationListFragment = ConversationListFragment.newInstance();
+        }
+
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
                 .replace(R.id.conversation_list_container, conversationListFragment)

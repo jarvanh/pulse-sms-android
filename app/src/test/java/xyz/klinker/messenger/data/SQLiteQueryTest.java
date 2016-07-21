@@ -287,6 +287,24 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         assertEquals(1, source.getUnreadMessages().getCount());
     }
 
+    @Test
+    public void seenConversation() {
+        assertEquals(1, source.getUnseenMessages().getCount());
+        assertEquals(2, source.getUnreadMessages().getCount());
+        source.seenConversation(1);
+        assertEquals(0, source.getUnseenMessages().getCount());
+        assertEquals(2, source.getUnreadMessages().getCount());
+    }
+
+    @Test
+    public void seenAllMessages() {
+        assertEquals(1, source.getUnseenMessages().getCount());
+        assertEquals(2, source.getUnreadMessages().getCount());
+        source.seenAllMessages();
+        assertEquals(0, source.getUnseenMessages().getCount());
+        assertEquals(2, source.getUnreadMessages().getCount());
+    }
+
     private void insertData() throws Exception {
         SQLiteDatabase database = source.getDatabase();
         FixtureLoader loader = new FixtureLoader();

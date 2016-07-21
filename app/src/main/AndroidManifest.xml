@@ -42,7 +42,8 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".activity.MessengerActivity"
-            android:theme="@style/AppTheme.MessengerActivity">
+            android:theme="@style/AppTheme.MessengerActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -123,6 +124,7 @@
         </service>
 
         <service android:name=".service.NotificationService" />
+        <service android:name=".service.NotificationDismissedService" />
 
     </application>
 

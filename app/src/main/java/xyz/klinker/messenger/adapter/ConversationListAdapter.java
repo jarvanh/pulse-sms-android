@@ -190,4 +190,34 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
     }
 
+    public int findPositionForConversationId(long conversationId) {
+        int headersAbove = 1;
+        int conversationPosition = -1;
+
+        for (int i = 0; i < conversations.size(); i++) {
+            if (conversations.get(i).id == conversationId) {
+                conversationPosition = i;
+                break;
+            }
+        }
+
+        if (conversationPosition == -1) {
+            return -1;
+        }
+
+        int totalSectionsCount = 0;
+
+        for (int i = 0; i < sectionCounts.size(); i++) {
+            totalSectionsCount += sectionCounts.get(i).count;
+
+            if (conversationPosition < totalSectionsCount) {
+                break;
+            } else {
+                headersAbove++;
+            }
+        }
+
+        return conversationPosition + headersAbove;
+    }
+
 }

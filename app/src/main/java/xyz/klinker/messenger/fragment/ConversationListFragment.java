@@ -53,6 +53,8 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
 public class ConversationListFragment extends Fragment
         implements SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener {
 
+    private static final String EXTRA_CONVERSATION_TO_OPEN_ID = "conversation_to_open";
+
     private View empty;
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
@@ -62,6 +64,14 @@ public class ConversationListFragment extends Fragment
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
+    }
+
+    public static ConversationListFragment newInstance(long conversationToOpenId) {
+        ConversationListFragment fragment = new ConversationListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(EXTRA_CONVERSATION_TO_OPEN_ID, conversationToOpenId);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -105,13 +115,12 @@ public class ConversationListFragment extends Fragment
             throw new RuntimeException("RecyclerView not yet initialized");
         }
 
-        if (recyclerView.getAdapter() != null) {
-            ConversationListAdapter adapter = (ConversationListAdapter) recyclerView.getAdapter();
+        ConversationListAdapter adapter = (ConversationListAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
         } else {
-            ConversationListAdapter adapter =
-                    new ConversationListAdapter(conversations, this, this);
+            adapter = new ConversationListAdapter(conversations, this, this);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(adapter);
@@ -121,7 +130,41 @@ public class ConversationListFragment extends Fragment
             touchHelper.attachToRecyclerView(recyclerView);
         }
 
+        if (getArguments() != null) {
+            long conversationToOpen = getArguments().getLong(EXTRA_CONVERSATION_TO_OPEN_ID, 0);
+            if (conversationToOpen != 0) {
+                Log.v("Conversation List", "open conversation with id " + conversationToOpen);
+                final int conversationPosition = adapter
+                        .findPositionForConversationId(conversationToOpen);
+
+                if (conversationPosition == -1) {
+                    Log.v("Conversation List", "couldn't find position to open in adapter");
+                } else {
+                    Log.v("Conversation List", "clicking conversation at position "
+                            + conversationPosition);
+                    clickConversationAtPosition(conversationPosition);
+                }
+            }
+        } else {
+            Log.v("Conversation List", "no conversations to open");
+        }
+
         checkEmptyViewDisplay();
+    }
+
+    private void clickConversationAtPosition(final int position) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    recyclerView.findViewHolderForAdapterPosition(position)
+                            .itemView.performClick();
+                } catch (Exception e) {
+                    // not yet ready to click
+                    clickConversationAtPosition(position);
+                }
+            }
+        }, 100);
     }
 
     private void checkEmptyViewDisplay() {

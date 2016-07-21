@@ -199,6 +199,24 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(0, adapter.getSectionCount());
     }
 
+    @Test
+    public void findPositionForConversationId() {
+        assertEquals(1, adapter.findPositionForConversationId(1));
+        assertEquals(2, adapter.findPositionForConversationId(2));
+        assertEquals(4, adapter.findPositionForConversationId(3));
+        assertEquals(6, adapter.findPositionForConversationId(4));
+        assertEquals(7, adapter.findPositionForConversationId(5));
+        assertEquals(9, adapter.findPositionForConversationId(6));
+        assertEquals(10, adapter.findPositionForConversationId(7));
+    }
+
+    @Test
+    public void findPositionForConversationIdNonexistant() {
+        assertEquals(-1, adapter.findPositionForConversationId(-1));
+        assertEquals(-1, adapter.findPositionForConversationId(0));
+        assertEquals(-1, adapter.findPositionForConversationId(8));
+    }
+
     private ConversationViewHolder getMockedViewHolder() {
         ConversationViewHolder holder = new ConversationViewHolder(
                 new View(RuntimeEnvironment.application), conversationExpandedListener);

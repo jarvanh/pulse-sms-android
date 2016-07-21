@@ -51,6 +51,10 @@ public class ImageUtil {
      * Clips a provided bitmap to a circle.
      */
     public static Bitmap clipToCircle(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+
         final int width = bitmap.getWidth();
         final int height = bitmap.getHeight();
         final Bitmap outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);

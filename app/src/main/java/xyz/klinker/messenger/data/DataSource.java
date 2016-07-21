@@ -502,7 +502,7 @@ public class DataSource {
      * @param conversationId the conversation id to mark.
      */
     public void readConversation(Context context, long conversationId) {
-        ContentValues values = new ContentValues(1);
+        ContentValues values = new ContentValues(2);
         values.put(Message.COLUMN_READ, 1);
         values.put(Message.COLUMN_SEEN, 1);
 
@@ -521,6 +521,27 @@ public class DataSource {
         } catch (NullPointerException e) {
             // thrown in robolectric tests
         }
+    }
+
+    /**
+     * Marks all messages in a conversation as seen.
+     */
+    public void seenConversation(long conversationId) {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_SEEN, 1);
+
+        database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND " +
+                Message.COLUMN_SEEN + "=0", new String[] {Long.toString(conversationId)});
+    }
+
+    /**
+     * Mark all messages as seen.
+     */
+    public void seenAllMessages() {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_SEEN, 1);
+
+        database.update(Message.TABLE, values, Message.COLUMN_SEEN + "=0", null);
     }
 
     /**

@@ -18,6 +18,7 @@ package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -179,7 +181,20 @@ public class NotificationService extends IntentService {
                 .build());
 
         // TODO set reply action and wearable extender
-        // TODO set deleted intent to mark message as seen and content intent to open conversation
+
+        Intent delete = new Intent(this, NotificationDismissedService.class);
+        delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
+        PendingIntent pendingDelete = PendingIntent.getService(this, (int) conversation.id,
+                delete, PendingIntent.FLAG_ONE_SHOT);
+
+        Intent open = new Intent(this, MessengerActivity.class);
+        open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
+        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
+                open, PendingIntent.FLAG_ONE_SHOT);
+
+        builder.setDeleteIntent(pendingDelete);
+        builder.setContentIntent(pendingOpen);
 
         NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
 
@@ -192,11 +207,9 @@ public class NotificationService extends IntentService {
      */
     private void giveSummaryNotification(LongSparseArray<NotificationConversation> conversations,
                                          List<String> rows) {
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-
         StringBuilder summaryBuilder = new StringBuilder();
         for (int i = 0; i < conversations.size(); i++) {
-            summaryBuilder.append(conversations.get(conversations.keyAt(i)));
+            summaryBuilder.append(conversations.get(conversations.keyAt(i)).title);
             summaryBuilder.append(", ");
         }
 
@@ -224,7 +237,6 @@ public class NotificationService extends IntentService {
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(title)
                 .setContentText(summary)
-                .setLargeIcon(largeIcon)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
                 .setAutoCancel(true)
@@ -233,11 +245,19 @@ public class NotificationService extends IntentService {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
 
+        Intent delete = new Intent(this, NotificationDismissedService.class);
+        PendingIntent pendingDelete = PendingIntent.getService(this, 0,
+                delete, PendingIntent.FLAG_ONE_SHOT);
+
+        Intent open = new Intent(this, MessengerActivity.class);
+        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingOpen = PendingIntent.getActivity(this, 0,
+                open, PendingIntent.FLAG_ONE_SHOT);
+
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(title)
                 .setContentText(summary)
-                .setLargeIcon(largeIcon)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
                 .setAutoCancel(true)
@@ -250,6 +270,8 @@ public class NotificationService extends IntentService {
                 .setWhen(conversations.get(conversations.keyAt(conversations.size() - 1)).timestamp)
                 .setStyle(style)
                 .setPublicVersion(publicVersion)
+                .setDeleteIntent(pendingDelete)
+                .setContentIntent(pendingOpen)
                 .build();
 
         NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
