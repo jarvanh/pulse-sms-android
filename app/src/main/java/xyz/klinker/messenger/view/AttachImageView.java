@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.view;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -36,6 +37,7 @@ import xyz.klinker.messenger.util.listener.ImageSelectedListener;
  * View that displays a list of images that are currently on your device and allows you to choose
  * one to attach to a message.
  */
+@SuppressLint("ViewConstructor")
 public class AttachImageView extends RecyclerView {
 
     private Cursor images;
