@@ -59,17 +59,21 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         when(source.getUnseenMessages()).thenReturn(getUnseenCursor());
         when(source.getConversation(1)).thenReturn(getConversation1());
         when(source.getConversation(2)).thenReturn(getConversation2());
+        when(source.getConversation(3)).thenReturn(getConversation3());
 
         LongSparseArray<NotificationConversation> conversations = service.getUnseenConversations();
 
-        assertEquals(2, conversations.size());
+        assertEquals(3, conversations.size());
         assertEquals("Luke Klinker", conversations.get(1).title);
-        assertEquals(2, conversations.get(1).messages.size());
+        assertEquals(3, conversations.get(1).messages.size());
         assertEquals("Hey what's up?", conversations.get(1).messages.get(0).data);
         assertEquals("Yo, you around?", conversations.get(1).messages.get(1).data);
+        assertEquals("Hello?", conversations.get(1).messages.get(2).data);
         assertEquals("Aaron Klinker", conversations.get(2).title);
         assertEquals(1, conversations.get(2).messages.size());
         assertEquals("Can we hang out tonight?", conversations.get(2).messages.get(0).data);
+        assertEquals(1, conversations.get(3).messages.size());
+        assertEquals("image/jpg", conversations.get(3).messages.get(0).mimeType);
     }
 
     private Cursor getUnseenCursor() {
@@ -101,6 +105,20 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 3000L
         });
 
+        cursor.addRow(new Object[] {
+                1,
+                "Hello?",
+                "text/plain",
+                4000L
+        });
+
+        cursor.addRow(new Object[] {
+                3,
+                "content://mms/part/1",
+                "image/jpg",
+                5000L
+        });
+
         return cursor;
     }
 
@@ -113,6 +131,12 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     private Conversation getConversation2() {
         Conversation conversation = new Conversation();
         conversation.title = "Aaron Klinker";
+        return conversation;
+    }
+
+    private Conversation getConversation3() {
+        Conversation conversation = new Conversation();
+        conversation.title = "Andrew Klinker";
         return conversation;
     }
 
