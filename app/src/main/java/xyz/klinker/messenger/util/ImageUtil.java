@@ -19,8 +19,11 @@ package xyz.klinker.messenger.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
 
 import java.io.InputStream;
@@ -32,6 +35,38 @@ import xyz.klinker.messenger.data.model.Conversation;
  * Helper for working with images.
  */
 public class ImageUtil {
+
+    /**
+     * Gets a bitmap from the provided uri. Returns null if the bitmap cannot be found.
+     */
+    public static Bitmap getBitmap(Context context, String uri) {
+        try {
+            return MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(uri));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Clips a provided bitmap to a circle.
+     */
+    public static Bitmap clipToCircle(Bitmap bitmap) {
+        final int width = bitmap.getWidth();
+        final int height = bitmap.getHeight();
+        final Bitmap outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        final Path path = new Path();
+        path.addCircle(
+                (float)(width / 2),
+                (float)(height / 2),
+                (float) Math.min(width, (height / 2)),
+                Path.Direction.CCW);
+
+        final Canvas canvas = new Canvas(outputBitmap);
+        canvas.clipPath(path);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        return outputBitmap;
+    }
 
     /**
      * Gets a bitmap from a contact URI.

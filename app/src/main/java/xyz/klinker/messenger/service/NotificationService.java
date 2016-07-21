@@ -17,24 +17,37 @@
 package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.text.Html;
 import android.util.LongSparseArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ImageUtil;
 
 /**
  * Service for displaying notifications to the user based on which conversations have not been
  * seen yet.
  */
 public class NotificationService extends IntentService {
+
+    private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
+    private static final int SUMMARY_ID = 0;
 
     public NotificationService() {
         super("NotificationService");
@@ -43,6 +56,14 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
+        List<String> rows = new ArrayList<>();
+
+        for (int i = 0; i < conversations.size(); i++) {
+            NotificationConversation conversation = conversations.get(conversations.keyAt(i));
+            rows.add(giveConversationNotification(conversation));
+        }
+
+        giveSummaryNotification(conversations, rows);
     }
 
     @VisibleForTesting
@@ -67,8 +88,14 @@ public class NotificationService extends IntentService {
                 NotificationConversation conversation = conversations.get(conversationId);
 
                 if (conversation == null) {
+                    Conversation c = source.getConversation(conversationId);
                     conversation = new NotificationConversation();
-                    conversation.title = source.getConversation(conversationId).title;
+                    conversation.id = c.id;
+                    conversation.title = c.title;
+                    conversation.imageUri = c.imageUri;
+                    conversation.color = c.colors.color;
+                    conversation.ringtoneUri = c.ringtoneUri;
+                    conversation.timestamp = c.timestamp;
                     conversations.put(conversationId, conversation);
                 }
 
@@ -82,6 +109,152 @@ public class NotificationService extends IntentService {
         return conversations;
     }
 
+    /**
+     * Displays a notification for a single conversation.
+     */
+    private String giveConversationNotification(NotificationConversation conversation) {
+        Bitmap contactImage = ImageUtil.clipToCircle(
+                ImageUtil.getBitmap(this, conversation.imageUri));
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(conversation.title)
+                .setAutoCancel(true)
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setColor(conversation.color)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setGroup(GROUP_KEY_MESSAGES)
+                .setLargeIcon(contactImage)
+                .setOnlyAlertOnce(true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setShowWhen(true)
+                .setSound(conversation.ringtoneUri == null ?
+                        null : Uri.parse(conversation.ringtoneUri))
+                .setTicker(getString(R.string.notification_ticker, conversation.title))
+                .setVisibility(Notification.VISIBILITY_PRIVATE)
+                .setWhen(conversation.timestamp);
+
+        NotificationCompat.BigPictureStyle pictureStyle = null;
+
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < conversation.messages.size(); i++) {
+            NotificationMessage message = conversation.messages.get(i);
+
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                text.append(conversation.messages.get(i).data);
+                text.append(" | ");
+            } else if (message.mimeType.startsWith("image/")) {
+                pictureStyle = new NotificationCompat.BigPictureStyle()
+                        .bigPicture(ImageUtil.getBitmap(this, message.data));
+            }
+        }
+
+        String content = text.toString();
+        if (content.endsWith(" | ")) {
+            content = content.substring(0, content.length() - 3);
+        }
+
+        builder.setContentText(content);
+
+        if (pictureStyle != null) {
+            pictureStyle.setSummaryText(content);
+            builder.setStyle(pictureStyle);
+        } else {
+            builder.setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(content));
+        }
+
+        builder.setPublicVersion(new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(conversation.title)
+                .setContentText(getResources().getQuantityString(R.plurals.new_messages,
+                        conversation.messages.size(), conversation.messages.size()))
+                .setLargeIcon(contactImage)
+                .setColor(conversation.color)
+                .setAutoCancel(true)
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setColor(conversation.color)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setGroup(GROUP_KEY_MESSAGES)
+                .build());
+
+        // TODO set reply action and wearable extender
+        // TODO set deleted intent to mark message as seen and content intent to open conversation
+
+        NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+
+        return "<b>" + conversation.title + "</b>  " + content;
+    }
+
+    /**
+     * Displays a summary notification for all conversations using the rows returned by each
+     * individual notification.
+     */
+    private void giveSummaryNotification(LongSparseArray<NotificationConversation> conversations,
+                                         List<String> rows) {
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        StringBuilder summaryBuilder = new StringBuilder();
+        for (int i = 0; i < conversations.size(); i++) {
+            summaryBuilder.append(conversations.get(conversations.keyAt(i)));
+            summaryBuilder.append(", ");
+        }
+
+        String summary = summaryBuilder.toString();
+        if (summary.endsWith(", ")) {
+            summary = summary.substring(0, summary.length() - 2);
+        }
+
+        String title = getResources().getQuantityString(R.plurals.new_conversations,
+                conversations.size(), conversations.size());
+
+        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
+                .setSummaryText(summary)
+                .setBigContentTitle(title);
+
+        for (String row : rows) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                style.addLine(Html.fromHtml(row, 0));
+            } else {
+                style.addLine(Html.fromHtml(row));
+            }
+        }
+
+        Notification publicVersion = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(title)
+                .setContentText(summary)
+                .setLargeIcon(largeIcon)
+                .setGroup(GROUP_KEY_MESSAGES)
+                .setGroupSummary(true)
+                .setAutoCancel(true)
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(title)
+                .setContentText(summary)
+                .setLargeIcon(largeIcon)
+                .setGroup(GROUP_KEY_MESSAGES)
+                .setGroupSummary(true)
+                .setAutoCancel(true)
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setShowWhen(true)
+                .setTicker(title)
+                .setVisibility(Notification.VISIBILITY_PRIVATE)
+                .setWhen(conversations.get(conversations.keyAt(conversations.size() - 1)).timestamp)
+                .setStyle(style)
+                .setPublicVersion(publicVersion)
+                .build();
+
+        NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
+    }
+
     @VisibleForTesting
     DataSource getDataSource() {
         return DataSource.getInstance(this);
@@ -89,7 +262,12 @@ public class NotificationService extends IntentService {
 
     @VisibleForTesting
     class NotificationConversation {
+        public long id;
         public String title;
+        public String imageUri;
+        public int color;
+        public String ringtoneUri;
+        public long timestamp;
         public List<NotificationMessage> messages;
 
         private NotificationConversation() {

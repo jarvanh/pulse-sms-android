@@ -83,4 +83,16 @@
     <string name="loading_messages_summary">Just working on getting your messages into the app, it
         won\'t take long!</string>
 
+    <!-- Notifications -->
+    <string name="new_mms_message">New MMS message</string>
+    <string name="notification_ticker">New message from %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d new conversation</item>
+        <item quantity="other">%1$d new conversations</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d new message</item>
+        <item quantity="other">%1$d new messages</item>
+    </plurals>
+
 </resources>
