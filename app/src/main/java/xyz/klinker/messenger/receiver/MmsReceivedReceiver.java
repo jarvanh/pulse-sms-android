@@ -26,6 +26,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
@@ -39,6 +40,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
+        insertMms(context);
+        context.startService(new Intent(context, NotificationService.class));
+    }
+
+    private void insertMms(Context context) {
         Cursor lastMessage = SmsMmsUtil.getLastMmsMessage(context);
 
         if (lastMessage != null && lastMessage.moveToFirst()) {

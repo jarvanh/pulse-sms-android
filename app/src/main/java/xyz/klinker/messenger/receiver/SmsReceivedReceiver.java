@@ -30,6 +30,7 @@ import android.util.Log;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 
@@ -64,6 +65,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
         insertInternalSms(context, address, body, date);
         insertSms(context, address, body);
+
+        context.startService(new Intent(context, NotificationService.class));
     }
 
     private void insertInternalSms(Context context, String address, String body, long dateSent) {
