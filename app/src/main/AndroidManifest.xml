@@ -125,6 +125,7 @@
 
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />
+        <service android:name=".service.ReplyService" />
 
     </application>
 

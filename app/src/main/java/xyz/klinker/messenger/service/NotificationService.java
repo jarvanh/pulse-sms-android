@@ -25,10 +25,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.RemoteInput;
 import android.text.Html;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ import xyz.klinker.messenger.util.ImageUtil;
 public class NotificationService extends IntentService {
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
-    private static final int SUMMARY_ID = 0;
+    public static final int SUMMARY_ID = 0;
 
     public NotificationService() {
         super("NotificationService");
@@ -60,12 +63,16 @@ public class NotificationService extends IntentService {
         LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
         List<String> rows = new ArrayList<>();
 
-        for (int i = 0; i < conversations.size(); i++) {
-            NotificationConversation conversation = conversations.get(conversations.keyAt(i));
-            rows.add(giveConversationNotification(conversation));
-        }
+        if (conversations.size() > 0) {
+            for (int i = 0; i < conversations.size(); i++) {
+                NotificationConversation conversation = conversations.get(conversations.keyAt(i));
+                rows.add(giveConversationNotification(conversation));
+            }
 
-        giveSummaryNotification(conversations, rows);
+            if (conversations.size() > 1) {
+                giveSummaryNotification(conversations, rows);
+            }
+        }
     }
 
     @VisibleForTesting
@@ -124,7 +131,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(conversation.color)
-                .setDefaults(Notification.DEFAULT_ALL)
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
                 .setOnlyAlertOnce(true)
@@ -176,11 +183,33 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(conversation.color)
-                .setDefaults(Notification.DEFAULT_ALL)
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .build());
 
-        // TODO set reply action and wearable extender
+
+        // one thing to keep in mind here... my adding only a wearable extender to the notification,
+        // will the action be shown on phones or only on wear devices? If it is shown on phones, is
+        // it only shown on Nougat+ where these actions can be accepted?
+        RemoteInput remoteInput = new RemoteInput.Builder(ReplyService.EXTRA_REPLY)
+                .setLabel(getString(R.string.reply_to, conversation.title))
+                .setChoices(getResources().getStringArray(R.array.reply_choices))
+                .setAllowFreeFormInput(true)
+                .build();
+
+        Intent reply = new Intent(this, ReplyService.class);
+        reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+        PendingIntent pendingReply = PendingIntent.getService(this, (int) conversation.id,
+                reply, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+                        getString(R.string.reply), pendingReply)
+                .addRemoteInput(remoteInput)
+                .build();
+
+        builder.extend(new NotificationCompat.WearableExtender().addAction(action));
+
 
         Intent delete = new Intent(this, NotificationDismissedService.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);

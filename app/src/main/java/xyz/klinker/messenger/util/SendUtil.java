@@ -53,7 +53,7 @@ public class SendUtil {
 
         if (data != null) {
             try {
-                // TODO do we need to resize the messages here before transfering to carrier app?
+                // TODO do we need to resize the messages here before transferring to carrier app?
                 byte[] bytes = getBytes(context, data);
                 Log.v("Sending MMS", "size: " + bytes.length + " bytes, mime type: " + mimeType);
                 message.addMedia(bytes, mimeType);
