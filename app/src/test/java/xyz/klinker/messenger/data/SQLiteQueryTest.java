@@ -180,6 +180,12 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void searchMessagesTimestamp() {
+        Cursor messages = source.searchMessages(1000);
+        assertEquals(5, messages.getCount());
+    }
+
+    @Test
     public void updateMessageType() {
         source.updateMessageType(1, Message.TYPE_SENT);
         Cursor messages = source.getMessages(1);

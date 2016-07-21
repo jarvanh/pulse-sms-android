@@ -74,6 +74,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                                            int[] grantResults) {
         if (PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults)) {
             startDatabaseSync();
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

@@ -16,8 +16,19 @@
 
 package xyz.klinker.messenger.view;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.BaseColumns;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.AttachImageListAdapter;
+import xyz.klinker.messenger.data.MimeType;
 
 /**
  * View that displays a list of images that are currently on your device and allows you to choose
@@ -25,8 +36,33 @@ import android.support.v7.widget.RecyclerView;
  */
 public class AttachImageView extends RecyclerView {
 
+    private Cursor images;
+
     public AttachImageView(Context context) {
         super(context);
+        init();
+    }
+
+    private void init() {
+        ContentResolver cr = getContext().getContentResolver();
+        images = Images.Media.query(cr, Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] {BaseColumns._ID, MediaStore.MediaColumns.DATA},
+                Images.Media.MIME_TYPE + " in (?, ?, ?)", new String[] {
+                        MimeType.IMAGE_JPEG, MimeType.IMAGE_PNG, MimeType.IMAGE_JPG
+                }, Images.Media.DATE_TAKEN + " DESC");
+
+        setLayoutManager(new GridLayoutManager(getContext(),
+                getResources().getInteger(R.integer.images_column_count)));
+        setAdapter(new AttachImageListAdapter(images));
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (!images.isClosed()) {
+            images.close();
+        }
     }
 
 }

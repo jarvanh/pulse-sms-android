@@ -16,17 +16,21 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +43,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -74,7 +79,7 @@ import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismi
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        Camera2BasicFragment.ImageSavedCallback, BackPressedListener {
+        Camera2BasicFragment.ImageSavedCallback {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -83,6 +88,8 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_COLOR_ACCENT = "color_accent";
     private static final String ARG_IS_GROUP = "is_group";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
+
+    private static final int PERMISSION_STORAGE_REQUEST = 1;
 
     private DataSource source;
     private View appBarLayout;
@@ -149,12 +156,17 @@ public class MessageListFragment extends Fragment implements
         recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
         attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
-        removeImage = (ImageView) view.findViewById(R.id.remove_image);
+        removeImage = view.findViewById(R.id.remove_image);
 
-        ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
+        final ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
         frame.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
+                if (attachLayout.getVisibility() == View.VISIBLE) {
+                    attach.performClick();
+                }
+
+                frame.removeListener(this);
                 getActivity().onBackPressed();
             }
         });
@@ -476,7 +488,12 @@ public class MessageListFragment extends Fragment implements
 
     private void attachImage() {
         prepareAttachHolder(0);
-        attachHolder.addView(new AttachImageView(getActivity()));
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            attachHolder.addView(new AttachImageView(getActivity()));
+        } else {
+            attachPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
     }
 
     private void captureImage() {
@@ -500,6 +517,27 @@ public class MessageListFragment extends Fragment implements
     private void recordAudio() {
         prepareAttachHolder(4);
         Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    private void attachPermissionRequest(final String permission) {
+        getLayoutInflater(null).inflate(R.layout.permission_request, attachHolder, true);
+        Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestPermissions(new String[] {permission}, PERMISSION_STORAGE_REQUEST);
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_STORAGE_REQUEST) {
+            attachImage();
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void prepareAttachHolder(int positionToBold) {
@@ -542,7 +580,6 @@ public class MessageListFragment extends Fragment implements
                 .into(attachedImage);
     }
 
-    @Override
     public boolean onBackPressed() {
         if (attachLayout.getVisibility() == View.VISIBLE) {
             attach.performClick();

@@ -88,6 +88,7 @@ public class MessengerActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private boolean checkInitialStart() {

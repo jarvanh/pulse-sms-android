@@ -73,6 +73,8 @@
     <string name="flip_picture">Flip Camera</string>
     <string name="attached_image">Attached Image</string>
     <string name="remove_image">Remove Attached Image</string>
+    <string name="permission_needed_for_action">Permissions needed for this action.</string>
+    <string name="request_permission">Request Permission</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to
