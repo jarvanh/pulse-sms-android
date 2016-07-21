@@ -17,6 +17,9 @@
 package xyz.klinker.messenger.fragment;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -294,13 +297,38 @@ public class MessageListFragment extends Fragment implements
         attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ValueAnimator animator;
+
                 if (attachLayout.getVisibility() == View.VISIBLE) {
-                    attachHolder.removeAllViews();
-                    attachLayout.setVisibility(View.GONE);
+                    animator = ValueAnimator.ofInt(attachLayout.getHeight(), 0);
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            attachHolder.removeAllViews();
+                            attachLayout.setVisibility(View.GONE);
+                        }
+                    });
                 } else {
                     attachImage();
                     attachLayout.setVisibility(View.VISIBLE);
+                    animator = ValueAnimator.ofInt(0,
+                            getResources().getDimensionPixelSize(R.dimen.attach_menu_height));
                 }
+
+                final ViewGroup.MarginLayoutParams params =
+                        (ViewGroup.MarginLayoutParams) attachLayout.getLayoutParams();
+
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        params.height= (Integer) valueAnimator.getAnimatedValue();
+                        attachLayout.requestLayout();
+                    }
+                });
+
+                animator.setDuration(200);
+                animator.start();
             }
         });
 

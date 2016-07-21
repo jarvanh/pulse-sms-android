@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
@@ -51,23 +52,35 @@ public class AttachImageView extends RecyclerView {
     }
 
     private void init() {
-        ContentResolver cr = getContext().getContentResolver();
-        images = Images.Media.query(cr, Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] {BaseColumns._ID, MediaStore.MediaColumns.DATA},
-                Images.Media.MIME_TYPE + " in (?, ?, ?)", new String[] {
-                        MimeType.IMAGE_JPEG, MimeType.IMAGE_PNG, MimeType.IMAGE_JPG
-                }, Images.Media.DATE_TAKEN + " DESC");
+        final Handler handler = new Handler();
 
-        setLayoutManager(new GridLayoutManager(getContext(),
-                getResources().getInteger(R.integer.images_column_count)));
-        setAdapter(new AttachImageListAdapter(images, callback));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentResolver cr = getContext().getContentResolver();
+                images = Images.Media.query(cr, Images.Media.EXTERNAL_CONTENT_URI,
+                        new String[] {BaseColumns._ID, MediaStore.MediaColumns.DATA},
+                        Images.Media.MIME_TYPE + " in (?, ?, ?)", new String[] {
+                                MimeType.IMAGE_JPEG, MimeType.IMAGE_PNG, MimeType.IMAGE_JPG
+                        }, Images.Media.DATE_TAKEN + " DESC");
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setLayoutManager(new GridLayoutManager(getContext(),
+                                getResources().getInteger(R.integer.images_column_count)));
+                        setAdapter(new AttachImageListAdapter(images, callback));
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (!images.isClosed()) {
+        if (images != null && !images.isClosed()) {
             images.close();
         }
     }

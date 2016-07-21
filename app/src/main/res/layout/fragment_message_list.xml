@@ -137,7 +137,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="288dp"
+            android:layout_height="@dimen/attach_menu_height"
             android:orientation="vertical"
             android:id="@+id/attach_layout"
             android:visibility="gone">
