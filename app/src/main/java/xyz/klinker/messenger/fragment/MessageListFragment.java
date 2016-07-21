@@ -387,20 +387,25 @@ public class MessageListFragment extends Fragment implements
         new Thread(new Runnable() {
             @Override
             public void run() {
-                long startTime = System.currentTimeMillis();
                 long conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
-                final Cursor cursor = source.getMessages(conversationId);
-                Log.v("message_load", "load took " + (
-                        System.currentTimeMillis() - startTime) + " ms");
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setMessages(cursor);
-                    }
-                });
+                if (isAdded()) {
+                    long startTime = System.currentTimeMillis();
+                    final Cursor cursor = source.getMessages(conversationId);
+                    Log.v("message_load", "load took " + (
+                            System.currentTimeMillis() - startTime) + " ms");
 
-                source.readConversation(getContext(), conversationId);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessages(cursor);
+                        }
+                    });
+                }
+
+                if (isAdded()) {
+                    source.readConversation(getContext(), conversationId);
+                }
             }
         }).start();
     }
