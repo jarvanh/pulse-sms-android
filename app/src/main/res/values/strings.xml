@@ -84,7 +84,6 @@
         won\'t take long!</string>
 
     <!-- Notifications -->
-    <string name="new_mms_message">New MMS message</string>
     <string name="notification_ticker">New message from %1$s</string>
     <plurals name="new_conversations">
         <item quantity="one">%1$d new conversation</item>

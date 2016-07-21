@@ -102,6 +102,7 @@ public class MessageListFragment extends Fragment implements
     private RecyclerView messageList;
     private LinearLayoutManager manager;
     private MessageListAdapter adapter;
+    private ElasticDragDismissFrameLayout dragDismissFrameLayout;
     private View attachLayout;
     private FrameLayout attachHolder;
     private LinearLayout attachButtonHolder;
@@ -159,15 +160,10 @@ public class MessageListFragment extends Fragment implements
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
         removeImage = view.findViewById(R.id.remove_image);
 
-        final ElasticDragDismissFrameLayout frame = (ElasticDragDismissFrameLayout) view;
-        frame.addListener(new ElasticDragDismissCallback() {
+        dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
+        dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
-                if (attachLayout.getVisibility() == View.VISIBLE) {
-                    attach.performClick();
-                }
-
-                frame.removeListener(this);
                 getActivity().onBackPressed();
             }
         });
@@ -306,6 +302,7 @@ public class MessageListFragment extends Fragment implements
                 ValueAnimator animator;
 
                 if (attachLayout.getVisibility() == View.VISIBLE) {
+                    dragDismissFrameLayout.setEnabled(true);
                     animator = ValueAnimator.ofInt(attachLayout.getHeight(), 0);
                     animator.addListener(new AnimatorListenerAdapter() {
                         @Override
@@ -316,6 +313,7 @@ public class MessageListFragment extends Fragment implements
                         }
                     });
                 } else {
+                    dragDismissFrameLayout.setEnabled(false);
                     attachImage();
                     attachLayout.setVisibility(View.VISIBLE);
                     animator = ValueAnimator.ofInt(0,
@@ -375,44 +373,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initRecycler() {
-        messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private boolean invoked = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                // only invoke this once
-                if (invoked) {
-                    return;
-                } else {
-                    invoked = true;
-                }
-
-                try {
-                    int color = getArguments().getInt(ARG_COLOR);
-                    final Class<?> clazz = RecyclerView.class;
-
-                    for (final String name : new String[] {"ensureTopGlow", "ensureBottomGlow"}) {
-                        Method method = clazz.getDeclaredMethod(name);
-                        method.setAccessible(true);
-                        method.invoke(messageList);
-                    }
-
-                    for (final String name : new String[] {"mTopGlow", "mBottomGlow"}) {
-                        final Field field = clazz.getDeclaredField(name);
-                        field.setAccessible(true);
-                        final Object edge = field.get(messageList);
-                        final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
-                        fEdgeEffect.setAccessible(true);
-                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(color);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        ColorUtil.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
 
         manager = new LinearLayoutManager(getActivity());
         manager.setStackFromEnd(true);
@@ -522,7 +483,8 @@ public class MessageListFragment extends Fragment implements
         prepareAttachHolder(0);
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachImageView(getActivity(), this));
+            attachHolder.addView(new AttachImageView(getActivity(), this,
+                    getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE);
         }

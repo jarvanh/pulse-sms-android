@@ -32,6 +32,7 @@ import android.util.Log;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.AttachImageListAdapter;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 
 /**
@@ -44,14 +45,15 @@ public class AttachImageView extends RecyclerView {
     private Cursor images;
     private ImageSelectedListener callback;
 
-    public AttachImageView(Context context, ImageSelectedListener callback) {
+    public AttachImageView(Context context, ImageSelectedListener callback, int color) {
         super(context);
 
         this.callback = callback;
-        init();
+        init(color);
     }
 
-    private void init() {
+    private void init(int color) {
+        ColorUtil.changeRecyclerOverscrollColors(this, color);
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {

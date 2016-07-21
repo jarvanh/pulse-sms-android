@@ -50,6 +50,8 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     private boolean draggingDown = false;
     private boolean draggingUp = false;
 
+    private boolean enabled = true;
+
     private static Interpolator fastOutSlowInInterpolator;
 
     private List<ElasticDragDismissCallback> callbacks;
@@ -102,44 +104,54 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        return (nestedScrollAxes & View.SCROLL_AXIS_VERTICAL) != 0;
+        if (enabled) {
+            return (nestedScrollAxes & View.SCROLL_AXIS_VERTICAL) != 0;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        // if we're in a drag gesture and the user reverses up the we should take those events
-        if (draggingDown && dy > 0 || draggingUp && dy < 0) {
-            dragScale(dy);
-            consumed[1] = dy;
+        if (enabled) {
+            // if we're in a drag gesture and the user reverses up the we should take those events
+            if (draggingDown && dy > 0 || draggingUp && dy < 0) {
+                dragScale(dy);
+                consumed[1] = dy;
+            }
         }
     }
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
                                int dxUnconsumed, int dyUnconsumed) {
-        dragScale(dyUnconsumed);
+        if (enabled) {
+            dragScale(dyUnconsumed);
+        }
     }
 
     @Override
     public void onStopNestedScroll(View child) {
-        if (Math.abs(totalDrag) >= dragDismissDistance) {
-            dispatchDismissCallback();
-        } else { // settle back to natural position
-            if (fastOutSlowInInterpolator == null) {
-                fastOutSlowInInterpolator = AnimationUtils.loadInterpolator(getContext(),
-                        android.R.interpolator.fast_out_slow_in);
+        if (enabled) {
+            if (Math.abs(totalDrag) >= dragDismissDistance) {
+                dispatchDismissCallback();
+            } else { // settle back to natural position
+                if (fastOutSlowInInterpolator == null) {
+                    fastOutSlowInInterpolator = AnimationUtils.loadInterpolator(getContext(),
+                            android.R.interpolator.fast_out_slow_in);
+                }
+                animate()
+                        .translationY(0f)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(200L)
+                        .setInterpolator(fastOutSlowInInterpolator)
+                        .setListener(null)
+                        .start();
+                totalDrag = 0;
+                draggingDown = draggingUp = false;
+                dispatchDragCallback(0f, 0f, 0f, 0f);
             }
-            animate()
-                    .translationY(0f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(200L)
-                    .setInterpolator(fastOutSlowInInterpolator)
-                    .setListener(null)
-                    .start();
-            totalDrag = 0;
-            draggingDown = draggingUp = false;
-            dispatchDragCallback(0f, 0f, 0f, 0f);
         }
     }
 
@@ -156,6 +168,14 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
             callbacks = new ArrayList<>();
         }
         callbacks.add(listener);
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void removeListener(ElasticDragDismissCallback listener) {

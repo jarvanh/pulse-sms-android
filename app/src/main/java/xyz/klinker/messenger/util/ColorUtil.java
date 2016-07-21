@@ -26,12 +26,15 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
@@ -182,6 +185,48 @@ public class ColorUtil {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+    }
+
+    /**
+     * Changes the overscroll highlight effect on a recyclerview to be the given color.
+     */
+    public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, final int color) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private boolean invoked = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                // only invoke this once
+                if (invoked) {
+                    return;
+                } else {
+                    invoked = true;
+                }
+
+                try {
+                    final Class<?> clazz = RecyclerView.class;
+
+                    for (final String name : new String[] {"ensureTopGlow", "ensureBottomGlow"}) {
+                        Method method = clazz.getDeclaredMethod(name);
+                        method.setAccessible(true);
+                        method.invoke(recyclerView);
+                    }
+
+                    for (final String name : new String[] {"mTopGlow", "mBottomGlow"}) {
+                        final Field field = clazz.getDeclaredField(name);
+                        field.setAccessible(true);
+                        final Object edge = field.get(recyclerView);
+                        final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
+                        fEdgeEffect.setAccessible(true);
+                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(color);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }
