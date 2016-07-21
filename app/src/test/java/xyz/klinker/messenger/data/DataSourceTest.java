@@ -199,7 +199,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getUnseenMessages() {
-        when(database.query("message", null, "seen=0", null, null, null, "timestamp desc"))
+        when(database.query("message", null, "seen=0", null, null, null, "timestamp asc"))
                 .thenReturn(cursor);
 
         assertEquals(cursor, source.getUnseenMessages());

@@ -540,7 +540,7 @@ public class DataSource {
      */
     public Cursor getUnseenMessages() {
         return database.query(Message.TABLE, null, Message.COLUMN_SEEN + "=0", null, null, null,
-                Message.COLUMN_TIMESTAMP + " desc");
+                Message.COLUMN_TIMESTAMP + " asc");
     }
 
 }
