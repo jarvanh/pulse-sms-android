@@ -389,7 +389,7 @@ public class MessageListFragment extends Fragment implements
             public void run() {
                 long conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
 
-                if (isAdded()) {
+                if (source.isOpen()) {
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
                     Log.v("message_load", "load took " + (
@@ -403,7 +403,7 @@ public class MessageListFragment extends Fragment implements
                     });
                 }
 
-                if (isAdded()) {
+                if (source.isOpen()) {
                     source.readConversation(getContext(), conversationId);
                 }
             }

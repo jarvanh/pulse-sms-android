@@ -98,6 +98,13 @@ public class DataSource {
     }
 
     /**
+     * Checks if the database is open.
+     */
+    public boolean isOpen() {
+        return database.isOpen();
+    }
+
+    /**
      * Closes the database.
      */
     public synchronized void close() {

@@ -111,6 +111,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:layout_weight="1"
                 android:hint="@string/type_message_to"
                 android:background="@drawable/message_sent"
@@ -118,6 +119,7 @@
                 android:padding="8dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="18dp"
+                android:textSize="16sp"
                 android:id="@+id/message_entry"
                 android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
                 android:imeOptions="actionSend"
