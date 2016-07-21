@@ -41,6 +41,7 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -73,6 +74,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AutoFitTextureView;
 
 public class Camera2BasicFragment extends Fragment
@@ -296,7 +298,7 @@ public class Camera2BasicFragment extends Fragment
     /**
      * Callback for notifying someone when an image has been saved.
      */
-    private ImageSavedCallback callback;
+    private ImageSelectedListener callback;
 
     /**
      * Handler for posting back to UI thread after image is saved.
@@ -441,7 +443,7 @@ public class Camera2BasicFragment extends Fragment
         return new Camera2BasicFragment();
     }
 
-    public void attachImageSavedCallback(ImageSavedCallback callback) {
+    public void attachImageSelectedListener(ImageSelectedListener callback) {
         this.callback = callback;
     }
 
@@ -968,11 +970,11 @@ public class Camera2BasicFragment extends Fragment
         /**
          * The callback to call once saving is done.
          */
-        private final ImageSavedCallback mCallback;
+        private final ImageSelectedListener mCallback;
 
         private final Camera2BasicFragment mFragment;
 
-        public ImageSaver(Image image, File file, ImageSavedCallback callback,
+        public ImageSaver(Image image, File file, ImageSelectedListener callback,
                           Camera2BasicFragment fragment) {
             mImage = image;
             mFile = file;
@@ -1006,7 +1008,7 @@ public class Camera2BasicFragment extends Fragment
                 mFragment.getUiHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onImageSaved(mFile);
+                        mCallback.onImageSelected(Uri.fromFile(mFile));
                     }
                 });
             }
@@ -1088,13 +1090,6 @@ public class Camera2BasicFragment extends Fragment
                             })
                     .create();
         }
-    }
-
-    /**
-     * Callback for easily notifying the caller when an image has been saved so we can act on it.
-     */
-    public interface ImageSavedCallback {
-        void onImageSaved(File file);
     }
 
 }

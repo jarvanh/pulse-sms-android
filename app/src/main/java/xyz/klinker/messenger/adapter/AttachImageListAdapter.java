@@ -30,6 +30,7 @@ import java.io.File;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder;
+import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 
 /**
  * An adapter for displaying images in a grid for the user to select to attach to a message.
@@ -37,16 +38,29 @@ import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder;
 public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder> {
 
     private Cursor images;
+    private ImageSelectedListener callback;
 
-    public AttachImageListAdapter(Cursor images) {
+    public AttachImageListAdapter(Cursor images, ImageSelectedListener callback) {
         this.images = images;
+        this.callback = callback;
     }
 
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_attach_image, parent, false);
-        return new ImageViewHolder(view);
+
+        final ImageViewHolder holder = new ImageViewHolder(view);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (callback != null) {
+                    callback.onImageSelected(holder.uri);
+                }
+            }
+        });
+
+        return holder;
     }
 
     @Override

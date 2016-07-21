@@ -19,6 +19,7 @@ package xyz.klinker.messenger.view;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
@@ -29,6 +30,7 @@ import android.util.Log;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.AttachImageListAdapter;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 
 /**
  * View that displays a list of images that are currently on your device and allows you to choose
@@ -37,9 +39,12 @@ import xyz.klinker.messenger.data.MimeType;
 public class AttachImageView extends RecyclerView {
 
     private Cursor images;
+    private ImageSelectedListener callback;
 
-    public AttachImageView(Context context) {
+    public AttachImageView(Context context, ImageSelectedListener callback) {
         super(context);
+
+        this.callback = callback;
         init();
     }
 
@@ -53,7 +58,7 @@ public class AttachImageView extends RecyclerView {
 
         setLayoutManager(new GridLayoutManager(getContext(),
                 getResources().getInteger(R.integer.images_column_count)));
-        setAdapter(new AttachImageListAdapter(images));
+        setAdapter(new AttachImageListAdapter(images, callback));
     }
 
     @Override

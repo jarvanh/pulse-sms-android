@@ -22,13 +22,11 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -70,7 +68,7 @@ import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PermissionsUtil;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SendUtil;
-import xyz.klinker.messenger.util.listener.BackPressedListener;
+import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
@@ -79,7 +77,7 @@ import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismi
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        Camera2BasicFragment.ImageSavedCallback {
+        ImageSelectedListener {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -490,7 +488,7 @@ public class MessageListFragment extends Fragment implements
         prepareAttachHolder(0);
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachImageView(getActivity()));
+            attachHolder.addView(new AttachImageView(getActivity(), this));
         } else {
             attachPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
@@ -501,7 +499,7 @@ public class MessageListFragment extends Fragment implements
 
         Camera2BasicFragment fragment = Camera2BasicFragment.newInstance();
         getFragmentManager().beginTransaction().add(R.id.attach_holder, fragment).commit();
-        fragment.attachImageSavedCallback(this);
+        fragment.attachImageSelectedListener(this);
     }
 
     private void attachGif() {
@@ -567,16 +565,16 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
-    public void onImageSaved(final File file) {
+    public void onImageSelected(Uri uri) {
         onBackPressed();
 
         clearAttachedData();
-        attachedUri = Uri.fromFile(file);
+        attachedUri = uri;
         attachedMimeType = MimeType.IMAGE_JPG;
 
         attachedImageHolder.setVisibility(View.VISIBLE);
         Glide.with(getContext())
-                .load(file)
+                .load(uri)
                 .into(attachedImage);
     }
 
