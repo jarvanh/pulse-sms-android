@@ -22,11 +22,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +70,8 @@ public class MessengerActivity extends AppCompatActivity
         initToolbar();
         initDrawer();
         initFab();
+
+        displayConversations();
     }
 
     @Override
@@ -112,8 +116,6 @@ public class MessengerActivity extends AppCompatActivity
     private void initDrawer() {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        clickDefaultDrawerItem();
     }
 
     private void initFab() {
@@ -176,9 +178,10 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        switch (item.getItemId()) {
-            case R.id.drawer_conversation:  return displayConversations();
-            default:                        return true;
+        if (item.getItemId() == R.id.drawer_conversation) {
+            return displayConversations();
+        } else {
+            return true;
         }
     }
 
@@ -224,18 +227,28 @@ public class MessengerActivity extends AppCompatActivity
 
     private boolean displayConversations() {
         Bundle extras = getIntent().getExtras();
+
         if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
+            Log.v("Messenger Activity", "displaying conversation and messages");
             conversationListFragment = ConversationListFragment
                     .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0));
             getIntent().getExtras().remove(EXTRA_CONVERSATION_ID);
         } else {
+            Log.v("Messenger Activity", "displaying only conversation");
             conversationListFragment = ConversationListFragment.newInstance();
         }
 
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.conversation_list_container, conversationListFragment)
-                .commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.conversation_list_container, conversationListFragment);
+
+        Fragment messageList = getSupportFragmentManager()
+                .findFragmentById(R.id.message_list_container);
+
+        if (messageList != null) {
+            transaction.remove(messageList);
+        }
+
+        transaction.commit();
 
         return true;
     }
@@ -244,34 +257,10 @@ public class MessengerActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // if we rotate twice in a row while expanded, conversationListFragment will still be null
-        if (conversationListFragment == null || conversationListFragment.isExpanded()) {
-            outState.putBoolean("expanded", true);
-        }
-    }
+        getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         AnimationUtil.originalRecyclerHeight = -1;
         AnimationUtil.originalFragmentContainerHeight = -1;
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        if (savedInstanceState != null && savedInstanceState.getBoolean("expanded", false)) {
-            fab.hide();
-            Fragment fragment = getSupportFragmentManager()
-                    .findFragmentById(R.id.conversation_list_container);
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-            conversationListFragment = null;
-
-            if (drawerLayout != null) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }
-        }
     }
 
 }

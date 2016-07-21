@@ -24,7 +24,8 @@
         <item
             android:id="@+id/drawer_conversation"
             android:icon="@drawable/ic_conversations"
-            android:title="@string/menu_conversations"/>
+            android:title="@string/menu_conversations"
+            android:checked="true"/>
 
         <item
             android:id="@+id/drawer_schedule"

@@ -186,8 +186,14 @@ public class MessageListFragment extends Fragment implements
     @Override
     public void onDetach() {
         super.onDetach();
-        adapter.getMessages().close();
-        source.close();
+
+        if (adapter != null) {
+            adapter.getMessages().close();
+        }
+
+        if (source != null) {
+            source.close();
+        }
     }
 
     private void initToolbar() {

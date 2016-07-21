@@ -61,6 +61,7 @@ public class ConversationListFragment extends Fragment
     private ConversationViewHolder expandedConversation;
     private MessageListFragment messageListFragment;
     private Snackbar deleteSnackbar;
+    private ConversationListAdapter adapter;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -115,7 +116,7 @@ public class ConversationListFragment extends Fragment
             throw new RuntimeException("RecyclerView not yet initialized");
         }
 
-        ConversationListAdapter adapter = (ConversationListAdapter) recyclerView.getAdapter();
+        adapter = (ConversationListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
@@ -133,23 +134,22 @@ public class ConversationListFragment extends Fragment
         if (getArguments() != null) {
             long conversationToOpen = getArguments().getLong(EXTRA_CONVERSATION_TO_OPEN_ID, 0);
             if (conversationToOpen != 0) {
-                Log.v("Conversation List", "open conversation with id " + conversationToOpen);
-                final int conversationPosition = adapter
-                        .findPositionForConversationId(conversationToOpen);
-
-                if (conversationPosition == -1) {
-                    Log.v("Conversation List", "couldn't find position to open in adapter");
-                } else {
-                    Log.v("Conversation List", "clicking conversation at position "
-                            + conversationPosition);
-                    clickConversationAtPosition(conversationPosition);
-                }
+                clickConversationWithId(conversationToOpen);
             }
         } else {
             Log.v("Conversation List", "no conversations to open");
         }
 
         checkEmptyViewDisplay();
+    }
+
+    private void clickConversationWithId(long id) {
+        final int conversationPosition = adapter.findPositionForConversationId(id);
+
+        if (conversationPosition != -1) {
+            recyclerView.getLayoutManager().scrollToPosition(conversationPosition);
+            clickConversationAtPosition(conversationPosition);
+        }
     }
 
     private void clickConversationAtPosition(final int position) {
@@ -269,6 +269,14 @@ public class ConversationListFragment extends Fragment
 
     public boolean isExpanded() {
         return expandedConversation != null;
+    }
+
+    public long getExpandedId() {
+        if (expandedConversation != null) {
+            return expandedConversation.conversation.id;
+        } else {
+            return 0;
+        }
     }
 
     public void notifyOfSentMessage(Message m) {
