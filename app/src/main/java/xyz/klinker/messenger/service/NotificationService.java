@@ -149,7 +149,7 @@ public class NotificationService extends IntentService {
         NotificationCompat.InboxStyle inboxStyle = null;
 
         StringBuilder text = new StringBuilder();
-        if (conversation.messages.size() > 0 && conversation.messages.get(0).from != null) {
+        if (conversation.messages.size() > 1 && conversation.messages.get(0).from != null) {
             inboxStyle = new NotificationCompat.InboxStyle();
 
             for (NotificationMessage message : conversation.messages) {
@@ -168,8 +168,16 @@ public class NotificationService extends IntentService {
                 NotificationMessage message = conversation.messages.get(i);
 
                 if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    text.append(conversation.messages.get(i).data);
-                    text.append(" | ");
+                    if (message.from != null) {
+                        text.append("<b>");
+                        text.append(message.from);
+                        text.append(":</b>  ");
+                        text.append(conversation.messages.get(i).data);
+                        text.append("\n");
+                    } else {
+                        text.append(conversation.messages.get(i).data);
+                        text.append(" | ");
+                    }
                 } else if (message.mimeType.startsWith("image/")) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
                             .bigPicture(ImageUtil.getBitmap(this, message.data));
@@ -177,9 +185,9 @@ public class NotificationService extends IntentService {
             }
         }
 
-        String content = text.toString();
-        if (content.endsWith(" | ")) {
-            content = content.substring(0, content.length() - 3);
+        String content = text.toString().trim();
+        if (content.endsWith(" |")) {
+            content = content.substring(0, content.length() - 2);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -194,7 +202,7 @@ public class NotificationService extends IntentService {
             builder.setStyle(inboxStyle);
         } else {
             builder.setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(content));
+                    .bigText(Html.fromHtml(content)));
         }
 
         builder.setPublicVersion(new NotificationCompat.Builder(this)
