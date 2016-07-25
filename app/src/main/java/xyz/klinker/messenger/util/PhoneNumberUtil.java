@@ -16,7 +16,10 @@
 
 package xyz.klinker.messenger.util;
 
+import android.content.Context;
 import android.telephony.PhoneNumberUtils;
+
+import com.klinker.android.send_message.Utils;
 
 import java.util.Locale;
 
@@ -50,6 +53,13 @@ public class PhoneNumberUtil {
         } else {
             return formatted;
         }
+    }
+
+    /**
+     * Returns the device's phone number.
+     */
+    public static String getMyPhoneNumber(Context context) {
+        return clearFormatting(Utils.getMyPhoneNumber(context));
     }
 
 }

@@ -28,9 +28,12 @@ import android.provider.Telephony;
 import android.text.TextUtils;
 
 import com.android.mms.transaction.MmsMessageSender;
+import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
+import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
+import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
 
@@ -112,7 +115,11 @@ public class SmsMmsUtil {
 
         List<String> matchers = new ArrayList<>();
         for (String n : numbers) {
-            matchers.add(n.substring(n.length() - 5));
+            if (n.length() >= 5) {
+                matchers.add(n.substring(n.length() - 5));
+            } else {
+                matchers.add(n);
+            }
         }
 
         Collections.sort(matchers);
@@ -339,6 +346,39 @@ public class SmsMmsUtil {
         }
 
         return "";
+    }
+
+    public static String getMmsTo(Uri uri, Context context) {
+        MultimediaMessagePdu msg;
+
+        try {
+            msg = (MultimediaMessagePdu) PduPersister.getPduPersister(
+                    context).load(uri);
+        } catch (MmsException e) {
+            return "";
+        }
+
+        StringBuilder toBuilder = new StringBuilder();
+        EncodedStringValue[] to = msg.getTo();
+
+        if (to != null) {
+            toBuilder.append(EncodedStringValue.concat(to));
+        }
+
+        if (msg instanceof RetrieveConf) {
+            EncodedStringValue[] cc = ((RetrieveConf) msg).getCc();
+            if (cc != null && cc.length > 0) {
+                toBuilder.append(";");
+                toBuilder.append(EncodedStringValue.concat(cc));
+            }
+        }
+
+        String built = toBuilder.toString().replace(";", ", ");
+        if (built.startsWith(", ")) {
+            built = built.substring(2);
+        }
+
+        return built;
     }
 
     private static String getMmsText(String id, Context context) {

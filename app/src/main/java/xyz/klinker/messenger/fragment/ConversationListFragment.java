@@ -86,6 +86,25 @@ public class ConversationListFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // TODO register receiver to look for conversation changes
+        // when one occurs, find the position in the conversation list, make the appropriate changes
+        // to that position and then let the adapter know that position needs to be updated (and
+        // make sure to adjust for the header views). If a new conversation is made then we'll have
+        // to experiment with adding it to the top of the list or reloading all conversations and
+        // closing the current message list fragment
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // TODO unregister receiver for conversation changes
+    }
+
     private void loadConversations() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {

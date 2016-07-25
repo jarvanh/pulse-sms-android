@@ -21,12 +21,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.util.ContactUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
@@ -50,6 +53,9 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         if (lastMessage != null && lastMessage.moveToFirst()) {
             Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
             final String from = SmsMmsUtil.getMmsFrom(uri, context);
+            final String to = SmsMmsUtil.getMmsTo(uri, context);
+            final String phoneNumbers = getPhoneNumbers(from, to,
+                    PhoneNumberUtil.getMyPhoneNumber(context));
             List<ContentValues> values = SmsMmsUtil.processMessage(lastMessage, -1L, context);
 
             DataSource source = DataSource.getInstance(context);
@@ -63,12 +69,28 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE);
                 message.read = false;
                 message.seen = false;
-                message.from = from;
-                source.insertMessage(message, from, context);
+                message.from = ContactUtil.findContactNames(from, context);
+                source.insertMessage(message, phoneNumbers, context);
             }
 
             source.close();
         }
+    }
+
+    @VisibleForTesting
+    String getPhoneNumbers(String from, String to, String myNumber) {
+        String[] toNumbers = to.split(", ");
+        StringBuilder builder = new StringBuilder();
+
+        for (String number : toNumbers) {
+            if (!number.contains(myNumber) && !myNumber.contains(number)) {
+                builder.append(number);
+                builder.append(", ");
+            }
+        }
+
+        builder.append(from);
+        return builder.toString();
     }
 
 }

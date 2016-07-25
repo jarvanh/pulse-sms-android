@@ -93,6 +93,8 @@ public class NotificationService extends IntentService {
                         .getString(unseenMessages.getColumnIndex(Message.COLUMN_MIME_TYPE));
                 long timestamp = unseenMessages
                         .getLong(unseenMessages.getColumnIndex(Message.COLUMN_TIMESTAMP));
+                String from = unseenMessages
+                        .getString(unseenMessages.getColumnIndex(Message.COLUMN_FROM));
 
                 NotificationConversation conversation = conversations.get(conversationId);
 
@@ -108,7 +110,7 @@ public class NotificationService extends IntentService {
                     conversations.put(conversationId, conversation);
                 }
 
-                conversation.messages.add(new NotificationMessage(data, mimeType, timestamp));
+                conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
             } while (unseenMessages.moveToNext());
 
             unseenMessages.close();
@@ -144,17 +146,34 @@ public class NotificationService extends IntentService {
                 .setWhen(conversation.timestamp);
 
         NotificationCompat.BigPictureStyle pictureStyle = null;
+        NotificationCompat.InboxStyle inboxStyle = null;
 
         StringBuilder text = new StringBuilder();
-        for (int i = 0; i < conversation.messages.size(); i++) {
-            NotificationMessage message = conversation.messages.get(i);
+        if (conversation.messages.size() > 0 && conversation.messages.get(0).from != null) {
+            inboxStyle = new NotificationCompat.InboxStyle();
 
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                text.append(conversation.messages.get(i).data);
-                text.append(" | ");
-            } else if (message.mimeType.startsWith("image/")) {
-                pictureStyle = new NotificationCompat.BigPictureStyle()
-                        .bigPicture(ImageUtil.getBitmap(this, message.data));
+            for (NotificationMessage message : conversation.messages) {
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    String line = "<b>" + message.from + ":</b>  " + message.data;
+                    text.append(line);
+                    text.append("\n");
+                    inboxStyle.addLine(Html.fromHtml(line));
+                } else {
+                    pictureStyle = new NotificationCompat.BigPictureStyle()
+                            .bigPicture(ImageUtil.getBitmap(this, message.data));
+                }
+            }
+        } else {
+            for (int i = 0; i < conversation.messages.size(); i++) {
+                NotificationMessage message = conversation.messages.get(i);
+
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    text.append(conversation.messages.get(i).data);
+                    text.append(" | ");
+                } else if (message.mimeType.startsWith("image/")) {
+                    pictureStyle = new NotificationCompat.BigPictureStyle()
+                            .bigPicture(ImageUtil.getBitmap(this, message.data));
+                }
             }
         }
 
@@ -163,11 +182,16 @@ public class NotificationService extends IntentService {
             content = content.substring(0, content.length() - 3);
         }
 
-        builder.setContentText(content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.setContentText(Html.fromHtml(content, 0));
+        } else {
+            builder.setContentText(Html.fromHtml(content));
+        }
 
         if (pictureStyle != null) {
-            pictureStyle.setSummaryText(content);
             builder.setStyle(pictureStyle);
+        } else if (inboxStyle != null) {
+            builder.setStyle(inboxStyle);
         } else {
             builder.setStyle(new NotificationCompat.BigTextStyle()
                     .bigText(content));
@@ -331,11 +355,13 @@ public class NotificationService extends IntentService {
         public String data;
         public String mimeType;
         public long timestamp;
+        public String from;
 
-        private NotificationMessage(String data, String mimeType, long timestamp) {
+        private NotificationMessage(String data, String mimeType, long timestamp, String from) {
             this.data = data;
             this.mimeType = mimeType;
             this.timestamp = timestamp;
+            this.from = from;
         }
     }
 
