@@ -99,7 +99,6 @@ public class Camera2BasicFragment extends Fragment
      */
     private static final String TAG = "Camera2BasicFragment";
 
-    private static final String ARG_RANDOM_INT = "random_int";
     private static final String PREF_FRONT_FACING = "use_front_facing_camera";
 
     /**

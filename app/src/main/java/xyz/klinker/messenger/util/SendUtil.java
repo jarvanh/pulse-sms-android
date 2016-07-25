@@ -28,6 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import xyz.klinker.messenger.data.MimeType;
+
 /**
  * Utility for helping to send messages.
  */
@@ -53,7 +55,11 @@ public class SendUtil {
 
         if (data != null) {
             try {
-                // TODO do we need to resize the messages here before transferring to carrier app?
+                if (mimeType.startsWith("image") && !mimeType.equals(MimeType.IMAGE_GIF)) {
+                    data = ImageUtil.scaleToSend(context, data);
+                    mimeType = MimeType.IMAGE_JPEG;
+                }
+
                 byte[] bytes = getBytes(context, data);
                 Log.v("Sending MMS", "size: " + bytes.length + " bytes, mime type: " + mimeType);
                 message.addMedia(bytes, mimeType);

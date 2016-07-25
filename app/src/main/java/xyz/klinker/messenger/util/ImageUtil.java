@@ -25,7 +25,12 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
+import android.util.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import xyz.klinker.messenger.data.ColorSet;
@@ -35,6 +40,9 @@ import xyz.klinker.messenger.data.model.Conversation;
  * Helper for working with images.
  */
 public class ImageUtil {
+
+    private static final int MAX_FILE_SIZE = 1024 * 1024;
+    private static final float SCALE_RATIO = 0.75f;
 
     /**
      * Gets a bitmap from the provided uri. Returns null if the bitmap cannot be found.
@@ -135,6 +143,55 @@ public class ImageUtil {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Scales a bitmap file to a lower resolution so that it can be sent over MMS. Most carriers
+     * have a 1 MB limit, so we'll scale to under that. This method will create a new file in the
+     * application memory.
+     */
+    public static Uri scaleToSend(Context context, Uri uri) {
+        File newLocation = new File(context.getFilesDir(),
+                ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
+        File oldLocation = new File(uri.getPath());
+        FileUtil.copy(oldLocation, newLocation);
+        File file = scaleToSend(newLocation, BitmapFactory.decodeFile(uri.getPath()));
+        return Uri.fromFile(file);
+    }
+
+    private static File scaleToSend(File file, Bitmap bitmap) {
+        while (!file.exists() || file.length() > MAX_FILE_SIZE) {
+            Log.v("Scale to Send", "current file size: " + file.length());
+
+            bitmap = Bitmap.createScaledBitmap(bitmap,
+                    (int) (bitmap.getWidth() * SCALE_RATIO),
+                    (int) (bitmap.getHeight() * SCALE_RATIO),
+                    false);
+
+            FileOutputStream out = null;
+
+            try {
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            } catch (IOException e) {
+                Log.e("Scale to Send", "failed to write output stream", e);
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    Log.e("Scale to Send", "failed to close output stream", e);
+                }
+            }
+        }
+
+        Log.v("Scale to Send", "final file size: " + file.length());
+        return file;
     }
 
 }
