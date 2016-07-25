@@ -152,7 +152,7 @@ public class ImageUtil {
         java.io.File newLocation = new java.io.File(context.getFilesDir(),
                 ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
         java.io.File oldLocation = new java.io.File(uri.getPath());
-        FileUtils.copy(oldLocation, newLocation);
+        FileUtil.copy(oldLocation, newLocation);
         java.io.File file = scaleToSend(newLocation, BitmapFactory.decodeFile(uri.getPath()));
         return Uri.fromFile(file);
     }
