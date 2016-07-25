@@ -81,42 +81,48 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 Message.COLUMN_CONVERSATION_ID,
                 Message.COLUMN_DATA,
                 Message.COLUMN_MIME_TYPE,
-                Message.COLUMN_TIMESTAMP
+                Message.COLUMN_TIMESTAMP,
+                Message.COLUMN_FROM
         });
 
         cursor.addRow(new Object[] {
                 1,
                 "Hey what's up?",
                 "text/plain",
-                1000L
+                1000L,
+                null
         });
 
         cursor.addRow(new Object[] {
                 1,
                 "Yo, you around?",
                 "text/plain",
-                2000L
+                2000L,
+                null
         });
 
         cursor.addRow(new Object[] {
                 2,
                 "Can we hang out tonight?",
                 "text/plain",
-                3000L
+                3000L,
+                null
         });
 
         cursor.addRow(new Object[] {
                 1,
                 "Hello?",
                 "text/plain",
-                4000L
+                4000L,
+                null
         });
 
         cursor.addRow(new Object[] {
                 3,
                 "content://mms/part/1",
                 "image/jpg",
-                5000L
+                5000L,
+                null
         });
 
         return cursor;
