@@ -28,9 +28,9 @@ import java.io.OutputStream;
 /**
  * Util for working with files.
  */
-public class FileUtil {
+public class FileUtils {
 
-    public static void copy(File src, File dst) {
+    public static void copy(java.io.File src, java.io.File dst) {
         try {
             InputStream in = new FileInputStream(src);
             OutputStream out = new FileOutputStream(dst);
@@ -44,7 +44,7 @@ public class FileUtil {
             in.close();
             out.close();
         } catch (IOException e) {
-            Log.e("FileUtil", "error copying file", e);
+            Log.e("File", "error copying file", e);
         }
     }
 
