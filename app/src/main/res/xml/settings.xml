@@ -15,19 +15,6 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="background">#374248</color>
-    <color name="drawerBackground">#202B30</color>
-    <color name="primaryText">#FFFFFFFF</color>
-    <color name="secondaryText">#B2FFFFFF</color>
-    <color name="divider">#29353a</color>
-    <color name="ripple">#22FFFFFF</color>
-    <color name="code_block_color">#11FFFFFF</color>
-
-    <color name="emptyIconTint">@color/background</color>
-    <color name="emptyTextPrimary">#E2374248</color>
-    <color name="emptyTextSecondary">#8C000000</color>
-    <color name="deleteIcon">@color/background</color>
-
-</resources>
+</PreferenceScreen>

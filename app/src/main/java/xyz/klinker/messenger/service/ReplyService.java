@@ -17,8 +17,6 @@
 package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -30,8 +28,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.NotificationUtil;
-import xyz.klinker.messenger.util.SendUtil;
+import xyz.klinker.messenger.util.SendUtils;
 
 /**
  * Service for getting back voice replies from Android Wear and sending them out.
@@ -86,7 +83,7 @@ public class ReplyService extends IntentService {
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
-        SendUtil.send(this, reply, conversation.phoneNumbers);
+        SendUtils.send(this, reply, conversation.phoneNumbers);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

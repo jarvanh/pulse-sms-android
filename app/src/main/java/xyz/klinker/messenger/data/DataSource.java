@@ -26,12 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ContactUtil;
-import xyz.klinker.messenger.util.ImageUtil;
+import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -471,10 +470,10 @@ public class DataSource {
 
             conversation.ringtoneUri = null;
             conversation.phoneNumbers = phoneNumbers;
-            conversation.title = ContactUtil.findContactNames(phoneNumbers, context);
-            conversation.imageUri = ContactUtil.findImageUri(phoneNumbers, context);
+            conversation.title = ContactUtils.findContactNames(phoneNumbers, context);
+            conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context);
             conversation.idMatcher = matcher;
-            ImageUtil.fillConversationColors(conversation, context);
+            ImageUtils.fillConversationColors(conversation, context);
 
             conversationId = insertConversation(conversation);
         }

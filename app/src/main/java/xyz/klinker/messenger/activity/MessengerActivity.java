@@ -22,7 +22,6 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -40,8 +39,12 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
-import xyz.klinker.messenger.util.AnimationUtil;
-import xyz.klinker.messenger.util.PermissionsUtil;
+import xyz.klinker.messenger.fragment.settings.AboutFragment;
+import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
+import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.fragment.settings.SettingsFragment;
+import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 
 /**
@@ -57,6 +60,7 @@ public class MessengerActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
     private FloatingActionButton fab;
+    private boolean inSettings = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,19 +87,19 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private void requestPermissions() {
-        if (PermissionsUtil.checkRequestMainPermissions(this)) {
-            PermissionsUtil.startMainPermissionRequest(this);
+        if (PermissionsUtils.checkRequestMainPermissions(this)) {
+            PermissionsUtils.startMainPermissionRequest(this);
         }
 
-        if (!PermissionsUtil.isDefaultSmsApp(this)) {
-            PermissionsUtil.setDefaultSmsApp(this);
+        if (!PermissionsUtils.isDefaultSmsApp(this)) {
+            PermissionsUtils.setDefaultSmsApp(this);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults);
+        PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -166,6 +170,8 @@ public class MessengerActivity extends AppCompatActivity
             if (drawerLayout != null) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
+        } else if (inSettings) {
+            clickDefaultDrawerItem();
         } else {
             super.onBackPressed();
         }
@@ -193,6 +199,14 @@ public class MessengerActivity extends AppCompatActivity
 
         if (item.getItemId() == R.id.drawer_conversation) {
             return displayConversations();
+        } else if (item.getItemId() == R.id.drawer_settings) {
+            return displaySettings();
+        } else if (item.getItemId() == R.id.drawer_account) {
+            return displayMyAccount();
+        } else if (item.getItemId() == R.id.drawer_help) {
+            return displayHelpAndFeedback();
+        } else if (item.getItemId() == R.id.drawer_about) {
+            return displayAbout();
         } else {
             return true;
         }
@@ -239,6 +253,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
+        inSettings = false;
         Bundle extras = getIntent().getExtras();
 
         if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
@@ -266,14 +281,39 @@ public class MessengerActivity extends AppCompatActivity
         return true;
     }
 
+    private boolean displaySettings() {
+        return displayFragmentWithBackStack(new SettingsFragment());
+    }
+
+    private boolean displayMyAccount() {
+        return displayFragmentWithBackStack(new MyAccountFragment());
+    }
+
+    private boolean displayHelpAndFeedback() {
+        return displayFragmentWithBackStack(new HelpAndFeedbackFragment());
+    }
+
+    private boolean displayAbout() {
+        return displayFragmentWithBackStack(new AboutFragment());
+    }
+
+    private boolean displayFragmentWithBackStack(Fragment fragment) {
+        inSettings = true;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.conversation_list_container, fragment)
+                .commit();
+
+        return true;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
 
-        AnimationUtil.originalRecyclerHeight = -1;
-        AnimationUtil.originalFragmentContainerHeight = -1;
+        AnimationUtils.originalRecyclerHeight = -1;
+        AnimationUtils.originalFragmentContainerHeight = -1;
     }
 
 }

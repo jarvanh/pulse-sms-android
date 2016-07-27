@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/pref_about_changelog"
+        android:title="@string/changelog"/>
+
+    <Preference
+        android:key="@string/pref_about_app_version"
+        android:title="@string/app_version"/>
+
+    <Preference
+        android:key="@string/pref_about_device_id"
+        android:title="@string/device_id"/>
+
+    <Preference
+        android:key="@string/pref_about_device_info"
+        android:title="@string/device_info"/>
+
+    <Preference
+        android:key="@string/pref_about_copyright"
+        android:title="@string/copyright"
+        android:summary="@string/copyright_summary"/>
+
+    <Preference
+        android:key="@string/pref_about_beta"
+        android:summary="@string/beta_disclaimer"/>
+
+</PreferenceScreen>

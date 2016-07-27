@@ -21,12 +21,12 @@ import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-public class ColorUtilTest extends MessengerRobolectricSuite {
+public class ColorUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void noRandomOutOfBounds() {
         for (int i = 0; i < 100; i++) {
-            ColorUtil.getRandomMaterialColor(RuntimeEnvironment.application);
+            ColorUtils.getRandomMaterialColor(RuntimeEnvironment.application);
         }
     }
 

@@ -32,14 +32,12 @@ import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
 
-import java.util.List;
-
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
-import xyz.klinker.messenger.util.TimeUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Adapter for displaying messages in a conversation.
@@ -116,7 +114,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 @Override
                 public void onClick(String clickedText) {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:" + PhoneNumberUtil.clearFormatting(clickedText)));
+                    intent.setData(Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText)));
                     holder.message.getContext().startActivity(intent);
                 }
             });
@@ -163,9 +161,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             nextTimestamp = System.currentTimeMillis();
         }
 
-        if (TimeUtil.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
+        if (TimeUtils.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
             holder.timestamp.setVisibility(View.VISIBLE);
-            holder.timestamp.setText(TimeUtil.formatTimestamp(holder.timestamp.getContext(),
+            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
                     message.timestamp));
         } else {
             holder.timestamp.setVisibility(View.GONE);

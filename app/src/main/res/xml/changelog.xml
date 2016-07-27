@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
@@ -15,19 +14,11 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<changelog>
 
-    <color name="background">#374248</color>
-    <color name="drawerBackground">#202B30</color>
-    <color name="primaryText">#FFFFFFFF</color>
-    <color name="secondaryText">#B2FFFFFF</color>
-    <color name="divider">#29353a</color>
-    <color name="ripple">#22FFFFFF</color>
-    <color name="code_block_color">#11FFFFFF</color>
+    <version name="0.1" description="Working SMS/MMS client">
+        <text>Basically recreate features that I've implemented in EvolveSMS in the past in a better way</text>
+        <text>Use my own database instead of the internal content provider for speed and syncing between devices</text>
+    </version>
 
-    <color name="emptyIconTint">@color/background</color>
-    <color name="emptyTextPrimary">#E2374248</color>
-    <color name="emptyTextSecondary">#8C000000</color>
-    <color name="deleteIcon">@color/background</color>
-
-</resources>
+</changelog>

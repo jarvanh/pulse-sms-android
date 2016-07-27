@@ -35,8 +35,8 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.PermissionsUtil;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.util.PermissionsUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -60,8 +60,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void requestPermissions() {
-        if (PermissionsUtil.checkRequestMainPermissions(this)) {
-            PermissionsUtil.startMainPermissionRequest(this);
+        if (PermissionsUtils.checkRequestMainPermissions(this)) {
+            PermissionsUtils.startMainPermissionRequest(this);
         } else {
             startDatabaseSync();
         }
@@ -70,7 +70,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        if (PermissionsUtil.processPermissionRequest(this, requestCode, permissions, grantResults)) {
+        if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
             startDatabaseSync();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -85,11 +85,11 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 long startTime = System.currentTimeMillis();
 
                 String myName = getName();
-                String myPhoneNumber = PhoneNumberUtil.format(getPhoneNumber());
+                String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
                 final Settings settings = Settings.get(context);
-                settings.setValue(Settings.MY_NAME, myName);
-                settings.setValue(Settings.MY_PHONE_NUMBER, myPhoneNumber);
+                settings.setValue(getString(R.string.pref_my_name), myName);
+                settings.setValue(getString(R.string.pref_my_phone_number), myPhoneNumber);
 
                 List<Conversation> conversations = SmsMmsUtil.queryConversations(context);
 
@@ -101,7 +101,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        settings.setValue(Settings.FIRST_START, false);
+                        settings.setValue(getString(R.string.pref_first_start), false);
                         startActivity(new Intent(context, MessengerActivity.class));
                         finish();
                     }
@@ -128,7 +128,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private String getPhoneNumber() {
-        return PhoneNumberUtil.clearFormatting(Utils.getMyPhoneNumber(this));
+        return PhoneNumberUtils.clearFormatting(Utils.getMyPhoneNumber(this));
     }
 
     @Override

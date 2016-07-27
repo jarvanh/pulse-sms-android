@@ -40,54 +40,54 @@ public class SettingsTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void test_create() {
+    public void create() {
         assertNotNull(settings.getContext());
         assertNotNull(settings.getSharedPrefs());
     }
 
     @Test
-    public void test_forceUpdate() {
+    public void forceUpdate() {
         settings.forceUpdate();
         verify(settings).init(any(Context.class));
     }
 
     @Test
-    public void test_setBooleanValue() {
+    public void setBooleanValue() {
         settings.setValue("test", true);
         verify(settings).init(any(Context.class));
         assertTrue(settings.getSharedPrefs().getBoolean("test", false));
     }
 
     @Test
-    public void test_setIntValue() {
+    public void setIntValue() {
         settings.setValue("test", 1);
         verify(settings).init(any(Context.class));
         assertTrue(settings.getSharedPrefs().getInt("test", 2) == 1);
     }
 
     @Test
-    public void test_setStringValue() {
+    public void setStringValue() {
         settings.setValue("test", "test string");
         verify(settings, atLeastOnce()).init(any(Context.class));
         assertTrue(settings.getSharedPrefs().getString("test", "not test string").equals("test string"));
     }
 
     @Test
-    public void test_setLongValue() {
+    public void setLongValue() {
         settings.setValue("test", 111L);
         verify(settings).init(any(Context.class));
         assertEquals(111L, settings.getSharedPrefs().getLong("test", -1));
     }
 
     @Test
-    public void test_removeKey() {
+    public void removeKey() {
         settings.setValue("test", "testvalue");
         settings.removeValue("test");
         assertEquals(null, settings.getSharedPrefs().getString("test", null));
     }
 
     @Test(expected = RuntimeException.class)
-    public void test_cantInitializeWithBlankConstructor() {
+    public void cantInitializeWithBlankConstructor() {
         Settings settings = new Settings();
     }
 

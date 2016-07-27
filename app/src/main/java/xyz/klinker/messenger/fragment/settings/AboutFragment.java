@@ -1,0 +1,133 @@
+/*
+ * Copyright (C) 2016 Jacob Klinker
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package xyz.klinker.messenger.fragment.settings;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ChangelogAdapter;
+import xyz.klinker.messenger.adapter.OpenSourceAdapter;
+import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.util.StringUtils;
+import xyz.klinker.messenger.util.xml.ChangelogParser;
+import xyz.klinker.messenger.util.xml.OpenSourceParser;
+
+/**
+ * Fragment for displaying information about the app.
+ */
+public class AboutFragment extends PreferenceFragmentCompat {
+
+    @Override
+    public void onCreatePreferences(Bundle bundle, String s) {
+        addPreferencesFromResource(R.xml.about);
+
+        findPreference(getString(R.string.pref_about_app_version)).setSummary(getVersionName());
+        findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
+        findPreference(getString(R.string.pref_about_device_info)).setSummary(getDeviceInfo());
+
+        findPreference(getString(R.string.pref_about_changelog))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displayChangelog();
+                        return true;
+                    }
+                });
+
+        findPreference(getString(R.string.pref_about_copyright))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displayOpenSource();
+                        return true;
+                    }
+                });
+    }
+
+    /**
+     * Gets the version name associated with the current build.
+     *
+     * @return the version name.
+     */
+    public String getVersionName() {
+        try {
+            return getActivity().getPackageManager()
+                    .getPackageInfo(getActivity().getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Gets a device id for this device. This will be a 32-bit random hex value.
+     *
+     * @return the device id.
+     */
+    public String getDeviceId() {
+        Settings settings = Settings.get(getContext());
+        String deviceId = settings.deviceId;
+
+        if (deviceId == null) {
+            deviceId = StringUtils.generateHexString(32);
+            settings.setValue(getString(R.string.pref_device_id), deviceId);
+        }
+
+        return deviceId;
+    }
+
+    /**
+     * Gets device info (manufacturer and model).
+     *
+     * @return the device info.
+     */
+    public String getDeviceInfo() {
+        return Build.MANUFACTURER + ", " + Build.MODEL;
+    }
+
+    /**
+     * Shows the apps changelog in a dialog box.
+     */
+    public void displayChangelog() {
+        Activity activity = getActivity();
+
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.changelog)
+                .setAdapter(new ChangelogAdapter(activity, ChangelogParser.parse(activity)), null)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+    /**
+     * Displays information from the open source libraries used in the project.
+     */
+    public void displayOpenSource() {
+        Activity activity = getActivity();
+
+        new AlertDialog.Builder(activity)
+                .setAdapter(new OpenSourceAdapter(activity, OpenSourceParser.parse(activity)), null)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+}

@@ -29,7 +29,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
 
@@ -89,7 +89,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         DataSource source = DataSource.getInstance(context);
         source.open();
         long conversationId = source
-                .insertMessage(message, PhoneNumberUtil.clearFormatting(address), context);
+                .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
         source.close();
 
         ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);

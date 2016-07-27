@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
-import android.telephony.PhoneNumberUtils;
 
 import com.klinker.android.send_message.Utils;
 
@@ -26,7 +25,7 @@ import java.util.Locale;
 /**
  * Helper for working with phone numbers, mainly formatting them.
  */
-public class PhoneNumberUtil {
+public class PhoneNumberUtils {
 
     /**
      * Removes any formatted characters from a number, leaving just the number and maybe a + in the
@@ -36,7 +35,7 @@ public class PhoneNumberUtil {
      * @return the plain phone number.
      */
     public static String clearFormatting(String number) {
-        return PhoneNumberUtils.stripSeparators(number);
+        return android.telephony.PhoneNumberUtils.stripSeparators(number);
     }
 
     /**
@@ -46,7 +45,8 @@ public class PhoneNumberUtil {
      * @return the formatted number.
      */
     public static String format(String number) {
-        String formatted = PhoneNumberUtils.formatNumber(number, Locale.getDefault().getCountry());
+        String formatted = android.telephony.PhoneNumberUtils
+                .formatNumber(number, Locale.getDefault().getCountry());
 
         if (formatted == null) {
             return number;

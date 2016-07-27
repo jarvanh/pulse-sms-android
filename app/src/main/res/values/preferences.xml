@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string name="pref_first_start" translatable="false">first_start</string>
+    <string name="pref_my_name" translatable="false">my_name</string>
+    <string name="pref_my_phone_number" translatable="false">my_phone_number</string>
+
+    <string name="pref_device_id" translatable="false">device_id</string>
+
+    <string name="pref_about_changelog" translatable="false">changelog</string>
+    <string name="pref_about_copyright" translatable="false">copyright</string>
+    <string name="pref_about_app_version" translatable="false">app_version</string>
+    <string name="pref_about_device_id" translatable="false">device_id</string>
+    <string name="pref_about_device_info" translatable="false">device_info</string>
+    <string name="pref_about_beta" translatable="false">beta</string>
+
+    <string name="pref_help_faqs" translatable="false">faqs</string>
+    <string name="pref_help_google_plus" translatable="false">google+</string>
+    <string name="pref_help_email" translatable="false">email</string>
+    <string name="pref_help_twitter" translatable="false">twitter</string>
+
+</resources>

@@ -24,7 +24,7 @@ import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.AnimationUtil;
+import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 
 /**
@@ -92,13 +92,13 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     private void expandConversation() {
         expanded = true;
-        AnimationUtil.expandConversationListItem(itemView);
+        AnimationUtils.expandConversationListItem(itemView);
         listener.onConversationExpanded(this);
     }
 
     private void collapseConversation() {
         expanded = false;
-        AnimationUtil.contractConversationListItem(itemView);
+        AnimationUtils.contractConversationListItem(itemView);
         listener.onConversationContracted(this);
     }
 

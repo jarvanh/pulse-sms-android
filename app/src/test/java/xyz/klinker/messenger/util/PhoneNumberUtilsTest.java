@@ -22,42 +22,42 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 
 import static org.junit.Assert.*;
 
-public class PhoneNumberUtilTest extends MessengerRobolectricSuite {
+public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void clearFormattingNone() {
-        assertEquals("5154224558", PhoneNumberUtil.clearFormatting("5154224558"));
+        assertEquals("5154224558", PhoneNumberUtils.clearFormatting("5154224558"));
     }
 
     @Test
     public void clearFormattingLeavePlus() {
-        assertEquals("+15154224558", PhoneNumberUtil.clearFormatting("+15154224558"));
+        assertEquals("+15154224558", PhoneNumberUtils.clearFormatting("+15154224558"));
     }
 
     @Test
     public void clearFormatting() {
-        assertEquals("5154224558", PhoneNumberUtil.clearFormatting("(515) 422-4558"));
+        assertEquals("5154224558", PhoneNumberUtils.clearFormatting("(515) 422-4558"));
     }
 
     @Test
     public void clearFormattingMultipleNumbers() {
         assertEquals("5154224558,5159911493",
-                PhoneNumberUtil.clearFormatting("(515) 422-4558, (515) 991-1493"));
+                PhoneNumberUtils.clearFormatting("(515) 422-4558, (515) 991-1493"));
     }
 
     @Test
     public void format() {
-        assertEquals("+1 515-422-4558", PhoneNumberUtil.format("+15154224558"));
+        assertEquals("+1 515-422-4558", PhoneNumberUtils.format("+15154224558"));
     }
 
     @Test
     public void formatShorter() {
-        assertEquals("(515) 422-4558", PhoneNumberUtil.format("5154224558"));
+        assertEquals("(515) 422-4558", PhoneNumberUtils.format("5154224558"));
     }
 
     @Test
     public void formatShort() {
-        assertEquals("22000", PhoneNumberUtil.format("22000"));
+        assertEquals("22000", PhoneNumberUtils.format("22000"));
     }
 
 }

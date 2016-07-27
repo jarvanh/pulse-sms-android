@@ -28,7 +28,7 @@ import java.io.OutputStream;
 /**
  * Util for working with files.
  */
-public class FileUtil {
+public class FileUtils {
 
     public static void copy(java.io.File src, java.io.File dst) {
         try {

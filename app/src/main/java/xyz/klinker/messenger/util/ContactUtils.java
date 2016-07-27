@@ -24,13 +24,12 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Helper for working with Android's contact provider.
  */
-public class ContactUtil {
+public class ContactUtils {
 
     /**
      * Gets a space separated list of phone numbers.
@@ -52,7 +51,7 @@ public class ContactUtil {
                                         "_id=?", new String[] { ids[i] }, null);
 
                         if (number != null && number.moveToFirst()) {
-                            numbers.add(PhoneNumberUtil.clearFormatting(
+                            numbers.add(PhoneNumberUtils.clearFormatting(
                                     number.getString(number.getColumnIndex("address"))));
                         } else {
                             numbers.add(ids[i]);
@@ -129,7 +128,7 @@ public class ContactUtil {
                         names += ", " + phonesCursor.getString(0);
                     } else {
                         try {
-                            names += ", " + PhoneNumberUtil.format(number[i]);
+                            names += ", " + PhoneNumberUtils.format(number[i]);
                         } catch (Exception e) {
                             names += ", " + number;
                         }
@@ -141,7 +140,7 @@ public class ContactUtil {
                 }
             } catch (IllegalArgumentException e) {
                 try {
-                    names += ", " + PhoneNumberUtil.format(number[i]);
+                    names += ", " + PhoneNumberUtils.format(number[i]);
                 } catch (Exception f) {
                     names += ", " + number;
                 }

@@ -29,8 +29,8 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
-import xyz.klinker.messenger.util.ContactUtil;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
+import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 
 /**
@@ -56,7 +56,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             final String from = SmsMmsUtil.getMmsFrom(uri, context);
             final String to = SmsMmsUtil.getMmsTo(uri, context);
             final String phoneNumbers = getPhoneNumbers(from, to,
-                    PhoneNumberUtil.getMyPhoneNumber(context));
+                    PhoneNumberUtils.getMyPhoneNumber(context));
             List<ContentValues> values = SmsMmsUtil.processMessage(lastMessage, -1L, context);
 
             DataSource source = DataSource.getInstance(context);
@@ -72,7 +72,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE);
                 message.read = false;
                 message.seen = false;
-                message.from = ContactUtil.findContactNames(from, context);
+                message.from = ContactUtils.findContactNames(from, context);
 
                 if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                     snippet = message.data;

@@ -42,7 +42,7 @@ import xyz.klinker.messenger.data.ColorSet;
 /**
  * Helper class for working with colors.
  */
-public class ColorUtil {
+public class ColorUtils {
 
     public static ColorSet getRandomMaterialColor(Context context) {
         int num = (int) (Math.random() * (17 + 1));

@@ -24,9 +24,8 @@ import android.support.annotation.Nullable;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
-import xyz.klinker.messenger.util.SendUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.SendUtils;
 
 /**
  * Service for sending messages to a conversation without a UI present. These messages could come
@@ -45,7 +44,7 @@ public class HeadlessSmsSendService extends Service {
         String[] addresses = parseAddress(Uri.decode(intent.getDataString()));
         String text = getText(intent);
 
-        SendUtil.send(this, text, addresses);
+        SendUtils.send(this, text, addresses);
 
         StringBuilder phoneNumbers = new StringBuilder();
         for (int i = 0; i < addresses.length; i++) {
@@ -64,7 +63,7 @@ public class HeadlessSmsSendService extends Service {
     }
 
     private String[] parseAddress(String address) {
-        return PhoneNumberUtil.clearFormatting(address).replace("sms:", "")
+        return PhoneNumberUtils.clearFormatting(address).replace("sms:", "")
                 .replace("smsto:", "").replace("mms:", "").replace("mmsto:", "").split(",");
     }
 

@@ -22,16 +22,13 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
-import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.util.ArrayList;
@@ -43,7 +40,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ImageUtil;
+import xyz.klinker.messenger.util.ImageUtils;
 
 /**
  * Service for displaying notifications to the user based on which conversations have not been
@@ -124,8 +121,8 @@ public class NotificationService extends IntentService {
      * Displays a notification for a single conversation.
      */
     private String giveConversationNotification(NotificationConversation conversation) {
-        Bitmap contactImage = ImageUtil.clipToCircle(
-                ImageUtil.getBitmap(this, conversation.imageUri));
+        Bitmap contactImage = ImageUtils.clipToCircle(
+                ImageUtils.getBitmap(this, conversation.imageUri));
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify)
@@ -160,7 +157,7 @@ public class NotificationService extends IntentService {
                     inboxStyle.addLine(Html.fromHtml(line));
                 } else {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtil.getBitmap(this, message.data));
+                            .bigPicture(ImageUtils.getBitmap(this, message.data));
                 }
             }
         } else {
@@ -180,7 +177,7 @@ public class NotificationService extends IntentService {
                     }
                 } else if (MimeType.isStaticImage(message.mimeType)) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtil.getBitmap(this, message.data));
+                            .bigPicture(ImageUtils.getBitmap(this, message.data));
                 }
             }
         }

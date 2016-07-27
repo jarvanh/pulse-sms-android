@@ -16,27 +16,29 @@
 
 package xyz.klinker.messenger.util;
 
-import org.junit.Test;
+import java.util.Random;
 
-import static org.junit.Assert.*;
+/**
+ * Utility for working with different strings.
+ */
+public class StringUtils {
 
-public class SmsMmsUtilTest {
+    /**
+     * Generates a hexadecimal string of the specified length.
+     *
+     * @param length the length of the string.
+     * @return the hex string.
+     */
+    public static String generateHexString(int length) {
+        Random rand = new Random();
+        String id = "";
 
-    @Test
-    public void createIdMatcherSingleNumber() {
-        assertEquals("11555", SmsMmsUtil.createIdMatcher("+15154211555"));
-    }
+        for (int i = 0; i < length; i++) {
+            int r = rand.nextInt(0x10);
+            id += Integer.toHexString(r);
+        }
 
-    @Test
-    public void createIdMatcherMultipleNumbers() {
-        assertEquals("085321149396726",
-                SmsMmsUtil.createIdMatcher("5154196726, 5154808532, 5159911493"));
-    }
-
-    @Test
-    public void createIdMatcherEmail() {
-        assertEquals("jklinker1@gmail.com",
-                SmsMmsUtil.createIdMatcher("jklinker1@gmail.com"));
+        return id;
     }
 
 }

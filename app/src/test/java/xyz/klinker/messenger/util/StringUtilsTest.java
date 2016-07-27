@@ -16,27 +16,34 @@
 
 package xyz.klinker.messenger.util;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import xyz.klinker.messenger.MessengerSuite;
 
 import static org.junit.Assert.*;
 
-public class SmsMmsUtilTest {
+public class StringUtilsTest extends MessengerSuite {
 
-    @Test
-    public void createIdMatcherSingleNumber() {
-        assertEquals("11555", SmsMmsUtil.createIdMatcher("+15154211555"));
+    @Before
+    public void setUp() {
+        StringUtils helper = new StringUtils();
     }
 
     @Test
-    public void createIdMatcherMultipleNumbers() {
-        assertEquals("085321149396726",
-                SmsMmsUtil.createIdMatcher("5154196726, 5154808532, 5159911493"));
+    public void generate32charHexString() {
+        for (int i = 0; i < 10; i++) {
+            String hex = StringUtils.generateHexString(32);
+            assertEquals(32, hex.length());
+        }
     }
 
     @Test
-    public void createIdMatcherEmail() {
-        assertEquals("jklinker1@gmail.com",
-                SmsMmsUtil.createIdMatcher("jklinker1@gmail.com"));
+    public void generate20charHexString() {
+        for (int i = 0; i < 10; i++) {
+            String hex = StringUtils.generateHexString(20);
+            assertEquals(20, hex.length());
+        }
     }
 
 }

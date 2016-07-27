@@ -30,7 +30,7 @@ import xyz.klinker.messenger.R;
 /**
  * Helper for working with timestamps on messages.
  */
-public class TimeUtil {
+public class TimeUtils {
 
     private static final long SECOND = 1000;
     private static final long MINUTE = SECOND * 60;

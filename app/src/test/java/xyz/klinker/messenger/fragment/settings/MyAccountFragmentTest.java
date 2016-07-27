@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
+package xyz.klinker.messenger.fragment.settings;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import xyz.klinker.messenger.MessengerRobolectricSuite;
 
 import static org.junit.Assert.*;
 
-public class SmsMmsUtilTest {
+public class MyAccountFragmentTest extends MessengerRobolectricSuite {
 
-    @Test
-    public void createIdMatcherSingleNumber() {
-        assertEquals("11555", SmsMmsUtil.createIdMatcher("+15154211555"));
+    private MyAccountFragment fragment;
+
+    @Before
+    public void setUp() {
+        fragment = startFragment(new MyAccountFragment());
     }
 
     @Test
-    public void createIdMatcherMultipleNumbers() {
-        assertEquals("085321149396726",
-                SmsMmsUtil.createIdMatcher("5154196726, 5154808532, 5159911493"));
-    }
-
-    @Test
-    public void createIdMatcherEmail() {
-        assertEquals("jklinker1@gmail.com",
-                SmsMmsUtil.createIdMatcher("jklinker1@gmail.com"));
+    public void isAdded() {
+        assertTrue(fragment.isAdded());
     }
 
 }

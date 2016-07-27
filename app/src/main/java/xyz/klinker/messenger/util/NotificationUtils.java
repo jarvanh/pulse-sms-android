@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Helper for working with notifications.
  */
-public class NotificationUtil {
+public class NotificationUtils {
 
     /**
      * Works around a bug that seems to keep a grouped notification on screen after all of it's

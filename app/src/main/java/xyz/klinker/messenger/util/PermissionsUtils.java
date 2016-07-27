@@ -32,7 +32,7 @@ import xyz.klinker.messenger.R;
 /**
  * Helper class for working with permissions and making sure that they are granted.
  */
-public class PermissionsUtil {
+public class PermissionsUtils {
 
     private static final int REQUEST_MAIN_PERMISSIONS = 1;
 

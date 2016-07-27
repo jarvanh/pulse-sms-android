@@ -18,48 +18,59 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:id="@+id/primary_section"
         android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/drawer_conversation"
-            android:icon="@drawable/ic_conversations"
-            android:title="@string/menu_conversations"
-            android:checked="true"/>
+        <group
+            android:id="@+id/primary_section"
+            android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/drawer_schedule"
-            android:icon="@drawable/ic_schedule"
-            android:title="@string/menu_schedule"/>
+            <item
+                android:id="@+id/drawer_conversation"
+                android:icon="@drawable/ic_conversations"
+                android:title="@string/menu_conversations"
+                android:checked="true"/>
 
-        <item
-            android:id="@+id/drawer_mute_contacts"
-            android:icon="@drawable/ic_contacts"
-            android:title="@string/menu_mute_contacts"/>
+            <item
+                android:id="@+id/drawer_schedule"
+                android:icon="@drawable/ic_schedule"
+                android:title="@string/menu_schedule"/>
 
-        <item
-            android:id="@+id/drawer_invite"
-            android:icon="@drawable/ic_invite"
-            android:title="@string/menu_invite"/>
+            <item
+                android:id="@+id/drawer_mute_contacts"
+                android:icon="@drawable/ic_contacts"
+                android:title="@string/menu_mute_contacts"/>
 
-    </group>
+            <item
+                android:id="@+id/drawer_invite"
+                android:icon="@drawable/ic_invite"
+                android:title="@string/menu_invite"/>
 
-    <group android:id="@+id/other_section">
+        </group>
 
-        <item
-            android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/menu_settings"/>
+        <group android:id="@+id/other_section"
+            android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/drawer_help"
-            android:icon="@drawable/ic_help"
-            android:title="@string/menu_help"/>
+            <item
+                android:id="@+id/drawer_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/menu_settings"/>
 
-        <item
-            android:id="@+id/drawer_about"
-            android:icon="@drawable/ic_about"
-            android:title="@string/menu_about"/>
+            <item
+                android:id="@+id/drawer_account"
+                android:icon="@drawable/ic_account"
+                android:title="@string/menu_account"/>
+
+            <item
+                android:id="@+id/drawer_help"
+                android:icon="@drawable/ic_help"
+                android:title="@string/menu_help"/>
+
+            <item
+                android:id="@+id/drawer_about"
+                android:icon="@drawable/ic_about"
+                android:title="@string/menu_about"/>
+
+        </group>
 
     </group>
 

@@ -18,7 +18,6 @@ package xyz.klinker.messenger.util;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ import xyz.klinker.messenger.R;
  * Helper for handling all animations such as expanding and contracting conversations so that we
  * can keep those classes cleaner.
  */
-public class AnimationUtil {
+public class AnimationUtils {
 
     private static final int EXPAND_CONVERSATION_DURATION = 250;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
@@ -60,7 +59,7 @@ public class AnimationUtil {
      */
     public static void contractConversationListItem(View itemView) {
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
-        AnimationUtil.animateConversationListItem(itemView, itemView.getRootView().getHeight(), 0,
+        AnimationUtils.animateConversationListItem(itemView, itemView.getRootView().getHeight(), 0,
                 (int) recyclerView.getTranslationY(), 0,
                 new DecelerateInterpolator());
     }

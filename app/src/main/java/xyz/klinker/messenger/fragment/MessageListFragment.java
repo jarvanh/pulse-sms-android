@@ -66,13 +66,12 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.util.AnimationUtil;
-import xyz.klinker.messenger.util.ColorUtil;
-import xyz.klinker.messenger.util.PermissionsUtil;
-import xyz.klinker.messenger.util.PhoneNumberUtil;
-import xyz.klinker.messenger.util.SendUtil;
+import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.util.PermissionsUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.SendUtils;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
@@ -179,8 +178,8 @@ public class MessageListFragment extends Fragment implements
 
         dismissNotification();
 
-        AnimationUtil.animateConversationPeripheralIn(appBarLayout);
-        AnimationUtil.animateConversationPeripheralIn(sendBar);
+        AnimationUtils.animateConversationPeripheralIn(appBarLayout);
+        AnimationUtils.animateConversationPeripheralIn(sendBar);
 
         return view;
     }
@@ -245,12 +244,12 @@ public class MessageListFragment extends Fragment implements
         }
 
         setNameAndDrawerColor(getActivity());
-        ColorUtil.setCursorDrawableColor(messageEntry, colorAccent);
+        ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
     }
 
     private void setNameAndDrawerColor(Activity activity) {
         String name = getArguments().getString(ARG_TITLE);
-        String phoneNumber = PhoneNumberUtil.format(getArguments().getString(ARG_PHONE_NUMBERS));
+        String phoneNumber = PhoneNumberUtils.format(getArguments().getString(ARG_PHONE_NUMBERS));
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         boolean isGroup = getArguments().getBoolean(ARG_IS_GROUP);
 
@@ -269,8 +268,8 @@ public class MessageListFragment extends Fragment implements
 
             phoneNumberView.setText(phoneNumber);
 
-            ColorUtil.adjustStatusBarColor(colorDarker, activity);
-            ColorUtil.adjustDrawerColor(colorDarker, isGroup, activity);
+            ColorUtils.adjustStatusBarColor(colorDarker, activity);
+            ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity);
         }
     }
 
@@ -405,7 +404,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initRecycler() {
-        ColorUtil.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
+        ColorUtils.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
 
         manager = new LinearLayoutManager(getActivity());
         manager.setStackFromEnd(true);
@@ -485,10 +484,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void sendMessage() {
-        if (PermissionsUtil.checkRequestMainPermissions(getActivity())) {
-            PermissionsUtil.startMainPermissionRequest(getActivity());
-        } else if (!PermissionsUtil.isDefaultSmsApp(getActivity())) {
-            PermissionsUtil.setDefaultSmsApp(getActivity());
+        if (PermissionsUtils.checkRequestMainPermissions(getActivity())) {
+            PermissionsUtils.startMainPermissionRequest(getActivity());
+        } else if (!PermissionsUtils.isDefaultSmsApp(getActivity())) {
+            PermissionsUtils.setDefaultSmsApp(getActivity());
         } else {
             final String message = messageEntry.getText().toString().trim();
             final Uri uri = attachedUri;
@@ -537,7 +536,7 @@ public class MessageListFragment extends Fragment implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SendUtil.send(getContext(), message,
+                        SendUtils.send(getContext(), message,
                                 getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());
                     }

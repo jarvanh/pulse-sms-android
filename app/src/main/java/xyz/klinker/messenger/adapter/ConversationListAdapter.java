@@ -34,7 +34,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
-import xyz.klinker.messenger.util.TimeUtil;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
@@ -70,8 +70,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 conversations.add(conversation);
 
                 if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                        (currentSection == SectionType.TODAY && TimeUtil.isToday(conversation.timestamp)) ||
-                        (currentSection == SectionType.YESTERDAY && TimeUtil.isYesterday(conversation.timestamp)) ||
+                        (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
+                        (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
                         (currentSection == SectionType.OLDER)) {
                     currentCount++;
                 } else {

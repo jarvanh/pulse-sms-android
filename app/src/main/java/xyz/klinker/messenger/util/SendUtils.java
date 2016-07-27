@@ -33,7 +33,7 @@ import xyz.klinker.messenger.data.MimeType;
 /**
  * Utility for helping to send messages.
  */
-public class SendUtil {
+public class SendUtils {
 
     public static void send(Context context, String text, String address) {
         send(context, text, address.split(", "));
@@ -56,7 +56,7 @@ public class SendUtil {
         if (data != null) {
             try {
                 if (MimeType.isStaticImage(mimeType)) {
-                    data = ImageUtil.scaleToSend(context, data);
+                    data = ImageUtils.scaleToSend(context, data);
                     mimeType = MimeType.IMAGE_JPEG;
                 }
 

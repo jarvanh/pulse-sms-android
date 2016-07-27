@@ -37,7 +37,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 /**
  * Helper for working with images.
  */
-public class ImageUtil {
+public class ImageUtils {
 
     private static final int MAX_FILE_SIZE = 1024 * 1024;
     private static final float SCALE_RATIO = 0.75f;
@@ -99,10 +99,10 @@ public class ImageUtil {
      */
     public static void fillConversationColors(Conversation conversation, Context context) {
         if (conversation.imageUri == null) {
-            conversation.colors = ColorUtil.getRandomMaterialColor(context);
+            conversation.colors = ColorUtils.getRandomMaterialColor(context);
         } else {
-            Bitmap bitmap = ImageUtil.getContactImage(conversation.imageUri, context);
-            ColorSet colors = ImageUtil.extractColorSet(context, bitmap);
+            Bitmap bitmap = ImageUtils.getContactImage(conversation.imageUri, context);
+            ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
 
             if (colors != null) {
                 conversation.colors = colors;
@@ -111,7 +111,7 @@ public class ImageUtil {
                                 ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
                         .toString();
             } else {
-                conversation.colors = ColorUtil.getRandomMaterialColor(context);
+                conversation.colors = ColorUtils.getRandomMaterialColor(context);
                 conversation.imageUri = null;
             }
         }
@@ -126,7 +126,7 @@ public class ImageUtil {
      *         palette).
      */
     public static ColorSet extractColorSet(Context context, Bitmap bitmap) {
-        ColorSet defaults = ColorUtil.getRandomMaterialColor(context);
+        ColorSet defaults = ColorUtils.getRandomMaterialColor(context);
 
         try {
             Palette p = Palette.from(bitmap).generate();
@@ -152,7 +152,7 @@ public class ImageUtil {
         java.io.File newLocation = new java.io.File(context.getFilesDir(),
                 ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
         java.io.File oldLocation = new java.io.File(uri.getPath());
-        FileUtil.copy(oldLocation, newLocation);
+        FileUtils.copy(oldLocation, newLocation);
         java.io.File file = scaleToSend(newLocation, BitmapFactory.decodeFile(uri.getPath()));
         return Uri.fromFile(file);
     }

@@ -21,9 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.text.TextUtils;
 
@@ -34,7 +32,6 @@ import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
 
 import java.io.BufferedReader;
@@ -45,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -85,11 +81,11 @@ public class SmsMmsUtil {
                 conversation.timestamp = cursor.getLong(1);
                 conversation.snippet = cursor.getString(4);
                 conversation.ringtoneUri = null;
-                conversation.phoneNumbers = ContactUtil.findContactNumbers(cursor.getString(3), context);
-                conversation.title = ContactUtil.findContactNames(conversation.phoneNumbers, context);
-                conversation.imageUri = ContactUtil.findImageUri(conversation.phoneNumbers, context);
+                conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
+                conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
+                conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
                 conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
-                ImageUtil.fillConversationColors(conversation, context);
+                ImageUtils.fillConversationColors(conversation, context);
 
                 conversations.add(conversation);
             } while (cursor.moveToNext());
@@ -188,7 +184,7 @@ public class SmsMmsUtil {
         } else {
             Uri uri = Uri.parse("content://mms/" + messages.getLong(0));
             final String number = getMmsFrom(uri, context);
-            final String from = ContactUtil.findContactNames(number, context);
+            final String from = ContactUtils.findContactNames(number, context);
             final String mId = "mid=" + messages.getString(0);
             int type = getMmsMessageType(messages);
 

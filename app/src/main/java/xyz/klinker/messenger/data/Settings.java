@@ -21,6 +21,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 
+import xyz.klinker.messenger.R;
+
 /**
  * Holds all settings for the application and allows for easily changing the values stored for each
  * setting.
@@ -29,15 +31,12 @@ public class Settings {
 
     private static volatile Settings settings;
 
-    public static final String FIRST_START = "first_start";
-    public static final String MY_NAME = "my_name";
-    public static final String MY_PHONE_NUMBER = "my_phone_number";
-
     private Context context;
 
     public boolean firstStart;
     public String myName;
     public String myPhoneNumber;
+    public String deviceId;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -66,9 +65,10 @@ public class Settings {
         this.context = context;
         SharedPreferences sharedPrefs = getSharedPrefs();
 
-        this.firstStart = sharedPrefs.getBoolean(FIRST_START, true);
-        this.myName = sharedPrefs.getString(MY_NAME, null);
-        this.myPhoneNumber = sharedPrefs.getString(MY_PHONE_NUMBER, null);
+        this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
+        this.myName = sharedPrefs.getString(context.getString(R.string.pref_my_name), null);
+        this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.pref_my_phone_number), null);
+        this.deviceId = sharedPrefs.getString(context.getString(R.string.pref_device_id), null);
     }
 
     @VisibleForTesting

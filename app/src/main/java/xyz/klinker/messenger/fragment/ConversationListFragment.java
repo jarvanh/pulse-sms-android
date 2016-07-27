@@ -39,8 +39,8 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
-import xyz.klinker.messenger.util.AnimationUtil;
-import xyz.klinker.messenger.util.ColorUtil;
+import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -251,7 +251,7 @@ public class ConversationListFragment extends Fragment
     	}
     	
         expandedConversation = viewHolder;
-        AnimationUtil.expandActivityForConversation(getActivity());
+        AnimationUtils.expandActivityForConversation(getActivity());
 
         messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -262,7 +262,7 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
-        AnimationUtil.contractActivityFromConversation(getActivity());
+        AnimationUtils.contractActivityFromConversation(getActivity());
 
         getActivity().getSupportFragmentManager().beginTransaction()
                 .remove(messageListFragment)
@@ -270,8 +270,8 @@ public class ConversationListFragment extends Fragment
         messageListFragment = null;
 
         int color = getResources().getColor(R.color.colorPrimaryDark);
-        ColorUtil.adjustStatusBarColor(color, getActivity());
-        ColorUtil.adjustDrawerColor(color, getActivity());
+        ColorUtils.adjustStatusBarColor(color, getActivity());
+        ColorUtils.adjustDrawerColor(color, getActivity());
     }
 
     @Override

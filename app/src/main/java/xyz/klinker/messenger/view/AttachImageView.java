@@ -20,19 +20,17 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Handler;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.AttachImageListAdapter;
 import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.util.ColorUtil;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 
 /**
@@ -53,7 +51,7 @@ public class AttachImageView extends RecyclerView {
     }
 
     private void init(int color) {
-        ColorUtil.changeRecyclerOverscrollColors(this, color);
+        ColorUtils.changeRecyclerOverscrollColors(this, color);
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {

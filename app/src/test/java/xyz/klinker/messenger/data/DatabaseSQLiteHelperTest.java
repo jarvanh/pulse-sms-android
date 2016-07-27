@@ -47,19 +47,19 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void test_onCreate() {
+    public void onCreate() {
         helper.onCreate(database);
         verifyCreateStatement();
     }
 
     @Test
-    public void test_onUpgrade_1to2() {
+    public void onUpgrade_1to2() {
         helper.onUpgrade(database, 1, 2);
         verify2Upgrade();
     }
 
     @Test
-    public void test_onDrop() {
+    public void onDrop() {
         helper.onDrop(database);
         verifyDropStatement();
     }
