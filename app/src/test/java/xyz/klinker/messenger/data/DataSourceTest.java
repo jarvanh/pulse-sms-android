@@ -221,4 +221,29 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         assertEquals(cursor, source.getUnseenMessages());
     }
 
+    @Test
+    public void getDrafts() {
+        when(database.query("draft", null, "conversation_id=?", new String[] {"1"}, null, null,
+                null)).thenReturn(cursor);
+        assertNotNull(source.getDrafts(1));
+    }
+
+    @Test
+    public void insertDraft() {
+        source.insertDraft(1, "test", "text/plain");
+
+        ContentValues values = new ContentValues(3);
+        values.put("conversation_id", 1L);
+        values.put("data", "test");
+        values.put("mime_type", "text/plain");
+
+        verify(database).insert("draft", null, values);
+    }
+
+    @Test
+    public void deleteDrafts() {
+        source.deleteDrafts(1);
+        verify(database).delete("draft", "conversation_id=?", new String[] {"1"});
+    }
+
 }

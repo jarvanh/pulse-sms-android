@@ -22,11 +22,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ContactUtil;
 import xyz.klinker.messenger.util.ImageUtil;
@@ -572,6 +574,49 @@ public class DataSource {
     public Cursor getUnseenMessages() {
         return database.query(Message.TABLE, null, Message.COLUMN_SEEN + "=0", null, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
+    }
+
+    /**
+     * Inserts a draft into the database with the given parameters.
+     */
+    public void insertDraft(long conversationId, String data, String mimeType) {
+        ContentValues values = new ContentValues(3);
+        values.put(Draft.COLUMN_CONVERSATION_ID, conversationId);
+        values.put(Draft.COLUMN_DATA, data);
+        values.put(Draft.COLUMN_MIME_TYPE, mimeType);
+        database.insert(Draft.TABLE, null, values);
+    }
+
+    /**
+     * Gets all draft messages for a given conversation id. There may be multiple for each
+     * conversation because there is the potential for different mime types. For example, a
+     * conversation could have a text draft and an image draft, both of which should be displayed
+     * when the conversation is loaded.
+     */
+    public List<Draft> getDrafts(long conversationId) {
+        Cursor cursor = database.query(Draft.TABLE, null, Draft.COLUMN_CONVERSATION_ID + "=?",
+                new String[] { Long.toString(conversationId) }, null, null, null);
+        List<Draft> drafts = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Draft draft = new Draft();
+                draft.fillFromCursor(cursor);
+                drafts.add(draft);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return drafts;
+    }
+
+    /**
+     * Deletes all drafts for a given conversation. This should be used after a message has been
+     * sent to the conversation.
+     */
+    public void deleteDrafts(long conversationId) {
+        database.delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
+                new String[] { Long.toString(conversationId) });
     }
 
 }

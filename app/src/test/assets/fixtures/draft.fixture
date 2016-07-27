@@ -1,1 +1,4 @@
 | _id   | conversation_id   | data                          | mime_type     |
+| 1     | 1                 | test message                  | text/plain    |
+| 2     | 1                 | content://mms/part/1          | image/jpeg    |
+| 3     | 2                 | hey what's up?                | text/plain    |

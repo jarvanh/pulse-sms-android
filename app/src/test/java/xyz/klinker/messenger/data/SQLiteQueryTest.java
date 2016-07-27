@@ -30,6 +30,7 @@ import java.util.List;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ContactUtil;
 import xyz.klinker.messenger.util.FixtureLoader;
@@ -303,6 +304,28 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         source.seenAllMessages();
         assertEquals(0, source.getUnseenMessages().getCount());
         assertEquals(2, source.getUnreadMessages().getCount());
+    }
+
+    @Test
+    public void insertDraft() {
+        int initialSize = source.getDrafts(3).size();
+        source.insertDraft(3, "test", "text/plain");
+        int finalSize = source.getDrafts(3).size();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void getDrafts() {
+        List<Draft> drafts = source.getDrafts(1);
+        assertEquals(2, drafts.size());
+    }
+
+    @Test
+    public void deleteDrafts() {
+        assertEquals(1, source.getDrafts(2).size());
+        source.deleteDrafts(2);
+        assertEquals(0, source.getDrafts(2).size());
     }
 
     private void insertData() throws Exception {
