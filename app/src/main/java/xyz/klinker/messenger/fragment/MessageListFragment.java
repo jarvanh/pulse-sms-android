@@ -164,6 +164,7 @@ public class MessageListFragment extends Fragment implements
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
+                dismissKeyboard();
                 getActivity().onBackPressed();
             }
         });
