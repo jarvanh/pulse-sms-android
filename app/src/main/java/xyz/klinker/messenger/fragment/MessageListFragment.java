@@ -21,6 +21,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -62,6 +63,8 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.PermissionsUtil;
@@ -110,6 +113,7 @@ public class MessageListFragment extends Fragment implements
     private View attachedImageHolder;
     private ImageView attachedImage;
     private View removeImage;
+    private BroadcastReceiver updatedReceiver;
 
     private Uri attachedUri;
     private String attachedMimeType;
@@ -176,6 +180,23 @@ public class MessageListFragment extends Fragment implements
         AnimationUtil.animateConversationPeripheralIn(sendBar);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        updatedReceiver = new MessageListUpdatedReceiver(this);
+        getActivity().registerReceiver(updatedReceiver,
+                MessageListUpdatedReceiver.getIntentFilter());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (updatedReceiver != null) {
+            getActivity().unregisterReceiver(updatedReceiver);
+        }
     }
 
     @Override
@@ -386,7 +407,7 @@ public class MessageListFragment extends Fragment implements
                 .cancel((int) getArguments().getLong(ARG_CONVERSATION_ID));
     }
 
-    private void loadMessages() {
+    public void loadMessages() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
@@ -407,7 +428,10 @@ public class MessageListFragment extends Fragment implements
                     });
                 }
 
+                try { Thread.sleep(1000); } catch (Exception e) { }
+
                 if (source.isOpen()) {
+                    dismissNotification();
                     source.readConversation(getContext(), conversationId);
                 }
             }
@@ -590,6 +614,10 @@ public class MessageListFragment extends Fragment implements
         }
 
         return false;
+    }
+
+    public long getConversationId() {
+        return getArguments().getLong(ARG_CONVERSATION_ID);
     }
 
 }

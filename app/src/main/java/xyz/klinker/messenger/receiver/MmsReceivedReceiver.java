@@ -89,7 +89,9 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             source.close();
 
             if (conversationId != null) {
-                ConversationUpdatedReceiver.sendBroadcast(context, conversationId, snippet, false);
+                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId,
+                        snippet, false);
+                MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
             }
         }
     }

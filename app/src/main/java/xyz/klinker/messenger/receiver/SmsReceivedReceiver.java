@@ -20,19 +20,16 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.PhoneNumberUtil;
-import xyz.klinker.messenger.util.SmsMmsUtil;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
 
@@ -91,10 +88,12 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
         DataSource source = DataSource.getInstance(context);
         source.open();
-        long id = source.insertMessage(message, PhoneNumberUtil.clearFormatting(address), context);
+        long conversationId = source
+                .insertMessage(message, PhoneNumberUtil.clearFormatting(address), context);
         source.close();
 
-        ConversationUpdatedReceiver.sendBroadcast(context, id, body, false);
+        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
+        MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
     }
 
 }

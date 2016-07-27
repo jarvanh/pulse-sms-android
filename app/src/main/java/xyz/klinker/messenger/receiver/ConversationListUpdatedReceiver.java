@@ -37,7 +37,7 @@ import xyz.klinker.messenger.fragment.ConversationListFragment;
  * we need to add an extra item to the today section and remove that item from below, depending
  * on whether we've received a new conversation or are just updating an old one.
  */
-public class ConversationUpdatedReceiver extends BroadcastReceiver {
+public class ConversationListUpdatedReceiver extends BroadcastReceiver {
 
     private static final String ACTION_UPDATED = "xyz.klinker.messenger.CONVERSATION_UPDATED";
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
@@ -46,7 +46,7 @@ public class ConversationUpdatedReceiver extends BroadcastReceiver {
 
     private ConversationListFragment fragment;
 
-    public ConversationUpdatedReceiver(ConversationListFragment fragment) {
+    public ConversationListUpdatedReceiver(ConversationListFragment fragment) {
         this.fragment = fragment;
     }
 
@@ -60,7 +60,7 @@ public class ConversationUpdatedReceiver extends BroadcastReceiver {
         String snippet = intent.getStringExtra(EXTRA_SNIPPET);
         boolean read = intent.getBooleanExtra(EXTRA_READ, false);
 
-        if (conversationId == -1) {
+        if (conversationId == -1 || fragment.getExpandedId() == conversationId) {
             return;
         }
 

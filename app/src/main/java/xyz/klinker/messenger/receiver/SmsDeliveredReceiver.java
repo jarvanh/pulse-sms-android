@@ -73,6 +73,11 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
             if (messages != null && messages.moveToFirst()) {
                 long id = messages.getLong(0);
                 source.updateMessageType(id, error ? Message.TYPE_ERROR : Message.TYPE_DELIVERED);
+
+                long conversationId = messages
+                        .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
+
                 messages.close();
             }
 

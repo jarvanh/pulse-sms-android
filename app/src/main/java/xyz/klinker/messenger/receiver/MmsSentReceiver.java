@@ -58,6 +58,10 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
                     do {
                         long id = messages.getLong(0);
                         source.updateMessageType(id, Message.TYPE_SENT);
+
+                        long conversationId = messages
+                                .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                        MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
                     } while (messages.moveToNext());
                     messages.close();
                 }

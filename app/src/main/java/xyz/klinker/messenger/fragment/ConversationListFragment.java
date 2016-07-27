@@ -38,7 +38,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.receiver.ConversationUpdatedReceiver;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
@@ -63,7 +63,7 @@ public class ConversationListFragment extends Fragment
     private MessageListFragment messageListFragment;
     private Snackbar deleteSnackbar;
     private ConversationListAdapter adapter;
-    private ConversationUpdatedReceiver updatedReceiver;
+    private ConversationListUpdatedReceiver updatedReceiver;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -91,9 +91,9 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updatedReceiver = new ConversationUpdatedReceiver(this);
+        updatedReceiver = new ConversationListUpdatedReceiver(this);
         getActivity().registerReceiver(updatedReceiver,
-                ConversationUpdatedReceiver.getIntentFilter());
+                ConversationListUpdatedReceiver.getIntentFilter());
     }
 
     @Override
