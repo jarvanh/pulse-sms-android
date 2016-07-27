@@ -50,4 +50,11 @@ public class MimeType {
                 mimeType.equals(IMAGE_PNG);
     }
 
+    /**
+     * Gets whether the mime type is a supported static image (not a gif).
+     */
+    public static boolean isStaticImage(String mimeType) {
+        return mimeType.startsWith("image/") && !mimeType.equals(MimeType.IMAGE_GIF);
+    }
+
 }

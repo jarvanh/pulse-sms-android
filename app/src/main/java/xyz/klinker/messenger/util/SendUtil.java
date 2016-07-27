@@ -55,7 +55,7 @@ public class SendUtil {
 
         if (data != null) {
             try {
-                if (mimeType.startsWith("image") && !mimeType.equals(MimeType.IMAGE_GIF)) {
+                if (MimeType.isStaticImage(mimeType)) {
                     data = ImageUtil.scaleToSend(context, data);
                     mimeType = MimeType.IMAGE_JPEG;
                 }

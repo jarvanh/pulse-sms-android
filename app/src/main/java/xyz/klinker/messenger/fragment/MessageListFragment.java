@@ -57,11 +57,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
@@ -196,6 +199,15 @@ public class MessageListFragment extends Fragment implements
 
         if (updatedReceiver != null) {
             getActivity().unregisterReceiver(updatedReceiver);
+        }
+
+        if (messageEntry.getText() != null) {
+            source.insertDraft(getConversationId(),
+                    messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
+        }
+
+        if (attachedUri != null) {
+            source.insertDraft(getConversationId(), attachedUri.toString(), attachedMimeType);
         }
     }
 
@@ -404,7 +416,7 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         NotificationManagerCompat.from(getContext())
-                .cancel((int) getArguments().getLong(ARG_CONVERSATION_ID));
+                .cancel((int) getConversationId());
     }
 
     public void loadMessages() {
@@ -412,11 +424,17 @@ public class MessageListFragment extends Fragment implements
         new Thread(new Runnable() {
             @Override
             public void run() {
-                long conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
+                long conversationId = getConversationId();
 
                 if (source.isOpen()) {
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
+                    final List<Draft> drafts = source.getDrafts(conversationId);
+
+                    if (drafts.size() > 0) {
+                        source.deleteDrafts(conversationId);
+                    }
+                    
                     Log.v("message_load", "load took " + (
                             System.currentTimeMillis() - startTime) + " ms");
 
@@ -424,15 +442,20 @@ public class MessageListFragment extends Fragment implements
                         @Override
                         public void run() {
                             setMessages(cursor);
+                            setDrafts(drafts);
                         }
                     });
                 }
 
                 try { Thread.sleep(1000); } catch (Exception e) { }
 
-                if (source.isOpen()) {
-                    dismissNotification();
-                    source.readConversation(getContext(), conversationId);
+                try {
+                    if (source.isOpen()) {
+                        dismissNotification();
+                        source.readConversation(getContext(), conversationId);
+                    }
+                } catch (IllegalStateException e) {
+
                 }
             }
         }).start();
@@ -451,6 +474,16 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
+    private void setDrafts(List<Draft> drafts) {
+        for (Draft draft : drafts) {
+            if (draft.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                messageEntry.setText(draft.data);
+            } else if (MimeType.isStaticImage(draft.mimeType)) {
+                attachImage(Uri.parse(draft.data));
+            }
+        }
+    }
+
     private void sendMessage() {
         if (PermissionsUtil.checkRequestMainPermissions(getActivity())) {
             PermissionsUtil.startMainPermissionRequest(getActivity());
@@ -463,7 +496,7 @@ public class MessageListFragment extends Fragment implements
 
             if (message.length() > 0 || attachedUri != null) {
                 final Message m = new Message();
-                m.conversationId = getArguments().getLong(ARG_CONVERSATION_ID);
+                m.conversationId = getConversationId();
                 m.type = Message.TYPE_SENDING;
                 m.data = message;
                 m.timestamp = System.currentTimeMillis();
@@ -506,6 +539,7 @@ public class MessageListFragment extends Fragment implements
                     public void run() {
                         SendUtil.send(getContext(), message,
                                 getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
+                        source.deleteDrafts(getConversationId());
                     }
                 }).start();
             }
@@ -597,6 +631,10 @@ public class MessageListFragment extends Fragment implements
     public void onImageSelected(Uri uri) {
         onBackPressed();
 
+        attachImage(uri);
+    }
+
+    private void attachImage(Uri uri) {
         clearAttachedData();
         attachedUri = uri;
         attachedMimeType = MimeType.IMAGE_JPG;

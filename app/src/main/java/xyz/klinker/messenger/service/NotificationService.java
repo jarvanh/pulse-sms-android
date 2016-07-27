@@ -178,7 +178,7 @@ public class NotificationService extends IntentService {
                         text.append(conversation.messages.get(i).data);
                         text.append(" | ");
                     }
-                } else if (message.mimeType.startsWith("image/")) {
+                } else if (MimeType.isStaticImage(message.mimeType)) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
                             .bigPicture(ImageUtil.getBitmap(this, message.data));
                 }

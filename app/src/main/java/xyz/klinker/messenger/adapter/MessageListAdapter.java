@@ -135,7 +135,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 holder.message.setVisibility(View.VISIBLE);
             }
         } else {
-            if (message.mimeType.startsWith("image/")) {
+            if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())

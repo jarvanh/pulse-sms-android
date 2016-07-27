@@ -92,4 +92,16 @@ public class MimeTypeTest {
         assertFalse(MimeType.isSupported(MimeType.AUDIO_WAV));
     }
 
+    @Test
+    public void isStaticImage() {
+        assertTrue(MimeType.isStaticImage(MimeType.IMAGE_BMP));
+        assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPEG));
+        assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPG));
+        assertTrue(MimeType.isStaticImage(MimeType.IMAGE_PNG));
+        assertFalse(MimeType.isStaticImage(MimeType.IMAGE_GIF));
+        assertFalse(MimeType.isStaticImage(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isStaticImage(MimeType.VIDEO_MP4));
+        assertFalse(MimeType.isStaticImage(MimeType.AUDIO_MP4));
+    }
+
 }
