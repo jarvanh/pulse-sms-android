@@ -24,10 +24,13 @@ import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
+
+import com.klinker.android.send_message.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.PermissionsUtil;
+import xyz.klinker.messenger.util.PhoneNumberUtil;
 import xyz.klinker.messenger.util.SmsMmsUtil;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -44,8 +48,6 @@ import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
  * Activity for onboarding and initial database load.
  */
 public class InitialLoadActivity extends AppCompatActivity implements ProgressUpdateListener {
-
-    private static final int REQUEST_PERMISSIONS = 1;
 
     private Handler handler;
     private ProgressBar progress;
@@ -86,6 +88,13 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 final Context context = getApplicationContext();
                 long startTime = System.currentTimeMillis();
 
+                String myName = getName();
+                String myPhoneNumber = PhoneNumberUtil.format(getPhoneNumber());
+
+                final Settings settings = Settings.get(context);
+                settings.setValue(Settings.MY_NAME, myName);
+                settings.setValue(Settings.MY_PHONE_NUMBER, myPhoneNumber);
+
                 List<Conversation> conversations = SmsMmsUtil.queryConversations(context);
                 if (conversations.size() == 0) {
                     conversations = getFakeConversations(getResources());
@@ -99,8 +108,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Settings.getPrefs(context)
-                                .edit().putBoolean(Settings.FIRST_START, false).apply();
+                        settings.setValue(Settings.FIRST_START, false);
                         startActivity(new Intent(context, MessengerActivity.class));
                         finish();
                     }
@@ -110,6 +118,24 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }).start();
+    }
+
+    private String getName() {
+        Cursor cursor = getContentResolver()
+                .query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            String name = cursor.getString(cursor.getColumnIndex("display_name"));
+            cursor.close();
+            return name;
+        }
+
+        return null;
+    }
+
+    private String getPhoneNumber() {
+        return PhoneNumberUtil.clearFormatting(Utils.getMyPhoneNumber(this));
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

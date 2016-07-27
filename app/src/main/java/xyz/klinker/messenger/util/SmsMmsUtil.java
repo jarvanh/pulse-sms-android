@@ -176,7 +176,7 @@ public class SmsMmsUtil {
             ContentValues message = new ContentValues(9);
             message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
             message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
-            message.put(Message.COLUMN_DATA, messages.getString(1));
+            message.put(Message.COLUMN_DATA, messages.getString(1).trim());
             message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2));
             message.put(Message.COLUMN_MIME_TYPE, MimeType.TEXT_PLAIN);
             message.put(Message.COLUMN_READ, messages.getInt(3));
@@ -231,7 +231,7 @@ public class SmsMmsUtil {
                             }
 
                             if (text.trim().length() != 0) {
-                                message.put(Message.COLUMN_DATA, text);
+                                message.put(Message.COLUMN_DATA, text.trim());
                                 values.add(message);
                             }
                         } else {

@@ -18,6 +18,7 @@ package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean checkInitialStart() {
-        return Settings.getPrefs(this).getBoolean(Settings.FIRST_START, true);
+        return Settings.get(this).firstStart;
     }
 
     private void initToolbar() {
@@ -116,6 +118,17 @@ public class MessengerActivity extends AppCompatActivity
     private void initDrawer() {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Settings settings = Settings.get(getApplicationContext());
+                ((TextView) findViewById(R.id.drawer_header_my_name))
+                        .setText(settings.myName);
+                ((TextView) findViewById(R.id.drawer_header_my_phone_number))
+                        .setText(settings.myPhoneNumber);
+            }
+        }, 250);
     }
 
     private void initFab() {

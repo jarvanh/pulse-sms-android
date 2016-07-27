@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="my_name">Jake Klinker</string>
-    <string name="my_phone_number">(515) 422&#8211;4558</string>
+    <string name="my_name">Test Name</string>
+    <string name="my_phone_number">Test Phone Number</string>
 
 </resources>
