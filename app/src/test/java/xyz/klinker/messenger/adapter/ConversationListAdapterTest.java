@@ -162,7 +162,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void removeItems() {
-        adapter.removeItem(1);
+        adapter.deleteItem(1);
 
         assertEquals(4, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
@@ -170,31 +170,31 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(2, adapter.getItemCount(2));
         assertEquals(2, adapter.getItemCount(3));
 
-        adapter.removeItem(3);
+        adapter.deleteItem(3);
 
         assertEquals(3, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
         assertEquals(2, adapter.getItemCount(1));
         assertEquals(2, adapter.getItemCount(2));
 
-        adapter.removeItem(7);
-        adapter.removeItem(6);
+        adapter.deleteItem(7);
+        adapter.deleteItem(6);
 
         assertEquals(2, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
         assertEquals(2, adapter.getItemCount(1));
 
-        adapter.removeItem(1);
+        adapter.deleteItem(1);
 
         assertEquals(1, adapter.getSectionCount());
         assertEquals(2, adapter.getItemCount(0));
 
-        adapter.removeItem(2);
+        adapter.deleteItem(2);
 
         assertEquals(1, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
 
-        adapter.removeItem(1);
+        adapter.deleteItem(1);
 
         assertEquals(0, adapter.getSectionCount());
     }

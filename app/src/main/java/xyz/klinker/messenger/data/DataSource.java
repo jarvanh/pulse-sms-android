@@ -427,9 +427,10 @@ public class DataSource {
      *
      * @param message the message to insert.
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
+     * @return the conversation id that the message was inserted into.
      */
-    public void insertMessage(Message message, String phoneNumbers, Context context) {
-        insertMessage(message, updateOrCreateConversation(phoneNumbers, message, context));
+    public long insertMessage(Message message, String phoneNumbers, Context context) {
+        return insertMessage(message, updateOrCreateConversation(phoneNumbers, message, context));
     }
 
     /**
@@ -484,8 +485,9 @@ public class DataSource {
      *
      * @param message the message to insert.
      * @param conversationId the conversation to insert the message into.
+     * @return the conversation id that the message was inserted into.
      */
-    public void insertMessage(Message message, long conversationId) {
+    public long insertMessage(Message message, long conversationId) {
         ContentValues values = new ContentValues(9);
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
@@ -501,6 +503,7 @@ public class DataSource {
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
+        return conversationId;
     }
 
     /**

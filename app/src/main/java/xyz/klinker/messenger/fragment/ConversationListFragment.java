@@ -38,6 +38,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationUpdatedReceiver;
 import xyz.klinker.messenger.util.AnimationUtil;
 import xyz.klinker.messenger.util.ColorUtil;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
@@ -62,6 +63,7 @@ public class ConversationListFragment extends Fragment
     private MessageListFragment messageListFragment;
     private Snackbar deleteSnackbar;
     private ConversationListAdapter adapter;
+    private ConversationUpdatedReceiver updatedReceiver;
 
     public static ConversationListFragment newInstance() {
         return new ConversationListFragment();
@@ -89,20 +91,18 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // TODO register receiver to look for conversation changes
-        // when one occurs, find the position in the conversation list, make the appropriate changes
-        // to that position and then let the adapter know that position needs to be updated (and
-        // make sure to adjust for the header views). If a new conversation is made then we'll have
-        // to experiment with adding it to the top of the list or reloading all conversations and
-        // closing the current message list fragment
+        updatedReceiver = new ConversationUpdatedReceiver(this);
+        getActivity().registerReceiver(updatedReceiver,
+                ConversationUpdatedReceiver.getIntentFilter());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        // TODO unregister receiver for conversation changes
+        if (updatedReceiver != null) {
+            getActivity().unregisterReceiver(updatedReceiver);
+        }
     }
 
     private void loadConversations() {
@@ -306,6 +306,10 @@ public class ConversationListFragment extends Fragment
             expandedConversation.conversation.snippet = m.data;
             expandedConversation.summary.setText(m.data);
         }
+    }
+
+    public ConversationListAdapter getAdapter() {
+        return adapter;
     }
 
 }

@@ -153,7 +153,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         return new ConversationViewHolder(view, conversationExpandedListener);
     }
 
-    public void removeItem(int position) {
+    public void deleteItem(int position) {
+        removeItem(position, true);
+    }
+
+    public void removeItem(int position, boolean delete) {
         // The logic here can get a little tricky because we are removing items from the adapter
         // but need to account for the headers taking up a position as well. On top of that, if all
         // the items in a section are gone, then there shouldn't be a header for that section.
@@ -181,7 +185,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     notifyItemRemoved(originalPosition);
                 }
 
-                swipeToDeleteListener.onSwipeToDelete(deletedConversation);
+                if (delete) {
+                    swipeToDeleteListener.onSwipeToDelete(deletedConversation);
+                }
 
                 break;
             } else {
@@ -218,6 +224,24 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
 
         return conversationPosition + headersAbove;
+    }
+
+    public int getCountForSection(int sectionType) {
+        for (int i = 0; i < sectionCounts.size(); i++) {
+            if (sectionCounts.get(i).type == sectionType) {
+                return sectionCounts.get(i).count;
+            }
+        }
+
+        return 0;
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public List<SectionType> getSectionCounts() {
+        return sectionCounts;
     }
 
 }

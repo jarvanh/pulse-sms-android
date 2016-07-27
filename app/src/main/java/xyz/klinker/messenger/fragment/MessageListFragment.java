@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -45,7 +46,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -55,10 +55,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
@@ -173,6 +169,8 @@ public class MessageListFragment extends Fragment implements
         initAttachHolder();
         initToolbar();
         initRecycler();
+
+        dismissNotification();
 
         AnimationUtil.animateConversationPeripheralIn(appBarLayout);
         AnimationUtil.animateConversationPeripheralIn(sendBar);
@@ -381,6 +379,11 @@ public class MessageListFragment extends Fragment implements
         messageList.setLayoutManager(manager);
 
         loadMessages();
+    }
+
+    private void dismissNotification() {
+        NotificationManagerCompat.from(getContext())
+                .cancel((int) getArguments().getLong(ARG_CONVERSATION_ID));
     }
 
     private void loadMessages() {

@@ -83,7 +83,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     private void insertSms(Context context, String address, String body) {
         Message message = new Message();
         message.type = Message.TYPE_RECEIVED;
-        message.data = body;
+        message.data = body.trim();
         message.timestamp = System.currentTimeMillis();
         message.mimeType = MimeType.TEXT_PLAIN;
         message.read = false;
@@ -91,8 +91,10 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
         DataSource source = DataSource.getInstance(context);
         source.open();
-        source.insertMessage(message, PhoneNumberUtil.clearFormatting(address), context);
+        long id = source.insertMessage(message, PhoneNumberUtil.clearFormatting(address), context);
         source.close();
+
+        ConversationUpdatedReceiver.sendBroadcast(context, id, body, false);
     }
 
 }

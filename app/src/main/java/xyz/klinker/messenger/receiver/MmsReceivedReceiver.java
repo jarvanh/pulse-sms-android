@@ -26,6 +26,7 @@ import android.support.annotation.VisibleForTesting;
 import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtil;
@@ -61,19 +62,35 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             DataSource source = DataSource.getInstance(context);
             source.open();
 
+            Long conversationId = null;
+            String snippet = "";
             for (ContentValues value : values) {
                 Message message = new Message();
                 message.type = value.getAsInteger(Message.COLUMN_TYPE);
-                message.data = value.getAsString(Message.COLUMN_DATA);
+                message.data = value.getAsString(Message.COLUMN_DATA).trim();
                 message.timestamp = value.getAsLong(Message.COLUMN_TIMESTAMP);
                 message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE);
                 message.read = false;
                 message.seen = false;
                 message.from = ContactUtil.findContactNames(from, context);
-                source.insertMessage(message, phoneNumbers, context);
+
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    snippet = message.data;
+                }
+
+                // if not a group message, don't set from otherwise notifications will get weird
+                if (message.from.split(", ").length == 1) {
+                    message.from = null;
+                }
+
+                conversationId = source.insertMessage(message, phoneNumbers, context);
             }
 
             source.close();
+
+            if (conversationId != null) {
+                ConversationUpdatedReceiver.sendBroadcast(context, conversationId, snippet, false);
+            }
         }
     }
 
