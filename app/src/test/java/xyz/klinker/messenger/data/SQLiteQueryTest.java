@@ -28,13 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ContactUtil;
 import xyz.klinker.messenger.util.FixtureLoader;
-import xyz.klinker.messenger.util.ImageUtil;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -75,7 +72,7 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     @Test
     public void insertConversations() {
         int initialSize = source.getConversations().getCount();
-        source.insertConversations(InitialLoadActivity
+        source.insertConversations(DataSourceTest
                 .getFakeConversations(RuntimeEnvironment.application.getResources()),
                 RuntimeEnvironment.application, null);
         int newSize = source.getConversations().getCount();

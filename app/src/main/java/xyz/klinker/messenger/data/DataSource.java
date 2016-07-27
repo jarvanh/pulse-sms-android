@@ -220,7 +220,8 @@ public class DataSource {
                 }
 
                 if (messages.getCount() == 0) {
-                    messages = InitialLoadActivity.getFakeMessages();
+                    deleteConversation(conversationId);
+                    continue;
                 }
 
                 if (messages.moveToFirst()) {

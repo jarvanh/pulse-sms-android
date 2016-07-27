@@ -19,6 +19,7 @@ package xyz.klinker.messenger.data;
 import static org.junit.Assert.*;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -28,8 +29,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.activity.InitialLoadActivity;
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
@@ -107,8 +111,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertConversations() {
-        source.insertConversations(InitialLoadActivity
-                .getFakeConversations(RuntimeEnvironment.application.getResources()),
+        source.insertConversations(
+                getFakeConversations(RuntimeEnvironment.application.getResources()),
                 RuntimeEnvironment.application, null);
 
         verify(database, times(7)).insert(eq("conversation"), eq((String) null),
@@ -244,6 +248,103 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteDrafts() {
         source.deleteDrafts(1);
         verify(database).delete("draft", "conversation_id=?", new String[] {"1"});
+    }
+
+    public static List<Conversation> getFakeConversations(Resources resources) {
+        List<Conversation> conversations = new ArrayList<>();
+
+        Conversation conversation = new Conversation();
+        conversation.title = "Luke Klinker";
+        conversation.phoneNumbers = "(515) 991-1493";
+        conversation.colors.color = resources.getColor(R.color.materialIndigo);
+        conversation.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
+        conversation.pinned = true;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60);
+        conversation.snippet = "So maybe not going to be able to get platinum huh?";
+        conversation.idMatcher = "11493";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Matt Swiontek";
+        conversation.phoneNumbers = "(708) 928-0846";
+        conversation.colors.color = resources.getColor(R.color.materialRed);
+        conversation.colors.colorDark = resources.getColor(R.color.materialRedDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
+        conversation.pinned = true;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 12);
+        conversation.snippet = "Whoops ya idk what happened but anysho drive safe";
+        conversation.idMatcher = "80846";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Kris Klinker";
+        conversation.phoneNumbers = "(515) 419-6726";
+        conversation.colors.color = resources.getColor(R.color.materialPink);
+        conversation.colors.colorDark = resources.getColor(R.color.materialPinkDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
+        conversation.pinned = false;
+        conversation.read = false;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 20);
+        conversation.snippet = "Will probably be there from 6:30-9, just stop by when you can!";
+        conversation.idMatcher = "96726";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Andrew Klinker";
+        conversation.phoneNumbers = "(515) 991-8235";
+        conversation.colors.color = resources.getColor(R.color.materialBlue);
+        conversation.colors.colorDark = resources.getColor(R.color.materialBlueDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 26);
+        conversation.snippet = "Just finished, it was a lot of fun";
+        conversation.idMatcher = "18235";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Aaron Klinker";
+        conversation.phoneNumbers = "(515) 556-7749";
+        conversation.colors.color = resources.getColor(R.color.materialGreen);
+        conversation.colors.colorDark = resources.getColor(R.color.materialGreenDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 32);
+        conversation.snippet = "Yeah I'll do it when I get home";
+        conversation.idMatcher = "67749";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Mike Klinker";
+        conversation.phoneNumbers = "(515) 480-8532";
+        conversation.colors.color = resources.getColor(R.color.materialBrown);
+        conversation.colors.colorDark = resources.getColor(R.color.materialBrownDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 55);
+        conversation.snippet = "Yeah so hiking around in some place called beaver meadows now.";
+        conversation.idMatcher = "08532";
+        conversations.add(conversation);
+
+        conversation = new Conversation();
+        conversation.title = "Ben Madden";
+        conversation.phoneNumbers = "(847) 609-0939";
+        conversation.colors.color = resources.getColor(R.color.materialPurple);
+        conversation.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
+        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
+        conversation.pinned = false;
+        conversation.read = true;
+        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 78);
+        conversation.snippet = "Maybe they'll run into each other on the way back... idk";
+        conversation.idMatcher = "90939";
+        conversations.add(conversation);
+
+        return conversations;
     }
 
 }
