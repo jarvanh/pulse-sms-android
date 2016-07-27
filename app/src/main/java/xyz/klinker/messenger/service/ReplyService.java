@@ -28,6 +28,8 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.SendUtils;
 
 /**
@@ -96,6 +98,9 @@ public class ReplyService extends IntentService {
 
         unseenMessages.close();
         source.close();
+
+        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, reply, true);
+        MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
     }
 
 }
