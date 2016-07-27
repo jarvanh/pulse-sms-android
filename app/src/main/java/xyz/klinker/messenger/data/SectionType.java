@@ -34,4 +34,16 @@ public class SectionType {
         this.type = type;
         this.count = count;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SectionType) {
+            if (((SectionType) obj).type == this.type && ((SectionType) obj).count == this.count) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
