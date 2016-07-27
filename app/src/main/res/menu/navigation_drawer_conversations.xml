@@ -33,9 +33,9 @@
             android:title="@string/menu_schedule"/>
 
         <item
-            android:id="@+id/drawer_contacts"
+            android:id="@+id/drawer_mute_contacts"
             android:icon="@drawable/ic_contacts"
-            android:title="@string/menu_contacts"/>
+            android:title="@string/menu_mute_contacts"/>
 
         <item
             android:id="@+id/drawer_invite"

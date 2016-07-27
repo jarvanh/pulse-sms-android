@@ -22,7 +22,7 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Conversation List</string>
     <string name="menu_schedule">Scheduled Messages</string>
-    <string name="menu_contacts">View Contacts</string>
+    <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite Friends</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_help">Help and Feedback</string>
