@@ -70,6 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_holder"
+        android:layout_marginStart="@dimen/conversation_list_padding"
+        android:layout_marginEnd="@dimen/conversation_list_padding"
         android:id="@+id/recent_contacts"/>
 
 </RelativeLayout>
