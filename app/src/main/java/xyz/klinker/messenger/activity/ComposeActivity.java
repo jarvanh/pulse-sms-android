@@ -23,9 +23,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,21 +40,28 @@ import android.widget.TextView;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
+import com.android.ex.chips.RecipientEntry;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.util.listener.ContactClickedListener;
 
 /**
  * Activity to display UI for creating a new conversation.
  */
-public class ComposeActivity extends AppCompatActivity {
+public class ComposeActivity extends AppCompatActivity implements ContactClickedListener {
 
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
@@ -92,6 +102,44 @@ public class ComposeActivity extends AppCompatActivity {
         });
 
         handleIntent();
+        displayRecents();
+    }
+
+    private void displayRecents() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataSource source = DataSource.getInstance(getApplicationContext());
+                source.open();
+                Cursor cursor = source.getConversations();
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    final List<Conversation> conversations = new ArrayList<>();
+
+                    do {
+                        Conversation conversation = new Conversation();
+                        conversation.fillFromCursor(cursor);
+                        conversations.add(conversation);
+                    } while (cursor.moveToNext());
+                    cursor.close();
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ContactAdapter adapter = new ContactAdapter(conversations,
+                                    ComposeActivity.this);
+                            RecyclerView recyclerView = (RecyclerView)
+                                    findViewById(R.id.recent_contacts);
+
+                            recyclerView.setLayoutManager(
+                                    new LinearLayoutManager(getApplicationContext()));
+                            recyclerView.setAdapter(adapter);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void showConversation() {
@@ -212,6 +260,28 @@ public class ComposeActivity extends AppCompatActivity {
 
         source.close();
         finish();
+    }
+
+    @Override
+    public void onClicked(String title, String phoneNumber, String imageUri) {
+        String[] names = title.split(", ");
+
+        if (names.length == 1) {
+            if (imageUri == null) {
+                contactEntry.submitItem(title, phoneNumber);
+            } else {
+                contactEntry.submitItem(title, phoneNumber, Uri.parse(imageUri));
+            }
+        } else {
+            String[] phoneNumbers = phoneNumber.split(", ");
+            for (int i = 0; i < names.length; i++) {
+                String name = names[i];
+                String number = phoneNumbers[i];
+                String image = ContactUtils.findImageUri(number, this) + "/photo";
+
+                contactEntry.submitItem(name, number, Uri.parse(image));
+            }
+        }
     }
 
 }

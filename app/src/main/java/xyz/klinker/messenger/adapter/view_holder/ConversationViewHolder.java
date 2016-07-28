@@ -25,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 
 /**
@@ -39,12 +40,13 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public Conversation conversation;
 
     private boolean expanded = false;
-    private ConversationExpandedListener listener;
+    private ConversationExpandedListener expandedListener;
+    private ContactClickedListener contactClickedListener;
 
-    public ConversationViewHolder(View itemView, ConversationExpandedListener listener) {
+    public ConversationViewHolder(View itemView, final ConversationExpandedListener listener) {
         super(itemView);
 
-        this.listener = listener;
+        this.expandedListener = listener;
 
         header = (TextView) itemView.findViewById(R.id.header);
         image = (CircleImageView) itemView.findViewById(R.id.image);
@@ -59,8 +61,13 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                     setBold(false);
                 }
 
-                if (conversation != null) {
+                if (listener != null) {
                     changeExpandedState();
+                }
+
+                if (contactClickedListener != null) {
+                    contactClickedListener.onClicked(
+                            conversation.title, conversation.phoneNumbers, conversation.imageUri);
                 }
             }
         });
@@ -95,13 +102,17 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     private void expandConversation() {
         expanded = true;
         AnimationUtils.expandConversationListItem(itemView);
-        listener.onConversationExpanded(this);
+        expandedListener.onConversationExpanded(this);
     }
 
     private void collapseConversation() {
         expanded = false;
         AnimationUtils.contractConversationListItem(itemView);
-        listener.onConversationContracted(this);
+        expandedListener.onConversationContracted(this);
+    }
+
+    public void setContactClickedListener(ContactClickedListener listener) {
+        this.contactClickedListener = listener;
     }
 
 }

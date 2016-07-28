@@ -406,7 +406,7 @@ public class MessengerActivity extends AppCompatActivity
                 conversations.add(c);
             }
 
-            ContactAdapter adapter = new ContactAdapter(conversations);
+            ContactAdapter adapter = new ContactAdapter(conversations, null);
             RecyclerView recyclerView = new RecyclerView(this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);

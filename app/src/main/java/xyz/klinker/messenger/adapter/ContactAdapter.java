@@ -32,6 +32,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.listener.ContactClickedListener;
 
 /**
  * Adapter for displaying a list of contacts. Each contact should be loaded into a conversation
@@ -40,28 +41,42 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
 
     private List<Conversation> conversations;
+    private ContactClickedListener listener;
 
-    public ContactAdapter(List<Conversation> conversations) {
+    public ContactAdapter(List<Conversation> conversations, ContactClickedListener listener) {
         this.conversations = conversations;
+        this.listener = listener;
     }
 
     @Override
     public ConversationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contact_list_item, parent, false);
-        return new ConversationViewHolder(view, null);
+        ConversationViewHolder holder = new ConversationViewHolder(view, null);
+        holder.setContactClickedListener(listener);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(ConversationViewHolder holder, int position) {
         Conversation conversation = conversations.get(position);
 
+        holder.conversation = conversation;
+
         if (conversation.imageUri == null) {
-            holder.image.setImageDrawable(new ColorDrawable(
-                    ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
+            if (conversation.colors.color != 0) {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            } else {
+                holder.image.setImageDrawable(new ColorDrawable(
+                        ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
+            }
         } else {
+            if (!conversation.imageUri.endsWith("/photo")) {
+                conversation.imageUri = conversation.imageUri + "/photo";
+            }
+
             Glide.with(holder.image.getContext())
-                    .load(Uri.parse(conversation.imageUri + "/photo"))
+                    .load(Uri.parse(conversation.imageUri))
                     .into(holder.image);
         }
 
