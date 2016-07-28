@@ -43,7 +43,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/drawer_header_my_name"
                 android:text="@string/my_name"
@@ -54,7 +54,7 @@
                 android:ellipsize="end"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/drawer_header_my_phone_number"
                 android:text="@string/my_phone_number"
