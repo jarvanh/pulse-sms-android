@@ -90,7 +90,7 @@ public class AnimationUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 params.bottomMargin = (int) valueAnimator.getAnimatedValue();
-                itemView.requestLayout();
+                itemView.invalidate();
             }
         });
         animator.setInterpolator(interpolator);
