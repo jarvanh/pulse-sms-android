@@ -20,9 +20,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -348,6 +354,61 @@ public class DataSource {
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+    }
+
+    /**
+     * Gets details about a conversation that can be displayed to the user.
+     */
+    public Spanned getConversationDetails(Conversation conversation) {
+        StringBuilder builder = new StringBuilder();
+
+        if (conversation.isGroup()) {
+            builder.append("<b>Title: </b>");
+        } else {
+            builder.append("<b>Name: </b>");
+        }
+
+        builder.append(conversation.title);
+        builder.append("<br/>");
+
+        if (conversation.isGroup()) {
+            builder.append("<b>Phone Numbers: </b>");
+        } else {
+            builder.append("<b>Phone Number: </b>");
+        }
+
+        builder.append(conversation.phoneNumbers);
+        builder.append("<br/>");
+
+        if (conversation.isGroup()) {
+            builder.append("<b>Number of Members: </b>");
+            builder.append(conversation.phoneNumbers.split(", ").length);
+            builder.append("<br/>");
+        }
+
+        builder.append("<b>Date: </b>");
+        builder.append(SimpleDateFormat
+                .getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
+                .format(new Date(conversation.timestamp)));
+        builder.append("<br/>");
+
+        Cursor cursor = getMessages(conversation.id);
+        if (cursor != null && cursor.moveToFirst()) {
+            builder.append("<b>Message Count: </b>");
+            builder.append(cursor.getCount());
+            builder.append("<br/>");
+            cursor.close();
+        }
+
+        // remove the last <br/>
+        String description = builder.toString();
+        description = description.substring(0, description.length() - 5);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(description, 0);
+        } else {
+            return Html.fromHtml(description);
+        }
     }
 
     /**

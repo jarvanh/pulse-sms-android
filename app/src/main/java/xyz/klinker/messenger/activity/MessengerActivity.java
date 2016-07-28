@@ -44,6 +44,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.BlacklistFragment;
@@ -446,7 +447,20 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean conversationInformation() {
-        return true;
+        if (conversationListFragment.isExpanded()) {
+            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+            DataSource source = DataSource.getInstance(this);
+            source.open();
+
+            new AlertDialog.Builder(this)
+                    .setMessage(source.getConversationDetails(conversation))
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean contactSettings() {
