@@ -46,7 +46,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
-public class SmsMmsUtil {
+public class SmsMmsUtils {
 
     /**
      * Gets a list of conversations from the internal sms database that is ready to be inserted

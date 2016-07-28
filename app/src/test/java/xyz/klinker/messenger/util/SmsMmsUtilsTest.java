@@ -20,23 +20,23 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SmsMmsUtilTest {
+public class SmsMmsUtilsTest {
 
     @Test
     public void createIdMatcherSingleNumber() {
-        assertEquals("11555", SmsMmsUtil.createIdMatcher("+15154211555"));
+        assertEquals("11555", SmsMmsUtils.createIdMatcher("+15154211555"));
     }
 
     @Test
     public void createIdMatcherMultipleNumbers() {
         assertEquals("085321149396726",
-                SmsMmsUtil.createIdMatcher("5154196726, 5154808532, 5159911493"));
+                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493"));
     }
 
     @Test
     public void createIdMatcherEmail() {
         assertEquals("jklinker1@gmail.com",
-                SmsMmsUtil.createIdMatcher("jklinker1@gmail.com"));
+                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com"));
     }
 
 }

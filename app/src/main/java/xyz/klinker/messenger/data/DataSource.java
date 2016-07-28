@@ -31,7 +31,7 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
@@ -184,7 +184,7 @@ public class DataSource {
      * will come from your phones internal SMS database. It will then find all messages in each
      * of these conversations and insert them as well, during the same transaction.
      *
-     * @param conversations the list of conversations. See SmsMmsUtil.queryConversations().
+     * @param conversations the list of conversations. See SmsMmsUtils.queryConversations().
      * @param context the application context.
      */
     public void insertConversations(List<Conversation> conversations, Context context,
@@ -212,7 +212,7 @@ public class DataSource {
             long conversationId = database.insert(Conversation.TABLE, null, values);
 
             if (conversationId != -1) {
-                Cursor messages = SmsMmsUtil.queryConversation(conversation.id, context);
+                Cursor messages = SmsMmsUtils.queryConversation(conversation.id, context);
 
                 if (messages == null) {
                     continue;
@@ -226,7 +226,7 @@ public class DataSource {
                 if (messages.moveToFirst()) {
                     do {
                         List<ContentValues> valuesList =
-                                SmsMmsUtil.processMessage(messages, conversationId, context);
+                                SmsMmsUtils.processMessage(messages, conversationId, context);
                         if (valuesList != null) {
                             for (ContentValues value : valuesList) {
                                 database.insert(Message.TABLE, null, value);
@@ -444,7 +444,7 @@ public class DataSource {
      * @return the conversation id to use.
      */
     private long updateOrCreateConversation(String phoneNumbers, Message message, Context context) {
-        String matcher = SmsMmsUtil.createIdMatcher(phoneNumbers);
+        String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
                 new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
                 Conversation.COLUMN_ID_MATCHER + "=?", new String[] {matcher}, null, null, null);
@@ -529,7 +529,7 @@ public class DataSource {
                 new String[] { Long.toString(conversationId) });
 
         try {
-            SmsMmsUtil.markConversationRead(context, getConversation(conversationId).phoneNumbers);
+            SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);
         } catch (NullPointerException e) {
             // thrown in robolectric tests
         }

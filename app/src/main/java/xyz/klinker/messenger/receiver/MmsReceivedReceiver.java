@@ -31,7 +31,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
  * Receiver for notifying us when a new MMS has been received by the device. By default it will
@@ -49,15 +49,15 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     }
 
     private void insertMms(Context context) {
-        Cursor lastMessage = SmsMmsUtil.getLastMmsMessage(context);
+        Cursor lastMessage = SmsMmsUtils.getLastMmsMessage(context);
 
         if (lastMessage != null && lastMessage.moveToFirst()) {
             Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
-            final String from = SmsMmsUtil.getMmsFrom(uri, context);
-            final String to = SmsMmsUtil.getMmsTo(uri, context);
+            final String from = SmsMmsUtils.getMmsFrom(uri, context);
+            final String to = SmsMmsUtils.getMmsTo(uri, context);
             final String phoneNumbers = getPhoneNumbers(from, to,
                     PhoneNumberUtils.getMyPhoneNumber(context));
-            List<ContentValues> values = SmsMmsUtil.processMessage(lastMessage, -1L, context);
+            List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
             DataSource source = DataSource.getInstance(context);
             source.open();

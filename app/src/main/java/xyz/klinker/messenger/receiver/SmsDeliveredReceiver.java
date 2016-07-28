@@ -27,7 +27,7 @@ import com.klinker.android.send_message.DeliveredReceiver;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
  * Receiver for getting notifications of when an SMS has been delivered. By default it's super
@@ -60,7 +60,7 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
     }
 
     private void markMessage(Context context, Uri uri, boolean error) {
-        Cursor message = SmsMmsUtil.getSmsMessage(context, uri, null);
+        Cursor message = SmsMmsUtils.getSmsMessage(context, uri, null);
 
         if (message != null && message.moveToFirst()) {
             String body = message.getString(message.getColumnIndex(Telephony.Sms.BODY));

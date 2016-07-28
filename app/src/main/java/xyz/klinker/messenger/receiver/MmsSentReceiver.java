@@ -21,14 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.Telephony;
 
 import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.SmsMmsUtil;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
  * Receiver which gets a notification when an MMS message has finished sending. It will mark the
@@ -42,10 +40,10 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
         super.onReceive(context, intent);
 
         Uri uri = Uri.parse(intent.getStringExtra(EXTRA_CONTENT_URI).replace("/outbox", ""));
-        Cursor message = SmsMmsUtil.getMmsMessage(context, uri, null);
+        Cursor message = SmsMmsUtils.getMmsMessage(context, uri, null);
 
         if (message != null && message.moveToFirst()) {
-            List<ContentValues> mmsParts = SmsMmsUtil.processMessage(message, -1, context);
+            List<ContentValues> mmsParts = SmsMmsUtils.processMessage(message, -1, context);
             message.close();
 
             DataSource source = DataSource.getInstance(context);
