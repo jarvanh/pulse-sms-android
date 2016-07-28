@@ -37,7 +37,7 @@ public class ContactAdapterTest extends MessengerSuite {
 
     @Before
     public void setUp() {
-        adapter = new ContactAdapter(conversations);
+        adapter = new ContactAdapter(conversations, null);
     }
 
     @Test
