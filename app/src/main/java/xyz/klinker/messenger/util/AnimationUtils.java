@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.util;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -99,9 +101,9 @@ public class AnimationUtils {
         final ViewGroup.MarginLayoutParams recyclerParams = (ViewGroup.MarginLayoutParams)
                 recyclerView.getLayoutParams();
 
-	if (originalRecyclerHeight == -1) {
+	    if (originalRecyclerHeight == -1) {
         	originalRecyclerHeight = recyclerView.getHeight();
-	}
+	    }
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -184,7 +186,7 @@ public class AnimationUtils {
                                                         int containerStart, int containerTranslate,
                                                         int fabTranslate,
                                                         Interpolator interpolator) {
-        toolbar.animate().translationY(toolbarTranslate)
+        toolbar.animate().withLayer().translationY(toolbarTranslate)
                 .setDuration(PERIPHERAL_DURATION)
                 .setInterpolator(interpolator)
                 .setListener(null);
@@ -192,7 +194,7 @@ public class AnimationUtils {
         final ViewGroup.MarginLayoutParams containerParams = (ViewGroup.MarginLayoutParams)
                 fragmentContainer.getLayoutParams();
 
-	if (originalFragmentContainerHeight == -1) {
+	    if (originalFragmentContainerHeight == -1) {
             originalFragmentContainerHeight = fragmentContainer.getHeight();
         }
 
@@ -211,6 +213,7 @@ public class AnimationUtils {
         containerAnimator.start();
 
         fab.animate().translationY(fabTranslate)
+                .withLayer()
                 .setDuration(PERIPHERAL_DURATION)
                 .setInterpolator(interpolator)
                 .setListener(null);
@@ -224,7 +227,8 @@ public class AnimationUtils {
      * @param view the view to be animated in.
      */
     public static void animateConversationPeripheralIn(View view) {
-        view.animate().alpha(1f).translationY(0).setDuration(EXPAND_CONVERSATION_DURATION)
+        view.animate().withLayer().alpha(1f).translationY(0)
+                .setDuration(EXPAND_CONVERSATION_DURATION)
                 .setInterpolator(new DecelerateInterpolator()).setListener(null);
     }
 

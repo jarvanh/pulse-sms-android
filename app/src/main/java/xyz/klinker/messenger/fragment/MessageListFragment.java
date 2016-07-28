@@ -469,7 +469,8 @@ public class MessageListFragment extends Fragment implements
                     getArguments().getBoolean(ARG_IS_GROUP), manager);
             messageList.setAdapter(adapter);
 
-            messageList.animate().alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
+            messageList.animate().withLayer()
+                    .alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
         }
     }
 
