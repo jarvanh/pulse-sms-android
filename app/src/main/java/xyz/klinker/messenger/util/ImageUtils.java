@@ -27,6 +27,7 @@ import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -149,15 +150,27 @@ public class ImageUtils {
      * application memory.
      */
     public static Uri scaleToSend(Context context, Uri uri) {
-        java.io.File newLocation = new java.io.File(context.getFilesDir(),
+        File newLocation = new File(context.getFilesDir(),
                 ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
-        java.io.File oldLocation = new java.io.File(uri.getPath());
+        File oldLocation = new File(uri.getPath());
         FileUtils.copy(oldLocation, newLocation);
-        java.io.File file = scaleToSend(newLocation, BitmapFactory.decodeFile(uri.getPath()));
+
+        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+        if (bitmap == null) {
+            try {
+                InputStream is = context.getContentResolver().openInputStream(uri);
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File file = scaleToSend(newLocation, bitmap);
         return Uri.fromFile(file);
     }
 
-    private static java.io.File scaleToSend(java.io.File file, Bitmap bitmap) {
+    private static File scaleToSend(File file, Bitmap bitmap) {
         while (!file.exists() || file.length() > MAX_FILE_SIZE) {
             Log.v("Scale to Send", "current file size: " + file.length());
 

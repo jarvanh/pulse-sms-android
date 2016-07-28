@@ -16,12 +16,18 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,16 +39,22 @@ import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
+import java.io.InputStream;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.SendUtils;
 
 /**
  * Activity to display UI for creating a new conversation.
  */
 public class ComposeActivity extends AppCompatActivity {
+
+    private FloatingActionButton fab;
+    private RecipientEditTextView contactEntry;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,17 +63,19 @@ public class ComposeActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(" ");
 
-        final RecipientEditTextView contactEntry =
-                (RecipientEditTextView) findViewById(R.id.contact_entry);
+        contactEntry = (RecipientEditTextView) findViewById(R.id.contact_entry);
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         contactEntry.setAdapter(new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this));
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showConversation(contactEntry.getRecipients());
+                if (contactEntry.getRecipients().length > 0) {
+                    showConversation();
+                }
             }
         });
 
@@ -80,7 +94,13 @@ public class ComposeActivity extends AppCompatActivity {
         handleIntent();
     }
 
-    private void showConversation(DrawableRecipientChip[] chips) {
+    private void showConversation() {
+        String phoneNumbers = getPhoneNumberFromContactEntry();
+        showConversation(phoneNumbers.toString());
+    }
+
+    private String getPhoneNumberFromContactEntry() {
+        DrawableRecipientChip[] chips = contactEntry.getRecipients();
         StringBuilder phoneNumbers = new StringBuilder();
 
         for (int i = 0; i < chips.length; i++) {
@@ -91,7 +111,7 @@ public class ComposeActivity extends AppCompatActivity {
             }
         }
 
-        showConversation(phoneNumbers.toString());
+        return phoneNumbers.toString();
     }
 
     private void showConversation(String phoneNumbers) {
@@ -151,8 +171,47 @@ public class ComposeActivity extends AppCompatActivity {
 
             showConversation(builder.toString());
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
+            final String mimeType = getIntent().getType();
+            final String data;
 
+            if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+                data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            } else {
+                data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+            }
+
+            fab.setImageResource(R.drawable.ic_send);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (contactEntry.getRecipients().length > 0) {
+                        sendMessage(mimeType, data);
+                    }
+                }
+            });
         }
+    }
+
+    private void sendMessage(String mimeType, String data) {
+        String phoneNumbers = getPhoneNumberFromContactEntry();
+
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        source.insertSentMessage(phoneNumbers, data, mimeType, this);
+
+        if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+            SendUtils.send(this, data, phoneNumbers);
+        } else {
+            Uri imageUri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
+            Cursor cursor = source.searchMessages(data);
+            if (cursor != null && cursor.moveToFirst()) {
+                source.updateMessageData(cursor.getLong(0), imageUri.toString());
+                cursor.close();
+            }
+        }
+
+        source.close();
+        finish();
     }
 
 }

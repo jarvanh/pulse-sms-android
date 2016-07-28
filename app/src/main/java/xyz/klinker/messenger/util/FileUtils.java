@@ -30,7 +30,7 @@ import java.io.OutputStream;
  */
 public class FileUtils {
 
-    public static void copy(java.io.File src, java.io.File dst) {
+    public static void copy(File src, File dst) {
         try {
             InputStream in = new FileInputStream(src);
             OutputStream out = new FileOutputStream(dst);

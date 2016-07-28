@@ -43,12 +43,12 @@ public class SendUtils {
         send(context, text, addresses, null, null);
     }
 
-    public static void send(Context context, String text, String addresses, Uri data,
+    public static Uri send(Context context, String text, String addresses, Uri data,
                             String mimeType) {
-        send(context, text, addresses.split(", "), data, mimeType);
+        return send(context, text, addresses.split(", "), data, mimeType);
     }
 
-    public static void send(Context context, String text, String[] addresses, Uri data,
+    public static Uri send(Context context, String text, String[] addresses, Uri data,
                             String mimeType) {
         Transaction transaction = new Transaction(context, new Settings());
         Message message = new Message(text, addresses);
@@ -69,6 +69,8 @@ public class SendUtils {
         }
 
         transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+
+        return data;
     }
 
     private static byte[] getBytes(Context context, Uri data) throws IOException {

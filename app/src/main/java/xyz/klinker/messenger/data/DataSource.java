@@ -401,6 +401,20 @@ public class DataSource {
     }
 
     /**
+     * Updates the data field for a message.
+     *
+     * @param messageId the id of the message to update.
+     * @param data the new data string.
+     */
+    public void updateMessageData(long messageId, String data) {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_DATA, data);
+
+        database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
+                new String[] { Long.toString(messageId) });
+    }
+
+    /**
      * Inserts a new sent message after finding the conversation id.
      *
      * @param addresses the comma, space separated addresses.

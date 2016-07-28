@@ -511,8 +511,10 @@ public class MessageListFragment extends Fragment implements
                     source.deleteMessage(adapter.getItemId(0));
                 }
 
-                source.insertMessage(m, m.conversationId);
-                loadMessages();
+                if (message.length() != 0) {
+                    source.insertMessage(m, m.conversationId);
+                    loadMessages();
+                }
 
                 messageEntry.setText(null);
 
@@ -540,9 +542,17 @@ public class MessageListFragment extends Fragment implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SendUtils.send(getContext(), message,
+                        Uri imageUri = SendUtils.send(getContext(), message,
                                 getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());
+
+                        if (imageUri != null && uri != null) {
+                            Cursor cursor = source.searchMessages(uri.toString());
+                            if (cursor != null && cursor.moveToFirst()) {
+                                source.updateMessageData(cursor.getLong(0), imageUri.toString());
+                                cursor.close();
+                            }
+                        }
                     }
                 }).start();
             }
