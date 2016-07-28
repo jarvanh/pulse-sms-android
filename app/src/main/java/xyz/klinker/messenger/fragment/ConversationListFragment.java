@@ -56,6 +56,7 @@ public class ConversationListFragment extends Fragment
 
     private static final String EXTRA_CONVERSATION_TO_OPEN_ID = "conversation_to_open";
 
+    private long lastRefreshTime = 0;
     private View empty;
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
@@ -97,6 +98,17 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        // if the refresh time was more than an hour ago and there isn't an expanded conversation,
+        // refresh the list
+        if (lastRefreshTime > 1000 * 60 * 60 && expandedConversation == null) {
+            loadConversations();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -122,6 +134,7 @@ public class ConversationListFragment extends Fragment
                     public void run() {
                         setConversations(conversations);
                         source.close();
+                        lastRefreshTime = System.currentTimeMillis();
                     }
                 });
             }

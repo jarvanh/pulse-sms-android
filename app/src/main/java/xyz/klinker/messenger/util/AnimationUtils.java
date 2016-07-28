@@ -218,7 +218,7 @@ public class AnimationUtils {
 
     /**
      * Animates peripherals onto the screen when opening a conversation. This includes the
-     * sandbar and the toolbar. The message list will be animated separately after the
+     * sendbar and the toolbar. The message list will be animated separately after the
      * list has been loaded from the database.
      *
      * @param view the view to be animated in.
