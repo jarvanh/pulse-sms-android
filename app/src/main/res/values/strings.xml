@@ -77,6 +77,9 @@
     <string name="permission_needed_for_action">Permissions needed for this action.</string>
     <string name="request_permission">Request Permission</string>
 
+    <!-- Compose Screen -->
+    <string name="enter_contact_name">Enter Contact Name</string>
+
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to
         accept them before we can continue.</string>

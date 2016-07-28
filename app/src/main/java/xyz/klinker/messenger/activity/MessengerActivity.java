@@ -140,7 +140,7 @@ public class MessengerActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO start compose activity
+                startActivity(new Intent(getApplicationContext(), ComposeActivity.class));
             }
         });
     }

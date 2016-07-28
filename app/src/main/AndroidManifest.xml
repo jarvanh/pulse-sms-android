@@ -60,6 +60,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.ComposeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=" "/>
+
         <activity android:name=".activity.InitialLoadActivity"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />

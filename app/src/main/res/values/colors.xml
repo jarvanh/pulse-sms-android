@@ -100,6 +100,7 @@
 
     <!-- Other Global Colors (not day or night specific) -->
     <color name="statusBarDarker">#C5C5C5</color>
+    <color name="toolbarEditTextHint">#88FFFFFF</color>
 
     <!-- Theme Specific Colors -->
     <color name="background">#E5E5E5</color>
