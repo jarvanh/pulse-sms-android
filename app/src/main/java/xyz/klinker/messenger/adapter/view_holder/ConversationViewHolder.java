@@ -59,7 +59,9 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                     setBold(false);
                 }
 
-                changeExpandedState();
+                if (conversation != null) {
+                    changeExpandedState();
+                }
             }
         });
     }

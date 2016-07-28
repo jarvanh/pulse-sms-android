@@ -312,6 +312,10 @@ public class ConversationListFragment extends Fragment
         }
     }
 
+    public ConversationViewHolder getExpandedItem() {
+        return expandedConversation;
+    }
+
     public void notifyOfSentMessage(Message m) {
         expandedConversation.conversation.timestamp = m.timestamp;
         expandedConversation.conversation.read = m.read;

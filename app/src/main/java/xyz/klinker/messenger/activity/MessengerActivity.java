@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +27,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,16 +38,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.fragment.BlacklistFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.fragment.InviteFriendsFragment;
+import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.fragment.settings.SettingsFragment;
 import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 
@@ -197,18 +209,35 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        if (item.getItemId() == R.id.drawer_conversation) {
-            return displayConversations();
-        } else if (item.getItemId() == R.id.drawer_settings) {
-            return displaySettings();
-        } else if (item.getItemId() == R.id.drawer_account) {
-            return displayMyAccount();
-        } else if (item.getItemId() == R.id.drawer_help) {
-            return displayHelpAndFeedback();
-        } else if (item.getItemId() == R.id.drawer_about) {
-            return displayAbout();
-        } else {
-            return true;
+        switch(item.getItemId()) {
+            case R.id.drawer_conversation:
+                return displayConversations();
+            case R.id.drawer_schedule:
+                return displayScheduledMessages();
+            case R.id.drawer_mute_contacts:
+                return displayBlacklist();
+            case R.id.drawer_invite:
+                return displayInviteFriends();
+            case R.id.drawer_settings:
+                return displaySettings();
+            case R.id.drawer_account:
+                return displayMyAccount();
+            case R.id.drawer_help:
+                return displayHelpAndFeedback();
+            case R.id.drawer_about:
+                return displayAbout();
+            case R.id.drawer_call:
+                return callContact();
+            case R.id.drawer_view_contact:
+                return viewContact();
+            case R.id.drawer_delete_conversation:
+                return deleteConversation();
+            case R.id.drawer_conversation_information:
+                return conversationInformation();
+            case R.id.drawer_contact_settings:
+                return contactSettings();
+            default:
+                return true;
         }
     }
 
@@ -234,6 +263,16 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+
+        AnimationUtils.originalRecyclerHeight = -1;
+        AnimationUtils.originalFragmentContainerHeight = -1;
+    }
+
     private void clickDefaultDrawerItem() {
         clickNavigationItem(R.id.drawer_conversation);
     }
@@ -253,6 +292,10 @@ public class MessengerActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
+
+    /*****************************************************************
+     *  conversation list drawer options                             *
+     *****************************************************************/
 
     private boolean displayConversations() {
         fab.show();
@@ -286,6 +329,18 @@ public class MessengerActivity extends AppCompatActivity
         return true;
     }
 
+    private boolean displayScheduledMessages() {
+        return displayFragmentWithBackStack(new ScheduledMessagesFragment());
+    }
+
+    private boolean displayBlacklist() {
+        return displayFragmentWithBackStack(new BlacklistFragment());
+    }
+
+    private boolean displayInviteFriends() {
+        return displayFragmentWithBackStack(new InviteFriendsFragment());
+    }
+
     private boolean displaySettings() {
         return displayFragmentWithBackStack(new SettingsFragment());
     }
@@ -314,14 +369,69 @@ public class MessengerActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    /*****************************************************************
+     *  message list drawer options                                  *
+     *****************************************************************/
 
-        getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+    private boolean callContact() {
+        if (conversationListFragment.isExpanded()) {
+            String uri = "tel:" +
+                    conversationListFragment.getExpandedItem().conversation.phoneNumbers;
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse(uri));
+            startActivity(intent);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        AnimationUtils.originalRecyclerHeight = -1;
-        AnimationUtils.originalFragmentContainerHeight = -1;
+    private boolean viewContact() {
+        if (conversationListFragment.isExpanded()) {
+            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+            String[] names = conversation.title.split(", ");
+            String[] numbers = conversation.phoneNumbers.split(", ");
+            List<Conversation> conversations = new ArrayList<>();
+
+            for (int i = 0; i < numbers.length; i++) {
+                Conversation c = new Conversation();
+                c.title = names[i];
+                c.phoneNumbers = numbers[i];
+                c.imageUri = ContactUtils.findImageUri(numbers[i], this);
+
+                if (ImageUtils.getContactImage(c.imageUri, this) == null) {
+                    c.imageUri = null;
+                }
+
+                conversations.add(c);
+            }
+
+            ContactAdapter adapter = new ContactAdapter(conversations);
+            RecyclerView recyclerView = new RecyclerView(this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+
+            new AlertDialog.Builder(this)
+                    .setView(recyclerView)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean deleteConversation() {
+        return true;
+    }
+
+    private boolean conversationInformation() {
+        return true;
+    }
+
+    private boolean contactSettings() {
+        return true;
     }
 
 }
