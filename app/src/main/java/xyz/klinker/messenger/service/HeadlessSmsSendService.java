@@ -41,7 +41,7 @@ public class HeadlessSmsSendService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String[] addresses = parseAddress(Uri.decode(intent.getDataString()));
+        String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
         String text = getText(intent);
 
         SendUtils.send(this, text, addresses);
@@ -60,11 +60,6 @@ public class HeadlessSmsSendService extends Service {
         source.close();
 
         return super.onStartCommand(intent, flags, startId);
-    }
-
-    private String[] parseAddress(String address) {
-        return PhoneNumberUtils.clearFormatting(address).replace("sms:", "")
-                .replace("smsto:", "").replace("mms:", "").replace("mmsto:", "").split(",");
     }
 
     private String getText(Intent intent) {

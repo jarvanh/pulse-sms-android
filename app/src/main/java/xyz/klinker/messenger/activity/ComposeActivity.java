@@ -17,11 +17,11 @@
 package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,6 +76,8 @@ public class ComposeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        handleIntent();
     }
 
     private void showConversation(DrawableRecipientChip[] chips) {
@@ -89,20 +91,24 @@ public class ComposeActivity extends AppCompatActivity {
             }
         }
 
-        Message message = new Message();
-        message.type = Message.TYPE_INFO;
-        message.data = getString(R.string.no_messages_with_contact);
-        message.timestamp = System.currentTimeMillis();
-        message.mimeType = MimeType.TEXT_PLAIN;
-        message.read = true;
-        message.seen = true;
+        showConversation(phoneNumbers.toString());
+    }
 
+    private void showConversation(String phoneNumbers) {
         DataSource source = DataSource.getInstance(this);
         source.open();
-        Long conversationId = source.findConversationId(phoneNumbers.toString());
+        Long conversationId = source.findConversationId(phoneNumbers);
 
         if (conversationId == null) {
-            conversationId = source.insertMessage(message, phoneNumbers.toString(), this);
+            Message message = new Message();
+            message.type = Message.TYPE_INFO;
+            message.data = getString(R.string.no_messages_with_contact);
+            message.timestamp = System.currentTimeMillis();
+            message.mimeType = MimeType.TEXT_PLAIN;
+            message.read = true;
+            message.seen = true;
+
+            conversationId = source.insertMessage(message, phoneNumbers, this);
         }
 
         source.close();
@@ -124,6 +130,29 @@ public class ComposeActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private void handleIntent() {
+        if (getIntent().getAction() == null) {
+            return;
+        }
+
+        if (getIntent().getAction().equals(Intent.ACTION_SENDTO)) {
+            String[] phoneNumbers = PhoneNumberUtils
+                    .parseAddress(Uri.decode(getIntent().getDataString()));
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < phoneNumbers.length; i++) {
+                builder.append(phoneNumbers[i]);
+                if (i != phoneNumbers.length - 1) {
+                    builder.append(", ");
+                }
+            }
+
+            showConversation(builder.toString());
+        } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
+
+        }
     }
 
 }

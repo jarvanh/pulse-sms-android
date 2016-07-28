@@ -62,4 +62,12 @@ public class PhoneNumberUtils {
         return clearFormatting(Utils.getMyPhoneNumber(context));
     }
 
+    /**
+     * Parses a list of addresses coming from a URI string such as sms: or smsto:.
+     */
+    public static String[] parseAddress(String uriAddress) {
+        return clearFormatting(uriAddress).replace("sms:", "")
+                .replace("smsto:", "").replace("mms:", "").replace("mmsto:", "").split(",");
+    }
+
 }
