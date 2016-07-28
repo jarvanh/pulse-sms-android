@@ -506,10 +506,13 @@ public class MessageListFragment extends Fragment implements
                 m.from = null;
                 m.color = null;
 
-                if (message != null && message.length() != 0) {
-                    source.insertMessage(m, m.conversationId);
-                    loadMessages();
+                if (adapter.getItemCount() == 1 &&
+                        adapter.getItemViewType(0) == Message.TYPE_INFO) {
+                    source.deleteMessage(adapter.getItemId(0));
                 }
+
+                source.insertMessage(m, m.conversationId);
+                loadMessages();
 
                 messageEntry.setText(null);
 

@@ -76,6 +76,8 @@
     <string name="remove_image">Remove Attached Image</string>
     <string name="permission_needed_for_action">Permissions needed for this action.</string>
     <string name="request_permission">Request Permission</string>
+    <string name="no_messages_with_contact">You don\'t have any messages yet with this contact,
+        time to start up a new conversation!</string>
 
     <!-- Compose Screen -->
     <string name="enter_contact_name">Enter Contact Name</string>

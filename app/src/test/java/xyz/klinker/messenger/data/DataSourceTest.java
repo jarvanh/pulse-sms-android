@@ -184,6 +184,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void deleteMessage() {
+        source.deleteMessage(1);
+
+        verify(database).delete("message", "_id=?", new String[] {"1"});
+    }
+
+    @Test
     public void readConversation() {
         source.readConversation(RuntimeEnvironment.application, 3);
 

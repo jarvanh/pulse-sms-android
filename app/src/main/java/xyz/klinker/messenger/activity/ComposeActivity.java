@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,10 @@ import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 
 /**
  * Activity to display UI for creating a new conversation.
@@ -56,11 +61,7 @@ public class ComposeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (DrawableRecipientChip chip : contactEntry.getRecipients()) {
-                    Log.v("compose", chip.getEntry().getDestination());
-                }
-
-                finish();
+                showConversation(contactEntry.getRecipients());
             }
         });
 
@@ -75,6 +76,43 @@ public class ComposeActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void showConversation(DrawableRecipientChip[] chips) {
+        StringBuilder phoneNumbers = new StringBuilder();
+
+        for (int i = 0; i < chips.length; i++) {
+            phoneNumbers.append(PhoneNumberUtils
+                    .clearFormatting(chips[i].getEntry().getDestination()));
+            if (i != chips.length - 1) {
+                phoneNumbers.append(", ");
+            }
+        }
+
+        Message message = new Message();
+        message.type = Message.TYPE_INFO;
+        message.data = getString(R.string.no_messages_with_contact);
+        message.timestamp = System.currentTimeMillis();
+        message.mimeType = MimeType.TEXT_PLAIN;
+        message.read = true;
+        message.seen = true;
+
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        Long conversationId = source.findConversationId(phoneNumbers.toString());
+
+        if (conversationId == null) {
+            conversationId = source.insertMessage(message, phoneNumbers.toString(), this);
+        }
+
+        source.close();
+
+        Intent open = new Intent(this, MessengerActivity.class);
+        open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(open);
+
+        finish();
     }
 
     @Override

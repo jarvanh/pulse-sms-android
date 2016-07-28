@@ -262,6 +262,15 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
                 .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
     }
 
+    @Test
+    public void deleteMessage() {
+        int initialSize = source.getMessages(2).getCount();
+        source.deleteMessage(3);
+        int newSize = source.getMessages(2).getCount();
+
+        assertEquals(1, initialSize - newSize);
+    }
+
     private Message getFakeMessage() {
         Message m = new Message();
         m.conversationId = 2;

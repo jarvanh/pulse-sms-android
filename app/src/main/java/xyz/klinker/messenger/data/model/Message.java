@@ -65,6 +65,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public static final int TYPE_SENDING = 2;
     public static final int TYPE_ERROR = 3;
     public static final int TYPE_DELIVERED = 4;
+    public static final int TYPE_INFO = 5;
 
     public long id;
     public long conversationId;

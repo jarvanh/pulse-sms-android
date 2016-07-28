@@ -436,6 +436,25 @@ public class DataSource {
     }
 
     /**
+     * Checks whether or not a conversation exists for this string of phone numbers. If so, the
+     * conversation id will be returned. If not, null will be returned.
+     */
+    public Long findConversationId(String phoneNumbers) {
+        String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
+        Cursor cursor = database.query(Conversation.TABLE,
+                new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
+                Conversation.COLUMN_ID_MATCHER + "=?", new String[] {matcher}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            long conversationId = cursor.getLong(0);
+            cursor.close();
+            return conversationId;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Gets a current conversation id if one exists for the phone number, or inserts a new
      * conversation and returns that id if one does not exist.
      *
@@ -462,7 +481,7 @@ public class DataSource {
             conversation.read = message.read;
             conversation.timestamp = message.timestamp;
 
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && message.type != Message.TYPE_INFO) {
                 conversation.snippet = message.data;
             } else {
                 conversation.snippet = "";
@@ -506,6 +525,14 @@ public class DataSource {
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
         return conversationId;
+    }
+
+    /**
+     * Deletes a message with the given id.
+     */
+    public void deleteMessage(long messageId) {
+        database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
+                new String[] { Long.toString(messageId) });
     }
 
     /**

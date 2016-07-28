@@ -76,6 +76,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 layoutId = R.layout.message_error;
             } else if (viewType == Message.TYPE_DELIVERED) {
                 layoutId = R.layout.message_delivered;
+            } else if (viewType == Message.TYPE_INFO) {
+                layoutId = R.layout.message_info;
             } else {
                 layoutId = R.layout.message_sent;
             }
@@ -193,6 +195,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
     public int getItemViewType(int position) {
         messages.moveToPosition(position);
         return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+    }
+
+    public long getItemId(int position) {
+        messages.moveToPosition(position);
+        return messages.getInt(messages.getColumnIndex(Message.COLUMN_ID));
     }
 
     public void addMessage(Cursor newMessages) {
