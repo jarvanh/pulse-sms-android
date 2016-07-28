@@ -214,9 +214,11 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.activity_messenger, menu);
-        return true;
+        if (!inSettings) {
+            getMenuInflater().inflate(R.menu.activity_messenger, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -253,7 +255,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayConversations() {
+        fab.show();
+        invalidateOptionsMenu();
         inSettings = false;
+
         Bundle extras = getIntent().getExtras();
 
         if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
@@ -298,7 +303,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayFragmentWithBackStack(Fragment fragment) {
+        fab.hide();
+        invalidateOptionsMenu();
         inSettings = true;
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.conversation_list_container, fragment)
                 .commit();
