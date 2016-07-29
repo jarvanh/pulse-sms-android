@@ -126,5 +126,13 @@
     <string name="twitter">Twitter</string>
     <string name="twitter_summary">\@KlinkerApps</string>
     <string name="support">Support</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d message</item>
+        <item quantity="other">%1$d messages</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">in %1$d conversation</item>
+        <item quantity="other">in %1$d conversations</item>
+    </plurals>
 
 </resources>

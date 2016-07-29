@@ -357,6 +357,26 @@ public class DataSource {
     }
 
     /**
+     * Gets the number of conversations in the database.
+     */
+    public int getConversationCount() {
+        Cursor cursor = getConversations();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    /**
+     * Gets the number of messages in the database.
+     */
+    public int getMessageCount() {
+        Cursor cursor = getMessages();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    /**
      * Gets details about a conversation that can be displayed to the user.
      */
     public Spanned getConversationDetails(Conversation conversation) {
@@ -420,6 +440,14 @@ public class DataSource {
     public Cursor getMessages(long conversationId) {
         return database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
                 new String[] { Long.toString(conversationId) }, null, null,
+                Message.COLUMN_TIMESTAMP + " asc");
+    }
+
+    /**
+     * Gets all messages in the database.
+     */
+    public Cursor getMessages() {
+        return database.query(Message.TABLE, null, null, null, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
     }
 

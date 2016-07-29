@@ -35,4 +35,6 @@
     <string name="pref_help_email" translatable="false">email</string>
     <string name="pref_help_twitter" translatable="false">twitter</string>
 
+    <string name="pref_message_count" translatable="false">message_count</string>
+
 </resources>

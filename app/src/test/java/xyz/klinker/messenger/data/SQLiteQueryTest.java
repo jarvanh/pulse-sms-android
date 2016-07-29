@@ -143,6 +143,16 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getConversationCount() {
+        assertEquals(4, source.getConversationCount());
+    }
+
+    @Test
+    public void getMessageCount() {
+        assertEquals(5, source.getMessageCount());
+    }
+
+    @Test
     public void updateConversation() {
         source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
                 MimeType.TEXT_PLAIN);

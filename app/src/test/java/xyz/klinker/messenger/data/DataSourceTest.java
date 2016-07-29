@@ -144,11 +144,37 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getConversationCount() {
+        when(database.query("conversation", null, null, null, null, null,
+                "pinned desc, timestamp desc")).thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(20);
+
+        assertEquals(20, source.getConversationCount());
+    }
+
+    @Test
+    public void getMessageCount() {
+        when(database.query("message", null, null, null, null, null,
+                "timestamp asc")).thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(20);
+
+        assertEquals(20, source.getMessageCount());
+    }
+
+    @Test
     public void getMessages() {
         when(database.query("message", null, "conversation_id=?", new String[] {"1"}, null, null,
                 "timestamp asc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getMessages(1));
+    }
+
+    @Test
+    public void getAllMessages() {
+        when(database.query("message", null, null, null, null, null, "timestamp asc"))
+                .thenReturn(cursor);
+
+        assertEquals(cursor, source.getMessages());
     }
 
     @Test

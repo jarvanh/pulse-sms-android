@@ -18,16 +18,41 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.DataSource;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
  * for the user here, along with subscription status.
  */
-public class MyAccountFragment extends Fragment {
+public class MyAccountFragment extends PreferenceFragmentCompat {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle bundle, String s) {
+        addPreferencesFromResource(R.xml.my_account);
+
+        initMessageCountPreference();
+    }
+
+    private void initMessageCountPreference() {
+        Preference preference = findPreference(getString(R.string.pref_message_count));
+
+        DataSource source = DataSource.getInstance(getContext());
+        source.open();
+        int conversationCount = source.getConversationCount();
+        int messageCount = source.getMessageCount();
+        source.close();
+
+        String title = getResources().getQuantityString(R.plurals.message_count, messageCount,
+                messageCount);
+        String summary = getResources().getQuantityString(R.plurals.conversation_count,
+                conversationCount, conversationCount);
+
+        preference.setTitle(title);
+        preference.setSummary(summary);
     }
 
 }
