@@ -110,6 +110,7 @@ public class NotificationService extends IntentService {
                     conversation.color = c.colors.color;
                     conversation.ringtoneUri = c.ringtoneUri;
                     conversation.timestamp = c.timestamp;
+                    conversation.mute = c.mute;
                     conversations.put(conversationId, conversation);
                 }
 
@@ -265,7 +266,9 @@ public class NotificationService extends IntentService {
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
-        NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+        if (!conversation.mute) {
+            NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+        }
 
         return "<b>" + conversation.title + "</b>  " + content;
     }
@@ -359,6 +362,7 @@ public class NotificationService extends IntentService {
         public int color;
         public String ringtoneUri;
         public long timestamp;
+        public boolean mute;
         public List<NotificationMessage> messages;
 
         private NotificationConversation() {

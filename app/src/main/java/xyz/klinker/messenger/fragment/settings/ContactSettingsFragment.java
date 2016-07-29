@@ -65,6 +65,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
         setUpToolbar();
         setUpPin();
+        setUpMute();
         setUpGroupName();
         setUpRingtone();
         setUpColors();
@@ -113,6 +114,20 @@ public class ContactSettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 conversation.pinned = (boolean) o;
+                return true;
+            }
+        });
+    }
+
+    private void setUpMute() {
+        SwitchPreference preference = (SwitchPreference)
+                findPreference(getString(R.string.pref_contact_mute_conversation));
+        preference.setChecked(conversation.mute);
+
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                conversation.mute = (boolean) o;
                 return true;
             }
         });

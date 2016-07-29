@@ -38,6 +38,7 @@
     <string name="pref_message_count" translatable="false">message_count</string>
 
     <string name="pref_contact_pin_conversation" translatable="false">contact_pin_conversation</string>
+    <string name="pref_contact_mute_conversation" translatable="false">contact_mute_conversation</string>
     <string name="pref_contact_primary_color" translatable="false">contact_primary_color</string>
     <string name="pref_contact_primary_dark_color" translatable="false">contact_primary_dark_color</string>
     <string name="pref_contact_primary_light_color" translatable="false">contact_primary_light_color</string>

@@ -513,6 +513,7 @@ public class MessengerActivity extends AppCompatActivity
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
 
+            source.close();
             return true;
         } else {
             return false;

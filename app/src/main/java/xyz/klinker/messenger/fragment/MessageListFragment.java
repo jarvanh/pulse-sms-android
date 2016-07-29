@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -90,6 +91,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_COLOR_ACCENT = "color_accent";
     private static final String ARG_IS_GROUP = "is_group";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
+    private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
 
@@ -131,6 +133,7 @@ public class MessageListFragment extends Fragment implements
         args.putInt(ARG_COLOR_ACCENT, conversation.colors.colorAccent);
         args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
         args.putLong(ARG_CONVERSATION_ID, conversation.id);
+        args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
         fragment.setArguments(args);
 
         return fragment;
@@ -414,8 +417,12 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void dismissNotification() {
-        NotificationManagerCompat.from(getContext())
-                .cancel((int) getConversationId());
+        try {
+            NotificationManagerCompat.from(getContext())
+                    .cancel((int) getConversationId());
+        } catch (Exception e) {
+            
+        }
     }
 
     public void loadMessages() {

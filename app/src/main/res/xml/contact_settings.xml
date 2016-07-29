@@ -21,6 +21,10 @@
         android:key="@string/pref_contact_pin_conversation"
         android:title="@string/pin_conversation"/>
 
+    <SwitchPreference
+        android:key="@string/pref_contact_mute_conversation"
+        android:title="@string/mute_conversation"/>
+
     <EditTextPreference
         android:key="@string/pref_contact_group_name"
         android:title="@string/group_name"/>

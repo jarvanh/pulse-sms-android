@@ -142,6 +142,7 @@
         <item quantity="other">in %1$d conversations</item>
     </plurals>
     <string name="pin_conversation">Pin Conversation</string>
+    <string name="mute_conversation">Mute Conversation</string>
     <string name="primary_color">Primary Color</string>
     <string name="primary_dark_color">Primary Color Dark</string>
     <string name="accent_color">Accent Color</string>

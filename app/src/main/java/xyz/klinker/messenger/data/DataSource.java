@@ -362,7 +362,7 @@ public class DataSource {
      * Updates the settings for a conversation, such as ringtone and colors.
      */
     public void updateConversationSettings(Conversation conversation) {
-        ContentValues values = new ContentValues(7);
+        ContentValues values = new ContentValues(8);
         values.put(Conversation.COLUMN_PINNED, conversation.pinned);
         values.put(Conversation.COLUMN_TITLE, conversation.title);
         values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
@@ -370,6 +370,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
         values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
         values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+        values.put(Conversation.COLUMN_MUTE, conversation.mute);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversation.id) });
