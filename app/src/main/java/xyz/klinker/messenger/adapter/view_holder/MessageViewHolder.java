@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.ImageViewerActivity;
 
 /**
  * View holder for working with a message.
@@ -34,8 +36,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public TextView contact;
     public ImageView image;
     public View messageHolder;
+    public long messageId;
 
-    public MessageViewHolder(View itemView, int color) {
+    public MessageViewHolder(final View itemView, int color, final long conversationId) {
         super(itemView);
 
         message = (TextView) itemView.findViewById(R.id.message);
@@ -47,6 +50,16 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (color != -1 && messageHolder != null) {
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
         }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
+                intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
+                intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+                itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
 }

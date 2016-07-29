@@ -92,7 +92,9 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 return;
             }
 
-            if (position == pinnedCount) {
+            if (position <= pinnedCount) {
+                // if it is already pinned or the top item that isn't pinned, just mark the read
+                // and snippet changes
                 Conversation conversation = conversations.get(position);
                 conversation.snippet = snippet;
                 conversation.read = read;

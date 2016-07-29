@@ -78,6 +78,7 @@ public class ColorPreference extends Preference {
 
     private void displayPicker() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        //noinspection AndroidLintInflateParams
         View dialog = inflater.inflate(R.layout.dialog_color_preference, null, false);
         final LobsterPicker picker = (LobsterPicker) dialog.findViewById(R.id.lobsterpicker);
         LobsterShadeSlider slider = (LobsterShadeSlider) dialog.findViewById(R.id.shadeslider);

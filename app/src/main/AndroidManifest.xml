@@ -82,6 +82,8 @@
             android:theme="@style/AppTheme.NoColors"/>
         <activity android:name=".activity.SettingsActivity"
             android:label="@string/menu_settings"/>
+        <activity android:name=".activity.ImageViewerActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 

@@ -86,7 +86,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(layoutId, parent, false);
 
-        return new MessageViewHolder(view, color);
+        messages.moveToFirst();
+        return new MessageViewHolder(view, color,
+                messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)));
     }
 
     @Override
@@ -94,6 +96,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         messages.moveToPosition(position);
         Message message = new Message();
         message.fillFromCursor(messages);
+
+        holder.messageId = message.id;
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);

@@ -191,6 +191,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getMediaMessages() {
+        when(database.query("message", null, "conversation_id=? AND mime_type!='text/plain'",
+                new String[] {"1"}, null, null, "timestamp asc")).thenReturn(cursor);
+        assertNotNull(source.getMediaMessages(1));
+    }
+
+    @Test
     public void getAllMessages() {
         when(database.query("message", null, null, null, null, null, "timestamp asc"))
                 .thenReturn(cursor);

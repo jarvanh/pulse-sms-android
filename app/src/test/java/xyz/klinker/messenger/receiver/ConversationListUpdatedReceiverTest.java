@@ -215,13 +215,26 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
     public void conversationAlreadyAtTopWithPinned() {
         conversations.get(2).id = 1;
         when(sectionTypes.get(1)).thenReturn(today);
-        when(adapter.findPositionForConversationId(1)).thenReturn(5);
+        when(adapter.findPositionForConversationId(1)).thenReturn(4);
         when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
         when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(2);
 
         receiver.onReceive(context, intent);
 
-        verify(adapter).notifyItemChanged(5);
+        verify(adapter).notifyItemChanged(4);
+    }
+
+    @Test
+    public void conversationAlreadyAtTopAndIsPinned() {
+        conversations.get(1).id = 1;
+        when(sectionTypes.get(1)).thenReturn(today);
+        when(adapter.findPositionForConversationId(1)).thenReturn(2);
+        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(2);
+
+        receiver.onReceive(context, intent);
+
+        verify(adapter).notifyItemChanged(2);
     }
 
     @Test
