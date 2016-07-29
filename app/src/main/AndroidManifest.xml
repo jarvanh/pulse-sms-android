@@ -42,6 +42,9 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
+        <meta-data android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
         <activity android:name=".activity.MessengerActivity"
             android:theme="@style/AppTheme.MessengerActivity"
             android:launchMode="singleTop">

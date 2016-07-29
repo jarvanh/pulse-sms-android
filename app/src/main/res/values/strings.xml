@@ -120,6 +120,7 @@
         <item>OK</item>
         <item>Thanks</item>
     </string-array>
+    <string name="new_mms_message">New MMS message</string>
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>

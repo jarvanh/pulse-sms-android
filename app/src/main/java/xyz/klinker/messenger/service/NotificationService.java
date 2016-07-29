@@ -269,6 +269,22 @@ public class NotificationService extends IntentService {
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
+        NotificationCompat.CarExtender.UnreadConversation.Builder car = new
+                NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
+                .setReadPendingIntent(pendingDelete)
+                .setReplyAction(pendingReply, remoteInput)
+                .setLatestTimestamp(conversation.timestamp);
+
+        for (NotificationMessage message : conversation.messages) {
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                car.addMessage(message.data);
+            } else {
+                car.addMessage(getString(R.string.new_mms_message));
+            }
+        }
+
+        builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
+
         if (!conversation.mute) {
             NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
         }
