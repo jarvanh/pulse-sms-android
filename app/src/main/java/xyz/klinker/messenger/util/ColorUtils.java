@@ -71,6 +71,13 @@ public class ColorUtils {
     }
 
     /**
+     * Converts a color integer into it's hex equivalent.
+     */
+    public static String convertToHex(int color) {
+        return String.format("#%06X", (0xFFFFFF & color));
+    }
+
+    /**
      * Adjusts the status bar color depending on whether you are on a phone or tablet.
      *
      * @param color the color to change to.

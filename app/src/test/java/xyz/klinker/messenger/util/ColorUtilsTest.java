@@ -20,6 +20,9 @@ import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.R;
+
+import static junit.framework.Assert.assertEquals;
 
 public class ColorUtilsTest extends MessengerRobolectricSuite {
 
@@ -28,6 +31,12 @@ public class ColorUtilsTest extends MessengerRobolectricSuite {
         for (int i = 0; i < 100; i++) {
             ColorUtils.getRandomMaterialColor(RuntimeEnvironment.application);
         }
+    }
+
+    @Test
+    public void convertToHex() {
+        assertEquals("#F44336", ColorUtils.convertToHex(RuntimeEnvironment.application
+                .getResources().getColor(R.color.materialRed)));
     }
 
 }

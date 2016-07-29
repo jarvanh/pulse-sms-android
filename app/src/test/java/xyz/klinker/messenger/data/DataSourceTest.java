@@ -144,6 +144,20 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void updateConversation() {
+        source.updateConversation(1, true, System.currentTimeMillis(), "test", "text/plain");
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[] {"1"}));
+    }
+
+    @Test
+    public void updateConversationSettings() {
+        source.updateConversationSettings(new Conversation());
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[] {"0"}));
+    }
+
+    @Test
     public void getConversationCount() {
         when(database.query("conversation", null, null, null, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);

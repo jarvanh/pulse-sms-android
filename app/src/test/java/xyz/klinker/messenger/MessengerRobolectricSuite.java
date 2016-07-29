@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -55,6 +56,10 @@ public abstract class MessengerRobolectricSuite {
         return startFragment(fragment, FragmentActivity.class);
     }
 
+    public static <T extends android.app.Fragment> T startFragment(T fragment) {
+        return startFragment(fragment, FragmentActivity.class);
+    }
+
     public static <T extends Fragment> T startFragment(T fragment, Class<? extends FragmentActivity> activityClass) {
         FragmentActivity activity = Robolectric.buildActivity(activityClass)
                 .create()
@@ -63,6 +68,20 @@ public abstract class MessengerRobolectricSuite {
 
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(fragment, null);
+        fragmentTransaction.commit();
+
+        return fragment;
+    }
+
+    public static <T extends android.app.Fragment> T startFragment(T fragment, Class<? extends Activity> activityClass) {
+        Activity activity = Robolectric.buildActivity(activityClass)
+                .create()
+                .start()
+                .get();
+
+        android.app.FragmentManager fragmentManager = activity.getFragmentManager();
+        android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(fragment, null);
         fragmentTransaction.commit();
 

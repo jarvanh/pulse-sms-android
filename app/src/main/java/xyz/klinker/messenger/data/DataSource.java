@@ -91,7 +91,7 @@ public class DataSource {
      * @param database Mock of the sqlite database
      */
     @VisibleForTesting
-    protected DataSource(SQLiteDatabase database) {
+    public DataSource(SQLiteDatabase database) {
         this.database = database;
     }
 
@@ -139,7 +139,7 @@ public class DataSource {
      * @return sqlite database
      */
     @VisibleForTesting
-    protected SQLiteDatabase getDatabase() {
+    public SQLiteDatabase getDatabase() {
         return database;
     }
 
@@ -354,6 +354,23 @@ public class DataSource {
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+    }
+
+    /**
+     * Updates the settings for a conversation, such as ringtone and colors.
+     */
+    public void updateConversationSettings(Conversation conversation) {
+        ContentValues values = new ContentValues(7);
+        values.put(Conversation.COLUMN_PINNED, conversation.pinned);
+        values.put(Conversation.COLUMN_TITLE, conversation.title);
+        values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
+        values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
+        values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
+        values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
+        values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+
+        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[] { Long.toString(conversation.id) });
     }
 
     /**

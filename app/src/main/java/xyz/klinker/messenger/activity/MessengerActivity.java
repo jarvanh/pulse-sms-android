@@ -52,6 +52,7 @@ import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
+import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.fragment.settings.SettingsFragment;
@@ -464,7 +465,15 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean contactSettings() {
-        return true;
+        if (conversationListFragment.isExpanded()) {
+            long conversationId = conversationListFragment.getExpandedId();
+            Intent intent = new Intent(this, ContactSettingsActivity.class);
+            intent.putExtra(ContactSettingsActivity.EXTRA_CONVERSATION_ID, conversationId);
+            startActivity(intent);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

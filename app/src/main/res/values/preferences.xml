@@ -37,4 +37,12 @@
 
     <string name="pref_message_count" translatable="false">message_count</string>
 
+    <string name="pref_pin_conversation" translatable="false">pin_conversation</string>
+    <string name="pref_primary_color" translatable="false">primary_color</string>
+    <string name="pref_primary_dark_color" translatable="false">primary_dark_color</string>
+    <string name="pref_primary_light_color" translatable="false">primary_light_color</string>
+    <string name="pref_accent_color" translatable="false">accent_color</string>
+    <string name="pref_ringtone" translatable="false">ringtone</string>
+    <string name="pref_group_name" translatable="false">group_name</string>
+
 </resources>

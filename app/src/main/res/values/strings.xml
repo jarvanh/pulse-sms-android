@@ -134,5 +134,11 @@
         <item quantity="one">in %1$d conversation</item>
         <item quantity="other">in %1$d conversations</item>
     </plurals>
+    <string name="pin_conversation">Pin Conversation</string>
+    <string name="primary_color">Primary Color</string>
+    <string name="primary_dark_color">Primary Color Dark</string>
+    <string name="accent_color">Accent Color</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="group_name">Group Name</string>
 
 </resources>

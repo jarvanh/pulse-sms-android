@@ -36,4 +36,11 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+    <style name="AppTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/materialGrey</item>
+        <item name="colorPrimaryDark">@color/materialGreyDark</item>
+        <item name="colorAccent">@color/materialGrey</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
 </resources>

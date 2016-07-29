@@ -27,6 +27,7 @@ import org.robolectric.RuntimeEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.klinker.messenger.MessengerRealDataSuite;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
@@ -39,19 +40,7 @@ import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-public class SQLiteQueryTest extends MessengerRobolectricSuite {
-
-    private DataSource source;
-
-    @Before
-    public void setUp() throws Exception {
-        SQLiteDatabase database = SQLiteDatabase.create(null);
-        DatabaseSQLiteHelper helper = new DatabaseSQLiteHelper(RuntimeEnvironment.application);
-        helper.onCreate(database);
-
-        source = new DataSource(database);
-        insertData();
-    }
+public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void databaseCreated() {
@@ -342,12 +331,6 @@ public class SQLiteQueryTest extends MessengerRobolectricSuite {
         assertEquals(1, source.getDrafts(2).size());
         source.deleteDrafts(2);
         assertEquals(0, source.getDrafts(2).size());
-    }
-
-    private void insertData() throws Exception {
-        SQLiteDatabase database = source.getDatabase();
-        FixtureLoader loader = new FixtureLoader();
-        loader.loadFixturesToDatabase(database);
     }
 
 }
