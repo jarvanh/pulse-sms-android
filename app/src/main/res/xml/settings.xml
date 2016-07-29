@@ -18,6 +18,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:title="@string/theme_settings">
+
+        <SwitchPreference
+            android:key="@string/pref_dark_theme"
+            android:title="@string/dark_theme"
+            android:defaultValue="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/notification_settings">
 
         <SwitchPreference

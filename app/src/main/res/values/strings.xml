@@ -155,5 +155,7 @@
     <string name="group_name">Group Name</string>
     <string name="notification_settings">Notifications</string>
     <string name="vibrate">Vibrate</string>
+    <string name="theme_settings">Customization</string>
+    <string name="dark_theme">Night Theme</string>
 
 </resources>

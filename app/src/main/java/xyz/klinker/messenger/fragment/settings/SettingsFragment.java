@@ -17,7 +17,9 @@
 package xyz.klinker.messenger.fragment.settings;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
@@ -30,13 +32,32 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.settings);
+        initNightMode();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Settings.get(getActivity()).forceUpdate();
+    }
+
+    private void initNightMode() {
+        findPreference(getString(R.string.pref_dark_theme))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        boolean night = (boolean) o;
+                        if (night) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+
+                        return true;
+                    }
+                });
     }
 
 }

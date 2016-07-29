@@ -19,6 +19,8 @@ package xyz.klinker.messenger;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
+import xyz.klinker.messenger.data.Settings;
+
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
@@ -35,6 +37,10 @@ public class MessengerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (Settings.get(this).darkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
     }
 
 }

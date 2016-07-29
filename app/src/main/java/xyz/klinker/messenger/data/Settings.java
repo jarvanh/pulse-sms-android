@@ -40,6 +40,7 @@ public class Settings {
     public String ringtone;
     public boolean vibrate;
     public long snooze;
+    public boolean darkTheme;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -75,6 +76,7 @@ public class Settings {
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
         this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
+        this.darkTheme = sharedPrefs.getBoolean(context.getString(R.string.pref_dark_theme), false);
 
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();
