@@ -174,10 +174,14 @@ public class ImageUtils {
         while (!file.exists() || file.length() > MAX_FILE_SIZE) {
             Log.v("Scale to Send", "current file size: " + file.length());
 
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                    (int) (bitmap.getWidth() * SCALE_RATIO),
-                    (int) (bitmap.getHeight() * SCALE_RATIO),
-                    false);
+            try {
+                bitmap = Bitmap.createScaledBitmap(bitmap,
+                        (int) (bitmap.getWidth() * SCALE_RATIO),
+                        (int) (bitmap.getHeight() * SCALE_RATIO),
+                        false);
+            } catch (OutOfMemoryError e) {
+                return file;
+            }
 
             FileOutputStream out = null;
 

@@ -85,6 +85,11 @@
     <string name="request_permission">Request Permission</string>
     <string name="no_messages_with_contact">You don\'t have any messages yet with this contact,
         time to start up a new conversation!</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="share_content">Share content…</string>
+    <string name="saved">Saved to /Download folder!</string>
+    <string name="failed_to_save">Failed to save</string>
 
     <!-- Compose Screen -->
     <string name="enter_contact_name">Enter Contact Name</string>
