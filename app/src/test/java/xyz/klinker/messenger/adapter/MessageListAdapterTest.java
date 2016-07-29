@@ -114,7 +114,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     private MessageViewHolder getMockedViewHolder() {
         MessageViewHolder holder = new MessageViewHolder(new View(RuntimeEnvironment.application),
-                Color.RED);
+                Color.RED, 1);
         holder.message = message;
         holder.timestamp = timestamp;
         holder.image = image;

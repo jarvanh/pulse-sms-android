@@ -51,15 +51,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
         }
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
-                intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
-                intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
-                itemView.getContext().startActivity(intent);
-            }
-        });
+        if (image != null) {
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
+                    intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
+                    intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+        }
     }
 
 }
