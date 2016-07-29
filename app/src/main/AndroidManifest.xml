@@ -160,6 +160,24 @@
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.ReplyService" />
 
+        <!-- Widget -->
+        <receiver android:name=".widget.MessengerAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="xyz.klinker.messenger.widget.REFRESH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info"/>
+        </receiver>
+
+        <service
+            android:name=".widget.MessengerWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
     </application>
 
 </manifest>

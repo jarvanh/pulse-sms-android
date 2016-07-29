@@ -62,6 +62,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -100,6 +101,12 @@ public class MessengerActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         requestPermissions();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
     private void requestPermissions() {

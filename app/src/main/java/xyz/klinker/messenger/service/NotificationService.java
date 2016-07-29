@@ -42,6 +42,7 @@ import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
  * Service for displaying notifications to the user based on which conversations have not been
@@ -76,6 +77,8 @@ public class NotificationService extends IntentService {
                 giveSummaryNotification(conversations, rows);
             }
         }
+
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
     @VisibleForTesting
