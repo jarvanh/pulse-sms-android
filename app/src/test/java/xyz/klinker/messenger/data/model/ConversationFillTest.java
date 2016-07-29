@@ -49,6 +49,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         assertEquals("uri", conversation.ringtoneUri);
         assertEquals("image_uri", conversation.imageUri);
         assertEquals("11493", conversation.idMatcher);
+        assertFalse(conversation.mute);
     }
 
     private Cursor createCursor() {
@@ -66,7 +67,8 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_SNIPPET,
                 Conversation.COLUMN_RINGTONE,
                 Conversation.COLUMN_IMAGE_URI,
-                Conversation.COLUMN_ID_MATCHER
+                Conversation.COLUMN_ID_MATCHER,
+                Conversation.COLUMN_MUTE
         });
 
         cursor.addRow(new Object[] {
@@ -83,7 +85,8 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 "So maybe not going to be able to get platinum huh?",
                 "uri",
                 "image_uri",
-                "11493"
+                "11493",
+                0
         });
 
         return cursor;

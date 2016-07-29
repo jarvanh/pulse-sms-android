@@ -214,6 +214,7 @@ public class DataSource {
             values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
             values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
             values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
+            values.put(Conversation.COLUMN_MUTE, conversation.mute);
 
             long conversationId = database.insert(Conversation.TABLE, null, values);
 
@@ -274,6 +275,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
         values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
         values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
+        values.put(Conversation.COLUMN_MUTE, conversation.mute);
 
         return database.insert(Conversation.TABLE, null, values);
     }
@@ -612,6 +614,7 @@ public class DataSource {
             conversation.title = ContactUtils.findContactNames(phoneNumbers, context);
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context);
             conversation.idMatcher = matcher;
+            conversation.mute = false;
             ImageUtils.fillConversationColors(conversation, context);
 
             conversationId = insertConversation(conversation);

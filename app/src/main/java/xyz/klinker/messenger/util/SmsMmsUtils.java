@@ -85,6 +85,7 @@ public class SmsMmsUtils {
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
                 conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
+                conversation.mute = false;
                 ImageUtils.fillConversationColors(conversation, context);
 
                 conversations.add(conversation);

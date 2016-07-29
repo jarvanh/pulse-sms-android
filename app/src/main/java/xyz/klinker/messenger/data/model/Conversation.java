@@ -46,6 +46,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_RINGTONE = "ringtone";
     public static final String COLUMN_IMAGE_URI = "image_uri";
     public static final String COLUMN_ID_MATCHER = "id_matcher";
+    public static final String COLUMN_MUTE = "mute";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -62,7 +63,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_SNIPPET + " text, " +
             COLUMN_RINGTONE + " text, " +
             COLUMN_IMAGE_URI + " text, " +
-            COLUMN_ID_MATCHER + " text not null" +
+            COLUMN_ID_MATCHER + " text not null, " +
+            COLUMN_MUTE + " integer not null" +
             ");";
 
     public long id;
@@ -76,6 +78,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public String ringtoneUri;
     public String imageUri;
     public String idMatcher;
+    public boolean mute;
 
     @Override
     public String getCreateStatement() {
@@ -125,6 +128,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                  this.imageUri = cursor.getString(i);
              } else if (column.equals(COLUMN_ID_MATCHER)) {
                  this.idMatcher = cursor.getString(i);
+             } else if (column.equals(COLUMN_MUTE)) {
+                 this.mute = cursor.getInt(i) == 1;
              }
         }
     }

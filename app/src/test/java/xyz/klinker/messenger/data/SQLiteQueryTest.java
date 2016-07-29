@@ -81,6 +81,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         conversation.title = "test";
         conversation.imageUri = null;
         conversation.idMatcher = "24558";
+        conversation.mute = false;
 
         int initialSize = source.getConversations().getCount();
         source.insertConversation(conversation);

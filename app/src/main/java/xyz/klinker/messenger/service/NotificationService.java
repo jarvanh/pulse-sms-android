@@ -62,7 +62,7 @@ public class NotificationService extends IntentService {
         if (snoozeTil > System.currentTimeMillis()) {
             return;
         }
-        
+
         LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
         List<String> rows = new ArrayList<>();
 
