@@ -73,6 +73,7 @@ public class MessengerActivity extends AppCompatActivity
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
 
+    private DataSource source;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
@@ -82,6 +83,8 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        source = DataSource.getInstance(this);
+        source.open();
 
         if (checkInitialStart()) {
             startActivity(new Intent(this, InitialLoadActivity.class));
@@ -107,6 +110,12 @@ public class MessengerActivity extends AppCompatActivity
     public void onStop() {
         super.onStop();
         MessengerAppWidgetProvider.refreshWidget(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        source.close();
     }
 
     private void requestPermissions() {
