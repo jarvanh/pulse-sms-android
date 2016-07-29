@@ -27,6 +27,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
 
 public class MessengerAppWidgetProvider extends AppWidgetProvider {
@@ -77,8 +78,12 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
+            Intent compose = new Intent(context, ComposeActivity.class);
+            PendingIntent pendingCompose = PendingIntent.getActivity(context, 0, compose, 0);
+
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget);
             rv.setRemoteAdapter(R.id.widget_list, intent);
+            rv.setOnClickPendingIntent(R.id.compose, pendingCompose);
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty);
 
