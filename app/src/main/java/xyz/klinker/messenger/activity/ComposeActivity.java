@@ -53,6 +53,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -237,12 +238,22 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     }
                 }
             });
+
+            if (getIntent().getExtras()
+                    .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
+                String numbers = getIntent()
+                        .getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
+                sendMessage(mimeType, data, numbers);
+            }
         }
     }
 
     private void sendMessage(String mimeType, String data) {
         String phoneNumbers = getPhoneNumberFromContactEntry();
+        sendMessage(mimeType, data, phoneNumbers);
+    }
 
+    private void sendMessage(String mimeType, String data, String phoneNumbers) {
         DataSource source = DataSource.getInstance(this);
         source.open();
         source.insertSentMessage(phoneNumbers, data, mimeType, this);

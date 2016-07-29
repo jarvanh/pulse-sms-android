@@ -292,6 +292,16 @@ public class DataSource {
     }
 
     /**
+     * Gets all pinned conversations in the database.
+     *
+     * @return a list of pinned conversations.
+     */
+    public Cursor getPinnedConversations() {
+        return database.query(Conversation.TABLE, null, Conversation.COLUMN_PINNED + "=1", null,
+                null, null, Conversation.COLUMN_TIMESTAMP + " desc");
+    }
+
+    /**
      * Gets a conversation by its id.
      *
      * @param conversationId the conversation's id to find.

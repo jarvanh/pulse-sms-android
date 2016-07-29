@@ -134,6 +134,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getPinnedConversations() {
+        when(database.query("conversation", null, "pinned=1", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getPinnedConversations());
+    }
+
+    @Test
     public void deleteConversation() {
         Conversation conversation = new Conversation();
         conversation.id = 1;

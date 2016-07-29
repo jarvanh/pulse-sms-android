@@ -421,7 +421,7 @@ public class MessageListFragment extends Fragment implements
             NotificationManagerCompat.from(getContext())
                     .cancel((int) getConversationId());
         } catch (Exception e) {
-            
+
         }
     }
 
