@@ -47,5 +47,6 @@
 
     <string name="pref_ringtone">ringtone</string>
     <string name="pref_vibrate">vibrate</string>
+    <string name="pref_snooze">snooze</string>
 
 </resources>

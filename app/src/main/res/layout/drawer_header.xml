@@ -71,7 +71,8 @@
             android:src="@drawable/ic_snooze"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/menu_snooze"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:id="@+id/snooze"/>
 
     </LinearLayout>
 

@@ -37,6 +37,13 @@
     <string name="menu_conversation_information">Conversation Information</string>
     <string name="menu_contact_settings">Contact Settings</string>
     <string name="menu_group_settings">Group Settings</string>
+    <string name="menu_snooze_off">Off</string>
+    <string name="menu_snooze_1">1 hour</string>
+    <string name="menu_snooze_2">2 hours</string>
+    <string name="menu_snooze_4">4 hours</string>
+    <string name="menu_snooze_8">8 hours</string>
+    <string name="menu_snooze_24">24 hours</string>
+    <string name="menu_snooze_72">72 hours</string>
 
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>

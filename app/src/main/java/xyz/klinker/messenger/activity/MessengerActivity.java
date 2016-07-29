@@ -30,12 +30,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -145,8 +147,60 @@ public class MessengerActivity extends AppCompatActivity
                         .setText(settings.myName);
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                         .setText(settings.myPhoneNumber);
+                initSnooze();
             }
         }, 250);
+    }
+
+    private void initSnooze() {
+        ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
+        snooze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(MessengerActivity.this, view);
+                boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
+                        System.currentTimeMillis();
+                menu.inflate(currentlySnoozed ? R.menu.snooze_off : R.menu.snooze);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        long snoozeTil;
+                        switch (item.getItemId()) {
+                            case R.id.menu_snooze_off:
+                                snoozeTil = System.currentTimeMillis();
+                                break;
+                            case R.id.menu_snooze_1:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60);
+                                break;
+                            case R.id.menu_snooze_2:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 2);
+                                break;
+                            case R.id.menu_snooze_4:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 4);
+                                break;
+                            case R.id.menu_snooze_8:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 8);
+                                break;
+                            case R.id.menu_snooze_24:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 24);
+                                break;
+                            case R.id.menu_snooze_72:
+                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 72);
+                                break;
+                            default:
+                                snoozeTil = System.currentTimeMillis();
+                                break;
+                        }
+
+                        Settings.get(getApplicationContext()).setValue(
+                                getString(R.string.pref_snooze), snoozeTil);
+                        return true;
+                    }
+                });
+
+                menu.show();
+            }
+        });
     }
 
     private void initFab() {
