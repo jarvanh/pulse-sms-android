@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.animation.ValueAnimator;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -26,11 +27,13 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.view.ColorPreference;
 
 /**
  * Fragment for modifying contact preferences. This includes pinning, changing colors, changing
@@ -64,6 +67,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         setUpPin();
         setUpGroupName();
         setUpRingtone();
+        setUpColors();
     }
 
     private void loadConversation() {
@@ -145,6 +149,69 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+    }
+
+    private void setUpColors() {
+        ColorPreference preference = (ColorPreference)
+                findPreference(getString(R.string.pref_primary_color));
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                animateToolbar(conversation.colors.color, (int) o);
+                conversation.colors.color = (int) o;
+                return true;
+            }
+        });
+
+        preference = (ColorPreference) findPreference(getString(R.string.pref_primary_dark_color));
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                animateStatusBar(conversation.colors.colorDark, (int) o);
+                conversation.colors.colorDark = (int) o;
+                return true;
+            }
+        });
+
+        preference = (ColorPreference) findPreference(getString(R.string.pref_accent_color));
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                conversation.colors.colorAccent = (int) o;
+                return true;
+            }
+        });
+    }
+
+    private void animateToolbar(int originalColor, int newColor) {
+        final ColorDrawable drawable = new ColorDrawable(originalColor);
+        final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setBackgroundDrawable(drawable);
+
+        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
+        animator.setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int color = (int) valueAnimator.getAnimatedValue();
+                drawable.setColor(color);
+                actionBar.setBackgroundDrawable(drawable);
+            }
+        });
+        animator.start();
+    }
+
+    private void animateStatusBar(int originalColor, int newColor) {
+        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
+        animator.setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int color = (int) valueAnimator.getAnimatedValue();
+                getActivity().getWindow().setStatusBarColor(color);
+            }
+        });
+        animator.start();
     }
 
     public void saveSettings() {

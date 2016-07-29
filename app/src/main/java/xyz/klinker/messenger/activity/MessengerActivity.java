@@ -311,7 +311,7 @@ public class MessengerActivity extends AppCompatActivity
             Log.v("Messenger Activity", "displaying conversation and messages");
             conversationListFragment = ConversationListFragment
                     .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0));
-            getIntent().getExtras().remove(EXTRA_CONVERSATION_ID);
+            getIntent().getExtras().putLong(EXTRA_CONVERSATION_ID, -1);
         } else {
             Log.v("Messenger Activity", "displaying only conversation");
             conversationListFragment = ConversationListFragment.newInstance();
