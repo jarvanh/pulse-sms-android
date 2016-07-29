@@ -17,4 +17,19 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:title="@string/notification_settings">
+
+        <SwitchPreference
+            android:key="@string/pref_vibrate"
+            android:title="@string/vibrate"
+            android:defaultValue="true"/>
+
+        <RingtonePreference
+            android:key="@string/pref_ringtone"
+            android:title="@string/ringtone"
+            android:ringtoneType="notification"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

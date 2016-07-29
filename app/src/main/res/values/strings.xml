@@ -140,5 +140,7 @@
     <string name="accent_color">Accent Color</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Group Name</string>
+    <string name="notification_settings">Notifications</string>
+    <string name="vibrate">Vibrate</string>
 
 </resources>

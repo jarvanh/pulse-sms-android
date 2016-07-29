@@ -52,7 +52,6 @@ import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
-import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.fragment.settings.SettingsFragment;
@@ -345,7 +344,9 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displaySettings() {
-        return displayFragmentWithBackStack(new SettingsFragment());
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        return true;
     }
 
     private boolean displayMyAccount() {

@@ -25,13 +25,13 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
-import android.provider.Settings;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.view.ColorPreference;
 
@@ -84,16 +84,16 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpDefaults() {
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putBoolean(getString(R.string.pref_pin_conversation), conversation.pinned)
-                .putString(getString(R.string.pref_group_name), conversation.title)
-                .putString(getString(R.string.pref_ringtone),
+                .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
+                .putString(getString(R.string.pref_contact_group_name), conversation.title)
+                .putString(getString(R.string.pref_contact_ringtone),
                         conversation.ringtoneUri == null ?
-                                Settings.System.DEFAULT_NOTIFICATION_URI.toString() :
+                                Settings.get(getActivity()).ringtone :
                                 conversation.ringtoneUri)
-                .putInt(getString(R.string.pref_primary_color), conversation.colors.color)
-                .putInt(getString(R.string.pref_primary_dark_color), conversation.colors.colorDark)
-                .putInt(getString(R.string.pref_primary_light_color), conversation.colors.colorLight)
-                .putInt(getString(R.string.pref_accent_color), conversation.colors.colorAccent)
+                .putInt(getString(R.string.pref_contact_primary_color), conversation.colors.color)
+                .putInt(getString(R.string.pref_contact_primary_dark_color), conversation.colors.colorDark)
+                .putInt(getString(R.string.pref_contact_primary_light_color), conversation.colors.colorLight)
+                .putInt(getString(R.string.pref_contact_accent_color), conversation.colors.colorAccent)
                 .apply();
     }
 
@@ -106,7 +106,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpPin() {
         SwitchPreference preference = (SwitchPreference)
-                findPreference(getString(R.string.pref_pin_conversation));
+                findPreference(getString(R.string.pref_contact_pin_conversation));
         preference.setChecked(conversation.pinned);
 
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -120,7 +120,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpGroupName() {
         EditTextPreference preference = (EditTextPreference)
-                findPreference(getString(R.string.pref_group_name));
+                findPreference(getString(R.string.pref_contact_group_name));
 
         if (!conversation.isGroup()) {
             getPreferenceScreen().removePreference(preference);
@@ -140,7 +140,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpRingtone() {
         RingtonePreference preference = (RingtonePreference)
-                findPreference(getString(R.string.pref_ringtone));
+                findPreference(getString(R.string.pref_contact_ringtone));
 
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -153,7 +153,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpColors() {
         ColorPreference preference = (ColorPreference)
-                findPreference(getString(R.string.pref_primary_color));
+                findPreference(getString(R.string.pref_contact_primary_color));
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -163,7 +163,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
             }
         });
 
-        preference = (ColorPreference) findPreference(getString(R.string.pref_primary_dark_color));
+        preference = (ColorPreference) findPreference(getString(R.string.pref_contact_primary_dark_color));
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -173,7 +173,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
             }
         });
 
-        preference = (ColorPreference) findPreference(getString(R.string.pref_accent_color));
+        preference = (ColorPreference) findPreference(getString(R.string.pref_contact_accent_color));
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {

@@ -77,6 +77,8 @@
         <activity android:name=".activity.InitialLoadActivity"/>
         <activity android:name=".activity.ContactSettingsActivity"
             android:theme="@style/AppTheme.NoColors"/>
+        <activity android:name=".activity.SettingsActivity"
+            android:label="@string/menu_settings"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 

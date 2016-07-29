@@ -18,30 +18,30 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:key="@string/pref_pin_conversation"
+        android:key="@string/pref_contact_pin_conversation"
         android:title="@string/pin_conversation"/>
 
     <EditTextPreference
-        android:key="@string/pref_group_name"
+        android:key="@string/pref_contact_group_name"
         android:title="@string/group_name"/>
 
     <android.preference.RingtonePreference
-        android:key="@string/pref_ringtone"
+        android:key="@string/pref_contact_ringtone"
         android:title="@string/ringtone"
         android:ringtoneType="notification"
         android:showDefault="true"
         android:showSilent="true"/>
 
     <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_primary_color"
+        android:key="@string/pref_contact_primary_color"
         android:title="@string/primary_color"/>
 
     <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_primary_dark_color"
+        android:key="@string/pref_contact_primary_dark_color"
         android:title="@string/primary_dark_color"/>
 
     <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_accent_color"
+        android:key="@string/pref_contact_accent_color"
         android:title="@string/accent_color"/>
 
 </PreferenceScreen>

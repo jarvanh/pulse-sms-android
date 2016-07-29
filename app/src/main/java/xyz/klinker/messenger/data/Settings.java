@@ -37,6 +37,8 @@ public class Settings {
     public String myName;
     public String myPhoneNumber;
     public String deviceId;
+    public String ringtone;
+    public boolean vibrate;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -69,6 +71,14 @@ public class Settings {
         this.myName = sharedPrefs.getString(context.getString(R.string.pref_my_name), null);
         this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.pref_my_phone_number), null);
         this.deviceId = sharedPrefs.getString(context.getString(R.string.pref_device_id), null);
+        this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
+        this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
+
+        if (this.ringtone == null) {
+            String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();
+            setValue(context.getString(R.string.pref_ringtone), uri, false);
+            this.ringtone = uri;
+        }
     }
 
     @VisibleForTesting

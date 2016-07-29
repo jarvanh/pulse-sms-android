@@ -38,6 +38,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -124,20 +125,25 @@ public class NotificationService extends IntentService {
         Bitmap contactImage = ImageUtils.clipToCircle(
                 ImageUtils.getBitmap(this, conversation.imageUri));
 
+        int defaults = Notification.DEFAULT_LIGHTS;
+        if (Settings.get(this).vibrate) {
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(conversation.title)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(conversation.color)
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
+                .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
                 .setOnlyAlertOnce(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
-                .setSound(conversation.ringtoneUri == null ?
-                        null : Uri.parse(conversation.ringtoneUri))
+                .setSound(Uri.parse(conversation.ringtoneUri == null ?
+                        Settings.get(this).ringtone : conversation.ringtoneUri))
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
