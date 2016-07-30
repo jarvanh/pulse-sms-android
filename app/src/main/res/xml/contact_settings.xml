@@ -19,11 +19,13 @@
 
     <SwitchPreference
         android:key="@string/pref_contact_pin_conversation"
-        android:title="@string/pin_conversation"/>
+        android:title="@string/pin_conversation"
+        android:summary="@string/pin_conversation_summary"/>
 
     <SwitchPreference
         android:key="@string/pref_contact_mute_conversation"
-        android:title="@string/mute_conversation"/>
+        android:title="@string/mute_conversation"
+        android:summary="@string/mute_conversation_summary"/>
 
     <EditTextPreference
         android:key="@string/pref_contact_group_name"
