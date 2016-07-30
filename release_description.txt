@@ -1,0 +1,5 @@
+- Homescreen widget
+- Night theme option
+- Android Auto support
+- Bug fix on group messages not displaying from name
+- Support for playing GIFs
