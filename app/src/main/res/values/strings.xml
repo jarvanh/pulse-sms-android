@@ -124,7 +124,7 @@
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2016 Jake Klinker</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">View open source license information</string>
     <string name="app_version">App Version</string>
     <string name="device_id">Device ID</string>
@@ -135,7 +135,7 @@
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Messenger Beta Community</string>
     <string name="email">Email</string>
-    <string name="email_summary">support@klinkerapps.com</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
     <string name="twitter">Twitter</string>
     <string name="twitter_summary">\@KlinkerApps</string>
     <string name="support">Support</string>

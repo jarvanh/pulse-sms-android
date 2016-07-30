@@ -102,10 +102,10 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
      * Sends an email to support@klinkerapps.com
      */
     public void displayEmail() {
-        String[] email = new String[]{"support@klinkerapps.com"};
+        String[] email = new String[]{"luke@klinkerapps.com"};
         String subject = getString(R.string.app_name) + " " + getString(R.string.support);
 
-        Uri uri = Uri.parse("mailto:support@klinkerapps.com")
+        Uri uri = Uri.parse("mailto:luke@klinkerapps.com")
                 .buildUpon()
                 .appendQueryParameter("subject", subject)
                 .build();
