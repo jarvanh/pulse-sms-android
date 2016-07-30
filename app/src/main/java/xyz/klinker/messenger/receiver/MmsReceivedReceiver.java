@@ -78,11 +78,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     snippet = message.data;
                 }
 
-                // if not a group message, don't set from otherwise notifications will get weird
-                if (message.from.split(", ").length == 1) {
-                    message.from = null;
-                }
-
                 conversationId = source.insertMessage(message, phoneNumbers, context);
             }
 
