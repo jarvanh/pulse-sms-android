@@ -22,15 +22,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.MimeType;
 
 /**
  * Fragment for viewing an image using Chris Banes's PhotoView library.
@@ -55,28 +58,21 @@ public class ImageViewerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_image_viewer, parent, false);
 
         PhotoView photo = (PhotoView) view.findViewById(R.id.photo);
-        final PhotoViewAttacher attacher = new PhotoViewAttacher(photo);
+        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(photo);
 
-        Glide.with(getActivity())
-                .load(Uri.parse(getArguments().getString(ARG_DATA_URI)))
-                .fitCenter()
-                .listener(new RequestListener<Uri, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, Uri model, Target<GlideDrawable> target,
-                                               boolean isFirstResource) {
-                        return false;
-                    }
+        String data = getArguments().getString(ARG_DATA_URI);
+        String mimeType = getArguments().getString(ARG_DATA_MIME_TYPE);
 
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, Uri model,
-                                                   Target<GlideDrawable> target,
-                                                   boolean isFromMemoryCache,
-                                                   boolean isFirstResource) {
-                        attacher.update();
-                        return false;
-                    }
-                })
-                .into(photo);
+        if (MimeType.isStaticImage(mimeType)) {
+            Glide.with(getActivity())
+                    .load(Uri.parse(data))
+                    .fitCenter()
+                    .into(target);
+        } else {
+            Glide.with(getActivity())
+                    .load(Uri.parse(data))
+                    .into(target);
+        }
 
         return view;
     }

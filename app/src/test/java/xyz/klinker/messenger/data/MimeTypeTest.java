@@ -53,8 +53,8 @@ public class MimeTypeTest {
     }
 
     @Test
-    public void imageGifNotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.IMAGE_GIF));
+    public void imageGifSupported() {
+        assertTrue(MimeType.isSupported(MimeType.IMAGE_GIF));
     }
 
     @Test

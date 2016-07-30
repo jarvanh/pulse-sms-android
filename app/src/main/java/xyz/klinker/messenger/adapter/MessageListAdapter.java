@@ -145,6 +145,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .fitCenter()
                         .into(holder.image);
+            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+                Glide.with(holder.image.getContext())
+                        .load(Uri.parse(message.data))
+                        .into(holder.image);
             } else {
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
                 // TODO video and audio, etc.
