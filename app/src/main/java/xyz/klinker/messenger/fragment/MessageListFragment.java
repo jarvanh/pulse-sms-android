@@ -357,6 +357,7 @@ public class MessageListFragment extends Fragment implements
             int[] count = SmsMessage.calculateLength(messageEntry.getText().toString(), false);
 
             if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
+                //noinspection AndroidLintSetTextI18n
                 counter.setText(count[0] + "/" + count[2]);
             } else {
                 if (count[0] >= 4) {

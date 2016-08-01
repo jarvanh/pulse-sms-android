@@ -132,6 +132,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     }
 
     private void addBlacklist() {
+        //noinspection AndroidLintInflateParams
         View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
                 null, false);
         final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
