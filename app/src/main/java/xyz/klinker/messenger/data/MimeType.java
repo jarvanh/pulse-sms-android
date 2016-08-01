@@ -48,7 +48,10 @@ public class MimeType {
                 mimeType.equals(IMAGE_BMP) ||
                 mimeType.equals(IMAGE_JPG) ||
                 mimeType.equals(IMAGE_PNG) ||
-                mimeType.equals(IMAGE_GIF);
+                mimeType.equals(IMAGE_GIF) ||
+                mimeType.equals(VIDEO_MPEG) ||
+                mimeType.equals(VIDEO_3GPP) ||
+                mimeType.equals(VIDEO_MP4);
     }
 
     /**
