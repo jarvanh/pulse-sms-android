@@ -58,18 +58,18 @@ public class MimeTypeTest {
     }
 
     @Test
-    public void videoMpegNotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.VIDEO_MPEG));
+    public void videoMpegSupported() {
+        assertTrue(MimeType.isSupported(MimeType.VIDEO_MPEG));
     }
 
     @Test
-    public void video3gppNotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.VIDEO_3GPP));
+    public void video3gppSupported() {
+        assertTrue(MimeType.isSupported(MimeType.VIDEO_3GPP));
     }
 
     @Test
-    public void videoMp4NotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.VIDEO_MP4));
+    public void videoMp4Supported() {
+        assertTrue(MimeType.isSupported(MimeType.VIDEO_MP4));
     }
 
     @Test
@@ -98,10 +98,22 @@ public class MimeTypeTest {
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPEG));
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPG));
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_PNG));
+        assertFalse(MimeType.isStaticImage(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isStaticImage(MimeType.IMAGE_GIF));
         assertFalse(MimeType.isStaticImage(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isStaticImage(MimeType.VIDEO_MP4));
         assertFalse(MimeType.isStaticImage(MimeType.AUDIO_MP4));
+    }
+
+    @Test
+    public void isVideo() {
+        assertTrue(MimeType.isVideo(MimeType.VIDEO_MP4));
+        assertTrue(MimeType.isVideo(MimeType.VIDEO_3GPP));
+        assertTrue(MimeType.isVideo(MimeType.VIDEO_MPEG));
+        assertFalse(MimeType.isVideo(MimeType.IMAGE_JPEG));
+        assertFalse(MimeType.isVideo(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isVideo(MimeType.IMAGE_GIF));
+        assertFalse(MimeType.isVideo(MimeType.AUDIO_MP4));
     }
 
 }

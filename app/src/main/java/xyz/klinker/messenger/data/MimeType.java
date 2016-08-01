@@ -61,4 +61,11 @@ public class MimeType {
         return mimeType.startsWith("image/") && !mimeType.equals(MimeType.IMAGE_GIF);
     }
 
+    /**
+     * Gets whether the mime type is a video file.
+     */
+    public static boolean isVideo(String mimeType) {
+        return mimeType.startsWith("video/");
+    }
+
 }
