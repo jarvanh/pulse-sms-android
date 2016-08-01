@@ -1,1 +1,1 @@
-| _id   | conversation_id   | data                          | mime_type     | timestamp |
+| _id   | phone_number      | data                          | mime_type     | timestamp |

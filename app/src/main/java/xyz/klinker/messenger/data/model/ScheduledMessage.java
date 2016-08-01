@@ -29,7 +29,7 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
 
     public static final String TABLE = "scheduled_message";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_CONVERSATION_ID = "conversation_id";
+    public static final String COLUMN_TO = "phone_number";
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_MIME_TYPE = "mime_type";
     public static final String COLUMN_TIMESTAMP = "timestamp";
@@ -37,19 +37,16 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            COLUMN_CONVERSATION_ID + " integer not null, " +
+            COLUMN_TO + " text not null, " +
             COLUMN_DATA + " text not null, " +
             COLUMN_MIME_TYPE + " text not null, " +
             COLUMN_TIMESTAMP + " integer not null" +
             ");";
 
-    private static final String[] INDEXES = {
-            "create index if not exists conversation_id_scheduled_message_index on " + TABLE +
-                    " (" + COLUMN_CONVERSATION_ID + ");"
-    };
+    private static final String[] INDEXES = { };
 
     public long id;
-    public long conversationId;
+    public String to;
     public String data;
     public String mimeType;
     public long timestamp;
@@ -76,8 +73,8 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
 
             if (column.equals(COLUMN_ID)) {
                 this.id = cursor.getLong(i);
-            } else if (column.equals(COLUMN_CONVERSATION_ID)) {
-                this.conversationId = cursor.getLong(i);
+            } else if (column.equals(COLUMN_TO)) {
+                this.to = cursor.getString(i);
             } else if (column.equals(COLUMN_DATA)) {
                 this.data = cursor.getString(i);
             } else if (column.equals(COLUMN_MIME_TYPE)) {

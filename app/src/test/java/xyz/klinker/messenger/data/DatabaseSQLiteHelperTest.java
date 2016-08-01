@@ -72,7 +72,6 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL(new Blacklist().getCreateStatement());
         verify(database).execSQL(new Message().getIndexStatements()[0]);
         verify(database).execSQL(new Draft().getIndexStatements()[0]);
-        verify(database).execSQL(new ScheduledMessage().getIndexStatements()[0]);
         verifyNoMoreInteractions(database);
     }
 
