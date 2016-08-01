@@ -37,7 +37,7 @@
 
             <item
                 android:id="@+id/drawer_mute_contacts"
-                android:icon="@drawable/ic_contacts"
+                android:icon="@drawable/ic_block"
                 android:title="@string/menu_mute_contacts"/>
 
             <item
