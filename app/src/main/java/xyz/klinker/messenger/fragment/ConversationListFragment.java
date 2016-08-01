@@ -103,7 +103,8 @@ public class ConversationListFragment extends Fragment
 
         // if the refresh time was more than an hour ago and there isn't an expanded conversation,
         // refresh the list
-        if (lastRefreshTime > 1000 * 60 * 60 && expandedConversation == null) {
+        if (System.currentTimeMillis() - lastRefreshTime > 1000 * 60 * 60 &&
+                expandedConversation == null) {
             loadConversations();
         }
     }
@@ -201,13 +202,13 @@ public class ConversationListFragment extends Fragment
     }
 
     private void checkEmptyViewDisplay() {
-        if (recyclerView.getAdapter().getItemCount() == 0 &&
-                empty.getVisibility() == View.GONE) {
+        if (recyclerView.getAdapter().getItemCount() == 0 && empty.getVisibility() == View.GONE) {
             empty.setAlpha(0);
             empty.setVisibility(View.VISIBLE);
 
             empty.animate().alpha(1f).setDuration(250).setListener(null);
-        } else if (empty.getVisibility() == View.VISIBLE) {
+        } else if (recyclerView.getAdapter().getItemCount() != 0 &&
+                empty.getVisibility() == View.VISIBLE) {
             empty.setVisibility(View.GONE);
         }
     }
