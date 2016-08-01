@@ -29,6 +29,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
@@ -58,6 +59,10 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             body += sms.getMessageBody();
             address = sms.getOriginatingAddress();
             date = sms.getTimestampMillis();
+        }
+
+        if (BlacklistUtils.isBlacklisted(context, address)) {
+            return;
         }
 
         insertInternalSms(context, address, body, date);

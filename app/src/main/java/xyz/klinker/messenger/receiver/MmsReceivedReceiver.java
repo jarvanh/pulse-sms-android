@@ -29,6 +29,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -54,6 +55,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         if (lastMessage != null && lastMessage.moveToFirst()) {
             Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
             final String from = SmsMmsUtils.getMmsFrom(uri, context);
+
+            if (BlacklistUtils.isBlacklisted(context, from)) {
+                return;
+            }
+
             final String to = SmsMmsUtils.getMmsTo(uri, context);
             final String phoneNumbers = getPhoneNumbers(from, to,
                     PhoneNumberUtils.getMyPhoneNumber(context));

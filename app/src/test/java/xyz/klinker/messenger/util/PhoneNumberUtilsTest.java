@@ -60,4 +60,18 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
         assertEquals("22000", PhoneNumberUtils.format("22000"));
     }
 
+    @Test
+    public void equals() {
+        assertTrue(PhoneNumberUtils.checkEquality("5154224558", "5154224558"));
+        assertTrue(PhoneNumberUtils.checkEquality("5154224558", "+15154224558"));
+        assertTrue(PhoneNumberUtils.checkEquality("+1 (515) 422-4558", "5154224558"));
+    }
+
+    @Test
+    public void notEquals() {
+        assertFalse(PhoneNumberUtils.checkEquality("5154224558", "5159911493"));
+        assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15159911493"));
+        assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15254224558"));
+    }
+
 }

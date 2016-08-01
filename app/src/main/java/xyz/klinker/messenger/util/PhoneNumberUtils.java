@@ -70,4 +70,15 @@ public class PhoneNumberUtils {
                 .replace("smsto:", "").replace("mms:", "").replace("mmsto:", "").split(",");
     }
 
+    /**
+     * Checks the equality of 2 phone numbers. We should account for sometimes the number being
+     * the same even if one has a +1 in front of it or something like that.
+     */
+    public static boolean checkEquality(String number1, String number2) {
+        number1 = clearFormatting(number1);
+        number2 = clearFormatting(number2);
+
+        return number1.contains(number2) || number2.contains(number1);
+    }
+
 }
