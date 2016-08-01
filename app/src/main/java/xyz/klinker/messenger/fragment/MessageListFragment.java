@@ -40,6 +40,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsMessage;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -102,6 +105,7 @@ public class MessageListFragment extends Fragment implements
     private EditText messageEntry;
     private ImageButton attach;
     private FloatingActionButton send;
+    private TextView counter;
     private RecyclerView messageList;
     private LinearLayoutManager manager;
     private MessageListAdapter adapter;
@@ -152,6 +156,7 @@ public class MessageListFragment extends Fragment implements
         messageEntry = (EditText) view.findViewById(R.id.message_entry);
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
+        counter = (TextView) view.findViewById(R.id.text_counter);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
         attachLayout = view.findViewById(R.id.attach_layout);
         attachHolder = (FrameLayout) view.findViewById(R.id.attach_holder);
@@ -311,6 +316,23 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
+        messageEntry.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                changeCounterText();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
         send.setBackgroundTintList(ColorStateList.valueOf(accent));
         send.setOnClickListener(new View.OnClickListener() {
@@ -328,6 +350,24 @@ public class MessageListFragment extends Fragment implements
                 clearAttachedData();
             }
         });
+    }
+
+    private void changeCounterText() {
+        if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP)) {
+            int[] count = SmsMessage.calculateLength(messageEntry.getText().toString(), false);
+
+            if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
+                counter.setText(count[0] + "/" + count[2]);
+            } else {
+                if (count[0] >= 4) {
+                    counter.setText(/*R.string.mms_message*/ null);
+                } else {
+                    counter.setText(null);
+                }
+            }
+        } else {
+            counter.setText(/*R.string.mms_message*/ null);
+        }
     }
 
     private void initAttachHolder() {
@@ -641,6 +681,7 @@ public class MessageListFragment extends Fragment implements
         attachedImage.setImageDrawable(null);
         attachedUri = null;
         attachedMimeType = null;
+        changeCounterText();
     }
 
     private void dismissKeyboard() {
@@ -665,6 +706,7 @@ public class MessageListFragment extends Fragment implements
         Glide.with(getContext())
                 .load(uri)
                 .into(attachedImage);
+        changeCounterText();
     }
 
     public boolean onBackPressed() {
