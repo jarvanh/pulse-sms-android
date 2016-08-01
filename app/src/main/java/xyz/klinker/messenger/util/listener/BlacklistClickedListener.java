@@ -14,28 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.fragment;
+package xyz.klinker.messenger.util.listener;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
-
-import static org.junit.Assert.*;
-
-public class BlacklistFragmentTest extends MessengerRobolectricSuite {
-
-    private BlacklistFragment fragment;
-
-    @Before
-    public void setUp() {
-        fragment = startFragment(BlacklistFragment.newInstance());
-    }
-
-    @Test
-    public void isAdded() {
-        assertTrue(fragment.isAdded());
-    }
-
+/**
+ * Listener for when a blacklist item is clicked on.
+ */
+public interface BlacklistClickedListener {
+    void onClick(int position);
 }

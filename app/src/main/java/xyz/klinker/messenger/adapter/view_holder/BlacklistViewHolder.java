@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.fragment;
+package xyz.klinker.messenger.adapter.view_holder;
 
-import org.junit.Before;
-import org.junit.Test;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
-import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
+import xyz.klinker.messenger.R;
 
-import static org.junit.Assert.*;
+/**
+ * A very simple view holder that displays a single line of text.
+ */
+public class BlacklistViewHolder extends RecyclerView.ViewHolder {
 
-public class BlacklistFragmentTest extends MessengerRobolectricSuite {
+    public TextView text;
 
-    private BlacklistFragment fragment;
+    public BlacklistViewHolder(View itemView) {
+        super(itemView);
 
-    @Before
-    public void setUp() {
-        fragment = startFragment(BlacklistFragment.newInstance());
-    }
-
-    @Test
-    public void isAdded() {
-        assertTrue(fragment.isAdded());
+        text = (TextView) itemView.findViewById(R.id.text);
     }
 
 }

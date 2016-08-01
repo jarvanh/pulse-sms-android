@@ -14,28 +14,46 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.fragment;
+package xyz.klinker.messenger.adapter;
+
+import android.database.Cursor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
-public class BlacklistFragmentTest extends MessengerRobolectricSuite {
+public class BlacklistAdapterTest extends MessengerRobolectricSuite {
 
-    private BlacklistFragment fragment;
+    private BlacklistAdapter adapter;
+
+    @Mock
+    private Cursor cursor;
 
     @Before
     public void setUp() {
-        fragment = startFragment(BlacklistFragment.newInstance());
+        adapter = new BlacklistAdapter(cursor, null);
     }
 
     @Test
-    public void isAdded() {
-        assertTrue(fragment.isAdded());
+    public void nullCursorCount() {
+        assertEquals(0, new BlacklistAdapter(null, null).getItemCount());
+    }
+
+    @Test
+    public void cursorCount() {
+        when(cursor.getCount()).thenReturn(10);
+        assertEquals(10, adapter.getItemCount());
+    }
+
+    @Test
+    public void cursorCountZero() {
+        when(cursor.getCount()).thenReturn(0);
+        assertEquals(0, adapter.getItemCount());
     }
 
 }

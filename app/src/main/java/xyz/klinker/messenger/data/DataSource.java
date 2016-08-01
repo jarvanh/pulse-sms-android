@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -802,6 +803,30 @@ public class DataSource {
     public void deleteDrafts(long conversationId) {
         database.delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                 new String[] { Long.toString(conversationId) });
+    }
+
+    /**
+     * Gets all blacklists in the database.
+     */
+    public Cursor getBlacklists() {
+        return database.query(Blacklist.TABLE, null, null, null, null, null, null);
+    }
+
+    /**
+     * Inserts a blacklist into the database.
+     */
+    public void insertBlacklist(Blacklist blacklist) {
+        ContentValues values = new ContentValues(1);
+        values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber);
+        database.insert(Blacklist.TABLE, null, values);
+    }
+
+    /**
+     * Deletes a blacklist from the database.
+     */
+    public void deleteBlacklist(long id) {
+        database.delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
+                new String[] {Long.toString(id)});
     }
 
 }

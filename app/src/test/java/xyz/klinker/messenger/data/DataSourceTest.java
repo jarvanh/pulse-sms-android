@@ -34,6 +34,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
@@ -309,6 +310,24 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteDrafts() {
         source.deleteDrafts(1);
         verify(database).delete("draft", "conversation_id=?", new String[] {"1"});
+    }
+
+    @Test
+    public void getBlacklists() {
+        when(database.query("blacklist", null, null, null, null, null, null)).thenReturn(cursor);
+        assertEquals(cursor, source.getBlacklists());
+    }
+
+    @Test
+    public void insertBlacklist() {
+        source.insertBlacklist(new Blacklist());
+        verify(database).insert(eq("blacklist"), eq((String) null), any(ContentValues.class));
+    }
+
+    @Test
+    public void deleteBlacklist() {
+        source.deleteBlacklist(1);
+        verify(database).delete("blacklist", "_id=?", new String[] {"1"});
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

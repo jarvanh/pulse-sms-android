@@ -16,10 +16,197 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.BlacklistAdapter;
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.listener.BlacklistClickedListener;
 
 /**
  * Fragment for displaying/managing blacklisted contacts.
  */
-public class BlacklistFragment extends Fragment {
+public class BlacklistFragment extends Fragment implements BlacklistClickedListener {
+
+    private static final String ARG_PHONE_NUMBER = "phone_number";
+
+    private DataSource source;
+    private Cursor blacklists;
+    private RecyclerView list;
+    private FloatingActionButton fab;
+
+    public static BlacklistFragment newInstance() {
+        return BlacklistFragment.newInstance(null);
+    }
+
+    public static BlacklistFragment newInstance(String phoneNumber) {
+        BlacklistFragment fragment = new BlacklistFragment();
+        Bundle args = new Bundle();
+
+        if (phoneNumber != null) {
+            args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        }
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_blacklist, parent, false);
+        list = (RecyclerView) view.findViewById(R.id.list);
+        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBlacklist();
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        source = DataSource.getInstance(getActivity());
+        source.open();
+
+        loadBlacklists();
+
+        if (getArguments().containsKey(ARG_PHONE_NUMBER)) {
+            addBlacklist(getArguments().getString(ARG_PHONE_NUMBER));
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (blacklists != null && !blacklists.isClosed()) {
+            blacklists.close();
+        }
+
+        if (source != null && source.isOpen()) {
+            source.close();
+        }
+    }
+
+    private void loadBlacklists() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                blacklists = source.getBlacklists();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setBlacklists(blacklists);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void setBlacklists(Cursor blacklists) {
+        BlacklistAdapter adapter = new BlacklistAdapter(blacklists, this);
+        list.setAdapter(adapter);
+    }
+
+    private void addBlacklist() {
+        View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
+                null, false);
+        final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
+        editText.setHint(R.string.blacklist_hint);
+        editText.setInputType(InputType.TYPE_CLASS_PHONE);
+
+        new AlertDialog.Builder(getActivity())
+                .setView(layout)
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        addBlacklist(editText.getText().toString());
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void addBlacklist(String phoneNumber) {
+        final String cleared = PhoneNumberUtils.clearFormatting(phoneNumber);
+        String formatted = PhoneNumberUtils.format(cleared);
+
+        if (cleared.length() == 0) {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.blacklist_need_number)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            addBlacklist();
+                        }
+                    })
+                    .show();
+        } else {
+            String message = getString(R.string.add_blacklist, formatted);
+
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Blacklist blacklist = new Blacklist();
+                            blacklist.phoneNumber = cleared;
+                            source.insertBlacklist(blacklist);
+                            loadBlacklists();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+        }
+    }
+
+    private void removeBlacklist(final long id, String number) {
+        String message = getString(R.string.remove_blacklist, PhoneNumberUtils.format(number));
+
+        new AlertDialog.Builder(getActivity())
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        source.deleteBlacklist(id);
+                        loadBlacklists();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    @Override
+    public void onClick(int position) {
+        blacklists.moveToPosition(position);
+        long id = blacklists.getLong(blacklists.getColumnIndex(Blacklist.COLUMN_ID));
+        String number = blacklists
+                .getString(blacklists.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER));
+
+        removeBlacklist(id, number);
+    }
+
 }

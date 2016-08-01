@@ -29,6 +29,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.MessengerRealDataSuite;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -345,6 +346,31 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         assertEquals(1, source.getDrafts(2).size());
         source.deleteDrafts(2);
         assertEquals(0, source.getDrafts(2).size());
+    }
+
+    @Test
+    public void getBlacklists() {
+        assertEquals(2, source.getBlacklists().getCount());
+    }
+
+    @Test
+    public void insertBlacklist() {
+        Blacklist blacklist = new Blacklist();
+        blacklist.phoneNumber = "5154224558";
+        int initialSize = source.getBlacklists().getCount();
+        source.insertBlacklist(blacklist);
+        int finalSize = source.getBlacklists().getCount();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void deleteBlacklist() {
+        int initialSize = source.getBlacklists().getCount();
+        source.deleteBlacklist(1);
+        int finalSize = source.getBlacklists().getCount();
+
+        assertEquals(1, initialSize - finalSize);
     }
 
 }

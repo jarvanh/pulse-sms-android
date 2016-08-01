@@ -306,6 +306,8 @@ public class MessengerActivity extends AppCompatActivity
                 return deleteConversation();
             case R.id.drawer_conversation_information:
                 return conversationInformation();
+            case R.id.drawer_conversation_blacklist:
+                return conversationBlacklist();
             case R.id.drawer_contact_settings:
                 return contactSettings();
             default:
@@ -406,7 +408,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayBlacklist() {
-        return displayFragmentWithBackStack(new BlacklistFragment());
+        return displayFragmentWithBackStack(BlacklistFragment.newInstance());
     }
 
     private boolean displayInviteFriends() {
@@ -531,6 +533,18 @@ public class MessengerActivity extends AppCompatActivity
 
             source.close();
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean conversationBlacklist() {
+        if (conversationListFragment.isExpanded()) {
+            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+            conversationListFragment.getExpandedItem().itemView.performClick();
+            clickNavigationItem(R.id.drawer_mute_contacts);
+            return displayFragmentWithBackStack(
+                    BlacklistFragment.newInstance(conversation.phoneNumbers));
         } else {
             return false;
         }
