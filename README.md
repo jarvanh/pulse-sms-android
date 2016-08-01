@@ -13,24 +13,20 @@ email client.
 
 ### APIs
 
-The project will include APIs that allow any SMS app to use the online service and hook up to the
+The project will include Java APIs that allow any SMS app to use the online service and hook up to the
 tablet app. This will be important for EvolveSMS so that support can be there and our userbase can
 be larger. This app will also be very different from EvolveSMS, so the users can have their
-preference on which they like more.
+preference on which they like more. This Java project will be part of this repo.
 
 ### Server
 
-The server will be built so that I can host it on AWS myself, or provide a WAR file to advanced
-users so that they can host it themselves and configure the app so that all messages are stored on
-their own server for additional security.
+The server will be built so that I can host it on AWS myself and provide the service to users.
 
-Just a note, all messages and information will be stored in encrypted form at all points in the
+As a note, all messages and information will be stored in encrypted form at all points in the
 process, except on the user's device. Strong end-to-end encryption will be rigorously enforced
 and documented.
 
-By allowing users to host themselves, I will be able to charge them a slightly greater one-time fee
-($5?) instead of a monthly subscription fee ($1?) that would be the norm for this type of service.
-JIRA has the same type of payment structure, as an example.
+You can find this repo at [messenger-server](https://github.com/klinker41/messenger-server)
 
 ## License
 
