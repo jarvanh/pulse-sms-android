@@ -16,7 +16,8 @@ email client.
 The project will include Java APIs that allow any SMS app to use the online service and hook up to the
 tablet app. This will be important for EvolveSMS so that support can be there and our userbase can
 be larger. This app will also be very different from EvolveSMS, so the users can have their
-preference on which they like more. This Java project will be part of this repo.
+preference on which they like more. This Java project will be part of this repo and the APIs will be
+accessed using [Retrofit](http://square.github.io/retrofit/). 
 
 ### Server
 
@@ -26,7 +27,7 @@ As a note, all messages and information will be stored in encrypted form at all 
 process, except on the user's device. Strong end-to-end encryption will be rigorously enforced
 and documented.
 
-You can find this repo at [messenger-server](https://github.com/klinker41/messenger-server)
+You can find this repo at [messenger-server](https://github.com/klinker41/messenger-server).
 
 ## License
 
