@@ -36,7 +36,7 @@
     <ImageView
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/ic_audio_white"
+        android:src="@drawable/ic_audio"
         android:layout_gravity="center"
         android:id="@+id/audio"
         android:contentDescription="@null"

@@ -19,7 +19,6 @@ package xyz.klinker.messenger.adapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -160,10 +159,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.TYPE_RECEIVED) {
                     placeholder = holder.image.getContext()
-                            .getDrawable(R.drawable.ic_play_black);
+                            .getDrawable(R.drawable.ic_play_sent);
                 } else {
                     placeholder = holder.image.getContext()
-                            .getDrawable(R.drawable.ic_play_white);
+                            .getDrawable(R.drawable.ic_play);
                 }
 
                 Glide.with(holder.image.getContext())
@@ -178,7 +177,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                             public void onResourceReady(Bitmap resource,
                                                         GlideAnimation<? super Bitmap> glideAnimation) {
                                 ImageUtils.overlayBitmap(holder.image.getContext(),
-                                        resource, R.drawable.ic_play_white);
+                                        resource, R.drawable.ic_play);
                                 holder.image.setImageBitmap(resource);
                             }
                         });
@@ -186,10 +185,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.TYPE_RECEIVED) {
                     placeholder = holder.image.getContext()
-                            .getDrawable(R.drawable.ic_audio_black);
+                            .getDrawable(R.drawable.ic_audio_sent);
                 } else {
                     placeholder = holder.image.getContext()
-                            .getDrawable(R.drawable.ic_audio_white);
+                            .getDrawable(R.drawable.ic_audio);
                 }
 
                 Glide.with(holder.image.getContext())
