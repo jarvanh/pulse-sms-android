@@ -5,15 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.lapism.searchview.view.SearchView
-        android:id="@+id/searchView"
+    <FrameLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:search_version="toolbar"
-        app:search_style="toolbar_classic"
-        app:search_voice="false"
-        app:search_hint="@string/find_a_gif"
-        android:elevation="5dp"/>
+        android:layout_height="wrap_content"
+        android:elevation="5dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:searchBackground="@color/searchBackground"
+            app:searchBackIcon="@drawable/ic_search_back"
+            app:searchCloseIcon="@drawable/ic_search_close"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/secondaryText"
+            android:hint="@string/find_a_gif"
+            android:elevation="5dp"/>
+    </FrameLayout>
 
     <LinearLayout android:id="@+id/list_progress"
         android:orientation="vertical"

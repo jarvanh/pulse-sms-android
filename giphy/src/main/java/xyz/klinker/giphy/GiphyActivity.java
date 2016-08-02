@@ -27,13 +27,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.lapism.arrow.ArrowDrawable;
-import com.lapism.searchview.view.SearchView;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -51,10 +52,10 @@ public class GiphyActivity extends Activity {
     public static final String EXTRA_SIZE_LIMIT = "size_limit";
 
     private GiphyHelper helper;
-    private ImageView backArrow;
 
     private RecyclerView recycler;
     private View progressSpinner;
+    private MaterialSearchView searchView;
 
     private GifSearchAdapter adapter;
 
@@ -80,32 +81,33 @@ public class GiphyActivity extends Activity {
 
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         progressSpinner = findViewById(R.id.list_progress);
-        backArrow = (ImageView) findViewById(R.id.imageView_arrow_back);
-        SearchView toolbar = (SearchView) findViewById(R.id.searchView);
 
-        final ArrowDrawable drawable = new ArrowDrawable(this);
-        drawable.animate(ArrowDrawable.STATE_ARROW);
-        backArrow.setImageDrawable(drawable);
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
 
-        toolbar.setOnSearchMenuListener(new SearchView.SearchMenuListener() {
-            @Override
-            public void onMenuClick() {
-                setResult(Activity.RESULT_CANCELED);
-                finish();
-            }
-        });
-
-        toolbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 executeQuery(query);
-                backArrow.performClick();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                setResult(Activity.RESULT_CANCELED);
+                finish();
             }
         });
 
@@ -120,10 +122,15 @@ public class GiphyActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                drawable.animate(ArrowDrawable.STATE_ARROW);
                 loadTrending();
             }
         }, 750);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        searchView.showSearch(false);
     }
 
     private void loadTrending() {
@@ -254,4 +261,15 @@ public class GiphyActivity extends Activity {
         }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
 }
