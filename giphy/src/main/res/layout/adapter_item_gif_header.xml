@@ -11,6 +11,7 @@
         android:scaleType="center"
         android:layout_marginTop="12dp"
         android:src="@drawable/giffy"
-        android:foregroundGravity="center"/>
+        android:foregroundGravity="center"
+        android:contentDescription="@null"/>
 
 </LinearLayout>
