@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.afollestad.easyvideoplayer.EasyVideoCallback;
+import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -34,6 +36,7 @@ import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.util.listener.EasyVideoCallbackAdapter;
 
 /**
  * Fragment for viewing an image using Chris Banes's PhotoView library.
@@ -42,6 +45,8 @@ public class ImageViewerFragment extends Fragment {
 
     private static final String ARG_DATA_URI = "data_uri";
     private static final String ARG_DATA_MIME_TYPE = "mime_type";
+
+    private EasyVideoPlayer player;
 
     public static ImageViewerFragment newInstance(String uri, String mimeType) {
         ImageViewerFragment fragment = new ImageViewerFragment();
@@ -57,6 +62,7 @@ public class ImageViewerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_image_viewer, parent, false);
 
+        player = (EasyVideoPlayer) view.findViewById(R.id.player);
         PhotoView photo = (PhotoView) view.findViewById(R.id.photo);
         GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(photo);
 
@@ -68,6 +74,13 @@ public class ImageViewerFragment extends Fragment {
                     .load(Uri.parse(data))
                     .fitCenter()
                     .into(target);
+        } else if (MimeType.isVideo(mimeType)) {
+            player.setVisibility(View.VISIBLE);
+            photo.setVisibility(View.GONE);
+            player.setCallback(new EasyVideoCallbackAdapter());
+            player.setLeftAction(EasyVideoPlayer.LEFT_ACTION_NONE);
+            player.setRightAction(EasyVideoPlayer.RIGHT_ACTION_NONE);
+            player.setSource(Uri.parse(data));
         } else {
             Glide.with(getActivity())
                     .load(Uri.parse(data))
@@ -75,6 +88,12 @@ public class ImageViewerFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        player.pause();
     }
 
 }
