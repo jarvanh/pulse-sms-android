@@ -16,7 +16,6 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.getkeepsafe.dexcount'
-//apply from: 'jacoco.gradle'
 
 def propsFile = rootProject.file('keystore.properties')
 def props = new Properties()
@@ -75,7 +74,6 @@ android {
 
     buildTypes {
         debug {
-            testCoverageEnabled true
             versionNameSuffix "-DEBUG"
             signingConfig signingConfigs.debug
         }
