@@ -715,7 +715,7 @@ public class MessageListFragment extends Fragment implements
     @Override
     public void onRecorded(Uri uri) {
         onBackPressed();
-        //attachAudio(uri);
+        attachAudio(uri);
     }
 
     private void attachImage(Uri uri) {
@@ -727,6 +727,16 @@ public class MessageListFragment extends Fragment implements
         Glide.with(getContext())
                 .load(uri)
                 .into(attachedImage);
+        changeCounterText();
+    }
+
+    private void attachAudio(Uri uri) {
+        clearAttachedData();
+        attachedUri = uri;
+        attachedMimeType = MimeType.AUDIO_MP4;
+
+        attachedImageHolder.setVisibility(View.VISIBLE);
+        attachedImage.setImageResource(R.drawable.ic_audio_sent);
         changeCounterText();
     }
 

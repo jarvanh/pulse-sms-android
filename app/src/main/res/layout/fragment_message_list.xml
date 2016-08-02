@@ -70,7 +70,8 @@
                 android:contentDescription="@string/attached_image"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="48dp"
-                android:layout_marginTop="12dp"/>
+                android:layout_marginTop="12dp"
+                android:scaleType="fitCenter"/>
 
             <ImageView
                 android:layout_width="24dp"
