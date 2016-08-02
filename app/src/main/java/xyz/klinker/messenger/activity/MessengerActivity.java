@@ -55,6 +55,7 @@ import xyz.klinker.messenger.fragment.BlacklistFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
+import xyz.klinker.messenger.fragment.SearchFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
@@ -80,6 +81,7 @@ public class MessengerActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
+    private SearchFragment searchFragment;
     private FloatingActionButton fab;
     private MaterialSearchView searchView;
     private boolean inSettings = false;
@@ -421,6 +423,13 @@ public class MessengerActivity extends AppCompatActivity
         return true;
     }
 
+    private boolean displaySearchFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.conversation_list_container, searchFragment)
+                .commit();
+        return true;
+    }
+
     private boolean displayScheduledMessages() {
         return displayFragmentWithBackStack(new ScheduledMessagesFragment());
     }
@@ -596,22 +605,57 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        ensureSearchFragment();
+        searchFragment.search(query);
+        return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        if (newText.length() > 0) {
+            // display search fragment
+            ensureSearchFragment();
+            searchFragment.search(newText);
+            if (!searchFragment.isAdded()) {
+                displaySearchFragment();
+            }
+        } else {
+            // display conversation fragment
+            ensureSearchFragment();
+            searchFragment.search(null);
+
+            if (!conversationListFragment.isAdded()) {
+                displayConversations();
+                fab.hide();
+            }
+        }
+
+        return true;
     }
 
     @Override
     public void onSearchViewShown() {
         fab.hide();
+        ensureSearchFragment();
     }
 
     @Override
     public void onSearchViewClosed() {
-        fab.show();
+        ensureSearchFragment();
+
+        if (!searchFragment.isSearching()) {
+            fab.show();
+
+            if (!conversationListFragment.isAdded()) {
+                displayConversations();
+            }
+        }
+    }
+
+    private void ensureSearchFragment() {
+        if (searchFragment == null) {
+            searchFragment = SearchFragment.newInstance();
+        }
     }
 
 }
