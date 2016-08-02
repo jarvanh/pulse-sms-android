@@ -73,23 +73,23 @@ public class MimeTypeTest {
     }
 
     @Test
-    public void audioMp3NotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.AUDIO_MP3));
+    public void audioMp3Supported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_MP3));
     }
 
     @Test
-    public void audioMp4NotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.AUDIO_MP4));
+    public void audioMp4Supported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_MP4));
     }
 
     @Test
-    public void audioOggNotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.AUDIO_OGG));
+    public void audioOggSupported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_OGG));
     }
 
     @Test
-    public void audioWavNotSupported() {
-        assertFalse(MimeType.isSupported(MimeType.AUDIO_WAV));
+    public void audioWavSupported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_WAV));
     }
 
     @Test
@@ -114,6 +114,18 @@ public class MimeTypeTest {
         assertFalse(MimeType.isVideo(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isVideo(MimeType.IMAGE_GIF));
         assertFalse(MimeType.isVideo(MimeType.AUDIO_MP4));
+    }
+
+    @Test
+    public void isAudio() {
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_MP4));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_MP3));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_OGG));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_WAV));
+        assertFalse(MimeType.isAudio(MimeType.IMAGE_JPEG));
+        assertFalse(MimeType.isAudio(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isAudio(MimeType.IMAGE_GIF));
+        assertFalse(MimeType.isAudio(MimeType.VIDEO_MP4));
     }
 
 }

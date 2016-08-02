@@ -51,7 +51,11 @@ public class MimeType {
                 mimeType.equals(IMAGE_GIF) ||
                 mimeType.equals(VIDEO_MPEG) ||
                 mimeType.equals(VIDEO_3GPP) ||
-                mimeType.equals(VIDEO_MP4);
+                mimeType.equals(VIDEO_MP4) ||
+                mimeType.equals(AUDIO_MP3) ||
+                mimeType.equals(AUDIO_MP4) ||
+                mimeType.equals(AUDIO_OGG) ||
+                mimeType.equals(AUDIO_WAV);
     }
 
     /**
@@ -68,4 +72,11 @@ public class MimeType {
         return mimeType.startsWith("video/");
     }
 
+    /**
+     * Gets whether the mime type is an audio file.
+     */
+    public static boolean isAudio(String mimeType) {
+        return mimeType.startsWith("audio/");
+    }
+    
 }
