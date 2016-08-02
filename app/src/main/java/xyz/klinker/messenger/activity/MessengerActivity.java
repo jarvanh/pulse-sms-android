@@ -158,6 +158,7 @@ public class MessengerActivity extends AppCompatActivity
         searchView.setVoiceSearch(false);
         searchView.setBackgroundColor(getResources().getColor(R.color.drawerBackground));
         searchView.setOnQueryTextListener(this);
+        searchView.setOnSearchViewListener(this);
     }
 
     private void initDrawer() {
