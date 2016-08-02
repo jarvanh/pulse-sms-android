@@ -40,6 +40,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +71,8 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
  * conversations and displaying things on the screen to get the user started.
  */
 public class MessengerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
 
@@ -78,6 +81,7 @@ public class MessengerActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
     private FloatingActionButton fab;
+    private MaterialSearchView searchView;
     private boolean inSettings = false;
 
     @Override
@@ -149,6 +153,11 @@ public class MessengerActivity extends AppCompatActivity
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
+        searchView.setBackgroundColor(getResources().getColor(R.color.drawerBackground));
+        searchView.setOnQueryTextListener(this);
     }
 
     private void initDrawer() {
@@ -231,6 +240,11 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+            return;
+        }
+
         if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
@@ -319,6 +333,9 @@ public class MessengerActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!inSettings) {
             getMenuInflater().inflate(R.menu.activity_messenger, menu);
+
+            MenuItem item = menu.findItem(R.id.menu_search);
+            searchView.setMenuItem(item);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -570,6 +587,27 @@ public class MessengerActivity extends AppCompatActivity
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        // TODO show a search list
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public void onSearchViewShown() {
+
+    }
+
+    @Override
+    public void onSearchViewClosed() {
+        // TODO show the conversation list again
     }
 
 }
