@@ -76,7 +76,13 @@
                     <com.miguelcatalan.materialsearchview.MaterialSearchView
                         android:id="@+id/search_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:searchBackground="@color/drawerBackground"
+                        app:searchBackIcon="@drawable/ic_search_back"
+                        app:searchCloseIcon="@drawable/ic_search_close"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/secondaryText"
+                        android:hint="@string/enter_search"/>
 
                 </FrameLayout>
 

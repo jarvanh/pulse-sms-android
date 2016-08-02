@@ -240,11 +240,6 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
-            return;
-        }
-
         if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
@@ -258,6 +253,11 @@ public class MessengerActivity extends AppCompatActivity
                     return;
                 }
             }
+        }
+
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+            return;
         }
 
         if (conversationListFragment == null) {
@@ -451,6 +451,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayFragmentWithBackStack(Fragment fragment) {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        }
+
         fab.hide();
         invalidateOptionsMenu();
         inSettings = true;
@@ -591,7 +595,6 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        // TODO show a search list
         return false;
     }
 
@@ -602,12 +605,12 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     public void onSearchViewShown() {
-
+        fab.hide();
     }
 
     @Override
     public void onSearchViewClosed() {
-        // TODO show the conversation list again
+        fab.show();
     }
 
 }
