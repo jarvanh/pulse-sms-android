@@ -16,8 +16,10 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
@@ -36,6 +41,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 
@@ -145,11 +151,25 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .fitCenter()
                         .into(holder.image);
-            } else if (message.mimeType.equals(MimeType.IMAGE_GIF) ||
-                    MimeType.isVideo(message.mimeType)) {
+            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
                         .into(holder.image);
+            } else if (MimeType.isVideo(message.mimeType)) {
+                Glide.with(holder.image.getContext())
+                        .load(Uri.parse(message.data))
+                        .asBitmap()
+                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                        .fitCenter()
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource,
+                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                                ImageUtils.overlayBitmap(holder.image.getContext(),
+                                        resource, R.drawable.ic_play);
+                                holder.image.setImageBitmap(resource);
+                            }
+                        });
             } else {
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
                 // TODO audio

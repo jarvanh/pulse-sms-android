@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 
@@ -34,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.model.Conversation;
 
@@ -211,11 +213,28 @@ public class ImageUtils {
         return file;
     }
 
+    /**
+     * Creates a bitmap that is simply a single color.
+     */
     public static Bitmap createColoredBitmap(int color) {
         Bitmap bitmap = Bitmap.createBitmap(300, 300, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(color);
         return bitmap;
+    }
+
+    /**
+     * Overlays a drawable on top of a bitmap.
+     */
+    public static void overlayBitmap(Context context, Bitmap bitmap, @DrawableRes int overlay) {
+        Drawable drawable = context.getDrawable(overlay);
+        int size = context.getResources().getDimensionPixelSize(R.dimen.overlay_size);
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(width/2 - size/2, height/2 - size/2, width/2 + size/2, height/2 + size/2);
+        drawable.draw(canvas);
     }
 
 }
