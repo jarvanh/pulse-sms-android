@@ -23,6 +23,7 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -59,6 +60,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -83,6 +85,8 @@ import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 import xyz.klinker.messenger.view.RecordAudioView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Fragment for displaying messages for a certain conversation.
  */
@@ -100,6 +104,7 @@ public class MessageListFragment extends Fragment implements
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
+    private static final int RESULT_VIDEO_REQUEST = 3;
 
     private DataSource source;
     private View appBarLayout;
@@ -639,7 +644,15 @@ public class MessageListFragment extends Fragment implements
 
     private void recordVideo() {
         prepareAttachHolder(3);
-        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+
+        new MaterialCamera(getActivity())
+                .saveDir(getActivity().getFilesDir().getPath())
+                .qualityProfile(MaterialCamera.QUALITY_LOW)
+                .maxAllowedFileSize(1024 * 1024)
+                .allowRetry(false)
+                .autoSubmit(true)
+                .showPortraitWarning(false)
+                .start(RESULT_VIDEO_REQUEST);
     }
 
     private void recordAudio() {
@@ -676,6 +689,25 @@ public class MessageListFragment extends Fragment implements
             recordAudio();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_VIDEO_REQUEST) {
+            onBackPressed();
+            
+            if (resultCode == RESULT_OK) {
+                Log.v("video result", "saved to " + data.getDataString());
+                attachImage(data.getData());
+                attachedMimeType = MimeType.VIDEO_MP4;
+            } else if(data != null) {
+                Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
+                e.printStackTrace();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

@@ -89,6 +89,12 @@
             android:label="@string/menu_settings"/>
         <activity android:name=".activity.ImageViewerActivity"
             android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+        <activity
+            android:name="com.afollestad.materialcamera.CaptureActivity"
+            android:theme="@style/MaterialCamera.CaptureActivity" />
+        <activity
+            android:name="com.afollestad.materialcamera.CaptureActivity2"
+            android:theme="@style/MaterialCamera.CaptureActivity" />
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 
