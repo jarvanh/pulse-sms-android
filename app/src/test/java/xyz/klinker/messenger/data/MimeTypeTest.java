@@ -120,6 +120,7 @@ public class MimeTypeTest {
     public void isAudio() {
         assertTrue(MimeType.isAudio(MimeType.AUDIO_MP4));
         assertTrue(MimeType.isAudio(MimeType.AUDIO_MP3));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_MP3_2));
         assertTrue(MimeType.isAudio(MimeType.AUDIO_OGG));
         assertTrue(MimeType.isAudio(MimeType.AUDIO_WAV));
         assertFalse(MimeType.isAudio(MimeType.IMAGE_JPEG));

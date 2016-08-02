@@ -32,6 +32,7 @@ public class MimeType {
     public static final String VIDEO_3GPP = "video/3gpp";
     public static final String VIDEO_MP4 = "video/mp4";
     public static final String AUDIO_MP3 = "audio/mpeg";
+    public static final String AUDIO_MP3_2 = "audio/mp3";
     public static final String AUDIO_MP4 = "audio/mp4";
     public static final String AUDIO_OGG = "audio/ogg";
     public static final String AUDIO_WAV = "audio/vnd.wav";
@@ -53,6 +54,7 @@ public class MimeType {
                 mimeType.equals(VIDEO_3GPP) ||
                 mimeType.equals(VIDEO_MP4) ||
                 mimeType.equals(AUDIO_MP3) ||
+                mimeType.equals(AUDIO_MP3_2) ||
                 mimeType.equals(AUDIO_MP4) ||
                 mimeType.equals(AUDIO_OGG) ||
                 mimeType.equals(AUDIO_WAV);

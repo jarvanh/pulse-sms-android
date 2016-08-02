@@ -465,7 +465,7 @@ public class MessengerActivity extends AppCompatActivity
     private boolean viewContact() {
         if (conversationListFragment.isExpanded()) {
             Conversation conversation = conversationListFragment.getExpandedItem().conversation;
-            String[] names = conversation.title.split(", ");
+            String[] names = ContactUtils.findContactNames(conversation.phoneNumbers, this).split(", ");
             String[] numbers = conversation.phoneNumbers.split(", ");
             List<Conversation> conversations = new ArrayList<>();
 

@@ -74,13 +74,18 @@ public class ImageViewerFragment extends Fragment {
                     .load(Uri.parse(data))
                     .fitCenter()
                     .into(target);
-        } else if (MimeType.isVideo(mimeType)) {
+        } else if (MimeType.isVideo(mimeType) || MimeType.isAudio(mimeType)) {
             player.setVisibility(View.VISIBLE);
             photo.setVisibility(View.GONE);
             player.setCallback(new EasyVideoCallbackAdapter());
             player.setLeftAction(EasyVideoPlayer.LEFT_ACTION_NONE);
             player.setRightAction(EasyVideoPlayer.RIGHT_ACTION_NONE);
             player.setSource(Uri.parse(data));
+
+            if (MimeType.isAudio(mimeType)) {
+                view.findViewById(R.id.audio).setVisibility(View.VISIBLE);
+                player.setHideControlsOnPlay(false);
+            }
         } else {
             Glide.with(getActivity())
                     .load(Uri.parse(data))
