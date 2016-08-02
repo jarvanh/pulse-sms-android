@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -65,6 +64,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import xyz.klinker.giphy.Giphy;
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.DataSource;
@@ -105,6 +106,7 @@ public class MessageListFragment extends Fragment implements
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
     private static final int RESULT_VIDEO_REQUEST = 3;
+    private static final int RESULT_GIPHY_REQUEST = 4;
 
     private DataSource source;
     private View appBarLayout;
@@ -639,7 +641,9 @@ public class MessageListFragment extends Fragment implements
 
     private void attachGif() {
         prepareAttachHolder(2);
-        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+        new Giphy.Builder(getActivity(), BuildConfig.GIPHY_API_KEY)
+                .maxFileSize(1024 * 1024)
+                .start(RESULT_GIPHY_REQUEST);
     }
 
     private void recordVideo() {
@@ -698,7 +702,7 @@ public class MessageListFragment extends Fragment implements
 
         if (requestCode == RESULT_VIDEO_REQUEST) {
             onBackPressed();
-            
+
             if (resultCode == RESULT_OK) {
                 Log.v("video result", "saved to " + data.getDataString());
                 attachImage(data.getData());
@@ -707,6 +711,14 @@ public class MessageListFragment extends Fragment implements
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 e.printStackTrace();
                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == RESULT_GIPHY_REQUEST) {
+            onBackPressed();
+
+            if (resultCode == RESULT_OK) {
+                Log.v("gif result", "saved to " + data.getDataString());
+                attachImage(data.getData());
+                attachedMimeType = MimeType.IMAGE_GIF;
             }
         }
     }

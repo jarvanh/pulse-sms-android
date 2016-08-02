@@ -24,6 +24,10 @@ props.load(new FileInputStream(propsFile))
 
 def buildNumber = System.getenv("BUILD_NUMBER") as Integer ?: Integer.parseInt(VERSION_CODE)
 
+propsFile = rootProject.file('api_keys.properties')
+def apiKeys = new Properties()
+apiKeys.load(new FileInputStream(propsFile))
+
 android {
     try {
         compileSdkVersion Integer.parseInt(COMPILE_SDK)
@@ -50,6 +54,8 @@ android {
         jackOptions {
             enabled Boolean.parseBoolean(USE_JACK)
         }
+
+        buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
     }
 
     signingConfigs {
@@ -113,6 +119,8 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:1.2.7'
     compile "com.googlecode.mp4parser:isoparser:1.0.2"
     compile "com.github.lassana:continuous-audiorecorder:1.3.0"
+
+    compile project(":giphy")
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.0"
