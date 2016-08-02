@@ -770,6 +770,7 @@ public class MessageListFragment extends Fragment implements
         attachedImageHolder.setVisibility(View.VISIBLE);
         Glide.with(getContext())
                 .load(uri)
+                .placeholder(R.drawable.ic_image_sending)
                 .into(attachedImage);
         changeCounterText();
     }
