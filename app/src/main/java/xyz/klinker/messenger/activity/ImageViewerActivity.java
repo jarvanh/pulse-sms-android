@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -161,15 +163,20 @@ public class ImageViewerActivity extends AppCompatActivity {
     }
 
     private void saveMessage(Message message) {
-        if (MimeType.isStaticImage(message.mimeType)) {
-            File dst = new File(Environment.getExternalStorageDirectory() + "/Download",
-                    SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + ".jpg");
+        String extension = MimeType.getExtension(message.mimeType);
+        File dst = new File(Environment.getExternalStorageDirectory() + "/Download",
+                SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + extension);
 
+        if (!dst.exists()) {
             try {
-                if (!dst.exists()) {
-                    dst.createNewFile();
-                }
+                dst.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        if (MimeType.isStaticImage(message.mimeType)) {
+            try {
                 Bitmap bmp = ImageUtils.getBitmap(this, message.data);
                 FileOutputStream stream = new FileOutputStream(dst);
                 bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
@@ -185,6 +192,15 @@ public class ImageViewerActivity extends AppCompatActivity {
 
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            try {
+                InputStream in = getContentResolver().openInputStream(Uri.parse(message.data));
+                FileUtils.copy(in, dst);
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
             }

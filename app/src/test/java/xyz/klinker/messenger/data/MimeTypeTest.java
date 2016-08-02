@@ -129,4 +129,63 @@ public class MimeTypeTest {
         assertFalse(MimeType.isAudio(MimeType.VIDEO_MP4));
     }
 
+    @Test
+    public void extensionText() {
+        assertEquals(".txt", MimeType.getExtension(MimeType.TEXT_PLAIN));
+    }
+
+    @Test
+    public void extensionHtml() {
+        assertEquals(".html", MimeType.getExtension(MimeType.TEXT_HTML));
+    }
+
+    @Test
+    public void extensionJpg() {
+        assertEquals(".jpg", MimeType.getExtension(MimeType.IMAGE_JPEG));
+        assertEquals(".jpg", MimeType.getExtension(MimeType.IMAGE_JPG));
+    }
+
+    @Test
+    public void extensionBmp() {
+        assertEquals(".bmp", MimeType.getExtension(MimeType.IMAGE_BMP));
+    }
+
+    @Test
+    public void extensionPng() {
+        assertEquals(".png", MimeType.getExtension(MimeType.IMAGE_PNG));
+    }
+
+    @Test
+    public void extensionGif() {
+        assertEquals(".gif", MimeType.getExtension(MimeType.IMAGE_GIF));
+    }
+
+    @Test
+    public void extensionMp4() {
+        assertEquals(".mp4", MimeType.getExtension(MimeType.VIDEO_MPEG));
+        assertEquals(".mp4", MimeType.getExtension(MimeType.VIDEO_MP4));
+        assertEquals(".mp4", MimeType.getExtension(MimeType.AUDIO_MP4));
+    }
+
+    @Test
+    public void extension3gpp() {
+        assertEquals(".3gpp", MimeType.getExtension(MimeType.VIDEO_3GPP));
+    }
+
+    @Test
+    public void extensionMp3() {
+        assertEquals(".mp3", MimeType.getExtension(MimeType.AUDIO_MP3));
+        assertEquals(".mp3", MimeType.getExtension(MimeType.AUDIO_MP3_2));
+    }
+
+    @Test
+    public void extensionOgg() {
+        assertEquals(".ogg", MimeType.getExtension(MimeType.AUDIO_OGG));
+    }
+
+    @Test
+    public void extensionWav() {
+        assertEquals(".wav", MimeType.getExtension(MimeType.AUDIO_WAV));
+    }
+
 }

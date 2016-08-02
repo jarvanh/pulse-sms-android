@@ -16,6 +16,9 @@
 
 package xyz.klinker.messenger.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Holds the current mime types that the app supports.
  */
@@ -36,6 +39,27 @@ public class MimeType {
     public static final String AUDIO_MP4 = "audio/mp4";
     public static final String AUDIO_OGG = "audio/ogg";
     public static final String AUDIO_WAV = "audio/vnd.wav";
+
+    private static final Map<String, String> extensions;
+
+    static {
+        extensions = new HashMap<>();
+        extensions.put(TEXT_PLAIN, "txt");
+        extensions.put(TEXT_HTML, "html");
+        extensions.put(IMAGE_JPEG, "jpg");
+        extensions.put(IMAGE_BMP, "bmp");
+        extensions.put(IMAGE_JPG, "jpg");
+        extensions.put(IMAGE_PNG, "png");
+        extensions.put(IMAGE_GIF, "gif");
+        extensions.put(VIDEO_MPEG, "mp4");
+        extensions.put(VIDEO_3GPP, "3gpp");
+        extensions.put(VIDEO_MP4, "mp4");
+        extensions.put(AUDIO_MP3, "mp3");
+        extensions.put(AUDIO_MP3_2, "mp3");
+        extensions.put(AUDIO_MP4, "mp4");
+        extensions.put(AUDIO_OGG, "ogg");
+        extensions.put(AUDIO_WAV, "wav");
+    }
 
     /**
      * Checks whether the provided mime type is supported.
@@ -79,6 +103,13 @@ public class MimeType {
      */
     public static boolean isAudio(String mimeType) {
         return mimeType.startsWith("audio/");
+    }
+
+    /**
+     * Gets the file extension for a mime type. For example, .jpg for a JPEG.
+     */
+    public static String getExtension(String mimeType) {
+        return "." + extensions.get(mimeType);
     }
     
 }
