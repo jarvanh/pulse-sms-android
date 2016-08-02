@@ -91,6 +91,7 @@
     <string name="share_content">Share content…</string>
     <string name="saved">Saved to /Download folder!</string>
     <string name="failed_to_save">Failed to save</string>
+    <string name="start_recording_audio">Press the button to start recording audio!</string>
 
     <!-- Compose Screen -->
     <string name="enter_contact_name">Enter Contact Name</string>

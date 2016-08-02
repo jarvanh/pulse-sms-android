@@ -76,16 +76,18 @@ import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
+import xyz.klinker.messenger.view.RecordAudioView;
 
 /**
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener {
+        ImageSelectedListener, AudioRecordedListener {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -97,6 +99,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
+    private static final int PERMISSION_AUDIO_REQUEST = 2;
 
     private DataSource source;
     private View appBarLayout;
@@ -616,7 +619,8 @@ public class MessageListFragment extends Fragment implements
             attachHolder.addView(new AttachImageView(getActivity(), this,
                     getArguments().getInt(ARG_COLOR)));
         } else {
-            attachPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE);
+            attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 
@@ -640,16 +644,25 @@ public class MessageListFragment extends Fragment implements
 
     private void recordAudio() {
         prepareAttachHolder(4);
-        Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            attachHolder.addView(new RecordAudioView(getActivity(), this,
+                    getArguments().getInt(ARG_COLOR_ACCENT)));
+        } else {
+            attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO);
+        }
     }
 
-    private void attachPermissionRequest(final String permission) {
+    private void attachPermissionRequest(final int permissionRequestCode, final String... permissions) {
         getLayoutInflater(null).inflate(R.layout.permission_request, attachHolder, true);
         Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPermissions(new String[] {permission}, PERMISSION_STORAGE_REQUEST);
+                requestPermissions(permissions, permissionRequestCode);
             }
         });
     }
@@ -659,6 +672,8 @@ public class MessageListFragment extends Fragment implements
                                            @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_STORAGE_REQUEST) {
             attachImage();
+        } else if (requestCode == PERMISSION_AUDIO_REQUEST) {
+            recordAudio();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -694,8 +709,13 @@ public class MessageListFragment extends Fragment implements
     @Override
     public void onImageSelected(Uri uri) {
         onBackPressed();
-
         attachImage(uri);
+    }
+
+    @Override
+    public void onRecorded(Uri uri) {
+        onBackPressed();
+        //attachAudio(uri);
     }
 
     private void attachImage(Uri uri) {
