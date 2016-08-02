@@ -17,23 +17,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    try {
-        compileSdkVersion Integer.parseInt(COMPILE_SDK)
-    } catch (Exception e) {
-        compileSdkVersion COMPILE_SDK
-    }
-
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(project.MIN_SDK)
-
-        try {
-            targetSdkVersion Integer.parseInt(TARGET_SDK)
-        } catch (Exception e) {
-            targetSdkVersion TARGET_SDK
-        }
-
+        minSdkVersion 21
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
