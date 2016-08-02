@@ -1,0 +1,3 @@
+# The public beta Giphy API key. This should be replaced with a production key when app goes into
+# final production status.
+GIPHY=dc6zaTOxFJmzC

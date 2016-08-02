@@ -29,6 +29,15 @@ and documented.
 
 You can find this repo at [messenger-server](https://github.com/klinker41/messenger-server).
 
+### Building
+
+To build, you'll need to set up a few different API keys. Rename the `api_keys.properties.example`
+file to `api_keys.properties`. This file already contains the public Giphy beta testing key as an
+example for you. You should change this to your own key that you acquire from Giphy when publishing
+to production.
+
+After that a simple `./gradlew clean build` will assemble everything you need for the project.
+
 ## License
 
     Copyright (C) 2016 Jake Klinker
