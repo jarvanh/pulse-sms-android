@@ -39,6 +39,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
@@ -272,6 +273,9 @@ public class ConversationListFragment extends Fragment
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();
+
+        ActivityUtils.setTaskDescription(getActivity(),
+                viewHolder.conversation.title, viewHolder.conversation.colors.color);
     }
 
     @Override
@@ -287,6 +291,8 @@ public class ConversationListFragment extends Fragment
         int color = getResources().getColor(R.color.colorPrimaryDark);
         ColorUtils.adjustStatusBarColor(color, getActivity());
         ColorUtils.adjustDrawerColor(color, getActivity());
+
+        ActivityUtils.setTaskDescription(getActivity());
     }
 
     @Override

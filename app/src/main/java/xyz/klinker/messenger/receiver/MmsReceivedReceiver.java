@@ -84,6 +84,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     snippet = message.data;
                 }
 
+                if (phoneNumbers.split(", ").length == 1) {
+                    message.from = null;
+                }
+
                 conversationId = source.insertMessage(message, phoneNumbers, context);
             }
 
