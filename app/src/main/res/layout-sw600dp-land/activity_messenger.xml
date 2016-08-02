@@ -62,30 +62,37 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:id="@+id/app_bar_layout">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="?attr/colorPrimary"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                        android:layout_height="wrap_content">
 
-                    <com.miguelcatalan.materialsearchview.MaterialSearchView
-                        android:id="@+id/search_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:searchBackground="@color/drawerBackground"
-                        app:searchBackIcon="@drawable/ic_search_back"
-                        app:searchCloseIcon="@drawable/ic_search_close"
-                        android:textColor="@color/primaryText"
-                        android:textColorHint="@color/secondaryText"
-                        android:hint="@string/enter_search"/>
+                        <android.support.v7.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:background="?attr/colorPrimary"
+                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-                </FrameLayout>
+                        <com.miguelcatalan.materialsearchview.MaterialSearchView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:searchBackground="@color/drawerBackground"
+                            app:searchBackIcon="@drawable/ic_search_back"
+                            app:searchCloseIcon="@drawable/ic_search_close"
+                            android:textColor="@color/primaryText"
+                            android:textColorHint="@color/secondaryText"
+                            android:hint="@string/enter_search"/>
 
+                    </FrameLayout>
+
+                </android.support.design.widget.AppBarLayout>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
