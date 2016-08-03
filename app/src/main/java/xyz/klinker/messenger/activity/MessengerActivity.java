@@ -512,7 +512,7 @@ public class MessengerActivity extends AppCompatActivity
                 c.phoneNumbers = numbers[i];
                 c.imageUri = ContactUtils.findImageUri(numbers[i], this);
 
-                if (ImageUtils.getContactImage(c.imageUri, this) == null) {
+                if (c.imageUri != null && ImageUtils.getContactImage(c.imageUri, this) == null) {
                     c.imageUri = null;
                 }
 

@@ -84,7 +84,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (contactEntry.getRecipients().length > 0) {
+                if (contactEntry.getText().length() > 0) {
                     showConversation();
                 }
             }
@@ -145,19 +145,23 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     private void showConversation() {
         String phoneNumbers = getPhoneNumberFromContactEntry();
-        showConversation(phoneNumbers.toString());
+        showConversation(phoneNumbers);
     }
 
     private String getPhoneNumberFromContactEntry() {
         DrawableRecipientChip[] chips = contactEntry.getRecipients();
         StringBuilder phoneNumbers = new StringBuilder();
 
-        for (int i = 0; i < chips.length; i++) {
-            phoneNumbers.append(PhoneNumberUtils
-                    .clearFormatting(chips[i].getEntry().getDestination()));
-            if (i != chips.length - 1) {
-                phoneNumbers.append(", ");
+        if (chips.length > 0) {
+            for (int i = 0; i < chips.length; i++) {
+                phoneNumbers.append(PhoneNumberUtils
+                        .clearFormatting(chips[i].getEntry().getDestination()));
+                if (i != chips.length - 1) {
+                    phoneNumbers.append(", ");
+                }
             }
+        } else {
+            phoneNumbers.append(contactEntry.getText().toString());
         }
 
         return phoneNumbers.toString();

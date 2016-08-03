@@ -46,6 +46,11 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void clearFormattingEmail() {
+        assertEquals("jklinker1@gmail.com", PhoneNumberUtils.clearFormatting("jklinker1@gmail.com"));
+    }
+
+    @Test
     public void format() {
         assertEquals("+1 515-422-4558", PhoneNumberUtils.format("+15154224558"));
     }
@@ -72,6 +77,11 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
         assertFalse(PhoneNumberUtils.checkEquality("5154224558", "5159911493"));
         assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15159911493"));
         assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15254224558"));
+    }
+
+    @Test
+    public void notEqualsEmailAddress() {
+        assertFalse(PhoneNumberUtils.checkEquality("jklinker1@gmail.com", "+15673935130"));
     }
 
 }

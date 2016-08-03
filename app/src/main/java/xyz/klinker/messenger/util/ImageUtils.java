@@ -91,6 +91,10 @@ public class ImageUtils {
      * @return the image bitmap.
      */
     public static Bitmap getContactImage(String imageUri, Context context) {
+        if (imageUri == null) {
+            return null;
+        }
+
         InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
                 context.getContentResolver(), Uri.parse(imageUri), true);
         return BitmapFactory.decodeStream(stream);

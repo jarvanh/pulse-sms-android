@@ -17,10 +17,13 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.klinker.android.send_message.Utils;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper for working with phone numbers, mainly formatting them.
@@ -35,8 +38,46 @@ public class PhoneNumberUtils {
      * @return the plain phone number.
      */
     public static String clearFormatting(String number) {
-        return android.telephony.PhoneNumberUtils.stripSeparators(number);
+        if (!isEmailAddress(number)) {
+            return android.telephony.PhoneNumberUtils.stripSeparators(number);
+        } else {
+            return number;
+        }
     }
+
+    private static boolean isEmailAddress(String address) {
+        if (TextUtils.isEmpty(address)) {
+            return false;
+        }
+
+        String s = extractAddrSpec(address);
+        Matcher match = EMAIL_ADDRESS_PATTERN.matcher(s);
+        return match.matches();
+    }
+
+    private static final Pattern EMAIL_ADDRESS_PATTERN
+            = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+    );
+
+    private static final Pattern NAME_ADDR_EMAIL_PATTERN =
+            Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*");
+
+    private static String extractAddrSpec(String address) {
+        Matcher match = NAME_ADDR_EMAIL_PATTERN.matcher(address);
+
+        if (match.matches()) {
+            return match.group(2);
+        }
+        return address;
+    }
+
 
     /**
      * Formats a plain number into something more readable.
@@ -75,10 +116,7 @@ public class PhoneNumberUtils {
      * the same even if one has a +1 in front of it or something like that.
      */
     public static boolean checkEquality(String number1, String number2) {
-        number1 = clearFormatting(number1);
-        number2 = clearFormatting(number2);
-
-        return number1.contains(number2) || number2.contains(number1);
+        return android.telephony.PhoneNumberUtils.compare(number1, number2);
     }
 
 }
