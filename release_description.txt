@@ -1,5 +1,8 @@
-- Homescreen widget
-- Night theme option
-- Android Auto support
-- Bug fix on group messages not displaying from name
-- Support for playing GIFs
+- Text counter when typing
+- Blacklist contacts
+- Support playing videos and audio
+- Record videos and audio
+- Attach GIFs with Giphy
+- Search through messages and conversation
+
+NOTE: a wipe of app data may be required for this update.
