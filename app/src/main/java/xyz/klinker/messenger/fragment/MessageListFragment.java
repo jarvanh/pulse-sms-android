@@ -517,6 +517,11 @@ public class MessageListFragment extends Fragment implements
                             if (position != -1) {
                                 messageList.scrollToPosition(position);
                             }
+
+                            AnimationUtils.originalRecyclerHeight = getView().getHeight() -
+                                    toolbar.getHeight();
+                            AnimationUtils.originalFragmentContainerHeight = getView().getHeight() -
+                                    toolbar.getHeight();
                         }
                     });
                 }

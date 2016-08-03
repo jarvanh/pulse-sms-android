@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.SearchAdapter;
@@ -124,6 +126,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     @Override
     public void onSearchSelected(Message message) {
+        dismissKeyboard();
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, message.conversationId);
         intent.putExtra(MessengerActivity.EXTRA_MESSAGE_ID, message.id);
@@ -133,10 +136,17 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     @Override
     public void onSearchSelected(Conversation conversation) {
+        dismissKeyboard();
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getActivity().startActivity(intent);
+    }
+
+    private void dismissKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(list.getWindowToken(), 0);
     }
 
 }
