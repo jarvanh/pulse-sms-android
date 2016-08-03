@@ -24,6 +24,7 @@ import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.mms.transaction.MmsMessageSender;
 import com.google.android.mms.MmsException;
@@ -544,6 +545,22 @@ public class SmsMmsUtils {
             if (c != null) {
                 c.close();
             }
+        }
+    }
+
+    /**
+     * Deletes a conversation from the internal sms database.
+     */
+    public static void deleteConversation(Context context, String phoneNumbers) {
+        long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
+
+        try {
+            context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/" +
+                    threadId + "/"), null, null);
+            context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/"),
+                    "_id=?", new String[]{ Long.toString(threadId) });
+        } catch (Exception e) {
+            Log.e("delete conversation", "error deleting " + threadId, e);
         }
     }
 

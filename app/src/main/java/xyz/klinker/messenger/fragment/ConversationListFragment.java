@@ -42,6 +42,7 @@ import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -247,19 +248,27 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-                        deleteSnackbar = null;
 
-                        if (pendingDelete.size() == currentSize) {
-                            DataSource dataSource = DataSource.getInstance(getActivity());
-                            dataSource.open();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                deleteSnackbar = null;
 
-                            for (Conversation conversation : pendingDelete) {
-                                dataSource.deleteConversation(conversation);
+                                if (pendingDelete.size() == currentSize) {
+                                    DataSource dataSource = DataSource.getInstance(getActivity());
+                                    dataSource.open();
+
+                                    for (Conversation conversation : pendingDelete) {
+                                        dataSource.deleteConversation(conversation);
+                                        SmsMmsUtils.deleteConversation(getContext(),
+                                                conversation.phoneNumbers);
+                                    }
+
+                                    dataSource.close();
+                                    pendingDelete = new ArrayList<>();
+                                }
                             }
-
-                            dataSource.close();
-                            pendingDelete = new ArrayList<>();
-                        }
+                        }).start();
                     }
                 });
         deleteSnackbar.show();
