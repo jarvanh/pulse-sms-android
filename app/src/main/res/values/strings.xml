@@ -66,6 +66,18 @@
     <string name="conversations">Conversations</string>
     <string name="messages">Messages</string>
 
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Love Messenger?</string>
+    <string name="invite_friends_summary">So do we and so will others! We\'re trying to get it in
+        as many hands as we can to continue making it the best product that it can be and by
+        inviting your friends to try, you\'re helping with this! Oh, and did we mention you\'ll get
+        a month free of tablet and web use for sharing with 10 friends?\n\nSelect the friends below that
+        you\'d like to send the app to and it will send them an SMS with a short description and
+        a link to download!</string>
+    <string name="invite_friends_sms">I started using a new texting app and I think
+        you\'ll like it! Plus it\'s free, so might as well download it:
+        http://messenger.klinkerapps.com</string>
+
     <!-- Message List Screen -->
     <string name="type_message">Type message</string>
     <string name="type_message_to">Type message to %1$s</string>

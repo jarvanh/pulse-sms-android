@@ -19,6 +19,7 @@ package xyz.klinker.messenger.adapter.view_holder;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,6 +38,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView image;
     public TextView name;
     public TextView summary;
+    public CheckBox checkBox;
     public Conversation conversation;
 
     private boolean expanded = false;
@@ -52,6 +54,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
+        checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +71,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 if (contactClickedListener != null) {
                     contactClickedListener.onClicked(
                             conversation.title, conversation.phoneNumbers, conversation.imageUri);
+                }
+
+                if (checkBox != null) {
+                    checkBox.setChecked(!checkBox.isChecked());
                 }
             }
         });

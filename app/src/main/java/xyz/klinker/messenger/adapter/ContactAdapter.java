@@ -18,6 +18,7 @@ package xyz.klinker.messenger.adapter;
 
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +52,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
     @Override
     public ConversationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.contact_list_item, parent, false);
+                .inflate(getLayoutId(), parent, false);
         ConversationViewHolder holder = new ConversationViewHolder(view, null);
         holder.setContactClickedListener(listener);
         return holder;
+    }
+
+    @LayoutRes
+    public int getLayoutId() {
+        return R.layout.contact_list_item;
     }
 
     @Override
@@ -87,6 +93,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
     @Override
     public int getItemCount() {
         return conversations.size();
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
     }
 
 }
