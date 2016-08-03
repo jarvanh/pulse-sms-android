@@ -18,7 +18,9 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,7 +45,6 @@ public class AboutFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.about);
 
         findPreference(getString(R.string.pref_about_app_version)).setSummary(getVersionName());
-        findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
         findPreference(getString(R.string.pref_about_device_info)).setSummary(getDeviceInfo());
 
         findPreference(getString(R.string.pref_about_changelog))
@@ -63,6 +64,15 @@ public class AboutFragment extends PreferenceFragmentCompat {
                         return true;
                     }
                 });
+
+        findPreference(getString(R.string.pref_about_privacy_policy))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displayPrivacyPolicy();
+                        return true;
+                    }
+                });
     }
 
     /**
@@ -77,23 +87,6 @@ public class AboutFragment extends PreferenceFragmentCompat {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    /**
-     * Gets a device id for this device. This will be a 32-bit random hex value.
-     *
-     * @return the device id.
-     */
-    public String getDeviceId() {
-        Settings settings = Settings.get(getContext());
-        String deviceId = settings.deviceId;
-
-        if (deviceId == null) {
-            deviceId = StringUtils.generateHexString(32);
-            settings.setValue(getString(R.string.pref_device_id), deviceId);
-        }
-
-        return deviceId;
     }
 
     /**
@@ -128,6 +121,16 @@ public class AboutFragment extends PreferenceFragmentCompat {
                 .setAdapter(new OpenSourceAdapter(activity, OpenSourceParser.parse(activity)), null)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+    }
+
+    /**
+     * Displays the privacy policy in the web browser.
+     */
+    public void displayPrivacyPolicy() {
+        String url = "http://privacy.messenger.klinker.xyz";
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
 }

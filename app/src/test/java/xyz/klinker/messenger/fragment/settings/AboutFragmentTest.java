@@ -61,17 +61,6 @@ public class AboutFragmentTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void deviceId() {
-        assertNotNull(fragment.getDeviceId());
-    }
-
-    @Test
-    public void deviceIdSaved() {
-        String deviceId = fragment.getDeviceId();
-        assertEquals(deviceId, fragment.getDeviceId());
-    }
-
-    @Test
     public void clickChangelog() {
         fragment = spy(fragment);
         fragment.findPreference(fragment.getString(R.string.pref_about_changelog)).performClick();

@@ -23,6 +23,8 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.util.StringUtils;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
@@ -34,6 +36,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.my_account);
 
+        findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
         initMessageCountPreference();
     }
 
@@ -53,6 +56,23 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
         preference.setTitle(title);
         preference.setSummary(summary);
+    }
+
+    /**
+     * Gets a device id for this device. This will be a 32-bit random hex value.
+     *
+     * @return the device id.
+     */
+    public String getDeviceId() {
+        Settings settings = Settings.get(getContext());
+        String deviceId = settings.deviceId;
+
+        if (deviceId == null) {
+            deviceId = StringUtils.generateHexString(32);
+            settings.setValue(getString(R.string.pref_device_id), deviceId);
+        }
+
+        return deviceId;
     }
 
 }

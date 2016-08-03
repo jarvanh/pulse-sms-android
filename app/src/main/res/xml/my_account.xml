@@ -20,4 +20,8 @@
     <Preference
         android:key="@string/pref_message_count"/>
 
+    <Preference
+        android:key="@string/pref_about_device_id"
+        android:title="@string/device_id"/>
+
 </PreferenceScreen>

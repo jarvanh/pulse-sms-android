@@ -28,6 +28,7 @@
     <string name="pref_about_app_version" translatable="false">app_version</string>
     <string name="pref_about_device_id" translatable="false">device_id</string>
     <string name="pref_about_device_info" translatable="false">device_info</string>
+    <string name="pref_about_privacy_policy" translatable="false">privacy_policy</string>
     <string name="pref_about_beta" translatable="false">beta</string>
 
     <string name="pref_help_faqs" translatable="false">faqs</string>

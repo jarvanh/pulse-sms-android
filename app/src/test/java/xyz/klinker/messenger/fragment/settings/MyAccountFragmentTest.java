@@ -37,4 +37,15 @@ public class MyAccountFragmentTest extends MessengerRobolectricSuite {
         assertTrue(fragment.isAdded());
     }
 
+    @Test
+    public void deviceId() {
+        assertNotNull(fragment.getDeviceId());
+    }
+
+    @Test
+    public void deviceIdSaved() {
+        String deviceId = fragment.getDeviceId();
+        assertEquals(deviceId, fragment.getDeviceId());
+    }
+
 }

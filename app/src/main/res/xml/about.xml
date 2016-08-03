@@ -26,10 +26,6 @@
         android:title="@string/app_version"/>
 
     <Preference
-        android:key="@string/pref_about_device_id"
-        android:title="@string/device_id"/>
-
-    <Preference
         android:key="@string/pref_about_device_info"
         android:title="@string/device_info"/>
 
@@ -37,6 +33,11 @@
         android:key="@string/pref_about_copyright"
         android:title="@string/copyright"
         android:summary="@string/copyright_summary"/>
+
+    <Preference
+        android:key="@string/pref_about_privacy_policy"
+        android:title="@string/privacy_policy"
+        android:summary="@string/privacy_policy_summary"/>
 
     <Preference
         android:key="@string/pref_about_beta"
