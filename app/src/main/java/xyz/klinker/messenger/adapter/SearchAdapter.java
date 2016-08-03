@@ -27,6 +27,10 @@ import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
+import com.klinker.android.link_builder.Link;
+import com.klinker.android.link_builder.LinkBuilder;
+
+import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
@@ -38,10 +42,12 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
     private static final int VIEW_TYPE_CONVERSATION = -3;
 
+    private String search;
     private Cursor messages;
     private Cursor conversations;
 
-    public SearchAdapter(Cursor conversations, Cursor messages) {
+    public SearchAdapter(String search, Cursor conversations, Cursor messages) {
+        this.search = search;
         this.conversations = conversations;
         this.messages = messages;
     }
@@ -83,6 +89,14 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int section,
                                  int relativePosition, int absolutePosition) {
 
+        Pattern pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);
+        Link highlight = new Link(pattern)
+                .setTextColor(holder.itemView.getContext().getResources()
+                        .getColor(R.color.colorAccent))
+                .setHighlightAlpha(0.4f)
+                .setUnderlined(false)
+                .setBold(true);
+
         if (holder instanceof ConversationViewHolder) {
             conversations.moveToPosition(relativePosition);
             Conversation conversation = new Conversation();
@@ -91,6 +105,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             ConversationViewHolder h = (ConversationViewHolder) holder;
             h.name.setText(conversation.title);
             h.summary.setText(conversation.snippet);
+
+            LinkBuilder.on(h.name)
+                    .addLink(highlight)
+                    .build();
 
             if (conversation.imageUri == null) {
                 h.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
@@ -106,6 +124,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             h.message.setText(messages.getString(
                     messages.getColumnIndex(Message.COLUMN_DATA)));
             h.timestamp.setVisibility(View.GONE);
+
+            LinkBuilder.on(h.message)
+                    .addLink(highlight)
+                    .build();
         }
 
     }
@@ -171,7 +193,8 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         }
     }
 
-    public void updateCursors(Cursor conversations, Cursor messages) {
+    public void updateCursors(String search, Cursor conversations, Cursor messages) {
+        this.search = search;
         this.conversations = conversations;
         this.messages = messages;
         notifyDataSetChanged();

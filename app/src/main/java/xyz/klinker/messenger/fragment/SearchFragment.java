@@ -56,7 +56,7 @@ public class SearchFragment extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (adapter == null) {
-            adapter = new SearchAdapter(null, null);
+            adapter = new SearchAdapter(query, null, null);
         }
 
         list.setAdapter(adapter);
@@ -111,9 +111,9 @@ public class SearchFragment extends Fragment {
 
     private void setSearchResults(Cursor conversations, Cursor messages) {
         if (adapter != null) {
-            adapter.updateCursors(conversations, messages);
+            adapter.updateCursors(query, conversations, messages);
         } else {
-            adapter = new SearchAdapter(conversations, messages);
+            adapter = new SearchAdapter(query, conversations, messages);
         }
     }
 
