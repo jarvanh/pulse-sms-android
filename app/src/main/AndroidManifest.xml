@@ -15,6 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="xyz.klinker.messenger">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -95,6 +96,9 @@
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity2"
             android:theme="@style/MaterialCamera.CaptureActivity" />
+        <activity android:name="xyz.klinker.giphy.GiphyActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:replace="android:theme"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 

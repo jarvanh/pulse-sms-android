@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.InviteFriendsAdapter;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.ContactUtils;
