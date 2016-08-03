@@ -109,6 +109,8 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
 
                         contacts.add(conversation);
                     } while (cursor.moveToNext());
+
+                    cursor.close();
                 }
 
                 handler.post(new Runnable() {

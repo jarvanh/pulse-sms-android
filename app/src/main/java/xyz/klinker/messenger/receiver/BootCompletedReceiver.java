@@ -30,7 +30,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.startService(new Intent(context, ContentObserverService.class));
+        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            context.startService(new Intent(context, ContentObserverService.class));
+        }
     }
 
 }
