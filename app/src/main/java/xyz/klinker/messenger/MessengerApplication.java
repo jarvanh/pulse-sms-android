@@ -17,9 +17,11 @@
 package xyz.klinker.messenger;
 
 import android.app.Application;
+import android.content.Intent;
 import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.service.ContentObserverService;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -41,6 +43,8 @@ public class MessengerApplication extends Application {
         if (Settings.get(this).darkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+
+        startService(new Intent(this, ContentObserverService.class));
     }
 
 }

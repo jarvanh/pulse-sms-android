@@ -1,8 +1,5 @@
-- Text counter when typing
-- Blacklist contacts
-- Support playing videos and audio
-- Record videos and audio
-- Attach GIFs with Giphy
-- Search through messages and conversation
+- Bug fixes<br/>
+- Invite friends<br/>
+- Scheduled messages<br/><br/>
 
 NOTE: a wipe of app data may be required for this update.

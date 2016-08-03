@@ -686,6 +686,8 @@ public class DataSource {
      * @return the conversation id that the message was inserted into.
      */
     public long insertMessage(Message message, long conversationId) {
+        message.conversationId = conversationId;
+
         ContentValues values = new ContentValues(9);
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);

@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".MessengerApplication"
@@ -156,6 +157,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".service.HeadlessSmsSendService"
             android:exported="true"
@@ -173,6 +180,7 @@
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.ReplyService" />
+        <service android:name=".service.ContentObserverService" />
 
         <!-- Widget -->
         <receiver android:name=".widget.MessengerAppWidgetProvider">

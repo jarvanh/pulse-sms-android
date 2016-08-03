@@ -435,7 +435,8 @@ public class SmsMmsUtils {
                 Telephony.Sms.DATE,
                 Telephony.Sms.READ,
                 Telephony.Sms.TYPE,
-                Telephony.Sms.STATUS
+                Telephony.Sms.STATUS,
+                Telephony.Sms.ADDRESS
         };
 
         return context.getContentResolver().query(uri, projection, null, null, sortOrder);
