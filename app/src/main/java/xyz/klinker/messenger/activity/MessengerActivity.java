@@ -76,6 +76,7 @@ public class MessengerActivity extends AppCompatActivity
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
+    public static final String EXTRA_MESSAGE_ID = "message_id";
 
     private DataSource source;
     private DrawerLayout drawerLayout;
@@ -398,13 +399,18 @@ public class MessengerActivity extends AppCompatActivity
 
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
-            Log.v("Messenger Activity", "displaying conversation and messages");
+        if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID) &&
+                extras.containsKey(EXTRA_MESSAGE_ID)) {
+            conversationListFragment = ConversationListFragment
+                    .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0),
+                            getIntent().getLongExtra(EXTRA_MESSAGE_ID, 0));
+            getIntent().getExtras().putLong(EXTRA_CONVERSATION_ID, -1);
+            getIntent().getExtras().putLong(EXTRA_MESSAGE_ID, -1);
+        } else if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
             conversationListFragment = ConversationListFragment
                     .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0));
             getIntent().getExtras().putLong(EXTRA_CONVERSATION_ID, -1);
         } else {
-            Log.v("Messenger Activity", "displaying only conversation");
             conversationListFragment = ConversationListFragment.newInstance();
         }
 

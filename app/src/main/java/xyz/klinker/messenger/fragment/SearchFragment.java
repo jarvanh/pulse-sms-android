@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,13 +27,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.SearchAdapter;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.listener.SearchListener;
 
 /**
  * A fragment for searching through conversations and messages.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchListener {
 
     private RecyclerView list;
     private SearchAdapter adapter;
@@ -56,7 +61,7 @@ public class SearchFragment extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (adapter == null) {
-            adapter = new SearchAdapter(query, null, null);
+            adapter = new SearchAdapter(query, null, null, this);
         }
 
         list.setAdapter(adapter);
@@ -113,8 +118,25 @@ public class SearchFragment extends Fragment {
         if (adapter != null) {
             adapter.updateCursors(query, conversations, messages);
         } else {
-            adapter = new SearchAdapter(query, conversations, messages);
+            adapter = new SearchAdapter(query, conversations, messages, this);
         }
+    }
+
+    @Override
+    public void onSearchSelected(Message message) {
+        Intent intent = new Intent(getActivity(), MessengerActivity.class);
+        intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, message.conversationId);
+        intent.putExtra(MessengerActivity.EXTRA_MESSAGE_ID, message.id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onSearchSelected(Conversation conversation) {
+        Intent intent = new Intent(getActivity(), MessengerActivity.class);
+        intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        getActivity().startActivity(intent);
     }
 
 }

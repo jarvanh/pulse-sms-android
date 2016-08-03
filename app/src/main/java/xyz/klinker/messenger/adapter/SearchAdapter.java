@@ -38,6 +38,7 @@ import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.listener.SearchListener;
 
 public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
@@ -46,11 +47,14 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     private String search;
     private Cursor messages;
     private Cursor conversations;
+    private SearchListener listener;
 
-    public SearchAdapter(String search, Cursor conversations, Cursor messages) {
+    public SearchAdapter(String search, Cursor conversations, Cursor messages,
+                         SearchListener listener) {
         this.search = search;
         this.conversations = conversations;
         this.messages = messages;
+        this.listener = listener;
     }
 
     @Override
@@ -100,7 +104,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
         if (holder instanceof ConversationViewHolder) {
             conversations.moveToPosition(relativePosition);
-            Conversation conversation = new Conversation();
+            final Conversation conversation = new Conversation();
             conversation.fillFromCursor(conversations);
 
             ConversationViewHolder h = (ConversationViewHolder) holder;
@@ -119,17 +123,36 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                         .into(h.image);
             }
 
+            h.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        listener.onSearchSelected(conversation);
+                    }
+                }
+            });
+
         } else if (holder instanceof MessageViewHolder) {
             messages.moveToPosition(relativePosition);
-            MessageViewHolder h = (MessageViewHolder) holder;
+            final Message message = new Message();
+            message.fillFromCursor(messages);
 
-            h.message.setText(messages.getString(
-                    messages.getColumnIndex(Message.COLUMN_DATA)));
+            MessageViewHolder h = (MessageViewHolder) holder;
+            h.message.setText(message.data);
             h.timestamp.setVisibility(View.GONE);
 
             LinkBuilder.on(h.message)
                     .addLink(highlight)
                     .build();
+
+            h.messageHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        listener.onSearchSelected(message);
+                    }
+                }
+            });
         }
 
     }

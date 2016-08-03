@@ -55,7 +55,8 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
 public class ConversationListFragment extends Fragment
         implements SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener {
 
-    private static final String EXTRA_CONVERSATION_TO_OPEN_ID = "conversation_to_open";
+    private static final String ARG_CONVERSATION_TO_OPEN_ID = "conversation_to_open";
+    private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
 
     private long lastRefreshTime = 0;
     private View empty;
@@ -68,13 +69,26 @@ public class ConversationListFragment extends Fragment
     private ConversationListUpdatedReceiver updatedReceiver;
 
     public static ConversationListFragment newInstance() {
-        return new ConversationListFragment();
+        return newInstance(-1);
     }
 
     public static ConversationListFragment newInstance(long conversationToOpenId) {
+        return newInstance(conversationToOpenId, -1);
+    }
+
+    public static ConversationListFragment newInstance(long conversationToOpenId,
+                                                       long messageToOpenId) {
         ConversationListFragment fragment = new ConversationListFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(EXTRA_CONVERSATION_TO_OPEN_ID, conversationToOpenId);
+
+        if (conversationToOpenId != -1) {
+            bundle.putLong(ARG_CONVERSATION_TO_OPEN_ID, conversationToOpenId);
+        }
+
+        if (messageToOpenId != -1) {
+            bundle.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
+        }
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -166,10 +180,10 @@ public class ConversationListFragment extends Fragment
         }
 
         if (getArguments() != null) {
-            long conversationToOpen = getArguments().getLong(EXTRA_CONVERSATION_TO_OPEN_ID, 0);
+            long conversationToOpen = getArguments().getLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
             if (conversationToOpen != 0) {
                 clickConversationWithId(conversationToOpen);
-                getArguments().putLong(EXTRA_CONVERSATION_TO_OPEN_ID, 0);
+                getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
             }
         } else {
             Log.v("Conversation List", "no conversations to open");
@@ -269,7 +283,14 @@ public class ConversationListFragment extends Fragment
         expandedConversation = viewHolder;
         AnimationUtils.expandActivityForConversation(getActivity());
 
-        messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
+        if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
+            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
+                    getArguments().getLong(ARG_MESSAGE_TO_OPEN_ID));
+            getArguments().remove(ARG_MESSAGE_TO_OPEN_ID);
+        } else {
+            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
+        }
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();

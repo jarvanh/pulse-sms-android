@@ -102,6 +102,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_IS_GROUP = "is_group";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
     private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
+    private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -137,6 +138,10 @@ public class MessageListFragment extends Fragment implements
     private String attachedMimeType;
 
     public static MessageListFragment newInstance(Conversation conversation) {
+        return newInstance(conversation, -1);
+    }
+
+    public static MessageListFragment newInstance(Conversation conversation, long messageToOpenId) {
         MessageListFragment fragment = new MessageListFragment();
 
         Bundle args = new Bundle();
@@ -148,8 +153,12 @@ public class MessageListFragment extends Fragment implements
         args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
         args.putLong(ARG_CONVERSATION_ID, conversation.id);
         args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
-        fragment.setArguments(args);
 
+        if (messageToOpenId != -1) {
+            args.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
+        }
+
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -493,6 +502,8 @@ public class MessageListFragment extends Fragment implements
                     if (drafts.size() > 0) {
                         source.deleteDrafts(conversationId);
                     }
+
+                    final int position = findMessagePositionFromId(cursor);
                     
                     Log.v("message_load", "load took " + (
                             System.currentTimeMillis() - startTime) + " ms");
@@ -502,6 +513,10 @@ public class MessageListFragment extends Fragment implements
                         public void run() {
                             setMessages(cursor);
                             setDrafts(drafts);
+
+                            if (position != -1) {
+                                messageList.scrollToPosition(position);
+                            }
                         }
                     });
                 }
@@ -518,6 +533,22 @@ public class MessageListFragment extends Fragment implements
                 }
             }
         }).start();
+    }
+
+    private int findMessagePositionFromId(Cursor cursor) {
+        if (getArguments() != null && getArguments()
+                .containsKey(ARG_MESSAGE_TO_OPEN_ID) &&
+                cursor != null && cursor.moveToFirst()) {
+            long id = getArguments().getLong(ARG_MESSAGE_TO_OPEN_ID);
+
+            do {
+                if (cursor.getLong(0) == id) {
+                    return cursor.getPosition();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return -1;
     }
 
     private void setMessages(Cursor messages) {

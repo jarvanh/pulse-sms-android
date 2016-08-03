@@ -55,7 +55,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        adapter = new SearchAdapter("test", conversations, messages);
+        adapter = new SearchAdapter("test", conversations, messages, null);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection0Null() {
-        adapter = new SearchAdapter("test", null, messages);
+        adapter = new SearchAdapter("test", null, messages, null);
         assertEquals(0, adapter.getItemCount(0));
     }
 
@@ -83,7 +83,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection1Null() {
-        adapter = new SearchAdapter("test", conversations, null);
+        adapter = new SearchAdapter("test", conversations, null, null);
         assertEquals(0, adapter.getItemCount(1));
     }
 
