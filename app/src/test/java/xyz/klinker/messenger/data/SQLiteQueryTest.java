@@ -117,6 +117,13 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void searchConversations() {
+        Cursor search = source.searchConversations("luke");
+        assertEquals(2, search.getCount());
+        search.close();
+    }
+
+    @Test
     public void getConversation() {
         Conversation conversation = source.getConversation(1L);
         assertEquals("Luke Klinker", conversation.title);

@@ -62,6 +62,10 @@
     <string name="undo">Undo</string>
     <string name="enter_search">Search for…</string>
 
+    <!-- Search Screen -->
+    <string name="conversations">Conversations</string>
+    <string name="messages">Messages</string>
+
     <!-- Message List Screen -->
     <string name="type_message">Type message</string>
     <string name="type_message_to">Type message to %1$s</string>

@@ -142,6 +142,23 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void searchConversations() {
+        when(database.query("conversation", null, "title LIKE '%swimmer''s%'", null, null, null,
+                "timestamp desc")).thenReturn(cursor);
+        assertEquals(cursor, source.searchConversations("swimmer's"));
+    }
+
+    @Test
+    public void searchConversationNull() {
+        assertEquals(null, source.searchConversations(null));
+    }
+
+    @Test
+    public void searchConversationBlank() {
+        assertEquals(null, source.searchConversations(null));
+    }
+
+    @Test
     public void deleteConversation() {
         Conversation conversation = new Conversation();
         conversation.id = 1;
@@ -212,6 +229,16 @@ public class DataSourceTest extends MessengerRobolectricSuite {
                 .thenReturn(cursor);
 
         assertEquals(cursor, source.searchMessages("test"));
+    }
+
+    @Test
+    public void searchMessagesNullQuery() {
+        assertEquals(null, source.searchMessages(null));
+    }
+
+    @Test
+    public void searchMessagesBlankQuery() {
+        assertEquals(null, source.searchMessages(""));
     }
 
     @Test

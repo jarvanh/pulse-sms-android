@@ -303,6 +303,19 @@ public class DataSource {
     }
 
     /**
+     * Searches for conversations that have a title that matches the given query.
+     */
+    public Cursor searchConversations(String query) {
+        if (query == null || query.length() == 0) {
+            return null;
+        } else {
+            return database.query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
+                            query.replace("'", "''") + "%'", null, null, null,
+                    Conversation.COLUMN_TIMESTAMP + " desc");
+        }
+    }
+
+    /**
      * Gets a conversation by its id.
      *
      * @param conversationId the conversation's id to find.
@@ -513,9 +526,13 @@ public class DataSource {
      * @return a cursor with all messages matching that query.
      */
     public Cursor searchMessages(String query) {
-        return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
-                query.replace("'", "''") + "%'", null, null, null,
-                Message.COLUMN_TIMESTAMP + " desc");
+        if (query == null || query.length() == 0) {
+            return null;
+        } else {
+            return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
+                            query.replace("'", "''") + "%'", null, null, null,
+                    Message.COLUMN_TIMESTAMP + " desc");
+        }
     }
 
     /**
