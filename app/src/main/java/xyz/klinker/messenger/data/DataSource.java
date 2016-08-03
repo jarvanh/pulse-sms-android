@@ -530,7 +530,8 @@ public class DataSource {
             return null;
         } else {
             return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
-                            query.replace("'", "''") + "%'", null, null, null,
+                            query.replace("'", "''") + "%' AND " +
+                    Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null,
                     Message.COLUMN_TIMESTAMP + " desc");
         }
     }

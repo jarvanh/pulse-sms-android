@@ -225,8 +225,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void searchMessages() {
-        when(database.query("message", null, "data LIKE '%test%'", null, null, null, "timestamp desc"))
-                .thenReturn(cursor);
+        when(database.query("message", null, "data LIKE '%test%' AND mime_type='text/plain'",
+                null, null, null, "timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.searchMessages("test"));
     }

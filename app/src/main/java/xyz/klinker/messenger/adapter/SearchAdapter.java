@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
@@ -121,6 +122,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         } else if (holder instanceof MessageViewHolder) {
             messages.moveToPosition(relativePosition);
             MessageViewHolder h = (MessageViewHolder) holder;
+
             h.message.setText(messages.getString(
                     messages.getColumnIndex(Message.COLUMN_DATA)));
             h.timestamp.setVisibility(View.GONE);
