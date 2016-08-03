@@ -133,6 +133,7 @@ public class MessageListFragment extends Fragment implements
     private ImageView attachedImage;
     private View removeImage;
     private BroadcastReceiver updatedReceiver;
+    private boolean dismissNotification = false;
 
     private Uri attachedUri;
     private String attachedMimeType;
@@ -217,6 +218,18 @@ public class MessageListFragment extends Fragment implements
         updatedReceiver = new MessageListUpdatedReceiver(this);
         getActivity().registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        dismissNotification = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        dismissNotification = false;
     }
 
     @Override
@@ -480,8 +493,10 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         try {
-            NotificationManagerCompat.from(getContext())
-                    .cancel((int) getConversationId());
+            if (dismissNotification) {
+                NotificationManagerCompat.from(getContext())
+                        .cancel((int) getConversationId());
+            }
         } catch (Exception e) {
 
         }
