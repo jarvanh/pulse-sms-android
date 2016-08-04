@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.SearchAdapter;
 import xyz.klinker.messenger.data.DataSource;
@@ -59,7 +60,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        list = new RecyclerView(getActivity());
+        list = (RecyclerView) inflater.inflate(R.layout.fragment_search, parent, false);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (adapter == null) {
