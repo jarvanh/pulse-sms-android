@@ -16,10 +16,102 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
 
 /**
  * Fragment for displaying scheduled messages.
  */
-public class ScheduledMessagesFragment extends Fragment {
+public class ScheduledMessagesFragment extends Fragment implements ScheduledMessageClickListener {
+
+    private RecyclerView list;
+    private ProgressBar progress;
+    private FloatingActionButton fab;
+
+    private DataSource source;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_schedule_messages, parent, false);
+
+        list = (RecyclerView) view.findViewById(R.id.list);
+        progress = (ProgressBar) view.findViewById(R.id.progress);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
+        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        source = DataSource.getInstance(getActivity());
+        source.open();
+
+        loadMessages();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        source.close();
+    }
+
+    private void loadMessages() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Cursor messages = source.getScheduledMessages();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMessages(messages);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void setMessages(Cursor messages) {
+        progress.setVisibility(View.GONE);
+        list.setAdapter(new ScheduledMessagesAdapter(messages, this));
+    }
+
+    @Override
+    public void onClick(final ScheduledMessage message) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(getString(R.string.delete_scheduled_message, message.title))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        source.deleteScheduledMessage(message.id);
+                        loadMessages();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
 }

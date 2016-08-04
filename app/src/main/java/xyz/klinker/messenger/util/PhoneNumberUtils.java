@@ -86,6 +86,10 @@ public class PhoneNumberUtils {
      * @return the formatted number.
      */
     public static String format(String number) {
+        if (number == null) {
+            return null;
+        }
+
         String formatted = android.telephony.PhoneNumberUtils
                 .formatNumber(number, Locale.getDefault().getCountry());
 

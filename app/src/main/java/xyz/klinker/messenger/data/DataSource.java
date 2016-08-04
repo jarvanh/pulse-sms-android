@@ -36,6 +36,7 @@ import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -846,6 +847,35 @@ public class DataSource {
      */
     public void deleteBlacklist(long id) {
         database.delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
+                new String[] {Long.toString(id)});
+    }
+
+    /**
+     * Gets all scheduled messages in the database.
+     */
+    public Cursor getScheduledMessages() {
+        return database.query(ScheduledMessage.TABLE, null, null, null, null, null, null);
+    }
+
+    /**
+     * Inserts a scheduled message into the database.
+     */
+    public void insertScheduledMessage(ScheduledMessage message) {
+        ContentValues values = new ContentValues(5);
+        values.put(ScheduledMessage.COLUMN_TITLE, message.title);
+        values.put(ScheduledMessage.COLUMN_TO, message.id);
+        values.put(ScheduledMessage.COLUMN_DATA, message.data);
+        values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType);
+        values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
+
+        database.insert(ScheduledMessage.TABLE, null, values);
+    }
+
+    /**
+     * Deletes a scheduled message from the database.
+     */
+    public void deleteScheduledMessage(long id) {
+        database.delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
                 new String[] {Long.toString(id)});
     }
 

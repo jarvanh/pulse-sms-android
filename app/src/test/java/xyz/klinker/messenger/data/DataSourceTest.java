@@ -37,6 +37,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -355,6 +356,26 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteBlacklist() {
         source.deleteBlacklist(1);
         verify(database).delete("blacklist", "_id=?", new String[] {"1"});
+    }
+
+    @Test
+    public void getScheduledMessages() {
+        when(database.query("scheduled_message", null, null, null, null, null, null))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getScheduledMessages());
+    }
+
+    @Test
+    public void insertScheduledMessage() {
+        source.insertScheduledMessage(new ScheduledMessage());
+        verify(database).insert(eq("scheduled_message"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void deleteScheduledMessage() {
+        source.deleteScheduledMessage(1);
+        verify(database).delete("scheduled_message", "_id=?", new String[] {"1"});
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

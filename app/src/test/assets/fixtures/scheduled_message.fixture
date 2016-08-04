@@ -1,1 +1,2 @@
-| _id   | phone_number      | data                          | mime_type     | timestamp |
+| _id   | title         | phone_number      | data                          | mime_type     | timestamp |
+| 1     | Luke Klinker  | 5159911493        | hey, happy birthday!          | text/plain    | 1         |

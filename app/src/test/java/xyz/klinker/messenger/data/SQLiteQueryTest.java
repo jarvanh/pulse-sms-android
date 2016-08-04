@@ -33,6 +33,7 @@ import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.util.FixtureLoader;
 
 import static junit.framework.Assert.assertEquals;
@@ -376,6 +377,36 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int initialSize = source.getBlacklists().getCount();
         source.deleteBlacklist(1);
         int finalSize = source.getBlacklists().getCount();
+
+        assertEquals(1, initialSize - finalSize);
+    }
+
+    @Test
+    public void getScheduledMessages() {
+        assertEquals(1, source.getScheduledMessages().getCount());
+    }
+
+    @Test
+    public void insertScheduledMessage() {
+        ScheduledMessage message = new ScheduledMessage();
+        message.title = "Jake Klinker";
+        message.to = "515-422-4558";
+        message.data = "hey!";
+        message.mimeType = "text/plain";
+        message.timestamp = 1;
+
+        int initialSize = source.getScheduledMessages().getCount();
+        source.insertScheduledMessage(message);
+        int finalSize = source.getScheduledMessages().getCount();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void deleteScheduledMessage() {
+        int initialSize = source.getScheduledMessages().getCount();
+        source.deleteScheduledMessage(1);
+        int finalSize = source.getScheduledMessages().getCount();
 
         assertEquals(1, initialSize - finalSize);
     }

@@ -35,6 +35,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
         message.fillFromCursor(cursor);
 
         assertEquals(1, message.id);
+        assertEquals("luke", message.title);
         assertEquals("test", message.to);
         assertEquals("Do you want to go to summerfest this weekend?", message.data);
         assertEquals("text/plain", message.mimeType);
@@ -44,6 +45,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[] {
                 ScheduledMessage.COLUMN_ID,
+                ScheduledMessage.COLUMN_TITLE,
                 ScheduledMessage.COLUMN_TO,
                 ScheduledMessage.COLUMN_DATA,
                 ScheduledMessage.COLUMN_MIME_TYPE,
@@ -52,6 +54,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[] {
                 1,
+                "luke",
                 "test",
                 "Do you want to go to summerfest this weekend?",
                 "text/plain",
