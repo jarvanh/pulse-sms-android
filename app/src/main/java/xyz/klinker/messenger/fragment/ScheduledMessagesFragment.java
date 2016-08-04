@@ -182,10 +182,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
                             message.to = message.to.substring(0, message.to.length() - 2);
                             message.title = message.title.substring(0, message.title.length() - 2);
-                        } else {
+                        } else if (editText.getText().length() > 0) {
                             message.to = PhoneNumberUtils.clearFormatting(editText
                                     .getText().toString());
                             message.title = message.to;
+                        } else {
+                            displayNameDialog(message);
+                            return;
                         }
 
                         displayDateDialog(message);
@@ -239,9 +242,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        message.data = editText.getText().toString();
-                        message.mimeType = MimeType.TEXT_PLAIN;
-                        saveMessage(message);
+                        if (editText.getText().length() > 0) {
+                            message.data = editText.getText().toString();
+                            message.mimeType = MimeType.TEXT_PLAIN;
+                            saveMessage(message);
+                        } else {
+                            displayMessageDialog(message);
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
