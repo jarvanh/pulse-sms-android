@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,18 +27,33 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
+
+import com.android.ex.chips.BaseRecipientAdapter;
+import com.android.ex.chips.RecipientEditTextView;
+import com.android.ex.chips.recipientchip.DrawableRecipientChip;
+import com.android.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
 
 /**
@@ -59,6 +76,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSchedulingMessage();
+            }
+        });
 
         return view;
     }
@@ -114,4 +137,112 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
+
+    private void startSchedulingMessage() {
+        ScheduledMessage message = new ScheduledMessage();
+        displayNameDialog(message);
+    }
+
+    private void displayNameDialog(final ScheduledMessage message) {
+        //noinspection AndroidLintInflateParams
+        View layout = LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_recipient_edit_text, null, false);
+        final RecipientEditTextView editText = (RecipientEditTextView)
+                layout.findViewById(R.id.edit_text);
+        editText.setHint(R.string.scheduled_to_hint);
+        editText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        editText.setAdapter(new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getActivity()));
+
+        new AlertDialog.Builder(getActivity())
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (editText.getRecipients().length > 0) {
+                            StringBuilder to = new StringBuilder();
+                            StringBuilder title = new StringBuilder();
+
+                            for (DrawableRecipientChip chip : editText.getRecipients()) {
+                                to.append(chip.getEntry().getDestination());
+                                title.append(chip.getEntry().getDisplayName());
+                                to.append(", ");
+                                title.append(", ");
+                            }
+
+                            message.to = to.toString();
+                            message.title = title.toString();
+
+                            message.to = message.to.substring(0, message.to.length() - 2);
+                            message.title = message.title.substring(0, message.title.length() - 2);
+                        } else {
+                            message.to = PhoneNumberUtils.clearFormatting(editText
+                                    .getText().toString());
+                            message.title = message.to;
+                        }
+
+                        displayDateDialog(message);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void displayDateDialog(final ScheduledMessage message) {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        message.timestamp = new GregorianCalendar(year, month, day)
+                                .getTimeInMillis();
+                        displayTimeDialog(message);
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    private void displayTimeDialog(final ScheduledMessage message) {
+        Calendar calendar = Calendar.getInstance();
+        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                        message.timestamp += (1000 * 60 * 60 * hourOfDay);
+                        message.timestamp += (1000 * 60 * minute);
+                        displayMessageDialog(message);
+                    }
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                DateFormat.is24HourFormat(getActivity()))
+                .show();
+    }
+
+    private void displayMessageDialog(final ScheduledMessage message) {
+        //noinspection AndroidLintInflateParams
+        View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
+                null, false);
+        final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
+        editText.setHint(R.string.scheduled_message_hint);
+
+        new AlertDialog.Builder(getActivity())
+                .setView(layout)
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        message.data = editText.getText().toString();
+                        message.mimeType = MimeType.TEXT_PLAIN;
+                        saveMessage(message);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void saveMessage(final ScheduledMessage message) {
+        source.insertScheduledMessage(message);
+        loadMessages();
+    }
+
 }
