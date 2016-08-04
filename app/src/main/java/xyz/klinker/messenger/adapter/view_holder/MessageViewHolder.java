@@ -16,15 +16,20 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * View holder for working with a message.
@@ -59,6 +64,26 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                     intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
                     intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
                     itemView.getContext().startActivity(intent);
+                }
+            });
+        }
+
+        if (message != null) {
+            message.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (message.getVisibility() == View.VISIBLE) {
+                        ClipboardManager clipboard = (ClipboardManager)
+                                view.getContext().getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("messenger",
+                                message.getText().toString());
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(view.getContext(), R.string.message_copied_to_clipboard,
+                                Toast.LENGTH_SHORT).show();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             });
         }
