@@ -38,9 +38,6 @@ public class AnimationUtils {
     private static final int EXPAND_CONVERSATION_DURATION = 250;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
 
-    public static int originalRecyclerHeight = -1;
-    public static int originalFragmentContainerHeight = -1;
-
     /**
      * Animates a lines item to the full height of the view.
      *
@@ -101,16 +98,16 @@ public class AnimationUtils {
         final ViewGroup.MarginLayoutParams recyclerParams = (ViewGroup.MarginLayoutParams)
                 recyclerView.getLayoutParams();
 
-	    if (originalRecyclerHeight == -1) {
-        	originalRecyclerHeight = recyclerView.getHeight();
-	    }
+        Activity activity = (Activity) itemView.getContext();
+        final int originalHeight = activity.findViewById(R.id.content).getHeight() -
+                activity.findViewById(R.id.toolbar).getHeight();
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 recyclerView.setTranslationY((int) valueAnimator.getAnimatedValue());
-                recyclerParams.height = originalRecyclerHeight +
+                recyclerParams.height = originalHeight +
                         (-1 * (int) valueAnimator.getAnimatedValue());
                 recyclerView.requestLayout();
             }
@@ -194,16 +191,14 @@ public class AnimationUtils {
         final ViewGroup.MarginLayoutParams containerParams = (ViewGroup.MarginLayoutParams)
                 fragmentContainer.getLayoutParams();
 
-	    if (originalFragmentContainerHeight == -1) {
-            originalFragmentContainerHeight = fragmentContainer.getHeight();
-        }
+        final int originalHeight = ((View) fragmentContainer.getParent()).getHeight();
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 fragmentContainer.setTranslationY((int) valueAnimator.getAnimatedValue());
-                containerParams.height = originalFragmentContainerHeight +
+                containerParams.height = originalHeight +
                         (-1 * (int) valueAnimator.getAnimatedValue());
                 fragmentContainer.requestLayout();
             }

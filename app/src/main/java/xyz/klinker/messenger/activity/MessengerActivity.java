@@ -363,9 +363,6 @@ public class MessengerActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
 
         getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
-
-        AnimationUtils.originalRecyclerHeight = -1;
-        AnimationUtils.originalFragmentContainerHeight = -1;
     }
 
     private void clickDefaultDrawerItem() {
