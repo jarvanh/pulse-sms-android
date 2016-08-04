@@ -191,7 +191,9 @@ public class AnimationUtils {
         final ViewGroup.MarginLayoutParams containerParams = (ViewGroup.MarginLayoutParams)
                 fragmentContainer.getLayoutParams();
 
-        final int originalHeight = ((View) fragmentContainer.getParent()).getHeight();
+        Activity activity = (Activity) fragmentContainer.getContext();
+        final int originalHeight = activity.findViewById(R.id.content).getHeight() -
+                activity.findViewById(R.id.toolbar).getHeight();
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
