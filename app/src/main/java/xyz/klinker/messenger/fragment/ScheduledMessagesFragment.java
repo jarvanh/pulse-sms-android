@@ -19,6 +19,7 @@ package xyz.klinker.messenger.fragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,6 +54,7 @@ import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.service.ScheduledMessageService;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
 
@@ -93,6 +95,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         source.open();
 
         loadMessages();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().startService(new Intent(getActivity(), ScheduledMessageService.class));
     }
 
     @Override
@@ -163,7 +171,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                             StringBuilder title = new StringBuilder();
 
                             for (DrawableRecipientChip chip : editText.getRecipients()) {
-                                to.append(chip.getEntry().getDestination());
+                                to.append(PhoneNumberUtils.clearFormatting(chip.getEntry().getDestination()));
                                 title.append(chip.getEntry().getDisplayName());
                                 to.append(", ");
                                 title.append(", ");

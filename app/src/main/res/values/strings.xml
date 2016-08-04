@@ -194,5 +194,6 @@
         to %1$s?</string>
     <string name="scheduled_message_hint">Message to send…</string>
     <string name="scheduled_to_hint">Contact to send to…</string>
+    <string name="scheduled_message_sent">Scheduled message sent successfully</string>
 
 </resources>

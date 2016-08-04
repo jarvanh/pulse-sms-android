@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import xyz.klinker.messenger.service.ContentObserverService;
+import xyz.klinker.messenger.service.ScheduledMessageService;
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -32,6 +33,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             context.startService(new Intent(context, ContentObserverService.class));
+            context.startService(new Intent(context, ScheduledMessageService.class));
         }
     }
 

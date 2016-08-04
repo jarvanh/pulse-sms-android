@@ -360,7 +360,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getScheduledMessages() {
-        when(database.query("scheduled_message", null, null, null, null, null, null))
+        when(database.query("scheduled_message", null, null, null, null, null, "timestamp asc"))
                 .thenReturn(cursor);
         assertEquals(cursor, source.getScheduledMessages());
     }

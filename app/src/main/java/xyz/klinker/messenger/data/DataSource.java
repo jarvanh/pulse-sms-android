@@ -854,7 +854,8 @@ public class DataSource {
      * Gets all scheduled messages in the database.
      */
     public Cursor getScheduledMessages() {
-        return database.query(ScheduledMessage.TABLE, null, null, null, null, null, null);
+        return database.query(ScheduledMessage.TABLE, null, null, null, null, null,
+                ScheduledMessage.COLUMN_TIMESTAMP + " asc");
     }
 
     /**
@@ -863,7 +864,7 @@ public class DataSource {
     public void insertScheduledMessage(ScheduledMessage message) {
         ContentValues values = new ContentValues(5);
         values.put(ScheduledMessage.COLUMN_TITLE, message.title);
-        values.put(ScheduledMessage.COLUMN_TO, message.id);
+        values.put(ScheduledMessage.COLUMN_TO, message.to);
         values.put(ScheduledMessage.COLUMN_DATA, message.data);
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType);
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);

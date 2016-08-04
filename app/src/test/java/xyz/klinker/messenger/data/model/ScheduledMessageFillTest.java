@@ -36,7 +36,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
 
         assertEquals(1, message.id);
         assertEquals("luke", message.title);
-        assertEquals("test", message.to);
+        assertEquals("5159911493", message.to);
         assertEquals("Do you want to go to summerfest this weekend?", message.data);
         assertEquals("text/plain", message.mimeType);
         assertEquals(1001L, message.timestamp);
@@ -55,7 +55,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[] {
                 1,
                 "luke",
-                "test",
+                "5159911493",
                 "Do you want to go to summerfest this weekend?",
                 "text/plain",
                 1001L

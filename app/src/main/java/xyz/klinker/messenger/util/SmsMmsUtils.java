@@ -553,15 +553,14 @@ public class SmsMmsUtils {
      * Deletes a conversation from the internal sms database.
      */
     public static void deleteConversation(Context context, String phoneNumbers) {
-        long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
-
         try {
+            long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/" +
                     threadId + "/"), null, null);
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/"),
                     "_id=?", new String[]{ Long.toString(threadId) });
         } catch (Exception e) {
-            Log.e("delete conversation", "error deleting " + threadId, e);
+            Log.e("delete conversation", "error deleting", e);
         }
     }
 
