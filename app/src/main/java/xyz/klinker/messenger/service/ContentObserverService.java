@@ -27,10 +27,14 @@ import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.klinker.android.send_message.Utils;
+
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
@@ -99,11 +103,6 @@ public class ContentObserverService extends Service {
                 String body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY));
                 String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
 
-                if (type == Telephony.Sms.MESSAGE_TYPE_INBOX) {
-                    cursor.close();
-                    return;
-                }
-
                 DataSource source = DataSource.getInstance(context);
                 source.open();
 
@@ -111,25 +110,41 @@ public class ContentObserverService extends Service {
                 if (search != null && search.moveToFirst()) {
                     Message message = new Message();
                     message.fillFromCursor(search);
+                    Conversation conversation = source.getConversation(message.conversationId);
 
-                    // if a message with the same body was sent in the last minute, don't insert
-                    // this one into the database because we already have it.
-                    //
-                    // NOTE: we are just going to insert the message as sent here instead of
-                    //       sending like it should be... this is because we won't get a callback
-                    //       like we normally would for when the message has sent. This could be
-                    //       handled in this content observer however, so we'll save that for
-                    //       another time.
-                    if (!(message.data.equals(body) && message.type != Message.TYPE_RECEIVED &&
-                            message.timestamp > System.currentTimeMillis() - (1000 * 60))) {
-                        insertMessage(source, body, address);
+                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX) {
+                        // if a message with the same body was received from the same person in the
+                        // last minute and is the last message in that conversation, don't insert
+                        // this one into the database because we already have it. Otherwise, do.
+                        if (!(message.data.equals(body) && message.type == Message.TYPE_RECEIVED &&
+                                PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                                message.timestamp > System.currentTimeMillis() - (1000 * 60) &&
+                                body.equals(conversation.snippet))) {
+                            insertReceivedMessage(source, body, address);
+                        }
+                    } else {
+                        // if a message with the same body was sent to the same person in the last
+                        // minute and is the last message in that conversation, don't insert this one
+                        // into the database because we already have it. Otherwise, do insert it.
+                        //
+                        // NOTE: we are just going to insert the message as sent here instead of
+                        //       sending like it should be... this is because we won't get a callback
+                        //       like we normally would for when the message has sent. This could be
+                        //       handled in this content observer however, so we'll save that for
+                        //       another time.
+                        if (!(message.data.equals(body) && message.type != Message.TYPE_RECEIVED &&
+                                PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                                message.timestamp > System.currentTimeMillis() - (1000 * 60) &&
+                                body.equals(conversation.snippet))) {
+                            insertSentMessage(source, body, address);
+                        }
                     }
 
                     search.close();
                 } else {
                     // if we don't find the search text anywhere, insert the message since we
                     // already filtered out received messages above.
-                    insertMessage(source, body, address);
+                    insertSentMessage(source, body, address);
                 }
 
                 source.close();
@@ -137,12 +152,20 @@ public class ContentObserverService extends Service {
             }
         }
 
-        private void insertMessage(DataSource source, String body, String address) {
+        private void insertReceivedMessage(DataSource source, String body, String address) {
+            insertMessage(source, body, address, Message.TYPE_RECEIVED);
+        }
+
+        private void insertSentMessage(DataSource source, String body, String address) {
+            insertMessage(source, body, address, Message.TYPE_SENT);
+        }
+
+        private void insertMessage(DataSource source, String body, String address, int type) {
             Message insert = new Message();
             insert.data = body;
             insert.mimeType = MimeType.TEXT_PLAIN;
             insert.timestamp = System.currentTimeMillis();
-            insert.type = Message.TYPE_SENT;
+            insert.type = type;
             insert.read = true;
             insert.seen = true;
 
