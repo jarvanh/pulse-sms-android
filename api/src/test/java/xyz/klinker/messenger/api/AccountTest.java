@@ -18,10 +18,13 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import xyz.klinker.messenger.api.entity.LoginRequest;
+import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupRequest;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class AccountTest extends ApiTest {
 
@@ -39,6 +42,28 @@ public class AccountTest extends ApiTest {
         } else {
             System.out.println("request failed");
         }
+    }
+
+    @Test
+    public void loginSuccessful() {
+        LoginRequest request = new LoginRequest("test@email.com", "test password");
+        LoginResponse response = api.account().login(request);
+
+        System.out.println(response);
+        assertNotNull(response);
+        assertNotNull(response.accountId);
+        assertNotNull(response.salt1);
+        assertNotNull(response.salt2);
+        assertNotNull(response.name);
+        assertNotNull(response.phoneNumber);
+    }
+
+    @Test
+    public void loginFailed() {
+        LoginRequest request = new LoginRequest("test@email.com", "wrong password");
+        LoginResponse response = api.account().login(request);
+
+        assertNull(response);
     }
 
 }

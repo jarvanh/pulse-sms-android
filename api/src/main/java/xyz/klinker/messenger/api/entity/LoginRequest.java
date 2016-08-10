@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.api.service;
+package xyz.klinker.messenger.api.entity;
 
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import xyz.klinker.messenger.api.entity.LoginRequest;
-import xyz.klinker.messenger.api.entity.LoginResponse;
-import xyz.klinker.messenger.api.entity.SignupRequest;
-import xyz.klinker.messenger.api.entity.SignupResponse;
+public class LoginRequest {
 
-/**
- * Service for interfacing with account endpoints.
- */
-public interface AccountService {
+    public String username;
+    public String password;
 
-    @POST("accounts/signup")
-    SignupResponse signup(@Body SignupRequest request);
-
-    @POST("accounts/login")
-    LoginResponse login(@Body LoginRequest request);
+    public LoginRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
 }
