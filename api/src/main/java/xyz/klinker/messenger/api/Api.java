@@ -31,11 +31,12 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import xyz.klinker.messenger.api.service.AccountService;
 
 /**
  * Direct access to the messenger APIs using retrofit.
@@ -66,7 +67,8 @@ public class Api {
                 @Override
                 public <R> Object adapt(Call<R> call) {
                     try {
-                        return call.execute().body();
+                        Response response = call.execute();
+                        return response.body();
                     } catch (IOException e) {
                         throw new RuntimeException(); // do something better
                     }
@@ -120,7 +122,7 @@ public class Api {
     private Api(String baseUrl) {
         httpClient.addInterceptor(new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 HttpUrl url = request.url().newBuilder().build();
                 request = request.newBuilder().url(url).build();
@@ -135,6 +137,13 @@ public class Api {
                         .addCallAdapterFactory(callAdapterFactory);
 
         this.retrofit = builder.client(httpClient.build()).build();
+    }
+
+    /**
+     * Gets a service that can be used for account requests such as signup and login.
+     */
+    public AccountService account() {
+        return retrofit.create(AccountService.class);
     }
 
 }

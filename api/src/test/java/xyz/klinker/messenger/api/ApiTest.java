@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package xyz.klinker.messenger.api;
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+import org.junit.After;
+import org.junit.Before;
 
-dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.0.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+public class ApiTest {
 
-    testCompile 'junit:junit:4.12'
+    public Api api;
+
+    @Before
+    public void setUp() {
+        api = new Api(Api.Environment.DEBUG);
+    }
+
 }
-
-test.onlyIf { Boolean.getBoolean('run.tests') }

@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package xyz.klinker.messenger.api.service;
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import xyz.klinker.messenger.api.entity.SignupRequest;
+import xyz.klinker.messenger.api.entity.SignupResponse;
 
-dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.0.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+/**
+ * Service for interfacing with account endpoints.
+ */
+public interface AccountService {
 
-    testCompile 'junit:junit:4.12'
+    @POST("accounts/signup")
+    SignupResponse signup(@Body SignupRequest request);
+
 }
-
-test.onlyIf { Boolean.getBoolean('run.tests') }

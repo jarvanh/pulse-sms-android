@@ -14,16 +14,23 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package xyz.klinker.messenger.api.entity;
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+/**
+ * Request to sign up for the service.
+ */
+public class SignupRequest {
 
-dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.0.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    public String name;
+    public String realName;
+    public String password;
+    public String phoneNumber;
 
-    testCompile 'junit:junit:4.12'
+    public SignupRequest(String name, String realName, String password, String phoneNumber) {
+        this.name = name;
+        this.realName = realName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
 }
-
-test.onlyIf { Boolean.getBoolean('run.tests') }
