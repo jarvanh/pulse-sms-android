@@ -16,23 +16,15 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class MessageListResponse {
+public class DraftBody {
 
     public int deviceId;
     public int deviceConversationId;
-    public int messageType;
     public String data;
-    public long timestamp;
     public String mimeType;
-    public boolean read;
-    public boolean seen;
-    public String messageFrom;
-    public Integer color;
 
     @Override
     public String toString() {
-        return deviceId + ", " + deviceConversationId + ", " + messageType + ", " + data + ", " +
-                timestamp + ", " + mimeType + ", " + read + ", " + seen + ", " + messageFrom
-                + ", " + color;
+        return deviceId + ", " + deviceConversationId + ", " + data + ", " + mimeType;
     }
 }

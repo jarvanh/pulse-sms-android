@@ -16,18 +16,23 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class AccountListResponse {
+public class DeviceBody {
 
-    public DeviceBody[] devices;
-    public MessageBody[] messages;
-    public ConversationBody[] conversations;
-    public DraftBody[] drafts;
-    public ScheduledMessageBody[] scheduledMessages;
-    public BlacklistBody[] blacklists;
+    public String info;
+    public String name;
+    public boolean primary;
+    public String fcmToken;
+
+    public DeviceBody(String info, String name, boolean primary, String fcmToken) {
+        this.info = info;
+        this.name = name;
+        this.primary = primary;
+        this.fcmToken = fcmToken;
+    }
 
     @Override
     public String toString() {
-        return devices.length + ", " + messages.length + ", " + conversations.length + ", " +
-                drafts.length + ", " + scheduledMessages.length + ", " + blacklists.length;
+        return info + ", " + name + ", " + primary + ", " + fcmToken;
     }
+
 }

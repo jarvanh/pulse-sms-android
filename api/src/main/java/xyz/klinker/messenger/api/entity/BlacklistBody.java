@@ -16,15 +16,14 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class DraftListResponse {
+public class BlacklistBody {
 
     public int deviceId;
-    public int deviceConversationId;
-    public String data;
-    public String mimeType;
+    public String phoneNumber;
 
     @Override
     public String toString() {
-        return deviceId + ", " + deviceConversationId + ", " + data + ", " + mimeType;
+        return deviceId + ", " + phoneNumber;
     }
+
 }

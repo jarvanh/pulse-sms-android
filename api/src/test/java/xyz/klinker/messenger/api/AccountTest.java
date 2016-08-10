@@ -58,7 +58,7 @@ public class AccountTest extends ApiTest {
 
     @Test
     public void loginFailed() {
-        LoginRequest request = new LoginRequest("test@email.com", "wrong password");
+        LoginRequest request = new LoginRequest(USERNAME, "wrong " + PASSWORD);
         LoginResponse response = api.account().login(request);
 
         assertNull(response);

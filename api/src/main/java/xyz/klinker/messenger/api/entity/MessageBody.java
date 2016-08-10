@@ -16,17 +16,23 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class ScheduledMessageListResponse {
+public class MessageBody {
 
     public int deviceId;
-    public String to;
+    public int deviceConversationId;
+    public int messageType;
     public String data;
-    public String mimeType;
     public long timestamp;
+    public String mimeType;
+    public boolean read;
+    public boolean seen;
+    public String messageFrom;
+    public Integer color;
 
     @Override
     public String toString() {
-        return deviceId + ", " + to + ", " + data + ", " + mimeType + ", " + timestamp;
+        return deviceId + ", " + deviceConversationId + ", " + messageType + ", " + data + ", " +
+                timestamp + ", " + mimeType + ", " + read + ", " + seen + ", " + messageFrom
+                + ", " + color;
     }
-
 }

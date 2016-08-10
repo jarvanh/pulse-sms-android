@@ -16,16 +16,14 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class DeviceListResponse {
+public class AddDeviceRequest {
 
-    public String info;
-    public String name;
-    public boolean primary;
-    public String fcmToken;
+    public String accountId;
+    public DeviceBody device;
 
-    @Override
-    public String toString() {
-        return info + ", " + name + ", " + primary + ", " + fcmToken;
+    public AddDeviceRequest(String accountId, DeviceBody device) {
+        this.accountId = accountId;
+        this.device = device;
     }
 
 }

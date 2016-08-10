@@ -16,27 +16,17 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class ConversationListResponse {
+public class ScheduledMessageBody {
 
     public int deviceId;
-    public int color;
-    public int colorDark;
-    public int colorLight;
-    public int colorAccent;
-    public boolean pinned;
-    public boolean read;
+    public String to;
+    public String data;
+    public String mimeType;
     public long timestamp;
-    public String title;
-    public String phoneNumbers;
-    public String snippet;
-    public String ringtone;
-    public String idMatcher;
-    public boolean mute;
 
     @Override
     public String toString() {
-        return deviceId + ", " + color + ", " + colorDark + ", " + colorLight + ", " + colorAccent +
-                ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
-                phoneNumbers + ", " + snippet + ", " + ringtone + ", " + idMatcher + ", " + mute;
+        return deviceId + ", " + to + ", " + data + ", " + mimeType + ", " + timestamp;
     }
+
 }

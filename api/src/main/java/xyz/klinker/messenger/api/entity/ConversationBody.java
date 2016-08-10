@@ -16,18 +16,27 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class AccountListResponse {
+public class ConversationBody {
 
-    public DeviceBody[] devices;
-    public MessageBody[] messages;
-    public ConversationBody[] conversations;
-    public DraftBody[] drafts;
-    public ScheduledMessageBody[] scheduledMessages;
-    public BlacklistBody[] blacklists;
+    public int deviceId;
+    public int color;
+    public int colorDark;
+    public int colorLight;
+    public int colorAccent;
+    public boolean pinned;
+    public boolean read;
+    public long timestamp;
+    public String title;
+    public String phoneNumbers;
+    public String snippet;
+    public String ringtone;
+    public String idMatcher;
+    public boolean mute;
 
     @Override
     public String toString() {
-        return devices.length + ", " + messages.length + ", " + conversations.length + ", " +
-                drafts.length + ", " + scheduledMessages.length + ", " + blacklists.length;
+        return deviceId + ", " + color + ", " + colorDark + ", " + colorLight + ", " + colorAccent +
+                ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
+                phoneNumbers + ", " + snippet + ", " + ringtone + ", " + idMatcher + ", " + mute;
     }
 }

@@ -26,6 +26,9 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
 
 public class ApiTest {
 
+    public static final String USERNAME = "test@email.com";
+    public static final String PASSWORD = "test password";
+
     public Api api;
 
     @Before
@@ -34,13 +37,13 @@ public class ApiTest {
     }
 
     public SignupResponse getSignupResponse() {
-        SignupRequest request = new SignupRequest("test@email.com", "test user",
-                "test password", "test");
+        SignupRequest request = new SignupRequest(USERNAME, "test user",
+                PASSWORD, "test");
         return api.account().signup(request);
     }
 
     public LoginResponse getLoginResponse() {
-        LoginRequest request = new LoginRequest("test@email.com", "test password");
+        LoginRequest request = new LoginRequest(USERNAME, PASSWORD);
         return api.account().login(request);
     }
 
