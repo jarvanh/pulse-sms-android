@@ -18,9 +18,10 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import xyz.klinker.messenger.api.entity.AccountCountResponse;
+import xyz.klinker.messenger.api.entity.AccountListResponse;
 import xyz.klinker.messenger.api.entity.LoginRequest;
 import xyz.klinker.messenger.api.entity.LoginResponse;
-import xyz.klinker.messenger.api.entity.SignupRequest;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 
 import static org.junit.Assert.assertNotNull;
@@ -30,9 +31,7 @@ public class AccountTest extends ApiTest {
 
     @Test
     public void signUp() {
-        SignupRequest request = new SignupRequest("test@email.com", "test user",
-                "test password", "test");
-        SignupResponse response = api.account().signup(request);
+        SignupResponse response = getSignupResponse();
 
         if (response != null) {
             System.out.println(response);
@@ -40,14 +39,13 @@ public class AccountTest extends ApiTest {
             assertNotNull(response.salt1);
             assertNotNull(response.salt2);
         } else {
-            System.out.println("request failed");
+            System.out.println("signup failed");
         }
     }
 
     @Test
     public void loginSuccessful() {
-        LoginRequest request = new LoginRequest("test@email.com", "test password");
-        LoginResponse response = api.account().login(request);
+        LoginResponse response = getLoginResponse();
 
         System.out.println(response);
         assertNotNull(response);
@@ -65,5 +63,21 @@ public class AccountTest extends ApiTest {
 
         assertNull(response);
     }
+
+    @Test
+    public void count() {
+        AccountCountResponse response = api.account().count(getAccountId());
+        System.out.println(response);
+        assertNotNull(response);
+    }
+
+    @Test
+    public void list() {
+        AccountListResponse response = api.account().list(getAccountId());
+        System.out.println(response);
+        assertNotNull(response);
+    }
+
+
 
 }

@@ -19,6 +19,11 @@ package xyz.klinker.messenger.api;
 import org.junit.After;
 import org.junit.Before;
 
+import xyz.klinker.messenger.api.entity.LoginRequest;
+import xyz.klinker.messenger.api.entity.LoginResponse;
+import xyz.klinker.messenger.api.entity.SignupRequest;
+import xyz.klinker.messenger.api.entity.SignupResponse;
+
 public class ApiTest {
 
     public Api api;
@@ -26,6 +31,28 @@ public class ApiTest {
     @Before
     public void setUp() {
         api = new Api(Api.Environment.DEBUG);
+    }
+
+    public SignupResponse getSignupResponse() {
+        SignupRequest request = new SignupRequest("test@email.com", "test user",
+                "test password", "test");
+        return api.account().signup(request);
+    }
+
+    public LoginResponse getLoginResponse() {
+        LoginRequest request = new LoginRequest("test@email.com", "test password");
+        return api.account().login(request);
+    }
+
+    public String getAccountId() {
+        SignupResponse signup = getSignupResponse();
+
+        if (signup == null) {
+            LoginResponse login = getLoginResponse();
+            return login.accountId;
+        } else {
+            return signup.accountId;
+        }
     }
 
 }

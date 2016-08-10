@@ -17,7 +17,11 @@
 package xyz.klinker.messenger.api.service;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
+import xyz.klinker.messenger.api.entity.AccountCountResponse;
+import xyz.klinker.messenger.api.entity.AccountListResponse;
 import xyz.klinker.messenger.api.entity.LoginRequest;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupRequest;
@@ -33,5 +37,11 @@ public interface AccountService {
 
     @POST("accounts/login")
     LoginResponse login(@Body LoginRequest request);
+
+    @GET("accounts/count")
+    AccountCountResponse count(@Query("account_id") String accountId);
+
+    @GET("accounts")
+    AccountListResponse list(@Query("account_id") String accountId);
 
 }
