@@ -38,6 +38,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
 import xyz.klinker.messenger.api.service.DeviceService;
+import xyz.klinker.messenger.api.service.MessageService;
 
 /**
  * Direct access to the messenger APIs using retrofit.
@@ -152,6 +153,13 @@ public class Api {
      */
     public DeviceService device() {
         return retrofit.create(DeviceService.class);
+    }
+
+    /**
+     * Gets a service that can be used for message requests.
+     */
+    public MessageService message() {
+        return retrofit.create(MessageService.class);
     }
 
 }

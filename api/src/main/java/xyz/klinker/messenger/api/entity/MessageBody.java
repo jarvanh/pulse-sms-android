@@ -29,6 +29,21 @@ public class MessageBody {
     public String messageFrom;
     public Integer color;
 
+    public MessageBody(int deviceId, int deviceConversationId, int messageType, String data,
+                       long timestamp, String mimeType, boolean read, boolean seen,
+                       String messageFrom, Integer color) {
+        this.deviceId = deviceId;
+        this.deviceConversationId = deviceConversationId;
+        this.messageType = messageType;
+        this.data = data;
+        this.timestamp = timestamp;
+        this.mimeType = mimeType;
+        this.read = read;
+        this.seen = seen;
+        this.messageFrom = messageFrom;
+        this.color = color;
+    }
+
     @Override
     public String toString() {
         return deviceId + ", " + deviceConversationId + ", " + messageType + ", " + data + ", " +
