@@ -195,7 +195,12 @@ public class MessageListFragment extends Fragment implements
             @Override
             public void onDragDismissed() {
                 dismissKeyboard();
-                getActivity().onBackPressed();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().onBackPressed();
+                    }
+                }, 100);
             }
         });
 
