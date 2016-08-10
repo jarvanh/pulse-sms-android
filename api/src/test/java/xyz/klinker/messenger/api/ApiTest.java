@@ -26,7 +26,7 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
 
 public class ApiTest {
 
-    public static final String USERNAME = "test@email.com";
+    public static final String USERNAME = "test@klinkerapps.com";
     public static final String PASSWORD = "test password";
 
     public Api api;

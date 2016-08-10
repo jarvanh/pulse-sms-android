@@ -29,14 +29,20 @@ import java.util.Locale;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
+import okio.GzipSink;
+import okio.Okio;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
+import xyz.klinker.messenger.api.service.BetaService;
 import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.MessageService;
 
@@ -132,6 +138,9 @@ public class Api {
             }
         });
 
+        // gzip all bodies, the server should automatically unzip them
+        // httpClient.addInterceptor(new GzipRequestInterceptor());
+
         Retrofit.Builder builder =
                 new Retrofit.Builder()
                         .baseUrl(baseUrl)
@@ -160,6 +169,46 @@ public class Api {
      */
     public MessageService message() {
         return retrofit.create(MessageService.class);
+    }
+
+    /**
+     * Gets a service that can be used for beta requests.
+     */
+    public BetaService beta() {
+        return retrofit.create(BetaService.class);
+    }
+
+    final class GzipRequestInterceptor implements Interceptor {
+        @Override public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+            Request originalRequest = chain.request();
+            if (originalRequest.body() == null || originalRequest.header("Content-Encoding") != null) {
+                return chain.proceed(originalRequest);
+            }
+
+            Request compressedRequest = originalRequest.newBuilder()
+                    .header("Content-Encoding", "gzip")
+                    .method(originalRequest.method(), gzip(originalRequest.body()))
+                    .build();
+            return chain.proceed(compressedRequest);
+        }
+
+        private RequestBody gzip(final RequestBody body) {
+            return new RequestBody() {
+                @Override public MediaType contentType() {
+                    return body.contentType();
+                }
+
+                @Override public long contentLength() {
+                    return -1; // We don't know the compressed length in advance!
+                }
+
+                @Override public void writeTo(BufferedSink sink) throws IOException {
+                    BufferedSink gzipSink = Okio.buffer(new GzipSink(sink));
+                    body.writeTo(gzipSink);
+                    gzipSink.close();
+                }
+            };
+        }
     }
 
 }
