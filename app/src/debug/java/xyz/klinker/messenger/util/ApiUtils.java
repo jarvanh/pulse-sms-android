@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-include ':app', ':giphy', ':api'
+package xyz.klinker.messenger.util;
+
+import xyz.klinker.messenger.api.Api;
+
+/**
+ * A helper for getting the correct API object.
+ */
+public class ApiUtils {
+
+    public static Api create() {
+        return new Api(Api.Environment.DEBUG);
+    }
+
+}
