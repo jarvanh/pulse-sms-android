@@ -1,5 +1,2 @@
 - Bug fixes<br/>
-- Invite friends<br/>
-- Scheduled messages<br/><br/>
-
-NOTE: a wipe of app data may be required for this update.
+- Copy message text with long click on message bubble<br/><br/>
