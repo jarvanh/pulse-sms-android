@@ -39,13 +39,13 @@ public interface AccountService {
     @POST("accounts/login")
     LoginResponse login(@Body LoginRequest request);
 
+    @POST("accounts/remove/{account_id}")
+    Object remove(@Path("account_id") String accountId);
+
     @GET("accounts/count")
     AccountCountResponse count(@Query("account_id") String accountId);
 
     @GET("accounts")
     AccountListResponse list(@Query("account_id") String accountId);
-
-    @POST("accounts/remove/{account_id}")
-    Object remove(@Path("account_id") String accountId);
 
 }

@@ -30,12 +30,12 @@ public interface DeviceService {
     @POST("devices/add")
     AddDeviceResponse add(@Body AddDeviceRequest request);
 
-    @POST("devices/remove/{id}")
-    Object remove(@Path("id") int id, @Query("account_id") String accountId);
-
     @POST("devices/update/{id}")
     Object update(@Path("id") int id, @Query("account_id") String accountId,
                   @Query("name") String name);
+
+    @POST("devices/remove/{id}")
+    Object remove(@Path("id") int id, @Query("account_id") String accountId);
 
     @GET("devices")
     DeviceBody[] list(@Query("account_id") String accountId);
