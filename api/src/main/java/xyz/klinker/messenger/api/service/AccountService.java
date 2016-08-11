@@ -19,6 +19,7 @@ package xyz.klinker.messenger.api.service;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import xyz.klinker.messenger.api.entity.AccountCountResponse;
 import xyz.klinker.messenger.api.entity.AccountListResponse;
@@ -43,5 +44,8 @@ public interface AccountService {
 
     @GET("accounts")
     AccountListResponse list(@Query("account_id") String accountId);
+
+    @POST("accounts/remove/{account_id}")
+    Object remove(@Path("account_id") String accountId);
 
 }

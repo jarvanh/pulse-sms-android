@@ -78,6 +78,12 @@ public class AccountTest extends ApiTest {
         assertNotNull(response);
     }
 
+    @Test
+    public void remove() {
+        String accountId = getAccountId();
+        api.account().remove(accountId);
 
+        assertNull(getLoginResponse());
+    }
 
 }
