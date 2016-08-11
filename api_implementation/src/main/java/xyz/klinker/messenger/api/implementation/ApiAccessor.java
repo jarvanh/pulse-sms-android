@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
+package xyz.klinker.messenger.api.implementation;
 
 import xyz.klinker.messenger.api.Api;
 
 /**
  * A helper for getting the correct API object.
  */
-public class ApiUtils {
+class ApiAccessor {
 
-    public static Api create() {
-        return new Api(Api.Environment.STAGING);
+    public static Api create(String environment) {
+        if (environment.equals("debug")) {
+            return new Api(Api.Environment.DEBUG);
+        } else if (environment.equals("staging")) {
+            return new Api(Api.Environment.STAGING);
+        } else {
+            return new Api(Api.Environment.RELEASE);
+        }
     }
 
 }

@@ -112,6 +112,7 @@ public class Api {
             .create();
 
     private Retrofit retrofit;
+    private String baseUrl;
 
     public enum Environment {
         DEBUG, STAGING, RELEASE
@@ -152,6 +153,7 @@ public class Api {
                         .addCallAdapterFactory(callAdapterFactory);
 
         this.retrofit = builder.client(httpClient.build()).build();
+        this.baseUrl = baseUrl;
     }
 
     /**
@@ -208,6 +210,10 @@ public class Api {
      */
     public BetaService beta() {
         return retrofit.create(BetaService.class);
+    }
+
+    public String baseUrl() {
+        return baseUrl;
     }
 
     final class GzipRequestInterceptor implements Interceptor {

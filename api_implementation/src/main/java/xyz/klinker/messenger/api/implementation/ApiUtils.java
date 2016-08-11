@@ -14,17 +14,24 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.util;
+package xyz.klinker.messenger.api.implementation;
+
+import android.content.Context;
 
 import xyz.klinker.messenger.api.Api;
 
-/**
- * A helper for getting the correct API object.
- */
 public class ApiUtils {
 
-    public static Api create() {
-        return new Api(Api.Environment.DEBUG);
+    private Context context;
+    private Api api;
+
+    public ApiUtils(Context context, String environment) {
+        this.context = context;
+        this.api = ApiAccessor.create(environment);
+    }
+
+    public Api getApi() {
+        return api;
     }
 
 }
