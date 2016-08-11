@@ -30,13 +30,37 @@ public class ConversationBody {
     public String phoneNumbers;
     public String snippet;
     public String ringtone;
+    public String imageUri;
     public String idMatcher;
     public boolean mute;
+
+    public ConversationBody(int deviceId, int color, int colorDark, int colorLight, int colorAccent,
+                            boolean pinned, boolean read, long timestamp, String title,
+                            String phoneNumbers, String snippet, String ringtone, String imageUri,
+                            String idMatcher, boolean mute) {
+        this.deviceId = deviceId;
+        this.color = color;
+        this.colorDark = colorDark;
+        this.colorLight = colorLight;
+        this.colorAccent = colorAccent;
+        this.pinned = pinned;
+        this.read = read;
+        this.timestamp = timestamp;
+        this.title = title;
+        this.phoneNumbers = phoneNumbers;
+        this.snippet = snippet;
+        this.ringtone = ringtone;
+        this.imageUri = imageUri;
+        this.idMatcher = idMatcher;
+        this.mute = mute;
+    }
 
     @Override
     public String toString() {
         return deviceId + ", " + color + ", " + colorDark + ", " + colorLight + ", " + colorAccent +
                 ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
-                phoneNumbers + ", " + snippet + ", " + ringtone + ", " + idMatcher + ", " + mute;
+                phoneNumbers + ", " + snippet + ", " + ringtone + ", " + imageUri + ", " +
+                idMatcher + ", " + mute;
     }
+
 }
