@@ -112,30 +112,25 @@ public class ContentObserverService extends Service {
                     message.fillFromCursor(search);
                     Conversation conversation = source.getConversation(message.conversationId);
 
-                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX) {
+                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
                         // if a message with the same body was received from the same person in the
                         // last minute and is the last message in that conversation, don't insert
                         // this one into the database because we already have it. Otherwise, do.
-                        if (!(message.data.equals(body) && message.type == Message.TYPE_RECEIVED &&
-                                PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
-                                message.timestamp > System.currentTimeMillis() - (1000 * 60) &&
-                                body.equals(conversation.snippet))) {
+                        if (!(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                                message.data.equals(body) && message.type == Message.TYPE_RECEIVED)) {
                             insertReceivedMessage(source, body, address);
                         }
-                    } else {
-                        // if a message with the same body was sent to the same person in the last
-                        // minute and is the last message in that conversation, don't insert this one
-                        // into the database because we already have it. Otherwise, do insert it.
+                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
+                        // if a message from the same person with the exact same body exists and the
+                        // type is not received, don't save the message. Otherwise, do.
                         //
                         // NOTE: we are just going to insert the message as sent here instead of
                         //       sending like it should be... this is because we won't get a callback
                         //       like we normally would for when the message has sent. This could be
                         //       handled in this content observer however, so we'll save that for
                         //       another time.
-                        if (!(message.data.equals(body) && message.type != Message.TYPE_RECEIVED &&
-                                PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
-                                message.timestamp > System.currentTimeMillis() - (1000 * 60) &&
-                                body.equals(conversation.snippet))) {
+                        if (!(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                                message.data.equals(body) && message.type != Message.TYPE_RECEIVED)) {
                             insertSentMessage(source, body, address);
                         }
                     }
