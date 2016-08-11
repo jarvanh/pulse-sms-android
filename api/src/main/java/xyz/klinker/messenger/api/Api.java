@@ -43,6 +43,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
 import xyz.klinker.messenger.api.service.BetaService;
+import xyz.klinker.messenger.api.service.BlacklistService;
 import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.MessageService;
 
@@ -169,6 +170,13 @@ public class Api {
      */
     public MessageService message() {
         return retrofit.create(MessageService.class);
+    }
+
+    /**
+     * Gets a service that can be used for blacklist requests.
+     */
+    public BlacklistService blacklist() {
+        return retrofit.create(BlacklistService.class);
     }
 
     /**

@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.api.entity;
+package xyz.klinker.messenger.api.service;
 
-public class BlacklistBody {
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
+import xyz.klinker.messenger.api.entity.BlacklistBody;
 
-    public int deviceId;
-    public String phoneNumber;
+public interface BlacklistService {
 
-    public BlacklistBody(int deviceId, String phoneNumber) {
-        this.deviceId = deviceId;
-        this.phoneNumber = phoneNumber;
-    }
+    @POST("blacklists/add")
+    Object add(@Body AddBlacklistRequest request);
 
-    @Override
-    public String toString() {
-        return deviceId + ", " + phoneNumber;
-    }
+    @POST("blacklists/remove")
+    Object remove(@Query("account_id") String accountId, @Query("device_id") int deviceId);
+
+    @GET("blacklists")
+    BlacklistBody[] list(@Query("account_id") String accountId);
 
 }

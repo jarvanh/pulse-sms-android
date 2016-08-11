@@ -16,19 +16,20 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class BlacklistBody {
+public class AddBlacklistRequest {
 
-    public int deviceId;
-    public String phoneNumber;
+    public String accountId;
+    public BlacklistBody[] blacklists;
 
-    public BlacklistBody(int deviceId, String phoneNumber) {
-        this.deviceId = deviceId;
-        this.phoneNumber = phoneNumber;
+    public AddBlacklistRequest(String accountId, BlacklistBody[] blacklists) {
+        this.accountId = accountId;
+        this.blacklists = blacklists;
     }
 
-    @Override
-    public String toString() {
-        return deviceId + ", " + phoneNumber;
+    public AddBlacklistRequest(String accountId, BlacklistBody blacklist) {
+        this.accountId = accountId;
+        this.blacklists = new BlacklistBody[1];
+        this.blacklists[0] = blacklist;
     }
 
 }
