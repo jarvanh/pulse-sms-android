@@ -16,26 +16,20 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class ScheduledMessageBody {
+public class AddScheduledMessageRequest {
 
-    public int deviceId;
-    public String to;
-    public String data;
-    public String mimeType;
-    public long timestamp;
+    public String accountId;
+    public ScheduledMessageBody[] scheduledMessages;
 
-    public ScheduledMessageBody(int deviceId, String to, String data, String mimeType,
-                                long timestamp) {
-        this.deviceId = deviceId;
-        this.to = to;
-        this.data = data;
-        this.mimeType = mimeType;
-        this.timestamp = timestamp;
+    public AddScheduledMessageRequest(String accountId, ScheduledMessageBody[] scheduledMessages) {
+        this.accountId = accountId;
+        this.scheduledMessages = scheduledMessages;
     }
 
-    @Override
-    public String toString() {
-        return deviceId + ", " + to + ", " + data + ", " + mimeType + ", " + timestamp;
+    public AddScheduledMessageRequest(String accountId, ScheduledMessageBody scheduledMessage) {
+        this.accountId = accountId;
+        this.scheduledMessages = new ScheduledMessageBody[1];
+        this.scheduledMessages[0] = scheduledMessage;
     }
 
 }

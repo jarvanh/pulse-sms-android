@@ -46,6 +46,7 @@ import xyz.klinker.messenger.api.service.BetaService;
 import xyz.klinker.messenger.api.service.BlacklistService;
 import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.MessageService;
+import xyz.klinker.messenger.api.service.ScheduledMessageService;
 
 /**
  * Direct access to the messenger APIs using retrofit.
@@ -173,6 +174,13 @@ public class Api {
     }
 
     /**
+     * Gets a service that can be used for scheduled message requests.
+     */
+    public ScheduledMessageService scheduled() {
+        return retrofit.create(ScheduledMessageService.class);
+    }
+
+    /**
      * Gets a service that can be used for blacklist requests.
      */
     public BlacklistService blacklist() {
@@ -187,9 +195,11 @@ public class Api {
     }
 
     final class GzipRequestInterceptor implements Interceptor {
-        @Override public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+        @Override
+        public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
             Request originalRequest = chain.request();
-            if (originalRequest.body() == null || originalRequest.header("Content-Encoding") != null) {
+            if (originalRequest.body() == null ||
+                    originalRequest.header("Content-Encoding") != null) {
                 return chain.proceed(originalRequest);
             }
 
@@ -202,15 +212,18 @@ public class Api {
 
         private RequestBody gzip(final RequestBody body) {
             return new RequestBody() {
-                @Override public MediaType contentType() {
+                @Override
+                public MediaType contentType() {
                     return body.contentType();
                 }
 
-                @Override public long contentLength() {
+                @Override
+                public long contentLength() {
                     return -1; // We don't know the compressed length in advance!
                 }
 
-                @Override public void writeTo(BufferedSink sink) throws IOException {
+                @Override
+                public void writeTo(BufferedSink sink) throws IOException {
                     BufferedSink gzipSink = Okio.buffer(new GzipSink(sink));
                     body.writeTo(gzipSink);
                     gzipSink.close();

@@ -45,6 +45,9 @@ public class MessageTest extends ApiTest {
         assertEquals(1, messages.length - originalSize);
 
         api.message().remove(1, accountId);
+
+        messages = api.message().list(accountId, null, null, null);
+        assertEquals(messages.length, originalSize);
     }
 
 }
