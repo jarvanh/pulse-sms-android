@@ -44,9 +44,7 @@ public class MessageTest extends ApiTest {
         MessageBody[] messages = api.message().list(accountId, null, null, null);
         assertEquals(1, messages.length - originalSize);
 
-        for (MessageBody m : messages) {
-            System.out.println(m);
-        }
+        api.message().remove(1, accountId);
     }
 
 }

@@ -34,6 +34,9 @@ public interface MessageService {
     Object update(@Path("device_id") int deviceId, @Query("account_id") String accountId,
                   @Body UpdateMessageRequest request);
 
+    @POST("messages/remove/{device_id}")
+    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+
     @GET("messages")
     MessageBody[] list(@Query("account_id") String accountId,
                        @Query("conversation_id") Integer conversationId,
