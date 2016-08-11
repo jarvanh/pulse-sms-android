@@ -40,7 +40,7 @@ public class BlacklistTest extends ApiTest {
         int newSize = api.blacklist().list(accountId).length;
         assertEquals(1, newSize - originalSize);
 
-        api.blacklist().remove(accountId, 1);
+        api.blacklist().remove(1, accountId);
 
         newSize = api.blacklist().list(accountId).length;
         assertEquals(newSize, originalSize);
