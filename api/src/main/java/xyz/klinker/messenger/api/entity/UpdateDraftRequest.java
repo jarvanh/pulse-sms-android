@@ -16,23 +16,14 @@
 
 package xyz.klinker.messenger.api.entity;
 
-public class DraftBody {
+public class UpdateDraftRequest {
 
-    public int deviceId;
-    public int deviceConversationId;
     public String data;
     public String mimeType;
 
-    public DraftBody(int deviceId, int deviceConversationId, String data, String mimeType) {
-        this.deviceId = deviceId;
-        this.deviceConversationId = deviceConversationId;
+    public UpdateDraftRequest(String data, String mimeType) {
         this.data = data;
         this.mimeType = mimeType;
-    }
-
-    @Override
-    public String toString() {
-        return deviceId + ", " + deviceConversationId + ", " + data + ", " + mimeType;
     }
 
 }
