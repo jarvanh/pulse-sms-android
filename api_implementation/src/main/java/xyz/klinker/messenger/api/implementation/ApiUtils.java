@@ -17,6 +17,9 @@
 package xyz.klinker.messenger.api.implementation;
 
 import xyz.klinker.messenger.api.Api;
+import xyz.klinker.messenger.api.entity.AddDeviceRequest;
+import xyz.klinker.messenger.api.entity.AddDeviceResponse;
+import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginRequest;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupRequest;
@@ -41,6 +44,19 @@ public class ApiUtils {
     public SignupResponse signup(String email, String password, String name, String phoneNumber) {
         SignupRequest request = new SignupRequest(email, name, password, phoneNumber);
         return api.account().signup(request);
+    }
+
+    public Integer registerDevice(String accountId, String info, String name,
+                                            boolean primary, String fcmToken) {
+        DeviceBody deviceBody = new DeviceBody(info, name, primary, fcmToken);
+        AddDeviceRequest request = new AddDeviceRequest(accountId, deviceBody);
+        AddDeviceResponse response = api.device().add(request);
+
+        if (response != null) {
+            return response.id;
+        } else {
+            return null;
+        }
     }
 
     public Api getApi() {

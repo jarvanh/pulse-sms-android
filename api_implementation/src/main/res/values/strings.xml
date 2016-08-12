@@ -31,5 +31,6 @@
     <string name="api_phone_number">Phone Number</string>
     <string name="api_connecting">Connecting to server…</string>
     <string name="api_error">An error occurred during the operation</string>
+    <string name="api_device_error">An error occurred while adding this device</string>
 
 </resources>

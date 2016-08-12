@@ -41,15 +41,17 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.my_account);
 
-        initSetupPreference();
-        findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
-        initMessageCountPreference();
+        if (initSetupPreference()) {
+            findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
+            initMessageCountPreference();
+        }
     }
 
-    private void initSetupPreference() {
+    private boolean initSetupPreference() {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
+        Settings settings = Settings.get(getActivity());
 
-        if (Settings.get(getActivity()).accountId == null && preference != null) {
+        if ((settings.accountId == null || settings.deviceId == null)  && preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -59,8 +61,18 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     return true;
                 }
             });
+
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_message_count)));
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_about_device_id)));
+
+            return false;
         } else if (preference != null) {
             getPreferenceScreen().removePreference(preference);
+            return true;
+        } else {
+            return true;
         }
     }
 
@@ -88,15 +100,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
      * @return the device id.
      */
     private String getDeviceId() {
-        Settings settings = Settings.get(getContext());
-        String deviceId = settings.deviceId;
-
-        if (deviceId == null) {
-            deviceId = StringUtils.generateHexString(32);
-            settings.setValue(getString(R.string.pref_device_id), deviceId);
-        }
-
-        return deviceId;
+        return Settings.get(getContext()).deviceId;
     }
 
     @Override

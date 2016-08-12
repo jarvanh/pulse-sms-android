@@ -24,4 +24,5 @@ public class AddDeviceResponse {
     public String toString() {
         return id + "";
     }
+
 }

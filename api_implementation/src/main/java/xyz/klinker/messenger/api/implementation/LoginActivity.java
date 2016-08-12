@@ -43,6 +43,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import xyz.klinker.messenger.api.entity.AddDeviceResponse;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.encryption.KeyUtils;
@@ -219,11 +220,13 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
+                    final boolean successful = addDevice(utils, response.accountId);
+
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             dialog.dismiss();
-                            setResult(RESULT_OK);
+                            setResult(successful ? RESULT_OK : RESULT_CANCELED);
                             close();
                         }
                     });
@@ -257,7 +260,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    // TODO save response and hashed password to shared prefs
                     KeyUtils keyUtils = new KeyUtils();
                     SharedPreferences sharedPrefs = PreferenceManager
                             .getDefaultSharedPreferences(getApplicationContext());
@@ -270,17 +272,48 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
+                    final boolean successful = addDevice(utils, response.accountId);
+
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             dialog.dismiss();
-                            setResult(RESULT_OK);
+                            setResult(successful ? RESULT_OK : RESULT_CANCELED);
                             close();
                         }
                     });
                 }
             }
         }).start();
+    }
+
+    private boolean addDevice(ApiUtils utils, String accountId) {
+        Integer deviceId = utils.registerDevice(accountId, Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
+                getPhoneNumber() != null, getFirebaseId());
+
+        if (deviceId != null) {
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putString("device_id", Integer.toString(deviceId))
+                    .apply();
+
+            return true;
+        } else {
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putString("device_id", null)
+                    .apply();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), R.string.api_device_error,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return false;
+        }
     }
 
     private void attachLoginTextWatcher(EditText editText) {
@@ -486,6 +519,11 @@ public class LoginActivity extends AppCompatActivity {
         TelephonyManager telephonyManager = (TelephonyManager)
                 getSystemService(Context.TELEPHONY_SERVICE);
         return PhoneNumberUtils.stripSeparators(telephonyManager.getLine1Number());
+    }
+
+    private String getFirebaseId() {
+        // TODO implement
+        return "1";
     }
 
     private boolean isValidEmail(CharSequence target) {

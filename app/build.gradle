@@ -135,3 +135,5 @@ dependencies {
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.0'
     testCompile 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
+
+apply plugin: 'com.google.gms.google-services'

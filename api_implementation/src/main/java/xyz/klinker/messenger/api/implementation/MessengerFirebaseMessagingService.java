@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.fragment.settings;
+package xyz.klinker.messenger.api.implementation;
 
-import org.junit.Before;
-import org.junit.Test;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 
-import xyz.klinker.messenger.MessengerRobolectricSuite;
+public class MessengerFirebaseMessagingService extends Service {
 
-import static org.junit.Assert.*;
-
-public class MyAccountFragmentTest extends MessengerRobolectricSuite {
-
-    private MyAccountFragment fragment;
-
-    @Before
-    public void setUp() {
-        fragment = startFragment(new MyAccountFragment());
-    }
-
-    @Test
-    public void isAdded() {
-        assertTrue(fragment.isAdded());
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
 }
