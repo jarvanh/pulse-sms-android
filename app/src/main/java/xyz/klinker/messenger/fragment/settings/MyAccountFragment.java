@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,8 @@ import xyz.klinker.messenger.util.StringUtils;
  */
 public class MyAccountFragment extends PreferenceFragmentCompat {
 
+    private static final int SETUP_REQUEST = 54321;
+
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.my_account);
@@ -45,15 +48,20 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
     private void initSetupPreference() {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                intent.putExtra(LoginActivity.EXTRA_ENVIRONMENT, getString(R.string.environment));
-                startActivity(intent);
-                return true;
-            }
-        });
+
+        if (Settings.get(getActivity()).accountId == null && preference != null) {
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.putExtra(LoginActivity.EXTRA_ENVIRONMENT, getString(R.string.environment));
+                    startActivityForResult(intent, SETUP_REQUEST);
+                    return true;
+                }
+            });
+        } else if (preference != null) {
+            getPreferenceScreen().removePreference(preference);
+        }
     }
 
     private void initMessageCountPreference() {
@@ -79,7 +87,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
      *
      * @return the device id.
      */
-    public String getDeviceId() {
+    private String getDeviceId() {
         Settings settings = Settings.get(getContext());
         String deviceId = settings.deviceId;
 
@@ -89,6 +97,14 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         }
 
         return deviceId;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int responseCode, Intent data) {
+        Settings.get(getActivity()).forceUpdate();
+        if (requestCode == SETUP_REQUEST && responseCode == Activity.RESULT_OK) {
+            initSetupPreference();
+        }
     }
 
 }

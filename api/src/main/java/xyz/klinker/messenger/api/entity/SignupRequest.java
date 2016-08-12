@@ -26,8 +26,8 @@ public class SignupRequest {
     public String password;
     public String phoneNumber;
 
-    public SignupRequest(String name, String realName, String password, String phoneNumber) {
-        this.name = name;
+    public SignupRequest(String username, String realName, String password, String phoneNumber) {
+        this.name = username;
         this.realName = realName;
         this.password = password;
         this.phoneNumber = phoneNumber;

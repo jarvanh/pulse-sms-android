@@ -41,6 +41,9 @@ public class Settings {
     public boolean vibrate;
     public long snooze;
     public boolean darkTheme;
+    public String accountId;
+    public String salt;
+    public String passhash;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -77,6 +80,9 @@ public class Settings {
         this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
         this.darkTheme = sharedPrefs.getBoolean(context.getString(R.string.pref_dark_theme), false);
+        this.accountId = sharedPrefs.getString(context.getString(R.string.pref_account_id), null);
+        this.salt = sharedPrefs.getString(context.getString(R.string.pref_salt), null);
+        this.passhash = sharedPrefs.getString(context.getString(R.string.pref_passhash), null);
 
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();

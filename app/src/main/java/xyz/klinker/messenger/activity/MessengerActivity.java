@@ -601,6 +601,11 @@ public class MessengerActivity extends AppCompatActivity
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
+        } else {
+            fragment = getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+            if (fragment != null) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);

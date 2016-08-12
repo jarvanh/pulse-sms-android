@@ -31,8 +31,7 @@ public class ApiUtilsTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        apiUtils = new ApiUtils(RuntimeEnvironment.application,
-                RuntimeEnvironment.application.getString(R.string.environment));
+        apiUtils = new ApiUtils(RuntimeEnvironment.application.getString(R.string.environment));
     }
 
     @Test

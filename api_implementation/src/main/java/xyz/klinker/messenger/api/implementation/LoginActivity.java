@@ -18,17 +18,34 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import xyz.klinker.messenger.api.entity.LoginResponse;
+import xyz.klinker.messenger.api.entity.SignupResponse;
+import xyz.klinker.messenger.encryption.KeyUtils;
 
 /**
  * Activity for logging a user in using the API
@@ -38,6 +55,14 @@ public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_ENVIRONMENT = "environment";
 
     private String environment;
+    private boolean isInitial = true;
+
+    private FloatingActionButton fab;
+    private EditText email;
+    private EditText password;
+    private EditText passwordConfirmation;
+    private EditText name;
+    private EditText phoneNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                animateLayoutIn();
+                circularRevealIn();
             }
         }, 100);
     }
@@ -77,14 +102,14 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                login();
             }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                signup();
             }
         });
 
@@ -96,7 +121,220 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void animateLayoutIn() {
+    private void login() {
+        slideLoginIn();
+
+        fab = (FloatingActionButton) findViewById(R.id.login_fab);
+        email = (EditText) findViewById(R.id.login_email);
+        password = (EditText) findViewById(R.id.login_password);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                performLogin();
+            }
+        });
+
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
+                        actionId == EditorInfo.IME_ACTION_DONE) {
+                    fab.performClick();
+                }
+
+                return handled;
+            }
+        });
+
+        fab.hide();
+        attachLoginTextWatcher(email);
+        attachLoginTextWatcher(password);
+    }
+
+    private void signup() {
+        slideSignUpIn();
+
+        fab = (FloatingActionButton) findViewById(R.id.signup_fab);
+        email = (EditText) findViewById(R.id.signup_email);
+        password = (EditText) findViewById(R.id.signup_password);
+        passwordConfirmation = (EditText) findViewById(R.id.signup_password_confirmation);
+        name = (EditText) findViewById(R.id.signup_name);
+        phoneNumber = (EditText) findViewById(R.id.signup_phone_number);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                performSignup();
+            }
+        });
+
+        fab.hide();
+        attachSignupTextWatcher(email);
+        attachSignupTextWatcher(password);
+        attachSignupTextWatcher(passwordConfirmation);
+        attachSignupTextWatcher(name);
+        attachSignupTextWatcher(phoneNumber);
+
+        name.setText(getName());
+        phoneNumber.setText(getPhoneNumber());
+    }
+
+    private void performLogin() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.api_connecting));
+        dialog.show();
+
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ApiUtils utils = new ApiUtils(environment);
+                final LoginResponse response = utils.login(email.getText().toString(),
+                        password.getText().toString());
+
+                if (response == null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            setResult(RESULT_CANCELED);
+                            Toast.makeText(getApplicationContext(), R.string.api_error,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    KeyUtils keyUtils = new KeyUtils();
+                    SharedPreferences sharedPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext());
+                    sharedPrefs.edit()
+                            .putString("my_name", response.name)
+                            .putString("my_phone_number", response.phoneNumber)
+                            .putString("account_id", response.accountId)
+                            .putString("salt", response.salt1)
+                            .putString("passhash", keyUtils.hashPassword(
+                                    password.getText().toString(), response.salt2))
+                            .apply();
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            setResult(RESULT_OK);
+                            close();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private void performSignup() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.api_connecting));
+        dialog.show();
+
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ApiUtils utils = new ApiUtils(environment);
+                final SignupResponse response = utils.signup(email.getText().toString(),
+                        password.getText().toString(), name.getText().toString(),
+                        phoneNumber.getText().toString());
+
+                if (response == null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            setResult(RESULT_CANCELED);
+                            Toast.makeText(getApplicationContext(), R.string.api_error,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // TODO save response and hashed password to shared prefs
+                    KeyUtils keyUtils = new KeyUtils();
+                    SharedPreferences sharedPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext());
+                    sharedPrefs.edit()
+                            .putString("my_name", name.getText().toString())
+                            .putString("my_phone_number", phoneNumber.getText().toString())
+                            .putString("account_id", response.accountId)
+                            .putString("salt", response.salt1)
+                            .putString("passhash", keyUtils.hashPassword(
+                                    password.getText().toString(), response.salt2))
+                            .apply();
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            setResult(RESULT_OK);
+                            close();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private void attachLoginTextWatcher(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (isFilled(email) && isFilled(password) && isValidEmail(email.getText())) {
+                    fab.show();
+                } else {
+                    fab.hide();
+                }
+            }
+        });
+    }
+
+    private void attachSignupTextWatcher(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (isFilled(email) && isFilled(password) && isFilled(passwordConfirmation) &&
+                        isFilled(name) && isFilled(phoneNumber) && isValidEmail(email.getText())) {
+                    fab.show();
+                } else {
+                    fab.hide();
+                }
+            }
+        });
+    }
+
+    private boolean isFilled(EditText editText) {
+        return editText.getText() != null && editText.getText().length() != 0;
+    }
+
+    private void circularRevealIn() {
         View view = findViewById(R.id.initial_layout);
         view.setVisibility(View.VISIBLE);
 
@@ -111,7 +349,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void animateLayoutOut() {
+    private void circularRevealOut() {
         final View view = findVisibleHolder();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -124,7 +362,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    view.setVisibility(View.GONE);
+                    view.setVisibility(View.INVISIBLE);
                     close();
                 }
             });
@@ -141,14 +379,75 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void slideLoginIn() {
+        slideIn(findViewById(R.id.login_layout));
+    }
+
+    private void slideSignUpIn() {
+        slideIn(findViewById(R.id.signup_layout));
+    }
+
+    private void slideIn(View view) {
+        isInitial = false;
+        final View initial = findViewById(R.id.initial_layout);
+
+        view.setVisibility(View.VISIBLE);
+        view.setAlpha(0f);
+        view.setTranslationX(view.getWidth());
+        view.animate()
+                .alpha(1f)
+                .translationX(0)
+                .setListener(null)
+                .start();
+
+        initial.animate()
+                .alpha(0f)
+                .translationX(-1 * initial.getWidth())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        initial.setVisibility(View.INVISIBLE);
+                        initial.setTranslationX(0);
+                    }
+                }).start();
+    }
+
+    private void slideOut() {
+        isInitial = true;
+        final View visible = findVisibleHolder();
+        View initial = findViewById(R.id.initial_layout);
+
+        visible.animate()
+                .alpha(0f)
+                .translationX(visible.getWidth())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        visible.setVisibility(View.INVISIBLE);
+                        visible.setTranslationX(0);
+                    }
+                }).start();
+
+        initial.setVisibility(View.VISIBLE);
+        initial.setAlpha(0f);
+        initial.setTranslationX(-1 * initial.getWidth());
+        initial.animate()
+                .alpha(1f)
+                .translationX(0)
+                .setListener(null)
+                .start();
+    }
+
     private View findVisibleHolder() {
         View initial = findViewById(R.id.initial_layout);
         View login = findViewById(R.id.login_layout);
         View signup = findViewById(R.id.signup_layout);
 
-        if (initial.getVisibility() != View.GONE) {
+        if (initial.getVisibility() != View.INVISIBLE) {
             return initial;
-        } else if (login.getVisibility() != View.GONE) {
+        } else if (login.getVisibility() != View.INVISIBLE) {
             return login;
         } else {
             return signup;
@@ -157,7 +456,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        animateLayoutOut();
+        if (isInitial) {
+            circularRevealOut();
+        } else {
+            slideOut();
+        }
     }
 
     private void close() {
@@ -182,7 +485,12 @@ public class LoginActivity extends AppCompatActivity {
     private String getPhoneNumber() {
         TelephonyManager telephonyManager = (TelephonyManager)
                 getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getLine1Number();
+        return PhoneNumberUtils.stripSeparators(telephonyManager.getLine1Number());
+    }
+
+    private boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
 }

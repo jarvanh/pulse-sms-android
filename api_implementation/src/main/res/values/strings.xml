@@ -24,5 +24,12 @@
     <string name="api_skip_signup">Or, if you just want to use the app on this device and not the network
         features such as texting from a tablet or computer, you can skip this step:</string>
     <string name="api_skip">Skip</string>
+    <string name="api_email">Email Address</string>
+    <string name="api_password">Password</string>
+    <string name="api_password_confirmation">Password Confirmation</string>
+    <string name="api_name">Name</string>
+    <string name="api_phone_number">Phone Number</string>
+    <string name="api_connecting">Connecting to server…</string>
+    <string name="api_error">An error occurred during the operation</string>
 
 </resources>

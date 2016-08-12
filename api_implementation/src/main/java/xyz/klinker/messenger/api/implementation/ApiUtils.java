@@ -16,18 +16,31 @@
 
 package xyz.klinker.messenger.api.implementation;
 
-import android.content.Context;
-
 import xyz.klinker.messenger.api.Api;
+import xyz.klinker.messenger.api.entity.LoginRequest;
+import xyz.klinker.messenger.api.entity.LoginResponse;
+import xyz.klinker.messenger.api.entity.SignupRequest;
+import xyz.klinker.messenger.api.entity.SignupResponse;
 
+/**
+ * Utility for easing access to APIs.
+ */
 public class ApiUtils {
 
-    private Context context;
     private Api api;
 
-    public ApiUtils(Context context, String environment) {
-        this.context = context;
+    public ApiUtils(String environment) {
         this.api = ApiAccessor.create(environment);
+    }
+
+    public LoginResponse login(String email, String password) {
+        LoginRequest request = new LoginRequest(email, password);
+        return api.account().login(request);
+    }
+
+    public SignupResponse signup(String email, String password, String name, String phoneNumber) {
+        SignupRequest request = new SignupRequest(email, name, password, phoneNumber);
+        return api.account().signup(request);
     }
 
     public Api getApi() {

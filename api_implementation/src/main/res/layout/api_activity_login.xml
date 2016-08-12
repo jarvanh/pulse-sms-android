@@ -16,6 +16,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/api_window_background"
@@ -81,28 +82,133 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="300dp"
+    <RelativeLayout
+        android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:background="@color/api_login_background"
-        android:padding="16dp"
         android:id="@+id/login_layout"
-        android:elevation="4dp"
-        android:visibility="gone"/>
+        android:visibility="invisible">
 
-    <View
-        android:layout_width="300dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/api_login_background"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:id="@+id/login_dialog">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_email"
+                android:inputType="textEmailAddress"
+                android:hint="@string/api_email"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_password"
+                android:inputType="textPassword"
+                android:hint="@string/api_password"
+                android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/api_forward"
+            android:id="@+id/login_fab"
+            android:layout_below="@id/login_dialog"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:fabSize="normal"
+            app:borderWidth="0dp"
+            app:backgroundTint="@color/api_fab_background"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:background="@color/api_login_background"
-        android:padding="16dp"
         android:id="@+id/signup_layout"
-        android:elevation="4dp"
-        android:visibility="gone"/>
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/api_login_background"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:id="@+id/signup_dialog">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_email"
+                android:inputType="textEmailAddress"
+                android:hint="@string/api_email"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_password"
+                android:inputType="textPassword"
+                android:hint="@string/api_password"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_password_confirmation"
+                android:inputType="textPassword"
+                android:hint="@string/api_password_confirmation"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_name"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:hint="@string/api_name"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_phone_number"
+                android:hint="@string/api_phone_number"
+                android:inputType="phone"
+                android:enabled="false"
+                android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/api_forward"
+            android:id="@+id/signup_fab"
+            android:layout_below="@id/signup_dialog"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:fabSize="normal"
+            app:borderWidth="0dp"
+            app:backgroundTint="@color/api_fab_background"/>
+
+    </RelativeLayout>
 
 </FrameLayout>
