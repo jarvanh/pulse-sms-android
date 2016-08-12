@@ -64,6 +64,7 @@ import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
@@ -175,7 +176,7 @@ public class MessengerActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.drawer_header_my_name))
                         .setText(settings.myName);
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
-                        .setText(settings.myPhoneNumber);
+                        .setText(PhoneNumberUtils.format(settings.myPhoneNumber));
                 initSnooze();
             }
         }, 250);

@@ -32,7 +32,7 @@ public interface DeviceService {
 
     @POST("devices/update/{id}")
     Object update(@Path("id") int id, @Query("account_id") String accountId,
-                  @Query("name") String name);
+                  @Query("name") String name, @Query("fcm_token") String fcmToken);
 
     @POST("devices/remove/{id}")
     Object remove(@Path("id") int id, @Query("account_id") String accountId);

@@ -40,7 +40,8 @@ public class DeviceTest extends ApiTest {
         assertEquals(1, devices.length);
         assertEquals("test device", devices[0].name);
 
-        api.device().update(response.id, accountId, "test device 2");
+        api.device().update(response.id, accountId, "test device 2", null);
+        api.device().update(response.id, accountId, null, "3");
 
         devices = api.device().list(accountId);
         assertEquals(1, devices.length);

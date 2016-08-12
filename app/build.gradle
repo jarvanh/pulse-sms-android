@@ -92,7 +92,8 @@ android {
     lintOptions {
         abortOnError true
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
-                'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager'
+                'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
+                'UnusedResources'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

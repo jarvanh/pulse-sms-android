@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import java.lang.reflect.Field;
 
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ContentObserverService;
 
@@ -41,6 +42,8 @@ public class MessengerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 
         if (Settings.get(this).darkTheme) {

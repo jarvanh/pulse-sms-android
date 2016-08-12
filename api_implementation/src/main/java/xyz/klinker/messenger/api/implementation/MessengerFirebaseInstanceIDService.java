@@ -16,17 +16,27 @@
 
 package xyz.klinker.messenger.api.implementation;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-public class MessengerFirebaseInstanceIDService extends Service {
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
-    @Nullable
+public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdService {
+
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public void onTokenRefresh() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String deviceId = sharedPrefs.getString("device_id", null);
+
+        if (deviceId != null) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            String accountId = sharedPrefs.getString("account_id", null);
+
+            new ApiUtils().updateDevice(accountId, Integer.parseInt(deviceId),
+                    null, refreshedToken);
+        }
+
     }
 
 }

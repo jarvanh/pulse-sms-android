@@ -56,7 +56,6 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intent = new Intent(getContext(), LoginActivity.class);
-                    intent.putExtra(LoginActivity.EXTRA_ENVIRONMENT, getString(R.string.environment));
                     startActivityForResult(intent, SETUP_REQUEST);
                     return true;
                 }

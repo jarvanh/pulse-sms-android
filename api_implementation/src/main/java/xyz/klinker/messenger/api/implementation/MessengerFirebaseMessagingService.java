@@ -16,17 +16,24 @@
 
 package xyz.klinker.messenger.api.implementation;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
+import android.util.Log;
 
-public class MessengerFirebaseMessagingService extends Service {
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
-    @Nullable
+public class MessengerFirebaseMessagingService extends FirebaseMessagingService {
+
+    private static final String TAG = "FCMService";
+
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        }
     }
 
 }

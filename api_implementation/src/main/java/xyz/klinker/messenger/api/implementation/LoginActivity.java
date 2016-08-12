@@ -43,7 +43,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import xyz.klinker.messenger.api.entity.AddDeviceResponse;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.encryption.KeyUtils;
@@ -53,9 +54,6 @@ import xyz.klinker.messenger.encryption.KeyUtils;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ENVIRONMENT = "environment";
-
-    private String environment;
     private boolean isInitial = true;
 
     private FloatingActionButton fab;
@@ -68,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnvironment();
         setContentView(R.layout.api_activity_login);
         setUpInitialLayout();
 
@@ -78,15 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                 circularRevealIn();
             }
         }, 100);
-    }
-
-    private void setEnvironment() {
-        if (getIntent().getExtras() != null &&
-                getIntent().getExtras().containsKey(EXTRA_ENVIRONMENT)) {
-            environment = getIntent().getStringExtra(EXTRA_ENVIRONMENT);
-        } else {
-            environment = "release";
-        }
     }
 
     private void setUpInitialLayout() {
@@ -193,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ApiUtils utils = new ApiUtils(environment);
+                ApiUtils utils = new ApiUtils();
                 final LoginResponse response = utils.login(email.getText().toString(),
                         password.getText().toString());
 
@@ -244,7 +232,7 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ApiUtils utils = new ApiUtils(environment);
+                ApiUtils utils = new ApiUtils();
                 final SignupResponse response = utils.signup(email.getText().toString(),
                         password.getText().toString(), name.getText().toString(),
                         phoneNumber.getText().toString());
@@ -522,8 +510,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getFirebaseId() {
-        // TODO implement
-        return "1";
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     private boolean isValidEmail(CharSequence target) {

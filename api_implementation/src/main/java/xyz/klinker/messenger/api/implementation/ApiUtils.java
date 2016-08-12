@@ -30,9 +30,11 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
  */
 public class ApiUtils {
 
+    public static String environment;
+
     private Api api;
 
-    public ApiUtils(String environment) {
+    public ApiUtils() {
         this.api = ApiAccessor.create(environment);
     }
 
@@ -57,6 +59,10 @@ public class ApiUtils {
         } else {
             return null;
         }
+    }
+
+    public void updateDevice(String accountId, int deviceId, String name, String fcmToken) {
+        api.device().update(deviceId, accountId, name, fcmToken);
     }
 
     public Api getApi() {
