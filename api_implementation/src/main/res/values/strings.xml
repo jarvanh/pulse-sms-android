@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
@@ -14,12 +15,14 @@
   ~ limitations under the License.
   -->
 
-<manifest package="xyz.klinker.messenger.api.implementation"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
-    <application >
-        <activity android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.Translucent"/>
-    </application>
+    <string name="api_login">Login</string>
+    <string name="api_signup">Sign Up</string>
+    <string name="api_signup_failed">Cannot sign up on this device, you must register with a primary
+        device that has a phone number first!</string>
+    <string name="api_skip_signup">Or, if you just want to use the app on this device and not the network
+        features such as texting from a tablet or computer, you can skip this step:</string>
+    <string name="api_skip">Skip</string>
 
-</manifest>
+</resources>

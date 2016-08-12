@@ -22,6 +22,7 @@
     <string name="pref_my_phone_number" translatable="false">my_phone_number</string>
 
     <string name="pref_device_id" translatable="false">device_id</string>
+    <string name="pref_my_account_setup" translatable="false">my_account_setup</string>
 
     <string name="pref_about_changelog" translatable="false">changelog</string>
     <string name="pref_about_copyright" translatable="false">copyright</string>

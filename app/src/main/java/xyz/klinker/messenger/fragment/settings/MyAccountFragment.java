@@ -16,12 +16,14 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.util.StringUtils;
@@ -36,8 +38,20 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.my_account);
 
+        initSetupPreference();
         findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
         initMessageCountPreference();
+    }
+
+    private void initSetupPreference() {
+        Preference preference = findPreference(getString(R.string.pref_my_account_setup));
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getContext(), LoginActivity.class));
+                return true;
+            }
+        });
     }
 
     private void initMessageCountPreference() {

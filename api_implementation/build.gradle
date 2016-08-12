@@ -19,9 +19,10 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
+    resourcePrefix 'api_'
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -49,4 +50,5 @@ android {
 dependencies {
     compile project(":api")
     compile project(":encryption")
+    compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
 }
