@@ -23,6 +23,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
@@ -51,7 +53,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Settings settings = Settings.get(getActivity());
 
-        if (preference != null) {
+        if ((settings.accountId == null || settings.deviceId == null)  && preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -68,7 +70,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
             return false;
         } else if (preference != null) {
-            //getPreferenceScreen().removePreference(preference);
+            getPreferenceScreen().removePreference(preference);
             return true;
         } else {
             return true;
@@ -99,7 +101,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
      * @return the device id.
      */
     private String getDeviceId() {
-        return Settings.get(getContext()).deviceId;
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override
