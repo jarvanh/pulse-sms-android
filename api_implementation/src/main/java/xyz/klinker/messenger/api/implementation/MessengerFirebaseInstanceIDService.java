@@ -29,6 +29,13 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String deviceId = sharedPrefs.getString("device_id", null);
 
+        try {
+            Integer.parseInt(deviceId);
+        } catch (Exception e) {
+            sharedPrefs.edit().remove("device_id").apply();
+            deviceId = null;
+        }
+
         if (deviceId != null) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             String accountId = sharedPrefs.getString("account_id", null);
