@@ -35,9 +35,14 @@ import android.widget.Button;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String EXTRA_ENVIRONMENT = "environment";
+
+    private String environment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setEnvironment();
         setContentView(R.layout.api_activity_login);
         setUpInitialLayout();
 
@@ -47,6 +52,15 @@ public class LoginActivity extends AppCompatActivity {
                 animateLayoutIn();
             }
         }, 100);
+    }
+
+    private void setEnvironment() {
+        if (getIntent().getExtras() != null &&
+                getIntent().getExtras().containsKey(EXTRA_ENVIRONMENT)) {
+            environment = getIntent().getStringExtra(EXTRA_ENVIRONMENT);
+        } else {
+            environment = "release";
+        }
     }
 
     private void setUpInitialLayout() {

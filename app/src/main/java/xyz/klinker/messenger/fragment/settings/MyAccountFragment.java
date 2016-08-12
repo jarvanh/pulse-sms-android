@@ -48,7 +48,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.putExtra(LoginActivity.EXTRA_ENVIRONMENT, getString(R.string.environment));
+                startActivity(intent);
                 return true;
             }
         });

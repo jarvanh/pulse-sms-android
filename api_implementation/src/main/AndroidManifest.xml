@@ -19,7 +19,7 @@
 
     <application >
         <activity android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.Translucent"/>
+            android:theme="@style/api_Theme.AppCompat.Translucent"/>
     </application>
 
 </manifest>
