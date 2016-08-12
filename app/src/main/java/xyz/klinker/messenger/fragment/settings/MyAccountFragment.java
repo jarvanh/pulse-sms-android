@@ -23,8 +23,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
@@ -101,7 +99,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
      * @return the device id.
      */
     private String getDeviceId() {
-        return FirebaseInstanceId.getInstance().getToken();
+        return Settings.get(getContext()).deviceId;
     }
 
     @Override
