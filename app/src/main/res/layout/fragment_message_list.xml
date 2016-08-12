@@ -98,16 +98,33 @@
             android:alpha="0"
             android:translationY="-32dp">
 
-            <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_attach"
-                android:background="?android:attr/selectableItemBackground"
-                android:tint="@color/secondaryText"
-                android:id="@+id/attach"
-                android:clickable="true"
-                android:layout_marginEnd="8dp"
-                android:contentDescription="@string/attach"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp">
+
+                <ImageButton
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_attach"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@color/secondaryText"
+                    android:id="@+id/attach"
+                    android:clickable="true"
+                    android:contentDescription="@string/attach"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="2dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="12sp"
+                    android:id="@+id/text_counter"
+                    android:textColor="@color/secondaryText"/>
+
+            </RelativeLayout>
 
             <EditText
                 android:layout_width="0dp"
@@ -126,33 +143,16 @@
                 android:imeOptions="actionSend"
                 android:maxLines="5"/>
 
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_send"
-                    android:id="@+id/send"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    android:layout_centerInParent="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="2dp"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="12sp"
-                    android:id="@+id/text_counter"
-                    android:textColor="@color/secondaryText"/>
-
-            </RelativeLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_send"
+                android:id="@+id/send"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
