@@ -105,8 +105,15 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         Settings.get(getActivity()).forceUpdate();
-        if (requestCode == SETUP_REQUEST && responseCode == Activity.RESULT_OK) {
+        if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
             initSetupPreference();
+
+            if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
+                // TODO start uploading messages that are in the database (we've already synced them
+                // since this is after the initial setup
+            } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
+                // TODO wipe the database then find the messages from the network and insert them
+            }
         }
     }
 

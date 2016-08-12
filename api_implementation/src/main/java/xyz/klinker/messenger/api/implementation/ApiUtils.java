@@ -61,6 +61,14 @@ public class ApiUtils {
         }
     }
 
+    public void removeDevice(String accountId, int deviceId) {
+        api.device().remove(deviceId, accountId);
+    }
+
+    public DeviceBody[] getDevices(String accountId) {
+        return api.device().list(accountId);
+    }
+
     public void updateDevice(String accountId, int deviceId, String name, String fcmToken) {
         api.device().update(deviceId, accountId, name, fcmToken);
     }

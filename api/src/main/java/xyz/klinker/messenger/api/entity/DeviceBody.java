@@ -18,6 +18,7 @@ package xyz.klinker.messenger.api.entity;
 
 public class DeviceBody {
 
+    public int id;
     public String info;
     public String name;
     public boolean primary;

@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
@@ -28,12 +29,14 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -45,6 +48,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.encryption.KeyUtils;
@@ -54,6 +58,9 @@ import xyz.klinker.messenger.encryption.KeyUtils;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    public static final int RESULT_START_NETWORK_SYNC = 32;
+    public static final int RESULT_START_DEVICE_SYNC = 33;
+
     private boolean isInitial = true;
 
     private FloatingActionButton fab;
@@ -62,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordConfirmation;
     private EditText name;
     private EditText phoneNumber;
+    private ProgressDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,11 +181,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performLogin() {
-        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
 
-        final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -186,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                         password.getText().toString());
 
                 if (response == null) {
-                    handler.post(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             dialog.dismiss();
@@ -208,23 +215,14 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    final boolean successful = addDevice(utils, response.accountId);
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            setResult(successful ? RESULT_OK : RESULT_CANCELED);
-                            close();
-                        }
-                    });
+                    addDevice(utils, response.accountId, getPhoneNumber() != null);
                 }
             }
         }).start();
     }
 
     private void performSignup() {
-        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
 
@@ -238,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                         phoneNumber.getText().toString());
 
                 if (response == null) {
-                    handler.post(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             dialog.dismiss();
@@ -260,48 +258,106 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    final boolean successful = addDevice(utils, response.accountId);
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            setResult(successful ? RESULT_OK : RESULT_CANCELED);
-                            close();
-                        }
-                    });
+                    addDevice(utils, response.accountId, true);
                 }
             }
         }).start();
     }
 
-    private boolean addDevice(ApiUtils utils, String accountId) {
-        Integer deviceId = utils.registerDevice(accountId, Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
-                getPhoneNumber() != null, getFirebaseId());
+    private void addDevice(final ApiUtils utils, final String accountId, final boolean primary) {
+        Integer deviceId = utils.registerDevice(accountId,
+                Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
+                primary, getFirebaseId());
 
         if (deviceId != null) {
             PreferenceManager.getDefaultSharedPreferences(this)
                     .edit()
                     .putString("device_id", Integer.toString(deviceId))
-                    .apply();
-
-            return true;
-        } else {
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putString("device_id", null)
+                    .putBoolean("primary", primary)
                     .apply();
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), R.string.api_device_error,
-                            Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    setResult(primary ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
+                    close();
                 }
             });
+        } else {
+            DeviceBody[] devices = utils.getDevices(accountId);
+            if (devices == null) {
+                failAddDevice();
+            } else {
+                int primaryLocation = -1;
+                for (int i = 0; i < devices.length; i++) {
+                    if (devices[i].primary) {
+                        primaryLocation = i;
+                        break;
+                    }
+                }
 
-            return false;
+                if (primaryLocation == -1) {
+                    failAddDevice();
+                }
+
+                final DeviceBody device = devices[primaryLocation];
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = getString(R.string.api_add_second_primary_device,
+                                device.name);
+
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(message)
+                                .setPositiveButton(R.string.api_yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                utils.removeDevice(accountId, device.id);
+                                                addDevice(utils, accountId, true);
+                                            }
+                                        }).start();
+                                    }
+                                })
+                                .setNegativeButton(R.string.api_no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                addDevice(utils, accountId, false);
+                                            }
+                                        }).start();
+                                    }
+                                })
+                                .show();
+                    }
+                });
+            }
         }
+    }
+
+    private void failAddDevice() {
+        Log.v("LoginActivity", "failed and closing");
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putString("device_id", null)
+                .putBoolean("primary", false)
+                .apply();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), R.string.api_device_error,
+                        Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED);
+                close();
+            }
+        });
     }
 
     private void attachLoginTextWatcher(EditText editText) {
