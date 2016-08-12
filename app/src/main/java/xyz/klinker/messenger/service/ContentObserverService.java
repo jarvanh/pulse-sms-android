@@ -86,7 +86,7 @@ public class ContentObserverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
 
                     }
@@ -137,9 +137,11 @@ public class ContentObserverService extends Service {
 
                     search.close();
                 } else {
-                    // if we don't find the search text anywhere, insert the message since we
-                    // already filtered out received messages above.
-                    insertSentMessage(source, body, address);
+                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
+                        insertReceivedMessage(source, body, address);
+                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
+                        insertSentMessage(source, body, address);
+                    }
                 }
 
                 source.close();
