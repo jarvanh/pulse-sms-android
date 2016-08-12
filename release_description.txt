@@ -1,2 +1,1 @@
-- Bug fixes<br/>
-- Copy message text with long click on message bubble<br/><br/>
+- Bug fixes
