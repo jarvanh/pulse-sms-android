@@ -51,7 +51,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Settings settings = Settings.get(getActivity());
 
-        if ((settings.accountId == null || settings.deviceId == null)  && preference != null) {
+        if (preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -68,7 +68,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
             return false;
         } else if (preference != null) {
-            getPreferenceScreen().removePreference(preference);
+            //getPreferenceScreen().removePreference(preference);
             return true;
         } else {
             return true;

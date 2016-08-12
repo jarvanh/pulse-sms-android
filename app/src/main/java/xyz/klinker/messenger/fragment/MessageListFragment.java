@@ -333,7 +333,7 @@ public class MessageListFragment extends Fragment implements
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 boolean handled = false;
 
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
                         keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
                         actionId == EditorInfo.IME_ACTION_SEND) {
                     sendMessage();
