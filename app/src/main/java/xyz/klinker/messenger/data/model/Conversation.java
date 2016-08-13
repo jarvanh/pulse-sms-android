@@ -23,6 +23,7 @@ import android.database.MatrixCursor;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
@@ -80,6 +81,28 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public String imageUri;
     public String idMatcher;
     public boolean mute;
+
+    public Conversation() {
+
+    }
+
+    public Conversation(ConversationBody body) {
+        this.id = body.deviceId;
+        this.colors.color = body.color;
+        this.colors.colorDark = body.colorDark;
+        this.colors.colorLight = body.colorLight;
+        this.colors.colorAccent = body.colorAccent;
+        this.pinned = body.pinned;
+        this.read = body.read;
+        this.timestamp = body.timestamp;
+        this.title = body.title;
+        this.phoneNumbers = body.phoneNumbers;
+        this.snippet = body.snippet;
+        this.ringtoneUri = body.ringtone;
+        this.imageUri = body.imageUri;
+        this.idMatcher = body.idMatcher;
+        this.mute = body.mute;
+    }
 
     @Override
     public String getCreateStatement() {

@@ -18,6 +18,7 @@ package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
 
+import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
@@ -74,6 +75,23 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean seen;
     public String from;
     public Integer color;
+
+    public Message() {
+
+    }
+
+    public Message(MessageBody body) {
+        this.id = body.deviceId;
+        this.conversationId = body.deviceConversationId;
+        this.type = body.messageType;
+        this.data = body.data;
+        this.timestamp = body.timestamp;
+        this.mimeType = body.mimeType;
+        this.read = body.read;
+        this.seen = body.seen;
+        this.from = body.messageFrom;
+        this.color = body.color;
+    }
 
     @Override
     public String getCreateStatement() {

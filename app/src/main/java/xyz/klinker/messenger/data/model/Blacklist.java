@@ -18,6 +18,7 @@ package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
 
+import xyz.klinker.messenger.api.entity.BlacklistBody;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
@@ -39,6 +40,15 @@ public class Blacklist implements DatabaseSQLiteHelper.DatabaseTable {
 
     public long id;
     public String phoneNumber;
+
+    public Blacklist() {
+
+    }
+
+    public Blacklist(BlacklistBody body) {
+        this.id = body.deviceId;
+        this.phoneNumber = body.phoneNumber;
+    }
 
     @Override
     public String getCreateStatement() {

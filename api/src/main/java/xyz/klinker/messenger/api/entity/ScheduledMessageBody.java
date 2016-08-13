@@ -23,19 +23,22 @@ public class ScheduledMessageBody {
     public String data;
     public String mimeType;
     public long timestamp;
+    public String title;
 
     public ScheduledMessageBody(long deviceId, String to, String data, String mimeType,
-                                long timestamp) {
+                                long timestamp, String title) {
         this.deviceId = deviceId;
         this.to = to;
         this.data = data;
         this.mimeType = mimeType;
         this.timestamp = timestamp;
+        this.title = title;
     }
 
     @Override
     public String toString() {
-        return deviceId + ", " + to + ", " + data + ", " + mimeType + ", " + timestamp;
+        return deviceId + ", " + to + ", " + data + ", " + mimeType + ", " + timestamp + ", " +
+                title;
     }
 
 }

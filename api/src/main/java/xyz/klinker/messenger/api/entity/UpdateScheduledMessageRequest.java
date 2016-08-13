@@ -22,8 +22,10 @@ public class UpdateScheduledMessageRequest {
     public String data;
     public String mimeType;
     public Long timestamp;
+    public String title;
 
-    public UpdateScheduledMessageRequest(String to, String data, String mimeType, Long timestamp) {
+    public UpdateScheduledMessageRequest(String to, String data, String mimeType, Long timestamp,
+                                         String title) {
         this.to = to;
         this.data = data;
         this.mimeType = mimeType;

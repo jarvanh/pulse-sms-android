@@ -20,6 +20,7 @@ import android.database.Cursor;
 
 import java.sql.Time;
 
+import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
@@ -54,6 +55,19 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
     public String data;
     public String mimeType;
     public long timestamp;
+
+    public ScheduledMessage() {
+
+    }
+
+    public ScheduledMessage(ScheduledMessageBody body) {
+        this.id = body.deviceId;
+        this.title = body.title;
+        this.to = body.to;
+        this.data = body.data;
+        this.mimeType = body.mimeType;
+        this.timestamp = body.timestamp;
+    }
 
     @Override
     public String getCreateStatement() {

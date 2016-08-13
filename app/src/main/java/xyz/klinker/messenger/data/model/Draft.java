@@ -18,6 +18,7 @@ package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
 
+import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
@@ -49,6 +50,17 @@ public class Draft implements DatabaseSQLiteHelper.DatabaseTable {
     public long conversationId;
     public String data;
     public String mimeType;
+
+    public Draft() {
+
+    }
+
+    public Draft(DraftBody body) {
+        this.id = body.deviceId;
+        this.conversationId = body.deviceConversationId;
+        this.data = body.data;
+        this.mimeType = body.mimeType;
+    }
 
     @Override
     public String getCreateStatement() {

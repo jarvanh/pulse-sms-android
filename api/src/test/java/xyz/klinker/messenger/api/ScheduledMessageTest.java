@@ -33,13 +33,13 @@ public class ScheduledMessageTest extends ApiTest {
         int originalSize = api.scheduled().list(accountId).length;
 
         ScheduledMessageBody message = new ScheduledMessageBody(1, "5159911493", "test",
-                "text/plain", System.currentTimeMillis());
+                "text/plain", System.currentTimeMillis(), "test");
         AddScheduledMessageRequest request = new AddScheduledMessageRequest(accountId, message);
         Object response = api.scheduled().add(request);
         assertNotNull(response);
 
         UpdateScheduledMessageRequest update = new UpdateScheduledMessageRequest("5154224558",
-                null, null, null);
+                null, null, null, null);
         api.scheduled().update(1, accountId, update);
 
         ScheduledMessageBody[] messages = api.scheduled().list(accountId);
