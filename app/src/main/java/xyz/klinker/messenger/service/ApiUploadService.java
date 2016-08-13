@@ -205,7 +205,7 @@ public class ApiUploadService extends Service {
                 m.fillFromCursor(cursor);
                 m.encrypt(encryptionUtils);
                 ScheduledMessageBody message = new ScheduledMessageBody(m.id, m.to, m.data,
-                        m.mimeType, m.timestamp);
+                        m.mimeType, m.timestamp, m.title);
 
                 messages[cursor.getPosition()] = message;
             } while (cursor.moveToNext());

@@ -34,6 +34,11 @@ import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
 
@@ -99,25 +104,90 @@ public class ApiDownloadService extends Service {
     }
 
     private void downloadMessages() {
+        long startTime = System.currentTimeMillis();
         MessageBody[] messages = apiUtils.getApi().message()
                 .list(settings.accountId, null, null, null);
+
+        if (messages != null) {
+            for (MessageBody body : messages) {
+                Message message = new Message(body);
+                message.decrypt(encryptionUtils);
+                source.insertMessage(message, message.conversationId);
+            }
+
+            Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "messages failed to insert");
+        }
     }
 
     private void downloadConversations() {
+        long startTime = System.currentTimeMillis();
         ConversationBody[] conversations = apiUtils.getApi().conversation()
                 .list(settings.accountId);
+
+        if (conversations != null) {
+            for (ConversationBody body : conversations) {
+                Conversation conversation = new Conversation(body);
+                conversation.decrypt(encryptionUtils);
+                source.insertConversation(conversation);
+            }
+
+            Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "conversations failed to insert");
+        }
     }
 
     private void downloadBlacklists() {
+        long startTime = System.currentTimeMillis();
         BlacklistBody[] blacklists = apiUtils.getApi().blacklist().list(settings.accountId);
+
+        if (blacklists != null) {
+            for (BlacklistBody body : blacklists) {
+                Blacklist blacklist = new Blacklist(body);
+                blacklist.decrypt(encryptionUtils);
+                source.insertBlacklist(blacklist);
+            }
+
+            Log.v(TAG, "blacklists inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "blacklists failed to insert");
+        }
     }
 
     private void downloadScheduledMessages() {
+        long startTime = System.currentTimeMillis();
         ScheduledMessageBody[] messages = apiUtils.getApi().scheduled().list(settings.accountId);
+
+        if (messages != null) {
+            for (ScheduledMessageBody body : messages) {
+                ScheduledMessage message = new ScheduledMessage(body);
+                message.decrypt(encryptionUtils);
+                source.insertScheduledMessage(message);
+            }
+
+            Log.v(TAG, "scheduled messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "scheduled messages failed to insert");
+        }
     }
 
     private void downloadDrafts() {
+        long startTime = System.currentTimeMillis();
         DraftBody[] drafts = apiUtils.getApi().draft().list(settings.accountId);
+
+        if (drafts != null) {
+            for (DraftBody body : drafts) {
+                Draft draft = new Draft(body);
+                draft.decrypt(encryptionUtils);
+                source.insertDraft(draft);
+            }
+
+            Log.v(TAG, "drafts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "drafts failed to insert");
+        }
     }
 
 }
