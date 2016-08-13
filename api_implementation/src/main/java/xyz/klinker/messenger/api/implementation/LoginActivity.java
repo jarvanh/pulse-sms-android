@@ -398,7 +398,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isFilled(email) && isFilled(password) && isFilled(passwordConfirmation) &&
-                        isFilled(name) && isFilled(phoneNumber) && isValidEmail(email.getText())) {
+                        isFilled(name) && isFilled(phoneNumber) && isValidEmail(email.getText()) &&
+                        passwordConfirmation.getText().toString().equals(password.getText().toString())) {
                     fab.show();
                 } else {
                     fab.hide();
