@@ -25,6 +25,10 @@
         <answer>If you send me an email, we can try and troubleshoot possible solutions to the problem! I can also get more information this way so that the process can be improved in the future.</answer>
     </item>
 
+    <item question="How can I know that my messages are safe and private?">
+        <answer>We use strong end-to-end encryption techniques to make sure that your data is kept secure and no one but you can access it. This means that on our servers your messages are encrypted using your password and even we cannot see what they contain, the only way to decrypt them is using your password. In technical terms, we use PBKDF2 to encrypt your password and use it as a key to encrypt messages and conversations. The only way to decrypt those messages is to then use your password again as the key, along with a few other randomly generated numbers called salts.</answer>
+    </item>
+
     <item question="How can I get in contact with you?">
         <answer>There are multiple options on this screen to talk to a dev from Klinker Apps, you can use any of them to talk to us! Probably your best bet is email for a quick response, or you can post on Google+ if you'd like other members to also help you out with something or get feedback on your ideas.</answer>
     </item>
