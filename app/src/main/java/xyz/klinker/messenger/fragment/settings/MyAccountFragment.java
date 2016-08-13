@@ -27,6 +27,8 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.service.ApiDownloadService;
+import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.util.StringUtils;
 
 /**
@@ -109,10 +111,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initSetupPreference();
 
             if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                // TODO start uploading messages that are in the database (we've already synced them
-                // since this is after the initial setup
+                getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                // TODO wipe the database then find the messages from the network and insert them
+                getActivity().startService(new Intent(getActivity(), ApiDownloadService.class));
             }
         }
     }

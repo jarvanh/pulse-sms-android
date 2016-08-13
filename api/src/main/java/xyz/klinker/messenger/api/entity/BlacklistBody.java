@@ -18,10 +18,10 @@ package xyz.klinker.messenger.api.entity;
 
 public class BlacklistBody {
 
-    public int deviceId;
+    public long deviceId;
     public String phoneNumber;
 
-    public BlacklistBody(int deviceId, String phoneNumber) {
+    public BlacklistBody(long deviceId, String phoneNumber) {
         this.deviceId = deviceId;
         this.phoneNumber = phoneNumber;
     }

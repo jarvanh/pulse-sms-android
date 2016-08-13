@@ -19,6 +19,7 @@ package xyz.klinker.messenger.data.model;
 import android.database.Cursor;
 
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Table for holding drafts for a conversation.
@@ -79,6 +80,18 @@ public class Draft implements DatabaseSQLiteHelper.DatabaseTable {
                 this.mimeType = cursor.getString(i);
             }
         }
+    }
+
+    @Override
+    public void encrypt(EncryptionUtils utils) {
+        this.data = utils.encrypt(this.data);
+        this.mimeType = utils.encrypt(this.mimeType);
+    }
+
+    @Override
+    public void decrypt(EncryptionUtils utils) {
+        this.data = utils.decrypt(this.data);
+        this.mimeType = utils.decrypt(this.mimeType);
     }
 
 }

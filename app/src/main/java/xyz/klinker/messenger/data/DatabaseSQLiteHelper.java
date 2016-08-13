@@ -27,6 +27,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Handles creating and updating databases.
@@ -94,6 +95,8 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         String getTableName();
         String[] getIndexStatements();
         void fillFromCursor(Cursor cursor);
+        void encrypt(EncryptionUtils utils);
+        void decrypt(EncryptionUtils utils);
 
     }
 

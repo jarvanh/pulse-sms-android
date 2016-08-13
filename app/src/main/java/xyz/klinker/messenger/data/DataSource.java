@@ -146,6 +146,17 @@ public class DataSource {
     }
 
     /**
+     * Deletes all data from the tables.
+     */
+    public void clearTables() {
+        database.delete(Message.TABLE, null, null);
+        database.delete(Conversation.TABLE, null, null);
+        database.delete(Blacklist.TABLE, null, null);
+        database.delete(Draft.TABLE, null, null);
+        database.delete(ScheduledMessage.TABLE, null, null);
+    }
+
+    /**
      * Begins a bulk transaction on the database.
      */
     public void beginTransaction() {
@@ -792,6 +803,13 @@ public class DataSource {
         values.put(Draft.COLUMN_DATA, data);
         values.put(Draft.COLUMN_MIME_TYPE, mimeType);
         database.insert(Draft.TABLE, null, values);
+    }
+
+    /**
+     * Gets all drafts in the database.
+     */
+    public Cursor getDrafts() {
+        return database.query(Draft.TABLE, null, null, null, null, null, null);
     }
 
     /**

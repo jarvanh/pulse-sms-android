@@ -18,13 +18,13 @@ package xyz.klinker.messenger.api.entity;
 
 public class ScheduledMessageBody {
 
-    public int deviceId;
+    public long deviceId;
     public String to;
     public String data;
     public String mimeType;
     public long timestamp;
 
-    public ScheduledMessageBody(int deviceId, String to, String data, String mimeType,
+    public ScheduledMessageBody(long deviceId, String to, String data, String mimeType,
                                 long timestamp) {
         this.deviceId = deviceId;
         this.to = to;

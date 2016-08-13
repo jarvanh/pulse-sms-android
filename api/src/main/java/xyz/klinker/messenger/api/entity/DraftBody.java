@@ -18,12 +18,12 @@ package xyz.klinker.messenger.api.entity;
 
 public class DraftBody {
 
-    public int deviceId;
-    public int deviceConversationId;
+    public long deviceId;
+    public long deviceConversationId;
     public String data;
     public String mimeType;
 
-    public DraftBody(int deviceId, int deviceConversationId, String data, String mimeType) {
+    public DraftBody(long deviceId, long deviceConversationId, String data, String mimeType) {
         this.deviceId = deviceId;
         this.deviceConversationId = deviceConversationId;
         this.data = data;

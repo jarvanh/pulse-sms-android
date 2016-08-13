@@ -17,12 +17,9 @@
 package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
-import android.database.MatrixCursor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Holds information regarding messages (eg what type they are, what they contain and a timestamp).
@@ -124,6 +121,20 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 }
             }
         }
+    }
+
+    @Override
+    public void encrypt(EncryptionUtils utils) {
+        this.data = utils.encrypt(this.data);
+        this.mimeType = utils.encrypt(this.mimeType);
+        this.from = utils.encrypt(this.from);
+    }
+
+    @Override
+    public void decrypt(EncryptionUtils utils) {
+        this.data = utils.decrypt(this.data);
+        this.mimeType = utils.decrypt(this.mimeType);
+        this.from = utils.decrypt(this.mimeType);
     }
 
 }

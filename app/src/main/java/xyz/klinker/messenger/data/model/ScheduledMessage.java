@@ -21,6 +21,7 @@ import android.database.Cursor;
 import java.sql.Time;
 
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Table for holding drafts for a conversation.
@@ -88,6 +89,22 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
                 this.timestamp = cursor.getLong(i);
             }
         }
+    }
+
+    @Override
+    public void encrypt(EncryptionUtils utils) {
+        this.title = utils.encrypt(this.title);
+        this.to = utils.encrypt(this.to);
+        this.data = utils.encrypt(this.data);
+        this.mimeType = utils.encrypt(this.mimeType);
+    }
+
+    @Override
+    public void decrypt(EncryptionUtils utils) {
+        this.title = utils.decrypt(this.title);
+        this.to = utils.decrypt(this.to);
+        this.data = utils.decrypt(this.data);
+        this.mimeType = utils.decrypt(this.mimeType);
     }
 
 }

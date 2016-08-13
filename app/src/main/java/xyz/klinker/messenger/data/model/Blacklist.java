@@ -19,6 +19,7 @@ package xyz.klinker.messenger.data.model;
 import android.database.Cursor;
 
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 public class Blacklist implements DatabaseSQLiteHelper.DatabaseTable {
 
@@ -65,6 +66,16 @@ public class Blacklist implements DatabaseSQLiteHelper.DatabaseTable {
                 this.phoneNumber = cursor.getString(i);
             }
         }
+    }
+
+    @Override
+    public void encrypt(EncryptionUtils utils) {
+        this.phoneNumber = utils.encrypt(this.phoneNumber);
+    }
+
+    @Override
+    public void decrypt(EncryptionUtils utils) {
+        this.phoneNumber = utils.decrypt(this.phoneNumber);
     }
 
 }

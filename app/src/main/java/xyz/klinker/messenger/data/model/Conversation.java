@@ -25,6 +25,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Data object for holding information about a conversation.
@@ -132,6 +133,26 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                  this.mute = cursor.getInt(i) == 1;
              }
         }
+    }
+
+    @Override
+    public void encrypt(EncryptionUtils utils) {
+        this.title = utils.encrypt(this.title);
+        this.phoneNumbers = utils.encrypt(this.phoneNumbers);
+        this.snippet = utils.encrypt(this.snippet);
+        this.ringtoneUri = utils.encrypt(this.ringtoneUri);
+        this.imageUri = utils.encrypt(this.imageUri);
+        this.idMatcher = utils.encrypt(this.idMatcher);
+    }
+
+    @Override
+    public void decrypt(EncryptionUtils utils) {
+        this.title = utils.decrypt(this.title);
+        this.phoneNumbers = utils.decrypt(this.phoneNumbers);
+        this.snippet = utils.decrypt(this.snippet);
+        this.ringtoneUri = utils.decrypt(this.ringtoneUri);
+        this.imageUri = utils.decrypt(this.imageUri);
+        this.idMatcher = utils.decrypt(this.idMatcher);
     }
 
     public boolean isGroup() {

@@ -43,9 +43,6 @@ public class MessengerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-//        Settings.get(this).setValue("device_id", null);
-//        Settings.get(this).setValue("account_id", null);
-
         ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 

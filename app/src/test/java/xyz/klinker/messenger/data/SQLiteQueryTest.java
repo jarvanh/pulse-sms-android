@@ -61,6 +61,13 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void clearTables() {
+        source.clearTables();
+        assertEquals(0, source.getMessageCount());
+        assertEquals(0, source.getConversationCount());
+    }
+
+    @Test
     public void insertConversations() {
         int initialSize = source.getConversations().getCount();
         source.insertConversations(DataSourceTest
@@ -341,6 +348,12 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int finalSize = source.getDrafts(3).size();
 
         assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void getAllDrafts() {
+        Cursor drafts = source.getDrafts();
+        assertEquals(3, drafts.getCount());
     }
 
     @Test

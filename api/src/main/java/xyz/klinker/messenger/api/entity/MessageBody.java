@@ -18,8 +18,8 @@ package xyz.klinker.messenger.api.entity;
 
 public class MessageBody {
 
-    public int deviceId;
-    public int deviceConversationId;
+    public long deviceId;
+    public long deviceConversationId;
     public int messageType;
     public String data;
     public long timestamp;
@@ -29,7 +29,7 @@ public class MessageBody {
     public String messageFrom;
     public Integer color;
 
-    public MessageBody(int deviceId, int deviceConversationId, int messageType, String data,
+    public MessageBody(long deviceId, long deviceConversationId, int messageType, String data,
                        long timestamp, String mimeType, boolean read, boolean seen,
                        String messageFrom, Integer color) {
         this.deviceId = deviceId;

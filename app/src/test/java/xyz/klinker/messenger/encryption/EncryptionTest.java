@@ -48,7 +48,7 @@ public class EncryptionTest extends MessengerRobolectricSuite {
         String text = "hey, what's up? Just testing encryption and decryption using " +
                 "strong-encryption techniques :)";
         String encrypted = encryptionUtils.encrypt(text);
-        String decrypted = encryptionUtils.decryptString(encrypted);
+        String decrypted = encryptionUtils.decrypt(encrypted);
         assertEquals(text, decrypted);
     }
 

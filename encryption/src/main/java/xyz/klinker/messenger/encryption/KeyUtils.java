@@ -101,7 +101,7 @@ public class KeyUtils {
      *                  hash.
      * @param salt the salt to use (should be gotten from the server after a successful login
      *             request). This should not be the same salt that was used for hashPassword().
-     * @return a secret key we can use to encrypt and decrypt data.
+     * @return a secret key we can use to encrypt and decryptData data.
      */
     public SecretKey createKey(String hash, String accountId, String salt) {
         String password = accountId + ":" + hash;

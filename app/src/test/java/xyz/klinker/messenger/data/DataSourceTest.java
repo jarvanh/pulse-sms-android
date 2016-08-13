@@ -82,6 +82,16 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void clearTables() {
+        source.clearTables();
+        verify(database).delete("message", null, null);
+        verify(database).delete("conversation", null, null);
+        verify(database).delete("blacklist", null, null);
+        verify(database).delete("draft", null, null);
+        verify(database).delete("scheduled_message", null, null);
+    }
+
+    @Test
     public void beginTransaction() {
         source.beginTransaction();
         verify(database).beginTransaction();
@@ -313,6 +323,12 @@ public class DataSourceTest extends MessengerRobolectricSuite {
                 .thenReturn(cursor);
 
         assertEquals(cursor, source.getUnseenMessages());
+    }
+
+    @Test
+    public void getAllDrafts() {
+        when(database.query("draft", null, null, null, null, null, null)).thenReturn(cursor);
+        assertNotNull(source.getDrafts());
     }
 
     @Test

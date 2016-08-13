@@ -43,9 +43,9 @@ public class EncryptionUtils {
     private Cipher cipher;
 
     /**
-     * Creates a utility that can be used to encrypt and decrypt data.
+     * Creates a utility that can be used to encrypt and decryptData data.
      *
-     * @param secretKey the secret key to encrypt and decrypt with.
+     * @param secretKey the secret key to encrypt and decryptData with.
      */
     public EncryptionUtils(SecretKey secretKey) {
         this.secretKey = secretKey;
@@ -64,7 +64,11 @@ public class EncryptionUtils {
      * @return the base 64 formatted string.
      */
     public String encrypt(String data) {
-        return encrypt(data.getBytes());
+        if (data == null) {
+            return null;
+        } else {
+            return encrypt(data.getBytes());
+        }
     }
 
     /**
@@ -95,18 +99,22 @@ public class EncryptionUtils {
      * @param data the data to decrypt.
      * @return the plaintext string.
      */
-    public String decryptString(String data) {
-        byte[] decrypted = decrypt(data);
-        return new String(decrypted);
+    public String decrypt(String data) {
+        if (data == null) {
+            return null;
+        } else {
+            byte[] decrypted = decryptData(data);
+            return new String(decrypted);
+        }
     }
 
     /**
      * Decrypts data that has been encrypted and encoded as base 64.
      *
-     * @param data the data to decrypt.
+     * @param data the data to decryptData.
      * @return the decrypted byte array.
      */
-    public byte[] decrypt(String data) {
+    public byte[] decryptData(String data) {
         byte[] iv = Base64.decode(data.split(SEPARATOR)[0], Base64.DEFAULT);
         byte[] ciphertext = Base64.decode(data.split(SEPARATOR)[1], Base64.DEFAULT);
 
@@ -115,7 +123,7 @@ public class EncryptionUtils {
             return cipher.doFinal(ciphertext);
         } catch (InvalidKeyException|InvalidAlgorithmParameterException|
                 IllegalBlockSizeException|BadPaddingException e) {
-            throw new RuntimeException("could not decrypt data", e);
+            throw new RuntimeException("could not decryptData data", e);
         }
     }
 

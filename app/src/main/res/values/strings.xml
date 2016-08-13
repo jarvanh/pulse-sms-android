@@ -200,4 +200,8 @@
     <string name="scheduled_to_hint">Contact to send to…</string>
     <string name="scheduled_message_sent">Scheduled message sent successfully</string>
 
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Encrypting and uploading…</string>
+    <string name="downloading_and_decrypting">Downloading and decrypting…</string>
+
 </resources>

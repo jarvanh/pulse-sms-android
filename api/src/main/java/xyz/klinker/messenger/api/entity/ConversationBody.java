@@ -18,7 +18,7 @@ package xyz.klinker.messenger.api.entity;
 
 public class ConversationBody {
 
-    public int deviceId;
+    public long deviceId;
     public int color;
     public int colorDark;
     public int colorLight;
@@ -34,7 +34,7 @@ public class ConversationBody {
     public String idMatcher;
     public boolean mute;
 
-    public ConversationBody(int deviceId, int color, int colorDark, int colorLight, int colorAccent,
+    public ConversationBody(long deviceId, int color, int colorDark, int colorLight, int colorAccent,
                             boolean pinned, boolean read, long timestamp, String title,
                             String phoneNumbers, String snippet, String ringtone, String imageUri,
                             String idMatcher, boolean mute) {
