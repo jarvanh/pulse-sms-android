@@ -739,7 +739,6 @@ public class DataSource {
         values.put(Message.COLUMN_COLOR, message.color);
 
         long messageId = database.insert(Message.TABLE, null, values);
-        System.out.println(messageId);
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
