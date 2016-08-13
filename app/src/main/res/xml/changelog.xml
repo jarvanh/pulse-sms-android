@@ -16,6 +16,11 @@
 
 <changelog>
 
+    <version name="0.8" description="August 13th, 2016">
+        <text>Server v1 implementation finished</text>
+        <text>Initial sign up, login and syncing occurs for your account</text>
+    </version>
+
     <version name="0.5" description="August 3rd, 2016">
         <text>All of the power features implemented on the phone client now, just need to add server support</text>
         <text>Bug fixes on initial client</text>

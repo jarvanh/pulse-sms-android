@@ -42,6 +42,7 @@ import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 
 public class ApiDownloadService extends Service {
 
@@ -132,6 +133,14 @@ public class ApiDownloadService extends Service {
                 Conversation conversation = new Conversation(body);
                 conversation.decrypt(encryptionUtils);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
+
+                if (conversation.imageUri != null &&
+                        ImageUtils.getContactImage(conversation.imageUri, this) == null) {
+                    conversation.imageUri = null;
+                } else if (conversation.imageUri != null) {
+                    conversation.imageUri += "/photo";
+                }
+
                 source.insertConversation(conversation);
             }
 
