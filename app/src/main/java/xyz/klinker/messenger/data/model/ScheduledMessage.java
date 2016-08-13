@@ -38,7 +38,7 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
-            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_ID + " integer primary key, " +
             COLUMN_TITLE + " text not null, " +
             COLUMN_TO + " text not null, " +
             COLUMN_DATA + " text not null, " +

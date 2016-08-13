@@ -34,7 +34,7 @@ public class Draft implements DatabaseSQLiteHelper.DatabaseTable {
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
-            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_ID + " integer primary key, " +
             COLUMN_CONVERSATION_ID + " integer not null, " +
             COLUMN_DATA + " text not null, " +
             COLUMN_MIME_TYPE + " text not null" +

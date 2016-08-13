@@ -51,7 +51,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
-            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_ID + " integer primary key, " +
             COLUMN_COLOR + " integer not null, " +
             COLUMN_COLOR_DARK + " integer not null, " +
             COLUMN_COLOR_LIGHT + " integer not null, " +

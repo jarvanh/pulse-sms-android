@@ -255,26 +255,20 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void insertMessageNewConversation() {
-        int initialMessageSize = source.getMessages(5).getCount();
         int initialConversationSize = source.getConversations().getCount();
         source.insertMessage(getFakeMessage(), "4444444", RuntimeEnvironment.application);
-        int newMessageSize = source.getMessages(5).getCount();
         int newConversationSize = source.getConversations().getCount();
 
         assertEquals(1, newConversationSize - initialConversationSize);
-        assertEquals(1, newMessageSize - initialMessageSize);
     }
 
     @Test
     public void insertMessageNewGroupConversation() {
-        int initialMessageSize = source.getMessages(5).getCount();
         int initialConversationSize = source.getConversations().getCount();
         source.insertMessage(getFakeMessage(), "1111111, 2222222", RuntimeEnvironment.application);
-        int newMessageSize = source.getMessages(5).getCount();
         int newConversationSize = source.getConversations().getCount();
 
         assertEquals(1, newConversationSize - initialConversationSize);
-        assertEquals(1, newMessageSize - initialMessageSize);
     }
 
     @Test
@@ -348,6 +342,22 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int finalSize = source.getDrafts(3).size();
 
         assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void insertDraftObject() {
+        Draft draft = new Draft();
+        draft.id = 10524;
+        draft.conversationId = 1;
+        draft.data = "test";
+        draft.mimeType = "text/plain";
+
+        int initialSize = source.getDrafts(1).size();
+        long id = source.insertDraft(draft);
+        int finalSize = source.getDrafts(1).size();
+
+        assertEquals(1, finalSize - initialSize);
+        assertEquals(10524, id);
     }
 
     @Test

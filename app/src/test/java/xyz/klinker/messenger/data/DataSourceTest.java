@@ -36,6 +36,7 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 
@@ -341,8 +342,21 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertDraft() {
         source.insertDraft(1, "test", "text/plain");
+        verify(database).insert(eq("draft"), eq((String) null), any(ContentValues.class));
+    }
 
-        ContentValues values = new ContentValues(3);
+    @Test
+    public void insertDraftObject() {
+        Draft draft = new Draft();
+        draft.id = 1;
+        draft.conversationId = 1;
+        draft.data = "test";
+        draft.mimeType = "text/plain";
+
+        source.insertDraft(draft);
+
+        ContentValues values = new ContentValues(4);
+        values.put("_id", 1L);
         values.put("conversation_id", 1L);
         values.put("data", "test");
         values.put("mime_type", "text/plain");

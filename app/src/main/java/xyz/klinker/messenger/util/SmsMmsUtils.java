@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -172,6 +173,7 @@ public class SmsMmsUtils {
 
         if (isSms(messages)) {
             ContentValues message = new ContentValues(9);
+            message.put(Message.COLUMN_ID, DataSource.generateId());
             message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
             message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
             message.put(Message.COLUMN_DATA, messages.getString(1).trim());

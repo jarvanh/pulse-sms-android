@@ -48,6 +48,15 @@ import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 public class DataSource {
 
     private static final String TAG = "DataSource";
+
+    /**
+     * A max value for the id. With this value, there is a 1 in 200,000 chance of overlap when a
+     * user uploads 100,000 messages, so we should be safe assuming that no user will be uploading
+     * that many messages.
+     *
+     * See https://github.com/klinker41/messenger-server/wiki/Generating-GUIDs.
+     */
+    private static final long MAX_ID = Long.MAX_VALUE/10000;
     private static volatile DataSource instance;
 
     private SQLiteDatabase database;
@@ -213,7 +222,11 @@ public class DataSource {
         for (int i = 0; i < conversations.size(); i++) {
             Conversation conversation = conversations.get(i);
 
-            ContentValues values = new ContentValues(12);
+            ContentValues values = new ContentValues(15);
+
+            // here we are loading the id from the internal database into the conversation object
+            // but we don't want to use that so we'll just generate a new one.
+            values.put(Conversation.COLUMN_ID, generateId());
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
             values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
             values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
@@ -274,7 +287,14 @@ public class DataSource {
      * @return the conversation id after insertion.
      */
     public long insertConversation(Conversation conversation) {
-        ContentValues values = new ContentValues(12);
+        ContentValues values = new ContentValues(15);
+
+        if (conversation.id > 0) {
+            values.put(Conversation.COLUMN_ID, conversation.id);
+        } else {
+            values.put(Conversation.COLUMN_ID, generateId());
+        }
+
         values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
         values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
         values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
@@ -361,10 +381,10 @@ public class DataSource {
      * @param conversationId the conversation id to delete.
      */
     public void deleteConversation(long conversationId) {
-        database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
+        database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
                 new String[] { Long.toString(conversationId) });
 
-        database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
+        database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
                 new String[] { Long.toString(conversationId) });
     }
 
@@ -596,7 +616,7 @@ public class DataSource {
      * @param mimeType the message mimeType.
      * @param context the application context.
      */
-    public void insertSentMessage(String addresses, String data, String mimeType, Context context) {
+    public long insertSentMessage(String addresses, String data, String mimeType, Context context) {
         final Message m = new Message();
         m.type = Message.TYPE_SENDING;
         m.data = data;
@@ -607,7 +627,7 @@ public class DataSource {
         m.from = null;
         m.color = null;
 
-        insertMessage(m, addresses, context);
+        return insertMessage(m, addresses, context);
     }
 
     /**
@@ -700,7 +720,14 @@ public class DataSource {
     public long insertMessage(Message message, long conversationId) {
         message.conversationId = conversationId;
 
-        ContentValues values = new ContentValues(9);
+        ContentValues values = new ContentValues(10);
+
+        if (message.id > 0) {
+            values.put(Message.COLUMN_ID, message.id);
+        } else {
+            values.put(Message.COLUMN_ID, generateId());
+        }
+
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
         values.put(Message.COLUMN_DATA, message.data);
@@ -711,7 +738,8 @@ public class DataSource {
         values.put(Message.COLUMN_FROM, message.from);
         values.put(Message.COLUMN_COLOR, message.color);
 
-        database.insert(Message.TABLE, null, values);
+        long messageId = database.insert(Message.TABLE, null, values);
+        System.out.println(messageId);
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
@@ -797,12 +825,31 @@ public class DataSource {
     /**
      * Inserts a draft into the database with the given parameters.
      */
-    public void insertDraft(long conversationId, String data, String mimeType) {
-        ContentValues values = new ContentValues(3);
+    public long insertDraft(long conversationId, String data, String mimeType) {
+        ContentValues values = new ContentValues(4);
+        values.put(Draft.COLUMN_ID, generateId());
         values.put(Draft.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Draft.COLUMN_DATA, data);
         values.put(Draft.COLUMN_MIME_TYPE, mimeType);
-        database.insert(Draft.TABLE, null, values);
+        return database.insert(Draft.TABLE, null, values);
+    }
+
+    /**
+     * Inserts a draft into the database.
+     */
+    public long insertDraft(Draft draft) {
+        ContentValues values = new ContentValues(4);
+
+        if (draft.id > 0) {
+            values.put(Draft.COLUMN_ID, draft.id);
+        } else {
+            values.put(Draft.COLUMN_ID, generateId());
+        }
+
+        values.put(Draft.COLUMN_CONVERSATION_ID, draft.conversationId);
+        values.put(Draft.COLUMN_DATA, draft.data);
+        values.put(Draft.COLUMN_MIME_TYPE, draft.mimeType);
+        return database.insert(Draft.TABLE, null, values);
     }
 
     /**
@@ -855,7 +902,14 @@ public class DataSource {
      * Inserts a blacklist into the database.
      */
     public void insertBlacklist(Blacklist blacklist) {
-        ContentValues values = new ContentValues(1);
+        ContentValues values = new ContentValues(2);
+
+        if (blacklist.id > 0) {
+            values.put(Blacklist.COLUMN_ID, blacklist.id);
+        } else {
+            values.put(Blacklist.COLUMN_ID, generateId());
+        }
+
         values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber);
         database.insert(Blacklist.TABLE, null, values);
     }
@@ -879,15 +933,22 @@ public class DataSource {
     /**
      * Inserts a scheduled message into the database.
      */
-    public void insertScheduledMessage(ScheduledMessage message) {
-        ContentValues values = new ContentValues(5);
+    public long insertScheduledMessage(ScheduledMessage message) {
+        ContentValues values = new ContentValues(6);
+
+        if (message.id > 0) {
+            values.put(ScheduledMessage.COLUMN_ID, message.id);
+        } else {
+            values.put(ScheduledMessage.COLUMN_ID, generateId());
+        }
+
         values.put(ScheduledMessage.COLUMN_TITLE, message.title);
         values.put(ScheduledMessage.COLUMN_TO, message.to);
         values.put(ScheduledMessage.COLUMN_DATA, message.data);
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType);
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
 
-        database.insert(ScheduledMessage.TABLE, null, values);
+        return database.insert(ScheduledMessage.TABLE, null, values);
     }
 
     /**
@@ -896,6 +957,15 @@ public class DataSource {
     public void deleteScheduledMessage(long id) {
         database.delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
                 new String[] {Long.toString(id)});
+    }
+
+    /**
+     * Generates a random id for the row.
+     */
+    public static long generateId() {
+        long leftLimit = 1L;
+        long rightLimit = MAX_ID;
+        return leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
     }
 
 }

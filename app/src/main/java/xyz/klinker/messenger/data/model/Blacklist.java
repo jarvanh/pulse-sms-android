@@ -29,7 +29,7 @@ public class Blacklist implements DatabaseSQLiteHelper.DatabaseTable {
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
-            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_ID + " integer primary key, " +
             COLUMN_PHONE_NUMBER + " text not null" +
             ");";
 
