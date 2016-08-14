@@ -43,8 +43,8 @@ import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
@@ -285,10 +285,10 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public void onConversationExpanded(ConversationViewHolder viewHolder) {
-    	if (deleteSnackbar != null && deleteSnackbar.isShown()) {
-    		deleteSnackbar.dismiss();
-    	}
-    	
+        if (deleteSnackbar != null && deleteSnackbar.isShown()) {
+            deleteSnackbar.dismiss();
+        }
+
         expandedConversation = viewHolder;
         AnimationUtils.expandActivityForConversation(getActivity());
 

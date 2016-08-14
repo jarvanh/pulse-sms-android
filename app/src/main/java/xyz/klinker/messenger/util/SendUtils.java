@@ -44,12 +44,12 @@ public class SendUtils {
     }
 
     public static Uri send(Context context, String text, String addresses, Uri data,
-                            String mimeType) {
+                           String mimeType) {
         return send(context, text, addresses.split(", "), data, mimeType);
     }
 
     public static Uri send(Context context, String text, String[] addresses, Uri data,
-                            String mimeType) {
+                           String mimeType) {
         Transaction transaction = new Transaction(context, new Settings());
         Message message = new Message(text, addresses);
 

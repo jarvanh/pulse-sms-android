@@ -35,7 +35,7 @@ public class ContactUtils {
      * Gets a space separated list of phone numbers.
      *
      * @param recipientIds the internal sms database recipient ids.
-     * @param context the application context.
+     * @param context      the application context.
      * @return the comma and space separated list of numbers.
      */
     public static String findContactNumbers(String recipientIds, Context context) {
@@ -48,7 +48,7 @@ public class ContactUtils {
                     if (ids[i] != null && (!ids[i].equals("") || !ids[i].equals(" "))) {
                         Cursor number = context.getContentResolver()
                                 .query(Uri.parse("content://mms-sms/canonical-addresses"), null,
-                                        "_id=?", new String[] { ids[i] }, null);
+                                        "_id=?", new String[]{ids[i]}, null);
 
                         if (number != null && number.moveToFirst()) {
                             numbers.add(PhoneNumberUtils.clearFormatting(
@@ -106,9 +106,9 @@ public class ContactUtils {
                     phonesCursor = context.getContentResolver()
                             .query(
                                     phoneUri,
-                                    new String[] {
-                                        ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
-                                        ContactsContract.RawContacts._ID
+                                    new String[]{
+                                            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+                                            ContactsContract.RawContacts._ID
                                     },
                                     null,
                                     null,
@@ -157,7 +157,7 @@ public class ContactUtils {
     /**
      * Gets a contact image for a given phone number.
      *
-     * @param number the phone number to find a contact for.
+     * @param number  the phone number to find a contact for.
      * @param context the current application context.
      * @return the image uri or null if one could not be found.
      */

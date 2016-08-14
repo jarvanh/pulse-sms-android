@@ -28,7 +28,8 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.util.xml.OpenSourceParser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class OpenSourceAdapterTest extends MessengerRobolectricSuite {
 

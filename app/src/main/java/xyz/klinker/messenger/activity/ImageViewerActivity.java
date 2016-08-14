@@ -51,7 +51,6 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.view.AttachImageView;
 
 /**
  * Activity that allows you to scroll between images in a given conversation.

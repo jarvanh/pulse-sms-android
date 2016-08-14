@@ -58,7 +58,7 @@ public class NotificationUtils {
 
             Iterator it = map.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
+                Map.Entry pair = (Map.Entry) it.next();
                 String key = (String) pair.getKey();
                 int value = (Integer) pair.getValue();
 

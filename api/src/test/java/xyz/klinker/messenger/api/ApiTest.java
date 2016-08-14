@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.api;
 
-import org.junit.After;
 import org.junit.Before;
 
 import xyz.klinker.messenger.api.entity.LoginRequest;

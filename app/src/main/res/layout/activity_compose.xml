@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="128dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:navigationIcon="@drawable/ic_back"/>
+            app:navigationIcon="@drawable/ic_back" />
 
         <com.android.ex.chips.RecipientEditTextView
             android:layout_width="match_parent"
@@ -47,7 +46,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
             android:layout_gravity="bottom"
-            android:id="@+id/contact_entry"/>
+            android:id="@+id/contact_entry" />
 
     </FrameLayout>
 
@@ -64,7 +63,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="-28dp"
-        android:clickable="true"/>
+        android:clickable="true" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -72,6 +71,6 @@
         android:layout_below="@+id/toolbar_holder"
         android:layout_marginStart="@dimen/conversation_list_padding"
         android:layout_marginEnd="@dimen/conversation_list_padding"
-        android:id="@+id/recent_contacts"/>
+        android:id="@+id/recent_contacts" />
 
 </RelativeLayout>

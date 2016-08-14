@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class StringUtilsTest extends MessengerSuite {
 

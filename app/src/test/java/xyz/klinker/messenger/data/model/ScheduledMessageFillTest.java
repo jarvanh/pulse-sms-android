@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
 
@@ -43,7 +43,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
     }
 
     private Cursor createCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 ScheduledMessage.COLUMN_ID,
                 ScheduledMessage.COLUMN_TITLE,
                 ScheduledMessage.COLUMN_TO,
@@ -52,7 +52,7 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
                 ScheduledMessage.COLUMN_TIMESTAMP
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 "luke",
                 "5159911493",

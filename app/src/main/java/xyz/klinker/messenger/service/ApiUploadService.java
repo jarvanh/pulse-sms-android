@@ -37,11 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Executor;
@@ -116,13 +112,13 @@ public class ApiUploadService extends Service {
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
 
-//                long startTime = System.currentTimeMillis();
-//                uploadMessages();
-//                uploadConversations();
-//                uploadBlacklists();
-//                uploadScheduledMessages();
-//                uploadDrafts();
-//                Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
+                long startTime = System.currentTimeMillis();
+                uploadMessages();
+                uploadConversations();
+                uploadBlacklists();
+                uploadScheduledMessages();
+                uploadDrafts();
+                Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
 
                 NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_UPLOAD_ID);
                 uploadMedia();
@@ -144,7 +140,7 @@ public class ApiUploadService extends Service {
                 // instead of sending the URI, we'll upload these images to firebase and retrieve
                 // them on another device based on account id and message id.
                 if (!m.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    m.data = null;
+                    m.data = "firebase";
                 }
 
                 m.encrypt(encryptionUtils);
@@ -376,7 +372,7 @@ public class ApiUploadService extends Service {
 
                 // wait for the upload to finish. Firebase only support async requests, which
                 // I do not want here.
-                while (!firebaseUploadFinished);
+                while (!firebaseUploadFinished) ;
 
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,

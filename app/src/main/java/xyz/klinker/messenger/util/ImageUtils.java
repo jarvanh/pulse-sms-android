@@ -21,7 +21,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Path;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -72,8 +71,8 @@ public class ImageUtils {
 
         final Path path = new Path();
         path.addCircle(
-                (float)(width / 2),
-                (float)(height / 2),
+                (float) (width / 2),
+                (float) (height / 2),
                 (float) Math.min(width, (height / 2)),
                 Path.Direction.CCW);
 
@@ -87,7 +86,7 @@ public class ImageUtils {
      * Gets a bitmap from a contact URI.
      *
      * @param imageUri the contact uri to get an image for.
-     * @param context the application context.
+     * @param context  the application context.
      * @return the image bitmap.
      */
     public static Bitmap getContactImage(String imageUri, Context context) {
@@ -104,7 +103,7 @@ public class ImageUtils {
      * Gets the correct colors for a conversation based on its image.
      *
      * @param conversation the conversation to fill colors for.
-     * @param context the current context.
+     * @param context      the current context.
      */
     public static void fillConversationColors(Conversation conversation, Context context) {
         if (conversation.imageUri == null) {
@@ -130,9 +129,9 @@ public class ImageUtils {
      * Extracts a material design color set from a provided bitmap.
      *
      * @param context the context.
-     * @param bitmap the bitmap.
+     * @param bitmap  the bitmap.
      * @return the color set (defaults to random material color when it fails to extract with
-     *         palette).
+     * palette).
      */
     public static ColorSet extractColorSet(Context context, Bitmap bitmap) {
         ColorSet defaults = ColorUtils.getRandomMaterialColor(context);
@@ -237,7 +236,7 @@ public class ImageUtils {
         int height = bitmap.getHeight();
 
         Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(width/2 - size/2, height/2 - size/2, width/2 + size/2, height/2 + size/2);
+        drawable.setBounds(width / 2 - size / 2, height / 2 - size / 2, width / 2 + size / 2, height / 2 + size / 2);
         drawable.draw(canvas);
     }
 

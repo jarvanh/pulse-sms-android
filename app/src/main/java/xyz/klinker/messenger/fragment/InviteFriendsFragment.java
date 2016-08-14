@@ -86,7 +86,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
             public void run() {
                 Cursor cursor = getActivity().getContentResolver()
                         .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                new String[] {
+                                new String[]{
                                         ContactsContract.CommonDataKinds.Phone._ID,
                                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                                         ContactsContract.CommonDataKinds.Phone.NUMBER}

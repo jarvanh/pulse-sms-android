@@ -111,5 +111,5 @@ public class MimeType {
     public static String getExtension(String mimeType) {
         return "." + extensions.get(mimeType);
     }
-    
+
 }

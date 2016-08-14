@@ -20,7 +20,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -92,10 +91,15 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
     public interface DatabaseTable {
 
         String getCreateStatement();
+
         String getTableName();
+
         String[] getIndexStatements();
+
         void fillFromCursor(Cursor cursor);
+
         void encrypt(EncryptionUtils utils);
+
         void decrypt(EncryptionUtils utils);
 
     }

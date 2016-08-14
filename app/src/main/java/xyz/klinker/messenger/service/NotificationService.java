@@ -249,8 +249,8 @@ public class NotificationService extends IntentService {
         NotificationCompat.Action action =
                 new NotificationCompat.Action.Builder(R.drawable.ic_reply,
                         getString(R.string.reply), pendingReply)
-                .addRemoteInput(remoteInput)
-                .build();
+                        .addRemoteInput(remoteInput)
+                        .build();
 
         builder.extend(new NotificationCompat.WearableExtender().addAction(action));
 

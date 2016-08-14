@@ -33,7 +33,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,8 +58,6 @@ import xyz.klinker.messenger.fragment.SearchFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
-import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
@@ -300,7 +297,7 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.drawer_conversation:
                 return displayConversations();
             case R.id.drawer_schedule:
@@ -387,7 +384,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     /*****************************************************************
-     *  conversation list drawer options                             *
+     * conversation list drawer options                             *
      *****************************************************************/
 
     private boolean displayConversations() {
@@ -481,7 +478,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     /*****************************************************************
-     *  message list drawer options                                  *
+     * message list drawer options                                  *
      *****************************************************************/
 
     private boolean callContact() {

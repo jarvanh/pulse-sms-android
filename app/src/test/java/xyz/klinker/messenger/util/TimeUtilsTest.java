@@ -30,7 +30,9 @@ import java.util.GregorianCalendar;
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.R;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class TimeUtilsTest extends MessengerSuite {
@@ -52,16 +54,16 @@ public class TimeUtilsTest extends MessengerSuite {
 
     @Test
     public void shouldNotDisplayTimestamp() {
-        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (5*MINUTE)));
+        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (5 * MINUTE)));
         assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + SECOND));
-        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (14*MINUTE) + (59*SECOND)));
+        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (14 * MINUTE) + (59 * SECOND)));
     }
 
     @Test
     public void shouldDisplayTimestamp() {
-        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (15*MINUTE)));
+        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (15 * MINUTE)));
         assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + HOUR));
-        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (2*DAY)));
+        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (2 * DAY)));
     }
 
     @Test(expected = RuntimeException.class)
@@ -76,14 +78,14 @@ public class TimeUtilsTest extends MessengerSuite {
 
     @Test
     public void displayTimeAsShort() {
-        long time = current - (5*HOUR);
+        long time = current - (5 * HOUR);
         assertEquals(DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time)),
                 TimeUtils.formatTimestamp(context, time));
     }
 
     @Test
     public void displayTimeAsMedium() {
-        long time = current - (2*DAY);
+        long time = current - (2 * DAY);
         String expected = new SimpleDateFormat("E").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
         assertEquals(expected, TimeUtils.formatTimestamp(context, time));
@@ -91,7 +93,7 @@ public class TimeUtilsTest extends MessengerSuite {
 
     @Test
     public void displayTimeAsLong() {
-        long time = current - (8*DAY);
+        long time = current - (8 * DAY);
         String expected = new SimpleDateFormat("MMM d").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
         assertEquals(expected, TimeUtils.formatTimestamp(context, time));
@@ -99,7 +101,7 @@ public class TimeUtilsTest extends MessengerSuite {
 
     @Test
     public void displayTimeAsExtraLong() {
-        long time = current - (400*DAY);
+        long time = current - (400 * DAY);
         String expected = new SimpleDateFormat("MMM d, yyyy").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
         assertEquals(expected, TimeUtils.formatTimestamp(context, time));
@@ -108,7 +110,7 @@ public class TimeUtilsTest extends MessengerSuite {
     @Test
     public void displayTimeAsShortActual() {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
-        long timestamp = currentTime - (8*HOUR);
+        long timestamp = currentTime - (8 * HOUR);
 
         assertEquals("12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
     }
@@ -116,7 +118,7 @@ public class TimeUtilsTest extends MessengerSuite {
     @Test
     public void displayTimeAsMediumActual() {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
-        long timestamp = currentTime - (8*HOUR) - (3*DAY);
+        long timestamp = currentTime - (8 * HOUR) - (3 * DAY);
 
         assertEquals("Sun, 12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
     }
@@ -124,7 +126,7 @@ public class TimeUtilsTest extends MessengerSuite {
     @Test
     public void displayTimeAsLongActual() {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
-        long timestamp = currentTime - (8*HOUR) - (8*DAY);
+        long timestamp = currentTime - (8 * HOUR) - (8 * DAY);
 
         assertEquals("Jul 5, 12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
     }

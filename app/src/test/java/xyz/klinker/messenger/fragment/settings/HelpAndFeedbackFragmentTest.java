@@ -22,7 +22,8 @@ import org.junit.Test;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 public class HelpAndFeedbackFragmentTest extends MessengerRobolectricSuite {

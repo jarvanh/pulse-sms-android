@@ -16,19 +16,31 @@
 
 <changelog>
 
-    <version name="0.8" description="August 13th, 2016">
+    <version
+        name="0.8"
+        description="August 13th, 2016">
         <text>Server v1 implementation finished</text>
         <text>Initial sign up, login and syncing occurs for your account</text>
     </version>
 
-    <version name="0.5" description="August 3rd, 2016">
-        <text>All of the power features implemented on the phone client now, just need to add server support</text>
+    <version
+        name="0.5"
+        description="August 3rd, 2016">
+        <text>All of the power features implemented on the phone client now, just need to add server
+            support
+        </text>
         <text>Bug fixes on initial client</text>
     </version>
 
-    <version name="0.1" description="July 27th, 2016">
-        <text>Basically recreate features that I've implemented in EvolveSMS in the past in a better way</text>
-        <text>Use my own database instead of the internal content provider for speed and syncing between devices</text>
+    <version
+        name="0.1"
+        description="July 27th, 2016">
+        <text>Basically recreate features that I've implemented in EvolveSMS in the past in a better
+            way
+        </text>
+        <text>Use my own database instead of the internal content provider for speed and syncing
+            between devices
+        </text>
     </version>
 
 </changelog>

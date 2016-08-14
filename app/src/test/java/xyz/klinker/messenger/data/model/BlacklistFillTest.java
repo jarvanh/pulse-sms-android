@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class BlacklistFillTest extends MessengerRobolectricSuite {
 
@@ -39,12 +39,12 @@ public class BlacklistFillTest extends MessengerRobolectricSuite {
     }
 
     private Cursor createCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Blacklist.COLUMN_ID,
                 Blacklist.COLUMN_PHONE_NUMBER,
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 "5154224558"
         });

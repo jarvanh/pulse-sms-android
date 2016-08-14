@@ -40,7 +40,8 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -229,7 +230,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     }
 
     private Cursor getFakeConversations(Context context) {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Conversation.COLUMN_ID,
                 Conversation.COLUMN_COLOR,
                 Conversation.COLUMN_COLOR_DARK,
@@ -244,7 +245,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_RINGTONE
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 ColorSet.INDIGO(context).color,
                 ColorSet.INDIGO(context).colorDark,
@@ -259,7 +260,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 2,
                 ColorSet.RED(context).color,
                 ColorSet.RED(context).colorDark,
@@ -274,7 +275,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 3,
                 ColorSet.PINK(context).color,
                 ColorSet.PINK(context).colorDark,
@@ -289,7 +290,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 4,
                 ColorSet.BLUE(context).color,
                 ColorSet.BLUE(context).colorDark,
@@ -304,7 +305,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 5,
                 ColorSet.GREEN(context).color,
                 ColorSet.GREEN(context).colorDark,
@@ -319,7 +320,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 6,
                 ColorSet.BROWN(context).color,
                 ColorSet.BROWN(context).colorDark,
@@ -334,7 +335,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 7,
                 ColorSet.PURPLE(context).color,
                 ColorSet.PURPLE(context).colorDark,

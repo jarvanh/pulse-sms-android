@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +33,7 @@
             android:layout_height="196dp"
             android:src="@drawable/ic_inbox"
             android:tint="@color/emptyIconTint"
-            android:contentDescription="@string/no_messages"/>
+            android:contentDescription="@string/no_messages" />
 
         <TextView
             android:layout_width="196dp"
@@ -51,7 +50,7 @@
             android:textColor="@color/emptyTextSecondary"
             android:textSize="14sp"
             android:text="@string/no_messages_summary"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 
@@ -59,6 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
 </FrameLayout>

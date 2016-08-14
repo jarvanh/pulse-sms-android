@@ -25,6 +25,7 @@ import xyz.klinker.messenger.data.model.Message;
 public interface SearchListener {
 
     void onSearchSelected(Message message);
+
     void onSearchSelected(Conversation conversation);
 
 }

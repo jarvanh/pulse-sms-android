@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License.
   -->
 
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -62,7 +60,7 @@
                         app:searchCloseIcon="@drawable/ic_search_close"
                         android:textColor="@color/primaryText"
                         android:textColorHint="@color/secondaryText"
-                        android:hint="@string/enter_search"/>
+                        android:hint="@string/enter_search" />
 
                 </FrameLayout>
 
@@ -71,7 +69,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/conversation_list_container"/>
+                android:id="@+id/conversation_list_container" />
 
         </LinearLayout>
 
@@ -85,12 +83,12 @@
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:fabSize="normal"
-            app:borderWidth="0dp"/>
+            app:borderWidth="0dp" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/message_list_container"/>
+            android:id="@+id/message_list_container" />
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -103,6 +101,6 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/navigation_drawer_conversations"
         app:itemTextColor="@drawable/drawer_text_selector"
-        app:itemIconTint="@drawable/drawer_icon_selector"/>
+        app:itemIconTint="@drawable/drawer_icon_selector" />
 
 </android.support.v4.widget.DrawerLayout>

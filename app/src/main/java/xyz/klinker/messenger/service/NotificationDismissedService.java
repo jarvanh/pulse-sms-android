@@ -18,8 +18,6 @@ package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import xyz.klinker.messenger.data.DataSource;
 

@@ -49,7 +49,7 @@ public class ApiUtils {
     }
 
     public Integer registerDevice(String accountId, String info, String name,
-                                            boolean primary, String fcmToken) {
+                                  boolean primary, String fcmToken) {
         DeviceBody deviceBody = new DeviceBody(info, name, primary, fcmToken);
         AddDeviceRequest request = new AddDeviceRequest(accountId, deviceBody);
         AddDeviceResponse response = api.device().add(request);

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,14 +38,14 @@
             android:layout_height="wrap_content"
             android:text="@string/api_login"
             style="?attr/borderlessButtonStyle"
-            android:id="@+id/login"/>
+            android:id="@+id/login" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/api_signup"
             style="?attr/borderlessButtonStyle"
-            android:id="@+id/signup"/>
+            android:id="@+id/signup" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,14 +55,14 @@
             android:background="@android:color/transparent"
             android:textColor="@android:color/white"
             android:id="@+id/signup_failed"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/api_divider_color"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -71,14 +70,14 @@
             android:gravity="center_horizontal"
             android:text="@string/api_skip_signup"
             android:background="@android:color/transparent"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/api_skip"
             style="?attr/borderlessButtonStyle"
-            android:id="@+id/skip"/>
+            android:id="@+id/skip" />
 
     </LinearLayout>
 
@@ -105,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/login_email"
                 android:inputType="textEmailAddress"
-                android:hint="@string/api_email"/>
+                android:hint="@string/api_email" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -113,7 +112,7 @@
                 android:id="@+id/login_password"
                 android:inputType="textPassword"
                 android:hint="@string/api_password"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
 
@@ -131,7 +130,7 @@
             android:layout_marginBottom="8dp"
             app:fabSize="normal"
             app:borderWidth="0dp"
-            app:backgroundTint="@color/api_fab_background"/>
+            app:backgroundTint="@color/api_fab_background" />
 
     </RelativeLayout>
 
@@ -158,21 +157,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_email"
                 android:inputType="textEmailAddress"
-                android:hint="@string/api_email"/>
+                android:hint="@string/api_email" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_password"
                 android:inputType="textPassword"
-                android:hint="@string/api_password"/>
+                android:hint="@string/api_password" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_password_confirmation"
                 android:inputType="textPassword"
-                android:hint="@string/api_password_confirmation"/>
+                android:hint="@string/api_password_confirmation" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -180,7 +179,7 @@
                 android:id="@+id/signup_name"
                 android:maxLines="1"
                 android:inputType="textPersonName"
-                android:hint="@string/api_name"/>
+                android:hint="@string/api_name" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -189,7 +188,7 @@
                 android:hint="@string/api_phone_number"
                 android:inputType="phone"
                 android:enabled="false"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
 
@@ -207,7 +206,7 @@
             android:layout_marginBottom="8dp"
             app:fabSize="normal"
             app:borderWidth="0dp"
-            app:backgroundTint="@color/api_fab_background"/>
+            app:backgroundTint="@color/api_fab_background" />
 
     </RelativeLayout>
 

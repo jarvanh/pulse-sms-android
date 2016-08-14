@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,17 +32,17 @@
         android:textColor="@color/secondaryText"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:maxWidth="@dimen/max_message_width"/>
+        android:maxWidth="@dimen/max_message_width" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/timestamp"/>
+        android:id="@+id/timestamp" />
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:id="@+id/image"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null" />
 
 </LinearLayout>

@@ -95,7 +95,7 @@ public class FaqsParser {
     private static String readAnswer(XmlPullParser parser)
             throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "answer");
-        String text = readText(parser).replace("    ", "");
+        String text = readText(parser).replace("    ", "").replace("\n", " ");
         parser.require(XmlPullParser.END_TAG, ns, "answer");
         return text;
     }

@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.util;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -68,17 +66,17 @@ public class AnimationUtils {
      * it fills the whole screen, giving the impression that the conversation is coming out of this
      * item.
      *
-     * @param itemView the view holder item view.
-     * @param fromBottom the starting bottom margin for the view.
-     * @param toBottom the ending bottom margin for the view.
-     * @param startY the starting y position for the view.
-     * @param translateY the amount to move the view in the Y direction.
+     * @param itemView     the view holder item view.
+     * @param fromBottom   the starting bottom margin for the view.
+     * @param toBottom     the ending bottom margin for the view.
+     * @param startY       the starting y position for the view.
+     * @param translateY   the amount to move the view in the Y direction.
      * @param interpolator the interpolator to animate with.
      */
     private static void animateConversationListItem(final View itemView,
-                                                   final int fromBottom, final int toBottom,
-                                                   final int startY, final int translateY,
-                                                   Interpolator interpolator) {
+                                                    final int fromBottom, final int toBottom,
+                                                    final int startY, final int translateY,
+                                                    Interpolator interpolator) {
         final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)
                 itemView.getLayoutParams();
 
@@ -120,10 +118,10 @@ public class AnimationUtils {
     /**
      * Expands the activity peripherals to be off of the screen so that the new conversation can
      * fill this entire space instead. This includes 3 different pieces:
-     *
+     * <p>
      * 1. Raise the toolbar off the top of the screen.
      * 2. Raise the fragment container to the top of the screen and expand the height so that it
-     *    stays matching the bottom.
+     * stays matching the bottom.
      * 3. Lower the FAB off the bottom.
      *
      * @param activity the activity to find the views at.
@@ -148,10 +146,10 @@ public class AnimationUtils {
     /**
      * Contracts the activity so that the original peripherals are shown again. This includes 3
      * pieces:
-     *
+     * <p>
      * 1. Lower the toolbar back to it's original spot under the status bar
      * 2. Lower the top of the fragment container to under the toolbar and contract it's height so
-     *    that it stays matching the bottom.
+     * that it stays matching the bottom.
      * 3. Raise the FAB back onto the screen.
      *
      * @param activity the activity to find the views in.
@@ -169,14 +167,14 @@ public class AnimationUtils {
     /**
      * Animates peripheral items on the screen to a given ending point.
      *
-     * @param toolbar the toolbar to animate.
-     * @param fragmentContainer the fragment container to animate.
-     * @param fab the floating action button to animate.
-     * @param toolbarTranslate the distance to translate the toolbar.
-     * @param containerStart the start point of the container.
+     * @param toolbar            the toolbar to animate.
+     * @param fragmentContainer  the fragment container to animate.
+     * @param fab                the floating action button to animate.
+     * @param toolbarTranslate   the distance to translate the toolbar.
+     * @param containerStart     the start point of the container.
      * @param containerTranslate the distance the container should translate.
-     * @param fabTranslate the distance the fab should translate.
-     * @param interpolator the interpolator to use.
+     * @param fabTranslate       the distance the fab should translate.
+     * @param interpolator       the interpolator to use.
      */
     private static void animateActivityWithConversation(View toolbar, final View fragmentContainer,
                                                         View fab, int toolbarTranslate,

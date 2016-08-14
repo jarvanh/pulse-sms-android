@@ -22,7 +22,7 @@ import org.robolectric.Robolectric;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class InitialLoadActivityTest extends MessengerRobolectricSuite {
 

@@ -25,7 +25,7 @@ import java.util.List;
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.data.model.Conversation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class ContactAdapterTest extends MessengerSuite {

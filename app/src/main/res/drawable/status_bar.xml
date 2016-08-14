@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,15 +18,17 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/statusBarDarker" />
-            <size android:height="24dp"
-                android:width="292dp"/>
+            <size
+                android:height="24dp"
+                android:width="292dp" />
         </shape>
     </item>
     <item android:left="292dp">
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white" />
-            <size android:height="24dp"
-                android:width="292dp"/>
+            <size
+                android:height="24dp"
+                android:width="292dp" />
         </shape>
     </item>
 </layer-list>

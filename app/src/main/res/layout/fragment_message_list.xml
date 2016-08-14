@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,7 @@
   ~ limitations under the License.
   -->
 
-<xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<xyz.klinker.messenger.view.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -52,7 +50,7 @@
             android:layout_marginStart="@dimen/message_list_padding"
             android:layout_marginEnd="@dimen/message_list_padding"
             android:alpha="0"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -71,7 +69,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="48dp"
                 android:layout_marginTop="12dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:layout_width="24dp"
@@ -81,7 +79,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_close"
                 android:id="@+id/remove_image"
-                android:contentDescription="@string/remove_image"/>
+                android:contentDescription="@string/remove_image" />
 
         </FrameLayout>
 
@@ -112,7 +110,7 @@
                     android:id="@+id/attach"
                     android:clickable="true"
                     android:contentDescription="@string/attach"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -122,7 +120,7 @@
                     android:layout_centerHorizontal="true"
                     android:textSize="12sp"
                     android:id="@+id/text_counter"
-                    android:textColor="@color/secondaryText"/>
+                    android:textColor="@color/secondaryText" />
 
             </RelativeLayout>
 
@@ -141,7 +139,7 @@
                 android:id="@+id/message_entry"
                 android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
                 android:imeOptions="actionSend"
-                android:maxLines="5"/>
+                android:maxLines="5" />
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="40dp"
@@ -152,7 +150,7 @@
                 android:layout_marginEnd="8dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
 
@@ -168,7 +166,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/attach_holder"
-                android:background="@color/drawerBackground"/>
+                android:background="@color/drawerBackground" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,7 +185,7 @@
                     android:contentDescription="@string/attach_image"
                     android:src="@drawable/ic_image"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -198,7 +196,7 @@
                     android:contentDescription="@string/capture_image"
                     android:src="@drawable/ic_capture_photo"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -209,7 +207,7 @@
                     android:contentDescription="@string/attach_gif"
                     android:src="@drawable/ic_gif"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -220,7 +218,7 @@
                     android:contentDescription="@string/record_video"
                     android:src="@drawable/ic_record_video"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -231,7 +229,7 @@
                     android:contentDescription="@string/record_audio"
                     android:src="@drawable/ic_record_audio"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" />
 
             </LinearLayout>
 

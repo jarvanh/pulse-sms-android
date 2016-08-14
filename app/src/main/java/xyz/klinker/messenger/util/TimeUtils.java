@@ -41,7 +41,7 @@ public class TimeUtils {
     /**
      * If the next timestamp is more than 15 minutes away, we will display it on the message.
      *
-     * @param timestamp the current message's timestamp.
+     * @param timestamp     the current message's timestamp.
      * @param nextTimestamp the next message's timestamp. This should be larger than timestamp.
      * @return true if we should display the timestamp, false otherwise.
      */
@@ -50,7 +50,7 @@ public class TimeUtils {
             throw new RuntimeException("nextTimestamp must be larger than timestamp");
         }
 
-        return nextTimestamp >= timestamp + (15*MINUTE);
+        return nextTimestamp >= timestamp + (15 * MINUTE);
     }
 
     /**
@@ -125,11 +125,11 @@ public class TimeUtils {
         Date date = new Date(timestamp);
         String formatted;
 
-        if (timestamp > currentTime - (2*MINUTE)) {
+        if (timestamp > currentTime - (2 * MINUTE)) {
             formatted = context.getString(R.string.now);
         } else if (timestamp > currentTime - DAY) {
             formatted = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-        } else if (timestamp > currentTime - (7*DAY)) {
+        } else if (timestamp > currentTime - (7 * DAY)) {
             formatted = new SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
                     DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         } else if (timestamp > currentTime - YEAR) {

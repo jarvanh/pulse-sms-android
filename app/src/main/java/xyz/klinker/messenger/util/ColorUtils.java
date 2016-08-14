@@ -24,7 +24,6 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -48,25 +47,44 @@ public class ColorUtils {
         int num = (int) (Math.random() * (17 + 1));
 
         switch (num) {
-            case 0:     return ColorSet.RED(context);
-            case 1:     return ColorSet.PINK(context);
-            case 2:     return ColorSet.PURPLE(context);
-            case 3:     return ColorSet.DEEP_PURPLE(context);
-            case 4:     return ColorSet.INDIGO(context);
-            case 5:     return ColorSet.BLUE(context);
-            case 6:     return ColorSet.LIGHT_BLUE(context);
-            case 7:     return ColorSet.CYAN(context);
-            case 8:     return ColorSet.GREEN(context);
-            case 9:     return ColorSet.LIGHT_GREEN(context);
-            case 10:    return ColorSet.LIME(context);
-            case 11:    return ColorSet.YELLOW(context);
-            case 12:    return ColorSet.AMBER(context);
-            case 13:    return ColorSet.ORANGE(context);
-            case 14:    return ColorSet.DEEP_ORANGE(context);
-            case 15:    return ColorSet.BROWN(context);
-            case 16:    return ColorSet.GREY(context);
-            case 17:    return ColorSet.BLUE_GREY(context);
-            default:    throw new RuntimeException("Invalid random color: " + num);
+            case 0:
+                return ColorSet.RED(context);
+            case 1:
+                return ColorSet.PINK(context);
+            case 2:
+                return ColorSet.PURPLE(context);
+            case 3:
+                return ColorSet.DEEP_PURPLE(context);
+            case 4:
+                return ColorSet.INDIGO(context);
+            case 5:
+                return ColorSet.BLUE(context);
+            case 6:
+                return ColorSet.LIGHT_BLUE(context);
+            case 7:
+                return ColorSet.CYAN(context);
+            case 8:
+                return ColorSet.GREEN(context);
+            case 9:
+                return ColorSet.LIGHT_GREEN(context);
+            case 10:
+                return ColorSet.LIME(context);
+            case 11:
+                return ColorSet.YELLOW(context);
+            case 12:
+                return ColorSet.AMBER(context);
+            case 13:
+                return ColorSet.ORANGE(context);
+            case 14:
+                return ColorSet.DEEP_ORANGE(context);
+            case 15:
+                return ColorSet.BROWN(context);
+            case 16:
+                return ColorSet.GREY(context);
+            case 17:
+                return ColorSet.BLUE_GREY(context);
+            default:
+                throw new RuntimeException("Invalid random color: " + num);
         }
     }
 
@@ -80,7 +98,7 @@ public class ColorUtils {
     /**
      * Adjusts the status bar color depending on whether you are on a phone or tablet.
      *
-     * @param color the color to change to.
+     * @param color    the color to change to.
      * @param activity the activity to find the views in.
      */
     public static void adjustStatusBarColor(final int color, final Activity activity) {
@@ -97,7 +115,7 @@ public class ColorUtils {
     /**
      * Adjusts the drawer colors and menu items to be correct depending on current state.
      *
-     * @param color the color for the header.
+     * @param color    the color for the header.
      * @param activity the activity to find the views in.
      */
     public static void adjustDrawerColor(int color, Activity activity) {
@@ -107,9 +125,9 @@ public class ColorUtils {
     /**
      * Adjusts the drawer colors and menu items to be correct depending on current state.
      *
-     * @param color the color for the header.
-     * @param isGroup whether we are adjusting the drawer for a group conversation or not. If so,
-     *                some of the text will be changed and the call option will be hidden.
+     * @param color    the color for the header.
+     * @param isGroup  whether we are adjusting the drawer for a group conversation or not. If so,
+     *                 some of the text will be changed and the call option will be hidden.
      * @param activity the activity to find the views in.
      */
     public static void adjustDrawerColor(int color, boolean isGroup, Activity activity) {
@@ -119,7 +137,7 @@ public class ColorUtils {
 
         int cx = revealView.getMeasuredWidth() / 2;
         int cy = revealView.getMeasuredHeight() / 2;
-        int radius = (int) Math.sqrt((cx*cx) + (cy*cy));
+        int radius = (int) Math.sqrt((cx * cx) + (cy * cy));
 
         if (revealView.getVisibility() == View.VISIBLE) {
             Animator anim =
@@ -170,7 +188,7 @@ public class ColorUtils {
      * unfortunately.
      *
      * @param editText the edit text to change.
-     * @param color the color of the new cursor.
+     * @param color    the color of the new cursor.
      */
     public static void setCursorDrawableColor(EditText editText, int color) {
         try {
@@ -215,13 +233,13 @@ public class ColorUtils {
                 try {
                     final Class<?> clazz = RecyclerView.class;
 
-                    for (final String name : new String[] {"ensureTopGlow", "ensureBottomGlow"}) {
+                    for (final String name : new String[]{"ensureTopGlow", "ensureBottomGlow"}) {
                         Method method = clazz.getDeclaredMethod(name);
                         method.setAccessible(true);
                         method.invoke(recyclerView);
                     }
 
-                    for (final String name : new String[] {"mTopGlow", "mBottomGlow"}) {
+                    for (final String name : new String[]{"mTopGlow", "mBottomGlow"}) {
                         final Field field = clazz.getDeclaredField(name);
                         field.setAccessible(true);
                         final Object edge = field.get(recyclerView);

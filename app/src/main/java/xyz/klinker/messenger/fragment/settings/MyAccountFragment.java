@@ -19,7 +19,6 @@ package xyz.klinker.messenger.fragment.settings;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
@@ -29,7 +28,6 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
-import xyz.klinker.messenger.util.StringUtils;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
@@ -53,7 +51,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Settings settings = Settings.get(getActivity());
 
-        if ((settings.accountId == null || settings.deviceId == null)  && preference != null) {
+        if ((settings.accountId == null || settings.deviceId == null) && preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

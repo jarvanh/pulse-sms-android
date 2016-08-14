@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,34 +19,34 @@
     <SwitchPreference
         android:key="@string/pref_contact_pin_conversation"
         android:title="@string/pin_conversation"
-        android:summary="@string/pin_conversation_summary"/>
+        android:summary="@string/pin_conversation_summary" />
 
     <SwitchPreference
         android:key="@string/pref_contact_mute_conversation"
         android:title="@string/mute_conversation"
-        android:summary="@string/mute_conversation_summary"/>
+        android:summary="@string/mute_conversation_summary" />
 
     <EditTextPreference
         android:key="@string/pref_contact_group_name"
-        android:title="@string/group_name"/>
+        android:title="@string/group_name" />
 
     <android.preference.RingtonePreference
         android:key="@string/pref_contact_ringtone"
         android:title="@string/ringtone"
         android:ringtoneType="notification"
         android:showDefault="true"
-        android:showSilent="true"/>
+        android:showSilent="true" />
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_primary_color"
-        android:title="@string/primary_color"/>
+        android:title="@string/primary_color" />
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_primary_dark_color"
-        android:title="@string/primary_dark_color"/>
+        android:title="@string/primary_dark_color" />
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_accent_color"
-        android:title="@string/accent_color"/>
+        android:title="@string/accent_color" />
 
 </PreferenceScreen>

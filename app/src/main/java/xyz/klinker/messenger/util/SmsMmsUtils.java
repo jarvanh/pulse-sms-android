@@ -60,7 +60,7 @@ public class SmsMmsUtils {
     public static List<Conversation> queryConversations(Context context) {
         List<Conversation> conversations = new ArrayList<>();
 
-        String[] projection = new String[] {
+        String[] projection = new String[]{
                 Telephony.ThreadsColumns._ID,
                 Telephony.ThreadsColumns.DATE,
                 Telephony.ThreadsColumns.MESSAGE_COUNT,
@@ -141,7 +141,7 @@ public class SmsMmsUtils {
      * @return the conversation as a cursor.
      */
     public static Cursor queryConversation(long conversationId, Context context) {
-        String[] projection = new String[] {
+        String[] projection = new String[]{
                 Telephony.MmsSms._ID,
                 Telephony.Sms.BODY,
                 Telephony.Sms.DATE,
@@ -163,7 +163,7 @@ public class SmsMmsUtils {
      * the internal database. See queryConversation(). For an mms message, there could be multiple
      * messages that need to be inserted, so the method returns a list.
      *
-     * @param messages the cursor holding the message.
+     * @param messages       the cursor holding the message.
      * @param conversationId the conversation id from our own internal database.
      * @return the content values to insert into our database.
      */
@@ -425,13 +425,13 @@ public class SmsMmsUtils {
     /**
      * Get an SMS message(s) from the provided URI.
      *
-     * @param context the context for the content provider.
-     * @param uri the sms message uri.
+     * @param context   the context for the content provider.
+     * @param uri       the sms message uri.
      * @param sortOrder the sort order to apply.
      * @return the cursor for the messages that match.
      */
     public static Cursor getSmsMessage(Context context, Uri uri, String sortOrder) {
-        String[] projection = new String[] {
+        String[] projection = new String[]{
                 Telephony.MmsSms._ID,
                 Telephony.Sms.BODY,
                 Telephony.Sms.DATE,
@@ -459,13 +459,13 @@ public class SmsMmsUtils {
     /**
      * Get an MMS message(s) from the provided URI.
      *
-     * @param context the context for the content provider.
-     * @param uri the mms message uri.
+     * @param context   the context for the content provider.
+     * @param uri       the mms message uri.
      * @param sortOrder the sort order to apply.
      * @return the cursor for the messages that match.
      */
     public static Cursor getMmsMessage(Context context, Uri uri, String sortOrder) {
-        String[] projection = new String[] {
+        String[] projection = new String[]{
                 Telephony.MmsSms._ID,
                 Telephony.Sms.DATE,
                 Telephony.Sms.READ,
@@ -479,7 +479,7 @@ public class SmsMmsUtils {
     /**
      * Marks a conversation as read in the internal database.
      *
-     * @param context the context to get the content provider with.
+     * @param context      the context to get the content provider with.
      * @param phoneNumbers the phone numbers to find the conversation with.
      */
     public static void markConversationRead(Context context, String phoneNumbers) {
@@ -500,7 +500,7 @@ public class SmsMmsUtils {
             boolean needUpdate = true;
 
             Cursor c = context.getContentResolver().query(threadUri,
-                    new String[] {"_id", "read"}, "(read=0 OR seen=0)", null, null);
+                    new String[]{"_id", "read"}, "(read=0 OR seen=0)", null, null);
             if (c != null) {
                 try {
                     needUpdate = c.getCount() > 0;
@@ -560,7 +560,7 @@ public class SmsMmsUtils {
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/" +
                     threadId + "/"), null, null);
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/"),
-                    "_id=?", new String[]{ Long.toString(threadId) });
+                    "_id=?", new String[]{Long.toString(threadId)});
         } catch (Exception e) {
             Log.e("delete conversation", "error deleting", e);
         }

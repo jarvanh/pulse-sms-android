@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +49,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:maxLines="1"
-                android:ellipsize="end"/>
+                android:ellipsize="end" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +58,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:fontFamily="sans-serif-light"
                 android:maxLines="1"
-                android:ellipsize="end"/>
+                android:ellipsize="end" />
 
         </LinearLayout>
 
@@ -70,7 +69,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/menu_snooze"
             android:padding="8dp"
-            android:id="@+id/snooze"/>
+            android:id="@+id/snooze" />
 
     </LinearLayout>
 
@@ -92,7 +91,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
         <TextView
             android:layout_width="match_parent"
@@ -101,7 +100,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:fontFamily="sans-serif-light"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
     </LinearLayout>
 

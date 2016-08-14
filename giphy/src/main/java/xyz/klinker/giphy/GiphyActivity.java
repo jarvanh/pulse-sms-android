@@ -31,7 +31,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -43,8 +42,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
-
-import xyz.klinker.giphy.R;
 
 public class GiphyActivity extends Activity {
 
@@ -219,7 +216,8 @@ public class GiphyActivity extends Activity {
 
                 try {
                     dialog.dismiss();
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                }
             } else {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                     Toast.makeText(activity, R.string.error_downloading_gif,

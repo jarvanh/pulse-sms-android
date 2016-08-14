@@ -20,9 +20,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class BlacklistFragmentTest extends MessengerRobolectricSuite {
 

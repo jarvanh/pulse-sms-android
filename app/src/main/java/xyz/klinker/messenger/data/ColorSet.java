@@ -34,7 +34,7 @@ public class ColorSet {
     public int colorAccent;
 
     private ColorSet(Context context, @ColorRes int color, @ColorRes int colorDark,
-                    @ColorRes int colorLight, @ColorRes int colorAccent) {
+                     @ColorRes int colorLight, @ColorRes int colorAccent) {
         this.color = getColor(context, color);
         this.colorDark = getColor(context, colorDark);
         this.colorLight = getColor(context, colorLight);

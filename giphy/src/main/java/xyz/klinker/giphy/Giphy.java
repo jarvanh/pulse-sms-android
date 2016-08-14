@@ -21,7 +21,7 @@ import android.content.Intent;
 
 /**
  * Entry class for creating a new GiphyActivity and downloading gifs from the service.
- *
+ * <p>
  * Simply create a new Giphy object and call start. Then in your activity, look for the results in
  * onActivityResult(). The uri to the downloaded image will be available at intent.getData() if the
  * result is set to Activity.RESULT_OK.

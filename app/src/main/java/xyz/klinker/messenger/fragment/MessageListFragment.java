@@ -440,7 +440,7 @@ public class MessageListFragment extends Fragment implements
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        params.height= (Integer) valueAnimator.getAnimatedValue();
+                        params.height = (Integer) valueAnimator.getAnimatedValue();
                         attachLayout.requestLayout();
                     }
                 });
@@ -524,7 +524,7 @@ public class MessageListFragment extends Fragment implements
                     }
 
                     final int position = findMessagePositionFromId(cursor);
-                    
+
                     Log.v("message_load", "load took " + (
                             System.currentTimeMillis() - startTime) + " ms");
 
@@ -541,7 +541,10 @@ public class MessageListFragment extends Fragment implements
                     });
                 }
 
-                try { Thread.sleep(1000); } catch (Exception e) { }
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                }
 
                 try {
                     if (source.isOpen()) {
@@ -758,7 +761,7 @@ public class MessageListFragment extends Fragment implements
                 Log.v("video result", "saved to " + data.getDataString());
                 attachImage(data.getData());
                 attachedMimeType = MimeType.VIDEO_MP4;
-            } else if(data != null) {
+            } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 e.printStackTrace();
                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();

@@ -24,6 +24,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 public interface ConversationExpandedListener {
 
     void onConversationExpanded(ConversationViewHolder viewHolder);
+
     void onConversationContracted(ConversationViewHolder viewHolder);
 
 }

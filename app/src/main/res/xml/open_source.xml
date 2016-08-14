@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +16,9 @@
 
 <open_source>
 
-    <item name="android-smsmms" owner="Jake Klinker">
+    <item
+        name="android-smsmms"
+        owner="Jake Klinker">
         <license>
             Copyright 2016 Jacob Klinker
 
@@ -35,7 +36,9 @@
         </license>
     </item>
 
-    <item name="android-chips" owner="Jake Klinker">
+    <item
+        name="android-chips"
+        owner="Jake Klinker">
         <license>
             Copyright 2014 Jacob Klinker
 
@@ -53,7 +56,9 @@
         </license>
     </item>
 
-    <item name="link_builder" owner="Luke Klinker">
+    <item
+        name="link_builder"
+        owner="Luke Klinker">
         <license>
             Copyright 2016 Luke Klinker
 
@@ -71,7 +76,9 @@
         </license>
     </item>
 
-    <item name="simple_videoview" owner="Luke Klinker">
+    <item
+        name="simple_videoview"
+        owner="Luke Klinker">
         <license>
             Copyright 2016 Luke Klinker
 
@@ -89,7 +96,9 @@
         </license>
     </item>
 
-    <item name="material-camera" owner="Aidan Follestad">
+    <item
+        name="material-camera"
+        owner="Aidan Follestad">
         <license>
             Copyright 2016 Aidan Follestad
 
@@ -107,7 +116,9 @@
         </license>
     </item>
 
-    <item name="easy-video-player" owner="Aidan Follestad">
+    <item
+        name="easy-video-player"
+        owner="Aidan Follestad">
         <license>
             Copyright 2016 Aidan Follestad
 
@@ -125,7 +136,9 @@
         </license>
     </item>
 
-    <item name="sectioned-recyclerview" owner="Aidan Follestad">
+    <item
+        name="sectioned-recyclerview"
+        owner="Aidan Follestad">
         <license>
             Copyright 2016 Aidan Follestad
 
@@ -143,7 +156,9 @@
         </license>
     </item>
 
-    <item name="circleimageview" owner="Henning Dodenhof">
+    <item
+        name="circleimageview"
+        owner="Henning Dodenhof">
         <license>
             Copyright 2014 - 2016 Henning Dodenhof
 
@@ -161,7 +176,9 @@
         </license>
     </item>
 
-    <item name="lobsterpicker" owner="Marie Schweiz &amp; Lars Werkman">
+    <item
+        name="lobsterpicker"
+        owner="Marie Schweiz &amp; Lars Werkman">
         <license>
             Copyright (C) 2015 Marie Schweiz &amp; Lars Werkman
             Licensed under the Apache License, Version 2.0 (the "License");
@@ -176,7 +193,9 @@
         </license>
     </item>
 
-    <item name="photoview" owner="Chris Banes">
+    <item
+        name="photoview"
+        owner="Chris Banes">
         <license>
             Copyright 2011, 2012 Chris Banes
 
@@ -194,7 +213,9 @@
         </license>
     </item>
 
-    <item name="continuous-audiorecorder" owner="Nikolai Doronin">
+    <item
+        name="continuous-audiorecorder"
+        owner="Nikolai Doronin">
         <license>
             Copyright (c) 2013, Nikolai Doronin
             All rights reserved.
@@ -221,7 +242,9 @@
         </license>
     </item>
 
-    <item name="isoparser" owner="Sebastian Annies">
+    <item
+        name="isoparser"
+        owner="Sebastian Annies">
         <license>
             Copyright (C) 2014 Sebastian Annies
 
@@ -239,7 +262,9 @@
         </license>
     </item>
 
-    <item name="MaterialSearchView" owner="Miguel Catalan Bañuls">
+    <item
+        name="MaterialSearchView"
+        owner="Miguel Catalan Bañuls">
         <license>
             Copyright 2015 Miguel Catalan Bañuls
 
@@ -257,7 +282,9 @@
         </license>
     </item>
 
-    <item name="retrofit" owner="Square">
+    <item
+        name="retrofit"
+        owner="Square">
         <license>
             Copyright 2013 Square, Inc.
 
@@ -275,7 +302,9 @@
         </license>
     </item>
 
-    <item name="glide" owner="Bump Technologies">
+    <item
+        name="glide"
+        owner="Bump Technologies">
         <license>
             Copyright 2014 Google, Inc. All rights reserved.
 
@@ -300,12 +329,15 @@
             ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
             The views and conclusions contained in the software and documentation are those of the
-            authors and should not be interpreted as representing official policies, either expressed
+            authors and should not be interpreted as representing official policies, either
+            expressed
             or implied, of Google, Inc.
         </license>
     </item>
 
-    <item name="android support library" owner="Google">
+    <item
+        name="android support library"
+        owner="Google">
         <license>
             Copyright (C) 2011 The Android Open Source Project
 
@@ -323,7 +355,9 @@
         </license>
     </item>
 
-    <item name="gson" owner="Google">
+    <item
+        name="gson"
+        owner="Google">
         <license>
             Copyright 2008 Google Inc.
 

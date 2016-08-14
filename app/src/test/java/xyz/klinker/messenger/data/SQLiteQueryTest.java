@@ -67,7 +67,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     public void insertConversations() {
         int initialSize = source.getConversations().getCount();
         source.insertConversations(DataSourceTest
-                .getFakeConversations(RuntimeEnvironment.application.getResources()),
+                        .getFakeConversations(RuntimeEnvironment.application.getResources()),
                 RuntimeEnvironment.application, null);
         int newSize = source.getConversations().getCount();
 

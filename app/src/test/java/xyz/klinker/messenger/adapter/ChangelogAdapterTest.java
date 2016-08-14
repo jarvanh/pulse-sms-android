@@ -26,7 +26,8 @@ import org.robolectric.Robolectric;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.util.xml.ChangelogParser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ChangelogAdapterTest extends MessengerRobolectricSuite {
 

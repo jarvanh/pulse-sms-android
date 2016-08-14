@@ -28,7 +28,8 @@ import org.robolectric.Robolectric;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class ScheduledMessagesAdapterTest extends MessengerRobolectricSuite {

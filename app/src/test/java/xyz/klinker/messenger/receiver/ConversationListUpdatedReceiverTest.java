@@ -32,7 +32,7 @@ import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;

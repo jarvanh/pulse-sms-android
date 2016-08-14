@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +43,7 @@
             android:maxHeight="@dimen/max_message_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
-            android:contentDescription="@string/mms_image"/>
+            android:contentDescription="@string/mms_image" />
 
         <com.klinker.android.link_builder.LinkConsumableTextView
             android:layout_width="wrap_content"
@@ -52,7 +51,7 @@
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
             android:textColor="@color/primaryText"
-            android:id="@+id/message"/>
+            android:id="@+id/message" />
 
     </LinearLayout>
 
@@ -63,7 +62,7 @@
         android:src="@drawable/ic_done"
         android:tint="@color/materialGreen"
         android:layout_marginEnd="12dp"
-        android:contentDescription="@string/delivered"/>
+        android:contentDescription="@string/delivered" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,6 +70,6 @@
         android:textSize="12sp"
         android:textColor="@color/secondaryText"
         android:id="@+id/timestamp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp" />
 
 </LinearLayout>

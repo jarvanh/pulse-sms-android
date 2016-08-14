@@ -31,7 +31,8 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService.NotificationConversation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -77,7 +78,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     }
 
     private Cursor getUnseenCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Message.COLUMN_CONVERSATION_ID,
                 Message.COLUMN_DATA,
                 Message.COLUMN_MIME_TYPE,
@@ -85,7 +86,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 Message.COLUMN_FROM
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 "Hey what's up?",
                 "text/plain",
@@ -93,7 +94,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 "Yo, you around?",
                 "text/plain",
@@ -101,7 +102,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 2,
                 "Can we hang out tonight?",
                 "text/plain",
@@ -109,7 +110,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 "Hello?",
                 "text/plain",
@@ -117,7 +118,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 3,
                 "content://mms/part/1",
                 "image/jpg",

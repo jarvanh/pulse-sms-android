@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,28 +18,28 @@
 
     <Preference
         android:key="@string/pref_about_changelog"
-        android:title="@string/changelog"/>
+        android:title="@string/changelog" />
 
     <Preference
         android:key="@string/pref_about_app_version"
-        android:title="@string/app_version"/>
+        android:title="@string/app_version" />
 
     <Preference
         android:key="@string/pref_about_device_info"
-        android:title="@string/device_info"/>
+        android:title="@string/device_info" />
 
     <Preference
         android:key="@string/pref_about_copyright"
         android:title="@string/copyright"
-        android:summary="@string/copyright_summary"/>
+        android:summary="@string/copyright_summary" />
 
     <Preference
         android:key="@string/pref_about_privacy_policy"
         android:title="@string/privacy_policy"
-        android:summary="@string/privacy_policy_summary"/>
+        android:summary="@string/privacy_policy_summary" />
 
     <Preference
         android:key="@string/pref_about_beta"
-        android:summary="@string/beta_disclaimer"/>
+        android:summary="@string/beta_disclaimer" />
 
 </PreferenceScreen>

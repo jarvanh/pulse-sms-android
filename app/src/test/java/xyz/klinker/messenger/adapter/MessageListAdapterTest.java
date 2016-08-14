@@ -20,7 +20,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +33,7 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Message;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
@@ -72,7 +71,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountZeroCursor() {
-        adapter.addMessage(new MatrixCursor(new String[] {}));
+        adapter.addMessage(new MatrixCursor(new String[]{}));
         assertEquals(0, adapter.getItemCount());
     }
 
@@ -88,7 +87,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void addMessage() {
-        adapter.addMessage(new MatrixCursor(new String[] {}));
+        adapter.addMessage(new MatrixCursor(new String[]{}));
         verify(manager).scrollToPosition(-1);
     }
 
@@ -125,7 +124,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     }
 
     private Cursor getFakeMessages() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Message.COLUMN_ID,
                 Message.COLUMN_CONVERSATION_ID,
                 Message.COLUMN_TYPE,
@@ -138,7 +137,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 Message.COLUMN_COLOR
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 1,
                 Message.TYPE_RECEIVED,
@@ -151,7 +150,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 2,
                 1,
                 Message.TYPE_SENT,
@@ -164,7 +163,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 3,
                 1,
                 Message.TYPE_SENT,
@@ -182,7 +181,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 4,
                 1,
                 Message.TYPE_RECEIVED,
@@ -195,7 +194,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 5,
                 1,
                 Message.TYPE_SENT,
@@ -208,7 +207,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 6,
                 1,
                 Message.TYPE_SENT,
@@ -222,7 +221,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 7,
                 1,
                 Message.TYPE_RECEIVED,
@@ -235,7 +234,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 8,
                 1,
                 Message.TYPE_SENT,
@@ -248,7 +247,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 9,
                 1,
                 Message.TYPE_RECEIVED,
@@ -261,7 +260,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 10,
                 1,
                 Message.TYPE_SENT,
@@ -275,7 +274,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 11,
                 1,
                 Message.TYPE_RECEIVED,
@@ -288,7 +287,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 null
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 12,
                 1,
                 Message.TYPE_SENT,

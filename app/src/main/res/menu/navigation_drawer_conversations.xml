@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +16,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
         <group
             android:id="@+id/primary_section"
@@ -28,47 +26,48 @@
                 android:id="@+id/drawer_conversation"
                 android:icon="@drawable/ic_conversations"
                 android:title="@string/menu_conversations"
-                android:checked="true"/>
+                android:checked="true" />
 
             <item
                 android:id="@+id/drawer_schedule"
                 android:icon="@drawable/ic_schedule"
-                android:title="@string/menu_schedule"/>
+                android:title="@string/menu_schedule" />
 
             <item
                 android:id="@+id/drawer_mute_contacts"
                 android:icon="@drawable/ic_block"
-                android:title="@string/menu_mute_contacts"/>
+                android:title="@string/menu_mute_contacts" />
 
             <item
                 android:id="@+id/drawer_invite"
                 android:icon="@drawable/ic_invite"
-                android:title="@string/menu_invite"/>
+                android:title="@string/menu_invite" />
 
         </group>
 
-        <group android:id="@+id/other_section"
+        <group
+            android:id="@+id/other_section"
             android:checkableBehavior="single">
 
             <item
                 android:id="@+id/drawer_settings"
                 android:icon="@drawable/ic_settings"
-                android:title="@string/menu_settings"/>
+                android:title="@string/menu_settings" />
 
             <item
                 android:id="@+id/drawer_account"
                 android:icon="@drawable/ic_account"
-                android:title="@string/menu_account"/>
+                android:title="@string/menu_account" />
 
             <item
                 android:id="@+id/drawer_help"
                 android:icon="@drawable/ic_help"
-                android:title="@string/menu_help"/>
+                android:title="@string/menu_help" />
 
             <item
                 android:id="@+id/drawer_about"
                 android:icon="@drawable/ic_about"
-                android:title="@string/menu_about"/>
+                android:title="@string/menu_about" />
 
         </group>
 

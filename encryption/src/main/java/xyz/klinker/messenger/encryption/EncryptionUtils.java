@@ -52,7 +52,7 @@ public class EncryptionUtils {
 
         try {
             cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        } catch (NoSuchPaddingException|NoSuchAlgorithmException e) {
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException e) {
             throw new RuntimeException("could not create cypher", e);
         }
     }
@@ -87,8 +87,8 @@ public class EncryptionUtils {
             String ciphertext = Base64.encodeToString(cipher.doFinal(data), Base64.DEFAULT);
 
             return iv + SEPARATOR + ciphertext;
-        } catch (InvalidKeyException|InvalidParameterSpecException|
-                IllegalBlockSizeException|BadPaddingException e) {
+        } catch (InvalidKeyException | InvalidParameterSpecException |
+                IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException("could not encrypt data", e);
         }
     }
@@ -121,8 +121,8 @@ public class EncryptionUtils {
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
             return cipher.doFinal(ciphertext);
-        } catch (InvalidKeyException|InvalidAlgorithmParameterException|
-                IllegalBlockSizeException|BadPaddingException e) {
+        } catch (InvalidKeyException | InvalidAlgorithmParameterException |
+                IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException("could not decryptData data", e);
         }
     }

@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -44,7 +43,7 @@ import xyz.klinker.messenger.util.listener.AudioRecordedListener;
  */
 @SuppressLint("ViewConstructor")
 public class RecordAudioView extends FrameLayout implements
-        AudioRecorder.OnStartListener, AudioRecorder.OnPauseListener{
+        AudioRecorder.OnStartListener, AudioRecorder.OnPauseListener {
 
     private AudioRecordedListener listener;
     private boolean recording = false;

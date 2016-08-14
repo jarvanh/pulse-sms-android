@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,22 +16,28 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/menu_snooze_1"
-        android:id="@+id/menu_snooze_1"/>
+    <item
+        android:title="@string/menu_snooze_1"
+        android:id="@+id/menu_snooze_1" />
 
-    <item android:title="@string/menu_snooze_2"
-        android:id="@+id/menu_snooze_2"/>
+    <item
+        android:title="@string/menu_snooze_2"
+        android:id="@+id/menu_snooze_2" />
 
-    <item android:title="@string/menu_snooze_4"
-        android:id="@+id/menu_snooze_4"/>
+    <item
+        android:title="@string/menu_snooze_4"
+        android:id="@+id/menu_snooze_4" />
 
-    <item android:title="@string/menu_snooze_8"
-        android:id="@+id/menu_snooze_8"/>
+    <item
+        android:title="@string/menu_snooze_8"
+        android:id="@+id/menu_snooze_8" />
 
-    <item android:title="@string/menu_snooze_24"
-        android:id="@+id/menu_snooze_24"/>
+    <item
+        android:title="@string/menu_snooze_24"
+        android:id="@+id/menu_snooze_24" />
 
-    <item android:title="@string/menu_snooze_72"
-        android:id="@+id/menu_snooze_72"/>
+    <item
+        android:title="@string/menu_snooze_72"
+        android:id="@+id/menu_snooze_72" />
 
 </menu>

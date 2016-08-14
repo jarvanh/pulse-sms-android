@@ -38,11 +38,11 @@ public class KeyUtils {
     /**
      * The number of iterations we should preform when hashing the key. Higher means more time but
      * better security.
-     *
+     * <p>
      * Some stats:
-     *      65,000 = 2.2 seconds on Nexus 6P
-     *      1000 = 42 ms on Nexus 6P
-     *      10000 = 400 ms on Nexus 6P
+     * 65,000 = 2.2 seconds on Nexus 6P
+     * 1000 = 42 ms on Nexus 6P
+     * 10000 = 400 ms on Nexus 6P
      */
     private static final int ITERATIONS = 10000;
 
@@ -73,8 +73,8 @@ public class KeyUtils {
      * sending it to the server.
      *
      * @param password the password to encode with the given salt.
-     * @param salt the salt to use (should be gotten from the server after a successful login
-     *             request).
+     * @param salt     the salt to use (should be gotten from the server after a successful login
+     *                 request).
      * @return a Base64 encoded secret key.
      */
     public String hashPassword(String password, String salt) {
@@ -96,11 +96,11 @@ public class KeyUtils {
      * key that will actually be used for encryption. This process is lengthy, so the key should
      * be stored in memory until the app specifically removes it.
      *
-     * @param hash the password hash created using hashPassword().
+     * @param hash      the password hash created using hashPassword().
      * @param accountId the account id that will be used to create the key in conjunction with the
      *                  hash.
-     * @param salt the salt to use (should be gotten from the server after a successful login
-     *             request). This should not be the same salt that was used for hashPassword().
+     * @param salt      the salt to use (should be gotten from the server after a successful login
+     *                  request). This should not be the same salt that was used for hashPassword().
      * @return a secret key we can use to encrypt and decryptData data.
      */
     public SecretKey createKey(String hash, String accountId, String salt) {

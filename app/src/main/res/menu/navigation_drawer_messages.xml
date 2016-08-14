@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,27 +23,27 @@
         <item
             android:id="@+id/drawer_call"
             android:icon="@drawable/ic_call"
-            android:title="@string/menu_call"/>
+            android:title="@string/menu_call" />
 
         <item
             android:id="@+id/drawer_view_contact"
             android:icon="@drawable/ic_contacts"
-            android:title="@string/menu_view_contact"/>
+            android:title="@string/menu_view_contact" />
 
         <item
             android:id="@+id/drawer_delete_conversation"
             android:icon="@drawable/ic_delete"
-            android:title="@string/menu_delete_conversation"/>
+            android:title="@string/menu_delete_conversation" />
 
         <item
             android:id="@+id/drawer_conversation_information"
             android:icon="@drawable/ic_about"
-            android:title="@string/menu_conversation_information"/>
+            android:title="@string/menu_conversation_information" />
 
         <item
             android:id="@+id/drawer_conversation_blacklist"
             android:icon="@drawable/ic_block"
-            android:title="@string/menu_conversation_blacklist"/>
+            android:title="@string/menu_conversation_blacklist" />
 
     </group>
 
@@ -53,7 +52,7 @@
         <item
             android:id="@+id/drawer_contact_settings"
             android:icon="@drawable/ic_settings"
-            android:title="@string/menu_contact_settings"/>
+            android:title="@string/menu_contact_settings" />
 
     </group>
 

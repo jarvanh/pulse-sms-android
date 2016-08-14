@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +30,7 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:fabSize="normal"
-        app:borderWidth="0dp"/>
+        app:borderWidth="0dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,6 +38,6 @@
         android:text="@string/start_recording_audio"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:id="@+id/record_text"/>
+        android:id="@+id/record_text" />
 
 </LinearLayout>

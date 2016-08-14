@@ -36,9 +36,9 @@ import java.util.Scanner;
 /**
  * Helper for working with Giphy data. To use, create a new object and pass in your api key and
  * max size, then call search() or trends().
- *
+ * <p>
  * new GiphyHelper(apiKey, 1024 * 1024)
- *          .search(this);
+ * .search(this);
  */
 class GiphyHelper {
 
@@ -52,7 +52,7 @@ class GiphyHelper {
         this.maxSize = maxSize;
     }
 
-    private static final String[] SIZE_OPTIONS = new String[] {
+    private static final String[] SIZE_OPTIONS = new String[]{
             "original", "downsized_medium", "fixed_height", "fixed_width", "fixed_height_small",
             /*"fixed_width_small",*/ "downsized_large", "downsized_medium", "downsized"
     };

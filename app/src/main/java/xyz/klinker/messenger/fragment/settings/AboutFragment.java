@@ -19,19 +19,15 @@ package xyz.klinker.messenger.fragment.settings;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ChangelogAdapter;
 import xyz.klinker.messenger.adapter.OpenSourceAdapter;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.xml.ChangelogParser;
 import xyz.klinker.messenger.util.xml.OpenSourceParser;
 

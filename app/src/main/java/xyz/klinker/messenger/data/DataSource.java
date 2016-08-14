@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 
 import java.text.SimpleDateFormat;
@@ -53,10 +52,10 @@ public class DataSource {
      * A max value for the id. With this value, there is a 1 in 200,000 chance of overlap when a
      * user uploads 100,000 messages, so we should be safe assuming that no user will be uploading
      * that many messages.
-     *
+     * <p>
      * See https://github.com/klinker41/messenger-server/wiki/Generating-GUIDs.
      */
-    private static final long MAX_ID = Long.MAX_VALUE/10000;
+    private static final long MAX_ID = Long.MAX_VALUE / 10000;
     private static volatile DataSource instance;
 
     private SQLiteDatabase database;
@@ -213,7 +212,7 @@ public class DataSource {
      * of these conversations and insert them as well, during the same transaction.
      *
      * @param conversations the list of conversations. See SmsMmsUtils.queryConversations().
-     * @param context the application context.
+     * @param context       the application context.
      */
     public void insertConversations(List<Conversation> conversations, Context context,
                                     ProgressUpdateListener listener) {
@@ -355,7 +354,7 @@ public class DataSource {
      */
     public Conversation getConversation(long conversationId) {
         Cursor cursor = database.query(Conversation.TABLE, null, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(conversationId) }, null, null, null);
+                new String[]{Long.toString(conversationId)}, null, null, null);
         if (cursor.moveToFirst()) {
             Conversation conversation = new Conversation();
             conversation.fillFromCursor(cursor);
@@ -382,20 +381,20 @@ public class DataSource {
      */
     public void deleteConversation(long conversationId) {
         database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
-                new String[] { Long.toString(conversationId) });
+                new String[]{Long.toString(conversationId)});
 
         database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(conversationId) });
+                new String[]{Long.toString(conversationId)});
     }
 
     /**
      * Updates the conversation with given values.
      *
      * @param conversationId the conversation to update.
-     * @param read whether the conversation is read or not.
-     * @param timestamp the new timestamp for the conversation
-     * @param snippet the snippet to display for appropriate mime types.
-     * @param snippetMime the snippet's mime type.
+     * @param read           whether the conversation is read or not.
+     * @param timestamp      the new timestamp for the conversation
+     * @param snippet        the snippet to display for appropriate mime types.
+     * @param snippetMime    the snippet's mime type.
      */
     public void updateConversation(long conversationId, boolean read, long timestamp,
                                    String snippet, String snippetMime) {
@@ -411,7 +410,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_TIMESTAMP, timestamp);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(conversationId) });
+                new String[]{Long.toString(conversationId)});
     }
 
     /**
@@ -429,7 +428,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(conversation.id) });
+                new String[]{Long.toString(conversation.id)});
     }
 
     /**
@@ -515,7 +514,7 @@ public class DataSource {
      */
     public Cursor getMessages(long conversationId) {
         return database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
-                new String[] { Long.toString(conversationId) }, null, null,
+                new String[]{Long.toString(conversationId)}, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
     }
 
@@ -532,8 +531,8 @@ public class DataSource {
      */
     public List<Message> getMediaMessages(long conversationId) {
         Cursor c = database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
-                Message.COLUMN_MIME_TYPE + "!='text/plain'",
-                new String[] { Long.toString(conversationId) }, null, null,
+                        Message.COLUMN_MIME_TYPE + "!='text/plain'",
+                new String[]{Long.toString(conversationId)}, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
 
         List<Message> messages = new ArrayList<>();
@@ -571,7 +570,7 @@ public class DataSource {
         } else {
             return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
                             query.replace("'", "''") + "%' AND " +
-                    Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null,
+                            Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null,
                     Message.COLUMN_TIMESTAMP + " desc");
         }
     }
@@ -584,7 +583,7 @@ public class DataSource {
      */
     public Cursor searchMessages(long timestamp) {
         return database.query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + " BETWEEN " +
-                (timestamp - 5000) + " AND " + (timestamp + 5000), null, null, null,
+                        (timestamp - 5000) + " AND " + (timestamp + 5000), null, null, null,
                 Message.COLUMN_TIMESTAMP + " desc");
     }
 
@@ -592,37 +591,37 @@ public class DataSource {
      * Updates the message with the given id to the given type.
      *
      * @param messageId the message to update.
-     * @param type the type to change it to.
+     * @param type      the type to change it to.
      */
     public void updateMessageType(long messageId, int type) {
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_TYPE, type);
 
         database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
-                new String[] { Long.toString(messageId) });
+                new String[]{Long.toString(messageId)});
     }
 
     /**
      * Updates the data field for a message.
      *
      * @param messageId the id of the message to update.
-     * @param data the new data string.
+     * @param data      the new data string.
      */
     public void updateMessageData(long messageId, String data) {
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_DATA, data);
 
         database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
-                new String[] { Long.toString(messageId) });
+                new String[]{Long.toString(messageId)});
     }
 
     /**
      * Inserts a new sent message after finding the conversation id.
      *
      * @param addresses the comma, space separated addresses.
-     * @param data the message data.
-     * @param mimeType the message mimeType.
-     * @param context the application context.
+     * @param data      the message data.
+     * @param mimeType  the message mimeType.
+     * @param context   the application context.
      */
     public long insertSentMessage(String addresses, String data, String mimeType, Context context) {
         final Message m = new Message();
@@ -643,7 +642,7 @@ public class DataSource {
      * will be slightly slower than if you were to have an id since we will need to find the
      * appropriate one in the database or create a new conversation entry.
      *
-     * @param message the message to insert.
+     * @param message      the message to insert.
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
      * @return the conversation id that the message was inserted into.
      */
@@ -658,8 +657,8 @@ public class DataSource {
     public Long findConversationId(String phoneNumbers) {
         String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
-                new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                Conversation.COLUMN_ID_MATCHER + "=?", new String[] {matcher}, null, null, null);
+                new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
+                Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             long conversationId = cursor.getLong(0);
@@ -675,14 +674,14 @@ public class DataSource {
      * conversation and returns that id if one does not exist.
      *
      * @param phoneNumbers the phone number to match the conversation with.
-     * @param message the message to use to initialize a conversation if needed.
+     * @param message      the message to use to initialize a conversation if needed.
      * @return the conversation id to use.
      */
     private long updateOrCreateConversation(String phoneNumbers, Message message, Context context) {
         String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
-                new String[] {Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                Conversation.COLUMN_ID_MATCHER + "=?", new String[] {matcher}, null, null, null);
+                new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
+                Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
 
         long conversationId;
 
@@ -721,7 +720,7 @@ public class DataSource {
      * Inserts a new message into the database. This also updates the conversation with the latest
      * data.
      *
-     * @param message the message to insert.
+     * @param message        the message to insert.
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
@@ -758,7 +757,7 @@ public class DataSource {
      */
     public void deleteMessage(long messageId) {
         database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
-                new String[] { Long.toString(messageId) });
+                new String[]{Long.toString(messageId)});
     }
 
     /**
@@ -772,14 +771,14 @@ public class DataSource {
         values.put(Message.COLUMN_SEEN, 1);
 
         database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
-                Message.COLUMN_READ + "=? OR " + Message.COLUMN_SEEN + "=?)",
-                new String[] {Long.toString(conversationId), "0", "0"});
+                        Message.COLUMN_READ + "=? OR " + Message.COLUMN_SEEN + "=?)",
+                new String[]{Long.toString(conversationId), "0", "0"});
 
         values = new ContentValues(1);
         values.put(Conversation.COLUMN_READ, 1);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[] { Long.toString(conversationId) });
+                new String[]{Long.toString(conversationId)});
 
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);
@@ -796,7 +795,7 @@ public class DataSource {
         values.put(Message.COLUMN_SEEN, 1);
 
         database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND " +
-                Message.COLUMN_SEEN + "=0", new String[] {Long.toString(conversationId)});
+                Message.COLUMN_SEEN + "=0", new String[]{Long.toString(conversationId)});
     }
 
     /**
@@ -874,7 +873,7 @@ public class DataSource {
      */
     public List<Draft> getDrafts(long conversationId) {
         Cursor cursor = database.query(Draft.TABLE, null, Draft.COLUMN_CONVERSATION_ID + "=?",
-                new String[] { Long.toString(conversationId) }, null, null, null);
+                new String[]{Long.toString(conversationId)}, null, null, null);
         List<Draft> drafts = new ArrayList<>();
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -895,7 +894,7 @@ public class DataSource {
      */
     public void deleteDrafts(long conversationId) {
         database.delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
-                new String[] { Long.toString(conversationId) });
+                new String[]{Long.toString(conversationId)});
     }
 
     /**
@@ -926,7 +925,7 @@ public class DataSource {
      */
     public void deleteBlacklist(long id) {
         database.delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
-                new String[] {Long.toString(id)});
+                new String[]{Long.toString(id)});
     }
 
     /**
@@ -963,7 +962,7 @@ public class DataSource {
      */
     public void deleteScheduledMessage(long id) {
         database.delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
-                new String[] {Long.toString(id)});
+                new String[]{Long.toString(id)});
     }
 
     /**

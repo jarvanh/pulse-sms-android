@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,21 +18,21 @@
 
     <Preference
         android:key="@string/pref_help_faqs"
-        android:title="@string/faqs"/>
+        android:title="@string/faqs" />
 
     <Preference
         android:key="@string/pref_help_google_plus"
         android:title="@string/google_plus"
-        android:summary="@string/google_plus_summary"/>
+        android:summary="@string/google_plus_summary" />
 
     <Preference
         android:key="@string/pref_help_email"
         android:title="@string/email"
-        android:summary="@string/email_summary"/>
+        android:summary="@string/email_summary" />
 
     <Preference
         android:key="@string/pref_help_twitter"
         android:title="@string/twitter"
-        android:summary="@string/twitter_summary"/>
+        android:summary="@string/twitter_summary" />
 
 </PreferenceScreen>

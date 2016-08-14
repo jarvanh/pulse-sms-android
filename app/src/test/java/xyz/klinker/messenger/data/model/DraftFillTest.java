@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class DraftFillTest extends MessengerRobolectricSuite {
 
@@ -41,14 +41,14 @@ public class DraftFillTest extends MessengerRobolectricSuite {
     }
 
     private Cursor createCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Draft.COLUMN_ID,
                 Draft.COLUMN_CONVERSATION_ID,
                 Draft.COLUMN_DATA,
                 Draft.COLUMN_MIME_TYPE
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 1,
                 "Do you want to go to summerfest this weekend?",

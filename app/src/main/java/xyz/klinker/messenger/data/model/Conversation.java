@@ -16,12 +16,7 @@
 
 package xyz.klinker.messenger.data.model;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.database.MatrixCursor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.data.ColorSet;
@@ -124,37 +119,37 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             String column = cursor.getColumnName(i);
 
-             if (column.equals(COLUMN_ID)) {
-                 this.id = cursor.getLong(i);
-             } else if (column.equals(COLUMN_COLOR)) {
-                 this.colors.color = cursor.getInt(i);
-             } else if (column.equals(COLUMN_COLOR_DARK)) {
-                 this.colors.colorDark = cursor.getInt(i);
-             } else if (column.equals(COLUMN_COLOR_LIGHT)) {
-                 this.colors.colorLight = cursor.getInt(i);
-             } else if (column.equals(COLUMN_COLOR_ACCENT)) {
-                 this.colors.colorAccent = cursor.getInt(i);
-             } else if (column.equals(COLUMN_PINNED)) {
-                 this.pinned = cursor.getInt(i) == 1;
-             } else if (column.equals(COLUMN_READ)) {
-                 this.read = cursor.getInt(i) == 1;
-             } else if (column.equals(COLUMN_TIMESTAMP)) {
-                 this.timestamp = cursor.getLong(i);
-             } else if (column.equals(COLUMN_TITLE)) {
-                 this.title = cursor.getString(i);
-             } else if (column.equals(COLUMN_PHONE_NUMBERS)) {
-                 this.phoneNumbers = cursor.getString(i);
-             } else if (column.equals(COLUMN_SNIPPET)) {
-                 this.snippet = cursor.getString(i);
-             } else if (column.equals(COLUMN_RINGTONE)) {
-                 this.ringtoneUri = cursor.getString(i);
-             } else if (column.equals(COLUMN_IMAGE_URI)) {
-                 this.imageUri = cursor.getString(i);
-             } else if (column.equals(COLUMN_ID_MATCHER)) {
-                 this.idMatcher = cursor.getString(i);
-             } else if (column.equals(COLUMN_MUTE)) {
-                 this.mute = cursor.getInt(i) == 1;
-             }
+            if (column.equals(COLUMN_ID)) {
+                this.id = cursor.getLong(i);
+            } else if (column.equals(COLUMN_COLOR)) {
+                this.colors.color = cursor.getInt(i);
+            } else if (column.equals(COLUMN_COLOR_DARK)) {
+                this.colors.colorDark = cursor.getInt(i);
+            } else if (column.equals(COLUMN_COLOR_LIGHT)) {
+                this.colors.colorLight = cursor.getInt(i);
+            } else if (column.equals(COLUMN_COLOR_ACCENT)) {
+                this.colors.colorAccent = cursor.getInt(i);
+            } else if (column.equals(COLUMN_PINNED)) {
+                this.pinned = cursor.getInt(i) == 1;
+            } else if (column.equals(COLUMN_READ)) {
+                this.read = cursor.getInt(i) == 1;
+            } else if (column.equals(COLUMN_TIMESTAMP)) {
+                this.timestamp = cursor.getLong(i);
+            } else if (column.equals(COLUMN_TITLE)) {
+                this.title = cursor.getString(i);
+            } else if (column.equals(COLUMN_PHONE_NUMBERS)) {
+                this.phoneNumbers = cursor.getString(i);
+            } else if (column.equals(COLUMN_SNIPPET)) {
+                this.snippet = cursor.getString(i);
+            } else if (column.equals(COLUMN_RINGTONE)) {
+                this.ringtoneUri = cursor.getString(i);
+            } else if (column.equals(COLUMN_IMAGE_URI)) {
+                this.imageUri = cursor.getString(i);
+            } else if (column.equals(COLUMN_ID_MATCHER)) {
+                this.idMatcher = cursor.getString(i);
+            } else if (column.equals(COLUMN_MUTE)) {
+                this.mute = cursor.getInt(i) == 1;
+            }
         }
     }
 

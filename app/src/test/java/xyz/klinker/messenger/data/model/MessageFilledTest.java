@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MessageFilledTest extends MessengerRobolectricSuite {
 
@@ -47,7 +47,7 @@ public class MessageFilledTest extends MessengerRobolectricSuite {
     }
 
     private Cursor createCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Message.COLUMN_ID,
                 Message.COLUMN_CONVERSATION_ID,
                 Message.COLUMN_TYPE,
@@ -60,7 +60,7 @@ public class MessageFilledTest extends MessengerRobolectricSuite {
                 Message.COLUMN_COLOR
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 1,
                 Message.TYPE_RECEIVED,

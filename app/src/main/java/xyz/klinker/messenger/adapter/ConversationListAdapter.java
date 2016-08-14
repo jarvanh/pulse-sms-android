@@ -31,10 +31,10 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
@@ -148,7 +148,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     public ConversationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(viewType == VIEW_TYPE_HEADER ?
-                        R.layout.conversation_list_header : R.layout.conversation_list_item,
+                                R.layout.conversation_list_header : R.layout.conversation_list_item,
                         parent, false);
         return new ConversationViewHolder(view, conversationExpandedListener);
     }

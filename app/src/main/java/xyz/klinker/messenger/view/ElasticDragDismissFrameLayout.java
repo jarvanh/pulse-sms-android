@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -33,7 +32,7 @@ import xyz.klinker.messenger.R;
  * A {@link FrameLayout} which responds to nested scrolls to create drag-dismissable layouts.
  * Applies an elasticity factor to reduce movement as you approach the given dismiss distance.
  * Optionally also scales down content during drag.
- *
+ * <p>
  * https://github.com/nickbutcher/plaid/blob/master/app/src/main/java/io/plaidapp/ui/widget/ElasticDragDismissFrameLayout.java
  */
 public class ElasticDragDismissFrameLayout extends FrameLayout {
@@ -93,12 +92,14 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
          * @param rawOffsetPixels     The raw distance the user has dragged
          */
         public void onDrag(float elasticOffset, float elasticOffsetPixels,
-                    float rawOffset, float rawOffsetPixels) { }
+                           float rawOffset, float rawOffsetPixels) {
+        }
 
         /**
          * Called when dragging is released and has exceeded the threshold dismiss distance.
          */
-        public void onDragDismissed() { }
+        public void onDragDismissed() {
+        }
 
     }
 

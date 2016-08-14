@@ -31,7 +31,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 
 /**
  * A simple callback for a recyclerview that can act on swipe motions.
- *
+ * <p>
  * Adapted from:
  * https://github.com/nemanja-kovacevic/recycler-view-swipe-to-delete/blob/master/app/src/main/java/net/nemanjakovacevic/recyclerviewswipetodelete/MainActivity.java
  */
@@ -105,7 +105,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
         int xMarkLeft = itemView.getLeft() + xMarkMargin;
         int xMarkRight = itemView.getLeft() + xMarkMargin + intrinsicWidth;
-        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight)/2;
+        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
         int xMarkBottom = xMarkTop + intrinsicHeight;
         xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
 

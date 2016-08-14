@@ -33,8 +33,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MessengerApplication"
@@ -45,10 +45,12 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="com.google.android.gms.car.application"
+        <meta-data
+            android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
 
-        <activity android:name=".activity.MessengerActivity"
+        <activity
+            android:name=".activity.MessengerActivity"
             android:theme="@style/AppTheme.MessengerActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -57,13 +59,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ComposeActivity"
+        <activity
+            android:name=".activity.ComposeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
@@ -79,27 +84,32 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
                 android:value=".service.MessengerChooserTargetService" />
         </activity>
 
-        <activity android:name=".activity.InitialLoadActivity"/>
-        <activity android:name=".activity.ContactSettingsActivity"
-            android:theme="@style/AppTheme.NoColors"/>
-        <activity android:name=".activity.SettingsActivity"
-            android:label="@string/menu_settings"/>
-        <activity android:name=".activity.ImageViewerActivity"
-            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+        <activity android:name=".activity.InitialLoadActivity" />
+        <activity
+            android:name=".activity.ContactSettingsActivity"
+            android:theme="@style/AppTheme.NoColors" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/menu_settings" />
+        <activity
+            android:name=".activity.ImageViewerActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" />
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity"
             android:theme="@style/MaterialCamera.CaptureActivity" />
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity2"
             android:theme="@style/MaterialCamera.CaptureActivity" />
-        <activity android:name="xyz.klinker.giphy.GiphyActivity"
+        <activity
+            android:name="xyz.klinker.giphy.GiphyActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme" />
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 
@@ -114,20 +124,22 @@
 
         <receiver
             android:name=".receiver.SmsReceivedReceiver"
-            android:permission="android.permission.BROADCAST_SMS" >
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SmsSentReceiver"
+        <receiver
+            android:name=".receiver.SmsSentReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.SMS_SENT" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SmsDeliveredReceiver"
+        <receiver
+            android:name=".receiver.SmsDeliveredReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.SMS_DELIVERED" />
@@ -136,21 +148,23 @@
 
         <receiver
             android:name="com.android.mms.transaction.PushReceiver"
-            android:permission="android.permission.BROADCAST_WAP_PUSH" >
+            android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.MmsSentReceiver"
+        <receiver
+            android:name=".receiver.MmsSentReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.klinker.android.messaging.MMS_SENT" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.MmsReceivedReceiver"
+        <receiver
+            android:name=".receiver.MmsReceivedReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.klinker.android.messaging.MMS_RECEIVED" />
@@ -166,10 +180,11 @@
         <service
             android:name=".service.HeadlessSmsSendService"
             android:exported="true"
-            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE" >
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
                 <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
@@ -188,20 +203,20 @@
         <!-- Widget -->
         <receiver android:name=".widget.MessengerAppWidgetProvider">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="xyz.klinker.messenger.widget.REFRESH"/>
+                <action android:name="xyz.klinker.messenger.widget.REFRESH" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info"/>
+                android:resource="@xml/appwidget_info" />
         </receiver>
 
         <service
             android:name=".widget.MessengerWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 

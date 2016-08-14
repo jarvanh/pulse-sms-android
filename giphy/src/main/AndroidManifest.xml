@@ -14,14 +14,16 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="xyz.klinker.giphy">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="xyz.klinker.giphy">
 
     <application>
-        <activity android:name=".GiphyActivity"
+        <activity
+            android:name=".GiphyActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 
 </manifest>

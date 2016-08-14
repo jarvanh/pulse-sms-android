@@ -23,15 +23,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
 
 /**
  * Item decorator that shows a background on each item as it is dismissing and adds some padding
  * to the top of the first item to improve spacing.
- *
+ * <p>
  * Adapted from:
  * https://github.com/nemanja-kovacevic/recycler-view-swipe-to-delete/blob/master/app/src/main/java/net/nemanjakovacevic/recyclerviewswipetodelete/MainActivity.java
  */

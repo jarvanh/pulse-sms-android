@@ -28,7 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,12 +41,9 @@ import android.widget.TimePicker;
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
-import com.android.i18n.phonenumbers.PhoneNumberUtil;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
@@ -201,13 +197,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private void displayDateDialog(final ScheduledMessage message) {
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        message.timestamp = new GregorianCalendar(year, month, day)
-                                .getTimeInMillis();
-                        displayTimeDialog(message);
-                    }
-                },
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                message.timestamp = new GregorianCalendar(year, month, day)
+                        .getTimeInMillis();
+                displayTimeDialog(message);
+            }
+        },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH))
@@ -217,13 +213,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private void displayTimeDialog(final ScheduledMessage message) {
         Calendar calendar = Calendar.getInstance();
         new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        message.timestamp += (1000 * 60 * 60 * hourOfDay);
-                        message.timestamp += (1000 * 60 * minute);
-                        displayMessageDialog(message);
-                    }
-                },
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                message.timestamp += (1000 * 60 * 60 * hourOfDay);
+                message.timestamp += (1000 * 60 * minute);
+                displayMessageDialog(message);
+            }
+        },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
                 DateFormat.is24HourFormat(getActivity()))

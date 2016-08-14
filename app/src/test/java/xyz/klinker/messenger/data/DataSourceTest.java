@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.data;
 
-import static org.junit.Assert.*;
-
 import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -40,6 +38,8 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -176,22 +176,22 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.id = 1;
         source.deleteConversation(conversation);
 
-        verify(database).delete("conversation", "_id=?", new String[] {"1"});
-        verify(database).delete("message", "conversation_id=?", new String[] {"1"});
+        verify(database).delete("conversation", "_id=?", new String[]{"1"});
+        verify(database).delete("message", "conversation_id=?", new String[]{"1"});
     }
 
     @Test
     public void updateConversation() {
         source.updateConversation(1, true, System.currentTimeMillis(), "test", "text/plain");
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[] {"1"}));
+                eq(new String[]{"1"}));
     }
 
     @Test
     public void updateConversationSettings() {
         source.updateConversationSettings(new Conversation());
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[] {"0"}));
+                eq(new String[]{"0"}));
     }
 
     @Test
@@ -214,7 +214,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getMessages() {
-        when(database.query("message", null, "conversation_id=?", new String[] {"1"}, null, null,
+        when(database.query("message", null, "conversation_id=?", new String[]{"1"}, null, null,
                 "timestamp asc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getMessages(1));
@@ -223,7 +223,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void getMediaMessages() {
         when(database.query("message", null, "conversation_id=? AND mime_type!='text/plain'",
-                new String[] {"1"}, null, null, "timestamp asc")).thenReturn(cursor);
+                new String[]{"1"}, null, null, "timestamp asc")).thenReturn(cursor);
         assertNotNull(source.getMediaMessages(1));
     }
 
@@ -272,7 +272,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void updateMessageType() {
         source.updateMessageType(1, Message.TYPE_SENT);
         verify(database).update(eq("message"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[] {"1"}));
+                eq(new String[]{"1"}));
     }
 
     @Test
@@ -288,7 +288,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteMessage() {
         source.deleteMessage(1);
 
-        verify(database).delete("message", "_id=?", new String[] {"1"});
+        verify(database).delete("message", "_id=?", new String[]{"1"});
     }
 
     @Test
@@ -296,9 +296,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         source.readConversation(RuntimeEnvironment.application, 3);
 
         verify(database).update(eq("message"), any(ContentValues.class),
-                eq("conversation_id=? AND (read=? OR seen=?)"), eq(new String[] {"3", "0", "0"}));
+                eq("conversation_id=? AND (read=? OR seen=?)"), eq(new String[]{"3", "0", "0"}));
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[] {"3"}));
+                eq(new String[]{"3"}));
     }
 
     @Test
@@ -306,7 +306,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         source.seenConversation(1);
 
         verify(database).update(eq("message"), any(ContentValues.class),
-                eq("conversation_id=? AND seen=0"), eq(new String[] {"1"}));
+                eq("conversation_id=? AND seen=0"), eq(new String[]{"1"}));
     }
 
     @Test
@@ -341,7 +341,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getDrafts() {
-        when(database.query("draft", null, "conversation_id=?", new String[] {"1"}, null, null,
+        when(database.query("draft", null, "conversation_id=?", new String[]{"1"}, null, null,
                 null)).thenReturn(cursor);
         assertNotNull(source.getDrafts(1));
     }
@@ -374,7 +374,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void deleteDrafts() {
         source.deleteDrafts(1);
-        verify(database).delete("draft", "conversation_id=?", new String[] {"1"});
+        verify(database).delete("draft", "conversation_id=?", new String[]{"1"});
     }
 
     @Test
@@ -392,7 +392,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void deleteBlacklist() {
         source.deleteBlacklist(1);
-        verify(database).delete("blacklist", "_id=?", new String[] {"1"});
+        verify(database).delete("blacklist", "_id=?", new String[]{"1"});
     }
 
     @Test
@@ -412,7 +412,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void deleteScheduledMessage() {
         source.deleteScheduledMessage(1);
-        verify(database).delete("scheduled_message", "_id=?", new String[] {"1"});
+        verify(database).delete("scheduled_message", "_id=?", new String[]{"1"});
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

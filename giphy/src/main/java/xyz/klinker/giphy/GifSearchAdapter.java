@@ -30,8 +30,6 @@ import com.klinker.android.simple_videoview.SimpleVideoView;
 
 import java.util.List;
 
-import xyz.klinker.giphy.R;
-
 public class GifSearchAdapter extends SectionedRecyclerViewAdapter<GifSearchAdapter.ViewHolder> {
 
     public interface Callback {

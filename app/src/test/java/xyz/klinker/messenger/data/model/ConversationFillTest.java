@@ -20,12 +20,13 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Color;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ConversationFillTest extends MessengerRobolectricSuite {
 
@@ -53,7 +54,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
     }
 
     private Cursor createCursor() {
-        MatrixCursor cursor = new MatrixCursor(new String[] {
+        MatrixCursor cursor = new MatrixCursor(new String[]{
                 Conversation.COLUMN_ID,
                 Conversation.COLUMN_COLOR,
                 Conversation.COLUMN_COLOR_DARK,
@@ -71,7 +72,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_MUTE
         });
 
-        cursor.addRow(new Object[] {
+        cursor.addRow(new Object[]{
                 1,
                 Color.RED,
                 Color.BLUE,

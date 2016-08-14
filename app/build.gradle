@@ -46,7 +46,7 @@ android {
             targetSdkVersion TARGET_SDK
         }
 
-        versionName (VERSION_NAME + '.' + buildNumber)
+        versionName(VERSION_NAME + '.' + buildNumber)
         versionCode buildNumber
         project.archivesBaseName = "messenger-${versionName}"
 

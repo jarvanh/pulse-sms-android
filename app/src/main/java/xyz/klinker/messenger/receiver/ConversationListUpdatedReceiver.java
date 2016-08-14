@@ -32,7 +32,7 @@ import xyz.klinker.messenger.fragment.ConversationListFragment;
 /**
  * Receiver that handles changing the conversation list when a new message is received. The logic
  * here can be quite tricky because of the pinned section and the section headers in the adapter.
- *
+ * <p>
  * We either need to create a new today section under the pinned section if one does not exist, or
  * we need to add an extra item to the today section and remove that item from below, depending
  * on whether we've received a new conversation or are just updating an old one.

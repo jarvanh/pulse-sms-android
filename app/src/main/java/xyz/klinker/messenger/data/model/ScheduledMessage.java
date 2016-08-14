@@ -18,8 +18,6 @@ package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
 
-import java.sql.Time;
-
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
@@ -47,7 +45,7 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_TIMESTAMP + " integer not null" +
             ");";
 
-    private static final String[] INDEXES = { };
+    private static final String[] INDEXES = {};
 
     public long id;
     public String title;

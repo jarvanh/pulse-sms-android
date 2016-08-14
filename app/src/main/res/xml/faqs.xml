@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,27 +17,53 @@
 <faqs>
 
     <item question="Why are my GIFs and videos that I send so small?">
-        <answer>The majority of carriers enforce a 1 MB size limit on all attachments. This unfortunately means that the quality and resolution of content like videos needs to be decreased so that it can fit under this limit but still be useful to the recipient. Since all of the infrastructure is already in place by carriers to support this, it isn't something that I can improve in the app.</answer>
+        <answer>The majority of carriers enforce a 1 MB size limit on all attachments. This
+            unfortunately means that the quality and resolution of content like videos needs to be
+            decreased so that it can fit under this limit but still be useful to the recipient.
+            Since all of the infrastructure is already in place by carriers to support this, it
+            isn't something that I can improve in the app.
+        </answer>
     </item>
 
     <item question="I'm not able to send MMS messages or group messages, what should I do?">
-        <answer>If you send me an email, we can try and troubleshoot possible solutions to the problem! I can also get more information this way so that the process can be improved in the future.</answer>
+        <answer>If you send me an email, we can try and troubleshoot possible solutions to the
+            problem! I can also get more information this way so that the process can be improved in
+            the future.
+        </answer>
     </item>
 
     <item question="How can I know that my messages are safe and private?">
-        <answer>We use strong end-to-end encryption techniques to make sure that your data is kept secure and no one but you can access it. This means that on our servers your messages are encrypted using your password and even we cannot see what they contain, the only way to decrypt them is using your password. In technical terms, we use PBKDF2 to encrypt your password and use it as a key to encrypt messages and conversations. The only way to decrypt those messages is to then use your password again as the key, along with a few other randomly generated numbers called salts.</answer>
+        <answer>We use strong end-to-end encryption techniques to make sure that your data is kept
+            secure and no one but you can access it. This means that on our servers your messages
+            are encrypted using your password and even we cannot see what they contain, the only way
+            to decrypt them is using your password. In technical terms, we use PBKDF2 to encrypt
+            your password and use it as a key to encrypt messages and conversations. The only way to
+            decrypt those messages is to then use your password again as the key, along with a few
+            other randomly generated numbers called salts.
+        </answer>
     </item>
 
     <item question="How can I get in contact with you?">
-        <answer>There are multiple options on this screen to talk to a dev from Klinker Apps, you can use any of them to talk to us! Probably your best bet is email for a quick response, or you can post on Google+ if you'd like other members to also help you out with something or get feedback on your ideas.</answer>
+        <answer>There are multiple options on this screen to talk to a dev from Klinker Apps, you
+            can use any of them to talk to us! Probably your best bet is email for a quick response,
+            or you can post on Google+ if you'd like other members to also help you out with
+            something or get feedback on your ideas.
+        </answer>
     </item>
 
     <item question="Do you accept feature requests?">
-        <answer>Of course! We're also excited to hear what our users are doing with the app and how it can work better for them. Feel free to reach out to us and let us know of your great ideas! We're a very small team so some things can take time, but we'll try and get everything done reasonably quickly, especially when we're also excited about your idea.</answer>
+        <answer>Of course! We're also excited to hear what our users are doing with the app and how
+            it can work better for them. Feel free to reach out to us and let us know of your great
+            ideas! We're a very small team so some things can take time, but we'll try and get
+            everything done reasonably quickly, especially when we're also excited about your idea.
+        </answer>
     </item>
 
     <item question="Where can I report bugs at?">
-        <answer>The best place would be either through email or on Google+. Let us know what device you're using, what version of the app and steps to take to reproduce the issue and we'll see what we can do to get it fixed quickly.</answer>
+        <answer>The best place would be either through email or on Google+. Let us know what device
+            you're using, what version of the app and steps to take to reproduce the issue and we'll
+            see what we can do to get it fixed quickly.
+        </answer>
     </item>
 
 </faqs>
