@@ -31,11 +31,12 @@ public interface DraftService {
     Object add(@Body AddDraftRequest request);
 
     @POST("drafts/update/{device_id}")
-    Object update(@Path("device_id") int deviceId, @Query("account_id") String accountId,
+    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateDraftRequest request);
 
-    @POST("drafts/remove/{device_id}")
-    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+    @POST("drafts/remove/{device_conversation_id}")
+    Object remove(@Path("device_conversation_id") long deviceConversationId,
+                  @Query("account_id") String accountId);
 
     @GET("drafts")
     DraftBody[] list(@Query("account_id") String accountId);

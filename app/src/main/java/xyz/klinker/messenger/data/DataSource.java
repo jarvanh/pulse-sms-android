@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
@@ -61,6 +62,8 @@ public class DataSource {
     private SQLiteDatabase database;
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
+    private String accountId = null;
+    private ApiUtils apiUtils;
 
     /**
      * Gets a new instance of the DataSource.
@@ -73,6 +76,7 @@ public class DataSource {
             instance = new DataSource(context);
         }
 
+        instance.accountId = Settings.get(context).accountId;
         return instance;
     }
 
@@ -83,6 +87,7 @@ public class DataSource {
      */
     private DataSource(Context context) {
         this.dbHelper = new DatabaseSQLiteHelper(context);
+        this.apiUtils = new ApiUtils();
     }
 
     /**
@@ -288,12 +293,11 @@ public class DataSource {
     public long insertConversation(Conversation conversation) {
         ContentValues values = new ContentValues(15);
 
-        if (conversation.id > 0) {
-            values.put(Conversation.COLUMN_ID, conversation.id);
-        } else {
-            values.put(Conversation.COLUMN_ID, generateId());
+        if (conversation.id <= 0) {
+            conversation.id = generateId();
         }
 
+        values.put(Conversation.COLUMN_ID, conversation.id);
         values.put(Conversation.COLUMN_COLOR, conversation.colors.color);
         values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
         values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
@@ -308,6 +312,13 @@ public class DataSource {
         values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
         values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
+
+        apiUtils.addConversation(accountId,conversation.id, conversation.colors.color,
+                conversation.colors.colorDark, conversation.colors.colorLight,
+                conversation.colors.colorAccent, conversation.pinned, conversation.read,
+                conversation.timestamp, conversation.title, conversation.phoneNumbers,
+                conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
+                conversation.mute);
 
         return database.insert(Conversation.TABLE, null, values);
     }
@@ -385,6 +396,8 @@ public class DataSource {
 
         database.delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
+
+        apiUtils.deleteConversation(accountId, conversationId);
     }
 
     /**
@@ -404,6 +417,7 @@ public class DataSource {
         if (snippetMime != null && snippetMime.equals(MimeType.TEXT_PLAIN)) {
             values.put(Conversation.COLUMN_SNIPPET, snippet);
         } else {
+            snippet = "";
             values.put(Conversation.COLUMN_SNIPPET, "");
         }
 
@@ -411,6 +425,9 @@ public class DataSource {
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
+
+        apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
+                read, timestamp, null, snippet, null, null);
     }
 
     /**
@@ -429,6 +446,11 @@ public class DataSource {
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversation.id)});
+
+        apiUtils.updateConversation(accountId, conversation.id, conversation.colors.color,
+                conversation.colors.colorDark, conversation.colors.colorLight,
+                conversation.colors.colorAccent, conversation.pinned, null, null,
+                conversation.title, null, conversation.ringtoneUri, conversation.mute);
     }
 
     /**
@@ -613,6 +635,8 @@ public class DataSource {
 
         database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
+
+        apiUtils.updateMessage(accountId, messageId, type, null, null);
     }
 
     /**
@@ -627,6 +651,10 @@ public class DataSource {
 
         database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
+
+        // NOTE: no changes to the server here. whenever we call this, it is only with messages
+        //       that are multimedia, so this changes the uri which does no good on the server
+        //       anyways.
     }
 
     /**
@@ -743,12 +771,11 @@ public class DataSource {
 
         ContentValues values = new ContentValues(10);
 
-        if (message.id > 0) {
-            values.put(Message.COLUMN_ID, message.id);
-        } else {
-            values.put(Message.COLUMN_ID, generateId());
+        if (message.id <= 0) {
+            message.id = generateId();
         }
 
+        values.put(Message.COLUMN_ID, message.id);
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
         values.put(Message.COLUMN_DATA, message.data);
@@ -759,10 +786,15 @@ public class DataSource {
         values.put(Message.COLUMN_FROM, message.from);
         values.put(Message.COLUMN_COLOR, message.color);
 
-        long messageId = database.insert(Message.TABLE, null, values);
+        database.insert(Message.TABLE, null, values);
+
+        apiUtils.addMessage(accountId, message.id, conversationId, message.type, message.data,
+                message.timestamp, message.mimeType, message.read, message.seen, message.from,
+                message.color);
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
+
         return conversationId;
     }
 
@@ -772,6 +804,8 @@ public class DataSource {
     public void deleteMessage(long messageId) {
         database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
+
+        apiUtils.deleteMessage(accountId, messageId);
     }
 
     /**
@@ -794,6 +828,8 @@ public class DataSource {
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
+        apiUtils.readConversation(accountId, conversationId);
+
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);
         } catch (NullPointerException e) {
@@ -810,6 +846,8 @@ public class DataSource {
 
         database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND " +
                 Message.COLUMN_SEEN + "=0", new String[]{Long.toString(conversationId)});
+
+        apiUtils.seenConversation(accountId, conversationId);
     }
 
     /**
@@ -820,6 +858,7 @@ public class DataSource {
         values.put(Message.COLUMN_SEEN, 1);
 
         database.update(Message.TABLE, values, Message.COLUMN_SEEN + "=0", null);
+        apiUtils.seenConversations(accountId);
     }
 
     /**
@@ -847,10 +886,13 @@ public class DataSource {
      */
     public long insertDraft(long conversationId, String data, String mimeType) {
         ContentValues values = new ContentValues(4);
-        values.put(Draft.COLUMN_ID, generateId());
+        long id = generateId();
+        values.put(Draft.COLUMN_ID, id);
         values.put(Draft.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Draft.COLUMN_DATA, data);
         values.put(Draft.COLUMN_MIME_TYPE, mimeType);
+
+        apiUtils.addDraft(accountId, id, conversationId, data, mimeType);
         return database.insert(Draft.TABLE, null, values);
     }
 
@@ -870,6 +912,9 @@ public class DataSource {
         values.put(Draft.COLUMN_DATA, draft.data);
         values.put(Draft.COLUMN_MIME_TYPE, draft.mimeType);
         return database.insert(Draft.TABLE, null, values);
+
+        // NOTE: no api interaction here because this is only called when we insert a draft
+        //       in the api download service.
     }
 
     /**
@@ -909,6 +954,8 @@ public class DataSource {
     public void deleteDrafts(long conversationId) {
         database.delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                 new String[]{Long.toString(conversationId)});
+
+        apiUtils.deleteDrafts(accountId, conversationId);
     }
 
     /**
@@ -924,14 +971,14 @@ public class DataSource {
     public void insertBlacklist(Blacklist blacklist) {
         ContentValues values = new ContentValues(2);
 
-        if (blacklist.id > 0) {
-            values.put(Blacklist.COLUMN_ID, blacklist.id);
-        } else {
-            values.put(Blacklist.COLUMN_ID, generateId());
+        if (blacklist.id <= 0) {
+            blacklist.id = generateId();
         }
 
+        values.put(Blacklist.COLUMN_ID, blacklist.id);
         values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber);
         database.insert(Blacklist.TABLE, null, values);
+        apiUtils.addBlacklist(accountId, blacklist.id, blacklist.phoneNumber);
     }
 
     /**
@@ -940,6 +987,8 @@ public class DataSource {
     public void deleteBlacklist(long id) {
         database.delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
                 new String[]{Long.toString(id)});
+
+        apiUtils.deleteBlacklist(accountId, id);
     }
 
     /**
@@ -956,17 +1005,19 @@ public class DataSource {
     public long insertScheduledMessage(ScheduledMessage message) {
         ContentValues values = new ContentValues(6);
 
-        if (message.id > 0) {
-            values.put(ScheduledMessage.COLUMN_ID, message.id);
-        } else {
-            values.put(ScheduledMessage.COLUMN_ID, generateId());
+        if (message.id <= 0) {
+            message.id = generateId();
         }
 
+        values.put(ScheduledMessage.COLUMN_ID, message.id);
         values.put(ScheduledMessage.COLUMN_TITLE, message.title);
         values.put(ScheduledMessage.COLUMN_TO, message.to);
         values.put(ScheduledMessage.COLUMN_DATA, message.data);
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType);
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
+
+        apiUtils.addScheduledMessage(accountId, message.id, message.title, message.to, message.data,
+                message.mimeType, message.timestamp);
 
         return database.insert(ScheduledMessage.TABLE, null, values);
     }
@@ -977,6 +1028,15 @@ public class DataSource {
     public void deleteScheduledMessage(long id) {
         database.delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
                 new String[]{Long.toString(id)});
+        apiUtils.deleteScheduledMessage(accountId, id);
+    }
+
+    /**
+     * Sets whether or not to upload data changes to the server. If there is no account id, then
+     * this value will always be false.
+     */
+    public void setUpload(boolean upload) {
+        this.apiUtils.setActive(upload);
     }
 
     /**

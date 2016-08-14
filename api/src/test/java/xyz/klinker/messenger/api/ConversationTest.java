@@ -50,6 +50,10 @@ public class ConversationTest extends ApiTest {
 
         conversations = api.conversation().list(accountId);
         assertEquals(conversations.length, originalSize);
+
+        assertNotNull(api.conversation().read(1, accountId));
+        assertNotNull(api.conversation().seen(1, accountId));
+        assertNotNull(api.conversation().seen(accountId));
     }
 
 }

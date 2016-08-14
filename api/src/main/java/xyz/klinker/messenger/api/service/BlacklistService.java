@@ -30,7 +30,7 @@ public interface BlacklistService {
     Object add(@Body AddBlacklistRequest request);
 
     @POST("blacklists/remove/{device_id}")
-    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("blacklists")
     BlacklistBody[] list(@Query("account_id") String accountId);

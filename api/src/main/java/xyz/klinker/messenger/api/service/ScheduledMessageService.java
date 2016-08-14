@@ -31,11 +31,11 @@ public interface ScheduledMessageService {
     Object add(@Body AddScheduledMessageRequest request);
 
     @POST("scheduled_messages/update/{device_id}")
-    Object update(@Path("device_id") int deviceId, @Query("account_id") String accountId,
+    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateScheduledMessageRequest request);
 
     @POST("scheduled_messages/remove/{device_id}")
-    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("scheduled_messages")
     ScheduledMessageBody[] list(@Query("account_id") String accountId);

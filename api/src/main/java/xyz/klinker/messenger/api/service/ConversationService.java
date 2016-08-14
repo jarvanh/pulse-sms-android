@@ -31,13 +31,22 @@ public interface ConversationService {
     Object add(@Body AddConversationRequest request);
 
     @POST("conversations/update/{device_id}")
-    Object update(@Path("device_id") int deviceId, @Query("account_id") String accountId,
+    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateConversationRequest request);
 
     @POST("conversations/remove/{device_id}")
-    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("conversations")
     ConversationBody[] list(@Query("account_id") String accountId);
+
+    @POST("conversations/read/{device_id}")
+    Object read(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+
+    @POST("conversations/seen/{device_id}")
+    Object seen(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+
+    @POST("conversations/seen")
+    Object seen(@Query("account_id") String accountId);
 
 }

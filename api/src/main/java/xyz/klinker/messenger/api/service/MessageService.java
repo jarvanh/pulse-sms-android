@@ -31,11 +31,11 @@ public interface MessageService {
     Object add(@Body AddMessagesRequest request);
 
     @POST("messages/update/{device_id}")
-    Object update(@Path("device_id") int deviceId, @Query("account_id") String accountId,
+    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateMessageRequest request);
 
     @POST("messages/remove/{device_id}")
-    Object remove(@Path("device_id") int deviceId, @Query("account_id") String accountId);
+    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("messages")
     MessageBody[] list(@Query("account_id") String accountId,
