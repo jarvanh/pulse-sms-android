@@ -230,13 +230,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void getAllMediaMessages() {
         when(database.query("message", null, "mime_type!='text/plain'", null, null, null,
-                "timestamp asc")).thenReturn(cursor);
+                "timestamp desc LIMIT 20")).thenReturn(cursor);
         assertNotNull(source.getAllMediaMessages(20));
     }
 
     @Test
     public void getFirebaseMediaMessages() {
-        when(database.query("message", null, "mime_type!='text/plain' AND data LIKE 'firebase'", null,
+        when(database.query("message", null, "mime_type!='text/plain' AND data LIKE 'firebase %'", null,
                 null, null, null)).thenReturn(cursor);
         assertEquals(cursor, source.getFirebaseMediaMessages());
     }

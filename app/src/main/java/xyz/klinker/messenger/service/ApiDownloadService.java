@@ -68,6 +68,8 @@ public class ApiDownloadService extends Service {
     private static final int MESSAGE_DOWNLOAD_ID = 7237;
     private static final int MEDIA_DOWNLOAD_ID = 7238;
     private static final long MAX_SIZE = 1024 * 1024 * 2;
+    public static final String ACTION_DOWNLOAD_FINISHED =
+            "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
     private Settings settings;
     private ApiUtils apiUtils;
@@ -117,6 +119,7 @@ public class ApiDownloadService extends Service {
                 downloadDrafts();
                 Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms");
 
+                sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
                 NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
                 source.setTransactionSuccessful();
                 source.endTransaction();
