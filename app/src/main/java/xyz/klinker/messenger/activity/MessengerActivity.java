@@ -128,7 +128,7 @@ public class MessengerActivity extends AppCompatActivity
             PermissionsUtils.startMainPermissionRequest(this);
         }
 
-        if (!PermissionsUtils.isDefaultSmsApp(this)) {
+        if (Settings.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
             PermissionsUtils.setDefaultSmsApp(this);
         }
     }

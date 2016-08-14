@@ -70,6 +70,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -601,7 +602,8 @@ public class MessageListFragment extends Fragment implements
     private void sendMessage() {
         if (PermissionsUtils.checkRequestMainPermissions(getActivity())) {
             PermissionsUtils.startMainPermissionRequest(getActivity());
-        } else if (!PermissionsUtils.isDefaultSmsApp(getActivity())) {
+        } else if (Settings.get(getActivity()).primary &&
+                !PermissionsUtils.isDefaultSmsApp(getActivity())) {
             PermissionsUtils.setDefaultSmsApp(getActivity());
         } else {
             final String message = messageEntry.getText().toString().trim();
