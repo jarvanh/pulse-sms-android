@@ -39,6 +39,7 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -51,7 +52,8 @@ import xyz.klinker.messenger.encryption.KeyUtils;
 public class ApiUploadService extends Service {
 
     private static final String TAG = "ApiUploadService";
-    private static final int NOTIFICATION_ID = 7235;
+    private static final int MESSAGE_UPLOAD_ID = 7235;
+    private static final int MEDIA_UPLOAD_ID = 7236;
 
     private Settings settings;
     private ApiUtils apiUtils;
@@ -66,6 +68,11 @@ public class ApiUploadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        uploadData();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void uploadData() {
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.encrypting_and_uploading))
                 .setSmallIcon(R.drawable.ic_upload)
@@ -73,7 +80,7 @@ public class ApiUploadService extends Service {
                 .setLocalOnly(true)
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .build();
-        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification);
+        NotificationManagerCompat.from(this).notify(MESSAGE_UPLOAD_ID, notification);
 
         new Thread(new Runnable() {
             @Override
@@ -93,12 +100,12 @@ public class ApiUploadService extends Service {
                 uploadDrafts();
                 Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
 
-                NotificationManagerCompat.from(getApplicationContext()).cancel(NOTIFICATION_ID);
+                NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_UPLOAD_ID);
+                uploadMedia();
                 source.close();
                 stopSelf();
             }
         }).start();
-        return super.onStartCommand(intent, flags, startId);
     }
 
     private void uploadMessages() {
@@ -111,6 +118,13 @@ public class ApiUploadService extends Service {
             do {
                 Message m = new Message();
                 m.fillFromCursor(cursor);
+
+                // instead of sending the URI, we'll upload these images to firebase and retrieve
+                // them on another device based on account id and message id.
+                if (!m.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    m.data = null;
+                }
+
                 m.encrypt(encryptionUtils);
                 MessageBody message = new MessageBody(m.id, m.conversationId, m.type, m.data,
                         m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color);
@@ -251,6 +265,24 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+    }
+
+    /**
+     * Media will be uploaded after the messages finish uploading
+     */
+    private void uploadMedia() {
+        Cursor media = source.getMediaMessages();
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.encrypting_and_uploading_media))
+                .setSmallIcon(R.drawable.ic_upload)
+                .setProgress(media.getCount(), 0, false)
+                .setLocalOnly(true)
+                .setColor(getResources().getColor(R.color.colorPrimary))
+                .build();
+        NotificationManagerCompat.from(this).notify(MEDIA_UPLOAD_ID, notification);
+
+        media.close();
     }
 
 }

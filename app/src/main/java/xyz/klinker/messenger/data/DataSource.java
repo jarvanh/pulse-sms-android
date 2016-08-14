@@ -520,7 +520,15 @@ public class DataSource {
     }
 
     /**
-     * Gets all messages where the mime type is not text/plain.
+     * Gets all messages in the database where mime type is not text/plain.
+     */
+    public Cursor getMediaMessages() {
+        return database.query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain'",
+                null, null, null, Message.COLUMN_TIMESTAMP + " asc");
+    }
+
+    /**
+     * Gets all messages for a conversation where the mime type is not text/plain.
      */
     public List<Message> getMediaMessages(long conversationId) {
         Cursor c = database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
