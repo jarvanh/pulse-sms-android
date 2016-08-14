@@ -51,6 +51,8 @@ dependencies {
     compile project(":api")
     compile project(":encryption")
     compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile "com.google.firebase:firebase-core:${FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-messaging:${FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-storage:${FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-auth:${FIREBASE_VERSION}"
 }
