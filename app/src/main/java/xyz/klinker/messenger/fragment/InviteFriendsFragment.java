@@ -96,18 +96,22 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                 final List<Conversation> contacts = new ArrayList<>();
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
-                        Conversation conversation = new Conversation();
-                        conversation.title = cursor.getString(1);
-                        conversation.phoneNumbers = PhoneNumberUtils
-                                .clearFormatting(cursor.getString(2));
-                        conversation.imageUri = ContactUtils
-                                .findImageUri(conversation.phoneNumbers, getActivity());
+                        try {
+                            Conversation conversation = new Conversation();
+                            conversation.title = cursor.getString(1);
+                            conversation.phoneNumbers = PhoneNumberUtils
+                                    .clearFormatting(cursor.getString(2));
+                            conversation.imageUri = ContactUtils
+                                    .findImageUri(conversation.phoneNumbers, getActivity());
 
-                        if (ImageUtils.getContactImage(conversation.imageUri, getContext()) == null) {
-                            conversation.imageUri = null;
+                            if (ImageUtils.getContactImage(conversation.imageUri, getActivity()) == null) {
+                                conversation.imageUri = null;
+                            }
+
+                            contacts.add(conversation);
+                        } catch (NullPointerException e) {
+                            return;
                         }
-
-                        contacts.add(conversation);
                     } while (cursor.moveToNext());
 
                     cursor.close();
@@ -116,7 +120,9 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setContacts(contacts);
+                        if (getActivity() != null) {
+                            setContacts(contacts);
+                        }
                     }
                 });
             }
