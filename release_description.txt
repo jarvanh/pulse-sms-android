@@ -1,1 +1,1 @@
-- Bug fixes
+- Server support</br></br>This version requires you to wipe data before it will work correctly!
