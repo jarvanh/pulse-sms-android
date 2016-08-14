@@ -117,6 +117,7 @@ public class DataSource {
     @VisibleForTesting
     protected DataSource(DatabaseSQLiteHelper helper) {
         this.dbHelper = helper;
+        this.apiUtils = new ApiUtils();
     }
 
     /**
@@ -127,6 +128,7 @@ public class DataSource {
     @VisibleForTesting
     public DataSource(SQLiteDatabase database) {
         this.database = database;
+        this.apiUtils = new ApiUtils();
     }
 
     /**
