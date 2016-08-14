@@ -57,27 +57,35 @@
             android:id="@+id/signup_failed"
             android:visibility="gone" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/api_divider_color"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/api_skip_signup"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/white" />
+            android:orientation="vertical"
+            android:id="@+id/skip_holder">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/api_skip"
-            style="?attr/borderlessButtonStyle"
-            android:id="@+id/skip" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/api_divider_color"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/api_skip_signup"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/api_skip"
+                style="?attr/borderlessButtonStyle"
+                android:id="@+id/skip" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -16,12 +16,16 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,9 +36,12 @@ import com.klinker.android.send_message.Utils;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.service.ApiDownloadService;
+import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -45,8 +52,12 @@ import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
  */
 public class InitialLoadActivity extends AppCompatActivity implements ProgressUpdateListener {
 
+    private static final int SETUP_REQUEST = 54321;
+
     private Handler handler;
     private ProgressBar progress;
+    private boolean startUploadAfterSync = false;
+    private BroadcastReceiver downloadReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +74,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
         if (PermissionsUtils.checkRequestMainPermissions(this)) {
             PermissionsUtils.startMainPermissionRequest(this);
         } else {
-            startDatabaseSync();
+            startLogin();
         }
     }
 
@@ -71,10 +82,54 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
-            startDatabaseSync();
+            startLogin();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int responseCode, Intent data) {
+        if (requestCode == SETUP_REQUEST) {
+            Settings.get(this).forceUpdate();
+            if (responseCode == RESULT_CANCELED) {
+                PreferenceManager.getDefaultSharedPreferences(this)
+                        .edit()
+                        .putString("device_id", null)
+                        .putBoolean("primary", true)
+                        .apply();
+
+                startDatabaseSync();
+            } else if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
+                startDatabaseSync();
+                startUploadAfterSync = true;
+            } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
+                startService(new Intent(this, ApiDownloadService.class));
+                downloadReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        close();
+                    }
+                };
+
+                registerReceiver(downloadReceiver,
+                        new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (downloadReceiver != null) {
+            unregisterReceiver(downloadReceiver);
+            downloadReceiver = null;
+        }
+    }
+
+    private void startLogin() {
+        startActivityForResult(new Intent(this, LoginActivity.class), SETUP_REQUEST);
     }
 
     private void startDatabaseSync() {
@@ -101,9 +156,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        settings.setValue(getString(R.string.pref_first_start), false);
-                        startActivity(new Intent(context, MessengerActivity.class));
-                        finish();
+                    close();
                     }
                 });
 
@@ -111,6 +164,17 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }).start();
+    }
+
+    private void close() {
+        Settings.get(this).setValue(getString(R.string.pref_first_start), false);
+        startActivity(new Intent(this, MessengerActivity.class));
+
+        if (startUploadAfterSync) {
+            startService(new Intent(this, ApiUploadService.class));
+        }
+
+        finish();
     }
 
     private String getName() {

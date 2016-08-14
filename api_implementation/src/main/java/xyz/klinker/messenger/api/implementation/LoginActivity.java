@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         if (getPhoneNumber() == null) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
+            findViewById(R.id.skip_holder).setVisibility(View.GONE);
         }
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    addDevice(utils, response.accountId, getPhoneNumber() != null);
+                    addDevice(utils, response.accountId, getPhoneNumber() != null, false);
                 }
             }
         }).start();
@@ -258,13 +259,14 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    addDevice(utils, response.accountId, true);
+                    addDevice(utils, response.accountId, true, true);
                 }
             }
         }).start();
     }
 
-    private void addDevice(final ApiUtils utils, final String accountId, final boolean primary) {
+    private void addDevice(final ApiUtils utils, final String accountId, final boolean primary,
+                           final boolean deviceSync) {
         Integer deviceId = utils.registerDevice(accountId,
                 Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                 primary, getFirebaseId());
@@ -280,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     dialog.dismiss();
-                    setResult(primary ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
+                    setResult(deviceSync ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
                     close();
                 }
             });
@@ -318,7 +320,7 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 utils.removeDevice(accountId, device.id);
-                                                addDevice(utils, accountId, true);
+                                                addDevice(utils, accountId, true, false);
                                             }
                                         }).start();
                                     }
@@ -329,7 +331,7 @@ public class LoginActivity extends AppCompatActivity {
                                         new Thread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                addDevice(utils, accountId, false);
+                                                addDevice(utils, accountId, false, false);
                                             }
                                         }).start();
                                     }
