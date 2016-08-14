@@ -17,10 +17,8 @@
 package xyz.klinker.messenger.data;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 
@@ -28,13 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRealDataSuite;
-import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
-import xyz.klinker.messenger.util.FixtureLoader;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -196,7 +192,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getAllMediaMessages() {
-        assertEquals(1, source.getMediaMessages().getCount());
+        assertEquals(1, source.getAllMediaMessages(20).getCount());
     }
 
     @Test

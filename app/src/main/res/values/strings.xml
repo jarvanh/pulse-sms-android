@@ -203,6 +203,8 @@
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypting and uploading…</string>
     <string name="encrypting_and_uploading_media">Encrypting and compressing media messages…</string>
+    <string name="encrypting_and_uploading_count">Encrypting and compressing media messages…
+        (%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">Downloading and decrypting…</string>
 
 </resources>

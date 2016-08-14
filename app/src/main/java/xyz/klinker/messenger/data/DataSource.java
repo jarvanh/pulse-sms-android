@@ -522,9 +522,9 @@ public class DataSource {
     /**
      * Gets all messages in the database where mime type is not text/plain.
      */
-    public Cursor getMediaMessages() {
+    public Cursor getAllMediaMessages(int limit) {
         return database.query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain'",
-                null, null, null, Message.COLUMN_TIMESTAMP + " asc");
+                null, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit);
     }
 
     /**

@@ -18,13 +18,24 @@ package xyz.klinker.messenger;
 
 import android.app.Application;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.encryption.CompressionUtils;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.encryption.KeyUtils;
+import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.service.ContentObserverService;
+import xyz.klinker.messenger.util.ImageUtils;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -51,6 +62,7 @@ public class MessengerApplication extends Application {
         }
 
         startService(new Intent(this, ContentObserverService.class));
+        startService(new Intent(this, ApiUploadService.class));
     }
 
     /**
