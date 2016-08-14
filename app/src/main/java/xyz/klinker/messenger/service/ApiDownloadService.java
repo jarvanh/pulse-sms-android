@@ -108,6 +108,7 @@ public class ApiDownloadService extends Service {
                         settings.accountId, settings.salt));
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
+                source.setUpload(false);
                 source.beginTransaction();
 
                 long startTime = System.currentTimeMillis();
@@ -122,6 +123,7 @@ public class ApiDownloadService extends Service {
                 sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
                 NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
                 source.setTransactionSuccessful();
+                source.setUpload(true);
                 source.endTransaction();
                 downloadMedia();
             }

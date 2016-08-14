@@ -104,6 +104,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_CONVERSATION_ID = "conversation_id";
     private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
     private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
+    private static final String ARG_READ = "read";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -155,6 +156,7 @@ public class MessageListFragment extends Fragment implements
         args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
         args.putLong(ARG_CONVERSATION_ID, conversation.id);
         args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
+        args.putBoolean(ARG_READ, conversation.read);
 
         if (messageToOpenId != -1) {
             args.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
@@ -246,7 +248,7 @@ public class MessageListFragment extends Fragment implements
             getActivity().unregisterReceiver(updatedReceiver);
         }
 
-        if (messageEntry.getText() != null) {
+        if (messageEntry.getText() != null && messageEntry.getText().length() > 0) {
             source.insertDraft(getConversationId(),
                     messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
         }
@@ -550,7 +552,11 @@ public class MessageListFragment extends Fragment implements
                 try {
                     if (source.isOpen()) {
                         dismissNotification();
-                        source.readConversation(getContext(), conversationId);
+
+                        Bundle args = getArguments();
+                        if (!args.getBoolean(ARG_READ, true)) {
+                            source.readConversation(getContext(), conversationId);
+                        }
                     }
                 } catch (IllegalStateException e) {
 

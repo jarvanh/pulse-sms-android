@@ -150,9 +150,13 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
 
     @Override
     public void decrypt(EncryptionUtils utils) {
-        this.data = utils.decrypt(this.data);
-        this.mimeType = utils.decrypt(this.mimeType);
-        this.from = utils.decrypt(this.from);
+        try {
+            this.data = utils.decrypt(this.data);
+            this.mimeType = utils.decrypt(this.mimeType);
+            this.from = utils.decrypt(this.from);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

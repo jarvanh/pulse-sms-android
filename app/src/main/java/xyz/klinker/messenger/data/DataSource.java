@@ -37,6 +37,8 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -63,6 +65,7 @@ public class DataSource {
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
     private String accountId = null;
+    private EncryptionUtils encryptionUtils;
     private ApiUtils apiUtils;
 
     /**
@@ -88,6 +91,22 @@ public class DataSource {
     private DataSource(Context context) {
         this.dbHelper = new DatabaseSQLiteHelper(context);
         this.apiUtils = new ApiUtils();
+
+        createEncryptionUtils(context);
+    }
+
+    public void createEncryptionUtils(final Context context) {
+        if (Settings.get(context).accountId != null && encryptionUtils == null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Settings settings = Settings.get(context);
+                    KeyUtils keyUtils = new KeyUtils();
+                    encryptionUtils = new EncryptionUtils(keyUtils.createKey(settings.passhash,
+                            settings.accountId, settings.salt));
+                }
+            }).start();
+        }
     }
 
     /**
@@ -318,7 +337,7 @@ public class DataSource {
                 conversation.colors.colorAccent, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
-                conversation.mute);
+                conversation.mute, encryptionUtils);
 
         return database.insert(Conversation.TABLE, null, values);
     }
@@ -427,7 +446,7 @@ public class DataSource {
                 new String[]{Long.toString(conversationId)});
 
         apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
-                read, timestamp, null, snippet, null, null);
+                read, timestamp, null, snippet, null, null, encryptionUtils);
     }
 
     /**
@@ -450,7 +469,8 @@ public class DataSource {
         apiUtils.updateConversation(accountId, conversation.id, conversation.colors.color,
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, null, null,
-                conversation.title, null, conversation.ringtoneUri, conversation.mute);
+                conversation.title, null, conversation.ringtoneUri, conversation.mute,
+                encryptionUtils);
     }
 
     /**
@@ -790,7 +810,7 @@ public class DataSource {
 
         apiUtils.addMessage(accountId, message.id, conversationId, message.type, message.data,
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                message.color);
+                message.color, encryptionUtils);
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType);
@@ -892,7 +912,7 @@ public class DataSource {
         values.put(Draft.COLUMN_DATA, data);
         values.put(Draft.COLUMN_MIME_TYPE, mimeType);
 
-        apiUtils.addDraft(accountId, id, conversationId, data, mimeType);
+        apiUtils.addDraft(accountId, id, conversationId, data, mimeType, encryptionUtils);
         return database.insert(Draft.TABLE, null, values);
     }
 
@@ -978,7 +998,7 @@ public class DataSource {
         values.put(Blacklist.COLUMN_ID, blacklist.id);
         values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber);
         database.insert(Blacklist.TABLE, null, values);
-        apiUtils.addBlacklist(accountId, blacklist.id, blacklist.phoneNumber);
+        apiUtils.addBlacklist(accountId, blacklist.id, blacklist.phoneNumber, encryptionUtils);
     }
 
     /**
@@ -1017,7 +1037,7 @@ public class DataSource {
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
 
         apiUtils.addScheduledMessage(accountId, message.id, message.title, message.to, message.data,
-                message.mimeType, message.timestamp);
+                message.mimeType, message.timestamp, encryptionUtils);
 
         return database.insert(ScheduledMessage.TABLE, null, values);
     }

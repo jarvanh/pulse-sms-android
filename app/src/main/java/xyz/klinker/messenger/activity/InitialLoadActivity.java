@@ -92,6 +92,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         if (requestCode == SETUP_REQUEST) {
             Settings.get(this).forceUpdate();
+            DataSource.getInstance(this).createEncryptionUtils(this);
+
             if (responseCode == RESULT_CANCELED) {
                 PreferenceManager.getDefaultSharedPreferences(this)
                         .edit()

@@ -38,6 +38,7 @@ import xyz.klinker.messenger.api.entity.SignupRequest;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Utility for easing access to APIs.
@@ -122,22 +123,27 @@ public class ApiUtils {
     /**
      * Adds a new conversation.
      */
-    public void addConversation(String accountId, long deviceId, int color, int colorDark,
-                                int colorLight, int colorAccent, boolean pinned, boolean read,
-                                long timestamp, String title, String phoneNumbers, String snippet,
-                                String ringtone, String idMatcher, boolean mute) {
-        if (!active || accountId == null) {
+    public void addConversation(final String accountId, final long deviceId, final int color,
+                                final int colorDark, final int colorLight, final int colorAccent,
+                                final boolean pinned, final boolean read, final long timestamp,
+                                final String title, final String phoneNumbers, final String snippet,
+                                final String ringtone, final String idMatcher, final boolean mute,
+                                final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        ConversationBody body = new ConversationBody(deviceId, color, colorDark, colorLight,
-                colorAccent, pinned, read, timestamp, title, phoneNumbers, snippet, ringtone,
-                null, idMatcher, mute);
-        final AddConversationRequest request = new AddConversationRequest(accountId, body);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                ConversationBody body = new ConversationBody(
+                        deviceId, color, colorDark, colorLight, colorAccent, pinned, read,
+                        timestamp, encryptionUtils.encrypt(title),
+                        encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
+                        encryptionUtils.encrypt(ringtone), null,
+                        encryptionUtils.encrypt(idMatcher), mute);
+                AddConversationRequest request = new AddConversationRequest(accountId, body);
+
                 Object response = api.conversation().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding conversation");
@@ -168,21 +174,24 @@ public class ApiUtils {
     /**
      * Updates a conversation with new settings or info.
      */
-    public void updateConversation(final String accountId, final long deviceId, Integer color,
-                                   Integer colorDark, Integer colorLight, Integer colorAccent,
-                                   Boolean pinned, Boolean read, Long timestamp, String title,
-                                   String snippet, String ringtone, Boolean mute) {
-        if (!active || accountId == null) {
+    public void updateConversation(final String accountId, final long deviceId, final Integer color,
+                                   final Integer colorDark, final Integer colorLight,
+                                   final Integer colorAccent, final Boolean pinned,
+                                   final Boolean read, final Long timestamp, final String title,
+                                   final String snippet, final String ringtone, final Boolean mute,
+                                   final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        final UpdateConversationRequest request = new UpdateConversationRequest(color,
-                colorDark, colorLight, colorAccent, pinned, read, timestamp, title, snippet,
-                ringtone, mute);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                UpdateConversationRequest request = new UpdateConversationRequest(color,
+                        colorDark, colorLight, colorAccent, pinned, read, timestamp,
+                        encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
+                        encryptionUtils.encrypt(ringtone), mute);
+
                 Object response = api.conversation().update(deviceId, accountId, request);
                 if (response == null) {
                     Log.e(TAG, "error updating conversation");
@@ -251,20 +260,30 @@ public class ApiUtils {
     /**
      * Adds a new message to the server.
      */
-    public void addMessage(String accountId, long deviceId, long deviceConversationId,
-                           int messageType, String data, long timestamp, String mimeType,
-                           boolean read, boolean seen, String messageFrom, int color) {
-        if (!active || accountId == null) {
+    public void addMessage(final String accountId, final long deviceId,
+                           final long deviceConversationId, final int messageType,
+                           final String data, final long timestamp, final String mimeType,
+                           final boolean read, final boolean seen, final String messageFrom,
+                           final Integer color, final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        MessageBody body = new MessageBody(deviceId, deviceConversationId, messageType, data,
-                timestamp, mimeType, read, seen, messageFrom, color);
-        final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                MessageBody body = new MessageBody(deviceId,
+                        deviceConversationId,
+                        messageType,
+                        encryptionUtils.encrypt(data),
+                        timestamp,
+                        encryptionUtils.encrypt(mimeType),
+                        read,
+                        seen,
+                        encryptionUtils.encrypt(messageFrom),
+                        color);
+                AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+
                 Object response = api.message().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding message");
@@ -317,18 +336,20 @@ public class ApiUtils {
     /**
      * Adds a draft.
      */
-    public void addDraft(String accountId, long deviceId, long deviceConversationId, String data,
-                         String mimeType) {
-        if (!active || accountId == null) {
+    public void addDraft(final String accountId, final long deviceId,
+                         final long deviceConversationId, final String data,
+                         final String mimeType, final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        DraftBody body = new DraftBody(deviceId, deviceConversationId, data, mimeType);
-        final AddDraftRequest request = new AddDraftRequest(accountId, body);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                DraftBody body = new DraftBody(deviceId, deviceConversationId,
+                        encryptionUtils.encrypt(data), encryptionUtils.encrypt(mimeType));
+                AddDraftRequest request = new AddDraftRequest(accountId, body);
+
                 Object response = api.draft().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding draft");
@@ -359,17 +380,19 @@ public class ApiUtils {
     /**
      * Adds a blacklist.
      */
-    public void addBlacklist(String accountId, long deviceId, String phoneNumber) {
-        if (!active || accountId == null) {
+    public void addBlacklist(final String accountId, final long deviceId, final String phoneNumber,
+                             final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        BlacklistBody body = new BlacklistBody(deviceId, phoneNumber);
-        final AddBlacklistRequest request = new AddBlacklistRequest(accountId, body);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                BlacklistBody body = new BlacklistBody(deviceId,
+                        encryptionUtils.encrypt(phoneNumber));
+                AddBlacklistRequest request = new AddBlacklistRequest(accountId, body);
+
                 Object response = api.blacklist().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding blacklist");
@@ -400,20 +423,28 @@ public class ApiUtils {
     /**
      * Adds a scheduled message.
      */
-    public void addScheduledMessage(String accountId, long deviceId, String title, String to,
-                                    String data, String mimeType, long timestamp) {
-        if (!active || accountId == null) {
+    public void addScheduledMessage(final String accountId, final long deviceId, final String title,
+                                    final String to, final String data, final String mimeType,
+                                    final long timestamp, final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
-
-        ScheduledMessageBody body = new ScheduledMessageBody(deviceId, to, data, mimeType,
-                timestamp, title);
-        final AddScheduledMessageRequest request = new AddScheduledMessageRequest(accountId, body);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                ScheduledMessageBody body = new ScheduledMessageBody(
+                        deviceId,
+                        encryptionUtils.encrypt(to),
+                        encryptionUtils.encrypt(data),
+                        encryptionUtils.encrypt(mimeType),
+                        timestamp,
+                        encryptionUtils.encrypt(title));
+
+                AddScheduledMessageRequest request =
+                        new AddScheduledMessageRequest(accountId, body);
                 Object response = api.scheduled().add(request);
+
                 if (response == null) {
                     Log.e(TAG, "error adding scheduled message");
                 }
