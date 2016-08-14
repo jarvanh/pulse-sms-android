@@ -328,12 +328,7 @@ public class ApiUploadService extends Service {
                 Message message = new Message();
                 message.fillFromCursor(media);
 
-                if (message.data == null) {
-                    continue;
-                }
-
-                String extension = MimeType.getExtension(message.mimeType);
-                StorageReference fileRef = folderRef.child(message.id + extension);
+                StorageReference fileRef = folderRef.child(message.id + "");
 
                 UploadTask upload;
                 byte[] bytes;
