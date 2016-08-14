@@ -527,6 +527,20 @@ public class DataSource {
     }
 
     /**
+     * Gets all messages in the database that still need to be downloaded from firebase. When
+     * inserted into the server database, instead of messages having the uri to the file they
+     * will simply contain "firebase [num]" to indicate that they need to be downloaded still.
+     * The num at the end is used for making the initial upload (20 will be done the first time)
+     * and so if that num is < 20 on the downloading side it means that there won't actually be
+     * an image for it and we shouldn't try to download. After the initial upload, we should use
+     * "firebase -1" to indicate that the image will be available for download.
+     */
+    public Cursor getFirebaseMediaMessages() {
+        return database.query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
+                Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, null);
+    }
+
+    /**
      * Gets all messages for a conversation where the mime type is not text/plain.
      */
     public List<Message> getMediaMessages(long conversationId) {

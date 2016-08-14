@@ -19,11 +19,27 @@ package xyz.klinker.messenger.service;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.concurrent.Executor;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
@@ -33,6 +49,7 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -43,16 +60,20 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.listener.DirectExecutor;
 
 public class ApiDownloadService extends Service {
 
     private static final String TAG = "ApiDownloadService";
-    private static final int NOTIFICATION_ID = 7236;
+    private static final int MESSAGE_DOWNLOAD_ID = 7237;
+    private static final int MEDIA_DOWNLOAD_ID = 7238;
+    private static final long MAX_SIZE = 1024 * 1024 * 2;
 
     private Settings settings;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
+    private boolean firebaseDownloadFinished = false;
 
     @Nullable
     @Override
@@ -62,6 +83,11 @@ public class ApiDownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        downloadData();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void downloadData() {
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.downloading_and_decrypting))
                 .setSmallIcon(R.drawable.ic_download)
@@ -69,7 +95,7 @@ public class ApiDownloadService extends Service {
                 .setLocalOnly(true)
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .build();
-        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification);
+        NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
 
         new Thread(new Runnable() {
             @Override
@@ -91,14 +117,12 @@ public class ApiDownloadService extends Service {
                 downloadDrafts();
                 Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms");
 
-                NotificationManagerCompat.from(getApplicationContext()).cancel(NOTIFICATION_ID);
+                NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
                 source.setTransactionSuccessful();
                 source.endTransaction();
-                source.close();
-                stopSelf();
+                downloadMedia();
             }
         }).start();
-        return super.onStartCommand(intent, flags, startId);
     }
 
     private void wipeDatabase() {
@@ -199,6 +223,105 @@ public class ApiDownloadService extends Service {
         } else {
             Log.v(TAG, "drafts failed to insert");
         }
+    }
+
+    private void downloadMedia() {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.decrypting_and_downloading_media))
+                .setSmallIcon(R.drawable.ic_download)
+                .setProgress(0, 0, true)
+                .setLocalOnly(true)
+                .setColor(getResources().getColor(R.color.colorPrimary));
+        final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+        manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        Executor executor = new DirectExecutor();
+        auth.signInAnonymously()
+                .addOnSuccessListener(executor, new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        processMediaDownload(manager, builder);
+                    }
+                })
+                .addOnFailureListener(executor, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "failed to sign in to firebase", e);
+                        finishMediaDownload(manager);
+                    }
+                });
+    }
+
+    private void processMediaDownload(NotificationManagerCompat manager,
+                                      NotificationCompat.Builder builder) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage
+                .getReferenceFromUrl(ApiUploadService.FIREBASE_STORAGE_URL);
+        StorageReference folderRef = storageRef.child(Settings.get(this).accountId);
+
+        Cursor media = source.getFirebaseMediaMessages();
+        if (media.moveToFirst()) {
+            do {
+                Message message = new Message();
+                message.fillFromCursor(media);
+
+                // each firebase message is formatted as "firebase [num]" and we want to get the
+                // num and process the message only if that num is actually stored on firebase
+                int number = Integer.parseInt(message.data.split(" ")[1]) + 1;
+                if (number < media.getCount() - ApiUploadService.NUM_MEDIA_TO_UPLOAD &&
+                        number != -1) {
+                    continue;
+                }
+
+                StorageReference fileRef = folderRef.child(message.id + "");
+                System.out.println(fileRef.getPath());
+
+                final File file = new File(getFilesDir(),
+                        message.id + MimeType.getExtension(message.mimeType));
+
+                fileRef.getBytes(MAX_SIZE)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                bytes = encryptionUtils.decryptData(new String(bytes));
+
+                                try {
+                                    BufferedOutputStream bos =
+                                            new BufferedOutputStream(new FileOutputStream(file));
+                                    bos.write(bytes);
+                                    bos.flush();
+                                    bos.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                firebaseDownloadFinished = true;
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                firebaseDownloadFinished = true;
+                            }
+                        });
+
+                while (!firebaseDownloadFinished) ;
+
+                source.updateMessageData(message.id, Uri.fromFile(file).toString());
+                builder.setProgress(media.getCount(), media.getPosition(), false);
+                manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+            } while (media.moveToNext());
+        }
+
+        media.close();
+        finishMediaDownload(manager);
+    }
+
+    private void finishMediaDownload(NotificationManagerCompat manager) {
+        manager.cancel(MEDIA_DOWNLOAD_ID);
+        source.close();
+        stopSelf();
     }
 
 }

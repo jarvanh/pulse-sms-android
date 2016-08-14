@@ -206,5 +206,6 @@
     <string name="encrypting_and_uploading_count">Encrypting and compressing media messages…
         (%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">Downloading and decrypting…</string>
+    <string name="decrypting_and_downloading_media">Decrypting and downloading media…</string>
 
 </resources>

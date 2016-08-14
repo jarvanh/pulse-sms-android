@@ -158,7 +158,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getMessageCount() {
-        assertEquals(6, source.getMessageCount());
+        assertEquals(7, source.getMessageCount());
     }
 
     @Test
@@ -187,12 +187,17 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void getMediaMessages() {
         assertEquals(0, source.getMediaMessages(1).size());
-        assertEquals(1, source.getMediaMessages(4).size());
+        assertEquals(2, source.getMediaMessages(4).size());
     }
 
     @Test
     public void getAllMediaMessages() {
-        assertEquals(1, source.getAllMediaMessages(20).getCount());
+        assertEquals(2, source.getAllMediaMessages(20).getCount());
+    }
+
+    @Test
+    public void getFirebaseMediaMessages() {
+        assertEquals(1, source.getFirebaseMediaMessages().getCount());
     }
 
     @Test
@@ -210,7 +215,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void searchMessagesTimestamp() {
         Cursor messages = source.searchMessages(1000);
-        assertEquals(6, messages.getCount());
+        assertEquals(7, messages.getCount());
     }
 
     @Test
