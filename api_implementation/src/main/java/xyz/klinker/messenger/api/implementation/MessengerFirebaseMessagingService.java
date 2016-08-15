@@ -16,23 +16,37 @@
 
 package xyz.klinker.messenger.api.implementation;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 public class MessengerFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FCMService";
+    public static final String ACTION_FIREBASE_MESSAGE_RECEIVED =
+            "xyz.klinker.messenger.api.implementation.MESSAGE_RECEIVED";
+    public static final String EXTRA_OPERATION = "operation";
+    public static final String EXTRA_DATA = "data";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.v(TAG, "received FCM message");
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Map<String, String> payload = remoteMessage.getData();
+            String operation = payload.get("operation");
+            String data = payload.get("contents");
+
+            Log.v(TAG, "operation: " + operation + ", contents: " + data);
+            Intent intent = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
+            intent.putExtra(EXTRA_OPERATION, operation);
+            intent.putExtra(EXTRA_DATA, data);
+            sendBroadcast(intent);
         }
     }
 
