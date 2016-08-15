@@ -131,19 +131,27 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeConversation(JSONObject json, DataSource source) throws JSONException {
-
+        long id = json.getLong("id");
+        source.deleteConversation(id);
+        Log.v(TAG, "removed conversation");
     }
 
     private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
-
+        long id = json.getLong("id");
+        source.deleteDrafts(id);
+        Log.v(TAG, "removed drafts");
     }
 
     private void removeMessage(JSONObject json, DataSource source) throws JSONException {
-
+        long id = json.getLong("id");
+        source.deleteMessage(id);
+        Log.v(TAG, "removed message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
-
+        long id = json.getLong("id");
+        source.deleteScheduledMessage(id);
+        Log.v(TAG, "removed scheduled message");
     }
 
 }
