@@ -52,20 +52,6 @@ public class KeyUtils {
      */
     private static final int KEY_LENGTH = 256;
 
-    private SecretKeyFactory factory;
-
-    /**
-     * Creates a new utility that can be used for creating your secret keys. A key factory will
-     * be created here with the algorighm set to PBKDF2WithHmacSHA256.
-     */
-    public KeyUtils() {
-        try {
-            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("could not create secret key factory", e);
-        }
-    }
-
     /**
      * Hashes the password provided by the user during the login sequence to something that can be
      * stored in the shared preferences and is encrypted. We can then use this encrypted password
@@ -79,12 +65,13 @@ public class KeyUtils {
      */
     public String hashPassword(String password, String salt) {
         try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(),
                     ITERATIONS, KEY_LENGTH);
             SecretKey tmp = factory.generateSecret(spec);
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             return Base64.encodeToString(secret.getEncoded(), Base64.DEFAULT);
-        } catch (InvalidKeySpecException e) {
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             Log.e(TAG, "could not create key", e);
         }
 
@@ -107,11 +94,12 @@ public class KeyUtils {
         String password = accountId + ":" + hash;
 
         try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(),
                     ITERATIONS, KEY_LENGTH);
             SecretKey tmp = factory.generateSecret(spec);
             return new SecretKeySpec(tmp.getEncoded(), "AES");
-        } catch (InvalidKeySpecException e) {
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             Log.e(TAG, "could not create key", e);
         }
 

@@ -45,6 +45,7 @@ public class Settings {
     public String salt;
     public String passhash;
     public boolean primary;
+    public String key;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -85,6 +86,7 @@ public class Settings {
         this.salt = sharedPrefs.getString(context.getString(R.string.pref_salt), null);
         this.passhash = sharedPrefs.getString(context.getString(R.string.pref_passhash), null);
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
+        this.key = sharedPrefs.getString("key", null);
 
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();

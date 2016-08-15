@@ -282,7 +282,6 @@ public class ApiDownloadService extends Service {
                 }
 
                 StorageReference fileRef = folderRef.child(message.id + "");
-                System.out.println(fileRef.getPath());
 
                 final File file = new File(getFilesDir(),
                         message.id + MimeType.getExtension(message.mimeType));

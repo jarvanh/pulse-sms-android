@@ -24,12 +24,17 @@ import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Base64;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.model.Blacklist;
@@ -101,9 +106,16 @@ public class DataSource {
                 @Override
                 public void run() {
                     Settings settings = Settings.get(context);
-                    KeyUtils keyUtils = new KeyUtils();
-                    encryptionUtils = new EncryptionUtils(keyUtils.createKey(settings.passhash,
-                            settings.accountId, settings.salt));
+
+                    if (settings.key == null) {
+                        KeyUtils keyUtils = new KeyUtils();
+                        SecretKey key = keyUtils.createKey(settings.passhash,
+                                settings.accountId, settings.salt);
+                        settings.setValue("key", Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
+                    }
+
+                    SecretKey key = new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES");
+                    encryptionUtils = new EncryptionUtils(key);
                 }
             }).start();
         }

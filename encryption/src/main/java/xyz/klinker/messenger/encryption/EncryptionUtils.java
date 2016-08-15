@@ -40,7 +40,6 @@ public class EncryptionUtils {
     private static final String SEPARATOR = "-:-";
 
     private SecretKey secretKey;
-    private Cipher cipher;
 
     /**
      * Creates a utility that can be used to encrypt and decryptData data.
@@ -49,12 +48,6 @@ public class EncryptionUtils {
      */
     public EncryptionUtils(SecretKey secretKey) {
         this.secretKey = secretKey;
-
-        try {
-            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException e) {
-            throw new RuntimeException("could not create cypher", e);
-        }
     }
 
     /**
@@ -79,6 +72,7 @@ public class EncryptionUtils {
      */
     public String encrypt(byte[] data) {
         try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             AlgorithmParameters params = cipher.getParameters();
             String iv = Base64.encodeToString(
@@ -88,7 +82,8 @@ public class EncryptionUtils {
 
             return iv + SEPARATOR + ciphertext;
         } catch (InvalidKeyException | InvalidParameterSpecException |
-                IllegalBlockSizeException | BadPaddingException e) {
+                IllegalBlockSizeException | BadPaddingException |
+                NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException("could not encrypt data", e);
         }
     }
@@ -119,10 +114,12 @@ public class EncryptionUtils {
         byte[] ciphertext = Base64.decode(data.split(SEPARATOR)[1], Base64.DEFAULT);
 
         try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
             return cipher.doFinal(ciphertext);
         } catch (InvalidKeyException | InvalidAlgorithmParameterException |
-                IllegalBlockSizeException | BadPaddingException e) {
+                IllegalBlockSizeException | BadPaddingException |
+                NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException("could not decryptData data", e);
         }
     }
