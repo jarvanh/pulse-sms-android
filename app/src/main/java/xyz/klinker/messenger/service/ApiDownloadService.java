@@ -96,6 +96,7 @@ public class ApiDownloadService extends Service {
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
                 .setColor(getResources().getColor(R.color.colorPrimary))
+                .setOngoing(true)
                 .build();
         NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
 
@@ -236,7 +237,8 @@ public class ApiDownloadService extends Service {
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(getResources().getColor(R.color.colorPrimary));
+                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
         manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
 
