@@ -192,6 +192,11 @@
     <string name="setup_my_account">Setup Account</string>
     <string name="setup_my_account_summary">Sign up or login to your account to start using
         more features like messaging from your tablet or computer</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_account_summary">Removes the account from this device, your other signed in
+        devices, and the server. This is not reversible!</string>
+    <string name="delete_account_confirmation">Are you sure you want to delete your account and
+        everything else with it? You can always sign up again later!</string>
 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Are you sure you want to delete this scheduled message

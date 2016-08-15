@@ -84,6 +84,16 @@ public class ApiUtils {
     }
 
     /**
+     * Removes the account from the server.
+     */
+    public void deleteAccount(final String accountId) {
+        Object response = api.account().remove(accountId);
+        if (response == null) {
+            Log.e(TAG, "error removing account");
+        }
+    }
+
+    /**
      * Registers your device as a new device on the server.
      */
     public Integer registerDevice(String accountId, String info, String name,

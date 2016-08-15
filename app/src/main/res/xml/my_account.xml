@@ -27,4 +27,9 @@
         android:key="@string/pref_about_device_id"
         android:title="@string/device_id" />
 
+    <Preference
+        android:key="@string/pref_delete_account"
+        android:title="@string/delete_account"
+        android:summary="@string/delete_account_summary"/>
+
 </PreferenceScreen>

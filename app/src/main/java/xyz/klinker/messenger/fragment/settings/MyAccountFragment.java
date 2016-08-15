@@ -17,12 +17,15 @@
 package xyz.klinker.messenger.fragment.settings;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
@@ -44,6 +47,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (initSetupPreference()) {
             findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
             initMessageCountPreference();
+            initRemoveAccountPreference();
         }
     }
 
@@ -61,11 +65,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 }
             });
 
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_message_count)));
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_about_device_id)));
-
+            removeAccountOptions();
             return false;
         } else if (preference != null) {
             getPreferenceScreen().removePreference(preference);
@@ -73,6 +73,15 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         } else {
             return true;
         }
+    }
+
+    private void removeAccountOptions() {
+        getPreferenceScreen()
+                .removePreference(findPreference(getString(R.string.pref_message_count)));
+        getPreferenceScreen()
+                .removePreference(findPreference(getString(R.string.pref_about_device_id)));
+        getPreferenceScreen()
+                .removePreference(findPreference(getString(R.string.pref_delete_account)));
     }
 
     private void initMessageCountPreference() {
@@ -91,6 +100,45 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
         preference.setTitle(title);
         preference.setSummary(summary);
+    }
+
+    private void initRemoveAccountPreference() {
+        Preference preference = findPreference(getString(R.string.pref_delete_account));
+
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.delete_account_confirmation)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Settings settings = Settings.get(getActivity());
+                                final String accountId = settings.accountId;
+                                settings.setValue(getString(R.string.pref_account_id), null);
+                                settings.setValue(getString(R.string.pref_device_id), null);
+
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new ApiUtils().deleteAccount(accountId);
+
+                                        DataSource source = DataSource.getInstance(getActivity());
+                                        source.open();
+                                        source.clearTables();
+                                        source.close();
+                                    }
+                                }).start();
+
+                                removeAccountOptions();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+
+                return true;
+            }
+        });
     }
 
     /**
