@@ -19,6 +19,7 @@ package xyz.klinker.messenger.fragment.settings;
 import android.support.v4.app.FragmentActivity;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -31,6 +32,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+/**
+ * Disabling these tests for now due to an issue in robolectric:
+ *
+ * https://github.com/robolectric/robolectric/issues/2520
+ */
+@Ignore
 public class AboutFragmentTest extends MessengerRobolectricSuite {
 
     private AboutFragment fragment;

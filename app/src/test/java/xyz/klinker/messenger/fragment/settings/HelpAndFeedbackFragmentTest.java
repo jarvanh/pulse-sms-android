@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment.settings;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
@@ -26,6 +27,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
+/**
+ * Disabling these tests for now due to an issue in robolectric:
+ *
+ * https://github.com/robolectric/robolectric/issues/2520
+ */
+@Ignore
 public class HelpAndFeedbackFragmentTest extends MessengerRobolectricSuite {
 
     private HelpAndFeedbackFragment fragment;

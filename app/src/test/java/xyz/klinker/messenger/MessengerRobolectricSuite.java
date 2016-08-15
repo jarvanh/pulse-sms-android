@@ -28,12 +28,13 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import xyz.klinker.messenger.data.DataSource;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 23, constants = BuildConfig.class)
 public abstract class MessengerRobolectricSuite {
 
     @Before

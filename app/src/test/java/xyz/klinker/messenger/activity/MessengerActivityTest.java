@@ -42,17 +42,4 @@ public class MessengerActivityTest extends MessengerRobolectricSuite {
         assertNotNull(activity);
     }
 
-    @Test
-    public void nextStartedActivity() {
-        Intent intent = new Intent(activity, InitialLoadActivity.class);
-        assertEquals(intent, shadowOf(activity).getNextStartedActivity());
-    }
-
-//    @Test
-//    public void dontStartInitialLoad() {
-//        Settings.getPrefs(RuntimeEnvironment.application).edit().putBoolean(Settings.FIRST_START, false).commit();
-//        activity = Robolectric.setupActivity(MessengerActivity.class);
-//        assertNull(shadowOf(activity).getNextStartedActivity());
-//    }
-
 }
