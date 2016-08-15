@@ -74,14 +74,32 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "removed_blacklist":
                     removeBlacklist(json, source);
                     break;
+                case "added_conversation":
+                    addConversation(json, source);
+                    break;
+                case "updated_conversation":
+                    updateConversation(json, source);
+                    break;
                 case "removed_conversation":
                     removeConversation(json, source);
+                    break;
+                case "added_draft":
+                    addDraft(json, source);
                     break;
                 case "removed_drafts":
                     removeDrafts(json, source);
                     break;
+                case "added_message":
+                    addMessage(json, source);
+                    break;
+                case "updated_message":
+                    updateMessage(json, source);
+                    break;
                 case "removed_message":
                     removeMessage(json, source);
+                    break;
+                case "added_scheduled_message":
+                    addScheduledMessage(json, source);
                     break;
                 case "removed_scheduled_message":
                     removeScheduledMessage(json, source);
@@ -130,10 +148,22 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed blacklist");
     }
 
+    private void addConversation(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
+    private void updateConversation(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
     private void removeConversation(JSONObject json, DataSource source) throws JSONException {
         long id = json.getLong("id");
         source.deleteConversation(id);
         Log.v(TAG, "removed conversation");
+    }
+
+    private void addDraft(JSONObject json, DataSource source) throws JSONException {
+        // TODO
     }
 
     private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
@@ -142,10 +172,22 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed drafts");
     }
 
+    private void addMessage(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
+    private void updateMessage(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
     private void removeMessage(JSONObject json, DataSource source) throws JSONException {
         long id = json.getLong("id");
         source.deleteMessage(id);
         Log.v(TAG, "removed message");
+    }
+
+    private void addScheduledMessage(JSONObject json, DataSource source) throws JSONException {
+        // TODO
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
