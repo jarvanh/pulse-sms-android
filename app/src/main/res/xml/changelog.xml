@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="0.9"
+        description="August 14th, 2016">
+        <text>Support for uploading changes from the device database to the server</text>
+        <text>End-to-end encryption support</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="0.8"
         description="August 13th, 2016">
         <text>Server v1 implementation finished</text>
