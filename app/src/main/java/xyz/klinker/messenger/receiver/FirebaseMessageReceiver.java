@@ -19,6 +19,7 @@ package xyz.klinker.messenger.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
@@ -29,9 +30,15 @@ import javax.crypto.spec.SecretKeySpec;
 
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Draft;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.util.SendUtils;
 
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
@@ -69,10 +76,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     removeAccount(json, source, context);
                     break;
                 case "added_message":
-                    addMessage(json, source);
+                    addMessage(json, source, context);
                     break;
                 case "updated_message":
-                    updateMessage(json, source);
+                    updateMessage(json, source, context);
                     break;
                 case "removed_message":
                     removeMessage(json, source);
@@ -139,6 +146,116 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         }
     }
 
+    private void addMessage(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        long id = json.getLong("id");
+        if (source.getMessage(id) == null) {
+            Message message = new Message();
+            message.id = id;
+            message.conversationId = json.getLong("conversation_id");
+            message.type = json.getInt("type");
+            message.data = encryptionUtils.decrypt(json.getString("data"));
+            message.timestamp = json.getLong("timestamp");
+            message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+            message.read = json.getBoolean("read");
+            message.seen = json.getBoolean("seen");
+            message.from = encryptionUtils.decrypt(json.has("from") ? json.getString("from") : null);
+
+            if (json.has("color") && !json.getString("color").equals("null")) {
+                message.color = json.getInt("color");
+            }
+
+            if (message.data.equals("firebase -1") &&
+                    !message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                Log.v(TAG, "downloading binary from firebase");
+                // TODO download message from firebase storage and update message.data
+            }
+
+            source.insertMessage(message, message.conversationId);
+            Log.v(TAG, "added message");
+
+            if (Settings.get(context).primary && message.type == Message.TYPE_SENDING) {
+                Conversation conversation = source.getConversation(message.conversationId);
+
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    SendUtils.send(context, message.data, conversation.phoneNumbers);
+                } else {
+                    SendUtils.send(context, "", conversation.phoneNumbers,
+                            Uri.parse(message.data), message.mimeType);
+                }
+
+                Log.v(TAG, "sent message");
+            }
+
+            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+            ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
+                    message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
+                    message.type != Message.TYPE_RECEIVED);
+        } else {
+            Log.v(TAG, "message already exists, not doing anything with it");
+        }
+    }
+
+    private void updateMessage(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        long id = json.getLong("id");
+        source.updateMessageType(id, json.getInt("type"));
+        Message message = source.getMessage(id);
+        MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+        Log.v(TAG, "updated message type");
+    }
+
+    private void removeMessage(JSONObject json, DataSource source) throws JSONException {
+        long id = json.getLong("id");
+        source.deleteMessage(id);
+        Log.v(TAG, "removed message");
+    }
+
+    private void addConversation(JSONObject json, DataSource source) throws JSONException {
+        // Not needed because inserting the message will take care of anything we need here in
+        // the local database
+    }
+
+    private void updateConversation(JSONObject json, DataSource source) throws JSONException {
+        Conversation conversation = new Conversation();
+        conversation.id = json.getLong("id");
+        conversation.title = encryptionUtils.decrypt(json.getString("title"));
+        conversation.colors.color = json.getInt("color");
+        conversation.colors.colorDark = json.getInt("color_dark");
+        conversation.colors.colorLight = json.getInt("color_light");
+        conversation.colors.colorAccent = json.getInt("color_accent");
+        conversation.pinned = json.getBoolean("pinned");
+        conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
+                json.getString("ringtone") : null);
+        conversation.mute = json.getBoolean("mute");
+
+        source.updateConversationSettings(conversation);
+        Log.v(TAG, "updated conversation");
+    }
+
+    private void removeConversation(JSONObject json, DataSource source) throws JSONException {
+        long id = json.getLong("id");
+        source.deleteConversation(id);
+        Log.v(TAG, "removed conversation");
+    }
+
+    private void addDraft(JSONObject json, DataSource source) throws JSONException {
+        Draft draft = new Draft();
+        draft.id = json.getLong("id");
+        draft.conversationId = json.getLong("conversation_id");
+        draft.data = encryptionUtils.decrypt(json.getString("data"));
+        draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+
+        source.insertDraft(draft);
+        Log.v(TAG, "added draft");
+    }
+
+    private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
+        long id = json.getLong("id");
+        source.deleteDrafts(id);
+        Log.v(TAG, "removed drafts");
+    }
+
     private void addBlacklist(JSONObject json, DataSource source) throws JSONException {
         long id = json.getLong("id");
         String phoneNumber = json.getString("phone_number");
@@ -157,46 +274,17 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed blacklist");
     }
 
-    private void addConversation(JSONObject json, DataSource source) throws JSONException {
-        // TODO
-    }
-
-    private void updateConversation(JSONObject json, DataSource source) throws JSONException {
-        // TODO
-    }
-
-    private void removeConversation(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
-        source.deleteConversation(id);
-        Log.v(TAG, "removed conversation");
-    }
-
-    private void addDraft(JSONObject json, DataSource source) throws JSONException {
-        // TODO
-    }
-
-    private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
-        source.deleteDrafts(id);
-        Log.v(TAG, "removed drafts");
-    }
-
-    private void addMessage(JSONObject json, DataSource source) throws JSONException {
-        // TODO
-    }
-
-    private void updateMessage(JSONObject json, DataSource source) throws JSONException {
-        // TODO
-    }
-
-    private void removeMessage(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
-        source.deleteMessage(id);
-        Log.v(TAG, "removed message");
-    }
-
     private void addScheduledMessage(JSONObject json, DataSource source) throws JSONException {
-        // TODO
+        ScheduledMessage message = new ScheduledMessage();
+        message.id = json.getLong("id");
+        message.to = encryptionUtils.decrypt(json.getString("to"));
+        message.data = encryptionUtils.decrypt(json.getString("data"));
+        message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+        message.timestamp = json.getLong("timestamp");
+        message.title = encryptionUtils.decrypt(json.getString("title"));
+
+        source.insertScheduledMessage(message);
+        Log.v(TAG, "added scheduled message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {

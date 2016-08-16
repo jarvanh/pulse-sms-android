@@ -282,10 +282,19 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String messageData;
+
+                if (mimeType.equals("text/plain")) {
+                    messageData = data;
+                } else {
+                    messageData = "firebase -1";
+                    // TODO upload binary file to firebase storage
+                }
+
                 MessageBody body = new MessageBody(deviceId,
                         deviceConversationId,
                         messageType,
-                        encryptionUtils.encrypt(data),
+                        encryptionUtils.encrypt(messageData),
                         timestamp,
                         encryptionUtils.encrypt(mimeType),
                         read,

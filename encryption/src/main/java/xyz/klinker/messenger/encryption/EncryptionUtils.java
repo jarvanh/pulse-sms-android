@@ -95,7 +95,7 @@ public class EncryptionUtils {
      * @return the plaintext string.
      */
     public String decrypt(String data) {
-        if (data == null) {
+        if (data == null || data.equals("null")) {
             return null;
         } else {
             byte[] decrypted = decryptData(data);

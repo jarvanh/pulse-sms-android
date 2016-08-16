@@ -575,6 +575,21 @@ public class DataSource {
     }
 
     /**
+     * Gets a single message from the database.
+     */
+    public Message getMessage(long messageId) {
+        Cursor cursor = database.query(Message.TABLE, null, Message.COLUMN_ID + "=?",
+                new String[]{Long.toString(messageId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            Message message = new Message();
+            message.fillFromCursor(cursor);
+            return message;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Gets all messages in the database where mime type is not text/plain.
      */
     public Cursor getAllMediaMessages(int limit) {
