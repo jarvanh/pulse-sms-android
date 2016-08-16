@@ -18,8 +18,10 @@ package xyz.klinker.messenger.adapter.view_holder;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
+import xyz.klinker.messenger.data.DataSource;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -46,19 +49,31 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     // TODO add an alert dialog with options for viewing message details and copying text
     private View.OnLongClickListener messageOptions = new View.OnLongClickListener() {
         @Override
-        public boolean onLongClick(View view) {
+        public boolean onLongClick(final View view) {
+            String[] items;
             if (message.getVisibility() == View.VISIBLE) {
-                ClipboardManager clipboard = (ClipboardManager)
-                        view.getContext().getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("messenger",
-                        message.getText().toString());
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(view.getContext(), R.string.message_copied_to_clipboard,
-                        Toast.LENGTH_SHORT).show();
-                return true;
+                items = new String[2];
+                items[0] = view.getContext().getString(R.string.view_details);
+                items[1] = view.getContext().getString(R.string.copy_message);
             } else {
-                return false;
+                items = new String[1];
+                items[0] = view.getContext().getString(R.string.view_details);
             }
+
+            new AlertDialog.Builder(view.getContext())
+                    .setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int which) {
+                            if (which == 0) {
+                                showMessageDetails();
+                            } else if (which == 1) {
+                                copyMessageText();
+                            }
+                        }
+                    })
+                    .show();
+
+            return true;
         }
     };
 
@@ -92,6 +107,28 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (message != null) {
             message.setOnLongClickListener(messageOptions);
         }
+    }
+
+    private void showMessageDetails() {
+        DataSource source = DataSource.getInstance(message.getContext());
+        source.open();
+
+        new AlertDialog.Builder(message.getContext())
+                .setMessage(source.getMessageDetails(message.getContext(), messageId))
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+
+        source.close();
+    }
+
+    private void copyMessageText() {
+        ClipboardManager clipboard = (ClipboardManager)
+                message.getContext().getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("messenger",
+                message.getText().toString());
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(message.getContext(), R.string.message_copied_to_clipboard,
+                Toast.LENGTH_SHORT).show();
     }
 
 }

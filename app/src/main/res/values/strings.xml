@@ -111,6 +111,8 @@
     <string name="start_recording_audio">Press the button to start recording audio!</string>
     <string name="audio_recording_error">Error with recording :(</string>
     <string name="message_copied_to_clipboard">Message copied to clipboard</string>
+    <string name="view_details">View Details</string>
+    <string name="copy_message">Copy Message</string>
 
     <!-- Compose Screen -->
     <string name="enter_contact_name">Enter Contact Name</string>

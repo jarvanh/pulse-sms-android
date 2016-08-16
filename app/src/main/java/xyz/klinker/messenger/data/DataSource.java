@@ -24,6 +24,7 @@ import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.format.Formatter;
 import android.util.Base64;
 import android.util.Log;
 
@@ -37,6 +38,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
@@ -47,6 +49,7 @@ import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
@@ -550,6 +553,51 @@ public class DataSource {
             builder.append(cursor.getCount());
             builder.append("<br/>");
             cursor.close();
+        }
+
+        // remove the last <br/>
+        String description = builder.toString();
+        description = description.substring(0, description.length() - 5);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(description, 0);
+        } else {
+            return Html.fromHtml(description);
+        }
+    }
+
+    /**
+     * Gets the details for a message.
+     */
+    public Spanned getMessageDetails(Context context, long messageId) {
+        Message message = getMessage(messageId);
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("<b>Date: </b>");
+        builder.append(SimpleDateFormat
+                .getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
+                .format(new Date(message.timestamp)));
+        builder.append("<br/>");
+
+//        builder.append("<b>Read: </b>");
+//        builder.append(message.read);
+//        builder.append("<br/>");
+//
+//        builder.append("<b>Seen: </b>");
+//        builder.append(message.seen);
+//        builder.append("<br/>");
+
+        if (message.from != null) {
+            builder.append("<b>From: </b>");
+            builder.append(message.from);
+            builder.append("<br/>");
+        }
+
+        if (!message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+            byte[] bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType);
+            builder.append("<b>Size: </b>");
+            builder.append(Formatter.formatShortFileSize(context, bytes.length));
+            builder.append("<br/>");
         }
 
         // remove the last <br/>
