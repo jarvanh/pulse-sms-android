@@ -650,6 +650,10 @@ public class MessageListFragment extends Fragment implements
                     m.data = uri.toString();
                     m.mimeType = mimeType;
 
+                    if (m.id != 0) {
+                        m.id = 0;
+                    }
+
                     source.insertMessage(getActivity(), m, m.conversationId);
                     loadMessages();
                 }
