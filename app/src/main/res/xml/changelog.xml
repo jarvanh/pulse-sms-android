@@ -20,6 +20,7 @@
         name="1.0"
         description="August 16th, 2016">
         <text>Firebase Cloud Messaging to sync settings and messages between devices</text>
+        <text>View message details or copy message when long clicking</text>
     </version>
 
     <version
@@ -55,6 +56,12 @@
         <text>Use my own database instead of the internal content provider for speed and syncing
             between devices
         </text>
+    </version>
+
+    <version
+        name="0.0"
+        description="July 7th, 2016">
+        <text>First line of code written</text>
     </version>
 
 </changelog>
