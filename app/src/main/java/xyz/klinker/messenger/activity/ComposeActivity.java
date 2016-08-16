@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -226,15 +227,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
             }
 
-            fab.setImageResource(R.drawable.ic_send);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (contactEntry.getRecipients().length > 0) {
-                        sendMessage(mimeType, data);
-                    }
-                }
-            });
+            setupSend(data, mimeType);
 
             if (getIntent().getExtras()
                     .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
@@ -242,7 +235,24 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                         .getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
                 sendMessage(mimeType, data, numbers);
             }
+        } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
+            Bundle extras = getIntent().getExtras();
+            if (extras.containsKey("sms_body")) {
+                setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN);
+            }
         }
+    }
+
+    private void setupSend(final String data, final String mimeType) {
+        fab.setImageResource(R.drawable.ic_send);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (contactEntry.getRecipients().length > 0) {
+                    sendMessage(mimeType, data);
+                }
+            }
+        });
     }
 
     private void sendMessage(String mimeType, String data) {
