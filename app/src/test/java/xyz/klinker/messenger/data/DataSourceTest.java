@@ -277,10 +277,10 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void searchMessagesTimestamp() {
-        when(database.query("message", null, "timestamp BETWEEN 0 AND 10000", null, null, null,
+        when(database.query("message", null, "timestamp BETWEEN 0 AND 20000", null, null, null,
                 "timestamp desc")).thenReturn(cursor);
 
-        assertEquals(cursor, source.searchMessages(5000L));
+        assertEquals(cursor, source.searchMessages(10000L));
     }
 
     @Test
