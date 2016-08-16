@@ -20,7 +20,8 @@
     <application>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent" />
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:configChanges="keyboardHidden"/>
 
         <service
             android:name=".MessengerFirebaseMessagingService"
