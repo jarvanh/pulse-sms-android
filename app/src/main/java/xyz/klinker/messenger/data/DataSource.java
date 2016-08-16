@@ -867,17 +867,19 @@ public class DataSource {
         values.put(Message.COLUMN_READ, 1);
         values.put(Message.COLUMN_SEEN, 1);
 
-        database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
+        int updated = database.update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
                         Message.COLUMN_READ + "=? OR " + Message.COLUMN_SEEN + "=?)",
                 new String[]{Long.toString(conversationId), "0", "0"});
 
         values = new ContentValues(1);
         values.put(Conversation.COLUMN_READ, 1);
 
-        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+        updated += database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
-        apiUtils.readConversation(accountId, conversationId);
+        if (updated > 0) {
+            apiUtils.readConversation(accountId, conversationId);
+        }
 
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);

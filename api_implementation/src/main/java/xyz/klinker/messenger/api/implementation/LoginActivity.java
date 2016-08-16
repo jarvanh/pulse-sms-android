@@ -227,7 +227,6 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
 
-        final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {

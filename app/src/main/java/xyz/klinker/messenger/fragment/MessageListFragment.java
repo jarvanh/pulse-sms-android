@@ -552,11 +552,7 @@ public class MessageListFragment extends Fragment implements
                 try {
                     if (source.isOpen()) {
                         dismissNotification();
-
-                        Bundle args = getArguments();
-                        if (!args.getBoolean(ARG_READ, true)) {
-                            source.readConversation(getContext(), conversationId);
-                        }
+                        source.readConversation(getContext(), conversationId);
                     }
                 } catch (IllegalStateException e) {
 

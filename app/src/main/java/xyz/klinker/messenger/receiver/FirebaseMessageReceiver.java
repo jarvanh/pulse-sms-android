@@ -38,6 +38,7 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.SendUtils;
 
 /**
@@ -191,6 +192,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
                     message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
                     message.type != Message.TYPE_RECEIVED);
+
+            if (message.type == Message.TYPE_RECEIVED) {
+                context.startService(new Intent(context, NotificationService.class));
+            }
         } else {
             Log.v(TAG, "message already exists, not doing anything with it");
         }
