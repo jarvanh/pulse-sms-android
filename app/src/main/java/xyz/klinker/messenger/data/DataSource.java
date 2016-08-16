@@ -668,7 +668,7 @@ public class DataSource {
      */
     public Cursor searchMessages(long timestamp) {
         return database.query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + " BETWEEN " +
-                        (timestamp - 5000) + " AND " + (timestamp + 5000), null, null, null,
+                        (timestamp - 10000) + " AND " + (timestamp + 10000), null, null, null,
                 Message.COLUMN_TIMESTAMP + " desc");
     }
 
@@ -738,7 +738,7 @@ public class DataSource {
      * @return the conversation id that the message was inserted into.
      */
     public long insertMessage(Message message, String phoneNumbers, Context context) {
-        return insertMessage(message, updateOrCreateConversation(phoneNumbers, message, context));
+        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context));
     }
 
     /**
@@ -815,7 +815,7 @@ public class DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    public long insertMessage(Message message, long conversationId) {
+    public long insertMessage(Context context, Message message, long conversationId) {
         message.conversationId = conversationId;
 
         ContentValues values = new ContentValues(10);
@@ -837,7 +837,7 @@ public class DataSource {
 
         database.insert(Message.TABLE, null, values);
 
-        apiUtils.addMessage(accountId, message.id, conversationId, message.type, message.data,
+        apiUtils.addMessage(context, accountId, message.id, conversationId, message.type, message.data,
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
                 message.color, encryptionUtils);
 

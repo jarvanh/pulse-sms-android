@@ -79,7 +79,7 @@ public class ReplyService extends IntentService {
         m.from = null;
         m.color = null;
 
-        source.insertMessage(m, conversationId);
+        source.insertMessage(this, m, conversationId);
         source.readConversation(this, conversationId);
         Conversation conversation = source.getConversation(conversationId);
 

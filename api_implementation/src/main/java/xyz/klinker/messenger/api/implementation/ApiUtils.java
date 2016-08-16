@@ -16,7 +16,20 @@
 
 package xyz.klinker.messenger.api.implementation;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import xyz.klinker.messenger.api.Api;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
@@ -46,10 +59,15 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class ApiUtils {
 
     private static final String TAG = "ApiUtils";
+    private static final long MAX_SIZE = 1024 * 1024 * 2;
+    private static final String FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com";
     public static String environment;
 
     private Api api;
     private boolean active = true;
+
+    private StorageReference folderRef;
+    private boolean firebaseFinished = false;
 
     /**
      * Creates a new api utility that will be used to directly interface with the server apis.
@@ -270,7 +288,7 @@ public class ApiUtils {
     /**
      * Adds a new message to the server.
      */
-    public void addMessage(final String accountId, final long deviceId,
+    public void addMessage(final Context context, final String accountId, final long deviceId,
                            final long deviceConversationId, final int messageType,
                            final String data, final long timestamp, final String mimeType,
                            final boolean read, final boolean seen, final String messageFrom,
@@ -283,17 +301,24 @@ public class ApiUtils {
             @Override
             public void run() {
                 String messageData;
+                int type;
 
                 if (mimeType.equals("text/plain")) {
                     messageData = data;
+                    type = messageType;
                 } else {
                     messageData = "firebase -1";
-                    // TODO upload binary file to firebase storage
+                    // if type is received, then received else sent. don't save sending status here
+                    type = messageType/* == 0 ? 0 : 1*/;
+
+                    saveFirebaseFolderRef(accountId);
+                    byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
+                    uploadBytesToFirebase(bytes, deviceId, encryptionUtils);
                 }
 
                 MessageBody body = new MessageBody(deviceId,
                         deviceConversationId,
-                        messageType,
+                        type,
                         encryptionUtils.encrypt(messageData),
                         timestamp,
                         encryptionUtils.encrypt(mimeType),
@@ -325,7 +350,17 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                int attempt = 1;
                 Object response = api.message().update(deviceId, accountId, request);
+
+                // retry up to three times. A failure can occur when the image has not yet finished
+                // uploading to firebase but has been sent and marked as so on the device.
+                while (response == null && attempt <= 6) {
+                    attempt++;
+                    try { Thread.sleep(5000); } catch (Exception e) { }
+                    response = api.message().update(deviceId, accountId, request);
+                }
+
                 if (response == null) {
                     Log.e(TAG, "error updating message");
                 }
@@ -488,6 +523,108 @@ public class ApiUtils {
                 }
             }
         }).start();
+    }
+
+    /**
+     * Uploads a byte array of encrypted data to firebase.
+     *
+     * @param bytes the byte array to upload.
+     * @param messageId the message id that the data belongs to.
+     * @param encryptionUtils the utils to encrypt the byte array with.
+     */
+    public void uploadBytesToFirebase(byte[] bytes, final long messageId,
+                                      EncryptionUtils encryptionUtils) {
+        if (folderRef == null) {
+            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+        }
+
+        final AtomicBoolean firebaseFinished = new AtomicBoolean(false);
+        StorageReference fileRef = folderRef.child(messageId + "");
+
+        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
+                addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.v(TAG, "finished uploading " + messageId);
+                        firebaseFinished.set(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "failed to upload file", e);
+                        firebaseFinished.set(true);
+                    }
+                });
+
+        // wait for the upload to finish. Firebase only support async requests, which
+        // I do not want here.
+        while (!firebaseFinished.get()) {
+            Log.v(TAG, "waiting for upload to finish for " + messageId);
+            try { Thread.sleep(1000); } catch (Exception e) { }
+        }
+
+        Log.v(TAG, "finished uploading and exiting for " + messageId);
+    }
+
+    /**
+     * Downloads and decrypts a file from firebase.
+     *
+     * @param file the location on your device to save to.
+     * @param messageId the id of the message to grab so we can create a firebase storage ref.
+     * @param encryptionUtils the utils to use to decrypt the message.
+     */
+    public void downloadFileFromFirebase(final File file, final long messageId,
+                                         final EncryptionUtils encryptionUtils) {
+        if (folderRef == null) {
+            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+        }
+
+        final AtomicBoolean firebaseFinished = new AtomicBoolean(false);
+        StorageReference fileRef = folderRef.child(messageId + "");
+
+        fileRef.getBytes(MAX_SIZE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        bytes = encryptionUtils.decryptData(new String(bytes));
+
+                        try {
+                            BufferedOutputStream bos =
+                                    new BufferedOutputStream(new FileOutputStream(file));
+                            bos.write(bytes);
+                            bos.flush();
+                            bos.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        firebaseFinished.set(true);
+                        Log.v(TAG, "finished downloading " + messageId);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        firebaseFinished.set(true);
+                        Log.v(TAG, "failed to download file", e);
+                    }
+                });
+
+        while (!firebaseFinished.get()) {
+            Log.v(TAG, "waiting for download " + messageId);
+            try { Thread.sleep(500); } catch (Exception e) { }
+        }
+    }
+
+    /**
+     * Creates a ref to a folder where all media will be stored for this user.
+     */
+    public void saveFirebaseFolderRef(String accountId) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage
+                .getReferenceFromUrl(FIREBASE_STORAGE_URL);
+        folderRef = storageRef.child(accountId);
     }
 
     /**

@@ -67,7 +67,6 @@ public class ApiDownloadService extends Service {
     private static final String TAG = "ApiDownloadService";
     private static final int MESSAGE_DOWNLOAD_ID = 7237;
     private static final int MEDIA_DOWNLOAD_ID = 7238;
-    private static final long MAX_SIZE = 1024 * 1024 * 2;
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
@@ -75,7 +74,6 @@ public class ApiDownloadService extends Service {
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
-    private boolean firebaseDownloadFinished = false;
 
     @Nullable
     @Override
@@ -144,7 +142,7 @@ public class ApiDownloadService extends Service {
             for (MessageBody body : messages) {
                 Message message = new Message(body);
                 message.decrypt(encryptionUtils);
-                source.insertMessage(message, message.conversationId);
+                source.insertMessage(this, message, message.conversationId);
             }
 
             Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -262,10 +260,7 @@ public class ApiDownloadService extends Service {
 
     private void processMediaDownload(NotificationManagerCompat manager,
                                       NotificationCompat.Builder builder) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage
-                .getReferenceFromUrl(ApiUploadService.FIREBASE_STORAGE_URL);
-        StorageReference folderRef = storageRef.child(Settings.get(this).accountId);
+        apiUtils.saveFirebaseFolderRef(Settings.get(this).accountId);
 
         Cursor media = source.getFirebaseMediaMessages();
         if (media.moveToFirst()) {
@@ -281,39 +276,12 @@ public class ApiDownloadService extends Service {
                     continue;
                 }
 
-                StorageReference fileRef = folderRef.child(message.id + "");
-
                 final File file = new File(getFilesDir(),
                         message.id + MimeType.getExtension(message.mimeType));
 
-                fileRef.getBytes(MAX_SIZE)
-                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] bytes) {
-                                bytes = encryptionUtils.decryptData(new String(bytes));
+                Log.v(TAG, "started downloading " + message.id);
 
-                                try {
-                                    BufferedOutputStream bos =
-                                            new BufferedOutputStream(new FileOutputStream(file));
-                                    bos.write(bytes);
-                                    bos.flush();
-                                    bos.close();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                firebaseDownloadFinished = true;
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                firebaseDownloadFinished = true;
-                            }
-                        });
-
-                while (!firebaseDownloadFinished) ;
-
+                apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils);
                 source.updateMessageData(message.id, Uri.fromFile(file).toString());
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 manager.notify(MEDIA_DOWNLOAD_ID, builder.build());

@@ -20,8 +20,6 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,14 +31,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.Executor;
 
 import xyz.klinker.messenger.R;
@@ -65,7 +56,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
-import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.util.listener.DirectExecutor;
 
 public class ApiUploadService extends Service {
@@ -73,14 +64,12 @@ public class ApiUploadService extends Service {
     private static final String TAG = "ApiUploadService";
     private static final int MESSAGE_UPLOAD_ID = 7235;
     private static final int MEDIA_UPLOAD_ID = 7236;
-    public static final String FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com";
     public static final int NUM_MEDIA_TO_UPLOAD = 20;
 
     private Settings settings;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
-    private boolean firebaseUploadFinished = false;
 
     @Nullable
     @Override
@@ -324,9 +313,7 @@ public class ApiUploadService extends Service {
 
     private void processMediaUpload(NotificationManagerCompat manager,
                                     NotificationCompat.Builder builder) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl(FIREBASE_STORAGE_URL);
-        StorageReference folderRef = storageRef.child(Settings.get(this).accountId);
+        apiUtils.saveFirebaseFolderRef(Settings.get(this).accountId);
 
         Cursor media = source.getAllMediaMessages(NUM_MEDIA_TO_UPLOAD);
         if (media.moveToFirst()) {
@@ -334,46 +321,10 @@ public class ApiUploadService extends Service {
                 Message message = new Message();
                 message.fillFromCursor(media);
 
-                StorageReference fileRef = folderRef.child(message.id + "");
+                Log.v(TAG, "started uploading " + message.id);
 
-                byte[] bytes;
-                firebaseUploadFinished = false;
-
-                if (MimeType.isStaticImage(message.mimeType)) {
-                    Bitmap bitmap = ImageUtils.getBitmap(this, message.data);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                    bytes = baos.toByteArray();
-                } else {
-                    try {
-                        InputStream stream = getContentResolver()
-                                .openInputStream(Uri.parse(message.data));
-                        bytes = readBytes(stream);
-                        stream.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        bytes = new byte[0];
-                    }
-                }
-
-                fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
-                        addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                firebaseUploadFinished = true;
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "failed to upload file", e);
-                                firebaseUploadFinished = true;
-                            }
-                        });
-
-                // wait for the upload to finish. Firebase only support async requests, which
-                // I do not want here.
-                while (!firebaseUploadFinished) ;
+                byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
+                apiUtils.uploadBytesToFirebase(bytes, message.id, encryptionUtils);
 
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,
@@ -390,20 +341,6 @@ public class ApiUploadService extends Service {
         manager.cancel(MEDIA_UPLOAD_ID);
         source.close();
         stopSelf();
-    }
-
-    public byte[] readBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-
-        return byteBuffer.toByteArray();
     }
 
 }

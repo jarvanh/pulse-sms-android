@@ -630,7 +630,7 @@ public class MessageListFragment extends Fragment implements
                 }
 
                 if (message.length() != 0) {
-                    source.insertMessage(m, m.conversationId);
+                    source.insertMessage(getActivity(), m, m.conversationId);
                     loadMessages();
                 }
 
@@ -647,7 +647,7 @@ public class MessageListFragment extends Fragment implements
                     m.data = uri.toString();
                     m.mimeType = mimeType;
 
-                    source.insertMessage(m, m.conversationId);
+                    source.insertMessage(getActivity(), m, m.conversationId);
                     loadMessages();
                 }
 

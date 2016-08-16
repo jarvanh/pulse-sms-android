@@ -26,8 +26,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.crypto.spec.SecretKeySpec;
 
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -51,12 +55,21 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private EncryptionUtils encryptionUtils;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         if (!MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED
                 .equals(intent.getAction())) {
             return;
         }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                process(context, intent);
+            }
+        }).start();
+    }
+
+    private void process(Context context, Intent intent) {
         encryptionUtils = new EncryptionUtils(
                 new SecretKeySpec(Base64.decode(Settings.get(context).key, Base64.DEFAULT), "AES"));
 
@@ -147,11 +160,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         }
     }
 
-    private void addMessage(JSONObject json, DataSource source, Context context)
+    private void addMessage(JSONObject json, final DataSource source, final Context context)
             throws JSONException {
         long id = json.getLong("id");
         if (source.getMessage(id) == null) {
-            Message message = new Message();
+            final Message message = new Message();
             message.id = id;
             message.conversationId = json.getLong("conversation_id");
             message.type = json.getInt("type");
@@ -166,16 +179,38 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 message.color = json.getInt("color");
             }
 
+            final AtomicBoolean downloading = new AtomicBoolean(false);
             if (message.data.equals("firebase -1") &&
                     !message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                 Log.v(TAG, "downloading binary from firebase");
-                // TODO download message from firebase storage and update message.data
+                downloading.set(true);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ApiUtils apiUtils = new ApiUtils();
+                        apiUtils.saveFirebaseFolderRef(Settings.get(context).accountId);
+
+                        final File file = new File(context.getFilesDir(),
+                                message.id + MimeType.getExtension(message.mimeType));
+                        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils);
+                        message.data = Uri.fromFile(file).toString();
+                        source.updateMessageData(message.id, message.data);
+                        MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+                        downloading.set(false);
+                    }
+                }).start();
             }
 
-            source.insertMessage(message, message.conversationId);
+            source.insertMessage(context, message, message.conversationId);
             Log.v(TAG, "added message");
 
             if (Settings.get(context).primary && message.type == Message.TYPE_SENDING) {
+                while (downloading.get()) {
+                    Log.v(TAG, "waiting for download before sending");
+                    try { Thread.sleep(1000); } catch (Exception e) { }
+                }
+
                 Conversation conversation = source.getConversation(message.conversationId);
 
                 if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {

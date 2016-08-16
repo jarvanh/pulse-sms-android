@@ -292,7 +292,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertMessage() {
-        source.insertMessage(new Message(), 1);
+        source.insertMessage(RuntimeEnvironment.application, new Message(), 1);
 
         verify(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),

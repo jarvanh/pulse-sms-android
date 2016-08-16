@@ -290,7 +290,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertMessage() {
         int initialSize = source.getMessages(2).getCount();
-        source.insertMessage(getFakeMessage(), 2);
+        source.insertMessage(RuntimeEnvironment.application, getFakeMessage(), 2);
         int newSize = source.getMessages(2).getCount();
 
         assertEquals(1, newSize - initialSize);
