@@ -254,7 +254,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     public long getItemId(int position) {
         messages.moveToPosition(position);
-        return messages.getInt(messages.getColumnIndex(Message.COLUMN_ID));
+        return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
     }
 
     public void addMessage(Cursor newMessages) {

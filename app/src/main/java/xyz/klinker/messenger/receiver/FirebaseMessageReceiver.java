@@ -19,6 +19,7 @@ package xyz.klinker.messenger.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Base64;
@@ -45,6 +46,7 @@ import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
 /**
@@ -278,7 +280,18 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"));
         conversation.mute = json.getBoolean("mute");
 
-        source.insertConversation(conversation);
+        if (conversation.imageUri != null &&
+                ImageUtils.getContactImage(conversation.imageUri, context) == null) {
+            conversation.imageUri = null;
+        } else if (conversation.imageUri != null) {
+            conversation.imageUri += "/photo";
+        }
+
+        try {
+            source.insertConversation(conversation);
+        } catch (SQLiteConstraintException e) {
+            // conversation already exists
+        }
     }
 
     private void updateConversation(JSONObject json, DataSource source, Context context)

@@ -899,11 +899,12 @@ public class DataSource {
     /**
      * Deletes a message with the given id.
      */
-    public void deleteMessage(long messageId) {
-        database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
+    public int deleteMessage(long messageId) {
+        int deleted = database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
 
         apiUtils.deleteMessage(accountId, messageId);
+        return deleted;
     }
 
     /**
