@@ -44,6 +44,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
 /**
@@ -100,7 +101,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     removeMessage(json, source);
                     break;
                 case "added_conversation":
-                    addConversation(json, source);
+                    addConversation(json, source, context);
                     break;
                 case "updated_conversation":
                     updateConversation(json, source, context);
@@ -245,7 +246,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         long id = json.getLong("id");
         source.updateMessageType(id, json.getInt("type"));
         Message message = source.getMessage(id);
-        MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+        if (message != null) {
+            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+        }
         Log.v(TAG, "updated message type");
     }
 
@@ -255,9 +258,27 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed message");
     }
 
-    private void addConversation(JSONObject json, DataSource source) throws JSONException {
-        // Not needed because inserting the message will take care of anything we need here in
-        // the local database
+    private void addConversation(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        Conversation conversation = new Conversation();
+        conversation.id = json.getLong("id");
+        conversation.colors.color = json.getInt("color");
+        conversation.colors.colorDark = json.getInt("color_dark");
+        conversation.colors.colorLight = json.getInt("color_light");
+        conversation.colors.colorAccent = json.getInt("color_accent");
+        conversation.pinned = json.getBoolean("pinned");
+        conversation.read = json.getBoolean("read");
+        conversation.timestamp = json.getLong("timestamp");
+        conversation.title = encryptionUtils.decrypt(json.getString("title"));
+        conversation.phoneNumbers = encryptionUtils.decrypt(json.getString("phone_numbers"));
+        conversation.snippet = encryptionUtils.decrypt(json.getString("snippet"));
+        conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
+                json.getString("ringtone") : null);
+        conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
+        conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"));
+        conversation.mute = json.getBoolean("mute");
+
+        source.insertConversation(conversation);
     }
 
     private void updateConversation(JSONObject json, DataSource source, Context context)
