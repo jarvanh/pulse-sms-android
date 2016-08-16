@@ -68,11 +68,14 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "removed_account":
                     removeAccount(json, source, context);
                     break;
-                case "added_blacklist":
-                    addBlacklist(json, source);
+                case "added_message":
+                    addMessage(json, source);
                     break;
-                case "removed_blacklist":
-                    removeBlacklist(json, source);
+                case "updated_message":
+                    updateMessage(json, source);
+                    break;
+                case "removed_message":
+                    removeMessage(json, source);
                     break;
                 case "added_conversation":
                     addConversation(json, source);
@@ -89,20 +92,26 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "removed_drafts":
                     removeDrafts(json, source);
                     break;
-                case "added_message":
-                    addMessage(json, source);
+                case "added_blacklist":
+                    addBlacklist(json, source);
                     break;
-                case "updated_message":
-                    updateMessage(json, source);
-                    break;
-                case "removed_message":
-                    removeMessage(json, source);
+                case "removed_blacklist":
+                    removeBlacklist(json, source);
                     break;
                 case "added_scheduled_message":
                     addScheduledMessage(json, source);
                     break;
                 case "removed_scheduled_message":
                     removeScheduledMessage(json, source);
+                    break;
+                case "changed_snooze":
+                    changeSnooze(json, source);
+                    break;
+                case "changed_dark_theme":
+                    changeDarkTheme(json, source);
+                    break;
+                case "changed_vibrate":
+                    changeVibrate(json, source);
                     break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
@@ -194,6 +203,18 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         long id = json.getLong("id");
         source.deleteScheduledMessage(id);
         Log.v(TAG, "removed scheduled message");
+    }
+
+    private void changeSnooze(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
+    private void changeDarkTheme(JSONObject json, DataSource source) throws JSONException {
+        // TODO
+    }
+
+    private void changeVibrate(JSONObject json, DataSource source) throws JSONException {
+        // TODO
     }
 
 }
