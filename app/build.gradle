@@ -79,6 +79,7 @@ android {
         }
         staging {
             versionNameSuffix "-STAGING"
+            debuggable true
             signingConfig signingConfigs.debug
         }
         release {
