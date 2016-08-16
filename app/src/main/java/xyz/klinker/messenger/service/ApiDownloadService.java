@@ -272,7 +272,7 @@ public class ApiDownloadService extends Service {
                 // num and process the message only if that num is actually stored on firebase
                 int number = Integer.parseInt(message.data.split(" ")[1]) + 1;
                 if (number < media.getCount() - ApiUploadService.NUM_MEDIA_TO_UPLOAD &&
-                        number != -1) {
+                        number != 0) {
                     continue;
                 }
 

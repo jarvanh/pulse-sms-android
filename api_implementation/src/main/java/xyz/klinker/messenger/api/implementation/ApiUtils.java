@@ -59,7 +59,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class ApiUtils {
 
     private static final String TAG = "ApiUtils";
-    private static final long MAX_SIZE = 1024 * 1024 * 2;
+    private static final long MAX_SIZE = 1024 * 1024 * 5;
     private static final String FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com";
     public static String environment;
 
