@@ -48,4 +48,17 @@ public interface AccountService {
     @GET("accounts")
     AccountListResponse list(@Query("account_id") String accountId);
 
+    @POST("accounts/update_snooze")
+    Object updateSnooze(@Query("account_id") String accountId, @Query("snooze") long snooze);
+
+    @POST("accounts/update_dark_theme")
+    Object updateDarkTheme(@Query("account_id") String accountId,
+                           @Query("dark_theme") boolean darkTheme);
+
+    @POST("accounts/update_vibrate")
+    Object updateVibrate(@Query("account_id") String accountId, @Query("vibrate") boolean vibrate);
+
+    @POST("accounts/dismissed_notification")
+    Object dismissedNotification(@Query("account_id") String accountId, @Query("id") long id);
+
 }

@@ -87,4 +87,17 @@ public class AccountTest extends ApiTest {
         assertNull(getLoginResponse());
     }
 
+    @Test
+    public void updateSettings() {
+        String accountId = getAccountId();
+        assertNotNull(api.account().updateSnooze(accountId, 1));
+        assertNotNull(api.account().updateDarkTheme(accountId, false));
+        assertNotNull(api.account().updateVibrate(accountId, false));
+    }
+
+    @Test
+    public void dismissNotification() {
+        assertNotNull(api.account().dismissedNotification(getAccountId(), 1));
+    }
+
 }
