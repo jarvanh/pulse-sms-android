@@ -106,15 +106,17 @@ public class NotificationService extends IntentService {
 
                 if (conversation == null) {
                     Conversation c = source.getConversation(conversationId);
-                    conversation = new NotificationConversation();
-                    conversation.id = c.id;
-                    conversation.title = c.title;
-                    conversation.imageUri = c.imageUri;
-                    conversation.color = c.colors.color;
-                    conversation.ringtoneUri = c.ringtoneUri;
-                    conversation.timestamp = c.timestamp;
-                    conversation.mute = c.mute;
-                    conversations.put(conversationId, conversation);
+                    if (c != null) {
+                        conversation = new NotificationConversation();
+                        conversation.id = c.id;
+                        conversation.title = c.title;
+                        conversation.imageUri = c.imageUri;
+                        conversation.color = c.colors.color;
+                        conversation.ringtoneUri = c.ringtoneUri;
+                        conversation.timestamp = c.timestamp;
+                        conversation.mute = c.mute;
+                        conversations.put(conversationId, conversation);
+                    }
                 }
 
                 conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
