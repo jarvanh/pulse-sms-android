@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.0"
+        description="August 16th, 2016">
+        <text>Firebase Cloud Messaging to sync settings and messages between devices</text>
+    </version>
+
+    <version
         name="0.9"
         description="August 14th, 2016">
         <text>Support for uploading changes from the device database to the server</text>
