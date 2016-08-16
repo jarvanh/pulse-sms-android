@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Base64;
 import android.util.Log;
 
@@ -126,13 +127,16 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     removeScheduledMessage(json, source);
                     break;
                 case "changed_snooze":
-                    changeSnooze(json, source);
+                    changeSnooze(json, context);
                     break;
                 case "changed_dark_theme":
-                    changeDarkTheme(json, source);
+                    changeDarkTheme(json, context);
                     break;
                 case "changed_vibrate":
-                    changeVibrate(json, source);
+                    changeVibrate(json, context);
+                    break;
+                case "dismissed_notification":
+                    dismissNotification(json, context);
                     break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
@@ -268,6 +272,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
                 json.getString("ringtone") : null);
         conversation.mute = json.getBoolean("mute");
+        conversation.read = json.getBoolean("read");
 
         source.updateConversationSettings(conversation);
         Log.v(TAG, "updated conversation");
@@ -333,16 +338,24 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed scheduled message");
     }
 
-    private void changeSnooze(JSONObject json, DataSource source) throws JSONException {
-        // TODO
+    private void changeSnooze(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("snooze", json.getLong("value"));
     }
 
-    private void changeDarkTheme(JSONObject json, DataSource source) throws JSONException {
-        // TODO
+    private void changeDarkTheme(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("dark_theme", json.getBoolean("value"));
     }
 
-    private void changeVibrate(JSONObject json, DataSource source) throws JSONException {
-        // TODO
+    private void changeVibrate(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("vibrate", json.getBoolean("value"));
+    }
+
+    private void dismissNotification(JSONObject json, Context context)
+            throws JSONException {
+        NotificationManagerCompat.from(context).cancel(json.getInt("id"));
     }
 
 }

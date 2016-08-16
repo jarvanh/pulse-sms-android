@@ -68,6 +68,7 @@ import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
@@ -504,6 +505,8 @@ public class MessageListFragment extends Fragment implements
             if (dismissNotification) {
                 NotificationManagerCompat.from(getContext())
                         .cancel((int) getConversationId());
+                new ApiUtils().dismissNotification(Settings.get(getActivity()).accountId,
+                        getConversationId());
             }
         } catch (Exception e) {
 

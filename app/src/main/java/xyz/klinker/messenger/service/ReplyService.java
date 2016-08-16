@@ -24,8 +24,10 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
@@ -95,6 +97,9 @@ public class ReplyService extends IntentService {
         } else {
             NotificationManagerCompat.from(this).cancel((int) conversationId);
         }
+
+        new ApiUtils().dismissNotification(Settings.get(this).accountId,
+                conversationId);
 
         unseenMessages.close();
         source.close();

@@ -47,6 +47,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -221,6 +222,8 @@ public class MessengerActivity extends AppCompatActivity
 
                         Settings.get(getApplicationContext()).setValue(
                                 getString(R.string.pref_snooze), snoozeTil);
+                        new ApiUtils().updateSnooze(Settings.get(getApplicationContext()).accountId,
+                                snoozeTil);
                         return true;
                     }
                 });

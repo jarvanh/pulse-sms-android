@@ -19,7 +19,9 @@ package xyz.klinker.messenger.service;
 import android.app.IntentService;
 import android.content.Intent;
 
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
 
 /**
  * A service to get run when a notification is dismissed.
@@ -46,6 +48,8 @@ public class NotificationDismissedService extends IntentService {
         }
 
         source.close();
+
+        new ApiUtils().dismissNotification(Settings.get(this).accountId, conversationId);
     }
 
 }

@@ -65,9 +65,7 @@ public class ApiUtils {
 
     private Api api;
     private boolean active = true;
-
     private StorageReference folderRef;
-    private boolean firebaseFinished = false;
 
     /**
      * Creates a new api utility that will be used to directly interface with the server apis.
@@ -625,6 +623,88 @@ public class ApiUtils {
         StorageReference storageRef = storage
                 .getReferenceFromUrl(FIREBASE_STORAGE_URL);
         folderRef = storageRef.child(accountId);
+    }
+
+    /**
+     * Update the snooze time setting.
+     */
+    public void updateSnooze(final String accountId, final long snoozeTil) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateSnooze(accountId, snoozeTil);
+                if (response == null) {
+                    Log.e(TAG, "error updating snooze til");
+                }
+            }
+        }).start();
+    }
+
+
+
+    /**
+     * Update the dark theme setting.
+     */
+    public void updateDarkTheme(final String accountId, final boolean darkTheme) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateDarkTheme(accountId, darkTheme);
+                if (response == null) {
+                    Log.e(TAG, "error updating dark theme");
+                }
+            }
+        }).start();
+    }
+
+
+
+    /**
+     * Update the vibrate setting.
+     */
+    public void updateVibrate(final String accountId, final boolean vibrate) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateVibrate(accountId, vibrate);
+                if (response == null) {
+                    Log.e(TAG, "error updating vibrate");
+                }
+            }
+        }).start();
+    }
+
+
+
+    /**
+     * Dismiss a notification across all devices.
+     */
+    public void dismissNotification(final String accountId, final long id) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().dismissedNotification(accountId, (int) id);
+                if (response == null) {
+                    Log.e(TAG, "error dismissing notification");
+                }
+            }
+        }).start();
     }
 
     /**

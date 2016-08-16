@@ -22,6 +22,7 @@ import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.Settings;
 
 /**
@@ -35,6 +36,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings);
         initNightMode();
+        initVibrate();
     }
 
     @Override
@@ -55,6 +57,22 @@ public class SettingsFragment extends PreferenceFragment {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         }
 
+                        new ApiUtils().updateDarkTheme(Settings.get(getActivity()).accountId,
+                                night);
+
+                        return true;
+                    }
+                });
+    }
+
+    private void initVibrate() {
+        findPreference(getString(R.string.pref_vibrate))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        boolean vibrate = (boolean) o;
+                        new ApiUtils().updateVibrate(Settings.get(getActivity()).accountId,
+                                vibrate);
                         return true;
                     }
                 });

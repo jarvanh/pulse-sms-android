@@ -59,6 +59,6 @@ public interface AccountService {
     Object updateVibrate(@Query("account_id") String accountId, @Query("vibrate") boolean vibrate);
 
     @POST("accounts/dismissed_notification")
-    Object dismissedNotification(@Query("account_id") String accountId, @Query("id") long id);
+    Object dismissedNotification(@Query("account_id") String accountId, @Query("id") int id);
 
 }
