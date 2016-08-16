@@ -103,7 +103,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     addConversation(json, source);
                     break;
                 case "updated_conversation":
-                    updateConversation(json, source);
+                    updateConversation(json, source, context);
                     break;
                 case "removed_conversation":
                     removeConversation(json, source);
@@ -260,7 +260,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         // the local database
     }
 
-    private void updateConversation(JSONObject json, DataSource source) throws JSONException {
+    private void updateConversation(JSONObject json, DataSource source, Context context)
+            throws JSONException {
         Conversation conversation = new Conversation();
         conversation.id = json.getLong("id");
         conversation.title = encryptionUtils.decrypt(json.getString("title"));
@@ -275,6 +276,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         conversation.read = json.getBoolean("read");
 
         source.updateConversationSettings(conversation);
+
+        if (conversation.read) {
+            source.readConversation(context, conversation.id);
+        }
         Log.v(TAG, "updated conversation");
     }
 

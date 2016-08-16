@@ -43,6 +43,25 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public View messageHolder;
     public long messageId;
 
+    // TODO add an alert dialog with options for viewing message details and copying text
+    private View.OnLongClickListener messageOptions = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            if (message.getVisibility() == View.VISIBLE) {
+                ClipboardManager clipboard = (ClipboardManager)
+                        view.getContext().getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("messenger",
+                        message.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(view.getContext(), R.string.message_copied_to_clipboard,
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
     public MessageViewHolder(final View itemView, int color, final long conversationId) {
         super(itemView);
 
@@ -66,26 +85,12 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                     itemView.getContext().startActivity(intent);
                 }
             });
+
+            image.setOnLongClickListener(messageOptions);
         }
 
         if (message != null) {
-            message.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if (message.getVisibility() == View.VISIBLE) {
-                        ClipboardManager clipboard = (ClipboardManager)
-                                view.getContext().getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("messenger",
-                                message.getText().toString());
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(view.getContext(), R.string.message_copied_to_clipboard,
-                                Toast.LENGTH_SHORT).show();
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            });
+            message.setOnLongClickListener(messageOptions);
         }
     }
 
