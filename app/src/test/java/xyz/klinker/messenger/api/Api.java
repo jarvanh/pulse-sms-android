@@ -23,8 +23,8 @@ package xyz.klinker.messenger.api;
  */
 public class Api {
     private static final String API_DEBUG_URL = "http://192.168.1.127:3000/api/v1/";
-    private static final String API_STAGING_URL = "https://fast-thicket-30117.herokuapp.com/api/v1/";
-    private static final String API_RELEASE_URL = "https://agile-harbor-47425.herokuapp.com/api/v1/";
+    private static final String API_STAGING_URL = "https://klinkerapps-messenger-staging.herokuapp.com/api/v1/";
+    private static final String API_RELEASE_URL = "https://klinkerapps-messenger.herokuapp.com/api/v1/";
 
     public enum Environment {
         DEBUG, STAGING, RELEASE
