@@ -34,6 +34,8 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
@@ -254,4 +256,27 @@ public class ColorUtils {
         });
     }
 
+    public static List<ColorSet> getColors(Context context) {
+        List<ColorSet> colors = new ArrayList<>();
+        colors.add(ColorSet.RED(context));
+        colors.add(ColorSet.PINK(context));
+        colors.add(ColorSet.PURPLE(context));
+        colors.add(ColorSet.DEEP_PURPLE(context));
+        colors.add(ColorSet.INDIGO(context));
+        colors.add(ColorSet.BLUE(context));
+        colors.add(ColorSet.LIGHT_BLUE(context));
+        colors.add(ColorSet.CYAN(context));
+        colors.add(ColorSet.TEAL(context));
+        colors.add(ColorSet.GREEN(context));
+        colors.add(ColorSet.LIGHT_GREEN(context));
+        colors.add(ColorSet.LIME(context));
+        colors.add(ColorSet.YELLOW(context));
+        colors.add(ColorSet.AMBER(context));
+        colors.add(ColorSet.ORANGE(context));
+        colors.add(ColorSet.DEEP_ORANGE(context));
+        colors.add(ColorSet.BROWN(context));
+        colors.add(ColorSet.GREY(context));
+        colors.add(ColorSet.BLUE_GREY(context));
+        return colors;
+    }
 }

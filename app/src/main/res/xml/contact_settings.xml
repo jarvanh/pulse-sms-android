@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreference
         android:key="@string/pref_contact_pin_conversation"
@@ -39,14 +40,17 @@
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_primary_color"
-        android:title="@string/primary_color" />
+        android:title="@string/primary_color"
+        app:display_normalize="true"/>
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_primary_dark_color"
-        android:title="@string/primary_dark_color" />
+        android:title="@string/primary_dark_color"
+        app:display_normalize="false" />
 
     <xyz.klinker.messenger.view.ColorPreference
         android:key="@string/pref_contact_accent_color"
-        android:title="@string/accent_color" />
+        android:title="@string/accent_color"
+        app:display_normalize="false" />
 
 </PreferenceScreen>

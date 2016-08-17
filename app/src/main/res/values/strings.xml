@@ -199,6 +199,8 @@
         devices, and the server. This is not reversible!</string>
     <string name="delete_account_confirmation">Are you sure you want to delete your account and
         everything else with it? You can always sign up again later!</string>
+    <string name="normalize_color_scheme">Or, you can choose a single color that you want to
+        base the contact on:</string>
 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Are you sure you want to delete this scheduled message

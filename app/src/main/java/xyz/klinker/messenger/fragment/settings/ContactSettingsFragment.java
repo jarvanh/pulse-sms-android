@@ -30,9 +30,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
 /**
@@ -169,6 +171,11 @@ public class ContactSettingsFragment extends PreferenceFragment {
     private void setUpColors() {
         ColorPreference preference = (ColorPreference)
                 findPreference(getString(R.string.pref_contact_primary_color));
+        final ColorPreference darkColorPreference = (ColorPreference)
+                findPreference(getString(R.string.pref_contact_primary_dark_color));
+        final ColorPreference accentColorPreference = (ColorPreference)
+                findPreference(getString(R.string.pref_contact_accent_color));
+
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -177,9 +184,15 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+        preference.setColorSelectedListener(new ColorSelectedListener() {
+            @Override
+            public void onColorSelected(ColorSet colors) {
+                darkColorPreference.setColor(colors.colorDark);
+                accentColorPreference.setColor(colors.colorAccent);
+            }
+        });
 
-        preference = (ColorPreference) findPreference(getString(R.string.pref_contact_primary_dark_color));
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        darkColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 animateStatusBar(conversation.colors.colorDark, (int) o);
@@ -188,8 +201,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
             }
         });
 
-        preference = (ColorPreference) findPreference(getString(R.string.pref_contact_accent_color));
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        accentColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 conversation.colors.colorAccent = (int) o;
