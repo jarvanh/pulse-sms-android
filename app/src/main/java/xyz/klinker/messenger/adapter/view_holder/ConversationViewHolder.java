@@ -59,6 +59,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (header == null && isBold()) {
+                    setBold(false);
+                }
+
                 if (listener != null) {
                     changeExpandedState();
                 }
@@ -66,10 +70,6 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 if (contactClickedListener != null) {
                     contactClickedListener.onClicked(
                             conversation.title, conversation.phoneNumbers, conversation.imageUri);
-                }
-
-                if (header == null && isBold()) {
-                    setBold(false);
                 }
 
                 if (checkBox != null) {
