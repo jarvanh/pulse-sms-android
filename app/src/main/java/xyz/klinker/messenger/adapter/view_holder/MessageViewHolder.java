@@ -46,7 +46,6 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public View messageHolder;
     public long messageId;
 
-    // TODO add an alert dialog with options for viewing message details and copying text
     private View.OnLongClickListener messageOptions = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(final View view) {

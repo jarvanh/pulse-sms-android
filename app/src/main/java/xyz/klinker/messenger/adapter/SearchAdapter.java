@@ -136,6 +136,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             message.fillFromCursor(messages);
 
             MessageViewHolder h = (MessageViewHolder) holder;
+            h.messageId = message.id;
             h.message.setText(message.data);
             h.timestamp.setVisibility(View.GONE);
 
