@@ -532,6 +532,10 @@ public class ApiUtils {
      */
     public void uploadBytesToFirebase(byte[] bytes, final long messageId,
                                       EncryptionUtils encryptionUtils) {
+        if (!active) {
+            return;
+        }
+
         if (folderRef == null) {
             throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
         }
