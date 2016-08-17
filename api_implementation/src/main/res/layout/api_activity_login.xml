@@ -30,7 +30,6 @@
         android:background="@color/api_login_background"
         android:padding="16dp"
         android:id="@+id/initial_layout"
-        android:elevation="4dp"
         android:visibility="invisible">
 
         <Button
