@@ -103,7 +103,6 @@
             android:background="@color/api_login_background"
             android:padding="16dp"
             android:layout_margin="8dp"
-            android:elevation="4dp"
             android:id="@+id/login_dialog">
 
             <EditText
@@ -156,7 +155,6 @@
             android:background="@color/api_login_background"
             android:padding="16dp"
             android:layout_margin="8dp"
-            android:elevation="4dp"
             android:id="@+id/signup_dialog">
 
             <EditText
