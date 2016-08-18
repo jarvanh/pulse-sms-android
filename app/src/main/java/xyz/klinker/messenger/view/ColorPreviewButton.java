@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -30,6 +31,7 @@ import android.view.View;
  * will be shown around the outside of the button so that the user can see what the theme will
  * look like.
  */
+@SuppressLint("ClickableViewAccessibility")
 public class ColorPreviewButton extends View {
 
     private static final String TAG = "ColorPreviewButton";

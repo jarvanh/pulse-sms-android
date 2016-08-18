@@ -18,6 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:scrollbars="vertical">
 
     <LinearLayout
@@ -60,7 +61,8 @@
                 android:layout_height="275dp"
                 android:numColumns="4"
                 android:id="@+id/color_picker"
-                android:gravity="center"/>
+                android:gravity="center"
+                tools:ignore="NestedScrolling"/>
 
         </LinearLayout>
 
