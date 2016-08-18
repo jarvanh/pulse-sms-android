@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.encryption;
 
-import android.util.Base64;
-
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

@@ -16,9 +16,6 @@
 
 package xyz.klinker.messenger.encryption;
 
-import android.util.Base64;
-import android.util.Log;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -72,7 +69,8 @@ public class KeyUtils {
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             return Base64.encodeToString(secret.getEncoded(), Base64.DEFAULT);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            Log.e(TAG, "could not create key", e);
+            System.out.println("could not create key");
+            e.printStackTrace();
         }
 
         throw new RuntimeException("error creating hash!");
@@ -100,7 +98,8 @@ public class KeyUtils {
             SecretKey tmp = factory.generateSecret(spec);
             return new SecretKeySpec(tmp.getEncoded(), "AES");
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            Log.e(TAG, "could not create key", e);
+            System.out.println("could not create key");
+            e.printStackTrace();
         }
 
         throw new RuntimeException("error creating secret key from hash!");

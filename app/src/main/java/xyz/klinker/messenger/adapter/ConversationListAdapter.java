@@ -124,6 +124,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                                  int absolutePosition) {
         Conversation conversation = conversations.get(absolutePosition);
 
+        // somehow a null conversation is being inserted in here sometimes after a new
+        // conversation is created on the phone and the tablet gets a broadcast for it. Don't know
+        // why this happens, but the situation is marked by a blank holder in the conversation list.
+        if (conversation == null) {
+            holder.conversation = null;
+            return;
+        }
+
         holder.conversation = conversation;
 
         if (conversation.imageUri == null) {
@@ -203,7 +211,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         int conversationPosition = -1;
 
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(i).id == conversationId) {
+            if (conversations.get(i) != null && conversations.get(i).id == conversationId) {
                 conversationPosition = i;
                 break;
             }
