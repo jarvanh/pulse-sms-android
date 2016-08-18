@@ -129,6 +129,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         // why this happens, but the situation is marked by a blank holder in the conversation list.
         if (conversation == null) {
             holder.conversation = null;
+            holder.image.setImageDrawable(null);
+            holder.name.setText(null);
+            holder.summary.setText(null);
+            holder.imageLetter.setText(null);
             return;
         }
 
