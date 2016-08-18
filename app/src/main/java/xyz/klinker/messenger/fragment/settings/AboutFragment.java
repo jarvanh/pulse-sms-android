@@ -123,7 +123,7 @@ public class AboutFragment extends PreferenceFragmentCompat {
      * Displays the privacy policy in the web browser.
      */
     public void displayPrivacyPolicy() {
-        String url = "http://privacy.messenger.klinkerapps.com";
+        String url = "https://messenger.klinkerapps.com/privacy.html";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
