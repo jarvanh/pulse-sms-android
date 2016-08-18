@@ -38,6 +38,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView image;
     public TextView name;
     public TextView summary;
+    public TextView imageLetter;
     public CheckBox checkBox;
     public Conversation conversation;
 
@@ -54,6 +55,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
+        imageLetter = (TextView) itemView.findViewById(R.id.image_letter);
         checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
         itemView.setOnClickListener(new View.OnClickListener() {

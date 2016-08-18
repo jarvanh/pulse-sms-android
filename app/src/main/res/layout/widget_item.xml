@@ -25,14 +25,30 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
 
-        <ImageView
+        <FrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_gravity="top"
-            android:id="@+id/picture"
-            android:contentDescription="@null" />
+            android:layout_gravity="top">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/picture"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:id="@+id/image_letter"
+                android:layout_gravity="center"
+                android:layout_marginTop="-1dp"
+                android:gravity="center"/>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_height="wrap_content"

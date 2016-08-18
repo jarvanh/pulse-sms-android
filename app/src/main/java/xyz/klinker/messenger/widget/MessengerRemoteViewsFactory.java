@@ -99,14 +99,18 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
             item.snippet = "<b>" + item.snippet + "</b>";
         }
 
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_item);
+
         Bitmap image = ImageUtils.getBitmap(context, item.imageUri);
         if (image == null) {
             image = ImageUtils.createColoredBitmap(item.colors.color);
+            rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
+        } else {
+            rv.setTextViewText(R.id.image_letter, null);
         }
 
         image = ImageUtils.clipToCircle(image);
 
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_item);
         rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.title));
         rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet));
         rv.setImageViewBitmap(R.id.picture, image);

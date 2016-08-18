@@ -115,7 +115,9 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             if (conversation.imageUri == null) {
                 h.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+                h.imageLetter.setText(conversation.title.substring(0, 1));
             } else {
+                h.imageLetter.setText(null);
                 Glide.with(h.image.getContext())
                         .load(Uri.parse(conversation.imageUri))
                         .into(h.image);

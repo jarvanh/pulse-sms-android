@@ -76,10 +76,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 holder.image.setImageDrawable(new ColorDrawable(
                         ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
             }
+
+            holder.imageLetter.setText(conversation.title.substring(0, 1));
         } else {
             if (!conversation.imageUri.endsWith("/photo")) {
                 conversation.imageUri = conversation.imageUri + "/photo";
             }
+
+            holder.imageLetter.setText(null);
 
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
