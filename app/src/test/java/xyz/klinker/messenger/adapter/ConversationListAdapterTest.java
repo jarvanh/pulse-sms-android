@@ -63,6 +63,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private TextView name;
     @Mock
     private TextView summary;
+    @Mock
+    private TextView imageLetter;
 
     @Before
     public void setUp() {
@@ -146,6 +148,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(summary).setText("So maybe not going to be able to get platinum huh?");
         verify(name, times(0)).setTypeface(Typeface.DEFAULT);
         verify(summary, times(0)).setTypeface(Typeface.DEFAULT);
+        verify(imageLetter).setText("L");
     }
 
     @Test
@@ -159,6 +162,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(summary).setText("Will probably be there from 6:30-9, just stop by when you can!");
         verify(name).setTypeface(Typeface.DEFAULT_BOLD);
         verify(summary).setTypeface(Typeface.DEFAULT_BOLD);
+        verify(imageLetter).setText("K");
     }
 
     @Test
@@ -225,6 +229,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         holder.image = image;
         holder.name = name;
         holder.summary = summary;
+        holder.imageLetter = imageLetter;
 
         return holder;
     }
