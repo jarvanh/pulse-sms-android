@@ -111,6 +111,7 @@
     <string name="audio_recording_error">Error with recording :(</string>
     <string name="message_copied_to_clipboard">Message copied to clipboard</string>
     <string name="view_details">View Details</string>
+    <string name="delete">Delete</string>
     <string name="copy_message">Copy Message</string>
 
     <!-- Compose Screen -->

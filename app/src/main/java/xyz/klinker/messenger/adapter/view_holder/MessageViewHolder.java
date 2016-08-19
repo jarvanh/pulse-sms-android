@@ -31,6 +31,8 @@ import android.widget.Toast;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -51,12 +53,14 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         public boolean onLongClick(final View view) {
             String[] items;
             if (message.getVisibility() == View.VISIBLE) {
+                items = new String[3];
+                items[0] = view.getContext().getString(R.string.view_details);
+                items[1] = view.getContext().getString(R.string.delete);
+                items[2] = view.getContext().getString(R.string.copy_message);
+            } else {
                 items = new String[2];
                 items[0] = view.getContext().getString(R.string.view_details);
-                items[1] = view.getContext().getString(R.string.copy_message);
-            } else {
-                items = new String[1];
-                items[0] = view.getContext().getString(R.string.view_details);
+                items[1] = view.getContext().getString(R.string.delete);
             }
 
             new AlertDialog.Builder(view.getContext())
@@ -66,6 +70,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                             if (which == 0) {
                                 showMessageDetails();
                             } else if (which == 1) {
+                                deleteMessage();
+                            } else if (which == 2) {
                                 copyMessageText();
                             }
                         }
@@ -118,6 +124,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 .show();
 
         source.close();
+    }
+
+    private void deleteMessage() {
+        DataSource source = DataSource.getInstance(message.getContext());
+        source.open();
+        Message m = source.getMessage(messageId);
+        long conversationId = m.conversationId;
+        source.deleteMessage(messageId);
+        source.close();
+
+        MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
     }
 
     private void copyMessageText() {

@@ -198,7 +198,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                         .into(holder.image);
             } else {
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
-                // TODO audio
             }
 
             if (holder.message.getVisibility() == View.VISIBLE) {
@@ -266,6 +265,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             int finalCount = getItemCount();
             if (initialCount == finalCount) {
                 notifyItemChanged(finalCount - 1);
+            } else if (initialCount > finalCount) {
+                notifyDataSetChanged();
             } else {
                 notifyItemInserted(finalCount - 1);
                 manager.scrollToPosition(finalCount - 1);
