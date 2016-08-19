@@ -36,6 +36,7 @@ import xyz.klinker.messenger.data.model.Message;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,6 +53,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private TextView timestamp;
     @Mock
     private ImageView image;
+    @Mock
+    private Cursor cursor;
 
     @Before
     public void setUp() {
@@ -87,8 +90,30 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void addMessage() {
-        adapter.addMessage(new MatrixCursor(new String[]{}));
-        verify(manager).scrollToPosition(-1);
+        when(cursor.getCount()).thenReturn(20);
+        when(cursor.moveToFirst()).thenReturn(true);
+        adapter = spy(adapter);
+        adapter.addMessage(cursor);
+        verify(adapter).notifyItemInserted(19);
+        verify(manager).scrollToPosition(19);
+    }
+
+    @Test
+    public void changeMessage() {
+        when(cursor.getCount()).thenReturn(12);
+        when(cursor.moveToFirst()).thenReturn(true);
+        adapter = spy(adapter);
+        adapter.addMessage(cursor);
+        verify(adapter).notifyItemChanged(11);
+    }
+
+    @Test
+    public void removeMessage() {
+        when(cursor.getCount()).thenReturn(11);
+        when(cursor.moveToFirst()).thenReturn(true);
+        adapter = spy(adapter);
+        adapter.addMessage(cursor);
+        verify(adapter).notifyDataSetChanged();
     }
 
     @Test

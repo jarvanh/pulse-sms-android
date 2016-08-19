@@ -263,6 +263,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
         if (newMessages != null) {
             int finalCount = getItemCount();
+
             if (initialCount == finalCount) {
                 notifyItemChanged(finalCount - 1);
             } else if (initialCount > finalCount) {
