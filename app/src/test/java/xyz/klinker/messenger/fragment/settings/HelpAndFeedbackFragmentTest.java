@@ -53,6 +53,11 @@ public class HelpAndFeedbackFragmentTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void features() {
+        fragment.findPreference(fragment.getString(R.string.pref_help_features)).performClick();
+    }
+
+    @Test
     public void googlePlus() {
         fragment.findPreference(fragment.getString(R.string.pref_help_google_plus)).performClick();
         assertNotNull(shadowOf(fragment.getActivity()).getNextStartedActivity());

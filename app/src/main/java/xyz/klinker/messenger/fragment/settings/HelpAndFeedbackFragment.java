@@ -47,6 +47,15 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
                     }
                 });
 
+        findPreference(getString(R.string.pref_help_features))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displayFeatures();
+                        return true;
+                    }
+                });
+
         findPreference(getString(R.string.pref_help_google_plus))
                 .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
@@ -79,13 +88,28 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
      * Displays the FAQs.
      */
     public void displayFaqs() {
-        Activity activity = getActivity();
+        /*Activity activity = getActivity();
 
         new AlertDialog.Builder(activity)
                 .setTitle(R.string.faqs)
                 .setAdapter(new FaqsAdapter(activity, FaqsParser.parse(activity)), null)
                 .setPositiveButton(android.R.string.ok, null)
-                .show();
+                .show();*/
+
+        String url = "https://messenger.klinkerapps.com/faq.html";
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+    }
+
+    /**
+     * Displays the FAQs.
+     */
+    public void displayFeatures() {
+        String url = "https://messenger.klinkerapps.com/features.html";
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
     /**

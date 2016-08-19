@@ -37,6 +37,7 @@
     <string name="pref_about_beta" translatable="false">beta</string>
 
     <string name="pref_help_faqs" translatable="false">faqs</string>
+    <string name="pref_help_features" translatable="false">features</string>
     <string name="pref_help_google_plus" translatable="false">google+</string>
     <string name="pref_help_email" translatable="false">email</string>
     <string name="pref_help_twitter" translatable="false">twitter</string>

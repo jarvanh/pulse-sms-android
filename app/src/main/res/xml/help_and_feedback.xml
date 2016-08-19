@@ -21,6 +21,10 @@
         android:title="@string/faqs" />
 
     <Preference
+        android:key="@string/pref_help_features"
+        android:title="@string/features" />
+
+    <Preference
         android:key="@string/pref_help_google_plus"
         android:title="@string/google_plus"
         android:summary="@string/google_plus_summary" />
