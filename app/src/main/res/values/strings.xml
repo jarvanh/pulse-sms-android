@@ -70,8 +70,7 @@
     <string name="invite_friends_title">Love Messenger?</string>
     <string name="invite_friends_summary">So do we and so will others! We\'re trying to get it in
         as many hands as we can to continue making it the best product that it can be and by
-        inviting your friends to try, you\'re helping with this! Oh, and did we mention you\'ll get
-        a month free of tablet and web use for sharing with 10 friends?\n\nSelect the friends below that
+        inviting your friends to try, you\'re helping with this! \n\nSelect the friends below that
         you\'d like to send the app to and it will send them an SMS with a short description and
         a link to download!</string>
     <string name="invite_friends_sms">I started using a new texting app and I think
@@ -183,7 +182,7 @@
     <string name="vibrate">Vibrate</string>
     <string name="theme_settings">Customization</string>
     <string name="dark_theme">Night Theme</string>
-    <string name="blacklist_hint">Type number to blacklist</string>
+    <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they come from this number and you will not be notified!</string>
     <string name="remove_blacklist">%1$s\n\nDo you want to delete this blacklist?</string>
@@ -215,6 +214,6 @@
     <string name="encrypting_and_uploading_count">Encrypting and compressing media messages…
         (%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">Downloading and decrypting…</string>
-    <string name="decrypting_and_downloading_media">Decrypting and downloading media…</string>
+    <string name="decrypting_and_downloading_media">Downloading and decrypting media…</string>
 
 </resources>
