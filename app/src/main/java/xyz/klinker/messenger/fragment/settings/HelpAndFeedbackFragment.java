@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,8 +23,6 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.adapter.FaqsAdapter;
-import xyz.klinker.messenger.util.xml.FaqsParser;
 
 /**
  * Fragment for allowing the user to get some help from the devs or submit feedback. This will
@@ -88,14 +84,6 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
      * Displays the FAQs.
      */
     public void displayFaqs() {
-        /*Activity activity = getActivity();
-
-        new AlertDialog.Builder(activity)
-                .setTitle(R.string.faqs)
-                .setAdapter(new FaqsAdapter(activity, FaqsParser.parse(activity)), null)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();*/
-
         String url = "https://messenger.klinkerapps.com/faq.html";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
