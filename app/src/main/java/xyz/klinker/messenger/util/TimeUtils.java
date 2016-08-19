@@ -46,10 +46,6 @@ public class TimeUtils {
      * @return true if we should display the timestamp, false otherwise.
      */
     public static boolean shouldDisplayTimestamp(long timestamp, long nextTimestamp) {
-        if (nextTimestamp < timestamp - 5000) {
-            throw new RuntimeException("nextTimestamp must be larger than timestamp");
-        }
-
         return nextTimestamp >= timestamp + (15 * MINUTE);
     }
 
