@@ -66,11 +66,6 @@ public class TimeUtilsTest extends MessengerSuite {
         assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (2 * DAY)));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenNextIsGreaterThanCurrent() {
-        TimeUtils.shouldDisplayTimestamp(current, current - MINUTE);
-    }
-
     @Test
     public void displayTimeAsNow() {
         assertEquals("Now", TimeUtils.formatTimestamp(context, current));
