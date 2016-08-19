@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.encryption;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -59,11 +60,7 @@ public class EncryptionUtils {
         if (data == null) {
             return null;
         } else {
-            try {
-                return encrypt(data.getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                return encrypt(data.getBytes());
-            }
+            return encrypt(data.getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -102,11 +99,7 @@ public class EncryptionUtils {
             return null;
         } else {
             byte[] decrypted = decryptData(data);
-            try {
-                return new String(decrypted, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                return new String(decrypted);
-            }
+            return new String(decrypted, StandardCharsets.UTF_8);
         }
     }
 
