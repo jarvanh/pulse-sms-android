@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -85,7 +87,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             json = new JSONObject(data);
 
 
-            DataSource source = DataSource.getInstance(context);
+            final DataSource source = DataSource.getInstance(context);
             source.open();
             source.setUpload(false);
 
@@ -146,6 +148,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     break;
             }
 
+            // sleep for a short amount of time to try to avoid uploading duplicates
+            try { Thread.sleep(50); } catch (Exception e) { }
             source.setUpload(true);
             source.close();
         } catch (JSONException e) {

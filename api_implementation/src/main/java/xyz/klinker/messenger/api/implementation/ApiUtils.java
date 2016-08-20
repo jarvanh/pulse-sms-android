@@ -106,6 +106,8 @@ public class ApiUtils {
         Object response = api.account().remove(accountId);
         if (response == null) {
             Log.e(TAG, "error removing account");
+        } else {
+            Log.v(TAG, "successfully removed account");
         }
     }
 
@@ -173,6 +175,8 @@ public class ApiUtils {
                 Object response = api.conversation().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding conversation");
+                } else {
+                    Log.v(TAG, "successfully added conversation");
                 }
             }
         }).start();
@@ -192,6 +196,8 @@ public class ApiUtils {
                 Object response = api.conversation().remove(deviceId, accountId);
                 if (response == null) {
                     Log.e(TAG, "error deleting conversation");
+                } else {
+                    Log.v(TAG, "successfully deleted conversation");
                 }
             }
         }).start();
@@ -221,6 +227,8 @@ public class ApiUtils {
                 Object response = api.conversation().update(deviceId, accountId, request);
                 if (response == null) {
                     Log.e(TAG, "error updating conversation");
+                } else {
+                    Log.v(TAG, "successfully updated conversation");
                 }
             }
         }).start();
@@ -239,7 +247,9 @@ public class ApiUtils {
             public void run() {
                 Object response = api.conversation().read(deviceId, accountId);
                 if (response == null) {
-                    Log.e(TAG, "error deleting conversation");
+                    Log.e(TAG, "error reading conversation");
+                } else {
+                    Log.v(TAG, "successfully read conversation");
                 }
             }
         }).start();
@@ -258,7 +268,9 @@ public class ApiUtils {
             public void run() {
                 Object response = api.conversation().seen(deviceId, accountId);
                 if (response == null) {
-                    Log.e(TAG, "error deleting conversation");
+                    Log.e(TAG, "error seeing conversation");
+                } else {
+                    Log.v(TAG, "successfully seen conversation");
                 }
             }
         }).start();
@@ -277,7 +289,9 @@ public class ApiUtils {
             public void run() {
                 Object response = api.conversation().seen(accountId);
                 if (response == null) {
-                    Log.e(TAG, "error deleting conversation");
+                    Log.e(TAG, "error seeing all conversations");
+                } else {
+                    Log.v(TAG, "successfully seen all conversations");
                 }
             }
         }).start();
@@ -329,6 +343,8 @@ public class ApiUtils {
                 Object response = api.message().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding message");
+                } else {
+                    Log.v(TAG, "successfully added message");
                 }
             }
         }).start();
@@ -361,6 +377,8 @@ public class ApiUtils {
 
                 if (response == null) {
                     Log.e(TAG, "error updating message");
+                } else {
+                    Log.v(TAG, "successfully updated");
                 }
             }
         }).start();
@@ -380,6 +398,8 @@ public class ApiUtils {
                 Object response = api.message().remove(deviceId, accountId);
                 if (response == null) {
                     Log.e(TAG, "error deleting message");
+                } else {
+                    Log.v(TAG, "successfully deleted message");
                 }
             }
         }).start();
@@ -405,6 +425,8 @@ public class ApiUtils {
                 Object response = api.draft().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding draft");
+                } else {
+                    Log.v(TAG, "successfully added draft");
                 }
             }
         }).start();
@@ -424,6 +446,8 @@ public class ApiUtils {
                 Object response = api.draft().remove(deviceConversationId, accountId);
                 if (response == null) {
                     Log.e(TAG, "error deleting draft");
+                } else {
+                    Log.v(TAG, "successfully deleted drafts");
                 }
             }
         }).start();
@@ -448,6 +472,8 @@ public class ApiUtils {
                 Object response = api.blacklist().add(request);
                 if (response == null) {
                     Log.e(TAG, "error adding blacklist");
+                } else {
+                    Log.v(TAG, "successfully added blacklist");
                 }
             }
         }).start();
@@ -467,6 +493,8 @@ public class ApiUtils {
                 Object response = api.blacklist().remove(deviceId, accountId);
                 if (response == null) {
                     Log.e(TAG, "error deleting blacklist");
+                } else {
+                    Log.v(TAG, "successfully deleted blacklist");
                 }
             }
         }).start();
@@ -499,6 +527,8 @@ public class ApiUtils {
 
                 if (response == null) {
                     Log.e(TAG, "error adding scheduled message");
+                } else {
+                    Log.v(TAG, "successfully scheduled message");
                 }
             }
         }).start();
@@ -518,6 +548,8 @@ public class ApiUtils {
                 Object response = api.scheduled().remove(deviceId, accountId);
                 if (response == null) {
                     Log.e(TAG, "error deleting scheduled message");
+                } else {
+                    Log.v(TAG, "successfully deleted scheduled message");
                 }
             }
         }).start();
@@ -643,6 +675,8 @@ public class ApiUtils {
                 Object response = api.account().updateSnooze(accountId, snoozeTil);
                 if (response == null) {
                     Log.e(TAG, "error updating snooze til");
+                } else {
+                    Log.v(TAG, "successfully updated snooze til");
                 }
             }
         }).start();
@@ -664,6 +698,8 @@ public class ApiUtils {
                 Object response = api.account().updateDarkTheme(accountId, darkTheme);
                 if (response == null) {
                     Log.e(TAG, "error updating dark theme");
+                } else {
+                    Log.v(TAG, "successfully updated dark theme");
                 }
             }
         }).start();
@@ -685,6 +721,8 @@ public class ApiUtils {
                 Object response = api.account().updateVibrate(accountId, vibrate);
                 if (response == null) {
                     Log.e(TAG, "error updating vibrate");
+                } else {
+                    Log.v(TAG, "successfully updated vibrate");
                 }
             }
         }).start();
@@ -706,6 +744,8 @@ public class ApiUtils {
                 Object response = api.account().dismissedNotification(accountId, (int) id);
                 if (response == null) {
                     Log.e(TAG, "error dismissing notification");
+                } else {
+                    Log.v(TAG, "successfully dismissed notification");
                 }
             }
         }).start();
