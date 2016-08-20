@@ -113,6 +113,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             urls.setOnClickListener(new Link.OnClickListener() {
                 @Override
                 public void onClick(String clickedText) {
+                    if (!clickedText.startsWith("http")) {
+                        clickedText = "http://" + clickedText;
+                    }
+                    
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(clickedText));
                     holder.message.getContext().startActivity(browserIntent);
                 }
