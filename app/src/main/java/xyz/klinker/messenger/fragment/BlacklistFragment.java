@@ -49,6 +49,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     private Cursor blacklists;
     private RecyclerView list;
     private FloatingActionButton fab;
+    private View emptyView;
 
     public static BlacklistFragment newInstance() {
         return BlacklistFragment.newInstance(null);
@@ -78,6 +79,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                 addBlacklist();
             }
         });
+        emptyView = view.findViewById(R.id.empty_view);
 
         return view;
     }
@@ -129,6 +131,12 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     private void setBlacklists(Cursor blacklists) {
         BlacklistAdapter adapter = new BlacklistAdapter(blacklists, this);
         list.setAdapter(adapter);
+
+        if (blacklists.getCount() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     private void addBlacklist() {

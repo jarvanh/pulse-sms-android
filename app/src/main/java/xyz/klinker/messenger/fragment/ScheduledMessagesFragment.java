@@ -62,6 +62,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private RecyclerView list;
     private ProgressBar progress;
     private FloatingActionButton fab;
+    private View emptyView;
 
     private DataSource source;
 
@@ -72,6 +73,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         list = (RecyclerView) view.findViewById(R.id.list);
         progress = (ProgressBar) view.findViewById(R.id.progress);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        emptyView = view.findViewById(R.id.empty_view);
 
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         fab.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +127,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private void setMessages(Cursor messages) {
         progress.setVisibility(View.GONE);
         list.setAdapter(new ScheduledMessagesAdapter(messages, this));
+
+        if (messages.getCount() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
