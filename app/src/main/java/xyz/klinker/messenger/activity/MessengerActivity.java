@@ -76,6 +76,7 @@ public class MessengerActivity extends AppCompatActivity
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_MESSAGE_ID = "message_id";
+    public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
 
     private DataSource source;
     private DrawerLayout drawerLayout;

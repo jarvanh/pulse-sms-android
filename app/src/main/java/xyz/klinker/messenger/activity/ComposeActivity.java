@@ -183,6 +183,12 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         Intent open = new Intent(this, MessengerActivity.class);
         open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        if (contactEntry.getRecipients().length == 1) {
+            String name = contactEntry.getRecipients()[0].getEntry().getDisplayName();
+            open.putExtra(MessengerActivity.EXTRA_CONVERSATION_NAME, name);
+        }
+
         startActivity(open);
 
         finish();
