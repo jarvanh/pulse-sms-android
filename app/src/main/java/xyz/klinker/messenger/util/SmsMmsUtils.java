@@ -356,7 +356,7 @@ public class SmsMmsUtils {
         try {
             msg = (MultimediaMessagePdu) PduPersister.getPduPersister(
                     context).load(uri);
-        } catch (MmsException e) {
+        } catch (Exception e) {
             return "";
         }
 

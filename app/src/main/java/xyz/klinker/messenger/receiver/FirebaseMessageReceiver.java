@@ -224,11 +224,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
                 Conversation conversation = source.getConversation(message.conversationId);
 
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    SendUtils.send(context, message.data, conversation.phoneNumbers);
+                if (conversation != null) {
+                    if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                        SendUtils.send(context, message.data, conversation.phoneNumbers);
+                    } else {
+                        SendUtils.send(context, "", conversation.phoneNumbers,
+                                Uri.parse(message.data), message.mimeType);
+                    }
                 } else {
-                    SendUtils.send(context, "", conversation.phoneNumbers,
-                            Uri.parse(message.data), message.mimeType);
+                    Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
                 }
 
                 Log.v(TAG, "sent message");
