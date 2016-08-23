@@ -104,7 +104,7 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
      * Displays Google+ community.
      */
     public void displayGooglePlus() {
-        String url = "https://plus.google.com/+KlinkerAppsIowaCity";
+        String url = "http://goo.gl/GqfuoT";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
