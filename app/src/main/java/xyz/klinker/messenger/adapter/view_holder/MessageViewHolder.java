@@ -83,7 +83,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                         .show();
 
                 if (fragment != null) {
-                    fragment.setItemDialog(dialog);
+                    fragment.setDetailsChoiceDialog(dialog);
                 }
             }
 

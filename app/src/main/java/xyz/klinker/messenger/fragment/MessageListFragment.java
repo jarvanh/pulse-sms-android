@@ -209,6 +209,12 @@ public class MessageListFragment extends Fragment implements
                     }
                 }, 100);
             }
+
+            @Override
+            public void onDrag(float elasticOffset, float elasticOffsetPixels,
+                               float rawOffset, float rawOffsetPixels) {
+                dismissDetailsChoiceDialog();
+            }
         });
 
         initSendbar();
@@ -854,10 +860,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public boolean onBackPressed() {
-        if (detailsChoiceDialog != null && detailsChoiceDialog.isShowing()) {
-            detailsChoiceDialog.dismiss();
-            detailsChoiceDialog = null;
-        }
+        dismissDetailsChoiceDialog();
 
         if (attachLayout.getVisibility() == View.VISIBLE) {
             attach.performClick();
@@ -875,7 +878,14 @@ public class MessageListFragment extends Fragment implements
         return dragDismissFrameLayout.isDragging();
     }
 
-    public void setItemDialog(AlertDialog dialog) {
+    public void setDetailsChoiceDialog(AlertDialog dialog) {
         this.detailsChoiceDialog = dialog;
+    }
+
+    private void dismissDetailsChoiceDialog() {
+        if (detailsChoiceDialog != null && detailsChoiceDialog.isShowing()) {
+            detailsChoiceDialog.dismiss();
+            detailsChoiceDialog = null;
+        }
     }
 }
