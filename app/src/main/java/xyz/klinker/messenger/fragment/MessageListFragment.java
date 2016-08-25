@@ -37,6 +37,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -140,6 +141,8 @@ public class MessageListFragment extends Fragment implements
 
     private Uri attachedUri;
     private String attachedMimeType;
+
+    private AlertDialog detailsChoiceDialog;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         return newInstance(conversation, -1);
@@ -586,7 +589,7 @@ public class MessageListFragment extends Fragment implements
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
                     getArguments().getInt(ARG_COLOR_ACCENT),
-                    getArguments().getBoolean(ARG_IS_GROUP), manager);
+                    getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             messageList.setAdapter(adapter);
 
             messageList.animate().withLayer()
@@ -851,6 +854,11 @@ public class MessageListFragment extends Fragment implements
     }
 
     public boolean onBackPressed() {
+        if (detailsChoiceDialog != null && detailsChoiceDialog.isShowing()) {
+            detailsChoiceDialog.dismiss();
+            detailsChoiceDialog = null;
+        }
+
         if (attachLayout.getVisibility() == View.VISIBLE) {
             attach.performClick();
             return true;
@@ -863,4 +871,11 @@ public class MessageListFragment extends Fragment implements
         return getArguments().getLong(ARG_CONVERSATION_ID);
     }
 
+    public boolean isDragging() {
+        return dragDismissFrameLayout.isDragging();
+    }
+
+    public void setItemDialog(AlertDialog dialog) {
+        this.detailsChoiceDialog = dialog;
+    }
 }

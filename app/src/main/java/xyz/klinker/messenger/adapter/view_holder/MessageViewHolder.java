@@ -32,6 +32,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -40,6 +41,8 @@ import static android.content.Context.CLIPBOARD_SERVICE;
  * View holder for working with a message.
  */
 public class MessageViewHolder extends RecyclerView.ViewHolder {
+
+    private MessageListFragment fragment;
 
     public TextView message;
     public TextView timestamp;
@@ -63,27 +66,35 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 items[1] = view.getContext().getString(R.string.delete);
             }
 
-            new AlertDialog.Builder(view.getContext())
-                    .setItems(items, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int which) {
-                            if (which == 0) {
-                                showMessageDetails();
-                            } else if (which == 1) {
-                                deleteMessage();
-                            } else if (which == 2) {
-                                copyMessageText();
+            if (fragment == null || !fragment.isDragging()) {
+                AlertDialog dialog = new AlertDialog.Builder(view.getContext())
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                if (which == 0) {
+                                    showMessageDetails();
+                                } else if (which == 1) {
+                                    deleteMessage();
+                                } else if (which == 2) {
+                                    copyMessageText();
+                                }
                             }
-                        }
-                    })
-                    .show();
+                        })
+                        .show();
+
+                if (fragment != null) {
+                    fragment.setItemDialog(dialog);
+                }
+            }
 
             return true;
         }
     };
 
-    public MessageViewHolder(final View itemView, int color, final long conversationId) {
+    public MessageViewHolder(MessageListFragment fragment, final View itemView, int color, final long conversationId) {
         super(itemView);
+
+        this.fragment = fragment;
 
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);

@@ -40,6 +40,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -54,14 +55,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
     private int accentColor;
     private boolean isGroup;
     private LinearLayoutManager manager;
+    private MessageListFragment fragment;
 
     public MessageListAdapter(Cursor messages, int receivedColor, int accentColor, boolean isGroup,
-                              LinearLayoutManager manager) {
+                              LinearLayoutManager manager, MessageListFragment fragment) {
         this.messages = messages;
         this.receivedColor = receivedColor;
         this.accentColor = accentColor;
         this.isGroup = isGroup;
         this.manager = manager;
+        this.fragment = fragment;
     }
 
     @Override
@@ -92,7 +95,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 .inflate(layoutId, parent, false);
 
         messages.moveToFirst();
-        return new MessageViewHolder(view, color,
+        return new MessageViewHolder(fragment, view, color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)));
     }
 

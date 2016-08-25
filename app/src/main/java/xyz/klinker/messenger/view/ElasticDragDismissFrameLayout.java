@@ -252,4 +252,8 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
         }
     }
 
+    public boolean isDragging() {
+        return draggingDown || draggingUp;
+    }
+
 }

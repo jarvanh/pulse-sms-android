@@ -32,6 +32,7 @@ import org.robolectric.RuntimeEnvironment;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.fragment.MessageListFragment;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
@@ -46,6 +47,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private MessageListAdapter adapter;
 
     @Mock
+    private MessageListFragment fragment;
+    @Mock
     private LinearLayoutManager manager;
     @Mock
     private TextView message;
@@ -58,7 +61,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager);
+        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager, fragment);
     }
 
     @Test
@@ -137,7 +140,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     }
 
     private MessageViewHolder getMockedViewHolder() {
-        MessageViewHolder holder = new MessageViewHolder(new View(RuntimeEnvironment.application),
+        MessageViewHolder holder = new MessageViewHolder(fragment, new View(RuntimeEnvironment.application),
                 Color.RED, 1);
         holder.message = message;
         holder.timestamp = timestamp;
