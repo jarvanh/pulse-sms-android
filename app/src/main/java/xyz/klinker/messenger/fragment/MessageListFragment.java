@@ -213,7 +213,11 @@ public class MessageListFragment extends Fragment implements
             @Override
             public void onDrag(float elasticOffset, float elasticOffsetPixels,
                                float rawOffset, float rawOffsetPixels) {
-                dismissDetailsChoiceDialog();
+                // todo: enable this after some offset amount.
+                // right now, it doesn't allow you to actually open the dialog because it thinks it is a move
+                // event when you pick your finger up.
+                
+                //dismissDetailsChoiceDialog();
             }
         });
 
