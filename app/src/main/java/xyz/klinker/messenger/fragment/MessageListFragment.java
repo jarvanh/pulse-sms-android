@@ -201,13 +201,15 @@ public class MessageListFragment extends Fragment implements
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
+                boolean focused = messageEntry.hasFocus();
+
                 dismissKeyboard();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         getActivity().onBackPressed();
                     }
-                }, 300);
+                }, focused ? 300 : 100);
             }
 
             @Override
