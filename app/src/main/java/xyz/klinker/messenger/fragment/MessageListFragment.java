@@ -207,7 +207,7 @@ public class MessageListFragment extends Fragment implements
                     public void run() {
                         getActivity().onBackPressed();
                     }
-                }, 100);
+                }, 300);
             }
 
             @Override
