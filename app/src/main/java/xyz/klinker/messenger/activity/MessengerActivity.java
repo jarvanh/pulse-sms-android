@@ -63,6 +63,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
@@ -92,6 +93,8 @@ public class MessengerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         source = DataSource.getInstance(this);
         source.open();
+
+        UpdateUtils.checkForUpdate(this);
 
         if (checkInitialStart()) {
             startActivity(new Intent(this, InitialLoadActivity.class));
