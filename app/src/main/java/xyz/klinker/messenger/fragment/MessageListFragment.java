@@ -207,7 +207,9 @@ public class MessageListFragment extends Fragment implements
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().onBackPressed();
+                        if (getActivity() != null) {
+                            getActivity().onBackPressed();
+                        }
                     }
                 }, focused ? 300 : 100);
             }
