@@ -172,19 +172,21 @@ public class SmsMmsUtils {
         List<ContentValues> values = new ArrayList<>();
 
         if (isSms(messages)) {
-            ContentValues message = new ContentValues(9);
-            message.put(Message.COLUMN_ID, DataSource.generateId());
-            message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
-            message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
-            message.put(Message.COLUMN_DATA, messages.getString(1).trim());
-            message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2));
-            message.put(Message.COLUMN_MIME_TYPE, MimeType.TEXT_PLAIN);
-            message.put(Message.COLUMN_READ, messages.getInt(3));
-            message.put(Message.COLUMN_SEEN, true);
-            message.put(Message.COLUMN_FROM, (String) null);
-            message.put(Message.COLUMN_COLOR, (Integer) null);
+            if (messages.getString(1) != null) {
+                ContentValues message = new ContentValues(9);
+                message.put(Message.COLUMN_ID, DataSource.generateId());
+                message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
+                message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
+                message.put(Message.COLUMN_DATA, messages.getString(1).trim());
+                message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2));
+                message.put(Message.COLUMN_MIME_TYPE, MimeType.TEXT_PLAIN);
+                message.put(Message.COLUMN_READ, messages.getInt(3));
+                message.put(Message.COLUMN_SEEN, true);
+                message.put(Message.COLUMN_FROM, (String) null);
+                message.put(Message.COLUMN_COLOR, (Integer) null);
 
-            values.add(message);
+                values.add(message);
+            }
         } else {
             Uri uri = Uri.parse("content://mms/" + messages.getLong(0));
             final String number = getMmsFrom(uri, context);
@@ -228,6 +230,10 @@ public class SmsMmsUtils {
                                 text = getMmsText(partId, context);
                             } else {
                                 text = query.getString(3);
+                            }
+
+                            if (text == null) {
+                                text = "";
                             }
 
                             if (text.trim().length() != 0) {
