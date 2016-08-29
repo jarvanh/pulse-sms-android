@@ -175,10 +175,14 @@ public class MessengerActivity extends AppCompatActivity
             @Override
             public void run() {
                 Settings settings = Settings.get(getApplicationContext());
-                ((TextView) findViewById(R.id.drawer_header_my_name))
-                        .setText(settings.myName);
-                ((TextView) findViewById(R.id.drawer_header_my_phone_number))
-                        .setText(PhoneNumberUtils.format(settings.myPhoneNumber));
+                try {
+                    ((TextView) findViewById(R.id.drawer_header_my_name))
+                            .setText(settings.myName);
+                    ((TextView) findViewById(R.id.drawer_header_my_phone_number))
+                            .setText(PhoneNumberUtils.format(settings.myPhoneNumber));
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
                 initSnooze();
             }
         }, 250);
