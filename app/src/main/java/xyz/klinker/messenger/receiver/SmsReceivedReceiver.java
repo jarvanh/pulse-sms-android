@@ -79,7 +79,11 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         values.put(Telephony.Sms.READ, false);
         values.put(Telephony.Sms.DATE_SENT, dateSent);
 
-        context.getContentResolver().insert(Telephony.Sms.Inbox.CONTENT_URI, values);
+        try {
+            context.getContentResolver().insert(Telephony.Sms.Inbox.CONTENT_URI, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void insertSms(Context context, String address, String body) {
