@@ -140,7 +140,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         if (conversation.imageUri == null) {
             holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
-            holder.imageLetter.setText(conversation.title.substring(0, 1));
+            if (conversation.title.length() > 0) {
+                holder.imageLetter.setText(conversation.title.substring(0, 1));
+            } else {
+                holder.imageLetter.setText(null);
+            }
         } else {
             holder.imageLetter.setText(null);
             Glide.with(holder.image.getContext())
