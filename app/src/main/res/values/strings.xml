@@ -183,7 +183,9 @@
     <string name="notification_settings">Notifications</string>
     <string name="vibrate">Vibrate</string>
     <string name="theme_settings">Customization</string>
-    <string name="dark_theme">Night Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="dark_theme_summary_on">Always uses the dark theme</string>
+    <string name="dark_theme_summary_off">Switches between dark and light themes</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they come from this number and you will not be notified!</string>
