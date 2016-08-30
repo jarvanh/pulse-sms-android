@@ -489,9 +489,13 @@ public class SmsMmsUtils {
      * @param phoneNumbers the phone numbers to find the conversation with.
      */
     public static void markConversationRead(Context context, String phoneNumbers) {
-        long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
-        markConversationRead(context,
-                ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
+        try {
+            long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
+            markConversationRead(context,
+                    ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void markConversationRead(final Context context, final Uri threadUri,
