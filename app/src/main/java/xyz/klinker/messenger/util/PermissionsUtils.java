@@ -37,16 +37,27 @@ public class PermissionsUtils {
     private static final int REQUEST_MAIN_PERMISSIONS = 1;
 
     public static boolean checkRequestMainPermissions(Activity activity) {
-        return ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS)
-                        != PackageManager.PERMISSION_GRANTED;
+        return !checkPermissionGranted(activity, Manifest.permission.READ_CONTACTS) ||
+                !checkPermissionGranted(activity, Manifest.permission.READ_SMS) ||
+                !checkPermissionGranted(activity, Manifest.permission.READ_PHONE_STATE);
+    }
+
+    private static boolean checkPermissionGranted(Activity activity, String permission) {
+        return ContextCompat.checkSelfPermission(activity, permission)
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     public static void startMainPermissionRequest(Activity activity) {
         ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS},
-                REQUEST_MAIN_PERMISSIONS);
+                new String[] {
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.READ_SMS,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.RECEIVE_SMS,
+                        Manifest.permission.RECEIVE_MMS,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.INTERNET
+                }, REQUEST_MAIN_PERMISSIONS);
     }
 
     public static boolean processPermissionRequest(final Activity activity, int requestCode,

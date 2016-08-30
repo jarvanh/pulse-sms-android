@@ -76,8 +76,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void process(Context context, Intent intent) {
+        Settings settings = Settings.get(context);
+
+        // received a message without having initialized an account yet
+        if (settings.key == null) {
+            return;
+        }
+
         encryptionUtils = new EncryptionUtils(
-                new SecretKeySpec(Base64.decode(Settings.get(context).key, Base64.DEFAULT), "AES"));
+                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"));
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);

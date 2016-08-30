@@ -141,7 +141,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         DataSource source = DataSource.getInstance(message.getContext());
         source.open();
         Message m = source.getMessage(messageId);
-        
+
         if (m != null) {
             long conversationId = m.conversationId;
             source.deleteMessage(messageId);
