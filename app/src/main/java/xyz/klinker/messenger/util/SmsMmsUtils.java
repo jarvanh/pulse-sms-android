@@ -50,6 +50,9 @@ import xyz.klinker.messenger.data.model.Message;
 
 public class SmsMmsUtils {
 
+    public static final int INITIAL_CONVERSATION_LIMIT = 100;
+    public static final int INITIAL_MESSAGE_LIMIT = 500;
+
     /**
      * Gets a list of conversations from the internal sms database that is ready to be inserted
      * into our database.
@@ -91,7 +94,7 @@ public class SmsMmsUtils {
                 ImageUtils.fillConversationColors(conversation, context);
 
                 conversations.add(conversation);
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);
 
             cursor.close();
         }

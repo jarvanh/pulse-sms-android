@@ -305,7 +305,7 @@ public class DataSource {
                                 database.insert(Message.TABLE, null, value);
                             }
                         }
-                    } while (messages.moveToNext());
+                    } while (messages.moveToNext() && messages.getPosition() < SmsMmsUtils.INITIAL_MESSAGE_LIMIT);
 
                     messages.close();
                 }
