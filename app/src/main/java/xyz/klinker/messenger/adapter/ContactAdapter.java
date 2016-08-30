@@ -77,7 +77,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                         ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
             }
 
-            holder.imageLetter.setText(conversation.title.substring(0, 1));
+            if (conversation.title.length() > 0) {
+                holder.imageLetter.setText(conversation.title.substring(0, 1));
+            } else {
+                holder.imageLetter.setText(null);
+            }
         } else {
             if (!conversation.imageUri.endsWith("/photo")) {
                 conversation.imageUri = conversation.imageUri + "/photo";
