@@ -104,7 +104,12 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         Bitmap image = ImageUtils.getBitmap(context, item.imageUri);
         if (image == null) {
             image = ImageUtils.createColoredBitmap(item.colors.color);
-            rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
+
+            if (item.title.length() > 0) {
+                rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
+            } else {
+                rv.setTextViewText(R.id.image_letter, null);
+            }
         } else {
             rv.setTextViewText(R.id.image_letter, null);
         }
