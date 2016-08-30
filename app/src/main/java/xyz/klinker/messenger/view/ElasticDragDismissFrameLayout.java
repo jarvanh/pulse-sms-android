@@ -42,7 +42,7 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     private float dragDismissFraction = -1f;
     private float dragDismissScale = 1f;
     private boolean shouldScale = false;
-    private float dragElasticity = 0.8f;
+    private float dragElasticity = 0.5f;
 
     // state
     private float totalDrag;

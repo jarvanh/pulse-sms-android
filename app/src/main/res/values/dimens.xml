@@ -19,7 +19,7 @@
     <dimen name="bottom_extra_padding">8dp</dimen>
     <dimen name="delete_margin">16dp</dimen>
     <dimen name="extra_expand_distance">8dp</dimen>
-    <dimen name="drag_down_dismiss_distance">128dp</dimen>
+    <dimen name="drag_down_dismiss_distance">192dp</dimen>
     <dimen name="attach_menu_height">288dp</dimen>
     <dimen name="overlay_size">72dp</dimen>
 
