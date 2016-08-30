@@ -300,6 +300,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (primaryLocation == -1) {
                     failAddDevice();
+                    return;
                 }
 
                 final DeviceBody device = devices[primaryLocation];
