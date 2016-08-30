@@ -144,7 +144,7 @@ public class Api {
         });
 
         // gzip all bodies, the server should automatically unzip them
-        //httpClient.addInterceptor(new GzipRequestInterceptor());
+        httpClient.addInterceptor(new GzipRequestInterceptor());
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()
