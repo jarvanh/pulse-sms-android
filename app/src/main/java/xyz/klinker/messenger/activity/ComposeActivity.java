@@ -18,6 +18,7 @@ package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,8 @@ import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +52,8 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.FileUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -225,12 +230,25 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             showConversation(builder.toString());
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
             final String mimeType = getIntent().getType();
-            final String data;
+            String data;
 
             if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                 data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
             } else {
-                data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                String tempData = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                try {
+                    File dst = new File(getFilesDir(),
+                            ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
+                    Bitmap bmp = ImageUtils.getBitmap(this, tempData);
+                    FileOutputStream stream = new FileOutputStream(dst);
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+                    stream.close();
+                    data = Uri.fromFile(dst).toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    data = tempData;
+                }
+
             }
 
             setupSend(data, mimeType);
