@@ -1,1 +1,1 @@
-- Server support<br/><br/>This version requires you to wipe data before it will work at all!!
+v1.1.0 contains bug fixes, UI improvements, improves on server response times, updates the swipe-to-delete direction, adds an option to turn on/off delivery reports for carriers that support them, adds clarification to the dark theme setting, plus more.
