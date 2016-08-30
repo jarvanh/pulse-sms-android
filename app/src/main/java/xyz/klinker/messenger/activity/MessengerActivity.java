@@ -180,10 +180,10 @@ public class MessengerActivity extends AppCompatActivity
                             .setText(settings.myName);
                     ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                             .setText(PhoneNumberUtils.format(settings.myPhoneNumber));
+                    initSnooze();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-                initSnooze();
             }
         }, 250);
     }
