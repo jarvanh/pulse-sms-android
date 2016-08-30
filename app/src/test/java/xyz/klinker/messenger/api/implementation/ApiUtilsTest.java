@@ -41,7 +41,7 @@ public class ApiUtilsTest extends MessengerRobolectricSuite {
         String environment = RuntimeEnvironment.application.getString(R.string.environment);
 
         if (environment.equals("debug")) {
-            assertTrue(url.startsWith("http://192.168.1."));
+            assertTrue(url.startsWith("http://192.168."));
             assertTrue(url.endsWith(":3000/api/v1/"));
         } else if (environment.equals("staging")) {
             assertEquals("https://klinkerapps-messenger-staging.herokuapp.com/api/v1/", url);
