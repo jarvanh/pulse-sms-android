@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -244,6 +246,34 @@ public class ImageUtils {
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(width / 2 - size / 2, height / 2 - size / 2, width / 2 + size / 2, height / 2 + size / 2);
         drawable.draw(canvas);
+    }
+
+    /**
+     * Create a content:// uri
+     *
+     * @param context application context
+     * @param fileUri uri to the file (file://). If this is already a content uri, it will simply be returned.
+     * @return sharable content:// uri to the file
+     */
+    public static Uri createContentUri(Context context, Uri fileUri) {
+        if (fileUri.toString().contains("content://")) {
+            return fileUri; // we already have a content uri to pass to other applications
+        } else {
+            File file = new File(fileUri.getPath());
+            return createContentUri(context, file);
+        }
+    }
+
+    /**
+     * Create a content:// uri
+     *
+     * @param context application context
+     * @param file Java file to be converted to content:// uri
+     * @return sharable content:// uri to the file
+     */
+    public static Uri createContentUri(Context context, File file) {
+        return  FileProvider.getUriForFile(context,
+                BuildConfig.APPLICATION_ID + ".provider", file);
     }
 
 }

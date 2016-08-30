@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ImageViewerAdapter;
 import xyz.klinker.messenger.data.DataSource;
@@ -207,9 +209,12 @@ public class ImageViewerActivity extends AppCompatActivity {
     }
 
     private void shareMessage(Message message) {
+        Uri contentUri =
+                ImageUtils.createContentUri(this, Uri.parse(message.data));
+
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(message.data));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         shareIntent.setType(message.mimeType);
         startActivity(Intent.createChooser(shareIntent,
                 getResources().getText(R.string.share_content)));
