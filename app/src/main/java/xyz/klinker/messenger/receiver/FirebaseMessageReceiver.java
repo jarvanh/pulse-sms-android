@@ -147,6 +147,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "changed_vibrate":
                     changeVibrate(json, context);
                     break;
+                case "changed_delivery_reports":
+                    changeDeliveryReports(json, context);
+                    break;
                 case "dismissed_notification":
                     dismissNotification(json, context);
                     break;
@@ -405,6 +408,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void changeVibrate(JSONObject json, Context context)
             throws JSONException {
         Settings.get(context).setValue("vibrate", json.getBoolean("value"));
+    }
+
+    private void changeDeliveryReports(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("delivery_reports", json.getBoolean("value"));
     }
 
     private void dismissNotification(JSONObject json, Context context)

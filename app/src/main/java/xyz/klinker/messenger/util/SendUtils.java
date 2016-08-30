@@ -50,6 +50,9 @@ public class SendUtils {
 
     public static Uri send(Context context, String text, String[] addresses, Uri data,
                            String mimeType) {
+        Settings settings = new Settings();
+        settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
+                .deliveryReports);
         Transaction transaction = new Transaction(context, new Settings());
         Message message = new Message(text, addresses);
 

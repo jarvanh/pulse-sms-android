@@ -728,6 +728,26 @@ public class ApiUtils {
         }).start();
     }
 
+    /**
+     * Update the delivery reports setting.
+     */
+    public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateDeliveryReports(accountId, deliveryReports);
+                if (response == null) {
+                    Log.e(TAG, "error updating delivery reports");
+                } else {
+                    Log.v(TAG, "successfully updated delivery reports");
+                }
+            }
+        }).start();
+    }
 
 
     /**

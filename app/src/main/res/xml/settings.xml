@@ -39,6 +39,11 @@
             android:title="@string/ringtone"
             android:ringtoneType="notification" />
 
+        <SwitchPreference
+            android:key="@string/pref_delivery_reports"
+            android:title="@string/delivery_reports"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

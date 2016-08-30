@@ -182,6 +182,7 @@
     <string name="group_name">Group Name</string>
     <string name="notification_settings">Notifications</string>
     <string name="vibrate">Vibrate</string>
+    <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
     <string name="dark_theme">Dark Theme</string>
     <string name="dark_theme_summary_on">Always uses the dark theme</string>

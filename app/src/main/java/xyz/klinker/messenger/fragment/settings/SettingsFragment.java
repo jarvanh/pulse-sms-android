@@ -37,6 +37,7 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.settings);
         initNightMode();
         initVibrate();
+        initDeliveryReports();
     }
 
     @Override
@@ -73,6 +74,19 @@ public class SettingsFragment extends PreferenceFragment {
                         boolean vibrate = (boolean) o;
                         new ApiUtils().updateVibrate(Settings.get(getActivity()).accountId,
                                 vibrate);
+                        return true;
+                    }
+                });
+    }
+
+    private void initDeliveryReports() {
+        findPreference(getString(R.string.pref_delivery_reports))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        boolean delivery = (boolean) o;
+                        new ApiUtils().updateDeliveryReports(Settings.get(getActivity()).accountId,
+                                delivery);
                         return true;
                     }
                 });
