@@ -178,7 +178,12 @@ public class LoginActivity extends AppCompatActivity {
         attachSignupTextWatcher(phoneNumber);
 
         name.setText(getName());
-        phoneNumber.setText(getPhoneNumber());
+
+        String number = getPhoneNumber();
+        phoneNumber.setText(number);
+        if (number == null || number.trim().length() == 0) {
+            phoneNumber.setEnabled(true);
+        }
     }
 
     private void performLogin() {
