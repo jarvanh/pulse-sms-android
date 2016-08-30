@@ -73,7 +73,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         if (viewHolder.itemView instanceof FrameLayout) {
             return 0;
         } else {
-            return ItemTouchHelper.END;
+            return ItemTouchHelper.START;
         }
     }
 
@@ -103,8 +103,8 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         int intrinsicWidth = xMark.getIntrinsicWidth();
         int intrinsicHeight = xMark.getIntrinsicWidth();
 
-        int xMarkLeft = itemView.getLeft() + xMarkMargin;
-        int xMarkRight = itemView.getLeft() + xMarkMargin + intrinsicWidth;
+        int xMarkLeft = itemView.getLeft() + xMarkMargin + intrinsicWidth;
+        int xMarkRight = itemView.getLeft() + xMarkMargin;
         int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
         int xMarkBottom = xMarkTop + intrinsicHeight;
         xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
