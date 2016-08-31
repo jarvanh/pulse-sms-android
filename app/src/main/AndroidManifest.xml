@@ -105,7 +105,8 @@
                 android:value=".service.MessengerChooserTargetService" />
         </activity>
 
-        <activity android:name=".activity.InitialLoadActivity" />
+        <activity android:name=".activity.InitialLoadActivity"
+            android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />
         <activity
             android:name=".activity.ContactSettingsActivity"
             android:theme="@style/AppTheme.NoColors" />

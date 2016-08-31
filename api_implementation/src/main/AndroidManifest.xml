@@ -21,7 +21,8 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/api_Theme.AppCompat.Translucent"
-            android:configChanges="keyboardHidden"/>
+            android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
+            android:launchMode="singleTask"/>
 
         <service
             android:name=".MessengerFirebaseMessagingService"
