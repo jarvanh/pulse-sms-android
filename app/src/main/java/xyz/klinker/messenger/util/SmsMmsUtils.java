@@ -156,7 +156,7 @@ public class SmsMmsUtils {
         };
 
         Uri uri = Uri.parse("content://mms-sms/conversations/" + conversationId + "/");
-        String sortOrder = "normalized_date";
+        String sortOrder = "normalized_date desc";
 
         return context.getContentResolver().query(uri, projection, null, null, sortOrder);
     }
