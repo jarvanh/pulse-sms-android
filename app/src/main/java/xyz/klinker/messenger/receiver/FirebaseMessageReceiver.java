@@ -218,7 +218,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                                 message.id + MimeType.getExtension(message.mimeType));
                         apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils);
                         message.data = Uri.fromFile(file).toString();
+                        DataSource source = DataSource.getInstance(context);
+                        source.open();
                         source.updateMessageData(message.id, message.data);
+                        source.close();
                         MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
                         downloading.set(false);
                     }
