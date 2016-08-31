@@ -36,5 +36,13 @@
         primary device and set this as the new primary?</string>
     <string name="api_yes">Yes</string>
     <string name="api_no">No</string>
+    <string name="api_no_email">No email address entered</string>
+    <string name="api_email_invalid">Invalid email address</string>
+    <string name="api_no_password">No password entered</string>
+    <string name="api_no_password_confirmation">No password confirmation entered</string>
+    <string name="api_password_mismatch">Passwords don\'t match</string>
+    <string name="api_no_name">No name entered</string>
+    <string name="api_no_phone_number">No phone number entered</string>
+    <string name="api_login_error">An error occurred logging in, wrong email or password?</string>
 
 </resources>

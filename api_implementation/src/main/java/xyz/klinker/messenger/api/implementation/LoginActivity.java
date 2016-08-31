@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordConfirmation;
     private EditText name;
     private EditText phoneNumber;
+    private TextView errorHint;
     private ProgressDialog dialog;
 
     @Override
@@ -147,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                         keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
                         actionId == EditorInfo.IME_ACTION_DONE) {
                     fab.performClick();
+                    handled = true;
                 }
 
                 return handled;
@@ -167,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordConfirmation = (EditText) findViewById(R.id.signup_password_confirmation);
         name = (EditText) findViewById(R.id.signup_name);
         phoneNumber = (EditText) findViewById(R.id.signup_phone_number);
+        errorHint = (TextView) findViewById(R.id.signup_error_hint);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             dialog.dismiss();
                             setResult(RESULT_CANCELED);
-                            Toast.makeText(getApplicationContext(), R.string.api_error,
+                            Toast.makeText(getApplicationContext(), R.string.api_login_error,
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -416,8 +419,27 @@ public class LoginActivity extends AppCompatActivity {
                         isFilled(name) && isFilled(phoneNumber) && isValidEmail(email.getText()) &&
                         passwordConfirmation.getText().toString().equals(password.getText().toString())) {
                     fab.show();
+                    errorHint.setVisibility(View.GONE);
                 } else {
                     fab.hide();
+                    errorHint.setVisibility(View.VISIBLE);
+
+                    if (!isFilled(email)) {
+                        errorHint.setText(R.string.api_no_email);
+                    } else if (!isValidEmail(email.getText())) {
+                        errorHint.setText(R.string.api_email_invalid);
+                    } else if (!isFilled(password)) {
+                        errorHint.setText(R.string.api_no_password);
+                    } else if (!isFilled(passwordConfirmation)) {
+                        errorHint.setText(R.string.api_no_password_confirmation);
+                    } else if (!passwordConfirmation.getText().toString()
+                            .equals(password.getText().toString())) {
+                        errorHint.setText(R.string.api_password_mismatch);
+                    } else if (!isFilled(name)) {
+                        errorHint.setText(R.string.api_no_name);
+                    } else if (!isFilled(phoneNumber)) {
+                        errorHint.setText(R.string.api_no_phone_number);
+                    }
                 }
             }
         });
