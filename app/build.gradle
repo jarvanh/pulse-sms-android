@@ -82,6 +82,11 @@ android {
             debuggable true
             signingConfig signingConfigs.debug
         }
+        release_fast {
+            versionNameSuffix "-RELEASE"
+            debuggable true
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled true
             shrinkResources true
