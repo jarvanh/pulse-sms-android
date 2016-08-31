@@ -46,7 +46,7 @@ import xyz.klinker.messenger.data.model.Conversation;
  */
 public class ImageUtils {
 
-    private static final int MAX_FILE_SIZE = 1024 * 1024;
+    private static final int MAX_FILE_SIZE = 900 * 1024;
     private static final float SCALE_RATIO = 0.75f;
 
     /**
