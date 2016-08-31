@@ -182,9 +182,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String number = getPhoneNumber();
         phoneNumber.setText(number);
-        if (number == null || number.trim().length() == 0) {
-            phoneNumber.setEnabled(true);
-        }
+        phoneNumber.setEnabled(true);
     }
 
     private void performLogin() {
