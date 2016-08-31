@@ -18,6 +18,7 @@ package xyz.klinker.messenger.util;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,7 +130,7 @@ public class AnimationUtils {
     public static void expandActivityForConversation(Activity activity) {
         View toolbar = activity.findViewById(R.id.app_bar_layout);
         View fragmentContainer = activity.findViewById(R.id.conversation_list_container);
-        View fab = activity.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
 
         int extraDistance = activity.getResources()
                 .getDimensionPixelSize(R.dimen.extra_expand_distance);
@@ -141,6 +142,7 @@ public class AnimationUtils {
         animateActivityWithConversation(toolbar, fragmentContainer, fab,
                 toolbarTranslate, 0, fragmentContainerTranslate, fabTranslate,
                 new AccelerateInterpolator());
+        fab.hide();
     }
 
     /**
@@ -157,11 +159,12 @@ public class AnimationUtils {
     public static void contractActivityFromConversation(Activity activity) {
         View toolbar = activity.findViewById(R.id.app_bar_layout);
         View fragmentContainer = activity.findViewById(R.id.conversation_list_container);
-        View fab = activity.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
 
         animateActivityWithConversation(toolbar, fragmentContainer, fab, 0,
                 (int) fragmentContainer.getTranslationY(), 0, 0,
                 new DecelerateInterpolator());
+        fab.show();
     }
 
     /**
@@ -207,11 +210,11 @@ public class AnimationUtils {
         containerAnimator.setDuration(PERIPHERAL_DURATION);
         containerAnimator.start();
 
-        fab.animate().translationY(fabTranslate)
-                .withLayer()
-                .setDuration(PERIPHERAL_DURATION)
-                .setInterpolator(interpolator)
-                .setListener(null);
+//        fab.animate().translationY(fabTranslate)
+//                .withLayer()
+//                .setDuration(PERIPHERAL_DURATION)
+//                .setInterpolator(interpolator)
+//                .setListener(null);
     }
 
     /**
