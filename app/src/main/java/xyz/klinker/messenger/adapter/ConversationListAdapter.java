@@ -140,7 +140,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         if (conversation.imageUri == null) {
             holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
-            if (conversation.title.length() > 0) {
+            if (conversation.title.length() > 0 && !conversation.title.contains(", ")) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
             } else {
                 holder.imageLetter.setText(null);

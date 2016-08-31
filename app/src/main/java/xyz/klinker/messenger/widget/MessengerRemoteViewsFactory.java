@@ -105,7 +105,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         if (image == null) {
             image = ImageUtils.createColoredBitmap(item.colors.color);
 
-            if (item.title.length() > 0) {
+            if (item.title.length() > 0 && !item.title.contains(", ")) {
                 rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
             } else {
                 rv.setTextViewText(R.id.image_letter, null);
