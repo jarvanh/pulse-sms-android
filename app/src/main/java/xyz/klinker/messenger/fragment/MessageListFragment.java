@@ -535,6 +535,13 @@ public class MessageListFragment extends Fragment implements
         new Thread(new Runnable() {
             @Override
             public void run() {
+
+                try {
+                    Thread.sleep(AnimationUtils.EXPAND_CONVERSATION_DURATION);
+                } catch (Exception e) {
+
+                }
+
                 long conversationId = getConversationId();
 
                 if (source.isOpen()) {
@@ -607,7 +614,7 @@ public class MessageListFragment extends Fragment implements
             messageList.setAdapter(adapter);
 
             messageList.animate().withLayer()
-                    .alpha(1f).setDuration(100).setStartDelay(250).setListener(null);
+                    .alpha(1f).setDuration(100).setStartDelay(0).setListener(null);
         }
     }
 
