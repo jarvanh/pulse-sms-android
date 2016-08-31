@@ -107,6 +107,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
     private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
     private static final String ARG_READ = "read";
+    private static final String ARG_IMAGE_URI = "image_uri";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -161,6 +162,7 @@ public class MessageListFragment extends Fragment implements
         args.putLong(ARG_CONVERSATION_ID, conversation.id);
         args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
         args.putBoolean(ARG_READ, conversation.read);
+        args.putString(ARG_IMAGE_URI, conversation.imageUri);
 
         if (messageToOpenId != -1) {
             args.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
@@ -318,10 +320,12 @@ public class MessageListFragment extends Fragment implements
         String phoneNumber = PhoneNumberUtils.format(getArguments().getString(ARG_PHONE_NUMBERS));
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         boolean isGroup = getArguments().getBoolean(ARG_IS_GROUP);
+        String imageUri = getArguments().getString(ARG_IMAGE_URI);
 
         TextView nameView = (TextView) activity.findViewById(R.id.drawer_header_reveal_name);
         TextView phoneNumberView = (TextView) activity
                 .findViewById(R.id.drawer_header_reveal_phone_number);
+        ImageView image = (ImageView) activity.findViewById(R.id.drawer_header_reveal_image);
 
         // could be null when rotating the device
         if (nameView != null) {
@@ -333,6 +337,14 @@ public class MessageListFragment extends Fragment implements
             }
 
             phoneNumberView.setText(phoneNumber);
+
+            if (imageUri != null) {
+                Glide.with(getActivity())
+                        .load(Uri.parse(imageUri))
+                        .into(image);
+            } else {
+                image.setImageDrawable(null);
+            }
 
             ColorUtils.adjustStatusBarColor(colorDarker, activity);
             ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity);

@@ -32,5 +32,7 @@
     <dimen name="max_gif_width">250dp</dimen>
     <dimen name="attached_image_size">96dp</dimen>
     <dimen name="compose_forward_margin">16dp</dimen>
+    <dimen name="header_height">184dp</dimen>
+    <dimen name="header_image_top_margin">24dp</dimen>
 
 </resources>
