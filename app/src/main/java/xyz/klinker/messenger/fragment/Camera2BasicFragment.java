@@ -653,6 +653,8 @@ public class Camera2BasicFragment extends Fragment
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "no camera found for the device");
         }
     }
 

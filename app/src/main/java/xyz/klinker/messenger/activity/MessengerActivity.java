@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -498,7 +500,12 @@ public class MessengerActivity extends AppCompatActivity
                     conversationListFragment.getExpandedItem().conversation.phoneNumbers;
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse(uri));
-            startActivity(intent);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, R.string.no_apps_found, Toast.LENGTH_SHORT).show();
+            }
+
             return true;
         } else {
             return false;

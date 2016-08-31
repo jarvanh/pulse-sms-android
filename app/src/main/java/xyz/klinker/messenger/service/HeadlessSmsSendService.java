@@ -41,6 +41,10 @@ public class HeadlessSmsSendService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) {
+            return START_NOT_STICKY;
+        }
+
         String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
         String text = getText(intent);
 
