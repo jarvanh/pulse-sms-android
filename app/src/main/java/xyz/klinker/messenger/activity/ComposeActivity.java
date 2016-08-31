@@ -77,7 +77,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         contactEntry = (RecipientEditTextView) findViewById(R.id.contact_entry);
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        contactEntry.setAdapter(new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this));
+        BaseRecipientAdapter adapter =
+                new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this);
+        adapter.setShowMobileOnly(false);
+        contactEntry.setAdapter(adapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
