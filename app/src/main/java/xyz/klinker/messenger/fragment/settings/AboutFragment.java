@@ -69,6 +69,15 @@ public class AboutFragment extends PreferenceFragmentCompat {
                         return true;
                     }
                 });
+
+        findPreference(getString(R.string.pref_about_beta))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displayIssueTracker();
+                        return true;
+                    }
+                });
     }
 
     /**
@@ -124,6 +133,16 @@ public class AboutFragment extends PreferenceFragmentCompat {
      */
     public void displayPrivacyPolicy() {
         String url = "https://messenger.klinkerapps.com/privacy.html";
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+    }
+
+    /**
+     * Displays the privacy policy in the web browser.
+     */
+    public void displayIssueTracker() {
+        String url = "https://github.com/klinker-apps/messenger-issues/issues";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
