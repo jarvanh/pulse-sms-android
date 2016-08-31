@@ -52,8 +52,13 @@ public class ContactUtils {
                                         "_id=?", new String[]{ids[i]}, null);
 
                         if (number != null && number.moveToFirst()) {
-                            numbers.add(PhoneNumberUtils.clearFormatting(
-                                    number.getString(number.getColumnIndex("address"))));
+                            String address = number.getString(number.getColumnIndex("address"));
+                            String n = PhoneNumberUtils.clearFormatting(address);
+                            if (n != null && n.length() > 0) {
+                                numbers.add(n);
+                            } else {
+                                numbers.add(address);
+                            }
                         } else {
                             numbers.add(ids[i]);
                         }
@@ -91,7 +96,11 @@ public class ContactUtils {
         try {
             number = numbers.split(", ");
         } catch (Exception e) {
-            return "";
+            if (numbers == null) {
+                return "";
+            } else {
+                return numbers;
+            }
         }
 
         for (int i = 0; i < number.length; i++) {
