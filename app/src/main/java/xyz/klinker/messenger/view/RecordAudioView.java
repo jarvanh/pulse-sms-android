@@ -19,6 +19,7 @@ package xyz.klinker.messenger.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -29,10 +30,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.lassana.recorder.AudioRecorder;
-import com.github.lassana.recorder.AudioRecorderBuilder;
-
 import java.io.File;
+import java.io.IOException;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.util.listener.AudioRecordedListener;
@@ -42,8 +41,9 @@ import xyz.klinker.messenger.util.listener.AudioRecordedListener;
  * ui by their content uri.
  */
 @SuppressLint("ViewConstructor")
-public class RecordAudioView extends FrameLayout implements
-        AudioRecorder.OnStartListener, AudioRecorder.OnPauseListener {
+public class RecordAudioView extends FrameLayout {
+
+    private static final String TAG = "RecordAudioView";
 
     private AudioRecordedListener listener;
     private boolean recording = false;
@@ -51,7 +51,8 @@ public class RecordAudioView extends FrameLayout implements
     private TextView text;
     private int seconds;
     private int minutes;
-    private AudioRecorder recorder;
+    private String fileName;
+    private MediaRecorder recorder;
 
     public RecordAudioView(Context context, AudioRecordedListener listener, int color) {
         super(context);
@@ -79,23 +80,6 @@ public class RecordAudioView extends FrameLayout implements
                 }
             }
         });
-
-        String fileName = getFileName();
-        File file = new File(fileName);
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        recorder = AudioRecorderBuilder.with(getContext())
-                .fileName(getFileName())
-                .config(AudioRecorder.MediaRecorderConfig.DEFAULT)
-                .loggable()
-                .build();
     }
 
     private String getFileName() {
@@ -129,43 +113,56 @@ public class RecordAudioView extends FrameLayout implements
     }
 
     private void startRecording() {
-        recorder.start(this);
+        minutes = 0;
+        seconds = 0;
+        record.setImageResource(R.drawable.ic_stop);
+
+        fileName = getFileName();
+        File file = new File(fileName);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e(TAG, "prepare() failed");
+        }
+
+        recorder.start();
+        updateTimer();
     }
 
     private void stopRecording() {
-        recorder.pause(this);
-    }
+        recorder.stop();
+        recorder.release();
+        recorder = null;
 
-    @Override
-    public void onPaused(String activeRecordFileName) {
         record.setImageResource(R.drawable.ic_record_audio);
         text.setText(R.string.start_recording_audio);
 
         if (listener != null) {
-            File file = new File(activeRecordFileName);
-            Log.v("audio recorded", "saved to file " + activeRecordFileName + " with size " +
+            File file = new File(fileName);
+            Log.v(TAG, "saved to file " + fileName + " with size " +
                     file.length());
             if (file.length() != 0) {
-                listener.onRecorded(Uri.fromFile(new File(activeRecordFileName)));
+                listener.onRecorded(Uri.fromFile(new File(fileName)));
             } else {
                 Toast.makeText(getContext(), R.string.audio_recording_error, Toast.LENGTH_SHORT)
                         .show();
             }
         }
-    }
-
-    @Override
-    public void onStarted() {
-        minutes = 0;
-        seconds = 0;
-        record.setImageResource(R.drawable.ic_stop);
-        updateTimer();
-    }
-
-    @Override
-    public void onException(Exception e) {
-        Toast.makeText(getContext(), R.string.audio_recording_error, Toast.LENGTH_SHORT).show();
-        e.printStackTrace();
     }
 
 }
