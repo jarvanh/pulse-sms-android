@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
+        if (!hasTelephony()) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
@@ -118,6 +118,10 @@ public class LoginActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private boolean hasTelephony() {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
     private void login() {
@@ -220,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    addDevice(utils, response.accountId, getPhoneNumber() != null, false);
+                    addDevice(utils, response.accountId, hasTelephony(), false);
                 }
             }
         }).start();
