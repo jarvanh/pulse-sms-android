@@ -309,40 +309,45 @@ public class LoginActivity extends AppCompatActivity {
 
                 final DeviceBody device = devices[primaryLocation];
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String message = getString(R.string.api_add_second_primary_device,
-                                device.name);
+                if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
+                    utils.removeDevice(accountId, device.id);
+                    addDevice(utils, accountId, true, false);
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String message = getString(R.string.api_add_second_primary_device,
+                                    device.name);
 
-                        new AlertDialog.Builder(LoginActivity.this)
-                                .setMessage(message)
-                                .setPositiveButton(R.string.api_yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        new Thread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                utils.removeDevice(accountId, device.id);
-                                                addDevice(utils, accountId, true, false);
-                                            }
-                                        }).start();
-                                    }
-                                })
-                                .setNegativeButton(R.string.api_no, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        new Thread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                addDevice(utils, accountId, false, false);
-                                            }
-                                        }).start();
-                                    }
-                                })
-                                .show();
-                    }
-                });
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setMessage(message)
+                                    .setPositiveButton(R.string.api_yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    utils.removeDevice(accountId, device.id);
+                                                    addDevice(utils, accountId, true, false);
+                                                }
+                                            }).start();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.api_no, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    addDevice(utils, accountId, false, false);
+                                                }
+                                            }).start();
+                                        }
+                                    })
+                                    .show();
+                        }
+                    });
+                }
             }
         }
     }
