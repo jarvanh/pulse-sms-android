@@ -27,6 +27,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Base64;
 import android.util.Log;
 
+import com.klinker.android.send_message.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -183,7 +185,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void addMessage(JSONObject json, final DataSource source, final Context context)
             throws JSONException {
-        long id = json.getLong("id");
+        final long id = json.getLong("id");
         if (source.getMessage(id) == null) {
             final Message message = new Message();
             message.id = id;
@@ -225,6 +227,23 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
             source.insertMessage(context, message, message.conversationId);
             Log.v(TAG, "added message");
+
+            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try { Thread.sleep(500); } catch (Exception e) {}
+                        DataSource source = DataSource.getInstance(context);
+                        source.open();
+                        source.updateMessageType(id, Message.TYPE_SENT);
+                        source.close();
+                    }
+                }).start();
+            }
+
+            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                message.type = Message.TYPE_SENT;
+            }
 
             if (Settings.get(context).primary && message.type == Message.TYPE_SENDING) {
                 while (downloading.get()) {
