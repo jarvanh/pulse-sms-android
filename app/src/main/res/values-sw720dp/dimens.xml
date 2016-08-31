@@ -20,5 +20,6 @@
     <dimen name="conversation_list_padding">120dp</dimen>
     <dimen name="message_list_padding">96dp</dimen>
     <dimen name="max_message_width">436dp</dimen>
+    <dimen name="max_gif_width">350dp</dimen>
 
 </resources>

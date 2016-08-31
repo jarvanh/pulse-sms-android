@@ -152,6 +152,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             }
         } else {
             holder.image.setImageDrawable(null);
+            holder.image.setMinimumWidth(0);
             if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
@@ -159,8 +160,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                         .fitCenter()
                         .into(holder.image);
             } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+                holder.image.setMaxWidth(holder.image.getContext()
+                        .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
+                        .fitCenter()
                         .into(holder.image);
             } else if (MimeType.isVideo(message.mimeType)) {
                 Drawable placeholder;
