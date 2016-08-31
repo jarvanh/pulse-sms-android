@@ -25,6 +25,7 @@ import android.provider.ContactsContract;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Helper for working with Android's contact provider.
@@ -152,6 +153,34 @@ public class ContactUtils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    /**
+     * Gets an id for the contact so that you can view that contact directly in the contacts app.
+     */
+    public static int findContactId(String number, Context context)
+            throws NoSuchElementException {
+
+        try {
+            Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                    Uri.encode(number));
+
+            Cursor phonesCursor = context.getContentResolver()
+                    .query(
+                            phoneUri,
+                            new String[]{ContactsContract.RawContacts._ID},
+                            null,
+                            null,
+                            null);
+
+            if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                return phonesCursor.getInt(0);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        throw new NoSuchElementException("Contact not found");
     }
 
     /**

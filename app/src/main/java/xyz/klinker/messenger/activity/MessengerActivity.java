@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
@@ -67,6 +69,7 @@ import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
+import xyz.klinker.messenger.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
@@ -532,7 +535,27 @@ public class MessengerActivity extends AppCompatActivity
                 conversations.add(c);
             }
 
-            ContactAdapter adapter = new ContactAdapter(conversations, null);
+            ContactAdapter adapter = new ContactAdapter(conversations, new ContactClickedListener() {
+                @Override
+                public void onClicked(String title, String phoneNumber, String imageUri) {
+                    Intent intent;
+
+                    try {
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                                String.valueOf(ContactUtils.findContactId(phoneNumber,
+                                        MessengerActivity.this)));
+                        intent.setData(uri);
+                    } catch (NoSuchElementException e) {
+                        e.printStackTrace();
+                        intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                        intent.setData(Uri.parse("tel:" + phoneNumber));
+                    }
+
+                    startActivity(intent);
+                }
+            });
+
             RecyclerView recyclerView = new RecyclerView(this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
