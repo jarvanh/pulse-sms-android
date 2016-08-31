@@ -23,5 +23,6 @@
     <dimen name="max_message_width">372dp</dimen>
     <dimen name="max_gif_width">300dp</dimen>
     <dimen name="attached_image_size">192dp</dimen>
+    <dimen name="compose_forward_margin">24dp</dimen>
 
 </resources>

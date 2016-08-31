@@ -31,5 +31,6 @@
     <dimen name="max_message_width">310dp</dimen>
     <dimen name="max_gif_width">250dp</dimen>
     <dimen name="attached_image_size">96dp</dimen>
+    <dimen name="compose_forward_margin">16dp</dimen>
 
 </resources>
