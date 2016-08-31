@@ -59,12 +59,29 @@ import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
  */
 public class ScheduledMessagesFragment extends Fragment implements ScheduledMessageClickListener {
 
+    private static final String ARG_TITLE = "title";
+    private static final String ARG_PHONE_NUMBERS = "phone_numbers";
+
     private RecyclerView list;
     private ProgressBar progress;
     private FloatingActionButton fab;
     private View emptyView;
 
     private DataSource source;
+
+    public static ScheduledMessagesFragment newInstance() {
+        return new ScheduledMessagesFragment();
+    }
+
+    public static ScheduledMessagesFragment newInstance(String title, String phoneNumbers) {
+        Bundle args = new Bundle();
+        args.putString(ARG_TITLE, title);
+        args.putString(ARG_PHONE_NUMBERS, phoneNumbers);
+
+        ScheduledMessagesFragment fragment = new ScheduledMessagesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -93,6 +110,14 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         source.open();
 
         loadMessages();
+
+        if (getArguments() != null && getArguments().getString(ARG_TITLE) != null &&
+                getArguments().getString(ARG_PHONE_NUMBERS) != null) {
+            ScheduledMessage message = new ScheduledMessage();
+            message.to = getArguments().getString(ARG_PHONE_NUMBERS);
+            message.title = getArguments().getString(ARG_TITLE);
+            displayDateDialog(message);
+        }
     }
 
     @Override

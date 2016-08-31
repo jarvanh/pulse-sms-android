@@ -67,6 +67,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -309,7 +310,7 @@ public class MessengerActivity extends AppCompatActivity
             if (item.getItemId() == R.id.drawer_conversation) {
                 setTitle(R.string.app_title);
             } else if (item.isCheckable()) {
-                setTitle(item.getTitle());
+                setTitle(StringUtils.titleize(item.getTitle().toString()));
             }
         }
 
@@ -340,6 +341,8 @@ public class MessengerActivity extends AppCompatActivity
                 return conversationInformation();
             case R.id.drawer_conversation_blacklist:
                 return conversationBlacklist();
+            case R.id.drawer_conversation_schedule:
+                return conversationSchedule();
             case R.id.drawer_contact_settings:
                 return contactSettings();
             default:
@@ -618,6 +621,19 @@ public class MessengerActivity extends AppCompatActivity
             clickNavigationItem(R.id.drawer_mute_contacts);
             return displayFragmentWithBackStack(
                     BlacklistFragment.newInstance(conversation.phoneNumbers));
+        } else {
+            return false;
+        }
+    }
+
+    private boolean conversationSchedule() {
+        if (conversationListFragment.isExpanded()) {
+            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+            conversationListFragment.getExpandedItem().itemView.performClick();
+            clickNavigationItem(R.id.drawer_schedule);
+            return displayFragmentWithBackStack(
+                    ScheduledMessagesFragment.newInstance(conversation.title,
+                            conversation.phoneNumbers));
         } else {
             return false;
         }

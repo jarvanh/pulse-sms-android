@@ -41,4 +41,25 @@ public class StringUtils {
         return id;
     }
 
+    /**
+     * Capitalize the first letter of each word.
+     */
+    public static String titleize(final String input) {
+        StringBuilder output = new StringBuilder(input.length());
+        boolean lastCharacterWasWhitespace = true;
+
+        for (int i = 0; i < input.length(); i++) {
+            char currentCharacter = input.charAt(i);
+
+            if (lastCharacterWasWhitespace && Character.isLowerCase(currentCharacter)) {
+                currentCharacter = Character.toTitleCase(currentCharacter);
+            }
+
+            output.append(currentCharacter);
+            lastCharacterWasWhitespace = Character.isWhitespace(currentCharacter);
+        }
+
+        return output.toString();
+    }
+
 }

@@ -46,4 +46,11 @@ public class StringUtilsTest extends MessengerSuite {
         }
     }
 
+    @Test
+    public void capitalizeCharacters() {
+        assertEquals("Conversation List", StringUtils.titleize("Conversation list"));
+        assertEquals("Scheduled Messages", StringUtils.titleize("Scheduled messages"));
+        assertEquals("Help & Feedback", StringUtils.titleize("Help & feedback"));
+    }
+
 }

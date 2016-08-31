@@ -35,6 +35,11 @@
             android:icon="@drawable/ic_about"
             android:title="@string/menu_conversation_information" />
 
+        <item
+            android:id="@+id/drawer_conversation_schedule"
+            android:icon="@drawable/ic_schedule"
+            android:title="@string/menu_conversation_schedule" />
+
     </group>
 
     <group android:id="@+id/other_section">
