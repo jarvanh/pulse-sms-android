@@ -22,6 +22,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        if (getPhoneNumber() == null) {
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
