@@ -25,6 +25,8 @@ import android.net.Uri;
 import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
@@ -54,12 +56,18 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
 
                 if (messages != null && messages.moveToFirst()) {
                     do {
-                        long id = messages.getLong(0);
-                        source.updateMessageType(id, Message.TYPE_SENT);
+                        Conversation conversation = source.getConversation(messages
+                                .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)));
 
-                        long conversationId = messages
-                                .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
-                        MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
+                        if (!messages.getString(messages.getColumnIndex(Message.COLUMN_MIME_TYPE))
+                                .equals(MimeType.TEXT_PLAIN) || conversation.isGroup()) {
+                            long id = messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
+                            source.updateMessageType(id, Message.TYPE_SENT);
+
+                            long conversationId = messages
+                                    .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                            MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
+                        }
                     } while (messages.moveToNext());
                     messages.close();
                 }
