@@ -168,12 +168,18 @@ public class ImageViewerActivity extends AppCompatActivity {
         File dst = new File(Environment.getExternalStorageDirectory() + "/Download",
                 SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + extension);
 
-        if (!dst.exists()) {
-            try {
-                dst.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        int count = 1;
+        while (dst.exists()) {
+            dst = new File(Environment.getExternalStorageDirectory() + "/Download",
+                    SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) +
+                            "-" + Integer.toString(count) + extension);
+            count++;
+        }
+
+        try {
+            dst.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         if (MimeType.isStaticImage(message.mimeType)) {
