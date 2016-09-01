@@ -35,6 +35,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -142,6 +143,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (message != null) {
             message.setOnLongClickListener(messageOptions);
             message.setOnClickListener(clickListener);
+            message.setOnTouchListener(new ForcedRippleTouchListener(message));
             message.setHapticFeedbackEnabled(false);
         }
     }
