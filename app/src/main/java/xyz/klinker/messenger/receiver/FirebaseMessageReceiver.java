@@ -124,10 +124,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     readConversation(json, source, context);
                     break;
                 case "seen_conversation":
-                    seenConversation(json, source);
+                    seenConversation(json, source, context);
                     break;
                 case "seen_conversations":
-                    seenConversations(source);
+                    seenConversations(source, context);
                     break;
                 case "added_draft":
                     addDraft(json, source);
@@ -373,17 +373,20 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void readConversation(JSONObject json, DataSource source, Context context) throws JSONException {
         long id = json.getLong("id");
         source.readConversation(context, id);
+        NotificationManagerCompat.from(context).cancel((int) id);
         Log.v(TAG, "read conversation");
     }
 
-    private void seenConversation(JSONObject json, DataSource source) throws JSONException {
+    private void seenConversation(JSONObject json, DataSource source, Context context) throws JSONException {
         long id = json.getLong("id");
         source.seenConversation(id);
+        NotificationManagerCompat.from(context).cancel((int) id);
         Log.v(TAG, "seen conversation");
     }
 
-    private void seenConversations(DataSource source) throws JSONException {
+    private void seenConversations(DataSource source, Context context) throws JSONException {
         source.seenConversations();
+        NotificationManagerCompat.from(context).cancelAll();
         Log.v(TAG, "seen all conversations");
     }
 
