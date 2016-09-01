@@ -924,8 +924,9 @@ public class DataSource {
         values = new ContentValues(1);
         values.put(Conversation.COLUMN_READ, 1);
 
-        updated += database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[]{Long.toString(conversationId)});
+        updated += database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=? AND " +
+                        Conversation.COLUMN_READ + "=?",
+                new String[]{Long.toString(conversationId), "0"});
 
         if (updated > 0) {
             apiUtils.readConversation(accountId, conversationId);
