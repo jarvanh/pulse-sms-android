@@ -7,7 +7,7 @@ import android.view.View;
 
 public class ForcedRippleTouchListener implements View.OnTouchListener {
 
-    private static final long RIPPLE_TIMEOUT_MS = 300;
+    private static final long RIPPLE_TIMEOUT_MS = 50;
 
     private View rippleView;
 
@@ -25,12 +25,13 @@ public class ForcedRippleTouchListener implements View.OnTouchListener {
     }
 
     private void forceRippleAnimation(View view, MotionEvent event) {
-        Drawable background = view.getBackground();
+        Drawable background = ((View) view.getParent()).getBackground();
 
         if (background instanceof RippleDrawable) {
             final RippleDrawable rippleDrawable = (RippleDrawable) background;
 
-            rippleDrawable.setState(new int[]{android.R.attr.state_pressed, android.R.attr.state_enabled});
+            rippleDrawable.setState(new int[]{android.R.attr.state_pressed,
+                    android.R.attr.state_enabled});
             rippleDrawable.setHotspot(event.getX(), event.getY());
 
             view.postDelayed(new Runnable() {
