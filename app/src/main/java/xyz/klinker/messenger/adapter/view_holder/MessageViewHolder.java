@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,9 +52,20 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public View messageHolder;
     public long messageId;
 
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
     private View.OnLongClickListener messageOptions = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(final View view) {
+            if (fragment.isRecyclerScrolling()) {
+                return true;
+            }
+
             String[] items;
             if (message.getVisibility() == View.VISIBLE) {
                 items = new String[3];
@@ -87,11 +99,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 }
             }
 
+            // need to manually force the haptic feedback, since the feedback was actually
+            // disabled on the long clicked views
+            view.setHapticFeedbackEnabled(true);
+            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            view.setHapticFeedbackEnabled(false);
+
             return true;
         }
     };
 
-    public MessageViewHolder(MessageListFragment fragment, final View itemView, int color, final long conversationId) {
+    public MessageViewHolder(final MessageListFragment fragment, final View itemView, int color, final long conversationId) {
         super(itemView);
 
         this.fragment = fragment;
@@ -118,10 +136,14 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             });
 
             image.setOnLongClickListener(messageOptions);
+            image.setOnClickListener(clickListener);
+            image.setHapticFeedbackEnabled(false);
         }
 
         if (message != null) {
             message.setOnLongClickListener(messageOptions);
+            message.setOnClickListener(clickListener);
+            message.setHapticFeedbackEnabled(false);
         }
     }
 
@@ -160,5 +182,4 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         Toast.makeText(message.getContext(), R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show();
     }
-
 }

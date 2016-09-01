@@ -224,11 +224,7 @@ public class MessageListFragment extends Fragment implements
             @Override
             public void onDrag(float elasticOffset, float elasticOffsetPixels,
                                float rawOffset, float rawOffsetPixels) {
-                // todo: enable this after some offset amount.
-                // right now, it doesn't allow you to actually open the dialog because it thinks it is a move
-                // event when you pick your finger up.
-                
-                //dismissDetailsChoiceDialog();
+
             }
         });
 
@@ -950,5 +946,9 @@ public class MessageListFragment extends Fragment implements
             detailsChoiceDialog.dismiss();
             detailsChoiceDialog = null;
         }
+    }
+
+    public boolean isRecyclerScrolling() {
+        return messageList != null && messageList.getScrollState() != RecyclerView.SCROLL_STATE_IDLE;
     }
 }
