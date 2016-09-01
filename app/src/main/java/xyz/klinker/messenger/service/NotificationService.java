@@ -41,6 +41,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
@@ -259,9 +260,9 @@ public class NotificationService extends IntentService {
         builder.extend(new NotificationCompat.WearableExtender().addAction(action));
 
 
-        Intent delete = new Intent(this, NotificationDismissedService.class);
+        Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
-        PendingIntent pendingDelete = PendingIntent.getService(this, (int) conversation.id,
+        PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.id,
                 delete, PendingIntent.FLAG_ONE_SHOT);
 
         Intent open = new Intent(this, MessengerActivity.class);
