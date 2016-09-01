@@ -280,6 +280,10 @@ public class MessageListFragment extends Fragment implements
 
             source.insertDraft(getConversationId(),
                     messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
+        } else if (messageEntry.getText() != null && messageEntry.getText().length() == 0 && textChanged) {
+            if (drafts.size() > 0) {
+                source.deleteDrafts(getConversationId());
+            }
         }
 
         if (attachedUri != null) {
