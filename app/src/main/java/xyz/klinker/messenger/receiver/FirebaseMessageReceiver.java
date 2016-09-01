@@ -21,8 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -121,6 +119,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     break;
                 case "removed_conversation":
                     removeConversation(json, source);
+                    break;
+                case "read_conversation":
+                    readConversation(json, source, context);
+                    break;
+                case "seen_conversation":
+                    seenConversation(json, source);
+                    break;
+                case "seen_conversations":
+                    seenConversations(source);
                     break;
                 case "added_draft":
                     addDraft(json, source);
@@ -361,6 +368,23 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         long id = json.getLong("id");
         source.deleteConversation(id);
         Log.v(TAG, "removed conversation");
+    }
+
+    private void readConversation(JSONObject json, DataSource source, Context context) throws JSONException {
+        long id = json.getLong("id");
+        source.readConversation(context, id);
+        Log.v(TAG, "read conversation");
+    }
+
+    private void seenConversation(JSONObject json, DataSource source) throws JSONException {
+        long id = json.getLong("id");
+        source.seenConversation(id);
+        Log.v(TAG, "seen conversation");
+    }
+
+    private void seenConversations(DataSource source) throws JSONException {
+        source.seenConversations();
+        Log.v(TAG, "seen all conversations");
     }
 
     private void addDraft(JSONObject json, DataSource source) throws JSONException {

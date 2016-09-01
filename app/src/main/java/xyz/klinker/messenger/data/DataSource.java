@@ -955,6 +955,18 @@ public class DataSource {
     /**
      * Mark all messages as seen.
      */
+    public void seenConversations() {
+        ContentValues values = new ContentValues(1);
+        values.put(Message.COLUMN_SEEN, 1);
+
+        database.update(Message.TABLE, values, Message.COLUMN_SEEN + "=0", null);
+
+        apiUtils.seenConversations(accountId);
+    }
+
+    /**
+     * Mark all messages as seen.
+     */
     public void seenAllMessages() {
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_SEEN, 1);

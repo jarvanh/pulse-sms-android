@@ -325,6 +325,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void seenConversations() {
+        source.seenConversations();
+
+        verify(database).update(eq("message"), any(ContentValues.class),
+                eq("seen=0"), eq((String[]) null));
+    }
+
+    @Test
     public void seenAllMessages() {
         source.seenAllMessages();
 
