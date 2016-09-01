@@ -82,6 +82,7 @@ public class MessengerActivity extends AppCompatActivity
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
+    public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
     public static final String EXTRA_MESSAGE_ID = "message_id";
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
 
@@ -114,6 +115,7 @@ public class MessengerActivity extends AppCompatActivity
         initFab();
 
         displayConversations();
+        dismissIfFromNotification();
     }
 
     @Override
@@ -718,6 +720,15 @@ public class MessengerActivity extends AppCompatActivity
     private void ensureSearchFragment() {
         if (searchFragment == null) {
             searchFragment = SearchFragment.newInstance();
+        }
+    }
+
+    private void dismissIfFromNotification() {
+        boolean fromNotification = getIntent().getBooleanExtra(EXTRA_FROM_NOTIFICATION, false);
+        long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
+
+        if (fromNotification && convoId != -1) {
+            new ApiUtils().dismissNotification(Settings.get(this).accountId, convoId);
         }
     }
 

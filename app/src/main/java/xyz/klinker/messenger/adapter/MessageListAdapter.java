@@ -249,7 +249,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     @Override
     public int getItemCount() {
-        if (messages == null || !messages.moveToFirst()) {
+        if (messages == null || messages.isClosed() || !messages.moveToFirst()) {
             return 0;
         } else {
             return messages.getCount();

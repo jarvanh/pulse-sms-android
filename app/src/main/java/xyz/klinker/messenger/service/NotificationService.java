@@ -267,6 +267,7 @@ public class NotificationService extends IntentService {
 
         Intent open = new Intent(this, MessengerActivity.class);
         open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
+        open.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
                 open, PendingIntent.FLAG_ONE_SHOT);
