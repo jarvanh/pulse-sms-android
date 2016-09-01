@@ -53,7 +53,7 @@ public class SendUtils {
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);
-        Transaction transaction = new Transaction(context, new Settings());
+        Transaction transaction = new Transaction(context, settings);
         Message message = new Message(text, addresses);
 
         if (data != null) {
