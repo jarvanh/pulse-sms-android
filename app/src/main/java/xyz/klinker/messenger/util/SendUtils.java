@@ -71,7 +71,9 @@ public class SendUtils {
             }
         }
 
-        transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+        if (xyz.klinker.messenger.data.Settings.get(context).primary) {
+            transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+        }
 
         return data;
     }

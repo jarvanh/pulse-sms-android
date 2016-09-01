@@ -31,6 +31,7 @@ import com.klinker.android.send_message.Utils;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
@@ -57,7 +58,7 @@ public class ContentObserverService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ContentObserverService", "starting content observer service");
-        if (observer == null) {
+        if (observer == null && Settings.get(this).primary) {
             observer = new SmsContentObserver(this, new Handler());
             getContentResolver().registerContentObserver(Telephony.Sms.CONTENT_URI, true, observer);
         }
@@ -68,7 +69,11 @@ public class ContentObserverService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getContentResolver().unregisterContentObserver(observer);
+
+        if (observer != null) {
+            getContentResolver().unregisterContentObserver(observer);
+            observer = null;
+        }
     }
 
     private class SmsContentObserver extends ContentObserver {
