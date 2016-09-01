@@ -25,7 +25,9 @@ public class SectionType {
     public static final int PINNED = 0;
     public static final int TODAY = 1;
     public static final int YESTERDAY = 2;
-    public static final int OLDER = 3;
+    public static final int LAST_WEEK = 3;
+    public static final int LAST_MONTH = 4;
+    public static final int OLDER = 5;
 
     public int type;
     public int count;

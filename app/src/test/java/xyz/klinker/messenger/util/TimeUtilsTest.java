@@ -214,4 +214,89 @@ public class TimeUtilsTest extends MessengerSuite {
         ));
     }
 
+    @Test
+    public void isLastWeek() {
+        long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
+
+        assertTrue(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 10, 12, 22, 0).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertTrue(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 7, 0, 4, 56).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertTrue(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 6, 17, 52, 16).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertTrue(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 12, 11, 52, 16).getTimeInMillis(),
+                currentTime
+        ));
+    }
+
+    @Test
+    public void isNotLastWeek() {
+        long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
+
+        assertFalse(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 12, 23, 12, 5).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertFalse(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 7, 4, 7, 56, 0).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertFalse(TimeUtils.isLastWeek(
+                new GregorianCalendar(2016, 5, 13, 15, 45, 26).getTimeInMillis(),
+                currentTime
+        ));
+    }
+
+    @Test
+    public void isLastMonth() {
+        long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
+
+        assertTrue(TimeUtils.isLastMonth(
+                new GregorianCalendar(2016, 7, 11, 12, 22, 0).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertTrue(TimeUtils.isLastMonth(
+                new GregorianCalendar(2016, 7, 1, 0, 4, 56).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertTrue(TimeUtils.isLastMonth(
+                new GregorianCalendar(2016, 6, 13, 17, 52, 16).getTimeInMillis(),
+                currentTime
+        ));
+    }
+
+    @Test
+    public void isNotLastMonth() {
+        long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
+
+        assertFalse(TimeUtils.isLastMonth(
+                new GregorianCalendar(2016, 7, 12, 23, 12, 5).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertFalse(TimeUtils.isLastMonth(
+                new GregorianCalendar(2015, 7, 10, 7, 56, 0).getTimeInMillis(),
+                currentTime
+        ));
+
+        assertFalse(TimeUtils.isLastMonth(
+                new GregorianCalendar(2016, 5, 13, 15, 45, 26).getTimeInMillis(),
+                currentTime
+        ));
+    }
+
 }

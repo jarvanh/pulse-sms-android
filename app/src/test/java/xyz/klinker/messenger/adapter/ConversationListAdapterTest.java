@@ -29,6 +29,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -84,13 +86,17 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(1, sectionCounts.get(1).count);
         assertEquals(SectionType.YESTERDAY, sectionCounts.get(2).type);
         assertEquals(2, sectionCounts.get(2).count);
-        assertEquals(SectionType.OLDER, sectionCounts.get(3).type);
+        assertEquals(SectionType.LAST_WEEK, sectionCounts.get(3).type);
         assertEquals(2, sectionCounts.get(3).count);
+        assertEquals(SectionType.LAST_MONTH, sectionCounts.get(4).type);
+        assertEquals(1, sectionCounts.get(4).count);
+        assertEquals(SectionType.OLDER, sectionCounts.get(5).type);
+        assertEquals(1, sectionCounts.get(5).count);
     }
 
     @Test
     public void getSectionCount() {
-        assertEquals(4, adapter.getSectionCount());
+        assertEquals(6, adapter.getSectionCount());
     }
 
     @Test
@@ -132,8 +138,20 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void bindHeaderOlder() {
+    public void bindHeaderThisWeek() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 3);
+        verify(header).setText("This week");
+    }
+
+    @Test
+    public void bindHeaderThisMonth() {
+        adapter.onBindHeaderViewHolder(getMockedViewHolder(), 4);
+        verify(header).setText("This month");
+    }
+
+    @Test
+    public void bindHeaderOlder() {
+        adapter.onBindHeaderViewHolder(getMockedViewHolder(), 5);
         verify(header).setText("Older");
     }
 
@@ -169,32 +187,53 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     public void removeItems() {
         adapter.deleteItem(1);
 
-        assertEquals(4, adapter.getSectionCount());
+        assertEquals(6, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
         assertEquals(1, adapter.getItemCount(1));
         assertEquals(2, adapter.getItemCount(2));
         assertEquals(2, adapter.getItemCount(3));
+        assertEquals(1, adapter.getItemCount(4));
+        assertEquals(1, adapter.getItemCount(5));
 
         adapter.deleteItem(3);
 
-        assertEquals(3, adapter.getSectionCount());
+        assertEquals(5, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
         assertEquals(2, adapter.getItemCount(1));
         assertEquals(2, adapter.getItemCount(2));
+        assertEquals(1, adapter.getItemCount(3));
+        assertEquals(1, adapter.getItemCount(4));
 
         adapter.deleteItem(7);
         adapter.deleteItem(6);
 
-        assertEquals(2, adapter.getSectionCount());
+        assertEquals(4, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
         assertEquals(2, adapter.getItemCount(1));
+        assertEquals(1, adapter.getItemCount(2));
+        assertEquals(1, adapter.getItemCount(3));
 
         adapter.deleteItem(1);
 
-        assertEquals(1, adapter.getSectionCount());
+        assertEquals(3, adapter.getSectionCount());
         assertEquals(2, adapter.getItemCount(0));
+        assertEquals(1, adapter.getItemCount(1));
+        assertEquals(1, adapter.getItemCount(2));
 
         adapter.deleteItem(2);
+
+        assertEquals(3, adapter.getSectionCount());
+        assertEquals(1, adapter.getItemCount(0));
+        assertEquals(1, adapter.getItemCount(1));
+        assertEquals(1, adapter.getItemCount(2));
+
+        adapter.deleteItem(1);
+
+        assertEquals(2, adapter.getSectionCount());
+        assertEquals(1, adapter.getItemCount(0));
+        assertEquals(1, adapter.getItemCount(1));
+
+        adapter.deleteItem(3);
 
         assertEquals(1, adapter.getSectionCount());
         assertEquals(1, adapter.getItemCount(0));
@@ -213,13 +252,15 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(7, adapter.findPositionForConversationId(5));
         assertEquals(9, adapter.findPositionForConversationId(6));
         assertEquals(10, adapter.findPositionForConversationId(7));
+        assertEquals(12, adapter.findPositionForConversationId(8));
+        assertEquals(14, adapter.findPositionForConversationId(9));
     }
 
     @Test
     public void findPositionForConversationIdNonexistant() {
         assertEquals(-1, adapter.findPositionForConversationId(-1));
         assertEquals(-1, adapter.findPositionForConversationId(0));
-        assertEquals(-1, adapter.findPositionForConversationId(8));
+        assertEquals(-1, adapter.findPositionForConversationId(10));
     }
 
     private ConversationViewHolder getMockedViewHolder() {
@@ -350,6 +391,38 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 78),
                 "Ben Madden",
+                "(847) 609-0939",
+                "Maybe they'll run into each other on the way back... idk",
+                null
+        });
+
+        cursor.addRow(new Object[] {
+                8,
+                ColorSet.PURPLE(context).color,
+                ColorSet.PURPLE(context).colorDark,
+                ColorSet.PURPLE(context).colorLight,
+                ColorSet.PURPLE(context).colorAccent,
+                0,
+                1,
+                System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 8),
+                "test 1",
+                "(847) 609-0939",
+                "Maybe they'll run into each other on the way back... idk",
+                null
+        });
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) - 2);
+        cursor.addRow(new Object[] {
+                9,
+                ColorSet.PURPLE(context).color,
+                ColorSet.PURPLE(context).colorDark,
+                ColorSet.PURPLE(context).colorLight,
+                ColorSet.PURPLE(context).colorAccent,
+                0,
+                1,
+                cal.getTimeInMillis(),
+                "test 2",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
                 null

@@ -72,6 +72,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 if ((currentSection == SectionType.PINNED && conversation.pinned) ||
                         (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
                         (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
+                        (currentSection == SectionType.LAST_WEEK && TimeUtils.isLastWeek(conversation.timestamp)) ||
+                        (currentSection == SectionType.LAST_MONTH && TimeUtils.isLastMonth(conversation.timestamp)) ||
                         (currentSection == SectionType.OLDER)) {
                     currentCount++;
                 } else {
@@ -114,6 +116,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             holder.header.setText(holder.header.getContext().getString(R.string.today));
         } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
             holder.header.setText(holder.header.getContext().getString(R.string.yesterday));
+        } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
+            holder.header.setText(holder.header.getContext().getString(R.string.last_week));
+        } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
+            holder.header.setText(holder.header.getContext().getString(R.string.last_month));
         } else {
             holder.header.setText(holder.header.getContext().getString(R.string.older));
         }

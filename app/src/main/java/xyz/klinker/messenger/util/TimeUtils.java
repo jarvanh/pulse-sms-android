@@ -96,6 +96,40 @@ public class TimeUtils {
         return current.getTimeInMillis() == time.getTimeInMillis();
     }
 
+    /**
+     * Checks whether the timestamp is within the last week.
+     */
+    public static boolean isLastWeek(long timestamp) {
+        return isLastWeek(timestamp, System.currentTimeMillis());
+    }
+
+    @VisibleForTesting
+    static boolean isLastWeek(long timestamp, long currentTime) {
+        Calendar lastWeek = Calendar.getInstance();
+        lastWeek.setTimeInMillis(currentTime);
+        zeroCalendarDay(lastWeek);
+        lastWeek.set(Calendar.WEEK_OF_YEAR, lastWeek.get(Calendar.WEEK_OF_YEAR) - 1);
+
+        return timestamp > lastWeek.getTimeInMillis() && timestamp < currentTime;
+    }
+
+    /**
+     * Checks whether the timestamp is within the last month.
+     */
+    public static boolean isLastMonth(long timestamp) {
+        return isLastMonth(timestamp, System.currentTimeMillis());
+    }
+
+    @VisibleForTesting
+    static boolean isLastMonth(long timestamp, long currentTime) {
+        Calendar lastMonth = Calendar.getInstance();
+        lastMonth.setTimeInMillis(currentTime);
+        zeroCalendarDay(lastMonth);
+        lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH) - 1);
+
+        return timestamp > lastMonth.getTimeInMillis() && timestamp < currentTime;
+    }
+
     private static void zeroCalendarDay(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

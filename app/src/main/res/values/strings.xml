@@ -55,6 +55,8 @@
     <string name="pinned">Pinned</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="last_week">This week</string>
+    <string name="last_month">This month</string>
     <string name="older">Older</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation deleted</item>
