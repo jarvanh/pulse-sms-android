@@ -19,7 +19,20 @@
     <version
         name="1.1"
         description="August 30th, 2016">
-        <text>Bug fixes</text>
+        <text>Server response time improvements</text>
+        <text>Opposite swipe-to-delete direction</text>
+        <text>Delivery notifications</text>
+        <text>Clarification for dark theme setting</text>
+        <text>Conversation list labels for this week and this month</text>
+        <text>Improvements to long clicking on messages</text>
+        <text>Improved read status syncing between devices</text>
+        <text>Fixes for the login/signup activity</text>
+        <text>Smoothed out some animations</text>
+        <text>View more contact information when clicking on them</text>
+        <text>Fix audio recording</text>
+        <text>Other bug fixes</text>
+        <text>UI improvements</text>
+        <text>And more!</text>
     </version>
 
     <version
