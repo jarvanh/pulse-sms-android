@@ -60,7 +60,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_SNIPPET + " text, " +
             COLUMN_RINGTONE + " text, " +
             COLUMN_IMAGE_URI + " text, " +
-            COLUMN_ID_MATCHER + " text not null, " +
+            COLUMN_ID_MATCHER + " text not null unique, " +
             COLUMN_MUTE + " integer not null" +
             ");";
 

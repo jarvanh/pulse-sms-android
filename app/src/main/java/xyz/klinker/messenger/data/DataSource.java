@@ -149,7 +149,7 @@ public class DataSource {
     /**
      * Opens the database.
      */
-    public synchronized void open() {
+    public void open() {
         if (openCounter.incrementAndGet() == 1) {
             database = dbHelper.getWritableDatabase();
         }
@@ -165,7 +165,7 @@ public class DataSource {
     /**
      * Closes the database.
      */
-    public synchronized void close() {
+    public void close() {
         if (openCounter.decrementAndGet() == 0) {
             dbHelper.close();
         }
@@ -356,7 +356,12 @@ public class DataSource {
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
                 conversation.mute, encryptionUtils);
 
-        return database.insert(Conversation.TABLE, null, values);
+        try {
+            return database.insert(Conversation.TABLE, null, values);
+        } catch (Exception e) {
+            Log.e(TAG, "failed to insert conversation", e);
+            return -1L;
+        }
     }
 
     /**
