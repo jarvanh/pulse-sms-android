@@ -136,7 +136,6 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             });
 
             image.setOnLongClickListener(messageOptions);
-            image.setOnClickListener(clickListener);
             image.setHapticFeedbackEnabled(false);
         }
 
