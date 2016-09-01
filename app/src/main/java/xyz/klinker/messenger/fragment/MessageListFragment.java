@@ -21,6 +21,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +29,10 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.service.notification.StatusBarNotification;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -531,7 +534,7 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         try {
-            if (dismissNotification) {
+            if (dismissNotification && notificationActive()) {
                 NotificationManagerCompat.from(getContext())
                         .cancel((int) getConversationId());
                 new ApiUtils().dismissNotification(Settings.get(getActivity()).accountId,
@@ -539,6 +542,24 @@ public class MessageListFragment extends Fragment implements
             }
         } catch (Exception e) {
 
+        }
+    }
+
+    private boolean notificationActive() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        } else {
+            NotificationManager manager = (NotificationManager) getContext().getSystemService(
+                    Context.NOTIFICATION_SERVICE);
+            StatusBarNotification[] notifications = manager.getActiveNotifications();
+
+            for (StatusBarNotification notification : notifications) {
+                if (notification.getId() == (int) getConversationId()) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
