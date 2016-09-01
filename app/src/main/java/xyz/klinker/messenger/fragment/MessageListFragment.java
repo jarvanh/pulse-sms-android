@@ -142,6 +142,8 @@ public class MessageListFragment extends Fragment implements
     private View removeImage;
     private BroadcastReceiver updatedReceiver;
     private boolean dismissNotification = false;
+    private boolean textChanged = false;
+    private List<Draft> drafts;
 
     private Uri attachedUri;
     private String attachedMimeType;
@@ -271,7 +273,11 @@ public class MessageListFragment extends Fragment implements
             getActivity().unregisterReceiver(updatedReceiver);
         }
 
-        if (messageEntry.getText() != null && messageEntry.getText().length() > 0) {
+        if (messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
+            if (drafts.size() > 0) {
+                source.deleteDrafts(getConversationId());
+            }
+
             source.insertDraft(getConversationId(),
                     messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
         }
@@ -580,11 +586,7 @@ public class MessageListFragment extends Fragment implements
                 if (source.isOpen()) {
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
-                    final List<Draft> drafts = source.getDrafts(conversationId);
-
-                    if (drafts.size() > 0) {
-                        source.deleteDrafts(conversationId);
-                    }
+                    drafts = source.getDrafts(conversationId);
 
                     final int position = findMessagePositionFromId(cursor);
 
@@ -600,6 +602,15 @@ public class MessageListFragment extends Fragment implements
                             if (position != -1) {
                                 messageList.scrollToPosition(position);
                             }
+
+                            textChanged = false;
+                            messageEntry.addTextChangedListener(new TextWatcher() {
+                                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                                @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                                @Override public void afterTextChanged(Editable editable) {
+                                    textChanged = true;
+                                }
+                            });
                         }
                     });
                 }
