@@ -748,6 +748,11 @@ public class MessageListFragment extends Fragment implements
                         }
                     }
                 }).start();
+
+                if (notificationActive()) {
+                    NotificationManagerCompat.from(getContext())
+                            .cancel((int) getConversationId());
+                }
             }
         }
     }
