@@ -56,17 +56,16 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
 
                 if (messages != null && messages.moveToFirst()) {
                     do {
-                        Conversation conversation = source.getConversation(messages
-                                .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)));
+                        Message m = new Message();
+                        m.fillFromCursor(messages);
 
-                        if (!messages.getString(messages.getColumnIndex(Message.COLUMN_MIME_TYPE))
-                                .equals(MimeType.TEXT_PLAIN) || conversation.isGroup()) {
-                            long id = messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
-                            source.updateMessageType(id, Message.TYPE_SENT);
+                        Conversation conversation = source.getConversation(m.conversationId);
 
-                            long conversationId = messages
-                                    .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
-                            MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
+                        if ((!m.mimeType.equals(MimeType.TEXT_PLAIN) || conversation.isGroup()) &&
+                                m.type == Message.TYPE_SENDING) {
+                            source.updateMessageType(m.id, Message.TYPE_SENT);
+
+                            MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
                         }
                     } while (messages.moveToNext());
                     messages.close();
