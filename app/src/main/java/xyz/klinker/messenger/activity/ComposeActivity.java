@@ -29,6 +29,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -46,8 +47,10 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MessengerChooserTargetService;
@@ -79,7 +82,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         BaseRecipientAdapter adapter =
                 new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this);
-        adapter.setShowMobileOnly(false);
+        adapter.setShowMobileOnly(Settings.get(this).mobileOnly);
         contactEntry.setAdapter(adapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -203,10 +206,37 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_compose, menu);
+        Settings settings = Settings.get(this);
+
+        MenuItem item = menu.findItem(R.id.menu_mobile_only);
+        item.setChecked(settings.mobileOnly);
+
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.menu_mobile_only:
+                boolean newValue = !item.isChecked();
+                Settings settings = Settings.get(this);
+
+                item.setChecked(newValue);
+
+                settings.setValue(getString(R.string.pref_mobile_only), newValue);
+                settings.forceUpdate();
+
+                contactEntry.getAdapter().setShowMobileOnly(item.isChecked());
+                contactEntry.getAdapter().notifyDataSetChanged();
+
+                new ApiUtils().updateMobileOnly(settings.accountId, newValue);
+
                 return true;
         }
 

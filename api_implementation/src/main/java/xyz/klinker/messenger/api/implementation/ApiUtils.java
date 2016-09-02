@@ -749,6 +749,27 @@ public class ApiUtils {
         }).start();
     }
 
+    /**
+     * Update the mobile only setting
+     */
+    public void updateMobileOnly(final String accountId, final boolean mobileOnly) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateMobileOnly(accountId, mobileOnly);
+                if (response == null) {
+                    Log.e(TAG, "error updating mobile only");
+                } else {
+                    Log.v(TAG, "successfully updated mobile only");
+                }
+            }
+        }).start();
+    }
+
 
     /**
      * Dismiss a notification across all devices.

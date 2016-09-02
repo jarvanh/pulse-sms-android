@@ -22,12 +22,14 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="AppTheme.MessengerActivity" parent="@style/AppTheme.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
@@ -36,6 +38,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="AppTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
@@ -44,12 +47,18 @@
         <item name="colorAccent">@color/materialGrey</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Translucent" parent="@style/AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
+    </style>
+
+    <style name="Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_overflow</item>
     </style>
 
 </resources>

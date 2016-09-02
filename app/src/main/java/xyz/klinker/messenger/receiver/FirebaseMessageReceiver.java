@@ -167,6 +167,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "changed_delivery_reports":
                     changeDeliveryReports(json, context);
                     break;
+                case "changed_mobile_only":
+                    changedMobileOnly(json, context);
+                    break;
                 case "dismissed_notification":
                     dismissNotification(json, context);
                     break;
@@ -471,6 +474,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void changeDeliveryReports(JSONObject json, Context context)
             throws JSONException {
         Settings.get(context).setValue("delivery_reports", json.getBoolean("value"));
+    }
+
+    private void changedMobileOnly(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("mobile_only", json.getBoolean("value"));
     }
 
     private void dismissNotification(JSONObject json, Context context)

@@ -61,6 +61,9 @@ public interface AccountService {
     @POST("accounts/update_delivery_reports")
     Object updateDeliveryReports(@Query("account_id") String accountId, @Query("delivery") boolean delivery);
 
+    @POST("accounts/update_mobile_only")
+    Object updateMobileOnly(@Query("account_id") String accountId, @Query("mobile") boolean mobile);
+
     @POST("accounts/dismissed_notification")
     Object dismissedNotification(@Query("account_id") String accountId, @Query("id") int id);
 
