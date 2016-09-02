@@ -284,7 +284,11 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
-    public void onConversationExpanded(ConversationViewHolder viewHolder) {
+    public boolean onConversationExpanded(ConversationViewHolder viewHolder) {
+        if (expandedConversation != null) {
+            return false;
+        }
+
         if (deleteSnackbar != null && deleteSnackbar.isShown()) {
             deleteSnackbar.dismiss();
         }
@@ -306,6 +310,7 @@ public class ConversationListFragment extends Fragment
 
         ActivityUtils.setTaskDescription(getActivity(),
                 viewHolder.conversation.title, viewHolder.conversation.colors.color);
+        return true;
     }
 
     @Override

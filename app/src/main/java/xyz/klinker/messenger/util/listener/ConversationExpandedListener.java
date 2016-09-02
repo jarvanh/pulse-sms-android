@@ -23,7 +23,12 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
  */
 public interface ConversationExpandedListener {
 
-    void onConversationExpanded(ConversationViewHolder viewHolder);
+    /**
+     * Tells the listener to expand the conversation.
+     *
+     * @return true if the listener actually expanded, otherwise false.
+     */
+    boolean onConversationExpanded(ConversationViewHolder viewHolder);
 
     void onConversationContracted(ConversationViewHolder viewHolder);
 

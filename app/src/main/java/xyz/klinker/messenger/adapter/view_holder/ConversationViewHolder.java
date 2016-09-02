@@ -112,15 +112,16 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void expandConversation() {
-        expanded = true;
-        AnimationUtils.expandConversationListItem(itemView);
-        expandedListener.onConversationExpanded(this);
+        if (expandedListener.onConversationExpanded(this)) {
+            expanded = true;
+            AnimationUtils.expandConversationListItem(itemView);
+        }
     }
 
     private void collapseConversation() {
         expanded = false;
-        AnimationUtils.contractConversationListItem(itemView);
         expandedListener.onConversationContracted(this);
+        AnimationUtils.contractConversationListItem(itemView);
     }
 
     public void setContactClickedListener(ContactClickedListener listener) {
