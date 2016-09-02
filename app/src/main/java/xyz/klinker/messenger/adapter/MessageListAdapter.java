@@ -45,17 +45,13 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Adapter for displaying messages in a conversation.
  */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> {
-
-    public static final Pattern PHONE = Pattern.compile(
-            "(\\+[0-9]+[\\- \\.]*)?"
-                    + "(\\([0-9]+\\)[\\- \\.]*)?"
-                    + "([0-9][0-9\\- \\.]+[0-9]{3,})");
 
     private Cursor messages;
     private int receivedColor;
@@ -117,7 +113,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
 
-            Link urls = new Link(Patterns.WEB_URL);
+            Link urls = new Link(Regex.WEB_URL);
             urls.setTextColor(accentColor);
             urls.setHighlightAlpha(.4f);
             urls.setOnClickListener(new Link.OnClickListener() {
@@ -132,7 +128,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 }
             });
 
-            Link phoneNumbers = new Link(PHONE);
+            Link phoneNumbers = new Link(Regex.PHONE);
             phoneNumbers.setTextColor(accentColor);
             phoneNumbers.setHighlightAlpha(.4f);
             phoneNumbers.setOnClickListener(new Link.OnClickListener() {
