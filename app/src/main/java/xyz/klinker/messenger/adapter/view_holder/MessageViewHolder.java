@@ -179,7 +179,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             if (messageHolder != null) {
                 messageHolder.setOnClickListener(clickListener);
             }
-            
+
             message.setOnTouchListener(new ForcedRippleTouchListener(message));
             message.setHapticFeedbackEnabled(false);
         }

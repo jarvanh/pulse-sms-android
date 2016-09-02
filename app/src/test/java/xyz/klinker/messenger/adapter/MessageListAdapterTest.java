@@ -16,11 +16,14 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +38,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.spy;
@@ -49,6 +53,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     @Mock
     private MessageListFragment fragment;
     @Mock
+    private Resources resources;
+    @Mock
     private LinearLayoutManager manager;
     @Mock
     private TextView message;
@@ -58,9 +64,16 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private ImageView image;
     @Mock
     private Cursor cursor;
+    @Mock
+    private ViewGroup.LayoutParams params;
+    @Mock
+    private Context context;
 
     @Before
     public void setUp() {
+        when(fragment.getResources()).thenReturn(resources);
+        when(resources.getDimensionPixelSize(anyInt())).thenReturn(1);
+        when(timestamp.getLayoutParams()).thenReturn(params);
         adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager, fragment);
     }
 
@@ -127,16 +140,17 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void bindViewHolderMessageNoTimestamp() {
+        when(timestamp.getContext()).thenReturn(context);
         adapter.onBindViewHolder(getMockedViewHolder(), adapter.getItemCount() - 1);
         verify(message).setText(anyString());
-        verify(timestamp).setVisibility(View.GONE);
+        assertEquals(0, params.height);
     }
 
     @Test
     public void bindViewHolderMessageTimestamp() {
         adapter.onBindViewHolder(getMockedViewHolder(), adapter.getItemCount() - 2);
         verify(message).setText(anyString());
-        verify(timestamp).setVisibility(View.VISIBLE);
+        assertEquals(1, params.height);
     }
 
     private MessageViewHolder getMockedViewHolder() {
