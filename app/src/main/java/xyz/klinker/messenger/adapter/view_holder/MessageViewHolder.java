@@ -175,7 +175,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (message != null) {
             message.setOnLongClickListener(messageOptions);
             message.setOnClickListener(clickListener);
-            messageHolder.setOnClickListener(clickListener);
+
+            if (messageHolder != null) {
+                messageHolder.setOnClickListener(clickListener);
+            }
+            
             message.setOnTouchListener(new ForcedRippleTouchListener(message));
             message.setHapticFeedbackEnabled(false);
         }
