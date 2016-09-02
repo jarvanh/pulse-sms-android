@@ -149,7 +149,7 @@ public class DataSource {
     /**
      * Opens the database.
      */
-    public void open() {
+    public synchronized void open() {
         if (openCounter.incrementAndGet() == 1) {
             database = dbHelper.getWritableDatabase();
         }
@@ -165,7 +165,7 @@ public class DataSource {
     /**
      * Closes the database.
      */
-    public void close() {
+    public synchronized void close() {
         if (openCounter.decrementAndGet() == 0) {
             dbHelper.close();
         }
