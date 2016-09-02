@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
@@ -220,6 +222,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                             return;
                         }
 
+                        dismissKeyboard(editText);
                         displayDateDialog(message);
                     }
                 })
@@ -287,6 +290,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private void saveMessage(final ScheduledMessage message) {
         source.insertScheduledMessage(message);
         loadMessages();
+    }
+
+    private void dismissKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager)
+                getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
 }
