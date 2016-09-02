@@ -351,25 +351,29 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void updateConversation(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        Conversation conversation = new Conversation();
-        conversation.id = json.getLong("id");
-        conversation.title = encryptionUtils.decrypt(json.getString("title"));
-        conversation.colors.color = json.getInt("color");
-        conversation.colors.colorDark = json.getInt("color_dark");
-        conversation.colors.colorLight = json.getInt("color_light");
-        conversation.colors.colorAccent = json.getInt("color_accent");
-        conversation.pinned = json.getBoolean("pinned");
-        conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
-                json.getString("ringtone") : null);
-        conversation.mute = json.getBoolean("mute");
-        conversation.read = json.getBoolean("read");
+        try {
+            Conversation conversation = new Conversation();
+            conversation.id = json.getLong("id");
+            conversation.title = encryptionUtils.decrypt(json.getString("title"));
+            conversation.colors.color = json.getInt("color");
+            conversation.colors.colorDark = json.getInt("color_dark");
+            conversation.colors.colorLight = json.getInt("color_light");
+            conversation.colors.colorAccent = json.getInt("color_accent");
+            conversation.pinned = json.getBoolean("pinned");
+            conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
+                    json.getString("ringtone") : null);
+            conversation.mute = json.getBoolean("mute");
+            conversation.read = json.getBoolean("read");
 
-        source.updateConversationSettings(conversation);
+            source.updateConversationSettings(conversation);
 
-        if (conversation.read) {
-            source.readConversation(context, conversation.id);
+            if (conversation.read) {
+                source.readConversation(context, conversation.id);
+            }
+            Log.v(TAG, "updated conversation");
+        } catch (RuntimeException e) {
+            Log.e(TAG, "failed to update conversation b/c of decrypting data");
         }
-        Log.v(TAG, "updated conversation");
     }
 
     private void removeConversation(JSONObject json, DataSource source) throws JSONException {
