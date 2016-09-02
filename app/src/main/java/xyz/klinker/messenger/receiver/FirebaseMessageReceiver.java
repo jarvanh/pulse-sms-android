@@ -98,6 +98,14 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             source.open();
             source.setUpload(false);
 
+            if (!source.isOpen()) {
+                // this happens sometimes, for some reason... so lets close it down to get rid of
+                // the current instance and open up a new one, I guess
+
+                source.close();
+                source.open();
+            }
+
             switch (operation) {
                 case "removed_account":
                     removeAccount(json, source, context);
