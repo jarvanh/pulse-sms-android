@@ -53,8 +53,6 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     @Mock
     private MessageListFragment fragment;
     @Mock
-    private Resources resources;
-    @Mock
     private LinearLayoutManager manager;
     @Mock
     private TextView message;
@@ -71,8 +69,6 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        when(fragment.getResources()).thenReturn(resources);
-        when(resources.getDimensionPixelSize(anyInt())).thenReturn(1);
         when(timestamp.getLayoutParams()).thenReturn(params);
         adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager, fragment);
     }
@@ -148,8 +144,10 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void bindViewHolderMessageTimestamp() {
+        adapter.setTimestampHeight(1);
         adapter.onBindViewHolder(getMockedViewHolder(), adapter.getItemCount() - 2);
         verify(message).setText(anyString());
+        verify(timestamp).setText(anyString());
         assertEquals(1, params.height);
     }
 
@@ -321,7 +319,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "so maybe not going to be able to get platinum huh? haha",
-                System.currentTimeMillis() - (1000 * 60 * 16),
+                System.currentTimeMillis() - (1000 * 60 * 18),
                 "text/plain",
                 1,
                 1,

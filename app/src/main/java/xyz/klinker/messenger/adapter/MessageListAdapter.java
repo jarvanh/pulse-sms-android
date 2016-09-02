@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,7 +79,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         int color;
 
         if (timestampHeight == 0) {
-            timestampHeight = parent.getResources().getDimensionPixelSize(R.dimen.timestamp_height);
+            setTimestampHeight(parent.getResources()
+                    .getDimensionPixelSize(R.dimen.timestamp_height));
         }
 
         if (viewType == Message.TYPE_RECEIVED) {
@@ -107,6 +109,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         return new MessageViewHolder(fragment, view, color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
                 viewType, timestampHeight);
+    }
+
+    @VisibleForTesting
+    void setTimestampHeight(int height) {
+        this.timestampHeight = height;
     }
 
     @Override
