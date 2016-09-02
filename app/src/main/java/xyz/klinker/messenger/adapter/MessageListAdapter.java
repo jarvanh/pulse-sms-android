@@ -69,13 +69,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         this.isGroup = isGroup;
         this.manager = manager;
         this.fragment = fragment;
-        timestampHeight = fragment.getResources().getDimensionPixelSize(R.dimen.timestamp_height);
+        this.timestampHeight = 0;
     }
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layoutId;
         int color;
+
+        if (timestampHeight == 0) {
+            timestampHeight = parent.getResources().getDimensionPixelSize(R.dimen.timestamp_height);
+        }
 
         if (viewType == Message.TYPE_RECEIVED) {
             layoutId = R.layout.message_received;
