@@ -36,6 +36,8 @@ import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
 
+import java.util.regex.Pattern;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
@@ -49,6 +51,11 @@ import xyz.klinker.messenger.util.TimeUtils;
  * Adapter for displaying messages in a conversation.
  */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> {
+
+    public static final Pattern PHONE = Pattern.compile(
+            "(\\+[0-9]+[\\- \\.]*)?"
+                    + "(\\([0-9]+\\)[\\- \\.]*)?"
+                    + "([0-9][0-9\\- \\.]+[0-9]{3,})");
 
     private Cursor messages;
     private int receivedColor;
@@ -125,7 +132,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 }
             });
 
-            Link phoneNumbers = new Link(Patterns.PHONE);
+            Link phoneNumbers = new Link(PHONE);
             phoneNumbers.setTextColor(accentColor);
             phoneNumbers.setHighlightAlpha(.4f);
             phoneNumbers.setOnClickListener(new Link.OnClickListener() {
