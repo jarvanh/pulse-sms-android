@@ -17,8 +17,14 @@
 <changelog>
 
     <version
+        name="1.2"
+        description="September 3rd, 2016">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="1.1"
-        description="August 30th, 2016">
+        description="September 2nd, 2016">
         <text>Click on message to display timestamp</text>
         <text>Server response time improvements</text>
         <text>Opposite swipe-to-delete direction</text>
