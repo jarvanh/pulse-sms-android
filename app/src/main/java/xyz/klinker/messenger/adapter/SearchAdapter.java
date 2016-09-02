@@ -200,7 +200,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(layoutId, parent, false);
 
-            holder = new MessageViewHolder(null, view, color, -1);
+            holder = new MessageViewHolder(null, view, color, -1, viewType, 0);
         }
 
         return holder;

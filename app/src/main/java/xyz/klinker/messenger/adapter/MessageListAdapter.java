@@ -59,6 +59,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
     private boolean isGroup;
     private LinearLayoutManager manager;
     private MessageListFragment fragment;
+    private int timestampHeight;
 
     public MessageListAdapter(Cursor messages, int receivedColor, int accentColor, boolean isGroup,
                               LinearLayoutManager manager, MessageListFragment fragment) {
@@ -68,6 +69,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         this.isGroup = isGroup;
         this.manager = manager;
         this.fragment = fragment;
+        timestampHeight = fragment.getResources().getDimensionPixelSize(R.dimen.timestamp_height);
     }
 
     @Override
@@ -99,7 +101,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
         messages.moveToFirst();
         return new MessageViewHolder(fragment, view, color,
-                messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)));
+                messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
+                viewType, timestampHeight);
     }
 
     @Override
@@ -231,12 +234,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
             nextTimestamp = System.currentTimeMillis();
         }
 
+        holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+                message.timestamp));
+
         if (TimeUtils.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
-            holder.timestamp.setVisibility(View.VISIBLE);
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
-                    message.timestamp));
+            holder.timestamp.getLayoutParams().height = timestampHeight;
         } else {
-            holder.timestamp.setVisibility(View.GONE);
+            holder.timestamp.getLayoutParams().height = 0;
         }
 
         if (isGroup && holder.contact != null && message.from != null) {
@@ -244,7 +248,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                 holder.contact.setVisibility(View.VISIBLE);
             }
 
-            int label = holder.timestamp.getVisibility() == View.VISIBLE ?
+            int label = holder.timestamp.getLayoutParams().height > 0 ?
                     R.string.message_from_bullet : R.string.message_from;
             holder.contact.setText(holder.contact.getResources().getString(label, message.from));
         }

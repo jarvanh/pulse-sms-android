@@ -71,7 +71,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/timestamp_height"
             android:textSize="12sp"
             android:textColor="@color/secondaryText"
             android:layout_marginStart="2dp"

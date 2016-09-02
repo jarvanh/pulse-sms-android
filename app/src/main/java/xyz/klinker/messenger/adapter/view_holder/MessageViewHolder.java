@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.animation.ValueAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -23,8 +24,12 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,11 +57,35 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public ImageView image;
     public View messageHolder;
     public long messageId;
+    private int type;
+    private int timestampHeight;
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (type == Message.TYPE_INFO) {
+                return;
+            }
 
+            ValueAnimator animator;
+            if (timestamp.getHeight() > 0) {
+                animator = ValueAnimator.ofInt(timestampHeight, 0);
+                animator.setInterpolator(new AccelerateInterpolator());
+            } else {
+                animator = ValueAnimator.ofInt(0, timestampHeight);
+                animator.setInterpolator(new DecelerateInterpolator());
+            }
+
+            final ViewGroup.LayoutParams params = timestamp.getLayoutParams();
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    params.height = (Integer) animation.getAnimatedValue();
+                    timestamp.requestLayout();
+                }
+            });
+            animator.setDuration(100);
+            animator.start();
         }
     };
 
@@ -110,10 +139,13 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         }
     };
 
-    public MessageViewHolder(final MessageListFragment fragment, final View itemView, int color, final long conversationId) {
+    public MessageViewHolder(final MessageListFragment fragment, final View itemView,
+                             int color, final long conversationId, int type, int timestampHeight) {
         super(itemView);
 
         this.fragment = fragment;
+        this.type = type;
+        this.timestampHeight = timestampHeight;
 
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);
@@ -143,6 +175,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (message != null) {
             message.setOnLongClickListener(messageOptions);
             message.setOnClickListener(clickListener);
+            messageHolder.setOnClickListener(clickListener);
             message.setOnTouchListener(new ForcedRippleTouchListener(message));
             message.setHapticFeedbackEnabled(false);
         }
@@ -183,4 +216,5 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         Toast.makeText(message.getContext(), R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show();
     }
+
 }
