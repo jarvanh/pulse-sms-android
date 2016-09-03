@@ -87,6 +87,7 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
 import xyz.klinker.messenger.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
+import xyz.klinker.messenger.util.listener.TextSelectedListener;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
@@ -99,7 +100,7 @@ import static android.app.Activity.RESULT_OK;
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener, AudioRecordedListener {
+        ImageSelectedListener, AudioRecordedListener, TextSelectedListener {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -828,7 +829,7 @@ public class MessageListFragment extends Fragment implements
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachLocationView(getActivity(), this,
+            attachHolder.addView(new AttachLocationView(getActivity(), this, this,
                     getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
@@ -928,6 +929,11 @@ public class MessageListFragment extends Fragment implements
         attachAudio(uri);
     }
 
+    @Override
+    public void onTextSelected(String text) {
+        messageEntry.setText(text);
+    }
+
     private void attachImage(Uri uri) {
         clearAttachedData();
         attachedUri = uri;
@@ -984,4 +990,5 @@ public class MessageListFragment extends Fragment implements
     public boolean isRecyclerScrolling() {
         return messageList != null && messageList.getScrollState() != RecyclerView.SCROLL_STATE_IDLE;
     }
+
 }
