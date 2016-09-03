@@ -59,10 +59,7 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
                         Message m = new Message();
                         m.fillFromCursor(messages);
 
-                        Conversation conversation = source.getConversation(m.conversationId);
-
-                        if ((!m.mimeType.equals(MimeType.TEXT_PLAIN) || conversation.isGroup()) &&
-                                m.type == Message.TYPE_SENDING) {
+                        if (m.type == Message.TYPE_SENDING) {
                             source.updateMessageType(m.id, Message.TYPE_SENT);
 
                             MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
