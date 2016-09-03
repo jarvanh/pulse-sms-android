@@ -626,6 +626,10 @@ public class DataSource {
             builder.append("<b>Size: </b>");
             builder.append(Formatter.formatShortFileSize(context, bytes.length));
             builder.append("<br/>");
+
+            builder.append("<b>Media Type: </b>");
+            builder.append(message.mimeType);
+            builder.append("<br/>");
         }
 
         // remove the last <br/>
