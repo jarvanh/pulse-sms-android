@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
@@ -48,6 +49,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
@@ -65,6 +67,8 @@ import xyz.klinker.messenger.util.listener.ContactClickedListener;
  * Activity to display UI for creating a new conversation.
  */
 public class ComposeActivity extends AppCompatActivity implements ContactClickedListener {
+
+    private static final String TAG = "ComposeActivity";
 
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
@@ -267,6 +271,9 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                 data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            } else if (MimeType.isVcard(mimeType)) {
+                data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                Log.v(TAG, "got vcard at: " + data);
             } else {
                 String tempData = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
                 try {
@@ -281,7 +288,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     e.printStackTrace();
                     data = tempData;
                 }
-
             }
 
             setupSend(data, mimeType);
@@ -325,10 +331,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         if (mimeType.equals(MimeType.TEXT_PLAIN)) {
             SendUtils.send(this, data, phoneNumbers);
         } else {
-            Uri imageUri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
+            Uri uri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
             Cursor cursor = source.searchMessages(data);
             if (cursor != null && cursor.moveToFirst()) {
-                source.updateMessageData(cursor.getLong(0), imageUri.toString());
+                source.updateMessageData(cursor.getLong(0), uri.toString());
                 cursor.close();
             }
         }

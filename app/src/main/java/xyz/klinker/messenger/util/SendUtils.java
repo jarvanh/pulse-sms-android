@@ -88,6 +88,7 @@ public class SendUtils {
         while ((len = stream.read(buffer)) != -1) {
             byteBuffer.write(buffer, 0, len);
         }
+
         return byteBuffer.toByteArray();
     }
 

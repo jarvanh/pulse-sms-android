@@ -123,6 +123,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         message.fillFromCursor(messages);
 
         holder.messageId = message.id;
+        holder.mimeType = message.mimeType;
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
@@ -224,6 +225,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
                         .error(placeholder)
                         .placeholder(placeholder)
                         .into(holder.image);
+            } else if (MimeType.isVcard(message.mimeType)) {
+                holder.message.setText(message.data);
+                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+                        R.drawable.ic_contacts_sent : R.drawable.ic_contacts);
             } else {
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
             }

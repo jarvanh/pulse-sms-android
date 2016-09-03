@@ -26,6 +26,8 @@ public class MimeType {
 
     public static final String TEXT_PLAIN = "text/plain";
     public static final String TEXT_HTML = "text/html";
+    public static final String TEXT_VCARD = "text/vcard";
+    public static final String TEXT_X_VCARD = "text/x-vcard";
     public static final String IMAGE_JPEG = "image/jpeg";
     public static final String IMAGE_BMP = "image/bmp";
     public static final String IMAGE_JPG = "image/jpg";
@@ -46,6 +48,8 @@ public class MimeType {
         extensions = new HashMap<>();
         extensions.put(TEXT_PLAIN, "txt");
         extensions.put(TEXT_HTML, "html");
+        extensions.put(TEXT_VCARD, "vcf");
+        extensions.put(TEXT_X_VCARD, "vcf");
         extensions.put(IMAGE_JPEG, "jpg");
         extensions.put(IMAGE_BMP, "bmp");
         extensions.put(IMAGE_JPG, "jpg");
@@ -69,6 +73,8 @@ public class MimeType {
      */
     public static boolean isSupported(String mimeType) {
         return mimeType.equals(TEXT_PLAIN) ||
+                mimeType.equals(TEXT_VCARD) ||
+                mimeType.equals(TEXT_X_VCARD) ||
                 mimeType.equals(IMAGE_JPEG) ||
                 mimeType.equals(IMAGE_BMP) ||
                 mimeType.equals(IMAGE_JPG) ||
@@ -85,10 +91,17 @@ public class MimeType {
     }
 
     /**
+     * Gets whether the mime type is a vcard extension.
+     */
+    public static boolean isVcard(String mimeType) {
+        return mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD);
+    }
+
+    /**
      * Gets whether the mime type is a supported static image (not a gif).
      */
     public static boolean isStaticImage(String mimeType) {
-        return mimeType.startsWith("image/") && !mimeType.equals(MimeType.IMAGE_GIF);
+        return mimeType.startsWith("image/") && !mimeType.equals(IMAGE_GIF);
     }
 
     /**

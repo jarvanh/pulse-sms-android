@@ -22,6 +22,8 @@ import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,12 +36,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -57,6 +65,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public ImageView image;
     public View messageHolder;
     public long messageId;
+    public String mimeType;
     private int type;
     private int timestampHeight;
 
@@ -161,10 +170,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
-                    intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
-                    intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
-                    itemView.getContext().startActivity(intent);
+                    if (mimeType != null && MimeType.isVcard(mimeType)) {
+                        Uri uri = Uri.parse(message.getText().toString());
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(uri, MimeType.TEXT_VCARD);
+                        itemView.getContext().startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
+                        intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
+                        intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+                        itemView.getContext().startActivity(intent);
+                    }
                 }
             });
 

@@ -121,7 +121,8 @@
     <string name="copy_message">Copy Message</string>
 
     <!-- Compose Screen -->
-    <string name="enter_contact_name">Enter Contact Name</string>
+    <string name="enter_contact_name">Enter contact name</string>
+    <string name="error_processing_vcard">Error processing vcard</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

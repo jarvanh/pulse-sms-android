@@ -35,6 +35,16 @@ public class MimeTypeTest {
     }
 
     @Test
+    public void textVcardSuppported() {
+        assertTrue(MimeType.isSupported(MimeType.TEXT_VCARD));
+    }
+
+    @Test
+    public void textXVcardSuppported() {
+        assertTrue(MimeType.isSupported(MimeType.TEXT_X_VCARD));
+    }
+
+    @Test
     public void imageJpegSupported() {
         assertTrue(MimeType.isSupported(MimeType.IMAGE_JPEG));
     }
@@ -95,12 +105,23 @@ public class MimeTypeTest {
     }
 
     @Test
+    public void isVcard() {
+        assertTrue(MimeType.isVcard(MimeType.TEXT_VCARD));
+        assertTrue(MimeType.isVcard(MimeType.TEXT_X_VCARD));
+        assertFalse(MimeType.isVcard(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isVcard(MimeType.TEXT_HTML));
+        assertFalse(MimeType.isVcard(MimeType.IMAGE_JPEG));
+    }
+
+    @Test
     public void isStaticImage() {
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_BMP));
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPEG));
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_JPG));
         assertTrue(MimeType.isStaticImage(MimeType.IMAGE_PNG));
         assertFalse(MimeType.isStaticImage(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isStaticImage(MimeType.TEXT_VCARD));
+        assertFalse(MimeType.isStaticImage(MimeType.TEXT_X_VCARD));
         assertFalse(MimeType.isStaticImage(MimeType.IMAGE_GIF));
         assertFalse(MimeType.isStaticImage(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isStaticImage(MimeType.VIDEO_MP4));
@@ -114,6 +135,8 @@ public class MimeTypeTest {
         assertTrue(MimeType.isVideo(MimeType.VIDEO_MPEG));
         assertFalse(MimeType.isVideo(MimeType.IMAGE_JPEG));
         assertFalse(MimeType.isVideo(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isVideo(MimeType.TEXT_VCARD));
+        assertFalse(MimeType.isVideo(MimeType.TEXT_X_VCARD));
         assertFalse(MimeType.isVideo(MimeType.IMAGE_GIF));
         assertFalse(MimeType.isVideo(MimeType.AUDIO_MP4));
     }
@@ -127,6 +150,8 @@ public class MimeTypeTest {
         assertTrue(MimeType.isAudio(MimeType.AUDIO_WAV));
         assertFalse(MimeType.isAudio(MimeType.IMAGE_JPEG));
         assertFalse(MimeType.isAudio(MimeType.TEXT_PLAIN));
+        assertFalse(MimeType.isAudio(MimeType.TEXT_VCARD));
+        assertFalse(MimeType.isAudio(MimeType.TEXT_X_VCARD));
         assertFalse(MimeType.isAudio(MimeType.IMAGE_GIF));
         assertFalse(MimeType.isAudio(MimeType.VIDEO_MP4));
     }
@@ -139,6 +164,16 @@ public class MimeTypeTest {
     @Test
     public void extensionHtml() {
         assertEquals(".html", MimeType.getExtension(MimeType.TEXT_HTML));
+    }
+
+    @Test
+    public void extensionVcard() {
+        assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_VCARD));
+    }
+
+    @Test
+    public void extensionXVcard() {
+        assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_X_VCARD));
     }
 
     @Test
