@@ -70,6 +70,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
     private TextSelectedListener textListener;
     private MapFragment mapFragment;
     private GoogleMap map;
+    private LocationManager locationManager;
     private double latitude;
     private double longitude;
 
@@ -125,7 +126,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
         try {
             googleMap.setMyLocationEnabled(true);
 
-            LocationManager locationManager = (LocationManager)
+           locationManager = (LocationManager)
                     getContext().getSystemService(Context.LOCATION_SERVICE);
 
             Criteria criteria = new Criteria();
@@ -152,6 +153,14 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                     .remove(mapFragment)
                     .commit();
         }
+
+        if (locationManager != null) {
+            try {
+                locationManager.removeUpdates(this);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void updateLatLong(double latitude, double longitude) {
@@ -159,6 +168,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
             this.latitude = latitude;
             this.longitude = longitude;
 
+            map.clear();
             LatLng position = new LatLng(latitude, longitude);
             MarkerOptions marker = new MarkerOptions().position(position);
             map.addMarker(marker);
