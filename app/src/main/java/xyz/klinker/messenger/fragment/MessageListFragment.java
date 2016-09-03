@@ -240,6 +240,7 @@ public class MessageListFragment extends Fragment implements
         initToolbar();
         initRecycler();
 
+        dismissNotification = true;
         dismissNotification();
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
