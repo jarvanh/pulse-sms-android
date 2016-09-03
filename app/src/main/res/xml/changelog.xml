@@ -19,6 +19,8 @@
     <version
         name="1.2"
         description="September 3rd, 2016">
+        <text>Quick reply from notification</text>
+        <text>Share location</text>
         <text>Bug fixes</text>
     </version>
 
