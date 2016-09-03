@@ -645,9 +645,10 @@ public class MessageListFragment extends Fragment implements
                     });
 
                     if (!getArguments().getBoolean(ARG_IS_GROUP)) {
-                        final String name = ContactUtils.findContactNames(
-                                getArguments().getString(ARG_PHONE_NUMBERS), getActivity());
-                        if (!name.equals(getArguments().getString(ARG_TITLE))) {
+                        String number = getArguments().getString(ARG_PHONE_NUMBERS);
+                        final String name = ContactUtils.findContactNames(number, getActivity());
+                        if (!name.equals(getArguments().getString(ARG_TITLE)) &&
+                                !PhoneNumberUtils.checkEquality(name, number)) {
                             Log.v(TAG, "contact name and conversation name do not match, updating");
                             source.updateConversationTitle(
                                     getArguments().getLong(ARG_CONVERSATION_ID), name);
