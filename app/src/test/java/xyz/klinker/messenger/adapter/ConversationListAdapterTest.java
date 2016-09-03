@@ -67,6 +67,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private TextView summary;
     @Mock
     private TextView imageLetter;
+    @Mock
+    private View unreadIndicator;
 
     @Before
     public void setUp() {
@@ -271,6 +273,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         holder.name = name;
         holder.summary = summary;
         holder.imageLetter = imageLetter;
+        holder.unreadIndicator = unreadIndicator;
 
         return holder;
     }
