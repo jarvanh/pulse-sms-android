@@ -195,6 +195,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void updateConversationTitle() {
+        source.updateConversationTitle(0L, "test");
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"0"}));
+    }
+
+    @Test
     public void getConversationCount() {
         when(database.query("conversation", null, null, null, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);

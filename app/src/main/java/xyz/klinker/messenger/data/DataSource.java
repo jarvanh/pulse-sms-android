@@ -497,6 +497,21 @@ public class DataSource {
     }
 
     /**
+     * Updates the conversation title for a given conversation. Handly when the user has changed
+     * the contact's name.
+     */
+    public void updateConversationTitle(long conversationId, String title) {
+        ContentValues values = new ContentValues(1);
+        values.put(Conversation.COLUMN_TITLE, title);
+
+        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[] {Long.toString(conversationId)});
+
+        apiUtils.updateConversation(accountId, conversationId, null, null, null, null,
+                null, null, null, title, null, null, null, encryptionUtils);
+    }
+
+    /**
      * Gets the number of conversations in the database.
      */
     public int getConversationCount() {

@@ -84,6 +84,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -104,6 +105,7 @@ import static android.app.Activity.RESULT_OK;
 public class MessageListFragment extends Fragment implements
         ImageSelectedListener, AudioRecordedListener, TextSelectedListener {
 
+    private static final String TAG = "MessageListFragment";
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
     private static final String ARG_COLOR = "color";
@@ -641,6 +643,22 @@ public class MessageListFragment extends Fragment implements
                             });
                         }
                     });
+
+                    if (!getArguments().getBoolean(ARG_IS_GROUP)) {
+                        final String name = ContactUtils.findContactNames(
+                                getArguments().getString(ARG_PHONE_NUMBERS), getActivity());
+                        if (!name.equals(getArguments().getString(ARG_TITLE))) {
+                            Log.v(TAG, "contact name and conversation name do not match, updating");
+                            source.updateConversationTitle(
+                                    getArguments().getLong(ARG_CONVERSATION_ID), name);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    toolbar.setTitle(name);
+                                }
+                            });
+                        }
+                    }
                 }
 
                 try {

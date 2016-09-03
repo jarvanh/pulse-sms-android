@@ -170,6 +170,13 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void updateConversationSettings() {
+        source.updateConversationTitle(1, "test title");
+        Conversation conversation = source.getConversation(1);
+        assertEquals("test title", conversation.title);
+    }
+
+    @Test
     public void updateConversationImage() {
         source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
                 MimeType.IMAGE_PNG);
