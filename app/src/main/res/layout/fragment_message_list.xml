@@ -231,6 +231,17 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp" />
 
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/white"
+                    android:id="@+id/attach_location"
+                    android:contentDescription="@string/attach_location"
+                    android:src="@drawable/ic_location"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
+
             </LinearLayout>
 
         </LinearLayout>

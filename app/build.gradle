@@ -126,7 +126,6 @@ dependencies {
     compile 'com.larswerkman:lobsterpicker:1.0.1'
     compile 'com.github.chrisbanes:PhotoView:1.2.7'
     compile "com.google.firebase:firebase-crash:${FIREBASE_VERSION}"
-    compile "com.google.android.gms:play-services:${GOOGLE_PLAY_SERVICES_VERSION}"
     compile "com.google.android.gms:play-services-maps:${GOOGLE_PLAY_SERVICES_VERSION}"
 
     compile project(":api_implementation")

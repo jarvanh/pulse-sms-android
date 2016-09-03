@@ -88,6 +88,7 @@ import xyz.klinker.messenger.util.SendUtils;
 import xyz.klinker.messenger.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AttachImageView;
+import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 import xyz.klinker.messenger.view.RecordAudioView;
@@ -116,6 +117,7 @@ public class MessageListFragment extends Fragment implements
     private static final int PERMISSION_AUDIO_REQUEST = 2;
     private static final int RESULT_VIDEO_REQUEST = 3;
     private static final int RESULT_GIPHY_REQUEST = 4;
+    private static final int PERMISSION_LOCATION_REQUEST = 5;
 
     private DataSource source;
     private View appBarLayout;
@@ -137,6 +139,7 @@ public class MessageListFragment extends Fragment implements
     private ImageButton attachGif;
     private ImageButton recordVideo;
     private ImageButton recordAudio;
+    private ImageButton attachLocation;
     private View attachedImageHolder;
     private ImageView attachedImage;
     private View removeImage;
@@ -200,6 +203,7 @@ public class MessageListFragment extends Fragment implements
         attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
         recordVideo = (ImageButton) view.findViewById(R.id.record_video);
         recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
+        attachLocation = (ImageButton) view.findViewById(R.id.attach_location);
         attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
         removeImage = view.findViewById(R.id.remove_image);
@@ -526,6 +530,13 @@ public class MessageListFragment extends Fragment implements
                 recordAudio();
             }
         });
+
+        attachLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attachLocation();
+            }
+        });
     }
 
     private void initRecycler() {
@@ -808,6 +819,17 @@ public class MessageListFragment extends Fragment implements
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO);
+        }
+    }
+
+    private void attachLocation() {
+        prepareAttachHolder(5);
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            attachHolder.addView(new AttachLocationView(getActivity(), this));
+        } else {
+            attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 

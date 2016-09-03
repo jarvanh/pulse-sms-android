@@ -97,6 +97,7 @@
     <string name="attach_gif">Attach GIF</string>
     <string name="record_video">Record Video</string>
     <string name="record_audio">Record Audio</string>
+    <string name="attach_location">Attach Location</string>
     <string name="camera_permission_needed">The camera permission needs to be granted to take
         pictures!</string>
     <string name="take_picture">Snap Picture</string>
