@@ -55,13 +55,28 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/timestamp_height"
-        android:textSize="12sp"
-        android:textColor="@color/secondaryText"
-        android:id="@+id/timestamp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/timestamp_height"
+            android:textSize="12sp"
+            android:textColor="@color/secondaryText"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/timestamp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/secondaryText"
+            android:text="@string/failed" />
+
+    </LinearLayout>
 
 </LinearLayout>

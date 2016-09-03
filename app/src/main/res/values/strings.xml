@@ -90,6 +90,7 @@
     <string name="mms_image">MMS Image</string>
     <string name="now">Now</string>
     <string name="sending">Sending…</string>
+    <string name="failed">Failed</string>
     <string name="delivered">Message delivered</string>
     <string name="attach_image">Attach Image</string>
     <string name="capture_image">Capture Image</string>

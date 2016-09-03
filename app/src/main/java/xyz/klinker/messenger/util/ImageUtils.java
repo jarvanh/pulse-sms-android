@@ -194,7 +194,7 @@ public class ImageUtils {
                         (int) (bitmap.getWidth() * SCALE_RATIO),
                         (int) (bitmap.getHeight() * SCALE_RATIO),
                         false);
-            } catch (OutOfMemoryError e) {
+            } catch (Throwable e) {
                 return file;
             }
 

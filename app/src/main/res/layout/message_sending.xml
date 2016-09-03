@@ -67,7 +67,7 @@
             android:layout_height="@dimen/timestamp_height"
             android:textSize="12sp"
             android:textColor="@color/secondaryText"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="8dp"
             android:id="@+id/timestamp" />
 
         <TextView

@@ -584,6 +584,29 @@ public class DataSource {
                 .format(new Date(message.timestamp)));
         builder.append("<br/>");
 
+        builder.append("<b>Status: </b>");
+        switch(message.type) {
+            case Message.TYPE_SENT:
+                builder.append("Sent");
+                break;
+            case Message.TYPE_SENDING:
+                builder.append("Sending");
+                break;
+            case Message.TYPE_ERROR:
+                builder.append("Failed");
+                break;
+            case Message.TYPE_DELIVERED:
+                builder.append("Delivered");
+                break;
+            case Message.TYPE_RECEIVED:
+                builder.append("Received");
+                break;
+            case Message.TYPE_INFO:
+                builder.append("Info");
+                break;
+        }
+        builder.append("<br/>");
+
 //        builder.append("<b>Read: </b>");
 //        builder.append(message.read);
 //        builder.append("<br/>");
