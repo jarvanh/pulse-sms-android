@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.util;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.File;
@@ -59,6 +60,28 @@ public class FileUtils {
         }
         in.close();
         out.close();
+    }
+
+    public static void writeBitmap(File file, Bitmap bmp) {
+        FileOutputStream out = null;
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

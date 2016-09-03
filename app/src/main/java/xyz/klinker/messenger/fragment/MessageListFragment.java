@@ -825,10 +825,14 @@ public class MessageListFragment extends Fragment implements
     private void attachLocation() {
         prepareAttachHolder(5);
         if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachLocationView(getActivity(), this));
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            attachHolder.addView(new AttachLocationView(getActivity(), this,
+                    getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
@@ -851,6 +855,8 @@ public class MessageListFragment extends Fragment implements
             attachImage();
         } else if (requestCode == PERMISSION_AUDIO_REQUEST) {
             recordAudio();
+        } else if (requestCode == PERMISSION_LOCATION_REQUEST) {
+            attachLocation();
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
