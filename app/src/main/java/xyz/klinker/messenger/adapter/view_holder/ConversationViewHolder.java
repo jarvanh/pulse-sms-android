@@ -20,6 +20,7 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,6 +40,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView name;
     public TextView summary;
     public TextView imageLetter;
+    public View unreadIndicator;
     public CheckBox checkBox;
     public Conversation conversation;
 
@@ -56,6 +58,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
         imageLetter = (TextView) itemView.findViewById(R.id.image_letter);
+        unreadIndicator = itemView.findViewById(R.id.unread_indicator);
         checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +96,11 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         if (bold) {
             name.setTypeface(Typeface.DEFAULT_BOLD);
             summary.setTypeface(Typeface.DEFAULT_BOLD);
+            unreadIndicator.setVisibility(View.VISIBLE);
         } else {
             name.setTypeface(Typeface.DEFAULT);
             summary.setTypeface(Typeface.DEFAULT);
+            unreadIndicator.setVisibility(View.GONE);
         }
     }
 
