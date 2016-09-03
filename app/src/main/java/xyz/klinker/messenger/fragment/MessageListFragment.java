@@ -50,6 +50,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -71,6 +72,7 @@ import java.util.List;
 import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
@@ -324,6 +326,29 @@ public class MessageListFragment extends Fragment implements
                 }
             });
         }
+
+        toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
+                R.menu.fragment_messages_group : R.menu.fragment_messages);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.menu_call) {
+                    try {
+                        ((MessengerActivity) getActivity()).callContact();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (item.getItemId() == R.id.menu_contact_settings) {
+                    DrawerLayout drawerLayout = (DrawerLayout) getActivity()
+                            .findViewById(R.id.drawer_layout);
+                    if (drawerLayout != null) {
+                        drawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }
+
+                return true;
+            }
+        });
 
         setNameAndDrawerColor(getActivity());
         ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);

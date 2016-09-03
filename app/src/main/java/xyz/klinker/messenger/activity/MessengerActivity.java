@@ -502,7 +502,7 @@ public class MessengerActivity extends AppCompatActivity
      * message list drawer options                                  *
      *****************************************************************/
 
-    private boolean callContact() {
+    public boolean callContact() {
         if (conversationListFragment.isExpanded()) {
             String uri = "tel:" +
                     conversationListFragment.getExpandedItem().conversation.phoneNumbers;
