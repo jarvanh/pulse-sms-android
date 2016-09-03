@@ -64,7 +64,8 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 public class AttachLocationView extends FrameLayout implements OnMapReadyCallback,
         LocationListener {
 
-    private FloatingActionButton done;
+    private static final String TAG = "AttachLocationView";
+
     private ImageSelectedListener imageListener;
     private TextSelectedListener textListener;
     private MapFragment mapFragment;
@@ -77,6 +78,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
         super(context);
 
         this.imageListener = imageListener;
+        this.textListener = textListener;
         init(color);
     }
 
@@ -88,7 +90,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        done = (FloatingActionButton) findViewById(R.id.done);
+        FloatingActionButton done = (FloatingActionButton) findViewById(R.id.done);
         done.setBackgroundTintList(ColorStateList.valueOf(color));
 
         done.setOnClickListener(new OnClickListener() {
@@ -173,11 +175,14 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.v(TAG, "getting addresses");
+
                 Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                 List<Address> addresses = null;
 
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    Log.v(TAG, "got " + addresses.size() + " addresses");
                 } catch (IOException exception) {
                     Log.e(TAG, "service not available", exception);
                 } catch (IllegalArgumentException exception) {
@@ -186,18 +191,21 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
 
                 if (addresses != null && addresses.size() > 0) {
                     Address address = addresses.get(0);
-                    final ArrayList<String> addressFragments = new ArrayList<>();
+                    ArrayList<String> addressFragments = new ArrayList<>();
 
                     for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                         addressFragments.add(address.getAddressLine(i));
                     }
 
+                    final String a = TextUtils.join(System.getProperty("line.separator"),
+                            addressFragments);
+                    Log.v(TAG, "got address: " + a);
+
                     getHandler().post(new Runnable() {
                         @Override
                         public void run() {
-                            textListener.onTextSelected(
-                                    TextUtils.join(System.getProperty("line.separator"),
-                                    addressFragments));
+                            Log.v(TAG, "posting back to fragment");
+                            textListener.onTextSelected(a);
                         }
                     });
                 } else {
@@ -225,18 +233,6 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
     @Override
     public void onProviderDisabled(String provider) {
 
-    }
-
-    private final class Constants {
-        public static final int SUCCESS_RESULT = 0;
-        public static final int FAILURE_RESULT = 1;
-        public static final String PACKAGE_NAME =
-                "com.google.android.gms.location.sample.locationaddress";
-        public static final String RECEIVER = PACKAGE_NAME + ".RECEIVER";
-        public static final String RESULT_DATA_KEY = PACKAGE_NAME +
-                ".RESULT_DATA_KEY";
-        public static final String LOCATION_DATA_EXTRA = PACKAGE_NAME +
-                ".LOCATION_DATA_EXTRA";
     }
 
 }
