@@ -24,10 +24,4 @@
         android:title="@string/menu_call"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/menu_contact_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/menu_contact_settings"
-        app:showAsAction="always" />
-
 </menu>

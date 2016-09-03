@@ -333,8 +333,6 @@ public class MessengerActivity extends AppCompatActivity
                 return displayHelpAndFeedback();
             case R.id.drawer_about:
                 return displayAbout();
-            case R.id.drawer_call:
-                return callContact();
             case R.id.drawer_view_contact:
                 return viewContact();
             case R.id.drawer_delete_conversation:

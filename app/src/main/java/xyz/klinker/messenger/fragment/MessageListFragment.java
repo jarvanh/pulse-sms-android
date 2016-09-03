@@ -334,17 +334,7 @@ public class MessageListFragment extends Fragment implements
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.menu_call) {
-                    try {
-                        ((MessengerActivity) getActivity()).callContact();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (item.getItemId() == R.id.menu_contact_settings) {
-                    DrawerLayout drawerLayout = (DrawerLayout) getActivity()
-                            .findViewById(R.id.drawer_layout);
-                    if (drawerLayout != null) {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
+                    ((MessengerActivity) getActivity()).callContact();
                 }
 
                 return true;
