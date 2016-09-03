@@ -183,7 +183,9 @@ public class ContactUtils {
                             null);
 
             if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                return phonesCursor.getInt(0);
+                int id = phonesCursor.getInt(0);
+                phonesCursor.close();
+                return id;
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

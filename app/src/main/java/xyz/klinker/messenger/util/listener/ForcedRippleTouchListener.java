@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.util.listener;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ public class ForcedRippleTouchListener implements View.OnTouchListener {
     }
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             forceRippleAnimation(rippleView, event);
