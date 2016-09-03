@@ -697,7 +697,9 @@ public class DataSource {
      */
     public List<Message> getMediaMessages(long conversationId) {
         Cursor c = database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
-                        Message.COLUMN_MIME_TYPE + "!='text/plain'",
+                        Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
+                        Message.COLUMN_MIME_TYPE + "!='text/x-vcard' AND " +
+                        Message.COLUMN_MIME_TYPE + "!='text/vcard'",
                 new String[]{Long.toString(conversationId)}, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
 
@@ -916,7 +918,7 @@ public class DataSource {
         values.put(Message.COLUMN_FROM, message.from);
         values.put(Message.COLUMN_COLOR, message.color);
 
-        database.insert(Message.TABLE, null, values);
+        long id = database.insert(Message.TABLE, null, values);
 
         apiUtils.addMessage(context, accountId, message.id, conversationId, message.type, message.data,
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
