@@ -793,6 +793,27 @@ public class ApiUtils {
     }
 
     /**
+     * Dismiss a notification across all devices.
+     */
+    public void seenConvoTooltip(final String accountId, final boolean seen) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().seenConvoTooltip(accountId, seen);
+                if (response == null) {
+                    Log.e(TAG, "error marking seen convo tooltip");
+                } else {
+                    Log.v(TAG, "successfully marked seen convo tooltip");
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Gets direct access to the apis for more advanced options.
      */
     public Api getApi() {

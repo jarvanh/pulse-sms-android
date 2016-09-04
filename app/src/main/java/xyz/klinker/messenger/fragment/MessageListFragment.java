@@ -85,6 +85,7 @@ import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -95,6 +96,7 @@ import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
+import xyz.klinker.messenger.view.MaterialTooltip;
 import xyz.klinker.messenger.view.RecordAudioView;
 
 import static android.app.Activity.RESULT_OK;
@@ -157,6 +159,7 @@ public class MessageListFragment extends Fragment implements
     private String attachedMimeType;
 
     private AlertDialog detailsChoiceDialog;
+    private MaterialTooltip navToolTip;
 
     public static MessageListFragment newInstance(Conversation conversation) {
         return newInstance(conversation, -1);
@@ -257,6 +260,8 @@ public class MessageListFragment extends Fragment implements
         updatedReceiver = new MessageListUpdatedReceiver(this);
         getActivity().registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
+
+        showTooltip();
     }
 
     @Override
@@ -269,6 +274,10 @@ public class MessageListFragment extends Fragment implements
     public void onStop() {
         super.onStop();
         dismissNotification = false;
+
+        if (navToolTip != null && navToolTip.isShowing()) {
+            navToolTip.hide();
+        }
     }
 
     @Override
@@ -1025,4 +1034,23 @@ public class MessageListFragment extends Fragment implements
         return messageList != null && messageList.getScrollState() != RecyclerView.SCROLL_STATE_IDLE;
     }
 
+    public void showTooltip() {
+        if (!getResources().getBoolean(R.bool.pin_drawer) && !Settings.get(getActivity()).seenConvoNavToolTip) {
+            MaterialTooltip.Options options = new MaterialTooltip.Options(
+                    56 + 24 + 12,
+                    12, 275, getArguments().getInt(ARG_COLOR))
+                    .setText(getString(R.string.navigation_drawer_conversation_hint));
+
+            navToolTip = new MaterialTooltip(getActivity(), options);
+            navToolTip.show(new MaterialTooltip.Callback() {
+                @Override
+                public void onGotIt() {
+                    Settings.get(getActivity())
+                            .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
+
+                    new ApiUtils().seenConvoTooltip(Settings.get(getActivity()).accountId, true);
+                }
+            });
+        }
+    }
 }

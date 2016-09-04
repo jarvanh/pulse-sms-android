@@ -67,4 +67,7 @@ public interface AccountService {
     @POST("accounts/dismissed_notification")
     Object dismissedNotification(@Query("account_id") String accountId, @Query("id") int id);
 
+    @POST("accounts/seen_convo_tooltip")
+    Object seenConvoTooltip(@Query("account_id") String accountId, @Query("seen") boolean seen);
+
 }

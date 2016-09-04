@@ -173,6 +173,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "dismissed_notification":
                     dismissNotification(json, context);
                     break;
+                case "seen_convo_tooltip":
+                    seenConvoTooltip(json, context);
+                    break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
                     break;
@@ -484,6 +487,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void dismissNotification(JSONObject json, Context context)
             throws JSONException {
         NotificationManagerCompat.from(context).cancel(json.getInt("id"));
+    }
+
+    private void seenConvoTooltip(JSONObject json, Context context)
+            throws JSONException {
+        Settings.get(context).setValue("seen_convo_nav_tooltip", json.getBoolean("value"));
     }
 
 }

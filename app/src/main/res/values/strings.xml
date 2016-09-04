@@ -130,6 +130,8 @@
     <string name="loading_messages">Optimizing…</string>
     <string name="loading_messages_summary">Just working on getting your messages into the app, it
         won\'t take long!</string>
+    <string name="tooltip_got_it">Got It!</string>
+    <string name="navigation_drawer_conversation_hint">More options for this conversation are stored in the navigation drawer.</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>

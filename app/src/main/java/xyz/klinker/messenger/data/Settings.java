@@ -48,6 +48,7 @@ public class Settings {
     public String key;
     public boolean deliveryReports;
     public boolean mobileOnly;
+    public boolean seenConvoNavToolTip;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -91,6 +92,7 @@ public class Settings {
         this.key = sharedPrefs.getString("key", null);
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
+        this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
 
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();
