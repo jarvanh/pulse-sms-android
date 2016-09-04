@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/dim_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/api_window_background"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:scrollbars="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/messages_more"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="12dp"
+                android:elevation="8dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/messages_initial_holder"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:background="@android:color/white"
+                android:elevation="8dp">
+
+                <TextView
+                    android:id="@+id/conversation_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_up"
+                    android:gravity="center_vertical"
+                    android:textSize="12sp"
+                    android:background="?selectableItemBackground"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/messages_initial"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image"
+                        android:layout_marginStart="18dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:civ_border_width="0dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/send_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="8dp">
+
+                <EditText
+                    android:id="@+id/message_entry"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:maxLines="1"
+                    android:hint="@null"
+                    android:inputType="textCapSentences|textAutoCorrect|textShortMessage"
+                    android:imeOptions="actionSend"
+                    android:scrollHorizontally="true"
+                    android:background="@null"/>
+
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/send_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_send"
+                        android:contentDescription="@string/send"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                    <ProgressBar
+                        android:id="@+id/send_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="12dp"
+                        android:alpha="0"
+                        style="@style/Widget.AppCompat.ProgressBar"/>
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/scrollview_filler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</FrameLayout>

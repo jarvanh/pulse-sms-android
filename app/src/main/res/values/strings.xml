@@ -234,4 +234,12 @@
     <string name="downloading_and_decrypting">Downloading and decrypting…</string>
     <string name="decrypting_and_downloading_media">Downloading and decrypting media…</string>
 
+    <!-- Quick Reply -->
+    <string name="audio_message">Audio Message</string>
+    <string name="video_message">Video Message</string>
+    <string name="picture_message">Picture Message</string>
+    <string name="contact_card">Contact Card</string>
+    <string name="conversation_with">Conversation with %1$s</string>
+    <string name="send">Send</string>
+
 </resources>

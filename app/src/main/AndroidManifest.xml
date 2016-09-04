@@ -134,6 +134,11 @@
             android:name="xyz.klinker.giphy.GiphyActivity"
             android:theme="@style/AppTheme.NoActionBar"
             tools:replace="android:theme" />
+        <activity android:name=".activity.NotificationReplyActivity"
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustPan"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 

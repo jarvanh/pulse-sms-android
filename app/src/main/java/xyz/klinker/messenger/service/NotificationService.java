@@ -36,6 +36,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.activity.NotificationReplyActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
@@ -50,6 +51,8 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
  * seen yet.
  */
 public class NotificationService extends IntentService {
+
+    private static final boolean DEBUG_QUICK_REPLY = true;
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
@@ -246,19 +249,46 @@ public class NotificationService extends IntentService {
                 .setAllowFreeFormInput(true)
                 .build();
 
-        Intent reply = new Intent(this, ReplyService.class);
-        reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
-        PendingIntent pendingReply = PendingIntent.getService(this, (int) conversation.id,
-                reply, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingReply;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !DEBUG_QUICK_REPLY) {
+            // with Android N, we only need to show the the reply service intent through the wearable extender
+            Intent reply = new Intent(this, ReplyService.class);
+            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+            pendingReply = PendingIntent.getService(this,
+                    (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Action action =
-                new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+            NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+                    getString(R.string.reply), pendingReply)
+                    .addRemoteInput(remoteInput)
+                    .build();
+
+            builder.extend(new NotificationCompat.WearableExtender().addAction(action));
+        } else {
+            // on older versions, we have to show the reply activity button as an action and add the remote input to it
+            // this will allow it to be used on android wear (we will have to handle this from the activity)
+            // as well as have a reply quick action button.
+            Intent reply = new Intent(this, NotificationReplyActivity.class);
+            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+            pendingReply = PendingIntent.getActivity(this,
+                    (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
+
+            if (DEBUG_QUICK_REPLY) {
+                // if we are debugging, the assumption is that we are on android N, we have to be stop showing
+                // the remote input or else it will keep using the direct reply
+                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+                        getString(R.string.reply), pendingReply)
+                        .build();
+
+                builder.addAction(action);
+            } else {
+                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
                         getString(R.string.reply), pendingReply)
                         .addRemoteInput(remoteInput)
                         .build();
 
-        builder.extend(new NotificationCompat.WearableExtender().addAction(action));
-
+                builder.addAction(action);
+            }
+        }
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);

@@ -392,7 +392,6 @@ public class MessageListFragment extends Fragment implements
             messageEntry.setHint(R.string.type_message);
         }
 
-
         messageEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
