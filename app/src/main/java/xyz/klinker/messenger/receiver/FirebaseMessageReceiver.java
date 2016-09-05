@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -155,26 +156,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "removed_scheduled_message":
                     removeScheduledMessage(json, source);
                     break;
-                case "changed_snooze":
-                    changeSnooze(json, context);
-                    break;
-                case "changed_dark_theme":
-                    changeDarkTheme(json, context);
-                    break;
-                case "changed_vibrate":
-                    changeVibrate(json, context);
-                    break;
-                case "changed_delivery_reports":
-                    changeDeliveryReports(json, context);
-                    break;
-                case "changed_mobile_only":
-                    changedMobileOnly(json, context);
+                case "update_setting":
+                    updateSetting(json, context);
                     break;
                 case "dismissed_notification":
                     dismissNotification(json, context);
-                    break;
-                case "seen_convo_tooltip":
-                    seenConvoTooltip(json, context);
                     break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
@@ -459,39 +445,31 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed scheduled message");
     }
 
-    private void changeSnooze(JSONObject json, Context context)
-            throws JSONException {
-        Settings.get(context).setValue("snooze", json.getLong("value"));
-    }
-
-    private void changeDarkTheme(JSONObject json, Context context)
-            throws JSONException {
-        Settings.get(context).setValue("dark_theme", json.getBoolean("value"));
-    }
-
-    private void changeVibrate(JSONObject json, Context context)
-            throws JSONException {
-        Settings.get(context).setValue("vibrate", json.getBoolean("value"));
-    }
-
-    private void changeDeliveryReports(JSONObject json, Context context)
-            throws JSONException {
-        Settings.get(context).setValue("delivery_reports", json.getBoolean("value"));
-    }
-
-    private void changedMobileOnly(JSONObject json, Context context)
-            throws JSONException {
-        Settings.get(context).setValue("mobile_only", json.getBoolean("value"));
-    }
-
     private void dismissNotification(JSONObject json, Context context)
             throws JSONException {
         NotificationManagerCompat.from(context).cancel(json.getInt("id"));
     }
 
-    private void seenConvoTooltip(JSONObject json, Context context)
+    private void updateSetting(JSONObject json, Context context)
             throws JSONException {
-        Settings.get(context).setValue("seen_convo_nav_tooltip", json.getBoolean("value"));
+        String pref = json.getString("pref");
+        String type = json.getString("type");
+
+        if (pref != null && type != null && json.has("value")) {
+            switch (type.toLowerCase()) {
+                case "boolean":
+                    Settings.get(context).setValue(pref, json.getBoolean("value"));
+                    break;
+                case "long":
+                    Settings.get(context).setValue(pref, json.getLong("value"));
+                    break;
+                case "int":
+                    Settings.get(context).setValue(pref, json.getInt("value"));
+                    break;
+                case "string":
+                    Settings.get(context).setValue(pref, json.getString("value"));
+            }
+        }
     }
 
 }

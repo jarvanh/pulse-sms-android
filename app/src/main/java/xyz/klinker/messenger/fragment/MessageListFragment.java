@@ -1048,7 +1048,7 @@ public class MessageListFragment extends Fragment implements
                     Settings.get(getActivity())
                             .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
 
-                    new ApiUtils().seenConvoTooltip(Settings.get(getActivity()).accountId, true);
+                    new ApiUtils().updateSeenTooltip(Settings.get(getActivity()).accountId, true);
                 }
             });
         }

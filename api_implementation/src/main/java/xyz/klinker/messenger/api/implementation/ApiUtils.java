@@ -662,116 +662,6 @@ public class ApiUtils {
     }
 
     /**
-     * Update the snooze time setting.
-     */
-    public void updateSnooze(final String accountId, final long snoozeTil) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateSnooze(accountId, snoozeTil);
-                if (response == null) {
-                    Log.e(TAG, "error updating snooze til");
-                } else {
-                    Log.v(TAG, "successfully updated snooze til");
-                }
-            }
-        }).start();
-    }
-
-
-
-    /**
-     * Update the dark theme setting.
-     */
-    public void updateDarkTheme(final String accountId, final boolean darkTheme) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateDarkTheme(accountId, darkTheme);
-                if (response == null) {
-                    Log.e(TAG, "error updating dark theme");
-                } else {
-                    Log.v(TAG, "successfully updated dark theme");
-                }
-            }
-        }).start();
-    }
-
-
-
-    /**
-     * Update the vibrate setting.
-     */
-    public void updateVibrate(final String accountId, final boolean vibrate) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateVibrate(accountId, vibrate);
-                if (response == null) {
-                    Log.e(TAG, "error updating vibrate");
-                } else {
-                    Log.v(TAG, "successfully updated vibrate");
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * Update the delivery reports setting.
-     */
-    public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateDeliveryReports(accountId, deliveryReports);
-                if (response == null) {
-                    Log.e(TAG, "error updating delivery reports");
-                } else {
-                    Log.v(TAG, "successfully updated delivery reports");
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * Update the mobile only setting
-     */
-    public void updateMobileOnly(final String accountId, final boolean mobileOnly) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateMobileOnly(accountId, mobileOnly);
-                if (response == null) {
-                    Log.e(TAG, "error updating mobile only");
-                } else {
-                    Log.v(TAG, "successfully updated mobile only");
-                }
-            }
-        }).start();
-    }
-
-
-    /**
      * Dismiss a notification across all devices.
      */
     public void dismissNotification(final String accountId, final long id) {
@@ -793,9 +683,79 @@ public class ApiUtils {
     }
 
     /**
+     * Update the snooze time setting.
+     */
+    public void updateSnooze(final String accountId, final long snoozeTil) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "snooze", "long", snoozeTil);
+        }
+    }
+
+
+
+    /**
+     * Update the dark theme setting.
+     */
+    public void updateDarkTheme(final String accountId, final boolean darkTheme) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "dark_theme", "boolean", darkTheme);
+        }
+    }
+
+
+
+    /**
+     * Update the vibrate setting.
+     */
+    public void updateVibrate(final String accountId, final boolean vibrate) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "vibrate", "boolean", vibrate);
+        }
+    }
+
+    /**
+     * Update the delivery reports setting.
+     */
+    public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "delivery_reports", "boolean", deliveryReports);
+        }
+    }
+
+    /**
+     * Update the mobile only setting
+     */
+    public void updateMobileOnly(final String accountId, final boolean mobileOnly) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mobile_only", "boolean", mobileOnly);
+        }
+    }
+
+    /**
+     * Update whether or not the user has seen the conversation tool tip
+     */
+    public void updateSeenTooltip(final String accountId, final boolean seenTooltip) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "seen_convo_nav_tooltip", "boolean", seenTooltip);
+        }
+    }
+
+    /**
      * Dismiss a notification across all devices.
      */
-    public void seenConvoTooltip(final String accountId, final boolean seen) {
+    public void updateSetting(final String accountId, final String pref, final String type, final Object value) {
         if (!active || accountId == null) {
             return;
         }
@@ -803,11 +763,11 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Object response = api.account().seenConvoTooltip(accountId, seen);
+                Object response = api.account().updateSetting(accountId, pref, type, value);
                 if (response == null) {
-                    Log.e(TAG, "error marking seen convo tooltip");
+                    Log.e(TAG, "error updating setting: pref");
                 } else {
-                    Log.v(TAG, "successfully marked seen convo tooltip");
+                    Log.v(TAG, "successfully updated setting: pref");
                 }
             }
         }).start();
