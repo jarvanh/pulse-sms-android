@@ -16,7 +16,9 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -89,6 +91,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         });
 
         Settings settings = Settings.get(itemView.getContext());
+
         if (header != null) {
             header.setTextSize(settings.smallFont);
         }
@@ -97,6 +100,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             name.setTextSize(settings.largeFont);
             summary.setTextSize(settings.mediumFont);
         }
+
+
     }
 
     public boolean isBold() {
@@ -108,6 +113,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             name.setTypeface(Typeface.DEFAULT_BOLD);
             summary.setTypeface(Typeface.DEFAULT_BOLD);
             unreadIndicator.setVisibility(View.VISIBLE);
+
+            ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
         } else {
             name.setTypeface(Typeface.DEFAULT);
             summary.setTypeface(Typeface.DEFAULT);

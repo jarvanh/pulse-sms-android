@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.data.Settings;
 
 /**
  * A simple callback for a recyclerview that can act on swipe motions.
@@ -44,7 +45,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     private boolean initiated;
 
     private void init(Context context) {
-        background = new ColorDrawable(context.getResources().getColor(R.color.colorPrimaryLight));
+        background = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
         xMark = context.getDrawable(R.drawable.ic_delete_sweep);
         xMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
         xMarkMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);

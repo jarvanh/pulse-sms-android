@@ -219,7 +219,11 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     private void showContactImage() {
         if (conversation.imageUri == null) {
-            image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            if (Settings.get(this).useGlobalThemeColor) {
+                image.setImageDrawable(new ColorDrawable(Settings.get(this).globalColorSet.color));
+            } else {
+                image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            }
         } else {
             Glide.with(this)
                     .load(Uri.parse(conversation.imageUri))
@@ -230,12 +234,20 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     // region setup sendbar
     private void setupSendBar() {
-        sendBar.setBackgroundColor(conversation.colors.color);
+        Settings settings = Settings.get(this);
+        if (settings.useGlobalThemeColor) {
+            sendBar.setBackgroundColor(settings.globalColorSet.color);
+            conversationIndicator.setTextColor(settings.globalColorSet.color);
+            conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
+                    .setTintList(ColorStateList.valueOf(settings.globalColorSet.color));
+        } else {
+            sendBar.setBackgroundColor(conversation.colors.color);
+            conversationIndicator.setTextColor(conversation.colors.color);
+            conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
+                    .setTintList(ColorStateList.valueOf(conversation.colors.color));
+        }
 
-        conversationIndicator.setTextColor(conversation.colors.color);
         conversationIndicator.setText(getString(R.string.conversation_with, conversation.title));
-        conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
-                .setTintList(ColorStateList.valueOf(conversation.colors.color));
         conversationIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -68,7 +68,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:id="@+id/unread_indicator"
-                android:src="@color/colorPrimary"
+                android:src="@android:color/black"
                 android:layout_marginEnd="8dp"
                 android:visibility="gone"/>
 

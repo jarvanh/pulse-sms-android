@@ -25,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Settings;
 
 /**
  * Item decorator that shows a background on each item as it is dismissing and adds some padding
@@ -51,7 +52,7 @@ public class SwipeItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void init(Context context) {
-        background = new ColorDrawable(context.getResources().getColor(R.color.colorPrimaryLight));
+        background = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
         initiated = true;
     }
 
