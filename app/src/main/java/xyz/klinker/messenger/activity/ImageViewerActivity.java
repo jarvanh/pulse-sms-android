@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
@@ -92,6 +93,10 @@ public class ImageViewerActivity extends AppCompatActivity {
         source.open();
         messages = source.getMediaMessages(conversationId);
         source.close();
+
+        if (messages.size() == 0) {
+            Snackbar.make(findViewById(android.R.id.content), "No media!", Snackbar.LENGTH_INDEFINITE).show();
+        }
     }
 
     private void initViewPager() {
