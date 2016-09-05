@@ -248,6 +248,8 @@ public class MessageListFragment extends Fragment implements
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             toolbar.setBackgroundColor(settings.globalColorSet.color);
+            send.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            messageEntry.setHighlightColor(settings.globalColorSet.colorAccent);
         }
 
         dismissNotification = true;

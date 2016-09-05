@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -78,7 +79,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
 
@@ -113,6 +115,15 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         handleIntent();
         displayRecents();
+
+        Settings settings = Settings.get(this);
+        if (settings.useGlobalThemeColor) {
+            toolbar.setBackgroundColor(settings.globalColorSet.color);
+            getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            contactEntry.setHighlightColor(settings.globalColorSet.colorAccent);
+        }
+
     }
 
     private void displayRecents() {
