@@ -753,6 +753,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the font size
+     */
+    public void updateFontSize(final String accountId, final String size) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "font_size", "string", size);
+        }
+    }
+
+    /**
      * Dismiss a notification across all devices.
      */
     public void updateSetting(final String accountId, final String pref, final String type, final Object value) {
@@ -765,9 +776,9 @@ public class ApiUtils {
             public void run() {
                 Object response = api.account().updateSetting(accountId, pref, type, value);
                 if (response == null) {
-                    Log.e(TAG, "error updating setting: pref");
+                    Log.e(TAG, "error updating setting: " + pref);
                 } else {
-                    Log.v(TAG, "successfully updated setting: pref");
+                    Log.v(TAG, "successfully updated setting: " + pref);
                 }
             }
         }).start();

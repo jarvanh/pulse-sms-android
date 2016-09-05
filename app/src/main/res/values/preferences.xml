@@ -55,6 +55,7 @@
     <string name="pref_contact_group_name" translatable="false">contact_group_name</string>
 
     <string name="pref_ringtone">ringtone</string>
+    <string name="pref_font_size">font_size</string>
     <string name="pref_vibrate">vibrate</string>
     <string name="pref_delivery_reports">delivery_reports</string>
     <string name="pref_mobile_only">mobile_only</string>

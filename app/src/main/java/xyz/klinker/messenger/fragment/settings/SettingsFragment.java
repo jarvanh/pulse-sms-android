@@ -36,6 +36,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings);
         initNightMode();
+        initFontSize();
         initVibrate();
         initDeliveryReports();
     }
@@ -60,6 +61,20 @@ public class SettingsFragment extends PreferenceFragment {
 
                         new ApiUtils().updateDarkTheme(Settings.get(getActivity()).accountId,
                                 night);
+
+                        return true;
+                    }
+                });
+    }
+
+    private void initFontSize() {
+        findPreference(getString(R.string.pref_font_size))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        String size = (String) o;
+                        new ApiUtils().updateFontSize(Settings.get(getActivity()).accountId,
+                                size);
 
                         return true;
                     }

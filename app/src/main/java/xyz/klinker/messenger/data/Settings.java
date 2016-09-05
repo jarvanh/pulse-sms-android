@@ -33,22 +33,33 @@ public class Settings {
 
     private Context context;
 
+    // initializers
     public boolean firstStart;
+    public boolean seenConvoNavToolTip;
+
+    // settings
+    public boolean vibrate;
+    public boolean darkTheme;
+    public boolean deliveryReports;
+    public boolean mobileOnly;
+    public long snooze;
+    public String ringtone;
+    public String fontSize;
+
+    // account info
+    public boolean primary;
     public String myName;
     public String myPhoneNumber;
     public String deviceId;
-    public String ringtone;
-    public boolean vibrate;
-    public long snooze;
-    public boolean darkTheme;
     public String accountId;
     public String salt;
     public String passhash;
-    public boolean primary;
     public String key;
-    public boolean deliveryReports;
-    public boolean mobileOnly;
-    public boolean seenConvoNavToolTip;
+
+    // configuration
+    public int smallFont;
+    public int mediumFont;
+    public int largeFont;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -77,27 +88,52 @@ public class Settings {
         this.context = context;
         SharedPreferences sharedPrefs = getSharedPrefs();
 
+        // initializers
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
+        this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
+
+        // settings
+        this.darkTheme = sharedPrefs.getBoolean(context.getString(R.string.pref_dark_theme), false);
+        this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
+        this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
+        this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
+        this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
+        this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
+        this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
+
+        // account info
+        this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
         this.myName = sharedPrefs.getString(context.getString(R.string.pref_my_name), null);
         this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.pref_my_phone_number), null);
         this.deviceId = sharedPrefs.getString(context.getString(R.string.pref_device_id), null);
-        this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
-        this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
-        this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
-        this.darkTheme = sharedPrefs.getBoolean(context.getString(R.string.pref_dark_theme), false);
         this.accountId = sharedPrefs.getString(context.getString(R.string.pref_account_id), null);
         this.salt = sharedPrefs.getString(context.getString(R.string.pref_salt), null);
         this.passhash = sharedPrefs.getString(context.getString(R.string.pref_passhash), null);
-        this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
         this.key = sharedPrefs.getString("key", null);
-        this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
-        this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
-        this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
 
+        // configuration
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();
             setValue(context.getString(R.string.pref_ringtone), uri, false);
             this.ringtone = uri;
+        }
+
+        if (fontSize.equals("small")) {
+            this.smallFont = 10;
+            this.mediumFont = 12;
+            this.largeFont = 14;
+        } else if (fontSize.equals("normal")) {
+            this.smallFont = 12;
+            this.mediumFont = 14;
+            this.largeFont = 16;
+        } else if (fontSize.equals("large")) {
+            this.smallFont = 14;
+            this.mediumFont = 16;
+            this.largeFont = 18;
+        } else if (fontSize.equals("extra_large")) {
+            this.smallFont = 16;
+            this.mediumFont = 18;
+            this.largeFont = 20;
         }
     }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="font_size">
+        <item>@string/font_size_small</item>
+        <item>@string/font_size_normal</item>
+        <item>@string/font_size_large</item>
+        <item>@string/font_size_extra_large</item>
+    </string-array>
+
+    <string-array name="font_size_values">
+        <item>small</item>
+        <item>normal</item>
+        <item>large</item>
+        <item>extra_large</item>
+    </string-array>
+
+</resources>
