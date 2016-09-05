@@ -33,6 +33,7 @@ import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
@@ -152,7 +153,10 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     }
 
     private MessageViewHolder getMockedViewHolder() {
-        MessageViewHolder holder = new MessageViewHolder(fragment, new View(RuntimeEnvironment.application),
+        View itemView = spy(new View(RuntimeEnvironment.application));
+        when(itemView.findViewById(R.id.timestamp)).thenReturn(timestamp);
+        when(itemView.findViewById(R.id.message)).thenReturn(message);
+        MessageViewHolder holder = new MessageViewHolder(fragment, itemView,
                 Color.RED, 1, 0, 0);
         holder.message = message;
         holder.timestamp = timestamp;
