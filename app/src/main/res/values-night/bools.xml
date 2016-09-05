@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="is_night">true</item>
+    <bool name="is_night">true</bool>
 
 </resources>

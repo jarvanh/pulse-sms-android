@@ -1,1 +1,1 @@
-Version 1.1 contains bug fixes, UI improvements, improves on server response times, updates the swipe-to-delete direction, adds an option to turn on/off delivery reports for carriers that support them, adds clarification to the dark theme setting, plus more.
+Version 1.2 contains a quick reply for Android Lollipop and Marshmallow, ability to share location and contact VCards, preferences for a global color scheme and font size, a "View Media" button in the message list drawer, support for updating contact names, bug fixes, and more!
