@@ -275,13 +275,14 @@ public class MessengerActivity extends AppCompatActivity
                     new int[] { android.R.attr.state_checked }
             };
 
+            String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
             int[] iconColors = new int[] {
-                    Color.parseColor("#77000000"),
+                    Color.parseColor("#77" + baseColor),
                     settings.globalColorSet.colorAccent
             };
 
             int[] textColors = new int[] {
-                    Color.parseColor("#DD000000"),
+                    Color.parseColor("#DD" + baseColor),
                     settings.globalColorSet.colorAccent
             };
 
