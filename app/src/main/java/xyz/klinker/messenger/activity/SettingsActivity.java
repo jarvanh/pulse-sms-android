@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.settings.SettingsFragment;
+import xyz.klinker.messenger.util.ColorUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -45,6 +46,8 @@ public class SettingsActivity extends AppCompatActivity {
         Settings settings = Settings.get(this);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
         getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+
+        ColorUtils.updateRecentsEntry(this);
     }
 
     @Override

@@ -19,8 +19,11 @@ package xyz.klinker.messenger.util;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
@@ -274,6 +277,16 @@ public class ColorUtils {
                 }
             }
         });
+    }
+
+    public static void updateRecentsEntry(Activity activity) {
+        Settings settings = Settings.get(activity);
+        if (settings.useGlobalThemeColor) {
+            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
+            ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
+
+            activity.setTaskDescription(td);
+        }
     }
 
     public static List<ColorSet> getColors(Context context) {

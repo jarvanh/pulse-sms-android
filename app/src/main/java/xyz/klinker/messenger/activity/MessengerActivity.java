@@ -295,6 +295,8 @@ public class MessengerActivity extends AppCompatActivity
                     navigationView.findViewById(R.id.header).setBackgroundColor(settings.globalColorSet.colorDark);
                 }
             });
+
+            ColorUtils.updateRecentsEntry(this);
         }
     }
 

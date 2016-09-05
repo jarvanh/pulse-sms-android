@@ -124,8 +124,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
             contactEntry.setHighlightColor(settings.globalColorSet.colorAccent);
             ColorUtils.setCursorDrawableColor(contactEntry, settings.globalColorSet.colorAccent);
+            ColorUtils.updateRecentsEntry(this);
         }
-
     }
 
     private void displayRecents() {

@@ -30,6 +30,7 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import uk.co.senab.photoview.PhotoView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.util.listener.EasyVideoCallbackAdapter;
 
 /**
@@ -75,6 +76,10 @@ public class ImageViewerFragment extends Fragment {
             player.setLeftAction(EasyVideoPlayer.LEFT_ACTION_NONE);
             player.setRightAction(EasyVideoPlayer.RIGHT_ACTION_NONE);
             player.setSource(Uri.parse(data));
+
+            if (Settings.get(getActivity()).useGlobalThemeColor) {
+                player.setThemeColor(Settings.get(getActivity()).globalColorSet.color);
+            }
 
             if (MimeType.isAudio(mimeType)) {
                 view.findViewById(R.id.audio).setVisibility(View.VISIBLE);

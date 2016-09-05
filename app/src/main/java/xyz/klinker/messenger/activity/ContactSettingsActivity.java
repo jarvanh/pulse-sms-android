@@ -17,11 +17,13 @@
 package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
+import xyz.klinker.messenger.util.ColorUtils;
 
 /**
  * Activity for changing contact settings.
@@ -44,6 +46,8 @@ public class ContactSettingsActivity extends AppCompatActivity {
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ColorUtils.updateRecentsEntry(this);
     }
 
     @Override

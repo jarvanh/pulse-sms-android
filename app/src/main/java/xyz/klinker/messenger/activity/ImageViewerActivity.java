@@ -51,6 +51,7 @@ import xyz.klinker.messenger.adapter.ImageViewerAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 
@@ -74,6 +75,8 @@ public class ImageViewerActivity extends AppCompatActivity {
         loadMessages();
         initViewPager();
         initToolbar();
+
+        ColorUtils.updateRecentsEntry(this);
     }
 
     private void loadMessages() {

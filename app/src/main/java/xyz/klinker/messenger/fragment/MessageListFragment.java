@@ -491,7 +491,13 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initAttachHolder() {
-        attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            attachButtonHolder.setBackgroundColor(settings.globalColorSet.color);
+        } else {
+            attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
+        }
+
         attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -717,7 +723,9 @@ public class MessageListFragment extends Fragment implements
             adapter.addMessage(messages);
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
-                    getArguments().getInt(ARG_COLOR_ACCENT),
+                    Settings.get(getActivity()).useGlobalThemeColor ?
+                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             messageList.setAdapter(adapter);
 
@@ -826,7 +834,9 @@ public class MessageListFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachImageView(getActivity(), this,
-                    getArguments().getInt(ARG_COLOR)));
+                    Settings.get(getActivity()).useGlobalThemeColor ?
+                            Settings.get(getActivity()).globalColorSet.color :
+                            getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
                     Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -851,14 +861,26 @@ public class MessageListFragment extends Fragment implements
     private void recordVideo() {
         prepareAttachHolder(3);
 
-        new MaterialCamera(getActivity())
-                .saveDir(getActivity().getFilesDir().getPath())
-                .qualityProfile(MaterialCamera.QUALITY_LOW)
-                .maxAllowedFileSize(1024 * 1024)
-                .allowRetry(false)
-                .autoSubmit(true)
-                .showPortraitWarning(false)
-                .start(RESULT_VIDEO_REQUEST);
+        if (Settings.get(getActivity()).useGlobalThemeColor) {
+            new MaterialCamera(getActivity())
+                    .saveDir(getActivity().getFilesDir().getPath())
+                    .qualityProfile(MaterialCamera.QUALITY_LOW)
+                    .maxAllowedFileSize(1024 * 1024)
+                    .allowRetry(false)
+                    .autoSubmit(true)
+                    .showPortraitWarning(false)
+                    .primaryColor(Settings.get(getActivity()).globalColorSet.color)
+                    .start(RESULT_VIDEO_REQUEST);
+        } else {
+            new MaterialCamera(getActivity())
+                    .saveDir(getActivity().getFilesDir().getPath())
+                    .qualityProfile(MaterialCamera.QUALITY_LOW)
+                    .maxAllowedFileSize(1024 * 1024)
+                    .allowRetry(false)
+                    .autoSubmit(true)
+                    .showPortraitWarning(false)
+                    .start(RESULT_VIDEO_REQUEST);
+        }
     }
 
     private void recordAudio() {
@@ -868,7 +890,9 @@ public class MessageListFragment extends Fragment implements
                 ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new RecordAudioView(getActivity(), this,
-                    getArguments().getInt(ARG_COLOR_ACCENT)));
+                    Settings.get(getActivity()).useGlobalThemeColor ?
+                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO);
@@ -882,7 +906,9 @@ public class MessageListFragment extends Fragment implements
                 ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachLocationView(getActivity(), this, this,
-                    getArguments().getInt(ARG_COLOR_ACCENT)));
+                    Settings.get(getActivity()).useGlobalThemeColor ?
+                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -1047,7 +1073,9 @@ public class MessageListFragment extends Fragment implements
         if (!getResources().getBoolean(R.bool.pin_drawer) && !Settings.get(getActivity()).seenConvoNavToolTip) {
             MaterialTooltip.Options options = new MaterialTooltip.Options(
                     56 + 24 + 12,
-                    12, 275, getArguments().getInt(ARG_COLOR))
+                    12, 275, Settings.get(getActivity()).useGlobalThemeColor ?
+                    Settings.get(getActivity()).globalColorSet.color :
+                    getArguments().getInt(ARG_COLOR))
                     .setText(getString(R.string.navigation_drawer_conversation_hint));
 
             navToolTip = new MaterialTooltip(getActivity(), options);

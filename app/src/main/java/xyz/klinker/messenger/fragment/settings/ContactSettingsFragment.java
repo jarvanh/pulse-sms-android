@@ -73,6 +73,12 @@ public class ContactSettingsFragment extends PreferenceFragment {
         setUpGroupName();
         setUpRingtone();
         setUpColors();
+
+        if (Settings.get(getActivity()).useGlobalThemeColor) {
+            getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_contact_primary_color)));
+            getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_contact_primary_dark_color)));
+            getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_contact_accent_color)));
+        }
     }
 
     private void loadConversation() {
