@@ -70,6 +70,15 @@ public class AboutFragment extends PreferenceFragmentCompat {
                     }
                 });
 
+        findPreference(getString(R.string.pref_supported_platforms))
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        displaySupportedPlatforms();
+                        return true;
+                    }
+                });
+
         findPreference(getString(R.string.pref_about_beta))
                 .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
@@ -133,6 +142,16 @@ public class AboutFragment extends PreferenceFragmentCompat {
      */
     public void displayPrivacyPolicy() {
         String url = "https://messenger.klinkerapps.com/privacy.html";
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+    }
+
+    /**
+     * Displays the supported platforms in the web browser.
+     */
+    public void displaySupportedPlatforms() {
+        String url = "https://messenger.klinkerapps.com/supported_platforms.html";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);

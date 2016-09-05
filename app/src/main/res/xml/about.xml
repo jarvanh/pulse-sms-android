@@ -34,6 +34,11 @@
         android:summary="@string/copyright_summary" />
 
     <Preference
+        android:key="@string/pref_supported_platforms"
+        android:title="@string/supported_platforms"
+        android:summary="@string/supported_platforms_summary"/>
+
+    <Preference
         android:key="@string/pref_about_privacy_policy"
         android:title="@string/privacy_policy"
         android:summary="@string/privacy_policy_summary" />
