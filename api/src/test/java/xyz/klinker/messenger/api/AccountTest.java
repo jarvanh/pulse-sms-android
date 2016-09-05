@@ -90,9 +90,7 @@ public class AccountTest extends ApiTest {
     @Test
     public void updateSettings() {
         String accountId = getAccountId();
-        assertNotNull(api.account().updateSnooze(accountId, 1));
-        assertNotNull(api.account().updateDarkTheme(accountId, false));
-        assertNotNull(api.account().updateVibrate(accountId, false));
+        assertNotNull(api.account().updateSetting(accountId, "test", "boolean", true));
     }
 
     @Test
