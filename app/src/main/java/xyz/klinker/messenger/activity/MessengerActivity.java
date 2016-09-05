@@ -335,6 +335,8 @@ public class MessengerActivity extends AppCompatActivity
                 return displayAbout();
             case R.id.drawer_view_contact:
                 return viewContact();
+            case R.id.drawer_view_media:
+                return viewMedia();
             case R.id.drawer_delete_conversation:
                 return deleteConversation();
             case R.id.drawer_conversation_information:
@@ -567,6 +569,18 @@ public class MessengerActivity extends AppCompatActivity
                     .setView(recyclerView)
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean viewMedia() {
+        if (conversationListFragment.isExpanded()) {
+            Intent intent = new Intent(this, ImageViewerActivity.class);
+            intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+            startActivity(intent);
 
             return true;
         } else {

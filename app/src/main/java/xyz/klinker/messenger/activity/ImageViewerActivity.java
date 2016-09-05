@@ -78,8 +78,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
     private void loadMessages() {
         if (getIntent().getExtras() == null ||
-                !getIntent().getExtras().containsKey(EXTRA_CONVERSATION_ID) ||
-                !getIntent().getExtras().containsKey(EXTRA_MESSAGE_ID)) {
+                !getIntent().getExtras().containsKey(EXTRA_CONVERSATION_ID)) {
             finish();
             return;
         }
@@ -102,11 +101,15 @@ public class ImageViewerActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new ImageViewerAdapter(getSupportFragmentManager(), messages));
 
-        for (int i = 0; i < messages.size(); i++) {
-            if (messages.get(i).id == messageId) {
-                viewPager.setCurrentItem(i, false);
-                break;
+        if (messageId != -1) {
+            for (int i = 0; i < messages.size(); i++) {
+                if (messages.get(i).id == messageId) {
+                    viewPager.setCurrentItem(i, false);
+                    break;
+                }
             }
+        } else {
+            viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1, false);
         }
     }
 

@@ -34,6 +34,7 @@
     <string name="menu_call">Call contact</string>
     <string name="menu_view_contact">View contact</string>
     <string name="menu_view_contacts">View contacts</string>
+    <string name="menu_view_media">View Media</string>
     <string name="menu_delete_conversation">Delete conversation</string>
     <string name="menu_conversation_information">Conversation information</string>
     <string name="menu_conversation_blacklist">Blacklist contact</string>
