@@ -22,4 +22,9 @@ public class DensityUtil {
         Resources r = context.getResources();
         return (int) TypedValue.applyDimension(conversionUnit, amount, r.getDisplayMetrics());
     }
+
+    public static int spToPx(Context context, int sp) {
+        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (sp * scaledDensity);
+    }
 }

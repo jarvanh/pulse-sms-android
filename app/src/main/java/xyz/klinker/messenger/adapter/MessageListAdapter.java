@@ -42,8 +42,10 @@ import java.util.regex.Pattern;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
@@ -79,8 +81,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         int color;
 
         if (timestampHeight == 0) {
-            setTimestampHeight(parent.getResources()
-                    .getDimensionPixelSize(R.dimen.timestamp_height));
+            setTimestampHeight(DensityUtil.spToPx(parent.getContext(), Settings.get(parent.getContext()).mediumFont));
         }
 
         if (viewType == Message.TYPE_RECEIVED) {

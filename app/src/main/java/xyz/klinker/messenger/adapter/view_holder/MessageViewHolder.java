@@ -44,9 +44,11 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 
@@ -161,6 +163,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         contact = (TextView) itemView.findViewById(R.id.contact);
         image = (ImageView) itemView.findViewById(R.id.image);
         messageHolder = itemView.findViewById(R.id.message_holder);
+
+        Settings settings = Settings.get(itemView.getContext());
+        message.setTextSize(settings.largeFont);
+        timestamp.setTextSize(settings.smallFont);
+        timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
         if (color != -1 && messageHolder != null) {
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));

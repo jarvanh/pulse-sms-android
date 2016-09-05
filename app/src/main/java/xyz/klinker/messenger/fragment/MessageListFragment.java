@@ -401,6 +401,8 @@ public class MessageListFragment extends Fragment implements
             messageEntry.setHint(R.string.type_message);
         }
 
+        messageEntry.setTextSize(Settings.get(getActivity()).largeFont);
+
         messageEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
