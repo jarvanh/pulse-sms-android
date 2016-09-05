@@ -34,7 +34,7 @@
     <string name="menu_call">Call contact</string>
     <string name="menu_view_contact">View contact</string>
     <string name="menu_view_contacts">View contacts</string>
-    <string name="menu_view_media">View Media</string>
+    <string name="menu_view_media">View media</string>
     <string name="menu_delete_conversation">Delete conversation</string>
     <string name="menu_conversation_information">Conversation information</string>
     <string name="menu_conversation_blacklist">Blacklist contact</string>
@@ -222,7 +222,7 @@
         base the contact on:</string>
     <string name="no_apps_found">No apps found to handle this action</string>
     <string name="supported_platforms">Supported Platforms</string>
-    <string name="supported_platforms_summary">All the official places that you can access the app from</string>
+    <string name="supported_platforms_summary">All the official places that you can access the app</string>
     <string name="font_size_small">Small</string>
     <string name="font_size_normal">Normal</string>
     <string name="font_size_large">Large</string>

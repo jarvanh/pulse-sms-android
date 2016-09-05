@@ -57,6 +57,7 @@ import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MessengerChooserTargetService;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -122,6 +123,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
             fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
             contactEntry.setHighlightColor(settings.globalColorSet.colorAccent);
+            ColorUtils.setCursorDrawableColor(contactEntry, settings.globalColorSet.colorAccent);
         }
 
     }

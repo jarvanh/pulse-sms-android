@@ -120,6 +120,7 @@
             android:theme="@style/AppTheme.NoColors" />
         <activity
             android:name=".activity.SettingsActivity"
+            android:theme="@style/AppTheme.NoColors"
             android:label="@string/menu_settings" />
         <activity
             android:name=".activity.ImageViewerActivity"

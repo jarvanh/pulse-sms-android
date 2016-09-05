@@ -29,6 +29,8 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.Set;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
@@ -102,9 +104,17 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     private void setUpToolbar() {
         getActivity().setTitle(conversation.title);
-        ((AppCompatActivity) getActivity()).getSupportActionBar()
-                .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));
-        getActivity().getWindow().setStatusBarColor(conversation.colors.colorDark);
+
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar()
+                    .setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
+            getActivity().getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar()
+                    .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));
+            getActivity().getWindow().setStatusBarColor(conversation.colors.colorDark);
+        }
     }
 
     private void setUpPin() {

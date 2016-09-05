@@ -203,6 +203,10 @@ public class ColorUtils {
      * @param color    the color of the new cursor.
      */
     public static void setCursorDrawableColor(EditText editText, int color) {
+        if (Settings.get(editText.getContext()).useGlobalThemeColor) {
+            color = Settings.get(editText.getContext()).globalColorSet.colorAccent;
+        }
+
         try {
             Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
             fCursorDrawableRes.setAccessible(true);

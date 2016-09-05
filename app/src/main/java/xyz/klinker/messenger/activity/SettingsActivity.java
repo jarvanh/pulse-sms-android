@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -39,6 +40,11 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // sets it to teal if there is no color selected
+        Settings settings = Settings.get(this);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
+        getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
     }
 
     @Override
