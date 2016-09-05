@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -86,6 +87,16 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
+        Settings settings = Settings.get(itemView.getContext());
+        if (header != null) {
+            header.setTextSize(settings.smallFont);
+        }
+
+        if (name!= null && summary != null) {
+            name.setTextSize(settings.largeFont);
+            summary.setTextSize(settings.mediumFont);
+        }
     }
 
     public boolean isBold() {
