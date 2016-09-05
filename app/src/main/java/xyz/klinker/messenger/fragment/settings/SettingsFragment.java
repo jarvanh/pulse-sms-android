@@ -35,6 +35,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
+        initGlobalTheme();
         initNightMode();
         initFontSize();
         initVibrate();
@@ -45,6 +46,20 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStop() {
         super.onStop();
         Settings.get(getActivity()).forceUpdate();
+    }
+
+    private void initGlobalTheme() {
+        findPreference(getString(R.string.pref_global_color_theme))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        String colorString = (String) o;
+                        new ApiUtils().updateGlobalThemeColor(Settings.get(getActivity()).accountId,
+                                colorString);
+
+                        return true;
+                    }
+                });
     }
 
     private void initNightMode() {

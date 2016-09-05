@@ -39,12 +39,14 @@ public class Settings {
 
     // settings
     public boolean vibrate;
+    public boolean useGlobalThemeColor;
     public boolean darkTheme;
     public boolean deliveryReports;
     public boolean mobileOnly;
     public long snooze;
     public String ringtone;
     public String fontSize;
+    public String themeColorString;
 
     // account info
     public boolean primary;
@@ -60,6 +62,7 @@ public class Settings {
     public int smallFont;
     public int mediumFont;
     public int largeFont;
+    public ColorSet globalColorSet;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -100,6 +103,8 @@ public class Settings {
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
+        this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
+        this.useGlobalThemeColor = !themeColorString.equals("default");
 
         // account info
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
@@ -135,6 +140,8 @@ public class Settings {
             this.mediumFont = 18;
             this.largeFont = 20;
         }
+
+        globalColorSet = ColorSet.getFromString(context, themeColorString);
     }
 
     @VisibleForTesting

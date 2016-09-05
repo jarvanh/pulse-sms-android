@@ -148,4 +148,48 @@ public class ColorSet {
                 R.color.materialBlueGreyLight, R.color.materialRedAccent);
     }
 
+    public static ColorSet getFromString(Context context, String colorString) {
+        switch (colorString) {
+            case "red":
+                return RED(context);
+            case "pink":
+                return PINK(context);
+            case "purple":
+                return PURPLE(context);
+            case "deep_purple":
+                return DEEP_PURPLE(context);
+            case "indigo":
+                return INDIGO(context);
+            case "blue":
+                return BLUE(context);
+            case "light_blue":
+                return LIGHT_BLUE(context);
+            case "cyan":
+                return CYAN(context);
+            case "teal":
+                return TEAL(context);
+            case "green":
+                return GREEN(context);
+            case  "light_green":
+                return LIGHT_GREEN(context);
+            case "lime":
+                return LIME(context);
+            case "yellow":
+                return YELLOW(context);
+            case "amber":
+                return AMBER(context);
+            case "orange":
+                return ORANGE(context);
+            case "deep_orange":
+                return DEEP_ORANGE(context);
+            case "brown":
+                return BROWN(context);
+            case "gray":
+                return GREY(context);
+            case "blue_gray":
+                return BLUE_GREY(context);
+            default:
+                return TEAL(context);
+        }
+    }
 }

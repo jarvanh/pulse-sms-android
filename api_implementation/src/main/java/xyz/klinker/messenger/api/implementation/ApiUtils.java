@@ -764,6 +764,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the global theme color setting
+     */
+    public void updateGlobalThemeColor(final String accountId, final String color) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "global_color_theme", "string", color);
+        }
+    }
+
+    /**
      * Dismiss a notification across all devices.
      */
     public void updateSetting(final String accountId, final String pref, final String type, final Object value) {

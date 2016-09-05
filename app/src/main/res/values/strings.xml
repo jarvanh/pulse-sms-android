@@ -197,6 +197,8 @@
     <string name="dark_theme">Dark Theme</string>
     <string name="dark_theme_summary_on">Always uses the dark theme</string>
     <string name="dark_theme_summary_off">Switches between dark and light themes</string>
+    <string name="global_theme_color">Global Theme Color</string>
+    <string name="global_theme_summary">Applied throughout the entire app</string>
     <string name="font_size">Font Size</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
@@ -225,6 +227,29 @@
     <string name="font_size_normal">Normal</string>
     <string name="font_size_large">Large</string>
     <string name="font_size_extra_large">Extra Large</string>
+
+
+    <!-- Material Colors -->
+    <string name="set_color_per_conversation">Set color per conversation</string>
+    <string name="material_color_red">Red</string>
+    <string name="material_color_pink">Pink</string>
+    <string name="material_color_purple">Purple</string>
+    <string name="material_color_deep_purple">Deep Purple</string>
+    <string name="material_color_indigo">Indigo</string>
+    <string name="material_color_blue">Blue</string>
+    <string name="material_color_light_blue">Light Blue</string>
+    <string name="material_color_cyan">Cyan</string>
+    <string name="material_color_teal">Teal</string>
+    <string name="material_color_green">Green</string>
+    <string name="material_color_light_green">Light Green</string>
+    <string name="material_color_lime">Lime</string>
+    <string name="material_color_yellow">Yellow</string>
+    <string name="material_color_amber">Amber</string>
+    <string name="material_color_orange">Orange</string>
+    <string name="material_color_deep_orange">Deep Orange</string>
+    <string name="material_color_brown">Brown</string>
+    <string name="material_color_gray">Gray</string>
+    <string name="material_color_blue_gray">Blue Gray</string>
 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Are you sure you want to delete this scheduled message
