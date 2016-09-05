@@ -18,6 +18,8 @@ package xyz.klinker.messenger.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,6 +65,7 @@ import xyz.klinker.messenger.fragment.SearchFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
@@ -87,6 +90,7 @@ public class MessengerActivity extends AppCompatActivity
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
 
     private DataSource source;
+    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
@@ -113,6 +117,7 @@ public class MessengerActivity extends AppCompatActivity
         initToolbar();
         initDrawer();
         initFab();
+        configureGlobalColors();
 
         displayConversations();
         dismissIfFromNotification();
@@ -158,7 +163,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -257,6 +262,39 @@ public class MessengerActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), ComposeActivity.class));
             }
         });
+    }
+
+    private void configureGlobalColors() {
+        final Settings settings = Settings.get(this);
+        if (settings.useGlobalThemeColor) {
+            toolbar.setBackgroundColor(settings.globalColorSet.color);
+            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+
+            int[][] states = new int[][] {
+                    new int[] {-android.R.attr.state_checked },
+                    new int[] { android.R.attr.state_checked }
+            };
+
+            int[] iconColors = new int[] {
+                    Color.parseColor("#77000000"),
+                    settings.globalColorSet.colorAccent
+            };
+
+            int[] textColors = new int[] {
+                    Color.parseColor("#DD000000"),
+                    settings.globalColorSet.colorAccent
+            };
+
+            navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
+            navigationView.setItemTextColor(new ColorStateList(states, textColors));
+            navigationView.post(new Runnable() {
+                @Override
+                public void run() {
+                    ColorUtils.adjustStatusBarColor(settings.globalColorSet.colorDark, MessengerActivity.this);
+                    navigationView.findViewById(R.id.header).setBackgroundColor(settings.globalColorSet.colorDark);
+                }
+            });
+        }
     }
 
     @Override

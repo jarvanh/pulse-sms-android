@@ -36,6 +36,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
@@ -101,6 +102,12 @@ public class ConversationListFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         loadConversations();
+
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            empty.setBackgroundColor(settings.globalColorSet.colorLight);
+            ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.globalColorSet.color);
+        }
 
         return view;
     }

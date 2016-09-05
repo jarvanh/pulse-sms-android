@@ -31,9 +31,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.Set;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.BlacklistAdapter;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.BlacklistClickedListener;
@@ -80,6 +83,11 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
             }
         });
         emptyView = view.findViewById(R.id.empty_view);
+
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
+        }
 
         return view;
     }

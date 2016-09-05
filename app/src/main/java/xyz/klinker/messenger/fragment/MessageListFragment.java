@@ -245,6 +245,11 @@ public class MessageListFragment extends Fragment implements
         initToolbar();
         initRecycler();
 
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            toolbar.setBackgroundColor(settings.globalColorSet.color);
+        }
+
         dismissNotification = true;
         dismissNotification();
 

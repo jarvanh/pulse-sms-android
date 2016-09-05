@@ -170,6 +170,10 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
         if (color != -1 && messageHolder != null) {
+            if (Settings.get(itemView.getContext()).useGlobalThemeColor) {
+                color = Settings.get(itemView.getContext()).globalColorSet.color;
+            }
+
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
         }
 

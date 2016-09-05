@@ -51,6 +51,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.service.ScheduledMessageService;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -101,6 +102,11 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 startSchedulingMessage();
             }
         });
+
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
+        }
 
         return view;
     }

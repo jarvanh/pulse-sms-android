@@ -36,9 +36,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.data.Settings;
 
 /**
  * Helper class for working with colors.
@@ -103,7 +105,11 @@ public class ColorUtils {
      * @param color    the color to change to.
      * @param activity the activity to find the views in.
      */
-    public static void adjustStatusBarColor(final int color, final Activity activity) {
+    public static void adjustStatusBarColor(int color, final Activity activity) {
+        if (Settings.get(activity).useGlobalThemeColor) {
+            color = Settings.get(activity).globalColorSet.colorDark;
+        }
+
         if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
             final DrawerLayout drawerLayout = (DrawerLayout) activity
                     .findViewById(R.id.drawer_layout);
@@ -133,8 +139,12 @@ public class ColorUtils {
      * @param activity the activity to find the views in.
      */
     public static void adjustDrawerColor(int color, boolean isGroup, Activity activity) {
-        final View revealView = activity.findViewById(R.id.header_reveal);
-        final View headerView = activity.findViewById(R.id.header);
+        if (Settings.get(activity).useGlobalThemeColor) {
+            color = Settings.get(activity).globalColorSet.colorDark;
+        }
+
+        final View revealView = activity.findViewById(R.id.navigation_view).findViewById(R.id.header_reveal);
+        final View headerView = activity.findViewById(R.id.navigation_view).findViewById(R.id.header);
         NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
 
         int cx = revealView.getMeasuredWidth() / 2;
@@ -217,7 +227,13 @@ public class ColorUtils {
     /**
      * Changes the overscroll highlight effect on a recyclerview to be the given color.
      */
-    public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, final int color) {
+    public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, int color) {
+        final int colorWithGlobalCalculated;
+        if (Settings.get(recyclerView.getContext()).useGlobalThemeColor) {
+            colorWithGlobalCalculated = Settings.get(recyclerView.getContext()).globalColorSet.color;
+        } else {
+            colorWithGlobalCalculated = color;
+        }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean invoked = false;
 
@@ -247,7 +263,7 @@ public class ColorUtils {
                         final Object edge = field.get(recyclerView);
                         final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
                         fEdgeEffect.setAccessible(true);
-                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(color);
+                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(colorWithGlobalCalculated);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
