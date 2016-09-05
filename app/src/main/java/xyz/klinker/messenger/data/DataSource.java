@@ -19,6 +19,7 @@ package xyz.klinker.messenger.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
@@ -1074,7 +1075,13 @@ public class DataSource {
         values.put(Draft.COLUMN_CONVERSATION_ID, draft.conversationId);
         values.put(Draft.COLUMN_DATA, draft.data);
         values.put(Draft.COLUMN_MIME_TYPE, draft.mimeType);
-        return database.insert(Draft.TABLE, null, values);
+
+        try {
+            return database.insert(Draft.TABLE, null, values);
+        } catch (SQLiteConstraintException e) {
+            e.printStackTrace();
+            return -1;
+        }
 
         // NOTE: no api interaction here because this is only called when we insert a draft
         //       in the api download service.
