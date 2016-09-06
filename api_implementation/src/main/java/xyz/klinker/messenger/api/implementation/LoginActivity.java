@@ -18,6 +18,7 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -59,10 +60,13 @@ import xyz.klinker.messenger.encryption.KeyUtils;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String ARG_SKIP_LOGIN = "arg_skip_login";
+
     public static final int RESULT_START_NETWORK_SYNC = 32;
     public static final int RESULT_START_DEVICE_SYNC = 33;
 
     private boolean isInitial = true;
+    private boolean skipLogin = false;
 
     private FloatingActionButton fab;
     private EditText email;
@@ -77,14 +81,20 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.api_activity_login);
-        setUpInitialLayout();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                circularRevealIn();
-            }
-        }, 100);
+        skipLogin = getIntent().getBooleanExtra(ARG_SKIP_LOGIN, false);
+        if (!skipLogin || !hasTelephony(this)) {
+            // we should only skip the login if they are on a phone. A tablet should never be able to login
+            setUpInitialLayout();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    circularRevealIn();
+                }
+            }, 100);
+        } else {
+            onBackPressed();
+        }
     }
 
     private void setUpInitialLayout() {
@@ -93,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        if (!hasTelephony()) {
+        if (!hasTelephony(this)) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
@@ -121,8 +131,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean hasTelephony() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+    public static boolean hasTelephony(Activity activity) {
+        return activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
     private void login() {
@@ -227,7 +237,7 @@ public class LoginActivity extends AppCompatActivity {
                                     password.getText().toString(), response.salt2))
                             .apply();
 
-                    addDevice(utils, response.accountId, hasTelephony(), false);
+                    addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
                 }
             }
         }).start();
@@ -571,7 +581,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isInitial) {
+        if (skipLogin) {
+            close();
+        } else if (isInitial) {
             circularRevealOut();
         } else {
             slideOut();

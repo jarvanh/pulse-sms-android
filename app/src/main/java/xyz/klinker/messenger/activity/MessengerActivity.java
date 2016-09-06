@@ -55,6 +55,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -85,6 +86,8 @@ public class MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
+    public static final boolean IS_BETA_TEST = false;
+
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
     public static final String EXTRA_MESSAGE_ID = "message_id";
@@ -110,14 +113,17 @@ public class MessengerActivity extends AppCompatActivity
         source = DataSource.getInstance(this);
         source.open();
 
-        //startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
-
         UpdateUtils.checkForUpdate(this);
 
         if (checkInitialStart()) {
-            startActivity(new Intent(this, InitialLoadActivity.class));
-            finish();
-            return;
+            if (IS_BETA_TEST) {
+                // beta test should skip this and go right to the initial login and data upload
+                startActivity(new Intent(this, InitialLoadActivity.class));
+                finish();
+                return;
+            } else {
+                startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
+            }
         }
 
         setContentView(R.layout.activity_messenger);
@@ -727,11 +733,13 @@ public class MessengerActivity extends AppCompatActivity
         }
 
         if (requestCode == REQUEST_ONBOARDING) {
+            Intent login = new Intent(this, InitialLoadActivity.class);
+
             if (resultCode == RESULT_SKIP_TRIAL) {
-
-            } else if (resultCode == RESULT_START_TRIAL) {
-
+                login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
             }
+
+            startActivity(login);
         }
 
         super.onActivityResult(requestCode, resultCode, data);

@@ -140,7 +140,7 @@
     <string name="skip_trial">Maybe\nLater</string>
     <string name="available_everywhere">Available Everywhere</string>
     <string name="message_anywhere_trial">Message Anywhere</string>
-    <string name="message_anywhere_trial_description">While you can use the Android app, on your phone, <b>COMPLETELY FREE</b>, to use Messenger on your other devices, a $1 subscription / month is required.\n\nYou get a free <b>ONE WEEK</b> trial of this service as a \"<i>Thank You!</i>\" for downloading!\n\nSubscribing gives you access to your messages from:\n- <b>Your tablet</b>\n- <b>https://messenger.klinkerapps.com</b>\n- Our stand-alone <b>Google Chrome app</b>\n- Our <b>Google Chrome browser extension</b>\n\nTry it today and let us know what you think!</string>
+    <string name="message_anywhere_trial_description">You can use the Android app, on your phone, COMPLETELY FREE!\n\nUsing Messenger across your other devices costs less than $1.00 / month, and you can cancel at any time.\n\nYou get a free ONE WEEK trial of this service as a \"Thank You!\" for downloading!\n\nSubscribing gives you access to your messages from:\n- Your tablet\n- https://messenger.klinkerapps.com\n- Our stand-alone Google Chrome app\n- Our Google Chrome browser extension\n\nTry it today and let us know what you think!</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>

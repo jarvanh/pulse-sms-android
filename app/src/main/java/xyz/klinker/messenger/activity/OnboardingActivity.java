@@ -10,6 +10,7 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.fragment.AppIntroExplanationFragment;
 
 public class OnboardingActivity extends AppIntro {
@@ -30,7 +31,6 @@ public class OnboardingActivity extends AppIntro {
                 R.drawable.ic_devices_onboarding,
                 getResources().getColor(R.color.materialLightBlue)));
 
-        addSlide(new AppIntroExplanationFragment());
 
         // Hide Skip/Done button.
         showSkipButton(false);
@@ -38,20 +38,24 @@ public class OnboardingActivity extends AppIntro {
         final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         final Button done = (Button) findViewById(R.id.done);
         final Button skip = (Button) findViewById(R.id.skip);
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-            @Override public void onPageScrollStateChanged(int state) { }
-            @Override public void onPageSelected(int position) {
-                if (position == pager.getAdapter().getCount() - 1) {
-                    skip.setVisibility(View.VISIBLE);
-                } else {
-                    skip.setVisibility(View.GONE);
-                }
-            }
-        });
 
-        skip.setText(getString(R.string.skip_trial));
-        done.setText(getString(R.string.start_trial));
+        if (LoginActivity.hasTelephony(this)) {
+            addSlide(new AppIntroExplanationFragment());
+            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+                @Override public void onPageScrollStateChanged(int state) { }
+                @Override public void onPageSelected(int position) {
+                    if (position == pager.getAdapter().getCount() - 1) {
+                        skip.setVisibility(View.VISIBLE);
+                    } else {
+                        skip.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            skip.setText(getString(R.string.skip_trial));
+            done.setText(getString(R.string.start_trial));
+        }
     }
 
     @Override

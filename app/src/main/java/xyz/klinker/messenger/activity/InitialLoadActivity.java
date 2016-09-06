@@ -131,7 +131,12 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void startLogin() {
-        startActivityForResult(new Intent(this, LoginActivity.class), SETUP_REQUEST);
+        // we want to pass the extras from the last intent to this one, since they will tell us if
+        // we should automatically skip the login and just go into the data load.
+        Intent login = new Intent(this, LoginActivity.class);
+        login.putExtras(getIntent());
+
+        startActivityForResult(login, SETUP_REQUEST);
     }
 
     private void startDatabaseSync() {
