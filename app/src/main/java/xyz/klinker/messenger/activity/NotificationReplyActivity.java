@@ -74,6 +74,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        hideKeyboard();
         slideOut();
         content.postDelayed(new Runnable() {
             @Override
@@ -145,6 +146,15 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 });
             }
         });
+
+        messageInput.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                messageInput.requestFocus();
+                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
+                        .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
+            }
+        }, 300);
     }
 
     // region setup message history
@@ -262,10 +272,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sendButton.setEnabled(false);
 
-                InputMethodManager imm = (InputMethodManager)
-                        NotificationReplyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(messageInput.getWindowToken(), 0);
-
+                hideKeyboard();
                 sendMessage();
 
                 alphaOut(sendButton, 200, 0);
@@ -423,6 +430,11 @@ public class NotificationReplyActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(messageInput.getWindowToken(), 0);
     }
 
     // region animators
