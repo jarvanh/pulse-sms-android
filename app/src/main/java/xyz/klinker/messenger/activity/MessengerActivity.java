@@ -106,6 +106,8 @@ public class MessengerActivity extends AppCompatActivity
         source = DataSource.getInstance(this);
         source.open();
 
+        //startActivity(new Intent(this, OnboardingActivity.class));
+
         UpdateUtils.checkForUpdate(this);
 
         if (checkInitialStart()) {

@@ -57,6 +57,11 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
+
+    <style name="AppIntro" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
     </style>
