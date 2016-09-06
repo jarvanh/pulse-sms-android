@@ -300,8 +300,6 @@ public class ColorUtils {
     public static void checkBlackBackground(Activity activity) {
         if (Settings.get(activity).blackTheme) {
             activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-        } else {
-            activity.getWindow().setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(R.color.background)));
         }
     }
 

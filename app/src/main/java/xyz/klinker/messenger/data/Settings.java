@@ -145,6 +145,9 @@ public class Settings {
 
         // we want to keep these seperate for day/night functionality
         switch (baseTheme) {
+            case "day_night":
+                this.darkTheme = false;
+                this.blackTheme = false;
             case "dark":
                 this.darkTheme = true;
                 this.blackTheme = false;

@@ -129,12 +129,8 @@ public class MessengerActivity extends AppCompatActivity
         super.onStart();
         requestPermissions();
 
-        Settings settings = Settings.get(this);
-        if (settings.blackTheme) {
-            ColorUtils.checkBlackBackground(this);
-        } else {
-            getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background)));
-        }
+        ColorUtils.checkBlackBackground(this);
+        ColorUtils.updateRecentsEntry(this);
     }
 
     @Override
@@ -303,8 +299,6 @@ public class MessengerActivity extends AppCompatActivity
                     navigationView.findViewById(R.id.header).setBackgroundColor(settings.globalColorSet.colorDark);
                 }
             });
-
-            ColorUtils.updateRecentsEntry(this);
         }
     }
 
