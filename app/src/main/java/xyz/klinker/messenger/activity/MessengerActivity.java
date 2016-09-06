@@ -86,7 +86,7 @@ public class MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
-    public static final boolean IS_BETA_TEST = false;
+    public static final boolean IS_BETA_TEST = true;
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
