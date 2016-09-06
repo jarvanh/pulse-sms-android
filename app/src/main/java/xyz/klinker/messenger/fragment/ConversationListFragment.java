@@ -315,8 +315,10 @@ public class ConversationListFragment extends Fragment
                 .replace(R.id.message_list_container, messageListFragment)
                 .commit();
 
-        ActivityUtils.setTaskDescription(getActivity(),
-                viewHolder.conversation.title, viewHolder.conversation.colors.color);
+        if (!Settings.get(getActivity()).useGlobalThemeColor) {
+            ActivityUtils.setTaskDescription(getActivity(),
+                    viewHolder.conversation.title, viewHolder.conversation.colors.color);
+        }
         return true;
     }
 
@@ -334,7 +336,9 @@ public class ConversationListFragment extends Fragment
         ColorUtils.adjustStatusBarColor(color, getActivity());
         ColorUtils.adjustDrawerColor(color, getActivity());
 
-        ActivityUtils.setTaskDescription(getActivity());
+        if (!Settings.get(getActivity()).useGlobalThemeColor) {
+            ActivityUtils.setTaskDescription(getActivity());
+        }
     }
 
     @Override
