@@ -48,6 +48,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ColorUtils.updateRecentsEntry(this);
+        ColorUtils.checkBlackBackground(this);
     }
 
     @Override

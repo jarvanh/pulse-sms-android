@@ -35,8 +35,8 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
+        initBaseTheme();
         initGlobalTheme();
-        initNightMode();
         initFontSize();
         initVibrate();
         initDeliveryReports();
@@ -62,20 +62,20 @@ public class SettingsFragment extends PreferenceFragment {
                 });
     }
 
-    private void initNightMode() {
-        findPreference(getString(R.string.pref_dark_theme))
+    private void initBaseTheme() {
+        findPreference(getString(R.string.pref_base_theme))
                 .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
-                        boolean night = (boolean) o;
-                        if (night) {
+                        String newValue = (String) o;
+                        if (!newValue.equals("day_night")) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         } else {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         }
 
-                        new ApiUtils().updateDarkTheme(Settings.get(getActivity()).accountId,
-                                night);
+                        new ApiUtils().updateBaseTheme(Settings.get(getActivity()).accountId,
+                                newValue);
 
                         return true;
                     }

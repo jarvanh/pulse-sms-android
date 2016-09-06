@@ -298,6 +298,7 @@ public class MessengerActivity extends AppCompatActivity
             });
 
             ColorUtils.updateRecentsEntry(this);
+            ColorUtils.checkBlackBackground(this);
         }
     }
 

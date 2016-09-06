@@ -693,21 +693,6 @@ public class ApiUtils {
         }
     }
 
-
-
-    /**
-     * Update the dark theme setting.
-     */
-    public void updateDarkTheme(final String accountId, final boolean darkTheme) {
-        if (!active || accountId == null) {
-            return;
-        } else {
-            updateSetting(accountId, "dark_theme", "boolean", darkTheme);
-        }
-    }
-
-
-
     /**
      * Update the vibrate setting.
      */
@@ -771,6 +756,17 @@ public class ApiUtils {
             return;
         } else {
             updateSetting(accountId, "global_color_theme", "string", color);
+        }
+    }
+
+    /**
+     * Update the base theme (day/night, always dark, always black)
+     */
+    public void updateBaseTheme(final String accountId, final String themeString) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "base_theme", "string", themeString);
         }
     }
 

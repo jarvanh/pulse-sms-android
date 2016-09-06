@@ -24,7 +24,9 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -279,6 +281,9 @@ public class ColorUtils {
         });
     }
 
+    /**
+     * Changes the color of the app bar on the "recents screen", if it is not the default theme
+     */
     public static void updateRecentsEntry(Activity activity) {
         Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
@@ -286,6 +291,15 @@ public class ColorUtils {
             ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
 
             activity.setTaskDescription(td);
+        }
+    }
+
+    /**
+     * Changes the window background to black if applicable
+     */
+    public static void checkBlackBackground(Activity activity) {
+        if (Settings.get(activity).blackTheme) {
+            activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         }
     }
 

@@ -19,19 +19,19 @@
     <PreferenceCategory android:title="@string/theme_settings">
 
         <ListPreference
+            android:key="@string/pref_base_theme"
+            android:title="@string/base_theme"
+            android:entries="@array/base_theme"
+            android:entryValues="@array/base_theme_values"
+            android:defaultValue="day_night" />
+
+        <ListPreference
             android:key="@string/pref_global_color_theme"
             android:title="@string/global_theme_color"
             android:summary="@string/global_theme_summary"
             android:entries="@array/global_color"
             android:entryValues="@array/global_color_values"
             android:defaultValue="default" />
-
-        <SwitchPreference
-            android:key="@string/pref_dark_theme"
-            android:title="@string/dark_theme"
-            android:summaryOn="@string/dark_theme_summary_on"
-            android:summaryOff="@string/dark_theme_summary_off"
-            android:defaultValue="false" />
 
         <ListPreference
             android:key="@string/pref_font_size"

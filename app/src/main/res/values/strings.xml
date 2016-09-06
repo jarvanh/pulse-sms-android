@@ -196,9 +196,7 @@
     <string name="vibrate">Vibrate</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
-    <string name="dark_theme">Dark Theme</string>
-    <string name="dark_theme_summary_on">Always uses the dark theme</string>
-    <string name="dark_theme_summary_off">Switches between dark and light themes</string>
+    <string name="base_theme">Base Theme</string>
     <string name="global_theme_color">Global Theme Color</string>
     <string name="global_theme_summary">Applied throughout the entire app</string>
     <string name="font_size">Font Size</string>
@@ -231,7 +229,10 @@
     <string name="font_size_extra_large">Extra Large</string>
 
 
-    <!-- Material Colors -->
+    <!-- Theming Options -->
+    <string name="day_night">Default (Day/Night)</string>
+    <string name="always_dark">Always Dark</string>
+    <string name="always_black">Always Black</string>
     <string name="set_color_per_conversation">Set color per conversation</string>
     <string name="material_color_red">Red</string>
     <string name="material_color_pink">Pink</string>

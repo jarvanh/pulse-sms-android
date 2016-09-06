@@ -40,13 +40,13 @@ public class Settings {
     // settings
     public boolean vibrate;
     public boolean useGlobalThemeColor;
-    public boolean darkTheme;
     public boolean deliveryReports;
     public boolean mobileOnly;
     public long snooze;
     public String ringtone;
     public String fontSize;
     public String themeColorString;
+    public String baseTheme;
 
     // account info
     public boolean primary;
@@ -63,6 +63,8 @@ public class Settings {
     public int mediumFont;
     public int largeFont;
     public ColorSet globalColorSet;
+    public boolean darkTheme;
+    public boolean blackTheme;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -96,7 +98,6 @@ public class Settings {
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
 
         // settings
-        this.darkTheme = sharedPrefs.getBoolean(context.getString(R.string.pref_dark_theme), false);
         this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
@@ -105,6 +106,7 @@ public class Settings {
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
         this.useGlobalThemeColor = !themeColorString.equals("default");
+        this.baseTheme = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
 
         // account info
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
@@ -141,7 +143,19 @@ public class Settings {
             this.largeFont = 20;
         }
 
-        globalColorSet = ColorSet.getFromString(context, themeColorString);
+        // we want to keep these seperate for day/night functionality
+        switch (baseTheme) {
+            case "dark":
+                this.darkTheme = true;
+                this.blackTheme = false;
+                break;
+            case "black":
+                this.darkTheme = true;
+                this.blackTheme = true;
+                break;
+        }
+
+        this.globalColorSet = ColorSet.getFromString(context, themeColorString);
     }
 
     @VisibleForTesting

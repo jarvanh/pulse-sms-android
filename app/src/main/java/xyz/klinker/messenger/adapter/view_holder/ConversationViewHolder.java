@@ -38,6 +38,7 @@ import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
  */
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
+    public View headerBackground;
     public TextView header;
     public CircleImageView image;
     public TextView name;
@@ -56,6 +57,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
         this.expandedListener = listener;
 
+        headerBackground = itemView.findViewById(R.id.header_background);
         header = (TextView) itemView.findViewById(R.id.header);
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
@@ -101,7 +103,9 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             summary.setTextSize(settings.mediumFont);
         }
 
-
+        if (settings.blackTheme && headerBackground != null) {
+            headerBackground.setBackgroundColor(Color.BLACK);
+        }
     }
 
     public boolean isBold() {

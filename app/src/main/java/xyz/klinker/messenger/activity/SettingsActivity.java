@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
 
         ColorUtils.updateRecentsEntry(this);
+        ColorUtils.checkBlackBackground(this);
     }
 
     @Override

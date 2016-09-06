@@ -128,6 +128,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             ColorUtils.setCursorDrawableColor(contactEntry, settings.globalColorSet.colorAccent);
             ColorUtils.updateRecentsEntry(this);
         }
+
+        ColorUtils.checkBlackBackground(this);
     }
 
     private void displayRecents() {
