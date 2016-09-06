@@ -148,6 +148,7 @@ public class Settings {
             case "day_night":
                 this.darkTheme = false;
                 this.blackTheme = false;
+                break;
             case "dark":
                 this.darkTheme = true;
                 this.blackTheme = false;
@@ -155,6 +156,10 @@ public class Settings {
             case "black":
                 this.darkTheme = true;
                 this.blackTheme = true;
+                break;
+            default:
+                this.darkTheme = false;
+                this.blackTheme = false;
                 break;
         }
 
