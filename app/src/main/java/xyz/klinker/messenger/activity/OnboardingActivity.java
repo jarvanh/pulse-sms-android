@@ -10,6 +10,7 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.fragment.AppIntroExplanationFragment;
 
 public class OnboardingActivity extends AppIntro {
 
@@ -20,19 +21,16 @@ public class OnboardingActivity extends AppIntro {
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
         addSlide(AppIntroFragment.newInstance(
-                getString(R.string.app_name_long), "",
-                R.drawable.launcher_hi_res,
+                "Messaging Re-imagined", "Smooth, fluid layouts with a powerful design and seamless integration. Messenger puts your conversations front and center.",
+                R.drawable.ic_inbox_onboarding,
                 getResources().getColor(R.color.materialTeal)));
 
         addSlide(AppIntroFragment.newInstance(
-                "Messaging Re-invented", "Smooth, fluid layouts with a powerful design and seamless integration. Pulse puts your conversations front and center.",
-                R.drawable.ic_inbox,
-                getResources().getColor(R.color.materialBlueGrey)));
-
-        addSlide(AppIntroFragment.newInstance(
-                "Available Anywhere", "Message from your tablet, computer, or any other connected devices!",
-                R.drawable.ic_devices,
+                "Available Everywhere", "Message from your tablet, computer, or any other connected devices!",
+                R.drawable.ic_devices_onboarding,
                 getResources().getColor(R.color.materialLightBlue)));
+
+        addSlide(new AppIntroExplanationFragment());
 
         // Hide Skip/Done button.
         showSkipButton(false);
@@ -52,18 +50,23 @@ public class OnboardingActivity extends AppIntro {
             }
         });
 
-        done.setText("Start\nTrial");
+        skip.setText(getString(R.string.skip_trial));
+        done.setText(getString(R.string.start_trial));
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        // start trial
+
+        setResult(MessengerActivity.RESULT_START_TRIAL);
+        finish();
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        // finish without starting trial
+
+        setResult(MessengerActivity.RESULT_SKIP_TRIAL);
+        finish();
     }
 }

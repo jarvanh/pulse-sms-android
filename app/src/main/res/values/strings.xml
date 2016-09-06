@@ -136,6 +136,11 @@
         won\'t take long!</string>
     <string name="tooltip_got_it">Got It!</string>
     <string name="navigation_drawer_conversation_hint">More options for this conversation are stored in the navigation drawer.</string>
+    <string name="start_trial">Start\nTrial</string>
+    <string name="skip_trial">Maybe\nLater</string>
+    <string name="available_everywhere">Available Everywhere</string>
+    <string name="message_anywhere_trial">Message Anywhere</string>
+    <string name="message_anywhere_trial_description">While you can use the Android app, on your phone, <b>COMPLETELY FREE</b>, to use Messenger on your other devices, a $1 subscription / month is required.\n\nYou get a free <b>ONE WEEK</b> trial of this service as a \"<i>Thank You!</i>\" for downloading!\n\nSubscribing gives you access to your messages from:\n- <b>Your tablet</b>\n- <b>https://messenger.klinkerapps.com</b>\n- Our stand-alone <b>Google Chrome app</b>\n- Our <b>Google Chrome browser extension</b>\n\nTry it today and let us know what you think!</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>

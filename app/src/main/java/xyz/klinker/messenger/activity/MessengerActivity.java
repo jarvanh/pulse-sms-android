@@ -90,6 +90,10 @@ public class MessengerActivity extends AppCompatActivity
     public static final String EXTRA_MESSAGE_ID = "message_id";
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
 
+    public static final int REQUEST_ONBOARDING = 101;
+    public static final int RESULT_START_TRIAL = 102;
+    public static final int RESULT_SKIP_TRIAL = 103;
+
     private DataSource source;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -106,7 +110,7 @@ public class MessengerActivity extends AppCompatActivity
         source = DataSource.getInstance(this);
         source.open();
 
-        //startActivity(new Intent(this, OnboardingActivity.class));
+        startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
 
         UpdateUtils.checkForUpdate(this);
 
@@ -719,6 +723,14 @@ public class MessengerActivity extends AppCompatActivity
             fragment = getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
             if (fragment != null) {
                 fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+
+        if (requestCode == REQUEST_ONBOARDING) {
+            if (resultCode == RESULT_SKIP_TRIAL) {
+
+            } else if (resultCode == RESULT_START_TRIAL) {
+
             }
         }
 
