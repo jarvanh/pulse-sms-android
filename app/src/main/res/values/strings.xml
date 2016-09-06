@@ -52,6 +52,7 @@
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>
     <string name="no_messages_summary">Start a new conversation or just enjoy your day!</string>
+    <string name="close">Close</string>
 
     <!-- Conversation List Screen -->
     <string name="pinned">Pinned</string>
@@ -120,6 +121,7 @@
     <string name="view_details">View Details</string>
     <string name="delete">Delete</string>
     <string name="copy_message">Copy Message</string>
+    <string name="no_media">No media in this conversation!</string>
 
     <!-- Compose Screen -->
     <string name="enter_contact_name">Enter contact name</string>

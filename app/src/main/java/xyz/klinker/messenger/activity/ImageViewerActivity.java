@@ -36,6 +36,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
@@ -95,7 +96,13 @@ public class ImageViewerActivity extends AppCompatActivity {
         source.close();
 
         if (messages.size() == 0) {
-            Snackbar.make(findViewById(android.R.id.content), "No media!", Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.no_media, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.close, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    }).show();
         }
     }
 
