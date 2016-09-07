@@ -140,7 +140,13 @@
     <string name="skip_trial">Maybe\nLater</string>
     <string name="available_everywhere">Available Everywhere</string>
     <string name="message_anywhere_trial">Message Anywhere</string>
-    <string name="message_anywhere_trial_description">You can use the Android app, on your phone, COMPLETELY FREE!\n\nUsing Messenger across your other devices costs less than $1.00 / month, and you can cancel at any time.\n\nYou get a free ONE WEEK trial of this service as a \"Thank You!\" for downloading!\n\nSubscribing gives you access to your messages from:\n- Your tablet\n- https://messenger.klinkerapps.com\n- Our stand-alone Google Chrome app\n- Our Google Chrome browser extension\n\nTry it today and let us know what you think!</string>
+    <string name="message_anywhere_trial_description" formatted="false">You can use the Android app, on your phone, %bCOMPLETELY FREE%bb!\n\nUsing Messenger across your other devices costs %bless than $1.00%bb / month, and you can cancel at any time.\n\nYou get a %bfree ONE WEEK%bb trial as a %iTHANK YOU%ii for downloading!</string>
+    <string name="subscription_platforms">Subscribing gives you access to your messages from:</string>
+    <string name="platform_tablet">Tablet</string>
+    <string name="platform_web">https://messenger.klinkerapps.com</string>
+    <string name="platform_chrome_app">Stand-alone Google Chrome app</string>
+    <string name="platform_chrome_extension">Google Chrome browser extension</string>
+    <string name="trial_description_end" formatted="false">Try it today and let us know what you think! If you already have an account, go ahead and press %iStart Trial%ii to log in to it.</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>
