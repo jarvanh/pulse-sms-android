@@ -33,6 +33,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -196,9 +197,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 layout.findViewById(R.id.edit_text);
         editText.setHint(R.string.scheduled_to_hint);
         editText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        editText.setAdapter(new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getActivity()));
+        BaseRecipientAdapter adapter =
+                new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getActivity());
+        adapter.setShowMobileOnly(Settings.get(getActivity()).mobileOnly);
+        editText.setAdapter(adapter);
 
-        new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -234,6 +238,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
+
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     private void displayDateDialog(final ScheduledMessage message) {
