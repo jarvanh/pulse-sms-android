@@ -115,8 +115,8 @@ public class MessengerActivity extends AppCompatActivity
 
         UpdateUtils.checkForUpdate(this);
 
-        startActivity(new Intent(this, OnboardingActivity.class));
-        /*if (checkInitialStart()) {
+        //startActivity(new Intent(this, OnboardingActivity.class));
+        if (checkInitialStart()) {
             if (IS_BETA_TEST) {
                 // beta test should skip this and go right to the initial login and data upload
                 startActivity(new Intent(this, InitialLoadActivity.class));
@@ -125,7 +125,7 @@ public class MessengerActivity extends AppCompatActivity
             } else {
                 startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
             }
-        }*/
+        }
 
         setContentView(R.layout.activity_messenger);
         initToolbar();
