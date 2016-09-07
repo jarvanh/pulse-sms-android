@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.3"
+        description="September 7th, 2016">
+        <text>Finish onboarding (not applied to beta)</text>
+        <text>"Read" button on notification</text>
+        <text>Improve list preferences in settings</text>
+    </version>
+    
+    <version
         name="1.2"
         description="September 5th, 2016">
         <text>Quick reply from notification</text>
