@@ -204,7 +204,6 @@
     <string name="theme_settings">Customization</string>
     <string name="base_theme">Base Theme</string>
     <string name="global_theme_color">Global Theme Color</string>
-    <string name="global_theme_summary">Applied throughout the entire app</string>
     <string name="font_size">Font Size</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
