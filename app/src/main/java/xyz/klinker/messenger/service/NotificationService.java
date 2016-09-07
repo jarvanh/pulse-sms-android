@@ -262,7 +262,7 @@ public class NotificationService extends IntentService {
                     .addRemoteInput(remoteInput)
                     .build();
 
-            builder.extend(new NotificationCompat.WearableExtender().addAction(action));
+            builder.addAction(action);
         } else {
             // on older versions, we have to show the reply activity button as an action and add the remote input to it
             // this will allow it to be used on android wear (we will have to handle this from the activity)
@@ -290,6 +290,11 @@ public class NotificationService extends IntentService {
             }
         }
 
+        Intent read = new Intent(this, NotificationMarkReadService.class);
+        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
+        PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
+                read, PendingIntent.FLAG_ONE_SHOT);
+
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
         PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.id,
@@ -302,6 +307,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
                 open, PendingIntent.FLAG_ONE_SHOT);
 
+        builder.addAction(new NotificationCompat.Action(R.drawable.ic_done, getString(R.string.read), pendingRead));
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 

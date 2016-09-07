@@ -1,0 +1,50 @@
+package xyz.klinker.messenger.service;
+
+import android.app.IntentService;
+import android.content.Intent;
+import android.database.Cursor;
+import android.support.v4.app.NotificationManagerCompat;
+
+import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+
+public class NotificationMarkReadService extends IntentService {
+
+    public static final String EXTRA_CONVERSATION_ID = "conversation_id";
+
+    public NotificationMarkReadService() {
+        super("NotificationMarkReadService");
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
+
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        source.readConversation(this, conversationId);
+        Conversation conversation = source.getConversation(conversationId);
+
+        // cancel the notification we just replied to or
+        // if there are no more notifications, cancel the summary as well
+        Cursor unseenMessages = source.getUnseenMessages();
+        if (unseenMessages.getCount() <= 0) {
+            NotificationManagerCompat.from(this).cancelAll();
+        } else {
+            NotificationManagerCompat.from(this).cancel((int) conversationId);
+        }
+
+        unseenMessages.close();
+        source.close();
+
+        new ApiUtils().dismissNotification(Settings.get(this).accountId,
+                conversationId);
+
+        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, conversation.snippet, true);
+    }
+}

@@ -158,6 +158,7 @@
         <item quantity="one">%1$d new message</item>
         <item quantity="other">%1$d new messages</item>
     </plurals>
+    <string name="read">Read</string>
     <string name="reply">Reply</string>
     <string name="reply_to">Reply to %1$s</string>
     <string-array name="reply_choices">
@@ -168,6 +169,7 @@
         <item>Thanks</item>
     </string-array>
     <string name="new_mms_message">New MMS message</string>
+
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>

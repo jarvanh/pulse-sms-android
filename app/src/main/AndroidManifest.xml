@@ -237,6 +237,7 @@
 
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />
+        <service android:name=".service.NotificationMarkReadService" />
         <service android:name=".service.ReplyService" />
         <service android:name=".service.ContentObserverService" />
         <service android:name=".service.ScheduledMessageService" />
