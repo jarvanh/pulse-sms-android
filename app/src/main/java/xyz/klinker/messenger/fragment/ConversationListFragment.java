@@ -248,6 +248,7 @@ public class ConversationListFragment extends Fragment
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        pendingDelete = new ArrayList<>();
                         loadConversations();
                     }
                 })
