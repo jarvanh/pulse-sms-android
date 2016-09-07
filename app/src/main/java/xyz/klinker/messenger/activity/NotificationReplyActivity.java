@@ -357,6 +357,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 Intent intent = new Intent(NotificationReplyActivity.this, MessengerActivity.class);
                 intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
                 intent.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

@@ -52,7 +52,7 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
  */
 public class NotificationService extends IntentService {
 
-    private static final boolean DEBUG_QUICK_REPLY = false;
+    private static final boolean DEBUG_QUICK_REPLY = true;
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
