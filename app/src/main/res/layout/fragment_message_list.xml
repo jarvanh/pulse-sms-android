@@ -138,7 +138,7 @@
                 android:textSize="16sp"
                 android:id="@+id/message_entry"
                 android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
-                android:imeOptions="actionSend"
+                android:imeOptions="actionSend|flagNoExtractUi"
                 android:maxLines="5" />
 
             <android.support.design.widget.FloatingActionButton
