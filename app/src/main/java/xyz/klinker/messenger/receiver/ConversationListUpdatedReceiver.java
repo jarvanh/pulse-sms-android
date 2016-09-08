@@ -103,7 +103,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
             } else {
                 // remove, update, and reinsert conversation to appropriate place
                 Conversation conversation = conversations.get(position);
-                adapter.removeItem(adapterPosition, false);
+                adapter.removeItem(adapterPosition, ConversationListAdapter.ReorderType.NEITHER);
 
                 conversation.snippet = snippet;
                 conversation.read = read;

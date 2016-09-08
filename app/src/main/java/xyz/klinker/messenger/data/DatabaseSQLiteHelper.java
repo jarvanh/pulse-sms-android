@@ -34,7 +34,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "messenger.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private DatabaseTable[] tables = {
             new Conversation(),
@@ -71,9 +71,9 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         // for example, if old version was 1, then we need to execute all changes from 2 through the
         // newest version
 
-        // if (oldVersion < 2) {
-
-        // }
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE conversation ADD COLUMN archive integer not null DEFAULT 0");
+        }
 
         // if (oldVersion < 3) {
 

@@ -45,6 +45,10 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
  */
 public class ConversationListAdapter extends SectionedRecyclerViewAdapter<ConversationViewHolder> {
 
+    public enum ReorderType {
+        DELETE, ARCHIVE, NEITHER
+    }
+
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
     private ConversationExpandedListener conversationExpandedListener;
@@ -180,10 +184,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     public void deleteItem(int position) {
-        removeItem(position, true);
+        removeItem(position, ReorderType.DELETE);
     }
 
-    public void removeItem(int position, boolean delete) {
+    public void archiveItem(int position) {
+        removeItem(position, ReorderType.ARCHIVE);
+    }
+
+    public void removeItem(int position, ReorderType reorderType) {
         // The logic here can get a little tricky because we are removing items from the adapter
         // but need to account for the headers taking up a position as well. On top of that, if all
         // the items in a section are gone, then there shouldn't be a header for that section.
@@ -211,8 +219,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     notifyItemRemoved(originalPosition);
                 }
 
-                if (delete) {
+                if (reorderType == ReorderType.DELETE) {
                     swipeToDeleteListener.onSwipeToDelete(deletedConversation);
+                } else if (reorderType == ReorderType.ARCHIVE) {
+                    swipeToDeleteListener.onSwipeToArchive(deletedConversation);
                 }
 
                 break;

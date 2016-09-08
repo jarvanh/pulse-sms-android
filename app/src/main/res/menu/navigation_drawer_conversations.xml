@@ -29,6 +29,11 @@
                 android:checked="true" />
 
             <item
+                android:id="@+id/drawer_archived"
+                android:icon="@drawable/ic_archive"
+                android:title="@string/menu_archived_conversations" />
+
+            <item
                 android:id="@+id/drawer_schedule"
                 android:icon="@drawable/ic_schedule"
                 android:title="@string/menu_schedule" />

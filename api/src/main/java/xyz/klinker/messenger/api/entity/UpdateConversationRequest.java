@@ -29,11 +29,12 @@ public class UpdateConversationRequest {
     public String snippet;
     public String ringtone;
     public Boolean mute;
+    public Boolean archive;
 
     public UpdateConversationRequest(Integer color, Integer colorDark, Integer colorLight,
                                      Integer colorAccent, Boolean pinned, Boolean read,
                                      Long timestamp, String title, String snippet, String ringtone,
-                                     Boolean mute) {
+                                     Boolean mute, Boolean archive) {
         this.color = color;
         this.colorDark = colorDark;
         this.colorLight = colorLight;
@@ -45,6 +46,7 @@ public class UpdateConversationRequest {
         this.snippet = snippet;
         this.ringtone = ringtone;
         this.mute = mute;
+        this.archive = archive;
     }
 
 }

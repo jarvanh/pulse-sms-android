@@ -17,6 +17,7 @@
 <resources>
 
     <color name="background">#374248</color>
+    <color name="swipeBackground">#2c353a</color>
     <color name="drawerBackground">#202B30</color>
     <color name="primaryText">#FFFFFFFF</color>
     <color name="secondaryText">#B2FFFFFF</color>

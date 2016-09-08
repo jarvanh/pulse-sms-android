@@ -22,6 +22,7 @@
 
     <!-- Drawer Items -->
     <string name="menu_conversations">Conversation list</string>
+    <string name="menu_archived_conversations">Archived conversations</string>
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
@@ -65,6 +66,14 @@
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation deleted</item>
         <item quantity="other">%1$d conversations deleted</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d conversation archived</item>
+        <item quantity="other">%1$d conversations archived</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d conversation moved to inbox</item>
+        <item quantity="other">%1$d conversations moved to inbox</item>
     </plurals>
     <string name="undo">Undo</string>
     <string name="enter_search">Search for…</string>

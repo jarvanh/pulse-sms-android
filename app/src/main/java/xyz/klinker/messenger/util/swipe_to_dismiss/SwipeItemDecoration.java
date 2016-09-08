@@ -18,6 +18,7 @@ package xyz.klinker.messenger.util.swipe_to_dismiss;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -52,7 +53,12 @@ public class SwipeItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void init(Context context) {
-        background = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        Settings settings = Settings.get(context);
+        if (settings.blackTheme) {
+            background = new ColorDrawable(Color.BLACK);
+        } else {
+            background = new ColorDrawable(context.getResources().getColor(R.color.swipeBackground));
+        }
         initiated = true;
     }
 

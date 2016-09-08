@@ -39,16 +39,33 @@ import xyz.klinker.messenger.data.Settings;
 public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     private ConversationListAdapter adapter;
-    private Drawable background;
-    private Drawable xMark;
-    private int xMarkMargin;
+    private Drawable endSwipeBackground;
+    private Drawable startSwipeBackground;
+    private Drawable endMark; // delete icon
+    private Drawable startMark; // archive icon
+    private int markMargin;
     private boolean initiated;
 
+    protected Drawable getArchiveItem(Context context) {
+        return context.getDrawable(R.drawable.ic_archive);
+    }
+
     private void init(Context context) {
-        background = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
-        xMark = context.getDrawable(R.drawable.ic_delete_sweep);
-        xMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
-        xMarkMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);
+        endSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        endMark = context.getDrawable(R.drawable.ic_delete_sweep);
+        endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+
+        Settings settings = Settings.get(context);
+        if (settings.useGlobalThemeColor) {
+            startSwipeBackground = new ColorDrawable(settings.globalColorSet.colorAccent);
+        } else {
+            startSwipeBackground = new ColorDrawable(context.getResources().getColor(R.color.colorAccent));
+        }
+
+        startMark = getArchiveItem(context);
+        startMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+
+        markMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);
         initiated = true;
     }
 
@@ -65,7 +82,11 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        adapter.deleteItem(viewHolder.getAdapterPosition());
+        if (direction == ItemTouchHelper.START) {
+            adapter.deleteItem(viewHolder.getAdapterPosition());
+        } else {
+            adapter.archiveItem(viewHolder.getAdapterPosition());
+        }
     }
 
     @Override
@@ -74,7 +95,8 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         if (viewHolder.itemView instanceof FrameLayout) {
             return 0;
         } else {
-            return ItemTouchHelper.START;
+            // swipe TOWARDS the start or TOWARDS the end
+            return ItemTouchHelper.START | ItemTouchHelper.END;
         }
     }
 
@@ -92,25 +114,48 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
             init(recyclerView.getContext());
         }
 
-        int left = Math.min(itemView.getRight() + (int) dX,
-                itemView.getRight() + itemView.getWidth());
 
-        // draw background
-        background.setBounds(left, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-        background.draw(c);
+        if (dX < 0) { // we are swiping towards the start (delete)
+            int left = Math.min(itemView.getRight() + (int) dX,
+                    itemView.getRight() + itemView.getWidth());
 
-        // draw trash can mark
-        int itemHeight = itemView.getBottom() - itemView.getTop();
-        int intrinsicWidth = xMark.getIntrinsicWidth();
-        int intrinsicHeight = xMark.getIntrinsicWidth();
+            // draw endSwipeBackground
+            endSwipeBackground.setBounds(left, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            endSwipeBackground.draw(c);
 
-        int xMarkLeft = itemView.getRight() - xMarkMargin - intrinsicWidth;
-        int xMarkRight = itemView.getRight() - xMarkMargin;
-        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
-        int xMarkBottom = xMarkTop + intrinsicHeight;
-        xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+            // draw trash can mark
+            int itemHeight = itemView.getBottom() - itemView.getTop();
+            int intrinsicWidth = endMark.getIntrinsicWidth();
+            int intrinsicHeight = endMark.getIntrinsicWidth();
 
-        xMark.draw(c);
+            int xMarkLeft = itemView.getRight() - markMargin - intrinsicWidth;
+            int xMarkRight = itemView.getRight() - markMargin;
+            int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+            int xMarkBottom = xMarkTop + intrinsicHeight;
+            endMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+
+            endMark.draw(c);
+        } else { // we are swiping towards the end (archive)
+            int right = Math.min(itemView.getLeft() + (int) dX,
+                    itemView.getLeft() + itemView.getWidth());
+
+            // draw background
+            startSwipeBackground.setBounds(itemView.getLeft(), itemView.getTop(), right, itemView.getBottom());
+            startSwipeBackground.draw(c);
+
+            // draw trash can mark
+            int itemHeight = itemView.getBottom() - itemView.getTop();
+            int intrinsicWidth = startMark.getIntrinsicWidth();
+            int intrinsicHeight = startMark.getIntrinsicWidth();
+
+            int xMarkLeft = itemView.getLeft() + markMargin;
+            int xMarkRight = itemView.getLeft() + markMargin + intrinsicWidth;
+            int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+            int xMarkBottom = xMarkTop + intrinsicHeight;
+            startMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+
+            startMark.draw(c);
+        }
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }

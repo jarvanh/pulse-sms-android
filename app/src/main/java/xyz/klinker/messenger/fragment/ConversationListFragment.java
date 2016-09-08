@@ -64,9 +64,11 @@ public class ConversationListFragment extends Fragment
     private View empty;
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
+    protected List<Conversation> pendingArchive;
     private ConversationViewHolder expandedConversation;
     private MessageListFragment messageListFragment;
     private Snackbar deleteSnackbar;
+    public  Snackbar archiveSnackbar;
     private ConversationListAdapter adapter;
     private ConversationListUpdatedReceiver updatedReceiver;
 
@@ -141,6 +143,10 @@ public class ConversationListFragment extends Fragment
         }
     }
 
+    protected Cursor getCursor(DataSource source) {
+        return source.getConversations();
+    }
+
     private void loadConversations() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
@@ -149,7 +155,7 @@ public class ConversationListFragment extends Fragment
                 long startTime = System.currentTimeMillis();
                 final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
-                final Cursor conversations = source.getConversations();
+                final Cursor conversations = getCursor(source);
                 Log.v("conversation_load", "load took " + (
                         System.currentTimeMillis() - startTime) + " ms");
 
@@ -165,8 +171,13 @@ public class ConversationListFragment extends Fragment
         }).start();
     }
 
+    public ItemTouchHelper getSwipeTouchHelper(ConversationListAdapter adapter) {
+        return new SwipeTouchHelper(adapter);
+    }
+
     private void setConversations(Cursor conversations) {
         this.pendingDelete = new ArrayList<>();
+        this.pendingArchive = new ArrayList<>();
 
         if (recyclerView == null) {
             throw new RuntimeException("RecyclerView not yet initialized");
@@ -183,7 +194,7 @@ public class ConversationListFragment extends Fragment
             recyclerView.setAdapter(adapter);
             recyclerView.addItemDecoration(new SwipeItemDecoration());
 
-            ItemTouchHelper touchHelper = new SwipeTouchHelper(adapter);
+            ItemTouchHelper touchHelper = getSwipeTouchHelper(adapter);
             touchHelper.attachToRecyclerView(recyclerView);
         }
 
@@ -244,6 +255,10 @@ public class ConversationListFragment extends Fragment
         String plural = getResources().getQuantityString(R.plurals.conversations_deleted,
                 pendingDelete.size(), pendingDelete.size());
 
+        if (archiveSnackbar != null && archiveSnackbar.isShown()) {
+            archiveSnackbar.dismiss();
+        }
+
         deleteSnackbar = Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
@@ -280,6 +295,71 @@ public class ConversationListFragment extends Fragment
                     }
                 });
         deleteSnackbar.show();
+
+        // for some reason, if this is done immediately then the final snackbar will not be
+        // displayed
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyViewDisplay();
+            }
+        }, 500);
+    }
+
+    protected String getArchiveSnackbarText() {
+        return getResources().getQuantityString(R.plurals.conversations_archived,
+                pendingArchive.size(), pendingArchive.size());
+    }
+
+    protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
+        dataSource.archiveConversation(conversation.id);
+    }
+
+    @Override
+    public void onSwipeToArchive(final Conversation conversation) {
+        pendingArchive.add(conversation);
+        final int currentSize = pendingArchive.size();
+
+        if (deleteSnackbar != null && deleteSnackbar.isShown()) {
+            deleteSnackbar.dismiss();
+        }
+
+        String plural = getArchiveSnackbarText();
+
+        archiveSnackbar = Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pendingArchive = new ArrayList<>();
+                        loadConversations();
+                    }
+                })
+                .setCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        super.onDismissed(snackbar, event);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                archiveSnackbar = null;
+
+                                if (pendingArchive.size() == currentSize) {
+                                    DataSource dataSource = DataSource.getInstance(getActivity());
+                                    dataSource.open();
+
+                                    for (Conversation conversation : pendingArchive) {
+                                        performArchiveOperation(dataSource, conversation);
+                                    }
+
+                                    dataSource.close();
+                                    pendingArchive = new ArrayList<>();
+                                }
+                            }
+                        }).start();
+                    }
+                });
+        archiveSnackbar.show();
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed

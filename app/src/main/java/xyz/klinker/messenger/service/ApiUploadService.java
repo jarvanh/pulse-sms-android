@@ -170,7 +170,7 @@ public class ApiUploadService extends Service {
                 ConversationBody conversation = new ConversationBody(c.id, c.colors.color,
                         c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.pinned,
                         c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri,
-                        /*c.imageUri*/null, c.idMatcher, c.mute);
+                        /*c.imageUri*/null, c.idMatcher, c.mute, c.archive);
 
                 conversations[cursor.getPosition()] = conversation;
             } while (cursor.moveToNext());
@@ -183,6 +183,7 @@ public class ApiUploadService extends Service {
                 Log.v(TAG, "failed to upload conversations in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
+                Log.v(TAG, result.toString());
                 Log.v(TAG, "conversations upload successful in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             }

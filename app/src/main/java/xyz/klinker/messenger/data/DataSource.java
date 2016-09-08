@@ -50,7 +50,6 @@ import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
-import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
@@ -263,7 +262,7 @@ public class DataSource {
         for (int i = 0; i < conversations.size(); i++) {
             Conversation conversation = conversations.get(i);
 
-            ContentValues values = new ContentValues(15);
+            ContentValues values = new ContentValues(16);
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
@@ -282,6 +281,7 @@ public class DataSource {
             values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
             values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
             values.put(Conversation.COLUMN_MUTE, conversation.mute);
+            values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
 
             long conversationId = database.insert(Conversation.TABLE, null, values);
 
@@ -328,7 +328,7 @@ public class DataSource {
      * @return the conversation id after insertion.
      */
     public long insertConversation(Conversation conversation) {
-        ContentValues values = new ContentValues(15);
+        ContentValues values = new ContentValues(16);
 
         if (conversation.id <= 0) {
             conversation.id = generateId();
@@ -349,13 +349,14 @@ public class DataSource {
         values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri);
         values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
+        values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
 
         apiUtils.addConversation(accountId,conversation.id, conversation.colors.color,
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
-                conversation.mute, encryptionUtils);
+                conversation.mute, conversation.archive, encryptionUtils);
 
         try {
             return database.insert(Conversation.TABLE, null, values);
@@ -371,7 +372,7 @@ public class DataSource {
      * @return a list of conversations.
      */
     public Cursor getConversations() {
-        return database.query(Conversation.TABLE, null, null, null, null, null,
+        return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", new String[] { "0" }, null, null,
                 Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
         );
     }
@@ -383,6 +384,16 @@ public class DataSource {
      */
     public Cursor getPinnedConversations() {
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_PINNED + "=1", null,
+                null, null, Conversation.COLUMN_TIMESTAMP + " desc");
+    }
+
+    /**
+     * Gets all archived conversations in the database.
+     *
+     * @return a list of pinned conversations.
+     */
+    public Cursor getArchivedConversations() {
+        return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1", null,
                 null, null, Conversation.COLUMN_TIMESTAMP + " desc");
     }
 
@@ -443,6 +454,43 @@ public class DataSource {
     }
 
     /**
+     * Archives a conversation from the database.
+     *
+     * @param conversationId the conversation to archive.
+     */
+    public void archiveConversation(long conversationId) {
+        archiveConversation(conversationId, true);
+    }
+
+    /**
+     * Archives a conversation from the database.
+     *
+     * @param conversationId the conversation to archive.
+     */
+    public void unarchiveConversation(long conversationId) {
+        archiveConversation(conversationId, false);
+    }
+
+    /**
+     * Archives a conversation from the database.
+     *
+     * @param conversationId the conversation id to archive.
+     * @param archive true if we want to archive, false if we want to have it not archived
+     */
+    public void archiveConversation(long conversationId, boolean archive) {
+        ContentValues values = new ContentValues(1);
+        values.put(Conversation.COLUMN_ARCHIVED, archive);
+
+        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[]{Long.toString(conversationId)});
+
+        if (updated > 0) {
+            apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
+                    null, null, null, null, null, null, archive, encryptionUtils);
+        }
+    }
+
+    /**
      * Updates the conversation with given values.
      *
      * @param conversationId the conversation to update.
@@ -452,8 +500,8 @@ public class DataSource {
      * @param snippetMime    the snippet's mime type.
      */
     public void updateConversation(long conversationId, boolean read, long timestamp,
-                                   String snippet, String snippetMime) {
-        ContentValues values = new ContentValues(3);
+                                   String snippet, String snippetMime, boolean archive) {
+        ContentValues values = new ContentValues(4);
         values.put(Conversation.COLUMN_READ, read);
 
         if (snippetMime != null && snippetMime.equals(MimeType.TEXT_PLAIN)) {
@@ -464,19 +512,20 @@ public class DataSource {
         }
 
         values.put(Conversation.COLUMN_TIMESTAMP, timestamp);
+        values.put(Conversation.COLUMN_ARCHIVED, archive);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
         apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
-                read, timestamp, null, snippet, null, null, encryptionUtils);
+                read, timestamp, null, snippet, null, null, archive, encryptionUtils);
     }
 
     /**
      * Updates the settings for a conversation, such as ringtone and colors.
      */
     public void updateConversationSettings(Conversation conversation) {
-        ContentValues values = new ContentValues(9);
+        ContentValues values = new ContentValues(10);
         values.put(Conversation.COLUMN_PINNED, conversation.pinned);
         values.put(Conversation.COLUMN_TITLE, conversation.title);
         values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
@@ -486,6 +535,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
         values.put(Conversation.COLUMN_READ, conversation.read);
+        values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversation.id)});
@@ -493,7 +543,7 @@ public class DataSource {
         apiUtils.updateConversation(accountId, conversation.id, conversation.colors.color,
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, null, null,
-                conversation.title, null, conversation.ringtoneUri, conversation.mute,
+                conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
                 encryptionUtils);
     }
 
@@ -509,7 +559,7 @@ public class DataSource {
                 new String[] {Long.toString(conversationId)});
 
         apiUtils.updateConversation(accountId, conversationId, null, null, null, null,
-                null, null, null, title, null, null, null, encryptionUtils);
+                null, null, null, title, null, null, null, null, encryptionUtils);
     }
 
     /**
@@ -878,7 +928,7 @@ public class DataSource {
         if (cursor != null && cursor.moveToFirst()) {
             conversationId = cursor.getLong(0);
             updateConversation(conversationId, message.read, message.timestamp, message.data,
-                    message.mimeType);
+                    message.mimeType, false);
             cursor.close();
         } else {
             Conversation conversation = new Conversation();
@@ -898,6 +948,7 @@ public class DataSource {
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context);
             conversation.idMatcher = matcher;
             conversation.mute = false;
+            conversation.archive = false;
             ImageUtils.fillConversationColors(conversation, context);
 
             conversationId = insertConversation(conversation);
@@ -923,6 +974,7 @@ public class DataSource {
             message.id = generateId();
         }
 
+
         values.put(Message.COLUMN_ID, message.id);
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
@@ -941,7 +993,7 @@ public class DataSource {
                 message.color, encryptionUtils);
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
-                message.mimeType);
+                message.mimeType, false);
 
         return conversationId;
     }

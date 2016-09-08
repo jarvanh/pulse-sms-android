@@ -29,4 +29,8 @@ public class SwipeTouchHelper extends ItemTouchHelper {
         super(new SwipeSimpleCallback(adapter));
     }
 
+    public SwipeTouchHelper(SwipeSimpleCallback callback) {
+        super(callback);
+    }
+
 }

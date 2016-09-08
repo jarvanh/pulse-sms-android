@@ -59,6 +59,7 @@ import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.fragment.BlacklistFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
@@ -374,7 +375,17 @@ public class MessengerActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.drawer_conversation:
+                if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null
+                        && conversationListFragment.archiveSnackbar.isShown()) {
+                    conversationListFragment.archiveSnackbar.dismiss();
+                }
                 return displayConversations();
+            case R.id.drawer_archived:
+                if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null
+                        && conversationListFragment.archiveSnackbar.isShown()) {
+                    conversationListFragment.archiveSnackbar.dismiss();
+                }
+                return displayArchived();
             case R.id.drawer_schedule:
                 return displayScheduledMessages();
             case R.id.drawer_mute_contacts:
@@ -464,7 +475,7 @@ public class MessengerActivity extends AppCompatActivity
      * conversation list drawer options                             *
      *****************************************************************/
 
-    private boolean displayConversations() {
+    public boolean displayConversations() {
         fab.show();
         invalidateOptionsMenu();
         inSettings = false;
@@ -499,6 +510,10 @@ public class MessengerActivity extends AppCompatActivity
         transaction.commit();
 
         return true;
+    }
+
+    private boolean displayArchived() {
+        return displayFragmentWithBackStack(new ArchivedConversationListFragment());
     }
 
     private boolean displaySearchFragment() {

@@ -326,6 +326,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
         conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"));
         conversation.mute = json.getBoolean("mute");
+        conversation.archive = json.getBoolean("archive");
 
         if (conversation.imageUri != null &&
                 ImageUtils.getContactImage(conversation.imageUri, context) == null) {
@@ -356,6 +357,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     json.getString("ringtone") : null);
             conversation.mute = json.getBoolean("mute");
             conversation.read = json.getBoolean("read");
+            conversation.read = json.getBoolean("read");
+            conversation.archive = json.getBoolean("archive");
 
             source.updateConversationSettings(conversation);
 

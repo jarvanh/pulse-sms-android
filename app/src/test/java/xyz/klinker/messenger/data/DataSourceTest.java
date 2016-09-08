@@ -140,7 +140,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversations() {
-        when(database.query("conversation", null, null, null, null, null,
+        when(database.query("conversation", null, "archived=?", new String[]{"0"}, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getConversations());
@@ -151,6 +151,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         when(database.query("conversation", null, "pinned=1", null, null, null, "timestamp desc"))
                 .thenReturn(cursor);
         assertEquals(cursor, source.getPinnedConversations());
+    }
+
+    @Test
+    public void getArchivedConversations() {
+        when(database.query("conversation", null, "archived=1", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getArchivedConversations());
     }
 
     @Test
@@ -181,8 +188,15 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void archiveConversation() {
+        source.archiveConversation(1);
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"1"}));
+    }
+
+    @Test
     public void updateConversation() {
-        source.updateConversation(1, true, System.currentTimeMillis(), "test", "text/plain");
+        source.updateConversation(1, true, System.currentTimeMillis(), "test", "text/plain", false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
     }
@@ -203,7 +217,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversationCount() {
-        when(database.query("conversation", null, null, null, null, null,
+        when(database.query("conversation", null, "archived=?", new String[] {"0"}, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
         when(cursor.getCount()).thenReturn(20);
 

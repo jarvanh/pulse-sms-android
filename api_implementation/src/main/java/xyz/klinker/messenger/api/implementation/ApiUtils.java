@@ -156,6 +156,7 @@ public class ApiUtils {
                                 final boolean pinned, final boolean read, final long timestamp,
                                 final String title, final String phoneNumbers, final String snippet,
                                 final String ringtone, final String idMatcher, final boolean mute,
+                                final boolean archive,
                                 final EncryptionUtils encryptionUtils) {
         if (!active || accountId == null || encryptionUtils == null) {
             return;
@@ -169,7 +170,7 @@ public class ApiUtils {
                         timestamp, encryptionUtils.encrypt(title),
                         encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
                         encryptionUtils.encrypt(ringtone), null,
-                        encryptionUtils.encrypt(idMatcher), mute);
+                        encryptionUtils.encrypt(idMatcher), mute, archive);
                 AddConversationRequest request = new AddConversationRequest(accountId, body);
 
                 Object response = api.conversation().add(request);
@@ -211,6 +212,7 @@ public class ApiUtils {
                                    final Integer colorAccent, final Boolean pinned,
                                    final Boolean read, final Long timestamp, final String title,
                                    final String snippet, final String ringtone, final Boolean mute,
+                                   final Boolean archive,
                                    final EncryptionUtils encryptionUtils) {
         if (!active || accountId == null || encryptionUtils == null) {
             return;
@@ -222,7 +224,7 @@ public class ApiUtils {
                 UpdateConversationRequest request = new UpdateConversationRequest(color,
                         colorDark, colorLight, colorAccent, pinned, read, timestamp,
                         encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
-                        encryptionUtils.encrypt(ringtone), mute);
+                        encryptionUtils.encrypt(ringtone), mute, archive);
 
                 Object response = api.conversation().update(deviceId, accountId, request);
                 if (response == null) {

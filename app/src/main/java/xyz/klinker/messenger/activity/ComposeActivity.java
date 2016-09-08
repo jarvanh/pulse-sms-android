@@ -208,6 +208,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             message.seen = true;
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
+        } else {
+            source.unarchiveConversation(conversationId);
         }
 
         source.close();

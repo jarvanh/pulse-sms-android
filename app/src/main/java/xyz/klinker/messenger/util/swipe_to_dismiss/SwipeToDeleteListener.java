@@ -24,5 +24,6 @@ import xyz.klinker.messenger.data.model.Conversation;
 public interface SwipeToDeleteListener {
 
     void onSwipeToDelete(Conversation conversation);
+    void onSwipeToArchive(Conversation conversation);
 
 }

@@ -108,9 +108,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
             cursor.close();
         }
 
-        assertEquals("Andrew Klinker", titles.get(0));
-        assertEquals("Luke Klinker", titles.get(1));
-        assertEquals("Aaron Klinker", titles.get(2));
+        assertEquals("Luke Klinker", titles.get(0));
+        assertEquals("Aaron Klinker", titles.get(1));
+        assertEquals("Aaron, Luke", titles.get(2));
     }
 
     @Test
@@ -118,6 +118,13 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Cursor pinned = source.getPinnedConversations();
         assertEquals(1, pinned.getCount());
         pinned.close();
+    }
+
+    @Test
+    public void getArchivedConversations() {
+        Cursor archived = source.getArchivedConversations();
+        assertEquals(1, archived.getCount());
+        archived.close();
     }
 
     @Test
@@ -153,7 +160,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getConversationCount() {
-        assertEquals(4, source.getConversationCount());
+        assertEquals(3, source.getConversationCount());
     }
 
     @Test
@@ -162,9 +169,20 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void archiveConversation() {
+        source.archiveConversation(1, true);
+        Conversation conversation = source.getConversation(1);
+        assertEquals(true, conversation.archive);
+
+        source.archiveConversation(1, false);
+        conversation = source.getConversation(1);
+        assertEquals(false, conversation.archive);
+    }
+
+    @Test
     public void updateConversation() {
         source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
-                MimeType.TEXT_PLAIN);
+                MimeType.TEXT_PLAIN, false);
         Conversation conversation = source.getConversation(1);
         assertEquals("test updated message", conversation.snippet);
     }
@@ -179,7 +197,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void updateConversationImage() {
         source.updateConversation(1, false, System.currentTimeMillis(), "test updated message",
-                MimeType.IMAGE_PNG);
+                MimeType.IMAGE_PNG, false);
         Conversation conversation = source.getConversation(1);
         assertEquals("", conversation.snippet);
     }
