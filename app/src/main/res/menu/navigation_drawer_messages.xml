@@ -36,6 +36,11 @@
             android:title="@string/menu_delete_conversation" />
 
         <item
+            android:id="@+id/drawer_archive_conversation"
+            android:icon="@drawable/ic_archive"
+            android:title="@string/menu_archive_conversation" />
+
+        <item
             android:id="@+id/drawer_conversation_information"
             android:icon="@drawable/ic_about"
             android:title="@string/menu_conversation_information" />

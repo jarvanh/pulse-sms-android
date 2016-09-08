@@ -406,6 +406,8 @@ public class MessengerActivity extends AppCompatActivity
                 return viewMedia();
             case R.id.drawer_delete_conversation:
                 return deleteConversation();
+            case R.id.drawer_archive_conversation:
+                return archiveConversation();
             case R.id.drawer_conversation_information:
                 return conversationInformation();
             case R.id.drawer_conversation_blacklist:
@@ -671,6 +673,28 @@ public class MessengerActivity extends AppCompatActivity
                     int position = adapter.findPositionForConversationId(conversationId);
                     if (position != -1) {
                         adapter.deleteItem(position);
+                    }
+                }
+            }, 250);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean archiveConversation() {
+        if (conversationListFragment.isExpanded()) {
+            final long conversationId = conversationListFragment.getExpandedId();
+            conversationListFragment.onBackPressed();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ConversationListAdapter adapter = conversationListFragment.getAdapter();
+                    int position = adapter.findPositionForConversationId(conversationId);
+                    if (position != -1) {
+                        adapter.archiveItem(position);
                     }
                 }
             }, 250);
