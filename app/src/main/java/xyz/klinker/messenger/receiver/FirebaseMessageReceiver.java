@@ -135,6 +135,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "seen_conversation":
                     seenConversation(json, source);
                     break;
+                case "archive_conversation":
+                    archiveConversation(json, source);
+                    break;
                 case "seen_conversations":
                     seenConversations(source);
                     break;
@@ -387,6 +390,13 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         long id = json.getLong("id");
         source.seenConversation(id);
         Log.v(TAG, "seen conversation");
+    }
+
+    private void archiveConversation(JSONObject json, DataSource source) throws JSONException {
+        long id = json.getLong("id");
+        boolean archive = json.getBoolean("archive");
+        source.archiveConversation(id, archive);
+        Log.v(TAG, "archive conversation: " + archive);
     }
 
     private void seenConversations(DataSource source) throws JSONException {
