@@ -51,6 +51,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
             NavigationView navView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
             navView.getMenu().getItem(0).setChecked(true);
 
+            getActivity().setTitle(getString(R.string.app_title));
             ((MessengerActivity) getActivity()).displayConversations();
         }
 
