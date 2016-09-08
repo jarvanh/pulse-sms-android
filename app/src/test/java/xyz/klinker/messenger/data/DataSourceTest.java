@@ -140,7 +140,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversations() {
-        when(database.query("conversation", null, "archived=?", new String[]{"0"}, null, null,
+        when(database.query("conversation", null, "archive=?", new String[]{"0"}, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getConversations());
@@ -155,7 +155,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getArchivedConversations() {
-        when(database.query("conversation", null, "archived=1", null, null, null, "timestamp desc"))
+        when(database.query("conversation", null, "archive=1", null, null, null, "timestamp desc"))
                 .thenReturn(cursor);
         assertEquals(cursor, source.getArchivedConversations());
     }
@@ -217,7 +217,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversationCount() {
-        when(database.query("conversation", null, "archived=?", new String[] {"0"}, null, null,
+        when(database.query("conversation", null, "archive=?", new String[] {"0"}, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
         when(cursor.getCount()).thenReturn(20);
 
