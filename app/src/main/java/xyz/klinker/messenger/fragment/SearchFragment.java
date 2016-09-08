@@ -128,6 +128,9 @@ public class SearchFragment extends Fragment implements SearchListener {
     @Override
     public void onSearchSelected(Message message) {
         dismissKeyboard();
+
+        source.archiveConversation(message.conversationId, false);
+
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, message.conversationId);
         intent.putExtra(MessengerActivity.EXTRA_MESSAGE_ID, message.id);
@@ -138,6 +141,11 @@ public class SearchFragment extends Fragment implements SearchListener {
     @Override
     public void onSearchSelected(Conversation conversation) {
         dismissKeyboard();
+
+        if (conversation.archive) {
+            source.archiveConversation(conversation.id, false);
+        }
+
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
