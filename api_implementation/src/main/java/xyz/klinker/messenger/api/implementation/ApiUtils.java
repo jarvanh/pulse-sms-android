@@ -244,7 +244,7 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 Object response = api.conversation().read(deviceId, accountId);
@@ -254,7 +254,7 @@ public class ApiUtils {
                     Log.v(TAG, "successfully read conversation");
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     /**
@@ -265,7 +265,7 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 Object response = api.conversation().seen(deviceId, accountId);
@@ -275,7 +275,7 @@ public class ApiUtils {
                     Log.v(TAG, "successfully seen conversation");
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     /**
@@ -286,7 +286,7 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 Object response = api.conversation().seen(accountId);
@@ -296,7 +296,7 @@ public class ApiUtils {
                     Log.v(TAG, "successfully seen all conversations");
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     /**
