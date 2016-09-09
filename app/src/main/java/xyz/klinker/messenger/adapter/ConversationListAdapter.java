@@ -149,6 +149,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
 
         holder.conversation = conversation;
+        holder.position = absolutePosition;
 
         if (conversation.imageUri == null) {
             holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
@@ -180,7 +181,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 .inflate(viewType == VIEW_TYPE_HEADER ?
                                 R.layout.conversation_list_header : R.layout.conversation_list_item,
                         parent, false);
-        return new ConversationViewHolder(view, conversationExpandedListener);
+        return new ConversationViewHolder(view, conversationExpandedListener, this);
     }
 
     public void deleteItem(int position) {

@@ -169,11 +169,11 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         if (viewType == VIEW_TYPE_HEADER) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.conversation_list_header, parent, false);
-            holder = new ConversationViewHolder(view, null);
+            holder = new ConversationViewHolder(view, null, null);
         } else if (viewType == VIEW_TYPE_CONVERSATION) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.conversation_list_item, parent, false);
-            holder = new ConversationViewHolder(view, null);
+            holder = new ConversationViewHolder(view, null, null);
         } else {
             int layoutId;
             int color;

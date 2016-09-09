@@ -53,7 +53,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
     public ConversationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(getLayoutId(), parent, false);
-        ConversationViewHolder holder = new ConversationViewHolder(view, null);
+        ConversationViewHolder holder = new ConversationViewHolder(view, null, null);
         holder.setContactClickedListener(listener);
         return holder;
     }

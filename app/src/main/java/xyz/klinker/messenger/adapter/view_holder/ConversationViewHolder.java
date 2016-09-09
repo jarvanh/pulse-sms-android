@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtils;
@@ -46,15 +47,18 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView imageLetter;
     public View unreadIndicator;
     public CheckBox checkBox;
+
     public Conversation conversation;
+    public int position = -1;
 
     private boolean expanded = false;
     private ConversationExpandedListener expandedListener;
     private ContactClickedListener contactClickedListener;
 
-    public ConversationViewHolder(View itemView, final ConversationExpandedListener listener) {
+    public ConversationViewHolder(View itemView, final ConversationExpandedListener listener, final ConversationListAdapter adapter) {
         super(itemView);
 
+        this.position = -1;
         this.expandedListener = listener;
 
         headerBackground = itemView.findViewById(R.id.header_background);
@@ -74,6 +78,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 if (header == null && isBold()) {
+                    if (position != -1 && adapter != null) {
+                        adapter.getConversations().get(position).read = true;
+                    }
+
                     setBold(false);
                 }
 
@@ -154,5 +162,4 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public void setContactClickedListener(ContactClickedListener listener) {
         this.contactClickedListener = listener;
     }
-
 }
