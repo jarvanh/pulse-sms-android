@@ -244,7 +244,7 @@ public class ApiUtils {
             return;
         }
 
-        /*new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 Object response = api.conversation().read(deviceId, accountId);
@@ -254,7 +254,7 @@ public class ApiUtils {
                     Log.v(TAG, "successfully read conversation");
                 }
             }
-        }).start();*/
+        }).start();
     }
 
     /**
