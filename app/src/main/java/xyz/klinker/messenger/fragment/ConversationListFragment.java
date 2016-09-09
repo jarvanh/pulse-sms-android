@@ -202,7 +202,7 @@ public class ConversationListFragment extends Fragment
             long conversationToOpen = getArguments().getLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
             if (conversationToOpen != 0) {
                 clickConversationWithId(conversationToOpen);
-                getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
+                getArguments().remove(ARG_CONVERSATION_TO_OPEN_ID);
             }
         } else {
             Log.v("Conversation List", "no conversations to open");
