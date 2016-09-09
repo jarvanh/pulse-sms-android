@@ -1,1 +1,1 @@
-Version 1.2 contains a quick reply for Android Lollipop and Marshmallow, ability to share location and contact VCards, preferences for a global color scheme, font size, and black theme. It also adds a "View Media" button in the message list drawer, support for updating contact names, bug fixes, and more!
+Version 1.3 contains the ability to archive conversations, an onboarding activity for new users, a "Read" button on the notification, improvements to settings, lots of tweaks, and many bug/crash fixes.
