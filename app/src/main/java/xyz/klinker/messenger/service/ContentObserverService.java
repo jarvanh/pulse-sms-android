@@ -121,7 +121,7 @@ public class ContentObserverService extends Service {
                         // if a message with the same body was received from the same person in the
                         // last minute and is the last message in that conversation, don't insert
                         // this one into the database because we already have it. Otherwise, do.
-                        if (!(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
                                 message.data.equals(body) && message.type == Message.TYPE_RECEIVED)) {
                             insertReceivedMessage(source, body, address);
                         }
@@ -134,7 +134,7 @@ public class ContentObserverService extends Service {
                         //       like we normally would for when the message has sent. This could be
                         //       handled in this content observer however, so we'll save that for
                         //       another time.
-                        if (!(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
                                 message.data.equals(body) && message.type != Message.TYPE_RECEIVED)) {
                             insertSentMessage(source, body, address);
                         }

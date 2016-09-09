@@ -57,9 +57,11 @@ public class AnimationUtils {
      */
     public static void contractConversationListItem(View itemView) {
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
-        AnimationUtils.animateConversationListItem(itemView, itemView.getRootView().getHeight(), 0,
-                (int) recyclerView.getTranslationY(), 0,
-                new DecelerateInterpolator());
+        if (recyclerView != null) {
+            AnimationUtils.animateConversationListItem(itemView, itemView.getRootView().getHeight(), 0,
+                    (int) recyclerView.getTranslationY(), 0,
+                    new DecelerateInterpolator());
+        }
     }
 
     /**

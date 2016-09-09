@@ -450,7 +450,12 @@ public class SmsMmsUtils {
                 Telephony.Sms.ADDRESS
         };
 
-        return context.getContentResolver().query(uri, projection, null, null, sortOrder);
+        try {
+            return context.getContentResolver().query(uri, projection, null, null, sortOrder);
+        } catch (SecurityException e) {
+            // they probably aren't using our app as the default?
+            return null;
+        }
     }
 
     /**

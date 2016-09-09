@@ -1038,7 +1038,7 @@ public class MessageListFragment extends Fragment implements
     public boolean onBackPressed() {
         dismissDetailsChoiceDialog();
 
-        if (attachLayout.getVisibility() == View.VISIBLE) {
+        if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
             attach.performClick();
             return true;
         }
@@ -1082,10 +1082,14 @@ public class MessageListFragment extends Fragment implements
             navToolTip.show(new MaterialTooltip.Callback() {
                 @Override
                 public void onGotIt() {
-                    Settings.get(getActivity())
-                            .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
+                    try {
+                        Settings.get(getActivity())
+                                .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
 
-                    new ApiUtils().updateSeenTooltip(Settings.get(getActivity()).accountId, true);
+                        new ApiUtils().updateSeenTooltip(Settings.get(getActivity()).accountId, true);
+                    } catch (IllegalStateException e) {
+                        // not attached to activity
+                    }
                 }
             });
         }
