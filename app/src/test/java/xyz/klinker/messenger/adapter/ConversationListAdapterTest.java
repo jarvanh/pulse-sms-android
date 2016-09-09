@@ -267,7 +267,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     private ConversationViewHolder getMockedViewHolder() {
         ConversationViewHolder holder = new ConversationViewHolder(
-                new View(RuntimeEnvironment.application), conversationExpandedListener);
+                new View(RuntimeEnvironment.application), conversationExpandedListener, adapter);
         holder.header = header;
         holder.image = image;
         holder.name = name;

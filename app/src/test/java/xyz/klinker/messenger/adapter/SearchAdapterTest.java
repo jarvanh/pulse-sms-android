@@ -91,7 +91,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     @Test
     public void bindHeaderViewHolderConversations() {
         when(view.findViewById(R.id.header)).thenReturn(textView);
-        ConversationViewHolder holder = new ConversationViewHolder(view, null);
+        ConversationViewHolder holder = new ConversationViewHolder(view, null, null);
         adapter.onBindHeaderViewHolder(holder, 0);
         verify(textView).setText(R.string.conversations);
     }
@@ -99,7 +99,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     @Test
     public void bindHeaderViewHolderMessages() {
         when(view.findViewById(R.id.header)).thenReturn(textView);
-        ConversationViewHolder holder = new ConversationViewHolder(view, null);
+        ConversationViewHolder holder = new ConversationViewHolder(view, null, null);
         adapter.onBindHeaderViewHolder(holder, 1);
         verify(textView).setText(R.string.messages);
     }
