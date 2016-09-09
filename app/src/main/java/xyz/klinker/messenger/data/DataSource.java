@@ -514,11 +514,13 @@ public class DataSource {
         values.put(Conversation.COLUMN_TIMESTAMP, timestamp);
         values.put(Conversation.COLUMN_ARCHIVED, archive);
 
-        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
-        apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
-                read, timestamp, null, snippet, null, null, archive, encryptionUtils);
+        if (updated > 0) {
+            apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
+                    read, timestamp, null, snippet, null, null, archive, encryptionUtils);
+        }
     }
 
     /**
@@ -555,11 +557,14 @@ public class DataSource {
         ContentValues values = new ContentValues(1);
         values.put(Conversation.COLUMN_TITLE, title);
 
-        database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
-                new String[] {Long.toString(conversationId)});
+        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=? AND " +
+                    Conversation.COLUMN_TITLE + " <> ?",
+                new String[] {Long.toString(conversationId), title});
 
-        apiUtils.updateConversation(accountId, conversationId, null, null, null, null,
-                null, null, null, title, null, null, null, null, encryptionUtils);
+        if (updated > 0) {
+            apiUtils.updateConversation(accountId, conversationId, null, null, null, null,
+                    null, null, null, title, null, null, null, null, encryptionUtils);
+        }
     }
 
     /**

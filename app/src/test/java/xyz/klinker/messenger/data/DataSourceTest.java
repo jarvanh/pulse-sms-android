@@ -211,8 +211,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void updateConversationTitle() {
         source.updateConversationTitle(0L, "test");
-        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[]{"0"}));
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=? AND title <> ?"),
+                eq(new String[]{"0", "test"}));
     }
 
     @Test
