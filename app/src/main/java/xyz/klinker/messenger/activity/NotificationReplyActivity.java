@@ -411,9 +411,10 @@ public class NotificationReplyActivity extends AppCompatActivity {
             public void run() {
                 SendUtils.send(NotificationReplyActivity.this, message,
                         conversation.phoneNumbers);
-                new ApiUtils().readConversation(
-                        Settings.get(NotificationReplyActivity.this).accountId,
-                        conversationId);
+                DataSource source = DataSource.getInstance(NotificationReplyActivity.this);
+                source.open();
+                source.readConversation(NotificationReplyActivity.this, conversationId);
+                source.close();
             }
         }).start();
     }
