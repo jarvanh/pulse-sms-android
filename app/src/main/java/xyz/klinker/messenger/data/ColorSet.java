@@ -95,7 +95,7 @@ public class ColorSet {
 
     public static ColorSet TEAL(Context context) {
         return new ColorSet(context, R.color.materialTeal, R.color.materialTealDark,
-                R.color.materialTealLight, R.color.materialDeepPurpleAccent);
+                R.color.materialTealLight, R.color.materialPinkAccent);
     }
 
     public static ColorSet GREEN(Context context) {

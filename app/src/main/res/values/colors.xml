@@ -68,12 +68,12 @@
     <color name="materialLightGreenLight">#C5E1A5</color>
     <color name="materialLightGreenAccent">#64DD17</color>
     <color name="materialLime">#CDDC39</color>
-    <color name="materialLimeDark">#9E9D24</color>
+    <color name="materialLimeDark">#AFB42B</color>
     <color name="materialLimeLight">#E6EE9C</color>
     <color name="materialLimeAccent">#AEEA00</color>
-    <color name="materialYellow">#FBC02D</color>
+    <color name="materialYellow">#FDD835</color>
     <color name="materialYellowDark">#F9A825</color>
-    <color name="materialYellowLight">#FFF59D</color>
+    <color name="materialYellowLight">#FFF176</color>
     <color name="materialYellowAccent">#FFD600</color>
     <color name="materialAmber">#FFC107</color>
     <color name="materialAmberDark">#FF8F00</color>
@@ -91,8 +91,8 @@
     <color name="materialBrownDark">#4E342E</color>
     <color name="materialBrownLight">#BCAAA4</color>
     <color name="materialGrey">#9E9E9E</color>
-    <color name="materialGreyDark">#424242</color>
-    <color name="materialGreyLight">#EEEEEE</color>
+    <color name="materialGreyDark">#757575</color>
+    <color name="materialGreyLight">#E0E0E0</color>
     <color name="materialBlueGrey">#607D8B</color>
     <color name="materialBlueGreyDark">#37474F</color>
     <color name="materialBlueGreyLight">#B0BEC5</color>
