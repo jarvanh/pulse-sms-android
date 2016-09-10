@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import xyz.klinker.messenger.adapter.BlacklistAdapter;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.BlacklistClickedListener;
 
@@ -87,6 +89,8 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
+            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            ColorUtils.changeRecyclerOverscrollColors(list, settings.globalColorSet.color);
         }
 
         return view;

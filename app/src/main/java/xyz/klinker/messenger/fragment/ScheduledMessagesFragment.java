@@ -21,6 +21,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +56,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.service.ScheduledMessageService;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
 
@@ -107,6 +109,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
+            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            ColorUtils.changeRecyclerOverscrollColors(list, settings.globalColorSet.color);
         }
 
         return view;
