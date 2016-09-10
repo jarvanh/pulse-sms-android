@@ -276,6 +276,7 @@
     <string name="material_color_brown">Brown</string>
     <string name="material_color_gray">Gray</string>
     <string name="material_color_blue_gray">Blue gray</string>
+    <string name="material_color_black">Black</string>
 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Are you sure you want to delete this scheduled message

@@ -148,6 +148,11 @@ public class ColorSet {
                 R.color.materialBlueGreyLight, R.color.materialRedAccent);
     }
 
+    public static ColorSet BLACK(Context context) {
+        return new ColorSet(context, android.R.color.black, android.R.color.black,
+                android.R.color.black, R.color.materialTealAccent);
+    }
+
     public static ColorSet getFromString(Context context, String colorString) {
         switch (colorString) {
             case "red":
@@ -188,6 +193,8 @@ public class ColorSet {
                 return GREY(context);
             case "blue_gray":
                 return BLUE_GREY(context);
+            case "black":
+                return BLACK(context);
             default:
                 return TEAL(context);
         }

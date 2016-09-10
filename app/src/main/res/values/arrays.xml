@@ -48,6 +48,7 @@
         <item>@string/material_color_brown</item>
         <item>@string/material_color_gray</item>
         <item>@string/material_color_blue_gray</item>
+        <item>@string/material_color_black</item>
     </string-array>
 
     <string-array name="global_color_values">
@@ -71,6 +72,7 @@
         <item>brown</item>
         <item>gray</item>
         <item>blue_gray</item>
+        <item>black</item>
     </string-array>
 
 </resources>
