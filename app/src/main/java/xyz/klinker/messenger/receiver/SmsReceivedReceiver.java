@@ -76,7 +76,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         values.put(Telephony.Sms.ADDRESS, address);
         values.put(Telephony.Sms.BODY, body);
         values.put(Telephony.Sms.DATE, System.currentTimeMillis());
-        values.put(Telephony.Sms.READ, false);
+        values.put(Telephony.Sms.READ, "0");
         values.put(Telephony.Sms.DATE_SENT, dateSent);
 
         try {
