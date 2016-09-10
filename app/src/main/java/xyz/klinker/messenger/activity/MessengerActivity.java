@@ -103,6 +103,7 @@ public class MessengerActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
+    private Fragment otherFragment;
     private SearchFragment searchFragment;
     private FloatingActionButton fab;
     private MaterialSearchView searchView;
@@ -502,6 +503,7 @@ public class MessengerActivity extends AppCompatActivity
             conversationListFragment = ConversationListFragment.newInstance();
         }
 
+        otherFragment = null;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.conversation_list_container, conversationListFragment);
 
@@ -522,6 +524,7 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displaySearchFragment() {
+        otherFragment = null;
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.conversation_list_container, searchFragment)
                 .commit();
@@ -567,6 +570,7 @@ public class MessengerActivity extends AppCompatActivity
         invalidateOptionsMenu();
         inSettings = true;
 
+        otherFragment = fragment;
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.conversation_list_container, fragment)
                 .commit();
@@ -664,15 +668,25 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
+    private boolean isArchiveConvoShowing() {
+        return otherFragment != null && otherFragment instanceof ArchivedConversationListFragment &&
+                ((ArchivedConversationListFragment) otherFragment).isExpanded();
+    }
+
+    private ConversationListFragment getShownConversationList() {
+        return isArchiveConvoShowing() ? (ArchivedConversationListFragment) otherFragment : conversationListFragment;
+    }
+
     private boolean deleteConversation() {
-        if (conversationListFragment.isExpanded()) {
-            final long conversationId = conversationListFragment.getExpandedId();
-            conversationListFragment.onBackPressed();
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            final long conversationId = fragment.getExpandedId();
+            fragment.onBackPressed();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ConversationListAdapter adapter = conversationListFragment.getAdapter();
+                    ConversationListAdapter adapter = fragment.getAdapter();
                     int position = adapter.findPositionForConversationId(conversationId);
                     if (position != -1) {
                         adapter.deleteItem(position);
@@ -687,14 +701,15 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean archiveConversation() {
-        if (conversationListFragment.isExpanded()) {
-            final long conversationId = conversationListFragment.getExpandedId();
-            conversationListFragment.onBackPressed();
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            final long conversationId = fragment.getExpandedId();
+            fragment.onBackPressed();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ConversationListAdapter adapter = conversationListFragment.getAdapter();
+                    ConversationListAdapter adapter = fragment.getAdapter();
                     int position = adapter.findPositionForConversationId(conversationId);
                     if (position != -1) {
                         adapter.archiveItem(position);
@@ -709,8 +724,9 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean conversationInformation() {
-        if (conversationListFragment.isExpanded()) {
-            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            Conversation conversation = fragment.getExpandedItem().conversation;
             DataSource source = DataSource.getInstance(this);
             source.open();
 
@@ -727,9 +743,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean conversationBlacklist() {
-        if (conversationListFragment.isExpanded()) {
-            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
-            conversationListFragment.getExpandedItem().itemView.performClick();
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            Conversation conversation = fragment.getExpandedItem().conversation;
+            fragment.getExpandedItem().itemView.performClick();
             clickNavigationItem(R.id.drawer_mute_contacts);
             return displayFragmentWithBackStack(
                     BlacklistFragment.newInstance(conversation.phoneNumbers));
@@ -739,9 +756,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean conversationSchedule() {
-        if (conversationListFragment.isExpanded()) {
-            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
-            conversationListFragment.getExpandedItem().itemView.performClick();
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            Conversation conversation = fragment.getExpandedItem().conversation;
+            fragment.getExpandedItem().itemView.performClick();
             clickNavigationItem(R.id.drawer_schedule);
             return displayFragmentWithBackStack(
                     ScheduledMessagesFragment.newInstance(conversation.title,
@@ -752,8 +770,9 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean contactSettings() {
-        if (conversationListFragment.isExpanded()) {
-            long conversationId = conversationListFragment.getExpandedId();
+        if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
+            final ConversationListFragment fragment = getShownConversationList();
+            long conversationId = fragment.getExpandedId();
             Intent intent = new Intent(this, ContactSettingsActivity.class);
             intent.putExtra(ContactSettingsActivity.EXTRA_CONVERSATION_ID, conversationId);
             startActivity(intent);

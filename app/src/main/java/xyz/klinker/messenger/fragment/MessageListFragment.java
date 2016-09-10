@@ -35,6 +35,7 @@ import android.os.Handler;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -119,6 +120,7 @@ public class MessageListFragment extends Fragment implements
     private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
     private static final String ARG_READ = "read";
     private static final String ARG_IMAGE_URI = "image_uri";
+    private static final String ARG_IS_ARCHIVED = "is_archived";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -179,6 +181,7 @@ public class MessageListFragment extends Fragment implements
         args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
         args.putBoolean(ARG_READ, conversation.read);
         args.putString(ARG_IMAGE_URI, conversation.imageUri);
+        args.putBoolean(ARG_IS_ARCHIVED, conversation.archive);
 
         if (messageToOpenId != -1) {
             args.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
@@ -396,6 +399,11 @@ public class MessageListFragment extends Fragment implements
 
             ColorUtils.adjustStatusBarColor(colorDarker, activity);
             ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity);
+        }
+
+        NavigationView nav = (NavigationView) activity.findViewById(R.id.navigation_view);
+        if (nav != null && getArguments().getBoolean(ARG_IS_ARCHIVED)) {
+            nav.getMenu().findItem(R.id.drawer_archive_conversation).setTitle(R.string.menu_move_to_inbox);
         }
     }
 

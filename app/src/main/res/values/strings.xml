@@ -39,6 +39,7 @@
     <string name="menu_view_media">View media</string>
     <string name="menu_delete_conversation">Delete conversation</string>
     <string name="menu_archive_conversation">Archive Conversation</string>
+    <string name="menu_move_to_inbox">Move to Inbox</string>
     <string name="menu_conversation_information">Conversation information</string>
     <string name="menu_conversation_blacklist">Blacklist contact</string>
     <string name="menu_conversation_schedule">Schedule a message</string>
