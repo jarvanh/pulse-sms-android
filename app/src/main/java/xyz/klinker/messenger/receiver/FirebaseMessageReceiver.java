@@ -39,6 +39,7 @@ import javax.crypto.spec.SecretKeySpec;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
@@ -85,7 +86,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         }
 
         encryptionUtils = new EncryptionUtils(
-                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"));
+                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"), FeatureFlags.get(context).TRIM_DECRYPTION);
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);
@@ -164,6 +165,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     break;
                 case "dismissed_notification":
                     dismissNotification(json, context);
+                    break;
+                case "feature_flag":
+                    writeFeatureFlag(json, context);
                     break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
@@ -483,6 +487,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     Settings.get(context).setValue(pref, json.getString("value"));
             }
         }
+    }
+
+    private void writeFeatureFlag(JSONObject json, Context context)
+            throws JSONException {
+        String identifier = json.getString("id");
+        boolean value = json.getBoolean("value");
+
+        FeatureFlags flags = FeatureFlags.get(context);
+        flags.updateFlag(identifier, value);
     }
 
 }

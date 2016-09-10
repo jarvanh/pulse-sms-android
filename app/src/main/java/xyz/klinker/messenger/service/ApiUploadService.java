@@ -47,6 +47,7 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
@@ -100,7 +101,7 @@ public class ApiUploadService extends Service {
                 settings = Settings.get(getApplicationContext());
                 apiUtils = new ApiUtils();
                 encryptionUtils = new EncryptionUtils(new KeyUtils().createKey(settings.passhash,
-                        settings.accountId, settings.salt));
+                        settings.accountId, settings.salt), FeatureFlags.get(getApplicationContext()).TRIM_DECRYPTION);
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
 
