@@ -18,7 +18,11 @@ package xyz.klinker.messenger;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.preference.PreferenceManager;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
 
@@ -68,5 +72,4 @@ public class MessengerApplication extends Application {
 
         }
     }
-
 }

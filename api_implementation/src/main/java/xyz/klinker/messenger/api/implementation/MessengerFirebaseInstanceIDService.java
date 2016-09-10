@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
@@ -44,6 +45,7 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
                     null, refreshedToken);
         }
 
+        FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
     }
 
 }

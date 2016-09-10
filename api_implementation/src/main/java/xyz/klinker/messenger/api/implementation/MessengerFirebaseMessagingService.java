@@ -17,8 +17,11 @@
 package xyz.klinker.messenger.api.implementation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -47,6 +50,12 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
             intent.putExtra(EXTRA_OPERATION, operation);
             intent.putExtra(EXTRA_DATA, data);
             sendBroadcast(intent);
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.contains("subscribed_to_feature_flag")) {
+            prefs.edit().putBoolean("subscribed_to_feature_flag", true).commit();
+            FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
         }
     }
 
