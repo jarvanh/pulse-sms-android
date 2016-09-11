@@ -35,6 +35,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
@@ -153,7 +154,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         if (conversation.imageUri == null) {
             holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
-            if (conversation.title.length() > 0 && !conversation.title.contains(", ")) {
+            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
             } else {
                 holder.imageLetter.setText(null);

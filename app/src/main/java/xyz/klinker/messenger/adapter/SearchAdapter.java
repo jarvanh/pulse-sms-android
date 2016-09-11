@@ -36,6 +36,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.listener.SearchListener;
 
 public class SearchAdapter extends SectionedRecyclerViewAdapter {
@@ -115,7 +116,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             if (conversation.imageUri == null) {
                 h.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
-                if (conversation.title.length() > 0) {
+                if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                     h.imageLetter.setText(conversation.title.substring(0, 1));
                 } else {
                     h.imageLetter.setText(null);

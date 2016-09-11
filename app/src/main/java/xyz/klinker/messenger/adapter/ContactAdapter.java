@@ -32,6 +32,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
 
@@ -77,7 +78,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                         ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
             }
 
-            if (conversation.title.length() > 0) {
+            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
             } else {
                 holder.imageLetter.setText(null);

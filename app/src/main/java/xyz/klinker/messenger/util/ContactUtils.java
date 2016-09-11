@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import xyz.klinker.messenger.data.model.Conversation;
+
 /**
  * Helper for working with Android's contact provider.
  */
@@ -225,6 +227,11 @@ public class ContactUtils {
                 return null;
             }
         }
+    }
+
+    public static boolean shouldDisplayContactLetter(Conversation conversation) {
+        return conversation.title.length() > 0 && !conversation.title.contains(", ") &&
+                !PhoneNumberUtils.checkEquality(conversation.phoneNumbers, conversation.title);
     }
 
 }

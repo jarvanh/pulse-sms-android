@@ -32,6 +32,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 
 public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -105,7 +106,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         if (image == null) {
             image = ImageUtils.createColoredBitmap(item.colors.color);
 
-            if (item.title.length() > 0 && !item.title.contains(", ")) {
+            if (ContactUtils.shouldDisplayContactLetter(item)) {
                 rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
             } else {
                 rv.setTextViewText(R.id.image_letter, null);
