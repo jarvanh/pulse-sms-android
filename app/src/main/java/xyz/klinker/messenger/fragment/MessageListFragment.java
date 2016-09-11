@@ -869,26 +869,21 @@ public class MessageListFragment extends Fragment implements
     private void recordVideo() {
         prepareAttachHolder(3);
 
+        MaterialCamera camera = new MaterialCamera(getActivity())
+                .saveDir(getActivity().getFilesDir().getPath())
+                .qualityProfile(MaterialCamera.QUALITY_LOW)
+                .maxAllowedFileSize(1024 * 1024)
+                .allowRetry(false)
+                .autoSubmit(true)
+                .showPortraitWarning(false);
+        
         if (Settings.get(getActivity()).useGlobalThemeColor) {
-            new MaterialCamera(getActivity())
-                    .saveDir(getActivity().getFilesDir().getPath())
-                    .qualityProfile(MaterialCamera.QUALITY_LOW)
-                    .maxAllowedFileSize(1024 * 1024)
-                    .allowRetry(false)
-                    .autoSubmit(true)
-                    .showPortraitWarning(false)
-                    .primaryColor(Settings.get(getActivity()).globalColorSet.color)
-                    .start(RESULT_VIDEO_REQUEST);
+            camera.primaryColor(Settings.get(getActivity()).globalColorSet.color);
         } else {
-            new MaterialCamera(getActivity())
-                    .saveDir(getActivity().getFilesDir().getPath())
-                    .qualityProfile(MaterialCamera.QUALITY_LOW)
-                    .maxAllowedFileSize(1024 * 1024)
-                    .allowRetry(false)
-                    .autoSubmit(true)
-                    .showPortraitWarning(false)
-                    .start(RESULT_VIDEO_REQUEST);
+            camera.primaryColor(getArguments().getInt(ARG_COLOR));
         }
+
+        camera.start(RESULT_VIDEO_REQUEST);
     }
 
     private void recordAudio() {
