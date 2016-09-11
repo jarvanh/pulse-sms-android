@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import xyz.klinker.messenger.api.Api;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
+import xyz.klinker.messenger.api.entity.AddContactRequest;
 import xyz.klinker.messenger.api.entity.AddConversationRequest;
 import xyz.klinker.messenger.api.entity.AddDeviceRequest;
 import xyz.klinker.messenger.api.entity.AddDeviceResponse;
@@ -40,6 +41,7 @@ import xyz.klinker.messenger.api.entity.AddDraftRequest;
 import xyz.klinker.messenger.api.entity.AddMessagesRequest;
 import xyz.klinker.messenger.api.entity.AddScheduledMessageRequest;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
+import xyz.klinker.messenger.api.entity.ContactBody;
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.DraftBody;
@@ -49,6 +51,7 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.entity.SignupRequest;
 import xyz.klinker.messenger.api.entity.SignupResponse;
+import xyz.klinker.messenger.api.entity.UpdateContactRequest;
 import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
@@ -146,6 +149,84 @@ public class ApiUtils {
      */
     public void updateDevice(String accountId, int deviceId, String name, String fcmToken) {
         api.device().update(deviceId, accountId, name, fcmToken);
+    }
+
+    /**
+     * Adds a new contact.
+     */
+    public void addContact(final String accountId, final String phoneNumber, final String name, final int color,
+                                final int colorDark, final int colorLight, final int colorAccent,
+                                final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContactBody body = new ContactBody(
+                        encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
+                        color, colorDark, colorLight, colorAccent);
+                AddContactRequest request = new AddContactRequest(accountId, body);
+
+                Object response = api.contact().add(request);
+                if (response == null) {
+                    Log.e(TAG, "error adding contact");
+                } else {
+                    Log.v(TAG, "successfully added contact");
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Deletes a conversation and all of its messages.
+     */
+    public void deleteContact(final String accountId, final String phoneNumber,
+                              final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId);
+                if (response == null) {
+                    Log.e(TAG, "error deleting contact");
+                } else {
+                    Log.v(TAG, "successfully deleted contact");
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Updates a conversation with new settings or info.
+     */
+    public void updateContact(final String accountId, final String phoneNumber, final String name,
+                                   final Integer color, final Integer colorDark, final Integer colorLight,
+                                   final Integer colorAccent,
+                                   final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpdateContactRequest request = new UpdateContactRequest(
+                        encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
+                        color, colorDark, colorLight, colorAccent);
+
+                Object response = api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request);
+                if (response == null) {
+                    Log.e(TAG, "error updating contact");
+                } else {
+                    Log.v(TAG, "successfully updated contact");
+                }
+            }
+        }).start();
     }
 
     /**
