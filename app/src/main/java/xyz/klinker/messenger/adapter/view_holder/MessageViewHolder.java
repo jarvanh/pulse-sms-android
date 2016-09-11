@@ -51,6 +51,7 @@ import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
+import xyz.klinker.messenger.util.listener.MessageDeletedListener;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -60,6 +61,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     private MessageListFragment fragment;
+    private MessageDeletedListener messageDeletedListener;
 
     public TextView message;
     public TextView timestamp;
@@ -151,12 +153,14 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     };
 
     public MessageViewHolder(final MessageListFragment fragment, final View itemView,
-                             int color, final long conversationId, int type, int timestampHeight) {
+                             int color, final long conversationId, int type, int timestampHeight,
+                             MessageDeletedListener messageDeletedListener) {
         super(itemView);
 
         this.fragment = fragment;
         this.type = type;
         this.timestampHeight = timestampHeight;
+        this.messageDeletedListener = messageDeletedListener;
 
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);
@@ -195,13 +199,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 }
             });
 
-            image.setOnLongClickListener(messageOptions);
-            image.setHapticFeedbackEnabled(false);
+            if (fragment != null) {
+                image.setOnLongClickListener(messageOptions);
+                image.setHapticFeedbackEnabled(false);
+            }
         }
 
         if (message != null) {
-            message.setOnLongClickListener(messageOptions);
-            message.setOnClickListener(clickListener);
+            if (fragment != null) {
+                message.setOnLongClickListener(messageOptions);
+                message.setOnClickListener(clickListener);
+            }
 
             if (messageHolder != null) {
                 messageHolder.setOnClickListener(clickListener);
@@ -233,6 +241,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             long conversationId = m.conversationId;
             source.deleteMessage(messageId);
             MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
+        }
+
+        if (messageDeletedListener != null) {
+            messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
+                    getAdapterPosition());
         }
 
         source.close();

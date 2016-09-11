@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -41,8 +42,10 @@ import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.util.DensityUtil;
@@ -50,11 +53,15 @@ import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.util.listener.MessageDeletedListener;
 
 /**
  * Adapter for displaying messages in a conversation.
  */
-public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> {
+public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
+        implements MessageDeletedListener {
+
+    private static final String TAG = "MessageListAdapter";
 
     private Cursor messages;
     private int receivedColor;
@@ -110,7 +117,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         messages.moveToFirst();
         return new MessageViewHolder(fragment, view, color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
-                viewType, timestampHeight);
+                viewType, timestampHeight, this);
     }
 
     @VisibleForTesting
@@ -313,6 +320,27 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
 
     public Cursor getMessages() {
         return messages;
+    }
+
+    @Override
+    public void onMessageDeleted(Context context, long conversationId, int position) {
+        if (position == getItemCount() - 1 && position != 0) {
+            Log.v(TAG, "deleted last item, updating conversation");
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+
+            Message message = new Message();
+            messages.moveToPosition(position - 1);
+            message.fillFromCursor(messages);
+
+            Conversation conversation = source.getConversation(conversationId);
+            source.updateConversation(conversationId, conversation.read, message.timestamp,
+                    message.data, message.mimeType, conversation.archive);
+
+            source.close();
+        } else {
+            Log.v(TAG, "position not last, so leaving conversation");
+        }
     }
 
 }
