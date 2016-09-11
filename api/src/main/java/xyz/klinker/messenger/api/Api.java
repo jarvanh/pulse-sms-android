@@ -44,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
 import xyz.klinker.messenger.api.service.BetaService;
 import xyz.klinker.messenger.api.service.BlacklistService;
+import xyz.klinker.messenger.api.service.ContactService;
 import xyz.klinker.messenger.api.service.ConversationService;
 import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.DraftService;
@@ -175,6 +176,13 @@ public class Api {
      */
     public MessageService message() {
         return retrofit.create(MessageService.class);
+    }
+
+    /**
+     * Gets a service that can be used for contact requests.
+     */
+    public ContactService contact() {
+        return retrofit.create(ContactService.class);
     }
 
     /**
