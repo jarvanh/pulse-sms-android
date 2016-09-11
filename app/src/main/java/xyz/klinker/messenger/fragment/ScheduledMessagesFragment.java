@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
@@ -269,7 +270,14 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 message.timestamp += (1000 * 60 * 60 * hourOfDay);
                 message.timestamp += (1000 * 60 * minute);
-                displayMessageDialog(message);
+
+                if (message.timestamp > System.currentTimeMillis()) {
+                    displayMessageDialog(message);
+                } else {
+                    Toast.makeText(getActivity(), R.string.scheduled_message_in_future,
+                            Toast.LENGTH_SHORT).show();
+                    displayDateDialog(message);
+                }
             }
         },
                 calendar.get(Calendar.HOUR_OF_DAY),

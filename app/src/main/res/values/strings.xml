@@ -288,6 +288,7 @@
     <string name="no_scheduled_messages">No scheduled messages</string>
     <string name="no_scheduled_messages_summary">You can create a new one with the plus button
         below!</string>
+    <string name="scheduled_message_in_future">Time must be in the future!</string>
 
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypting and uploading…</string>
