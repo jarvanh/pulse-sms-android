@@ -41,6 +41,7 @@ import javax.crypto.spec.SecretKeySpec;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -245,6 +246,154 @@ public class DataSource {
      */
     public void endTransaction() {
         database.endTransaction();
+    }
+
+    /**
+     * Bulk insert of contacts into the databse.
+     *
+     * @param contacts a list of all the contacts to insert
+     * @param listener callback for the progress of the insert
+     */
+    public void insertContacts(List<Contact> contacts, ProgressUpdateListener listener) {
+        beginTransaction();
+
+        for (int i = 0; i < contacts.size(); i++) {
+            Contact contact = contacts.get(i);
+
+            ContentValues values = new ContentValues(7);
+
+            // here we are loading the id from the internal database into the conversation object
+            // but we don't want to use that so we'll just generate a new one.
+            values.put(Contact.COLUMN_ID, generateId());
+            values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber);
+            values.put(Contact.COLUMN_NAME, contact.name);
+            values.put(Contact.COLUMN_COLOR, contact.colors.color);
+            values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark);
+            values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight);
+            values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent);
+
+            long insertId = database.insert(Contact.TABLE, null, values);
+
+            if (listener != null) {
+                listener.onProgressUpdate(i + 1, contacts.size());
+            }
+        }
+
+        setTransactionSuccessful();
+        endTransaction();
+    }
+
+    /**
+     * Insert a new contact into the apps database.
+     *
+     * @param contact the new contact
+     * @return id of the inserted contact or -1 if the insert failed
+     */
+    public long insertContact(Contact contact) {
+        ContentValues values = new ContentValues(7);
+
+        if (contact.id <= 0) {
+            contact.id = generateId();
+        }
+
+        values.put(Contact.COLUMN_ID, contact.id);
+        values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber);
+        values.put(Contact.COLUMN_NAME, contact.name);
+        values.put(Contact.COLUMN_COLOR, contact.colors.color);
+        values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark);
+        values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight);
+        values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent);
+
+        apiUtils.addContact(accountId,contact.phoneNumber, contact.name, contact.colors.color,
+                contact.colors.colorDark, contact.colors.colorLight,
+                contact.colors.colorAccent, encryptionUtils);
+
+        try {
+            return database.insert(Contact.TABLE, null, values);
+        } catch (Exception e) {
+            Log.e(TAG, "failed to insert contact", e);
+            return -1L;
+        }
+    }
+
+    /**
+     * Get all the contacts in the database.
+     *
+     * @return a cursor of all the contacts stored in the app.
+     */
+    public Cursor getContacts() {
+        return database.query(Contact.TABLE, null, null, null, null, null,
+                Contact.COLUMN_NAME + " ASC");
+    }
+
+    /**
+     * Get a contact from the database.
+     *
+     * @param phoneNumber unique phone number to find
+     * @return Contact from the database
+     */
+    public Contact getContact(String phoneNumber) {
+        Cursor cursor = database.query(Contact.TABLE, null, Contact.COLUMN_PHONE_NUMBER+ "=?",
+                new String[]{phoneNumber}, null, null, null);
+        if (cursor.moveToFirst()) {
+            Contact contact = new Contact();
+            contact.fillFromCursor(cursor);
+            cursor.close();
+            return contact;
+        }
+
+        return null;
+    }
+
+    /**
+     * Deletes a contact from the database.
+     *
+     * @param phoneNumber the phone number to delete
+     */
+    public void deleteContact(String phoneNumber) {
+        database.delete(Contact.TABLE, Contact.COLUMN_PHONE_NUMBER + "=?",
+                new String[]{phoneNumber});
+
+        apiUtils.deleteContact(accountId, phoneNumber, encryptionUtils);
+    }
+
+    /**
+     * Updates the conversation with given values.
+     *
+     * @param phoneNumber    the contact to update
+     * @param name           the contacts new name (null if we don't want to update it)
+     * @param color          the new main color (null if we don't want to update it)
+     * @param colorDark      the new dark color (null if we don't want to update it)
+     * @param colorLight     the new light color (null if we don't want to update it)
+     * @param colorAccent    the new accent color (null if we don't want to update it)
+     */
+    public void updateContact(String phoneNumber, String name, Integer color, Integer colorDark,
+                                   Integer colorLight, Integer colorAccent) {
+        ContentValues values = new ContentValues();
+
+        if (name != null) values.put(Contact.COLUMN_NAME, name);
+        if (color != null) values.put(Contact.COLUMN_COLOR, color);
+        if (colorDark != null) values.put(Contact.COLUMN_COLOR_DARK, colorDark);
+        if (colorLight != null) values.put(Contact.COLUMN_COLOR_LIGHT, colorLight);
+        if (colorAccent != null) values.put(Contact.COLUMN_COLOR_ACCENT, colorAccent);
+
+        int updated = database.update(Contact.TABLE, values, Contact.COLUMN_PHONE_NUMBER + "=?",
+                new String[]{phoneNumber});
+
+        if (updated > 0) {
+            apiUtils.updateContact(accountId, phoneNumber, name, color, colorDark,
+                    colorLight, colorAccent, encryptionUtils);
+        }
+    }
+
+    /**
+     * Gets the number of contacts in the database.
+     */
+    public int getContactsCount() {
+        Cursor cursor = getContacts();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
     /**

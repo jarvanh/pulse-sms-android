@@ -70,7 +70,7 @@ public class MaterialTooltip extends FrameLayout {
         setDistanceFromStart(DensityUtil.toPx(context, options.startOffset));
         setDistanceFromTop(DensityUtil.toPx(context, options.topOffset));
 
-        gotIt.setTextColor(options.doneButtonTextColor);
+        gotIt.setTextColor(Color.WHITE);
         text.setText(options.text);
 
         gotIt.setOnClickListener(new OnClickListener() {

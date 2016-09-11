@@ -27,6 +27,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.MessengerRealDataSuite;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -64,6 +65,29 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void insertContacts() {
+        int initialSize = source.getContacts().getCount();
+        source.insertContacts(DataSourceTest.getFakeContacts(RuntimeEnvironment.application.getResources()), null);
+        int newSize = source.getContacts().getCount();
+
+        assertEquals(7, newSize - initialSize);
+    }
+
+    @Test
+    public void insertContact() {
+        Contact contact = new Contact();
+        contact.name = "Aaron K";
+        contact.phoneNumber = "5155725868";
+
+        int initialSize = source.getContacts().getCount();
+        source.insertContact(contact);
+        int newSize = source.getContacts().getCount();
+
+        Assert.assertEquals(1, newSize - initialSize);
+    }
+
+
+    @Test
     public void insertConversations() {
         int initialSize = source.getConversations().getCount();
         source.insertConversations(DataSourceTest
@@ -72,6 +96,63 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int newSize = source.getConversations().getCount();
 
         assertEquals(7, newSize - initialSize);
+    }
+
+    @Test
+    public void getContacts() {
+        List<String> names = new ArrayList<>();
+        Cursor cursor = source.getContacts();
+
+        if (cursor.moveToFirst()) {
+            do {
+                names.add(cursor.getString(cursor.getColumnIndex(Contact.COLUMN_NAME)));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        assertEquals(2, names.size());
+
+        // alpabetical order
+        assertEquals("Jake K", names.get(0));
+        assertEquals("Luke K", names.get(1));
+    }
+
+    @Test
+    public void getContact() {
+        Contact contact = source.getContact("515-991-1493");
+        assertEquals("Luke K", contact.name);
+    }
+
+    @Test
+    public void updateContact() {
+        source.updateContact("515-991-1493", "Lucas Klinker", 2, 3, 4, 5);
+        Contact contact = source.getContact("515-991-1493");
+        assertEquals("Lucas Klinker", contact.name);
+        assertEquals(2, contact.colors.color);
+        assertEquals(3, contact.colors.colorDark);
+        assertEquals(4, contact.colors.colorLight);
+        assertEquals(5, contact.colors.colorAccent);
+    }
+
+    @Test
+    public void getContactNull() {
+        Contact contact = source.getContact("5159911493");
+        assertNull(contact);
+    }
+
+    @Test
+    public void deleteContact() {
+        int initialContactSize = source.getContacts().getCount();
+        source.deleteContact("515-991-1493");
+        int newContactSize = source.getContacts().getCount();
+
+        assertEquals(-1, newContactSize - initialContactSize);
+    }
+
+    @Test
+    public void getContactCount() {
+        assertEquals(2, source.getContactsCount());
     }
 
     @Test

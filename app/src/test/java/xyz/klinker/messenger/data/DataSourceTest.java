@@ -33,6 +33,7 @@ import java.util.List;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -123,6 +124,27 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void insertContacts() {
+        source.insertContacts(getFakeContacts(RuntimeEnvironment.application.getResources()), null);
+        verify(database, times(7)).insert(eq("contact"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void insertContact() {
+        source.insertContact(new Contact());
+        verify(database).insert(eq("contact"), eq((String) null), any(ContentValues.class));
+    }
+
+    @Test
+    public void getContacts() {
+        when(database.query("contact", null, null, null, null, null,
+                "name ASC")).thenReturn(cursor);
+
+        assertEquals(cursor, source.getContacts());
+    }
+
+    @Test
     public void insertConversations() {
         source.insertConversations(
                 getFakeConversations(RuntimeEnvironment.application.getResources()),
@@ -144,6 +166,19 @@ public class DataSourceTest extends MessengerRobolectricSuite {
                 "pinned desc, timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getConversations());
+    }
+
+    @Test
+    public void updateContact() {
+        source.updateContact("515", "Test", 1, 2, 3, 4);
+        verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),
+                eq(new String[]{"515"}));
+    }
+
+    @Test
+    public void deleteContact() {
+        source.deleteContact("515");
+        verify(database).delete("contact", "phone_number=?", new String[]{"515"});
     }
 
     @Test
@@ -561,6 +596,75 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversations.add(conversation);
 
         return conversations;
+    }
+
+    public static List<Contact> getFakeContacts(Resources resources) {
+        List<Contact> contacts = new ArrayList<>();
+
+        Contact contact = new Contact();
+        contact.name = "Luke Klinker";
+        contact.phoneNumber = "(515) 991-1493";
+        contact.colors.color = resources.getColor(R.color.materialIndigo);
+        contact.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialIndigoLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Matt Swiontek";
+        contact.phoneNumber = "(708) 928-0846";
+        contact.colors.color = resources.getColor(R.color.materialRed);
+        contact.colors.colorDark = resources.getColor(R.color.materialRedDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialRedLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Kris Klinker";
+        contact.phoneNumber = "(515) 419-6726";
+        contact.colors.color = resources.getColor(R.color.materialPink);
+        contact.colors.colorDark = resources.getColor(R.color.materialPinkDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialPinkLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Andrew Klinker";
+        contact.phoneNumber = "(515) 991-8235";
+        contact.colors.color = resources.getColor(R.color.materialBlue);
+        contact.colors.colorDark = resources.getColor(R.color.materialBlueDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialBlueLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Aaron Klinker";
+        contact.phoneNumber = "(515) 556-7749";
+        contact.colors.color = resources.getColor(R.color.materialGreen);
+        contact.colors.colorDark = resources.getColor(R.color.materialGreenDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialGreenLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Mike Klinker";
+        contact.phoneNumber = "(515) 480-8532";
+        contact.colors.color = resources.getColor(R.color.materialBrown);
+        contact.colors.colorDark = resources.getColor(R.color.materialBrownDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialBrownLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
+        contacts.add(contact);
+
+        contact = new Contact();
+        contact.name = "Ben Madden";
+        contact.phoneNumber = "(847) 609-0939";
+        contact.colors.color = resources.getColor(R.color.materialPurple);
+        contact.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
+        contact.colors.colorLight = resources.getColor(R.color.materialPurpleLight);
+        contact.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
+        contacts.add(contact);
+
+        return contacts;
     }
 
 }
