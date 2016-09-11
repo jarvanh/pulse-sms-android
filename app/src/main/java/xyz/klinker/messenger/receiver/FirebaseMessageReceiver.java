@@ -44,6 +44,7 @@ import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -121,6 +122,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     break;
                 case "removed_message":
                     removeMessage(json, source);
+                    break;
+                case "added_contact":
+                    addContact(json, source);
+                    break;
+                case "updated_contact":
+                    updateContact(json, source);
+                    break;
+                case "removed_contact":
+                    removeContact(json, source);
                     break;
                 case "added_conversation":
                     addConversation(json, source, context);
@@ -345,6 +355,47 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
         try {
             source.insertConversation(conversation);
+        } catch (SQLiteConstraintException e) {
+            // conversation already exists
+        }
+    }
+
+    private void updateContact(JSONObject json, DataSource source)
+            throws JSONException {
+        try {
+            Contact contact = new Contact();
+            contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
+            contact.name = encryptionUtils.decrypt(json.getString("name"));
+            contact.colors.color = json.getInt("color");
+            contact.colors.colorDark = json.getInt("color_dark");
+            contact.colors.colorLight = json.getInt("color_light");
+            contact.colors.colorAccent = json.getInt("color_accent");
+
+            source.updateContact(contact);
+            Log.v(TAG, "updated conversation");
+        } catch (RuntimeException e) {
+            Log.e(TAG, "failed to update conversation b/c of decrypting data");
+        }
+    }
+
+    private void removeContact(JSONObject json, DataSource source) throws JSONException {
+        String phoneNumber = json.getString("phone_number");
+        source.deleteContact(phoneNumber);
+        Log.v(TAG, "removed conversation");
+    }
+
+    private void addContact(JSONObject json, DataSource source)
+            throws JSONException {
+        Contact contact = new Contact();
+        contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
+        contact.name = encryptionUtils.decrypt(json.getString("name"));
+        contact.colors.color = json.getInt("color");
+        contact.colors.colorDark = json.getInt("color_dark");
+        contact.colors.colorLight = json.getInt("color_light");
+        contact.colors.colorAccent = json.getInt("color_accent");
+
+        try {
+            source.insertContact(contact);
         } catch (SQLiteConstraintException e) {
             // conversation already exists
         }

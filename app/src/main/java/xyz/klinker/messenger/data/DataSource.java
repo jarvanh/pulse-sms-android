@@ -360,6 +360,16 @@ public class DataSource {
     /**
      * Updates the conversation with given values.
      *
+     * @param contact the contact with new values
+     */
+    public void updateContact(Contact contact) {
+        updateContact(contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
+                contact.colors.colorLight, contact.colors.colorAccent);
+    }
+
+    /**
+     * Updates the conversation with given values.
+     *
      * @param phoneNumber    the contact to update
      * @param name           the contacts new name (null if we don't want to update it)
      * @param color          the new main color (null if we don't want to update it)
