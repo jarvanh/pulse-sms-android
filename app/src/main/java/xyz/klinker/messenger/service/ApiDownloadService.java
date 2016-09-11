@@ -39,10 +39,13 @@ import com.google.firebase.storage.StorageReference;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
+import xyz.klinker.messenger.api.entity.ContactBody;
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.api.entity.MessageBody;
@@ -53,6 +56,7 @@ import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -119,6 +123,7 @@ public class ApiDownloadService extends Service {
                 downloadBlacklists();
                 downloadScheduledMessages();
                 downloadDrafts();
+                downloadContacts();
                 Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms");
 
                 sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
@@ -141,11 +146,15 @@ public class ApiDownloadService extends Service {
                 .list(settings.accountId, null, null, null);
 
         if (messages != null) {
+            List<Message> messageList = new ArrayList<>();
+
             for (MessageBody body : messages) {
                 Message message = new Message(body);
                 message.decrypt(encryptionUtils);
-                source.insertMessage(this, message, message.conversationId);
+                messageList.add(message);
             }
+
+            source.insertMessages(this, messageList);
 
             Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
@@ -228,6 +237,27 @@ public class ApiDownloadService extends Service {
             Log.v(TAG, "drafts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
             Log.v(TAG, "drafts failed to insert");
+        }
+    }
+
+    private void downloadContacts() {
+        long startTime = System.currentTimeMillis();
+        ContactBody[] contacts = apiUtils.getApi().contact().list(settings.accountId);
+
+        if (contacts != null) {
+            List<Contact> contactList = new ArrayList<>();
+
+            for (ContactBody body : contacts) {
+                Contact contact = new Contact(body);
+                contact.decrypt(encryptionUtils);
+                contactList.add(contact);
+            }
+
+            source.insertContacts(contactList, null);
+
+            Log.v(TAG, "contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "contacts failed to insert");
         }
     }
 

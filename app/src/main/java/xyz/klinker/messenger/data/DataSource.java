@@ -272,7 +272,7 @@ public class DataSource {
             values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight);
             values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent);
 
-            long insertId = database.insert(Contact.TABLE, null, values);
+            database.insert(Contact.TABLE, null, values);
 
             if (listener != null) {
                 listener.onProgressUpdate(i + 1, contacts.size());
@@ -1138,7 +1138,6 @@ public class DataSource {
             message.id = generateId();
         }
 
-
         values.put(Message.COLUMN_ID, message.id);
         values.put(Message.COLUMN_CONVERSATION_ID, conversationId);
         values.put(Message.COLUMN_TYPE, message.type);
@@ -1160,6 +1159,49 @@ public class DataSource {
                 message.mimeType, false);
 
         return conversationId;
+    }
+
+    /**
+     * Inserts a new message list into the database. This also updates the conversation with the latest
+     * data.
+     *
+     * @param messages        list of messages to batch insert
+     */
+    public void insertMessages(Context context, List<Message> messages) {
+        beginTransaction();
+
+        for (int i = 0; i < messages.size(); i++) {
+            Message message = messages.get(i);
+
+            ContentValues values = new ContentValues(10);
+
+            if (message.id <= 0) {
+                message.id = generateId();
+            }
+
+            values.put(Message.COLUMN_ID, message.id);
+            values.put(Message.COLUMN_CONVERSATION_ID, message.conversationId);
+            values.put(Message.COLUMN_TYPE, message.type);
+            values.put(Message.COLUMN_DATA, message.data);
+            values.put(Message.COLUMN_TIMESTAMP, message.timestamp);
+            values.put(Message.COLUMN_MIME_TYPE, message.mimeType);
+            values.put(Message.COLUMN_READ, message.read);
+            values.put(Message.COLUMN_SEEN, message.seen);
+            values.put(Message.COLUMN_FROM, message.from);
+            values.put(Message.COLUMN_COLOR, message.color);
+
+            long id = database.insert(Message.TABLE, null, values);
+
+            apiUtils.addMessage(context, accountId, message.id, message.conversationId, message.type, message.data,
+                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
+                    message.color, encryptionUtils);
+
+            updateConversation(message.conversationId, message.read, message.timestamp, message.data,
+                    message.mimeType, false);
+        }
+
+        setTransactionSuccessful();
+        endTransaction();
     }
 
     /**
