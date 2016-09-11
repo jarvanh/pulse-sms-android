@@ -990,6 +990,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void clearAttachedData() {
+        source.deleteDrafts(getConversationId());
         attachedImageHolder.setVisibility(View.GONE);
         attachedImage.setImageDrawable(null);
         attachedUri = null;
