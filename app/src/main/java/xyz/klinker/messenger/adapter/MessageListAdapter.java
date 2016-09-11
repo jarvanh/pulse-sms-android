@@ -81,7 +81,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder> 
         int color;
 
         if (timestampHeight == 0) {
-            setTimestampHeight(DensityUtil.spToPx(parent.getContext(), Settings.get(parent.getContext()).mediumFont));
+            setTimestampHeight(DensityUtil.spToPx(parent.getContext(),
+                    Settings.get(parent.getContext()).mediumFont + 2));
         }
 
         if (viewType == Message.TYPE_RECEIVED) {
