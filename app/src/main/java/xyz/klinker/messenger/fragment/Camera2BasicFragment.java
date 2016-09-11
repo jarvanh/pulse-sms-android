@@ -1051,12 +1051,7 @@ public class Camera2BasicFragment extends Fragment
             final Activity activity = getActivity();
             return new AlertDialog.Builder(activity)
                     .setMessage(getArguments().getString(ARG_MESSAGE))
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            activity.finish();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, null)
                     .create();
         }
 
@@ -1079,16 +1074,7 @@ public class Camera2BasicFragment extends Fragment
                                     REQUEST_CAMERA_PERMISSION);
                         }
                     })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Activity activity = parent.getActivity();
-                                    if (activity != null) {
-                                        activity.finish();
-                                    }
-                                }
-                            })
+                    .setNegativeButton(android.R.string.cancel, null)
                     .create();
         }
     }
