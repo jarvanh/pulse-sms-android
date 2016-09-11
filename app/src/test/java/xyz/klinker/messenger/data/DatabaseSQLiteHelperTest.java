@@ -25,6 +25,7 @@ import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -64,6 +65,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
     }
 
     private void verifyCreateStatement() {
+        verify(database).execSQL(new Contact().getCreateStatement());
         verify(database).execSQL(new Conversation().getCreateStatement());
         verify(database).execSQL(new Draft().getCreateStatement());
         verify(database).execSQL(new Message().getCreateStatement());
@@ -79,6 +81,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
     }
 
     private void verifyDropStatement() {
+        verify(database).execSQL("drop table if exists " + Contact.TABLE);
         verify(database).execSQL("drop table if exists " + Conversation.TABLE);
         verify(database).execSQL("drop table if exists " + Draft.TABLE);
         verify(database).execSQL("drop table if exists " + Message.TABLE);
