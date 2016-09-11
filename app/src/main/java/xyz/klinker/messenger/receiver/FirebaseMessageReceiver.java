@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -491,11 +492,27 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void writeFeatureFlag(JSONObject json, Context context)
             throws JSONException {
+        FeatureFlags flags = FeatureFlags.get(context);
+
         String identifier = json.getString("id");
         boolean value = json.getBoolean("value");
+        int rolloutPercent = json.getInt("rollout"); // 1 - 100
 
-        FeatureFlags flags = FeatureFlags.get(context);
-        flags.updateFlag(identifier, value);
+        if (!value) {
+            // if we are turning the flag off, we want to do it for everyone immediately
+            flags.updateFlag(identifier, false);
+        } else {
+            Random rand = new Random();
+            int random = rand.nextInt(100) + 1; // between 1 - 100
+
+            if (random <= rolloutPercent) {
+                // they made it in the staged rollout!
+                flags.updateFlag(identifier, true);
+            }
+
+            // otherwise, don't do anything. We don't want to turn the flag off for those
+            // that had gotten it turned on in the past.
+        }
     }
 
 }
