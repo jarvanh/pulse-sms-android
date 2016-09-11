@@ -138,7 +138,7 @@ public class MessengerActivity extends AppCompatActivity
         displayConversations();
         dismissIfFromNotification();
 
-        getIntent().putExtra(EXTRA_CONVERSATION_ID, -1);
+        getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
         getIntent().putExtra(EXTRA_FROM_NOTIFICATION, false);
     }
 

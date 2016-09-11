@@ -41,7 +41,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -498,7 +500,9 @@ public class SmsMmsUtils {
      */
     public static void markConversationRead(Context context, String phoneNumbers) {
         try {
-            long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
+            Set<String> recipients = new HashSet<>();
+            Collections.addAll(recipients, phoneNumbers.split(", "));
+            long threadId = Utils.getOrCreateThreadId(context, recipients);
             markConversationRead(context,
                     ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
         } catch (IllegalArgumentException e) {
@@ -574,7 +578,9 @@ public class SmsMmsUtils {
      */
     public static void deleteConversation(Context context, String phoneNumbers) {
         try {
-            long threadId = Utils.getOrCreateThreadId(context, phoneNumbers);
+            Set<String> recipients = new HashSet<>();
+            Collections.addAll(recipients, phoneNumbers.split(", "));
+            long threadId = Utils.getOrCreateThreadId(context, recipients);
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/" +
                     threadId + "/"), null, null);
             context.getContentResolver().delete(Uri.parse("content://mms-sms/conversations/"),
