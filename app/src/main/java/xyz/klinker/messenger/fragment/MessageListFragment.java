@@ -876,7 +876,7 @@ public class MessageListFragment extends Fragment implements
                 .allowRetry(false)
                 .autoSubmit(true)
                 .showPortraitWarning(false);
-        
+
         if (Settings.get(getActivity()).useGlobalThemeColor) {
             camera.primaryColor(Settings.get(getActivity()).globalColorSet.color);
         } else {
