@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -34,9 +35,10 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "messenger.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private DatabaseTable[] tables = {
+            new Contact(),
             new Conversation(),
             new Message(),
             new Draft(),
@@ -75,11 +77,9 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE conversation ADD COLUMN archive integer not null DEFAULT 0");
         }
 
-        // if (oldVersion < 3) {
-
-        // }
-
-        // ...
+        if (oldVersion < 3) {
+            db.execSQL(new Contact().getCreateStatement());
+        }
     }
 
     public void onDrop(SQLiteDatabase db) {
