@@ -52,7 +52,7 @@ import xyz.klinker.messenger.data.model.Message;
 
 public class SmsMmsUtils {
 
-    public static final int INITIAL_CONVERSATION_LIMIT = 100;
+    public static final int INITIAL_CONVERSATION_LIMIT = 250;
     public static final int INITIAL_MESSAGE_LIMIT = 500;
 
     /**
