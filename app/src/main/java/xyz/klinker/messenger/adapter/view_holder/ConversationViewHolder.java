@@ -78,7 +78,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 if (header == null && isBold()) {
-                    if (position != -1 && adapter != null) {
+                    if (position != -1 && adapter != null && position < adapter.getConversations().size()) {
                         adapter.getConversations().get(position).read = true;
                     }
 
