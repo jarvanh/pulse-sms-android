@@ -34,6 +34,14 @@ public interface ConversationService {
     Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateConversationRequest request);
 
+    @POST("conversations/update_snippet/{device_id}")
+    Object updateSnippet(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+                         @Body UpdateConversationRequest request);
+
+    @POST("conversations/update_title/{device_id}")
+    Object updateTitle(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+                       @Query("title") String title);
+
     @POST("conversations/remove/{device_id}")
     Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 

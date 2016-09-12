@@ -691,8 +691,8 @@ public class DataSource {
                 new String[]{Long.toString(conversationId)});
 
         if (updated > 0) {
-            apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
-                    read, timestamp, null, snippet, null, null, archive, encryptionUtils);
+            apiUtils.updateConversationSnippet(accountId, conversationId,
+                    read, archive, timestamp, snippet, encryptionUtils);
         }
     }
 
@@ -723,7 +723,7 @@ public class DataSource {
     }
 
     /**
-     * Updates the conversation title for a given conversation. Handly when the user has changed
+     * Updates the conversation title for a given conversation. Handy when the user has changed
      * the contact's name.
      */
     public void updateConversationTitle(long conversationId, String title) {
@@ -735,8 +735,7 @@ public class DataSource {
                 new String[] {Long.toString(conversationId), title});
 
         if (updated > 0) {
-            apiUtils.updateConversation(accountId, conversationId, null, null, null, null,
-                    null, null, null, title, null, null, null, null, encryptionUtils);
+            apiUtils.updateConversationTitle(accountId, conversationId, title, encryptionUtils);
         }
     }
 

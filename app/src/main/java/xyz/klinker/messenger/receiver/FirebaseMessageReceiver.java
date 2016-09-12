@@ -135,6 +135,12 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "added_conversation":
                     addConversation(json, source, context);
                     break;
+                case "update_conversation_snippet":
+                    updateConversationSnippet(json, source, context);
+                    break;
+                case "update_conversation_title":
+                    updateConversationTitle(json, source);
+                    break;
                 case "updated_conversation":
                     updateConversation(json, source, context);
                     break;
@@ -427,6 +433,38 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             Log.v(TAG, "updated conversation");
         } catch (RuntimeException e) {
             Log.e(TAG, "failed to update conversation b/c of decrypting data");
+        }
+    }
+
+    private void updateConversationTitle(JSONObject json, DataSource source)
+            throws JSONException {
+        try {
+            source.updateConversationTitle(
+                    json.getLong("id"),
+                    encryptionUtils.decrypt(json.getString("title"))
+            );
+
+            Log.v(TAG, "updated conversation title");
+        } catch (RuntimeException e) {
+            Log.e(TAG, "failed to update conversation title b/c of decrypting data");
+        }
+    }
+
+    private void updateConversationSnippet(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        try {
+            source.updateConversation(
+                    json.getLong("id"),
+                    json.getBoolean("read"),
+                    json.getLong("timestamp"),
+                    encryptionUtils.decrypt(json.getString("snippet")),
+                    MimeType.TEXT_PLAIN,
+                    json.getBoolean("archive")
+            );
+
+            Log.v(TAG, "updated conversation snippet");
+        } catch (RuntimeException e) {
+            Log.e(TAG, "failed to update conversation snippet b/c of decrypting data");
         }
     }
 

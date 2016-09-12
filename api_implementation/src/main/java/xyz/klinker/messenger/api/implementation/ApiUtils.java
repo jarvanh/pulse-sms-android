@@ -360,6 +360,60 @@ public class ApiUtils {
     }
 
     /**
+     * Updates a conversation with new snippet info
+     */
+    public void updateConversationSnippet(final String accountId, final long deviceId,
+                                          final Boolean read, final Boolean archive,
+                                          final Long timestamp, final String snippet,
+                                          final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpdateConversationRequest request = new UpdateConversationRequest(null, null,
+                        null, null, null, read, timestamp, null, encryptionUtils.encrypt(snippet),
+                        null, null, archive);
+
+                Object response = api.conversation().updateSnippet(deviceId, accountId, request);
+                if (response == null) {
+                    Log.e(TAG, "error updating conversation snippet");
+                } else {
+                    Log.v(TAG, "successfully updated conversation snippet");
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Updates a conversation with a new title (usually when the name changes)
+     */
+    public void updateConversationTitle(final String accountId, final long deviceId,
+                                          final String title, final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpdateConversationRequest request = new UpdateConversationRequest(null, null,
+                        null, null, null, null, null, encryptionUtils.encrypt(title), null,
+                        null, null, null);
+
+                Object response = api.conversation().updateSnippet(deviceId, accountId, request);
+                if (response == null) {
+                    Log.e(TAG, "error updating conversation title");
+                } else {
+                    Log.v(TAG, "successfully updated conversation title");
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Marks all messages in conversation as read.
      */
     public void readConversation(final String accountId, final long deviceId) {
