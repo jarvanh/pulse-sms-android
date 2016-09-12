@@ -153,7 +153,7 @@ public class ApiUploadService extends Service {
             for (List<MessageBody> page : pages) {
                 AddMessagesRequest request = new AddMessagesRequest(settings.accountId, page.toArray(new MessageBody[0]));
                 results.add(apiUtils.getApi().message().add(request));
-                
+
                 Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
             }
 

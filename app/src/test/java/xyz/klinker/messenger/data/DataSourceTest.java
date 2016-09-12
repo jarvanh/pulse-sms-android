@@ -252,7 +252,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversationCount() {
-        when(database.query("conversation", null, "archive=?", new String[] {"0"}, null, null,
+        when(database.query("conversation", null, null, null, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
         when(cursor.getCount()).thenReturn(20);
 

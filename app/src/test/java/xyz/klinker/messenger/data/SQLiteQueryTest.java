@@ -241,7 +241,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getConversationCount() {
-        assertEquals(3, source.getConversationCount());
+        assertEquals(4, source.getConversationCount());
     }
 
     @Test
