@@ -314,7 +314,11 @@ public class MessengerActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     ColorUtils.adjustStatusBarColor(settings.globalColorSet.colorDark, MessengerActivity.this);
-                    navigationView.findViewById(R.id.header).setBackgroundColor(settings.globalColorSet.colorDark);
+
+                    View header = navigationView.findViewById(R.id.header);
+                    if (header != null) {
+                        header.setBackgroundColor(settings.globalColorSet.colorDark);
+                    }
                 }
             });
         }

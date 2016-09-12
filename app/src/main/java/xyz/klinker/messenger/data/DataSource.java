@@ -605,7 +605,11 @@ public class DataSource {
      * @param conversation the conversation to delete.
      */
     public void deleteConversation(Conversation conversation) {
-        deleteConversation(conversation.id);
+        if (conversation != null) {
+            deleteConversation(conversation.id);
+        } else {
+            // more than likely already deleted
+        }
     }
 
     /**

@@ -281,13 +281,17 @@ public class ConversationListFragment extends Fragment
                                     DataSource dataSource = DataSource.getInstance(getActivity());
                                     dataSource.open();
 
-                                    for (Conversation conversation : pendingDelete) {
+                                    // we were getting a concurrent modification exception, so
+                                    // copy this list and continue to delete in the background.
+                                    List<Conversation> copiedList = new ArrayList<>(pendingDelete);
+                                    for (Conversation conversation : copiedList) {
                                         dataSource.deleteConversation(conversation);
                                         SmsMmsUtils.deleteConversation(getContext(),
                                                 conversation.phoneNumbers);
                                     }
 
                                     dataSource.close();
+                                    copiedList.clear();
                                     pendingDelete = new ArrayList<>();
                                 }
                             }
@@ -348,11 +352,15 @@ public class ConversationListFragment extends Fragment
                                     DataSource dataSource = DataSource.getInstance(getActivity());
                                     dataSource.open();
 
-                                    for (Conversation conversation : pendingArchive) {
+                                    // we were getting a concurrent modification exception, so
+                                    // copy this list and continue to archive in the background.
+                                    List<Conversation> copiedList = new ArrayList<>(pendingArchive);
+                                    for (Conversation conversation : copiedList) {
                                         performArchiveOperation(dataSource, conversation);
                                     }
 
                                     dataSource.close();
+                                    copiedList.clear();
                                     pendingArchive = new ArrayList<>();
                                 }
                             }

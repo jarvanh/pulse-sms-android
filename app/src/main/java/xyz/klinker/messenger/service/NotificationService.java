@@ -365,9 +365,15 @@ public class NotificationService extends IntentService {
                 .setBigContentTitle(title);
 
         for (String row : rows) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                style.addLine(Html.fromHtml(row, 0));
-            } else {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    style.addLine(Html.fromHtml(row, 0));
+                } else {
+                    style.addLine(Html.fromHtml(row));
+                }
+            } catch (Throwable t) {
+                // there was a motorola device running api 24, but was on 6.0.1? WTF?
+                // so catch the throwable instead of checking the api version
                 style.addLine(Html.fromHtml(row));
             }
         }
