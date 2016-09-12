@@ -126,12 +126,10 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
         try {
             googleMap.setMyLocationEnabled(true);
 
-           locationManager = (LocationManager)
+            locationManager = (LocationManager)
                     getContext().getSystemService(Context.LOCATION_SERVICE);
 
-            Criteria criteria = new Criteria();
-            Location location = locationManager.getLastKnownLocation(locationManager
-                    .getBestProvider(criteria, false));
+            Location location = getBestLocationFromEnabledProviders();
             updateLatLong(location.getLatitude(), location.getLongitude());
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -141,6 +139,22 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    private Location getBestLocationFromEnabledProviders() throws SecurityException {
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+
+        for (String provider : providers) {
+            Location l = locationManager.getLastKnownLocation(provider);
+
+            if (l == null) continue;
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                bestLocation = l;
+            }
+        }
+
+        return bestLocation;
     }
 
     @Override
