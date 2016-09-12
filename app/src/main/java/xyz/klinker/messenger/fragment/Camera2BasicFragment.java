@@ -820,6 +820,8 @@ public class Camera2BasicFragment extends Fragment
                     mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace(); // capture already finished?
         }
     }
 
@@ -927,6 +929,8 @@ public class Camera2BasicFragment extends Fragment
                     mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace(); // capture completed and the capture session is null again
         }
     }
 

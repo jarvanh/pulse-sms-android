@@ -149,7 +149,20 @@ public class ApiDownloadService extends Service {
             if (messages != null) {
                 for (MessageBody body : messages) {
                     Message message = new Message(body);
-                    message.decrypt(encryptionUtils);
+
+                    try {
+                        message.decrypt(encryptionUtils);
+                    } catch (Exception e) {
+                        // cover up the force close here.
+                        // probably was happening because of huge downloads and something was getting corrupted.
+                        // even a single bit off could probably wreck the decryption.
+                        // hopefully this issue would be solved with the pagination, but I don't want to
+                        // risk that. If the decryption goes wrong, then just put in the encrypted message
+                        // chances are, the user will never see it anyways.
+
+                        e.printStackTrace();
+                    }
+
                     messageList.add(message);
                 }
             }
@@ -176,7 +189,17 @@ public class ApiDownloadService extends Service {
         if (conversations != null) {
             for (ConversationBody body : conversations) {
                 Conversation conversation = new Conversation(body);
-                conversation.decrypt(encryptionUtils);
+
+                try {
+                    conversation.decrypt(encryptionUtils);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v(TAG, "decryption error while downloading conversations. Retrying now.");
+
+                    retryConversationDownloadFromBadDecryption();
+                    return;
+                }
+
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
 
                 if (conversation.imageUri != null &&
@@ -187,6 +210,41 @@ public class ApiDownloadService extends Service {
                 }
 
                 source.insertConversation(conversation);
+            }
+
+            Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms");
+        } else {
+            Log.v(TAG, "conversations failed to insert");
+        }
+    }
+
+    // a bit probably got misplaced? Lets retry. If it doesn't work still, just skip inserting
+    // that conversation
+    private void retryConversationDownloadFromBadDecryption() {
+        long startTime = System.currentTimeMillis();
+        ConversationBody[] conversations = apiUtils.getApi().conversation()
+                .list(settings.accountId);
+
+        if (conversations != null) {
+            for (ConversationBody body : conversations) {
+                Conversation conversation = new Conversation(body);
+
+                try {
+                    conversation.decrypt(encryptionUtils);
+                    conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
+
+                    if (conversation.imageUri != null &&
+                            ImageUtils.getContactImage(conversation.imageUri, this) == null) {
+                        conversation.imageUri = null;
+                    } else if (conversation.imageUri != null) {
+                        conversation.imageUri += "/photo";
+                    }
+
+                    source.insertConversation(conversation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + conversation.id);
+                }
             }
 
             Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms");

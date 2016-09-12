@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.data.DataSource;
@@ -222,12 +223,20 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             message.id = id;
             message.conversationId = json.getLong("conversation_id");
             message.type = json.getInt("type");
-            message.data = encryptionUtils.decrypt(json.getString("data"));
             message.timestamp = json.getLong("timestamp");
-            message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
             message.read = json.getBoolean("read");
             message.seen = json.getBoolean("seen");
-            message.from = encryptionUtils.decrypt(json.has("from") ? json.getString("from") : null);
+
+            try {
+                message.data = encryptionUtils.decrypt(json.getString("data"));
+                message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+                message.from = encryptionUtils.decrypt(json.has("from") ? json.getString("from") : null);
+            } catch (Exception e) {
+                Log.v(TAG, "error adding message, from decyrption.");
+                message.data = context.getString(R.string.error_decrypting);
+                message.mimeType = MimeType.TEXT_PLAIN;
+                message.from = null;
+            }
 
             if (json.has("color") && !json.getString("color").equals("null")) {
                 message.color = json.getInt("color");
