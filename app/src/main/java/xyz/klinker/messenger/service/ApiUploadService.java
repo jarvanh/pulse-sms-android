@@ -159,7 +159,7 @@ public class ApiUploadService extends Service {
 
     private void uploadConversations() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getConversations();
+        Cursor cursor = source.getUnarchivedConversations();
 
         if (cursor != null && cursor.moveToFirst()) {
             ConversationBody[] conversations = new ConversationBody[cursor.getCount()];

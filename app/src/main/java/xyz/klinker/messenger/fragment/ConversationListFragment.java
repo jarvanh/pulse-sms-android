@@ -144,7 +144,7 @@ public class ConversationListFragment extends Fragment
     }
 
     protected Cursor getCursor(DataSource source) {
-        return source.getConversations();
+        return source.getUnarchivedConversations();
     }
 
     private void loadConversations() {

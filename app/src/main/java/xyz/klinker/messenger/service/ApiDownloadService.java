@@ -75,6 +75,8 @@ public class ApiDownloadService extends Service {
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
+    private static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 2000;
+
     private Settings settings;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
@@ -142,20 +144,23 @@ public class ApiDownloadService extends Service {
 
     private void downloadMessages() {
         long startTime = System.currentTimeMillis();
-        MessageBody[] messages = apiUtils.getApi().message()
-                .list(settings.accountId, null, null, null);
+        List<Message> messageList = new ArrayList<>();
 
-        if (messages != null) {
-            List<Message> messageList = new ArrayList<>();
+        do {
+            MessageBody[] messages = apiUtils.getApi().message()
+                    .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
 
-            for (MessageBody body : messages) {
-                Message message = new Message(body);
-                message.decrypt(encryptionUtils);
-                messageList.add(message);
+            if (messages != null) {
+                for (MessageBody body : messages) {
+                    Message message = new Message(body);
+                    message.decrypt(encryptionUtils);
+                    messageList.add(message);
+                }
             }
+        } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0);
 
+        if (messageList.size() > 0) {
             source.insertMessages(this, messageList);
-
             Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
             Log.v(TAG, "messages failed to insert");

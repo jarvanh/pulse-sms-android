@@ -526,12 +526,23 @@ public class DataSource {
     }
 
     /**
+     * Gets all conversations in the database that are not archived
+     *
+     * @return a list of conversations.
+     */
+    public Cursor getUnarchivedConversations() {
+        return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", new String[] { "0" }, null, null,
+                Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
+        );
+    }
+
+    /**
      * Gets all conversations in the database.
      *
      * @return a list of conversations.
      */
-    public Cursor getConversations() {
-        return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", new String[] { "0" }, null, null,
+    public Cursor getAllConversations() {
+        return database.query(Conversation.TABLE, null, null, null, null, null,
                 Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
         );
     }
@@ -730,7 +741,7 @@ public class DataSource {
      * Gets the number of conversations in the database.
      */
     public int getConversationCount() {
-        Cursor cursor = getConversations();
+        Cursor cursor = getAllConversations();
         int count = cursor.getCount();
         cursor.close();
         return count;

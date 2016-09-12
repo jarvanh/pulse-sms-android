@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +36,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
@@ -52,7 +49,6 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
@@ -61,7 +57,6 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -139,7 +134,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             public void run() {
                 DataSource source = DataSource.getInstance(getApplicationContext());
                 source.open();
-                Cursor cursor = source.getConversations();
+                Cursor cursor = source.getUnarchivedConversations();
 
                 if (cursor != null && cursor.moveToFirst()) {
                     final List<Conversation> conversations = new ArrayList<>();
