@@ -655,8 +655,11 @@ public class DataSource {
                 new String[]{Long.toString(conversationId)});
 
         if (updated > 0) {
-            apiUtils.updateConversation(accountId, conversationId, null, null, null, null, null,
-                    null, null, null, null, null, null, archive, encryptionUtils);
+            if (archive) {
+                apiUtils.archiveConversation(accountId, conversationId);
+            } else {
+                apiUtils.unarchiveConversation(accountId, conversationId);
+            }
         }
     }
 

@@ -286,6 +286,48 @@ public class ApiUtils {
     }
 
     /**
+     * Archives a conversation.
+     */
+    public void archiveConversation(final String accountId, final long deviceId) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.conversation().archive(deviceId, accountId);
+                if (response == null) {
+                    Log.e(TAG, "error archiving conversation");
+                } else {
+                    Log.v(TAG, "successfully archived conversation");
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Moves a conversation back to the inbox.
+     */
+    public void unarchiveConversation(final String accountId, final long deviceId) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.conversation().unarchive(deviceId, accountId);
+                if (response == null) {
+                    Log.e(TAG, "error un-archiving conversation");
+                } else {
+                    Log.v(TAG, "successfully un-archived conversation");
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Updates a conversation with new settings or info.
      */
     public void updateConversation(final String accountId, final long deviceId, final Integer color,

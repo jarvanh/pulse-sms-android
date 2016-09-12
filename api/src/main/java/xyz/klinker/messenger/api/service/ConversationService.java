@@ -49,4 +49,10 @@ public interface ConversationService {
     @POST("conversations/seen")
     Object seen(@Query("account_id") String accountId);
 
+    @POST("conversations/archive/{device_id}")
+    Object archive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+
+    @POST("conversations/unarchive/{device_id}")
+    Object unarchive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+
 }
