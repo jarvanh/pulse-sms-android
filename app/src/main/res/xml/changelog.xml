@@ -17,12 +17,6 @@
 <changelog>
 
     <version
-        name="1.4"
-        description="September 11th, 2016">
-        <text>Vastly improve message uploading and downloading process</text>
-    </version>
-
-    <version
         name="1.3"
         description="September 9th, 2016">
         <text>Archive conversations</text>
@@ -30,7 +24,9 @@
         <text>"Read" button on notification</text>
         <text>Pitch black toolbar color option</text>
         <text>Improve list preferences in settings</text>
+        <text>Vastly improve message uploading and downloading process</text>
         <text>Bug fixes</text>
+        <text>Tons of force close fixes</text>
     </version>
     
     <version
