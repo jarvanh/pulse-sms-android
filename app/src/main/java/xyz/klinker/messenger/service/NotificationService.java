@@ -42,6 +42,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
@@ -311,10 +312,15 @@ public class NotificationService extends IntentService {
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
+        Intent carReply = new Intent(this, CarReplyReceiver.class);
+        carReply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+        PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.id,
+                carReply, PendingIntent.FLAG_ONE_SHOT);
+
         NotificationCompat.CarExtender.UnreadConversation.Builder car = new
                 NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
                 .setReadPendingIntent(pendingDelete)
-                .setReplyAction(pendingReply, remoteInput)
+                .setReplyAction(pendingCarReply, remoteInput)
                 .setLatestTimestamp(conversation.timestamp);
 
         for (NotificationMessage message : conversation.messages) {

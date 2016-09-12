@@ -226,6 +226,9 @@
         <receiver android:name=".receiver.NotificationDismissedReceiver"
             android:exported="false" />
 
+        <receiver android:name=".receiver.CarReplyReceiver"
+            android:exported="false" />
+
         <service
             android:name=".service.HeadlessSmsSendService"
             android:exported="true"
