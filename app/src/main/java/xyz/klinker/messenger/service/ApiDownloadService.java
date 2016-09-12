@@ -75,7 +75,7 @@ public class ApiDownloadService extends Service {
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
-    private static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 2000;
+    public static final int MESSAGE_PAGE_SIZE = 2000;
 
     private Settings settings;
     private ApiUtils apiUtils;
@@ -149,7 +149,7 @@ public class ApiDownloadService extends Service {
         int pageNumber = 1;
         do {
             MessageBody[] messages = apiUtils.getApi().message()
-                    .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
+                    .list(settings.accountId, null, MESSAGE_PAGE_SIZE, messageList.size());
 
             if (messages != null) {
                 for (MessageBody body : messages) {
@@ -160,7 +160,8 @@ public class ApiDownloadService extends Service {
             }
 
             Log.v(TAG,  messageList.size() + " messages downloaded. " + pageNumber + " pages so far.");
-        } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0);
+            pageNumber++;
+        } while (messageList.size() % MESSAGE_PAGE_SIZE == 0);
 
         if (messageList.size() > 0) {
             source.insertMessages(this, messageList);

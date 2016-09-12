@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import xyz.klinker.messenger.R;
@@ -58,6 +60,7 @@ import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
+import xyz.klinker.messenger.util.PaginationUtils;
 import xyz.klinker.messenger.util.listener.DirectExecutor;
 
 public class ApiUploadService extends Service {
@@ -124,7 +127,7 @@ public class ApiUploadService extends Service {
         Cursor cursor = source.getMessages();
 
         if (cursor != null && cursor.moveToFirst()) {
-            MessageBody[] messages = new MessageBody[cursor.getCount()];
+            List<MessageBody> messages = new ArrayList<>();
             int firebaseNumber = 0;
 
             do {
@@ -141,13 +144,20 @@ public class ApiUploadService extends Service {
                 m.encrypt(encryptionUtils);
                 MessageBody message = new MessageBody(m.id, m.conversationId, m.type, m.data,
                         m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color);
-                messages[cursor.getPosition()] = message;
+                messages.add(message);
             } while (cursor.moveToNext());
 
-            AddMessagesRequest request = new AddMessagesRequest(settings.accountId, messages);
-            Object result = apiUtils.getApi().message().add(request);
+            List<Object> results = new ArrayList<>();
+            List<List<MessageBody>> pages = PaginationUtils.getPages(messages, ApiDownloadService.MESSAGE_PAGE_SIZE);
 
-            if (result == null) {
+            for (List<MessageBody> page : pages) {
+                AddMessagesRequest request = new AddMessagesRequest(settings.accountId, page.toArray(new MessageBody[0]));
+                results.add(apiUtils.getApi().message().add(request));
+                
+                Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
+            }
+
+            if (results.size() != pages.size() || !noNull(results)) {
                 Log.v(TAG, "failed to upload messages in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -345,4 +355,13 @@ public class ApiUploadService extends Service {
         stopSelf();
     }
 
+    private boolean noNull(List list) {
+        for (Object o : list) {
+            if (o == null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

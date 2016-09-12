@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.4"
+        description="September 11th, 2016">
+        <text>Vastly improve message uploading and downloading process</text>
+    </version>
+
+    <version
         name="1.3"
         description="September 9th, 2016">
         <text>Archive conversations</text>
