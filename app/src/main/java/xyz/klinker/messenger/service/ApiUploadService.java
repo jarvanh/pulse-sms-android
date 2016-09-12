@@ -70,6 +70,8 @@ public class ApiUploadService extends Service {
     private static final int MEDIA_UPLOAD_ID = 7236;
     public static final int NUM_MEDIA_TO_UPLOAD = 20;
 
+    public static final int MESSAGE_UPLOAD_PAGE_SIZE = 1000;
+
     private Settings settings;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
@@ -148,7 +150,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             List<Object> results = new ArrayList<>();
-            List<List<MessageBody>> pages = PaginationUtils.getPages(messages, ApiDownloadService.MESSAGE_PAGE_SIZE);
+            List<List<MessageBody>> pages = PaginationUtils.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<MessageBody> page : pages) {
                 AddMessagesRequest request = new AddMessagesRequest(settings.accountId, page.toArray(new MessageBody[0]));

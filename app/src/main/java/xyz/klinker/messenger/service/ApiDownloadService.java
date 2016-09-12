@@ -32,13 +32,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -75,7 +70,7 @@ public class ApiDownloadService extends Service {
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
-    public static final int MESSAGE_PAGE_SIZE = 2000;
+    public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 2000;
 
     private Settings settings;
     private ApiUtils apiUtils;
@@ -149,7 +144,7 @@ public class ApiDownloadService extends Service {
         int pageNumber = 1;
         do {
             MessageBody[] messages = apiUtils.getApi().message()
-                    .list(settings.accountId, null, MESSAGE_PAGE_SIZE, messageList.size());
+                    .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
 
             if (messages != null) {
                 for (MessageBody body : messages) {
@@ -161,12 +156,13 @@ public class ApiDownloadService extends Service {
 
             Log.v(TAG,  messageList.size() + " messages downloaded. " + pageNumber + " pages so far.");
             pageNumber++;
-        } while (messageList.size() % MESSAGE_PAGE_SIZE == 0);
+        } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0);
 
         if (messageList.size() > 0) {
             source.insertMessages(this, messageList);
+            Log.v(TAG, messageList.size() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages");
+
             messageList.clear();
-            Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
             Log.v(TAG, "messages failed to insert");
         }
