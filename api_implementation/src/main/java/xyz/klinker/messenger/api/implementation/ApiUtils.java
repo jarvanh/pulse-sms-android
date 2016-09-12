@@ -564,6 +564,27 @@ public class ApiUtils {
     }
 
     /**
+     * Updates a message with the given parameters.
+     */
+    public void updateMessageType(final String accountId, final long deviceId, final int type) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.message().updateType(deviceId, accountId, type);
+                if (response == null) {
+                    Log.e(TAG, "error updating message type");
+                } else {
+                    Log.v(TAG, "successfully updated message type");
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Deletes the given message.
      */
     public void deleteMessage(final String accountId, final long deviceId) {

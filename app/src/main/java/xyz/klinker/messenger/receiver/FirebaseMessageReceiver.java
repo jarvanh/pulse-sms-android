@@ -118,6 +118,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "added_message":
                     addMessage(json, source, context);
                     break;
+                case "update_message_type":
+                    updateMessageType(json, source, context);
+                    break;
                 case "updated_message":
                     updateMessage(json, source, context);
                     break;
@@ -327,6 +330,17 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             throws JSONException {
         long id = json.getLong("id");
         source.updateMessageType(id, json.getInt("type"));
+        Message message = source.getMessage(id);
+        if (message != null) {
+            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+        }
+        Log.v(TAG, "updated message type");
+    }
+
+    private void updateMessageType(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        long id = json.getLong("id");
+        source.updateMessageType(id, json.getInt("message_type"));
         Message message = source.getMessage(id);
         if (message != null) {
             MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);

@@ -285,9 +285,11 @@ public class ConversationListFragment extends Fragment
                                     // copy this list and continue to delete in the background.
                                     List<Conversation> copiedList = new ArrayList<>(pendingDelete);
                                     for (Conversation conversation : copiedList) {
-                                        dataSource.deleteConversation(conversation);
-                                        SmsMmsUtils.deleteConversation(getContext(),
-                                                conversation.phoneNumbers);
+                                        if (conversation != null) { // there are those blank convos that get populated with a new one
+                                            dataSource.deleteConversation(conversation);
+                                            SmsMmsUtils.deleteConversation(getContext(),
+                                                    conversation.phoneNumbers);
+                                        }
                                     }
 
                                     dataSource.close();
@@ -356,7 +358,9 @@ public class ConversationListFragment extends Fragment
                                     // copy this list and continue to archive in the background.
                                     List<Conversation> copiedList = new ArrayList<>(pendingArchive);
                                     for (Conversation conversation : copiedList) {
-                                        performArchiveOperation(dataSource, conversation);
+                                        if (conversation != null) {
+                                            performArchiveOperation(dataSource, conversation);
+                                        }
                                     }
 
                                     dataSource.close();

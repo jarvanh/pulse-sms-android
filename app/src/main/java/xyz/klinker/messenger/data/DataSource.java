@@ -1015,7 +1015,7 @@ public class DataSource {
         database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
 
-        apiUtils.updateMessage(accountId, messageId, type, null, null);
+        apiUtils.updateMessageType(accountId, messageId, type);
     }
 
     /**
