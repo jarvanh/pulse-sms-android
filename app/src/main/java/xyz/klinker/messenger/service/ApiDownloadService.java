@@ -146,6 +146,7 @@ public class ApiDownloadService extends Service {
         long startTime = System.currentTimeMillis();
         List<Message> messageList = new ArrayList<>();
 
+        int pageNumber = 1;
         do {
             MessageBody[] messages = apiUtils.getApi().message()
                     .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
@@ -157,10 +158,13 @@ public class ApiDownloadService extends Service {
                     messageList.add(message);
                 }
             }
+
+            Log.v(TAG,  messageList.size() + " messages downloaded. " + pageNumber + " pages so far.");
         } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0);
 
         if (messageList.size() > 0) {
             source.insertMessages(this, messageList);
+            messageList.clear();
             Log.v(TAG, "messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
             Log.v(TAG, "messages failed to insert");
