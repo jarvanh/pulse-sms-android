@@ -1022,11 +1022,16 @@ public class MessageListFragment extends Fragment implements
         attachedMimeType = MimeType.IMAGE_JPG;
 
         attachedImageHolder.setVisibility(View.VISIBLE);
-        Glide.with(getContext())
-                .load(uri)
-                .placeholder(R.drawable.ic_image_sending)
-                .into(attachedImage);
-        changeCounterText();
+
+        try {
+            Glide.with(getActivity())
+                    .load(uri)
+                    .placeholder(R.drawable.ic_image_sending)
+                    .into(attachedImage);
+            changeCounterText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void attachAudio(Uri uri) {
