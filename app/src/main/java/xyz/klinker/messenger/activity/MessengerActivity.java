@@ -112,12 +112,34 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        source = DataSource.getInstance(this);
-        source.open();
+
+        setContentView(R.layout.activity_messenger);
+        initToolbar();
+        initDrawer();
+        initFab();
+        configureGlobalColors();
+
+        dismissIfFromNotification();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requestPermissions();
+
+        if (source == null) {
+            source = DataSource.getInstance(this);
+            source.open();
+
+            displayConversations();
+        }
+
+        ColorUtils.checkBlackBackground(this);
+        ColorUtils.updateRecentsEntry(this);
 
         UpdateUtils.checkForUpdate(this);
 
-        //startActivity(new Intent(this, OnboardingActivity.class));
         if (checkInitialStart()) {
             if (IS_BETA_TEST) {
                 // beta test should skip this and go right to the initial login and data upload
@@ -129,26 +151,8 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        setContentView(R.layout.activity_messenger);
-        initToolbar();
-        initDrawer();
-        initFab();
-        configureGlobalColors();
-
-        displayConversations();
-        dismissIfFromNotification();
-
         getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
         getIntent().putExtra(EXTRA_FROM_NOTIFICATION, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        requestPermissions();
-
-        ColorUtils.checkBlackBackground(this);
-        ColorUtils.updateRecentsEntry(this);
     }
 
     @Override
