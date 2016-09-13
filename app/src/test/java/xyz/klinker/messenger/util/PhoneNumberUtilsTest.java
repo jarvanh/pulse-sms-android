@@ -54,7 +54,7 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void clearFormattingHiddenNumber() {
-        assertEquals("", PhoneNumberUtils.clearFormatting("Yahoo"));
+        assertEquals("Yahoo", PhoneNumberUtils.clearFormatting("Yahoo"));
     }
 
     @Test
@@ -77,6 +77,7 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
         assertTrue(PhoneNumberUtils.checkEquality("5154224558", "5154224558"));
         assertTrue(PhoneNumberUtils.checkEquality("5154224558", "+15154224558"));
         assertTrue(PhoneNumberUtils.checkEquality("+1 (515) 422-4558", "5154224558"));
+        assertTrue(PhoneNumberUtils.checkEquality("Yahoo", "Yahoo"));
     }
 
     @Test

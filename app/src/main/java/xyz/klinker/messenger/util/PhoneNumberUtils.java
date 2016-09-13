@@ -38,7 +38,9 @@ public class PhoneNumberUtils {
      * @return the plain phone number.
      */
     public static String clearFormatting(String number) {
-        if (!isEmailAddress(number)) {
+        if (number.matches(".*[a-zA-Z].*")) {
+            return number;
+        } else if (!isEmailAddress(number)) {
             return android.telephony.PhoneNumberUtils.stripSeparators(number);
         } else {
             return number;
