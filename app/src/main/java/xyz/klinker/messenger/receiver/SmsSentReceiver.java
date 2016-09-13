@@ -16,15 +16,22 @@
 
 package xyz.klinker.messenger.receiver;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.SmsManager;
+import android.text.Html;
 
 import com.klinker.android.send_message.SentReceiver;
 
+import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -80,6 +87,27 @@ public class SmsSentReceiver extends SentReceiver {
                 long conversationId = messages
                         .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
+
+                if (error) {
+                    Intent open = new Intent(context, MessengerActivity.class);
+                    open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+                    open.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
+                    open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    PendingIntent pendingOpen = PendingIntent.getActivity(context,
+                            (int) conversationId, open, PendingIntent.FLAG_ONE_SHOT);
+
+                    Notification notification = new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.ic_stat_notify)
+                            .setContentTitle(context.getString(R.string.message_sending_failed))
+                            .setContentText(messages.getString(
+                                    messages.getColumnIndex(Message.COLUMN_DATA)))
+                            .setColor(context.getResources().getColor(R.color.colorPrimary))
+                            .setAutoCancel(true)
+                            .setContentIntent(pendingOpen)
+                            .build();
+                    NotificationManagerCompat.from(context)
+                            .notify(6666 + (int) id, notification);
+                }
 
                 messages.close();
             }
