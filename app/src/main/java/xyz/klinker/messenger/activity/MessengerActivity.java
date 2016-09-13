@@ -128,13 +128,6 @@ public class MessengerActivity extends AppCompatActivity
         super.onStart();
         requestPermissions();
 
-        if (source == null) {
-            source = DataSource.getInstance(this);
-            source.open();
-
-            displayConversations();
-        }
-
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
 
@@ -149,6 +142,13 @@ public class MessengerActivity extends AppCompatActivity
             } else {
                 startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
             }
+        }
+
+        if (source == null) {
+            source = DataSource.getInstance(this);
+            source.open();
+
+            displayConversations();
         }
 
         getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
