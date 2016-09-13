@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -130,7 +131,11 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                     getContext().getSystemService(Context.LOCATION_SERVICE);
 
             Location location = getBestLocationFromEnabledProviders();
-            updateLatLong(location.getLatitude(), location.getLongitude());
+            if (location != null) {
+                updateLatLong(location.getLatitude(), location.getLongitude());
+            } else {
+                Toast.makeText(getContext(), R.string.no_location_found, Toast.LENGTH_SHORT).show();
+            }
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
