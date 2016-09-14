@@ -287,11 +287,13 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 }).start();
             }
 
-            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+            boolean isSending = message.type == Message.TYPE_SENDING;
+
+            if (!Utils.isDefaultSmsApp(context) && isSending) {
                 message.type = Message.TYPE_SENT;
             }
 
-            if (Settings.get(context).primary && message.type == Message.TYPE_SENDING) {
+            if (Settings.get(context).primary && isSending) {
                 while (downloading.get()) {
                     Log.v(TAG, "waiting for download before sending");
                     try { Thread.sleep(1000); } catch (Exception e) { }
@@ -320,6 +322,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
             if (message.type == Message.TYPE_RECEIVED) {
                 context.startService(new Intent(context, NotificationService.class));
+            } else if (isSending) {
+                NotificationManagerCompat.from(context).cancel((int) message.conversationId);
             }
         } else {
             Log.v(TAG, "message already exists, not doing anything with it");
