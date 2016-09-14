@@ -133,19 +133,19 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getContact_oneNumber() {
-        List<Contact> contacts = source.getContacts("515-991-1493");
+        List<Contact> contacts = source.getContacts("Luke K");
 
         assertEquals(1, contacts.size());
-        assertEquals("Luke K", contacts.get(0).name);
+        assertEquals("515-991-1493", contacts.get(0).phoneNumber);
     }
 
     @Test
     public void getContact_multipleNumbers() {
-        List<Contact> contacts = source.getContacts("515-991-1493, 515-422-4558");
+        List<Contact> contacts = source.getContacts("Luke K, Jake K");
 
         assertEquals(2, contacts.size());
-        assertEquals("Luke K", contacts.get(0).name);
-        assertEquals("Jake K", contacts.get(1).name);
+        assertEquals("515-991-1493", contacts.get(0).phoneNumber);
+        assertEquals("515-422-4558", contacts.get(1).phoneNumber);
     }
 
     @Test
