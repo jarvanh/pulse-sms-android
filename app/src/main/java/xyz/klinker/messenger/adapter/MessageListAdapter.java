@@ -139,10 +139,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         holder.mimeType = message.mimeType;
 
         if (message.type == Message.TYPE_RECEIVED &&
-                fromColorMapper != null && fromColorMapper.size() > 1) {
-            // group convo, color them differently
-            holder.messageHolder.setBackgroundTintList(
-                    ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
+                fromColorMapper != null) {
+            if (fromColorMapper.containsKey(message.from)) {
+                // group convo, color them differently
+                holder.messageHolder.setBackgroundTintList(
+                        ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
+            } else {
+                holder.messageHolder.setBackgroundTintList(
+                        ColorStateList.valueOf(receivedColor));
+            }
         }
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {

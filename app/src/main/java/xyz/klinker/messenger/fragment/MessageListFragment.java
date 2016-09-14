@@ -684,21 +684,19 @@ public class MessageListFragment extends Fragment implements
                         }
                     });
 
-                    if (!getArguments().getBoolean(ARG_IS_GROUP)) {
-                        String number = getArguments().getString(ARG_PHONE_NUMBERS);
-                        final String name = ContactUtils.findContactNames(number, getActivity());
-                        if (!name.equals(getArguments().getString(ARG_TITLE)) &&
-                                !PhoneNumberUtils.checkEquality(name, number)) {
-                            Log.v(TAG, "contact name and conversation name do not match, updating");
-                            source.updateConversationTitle(
-                                    getArguments().getLong(ARG_CONVERSATION_ID), name);
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    toolbar.setTitle(name);
-                                }
-                            });
-                        }
+                    String number = getArguments().getString(ARG_PHONE_NUMBERS);
+                    final String name = ContactUtils.findContactNames(number, getActivity());
+                    if (!name.equals(getArguments().getString(ARG_TITLE)) &&
+                            !PhoneNumberUtils.checkEquality(name, number)) {
+                        Log.v(TAG, "contact name and conversation name do not match, updating");
+                        source.updateConversationTitle(
+                                getArguments().getLong(ARG_CONVERSATION_ID), name);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                toolbar.setTitle(name);
+                            }
+                        });
                     }
                 }
 
