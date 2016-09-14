@@ -38,11 +38,13 @@ import java.util.concurrent.Executor;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
+import xyz.klinker.messenger.api.entity.AddContactRequest;
 import xyz.klinker.messenger.api.entity.AddConversationRequest;
 import xyz.klinker.messenger.api.entity.AddDraftRequest;
 import xyz.klinker.messenger.api.entity.AddMessagesRequest;
 import xyz.klinker.messenger.api.entity.AddScheduledMessageRequest;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
+import xyz.klinker.messenger.api.entity.ContactBody;
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.api.entity.MessageBody;
@@ -53,6 +55,7 @@ import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -113,6 +116,7 @@ public class ApiUploadService extends Service {
                 long startTime = System.currentTimeMillis();
                 uploadMessages();
                 uploadConversations();
+                uploadContacts();
                 uploadBlacklists();
                 uploadScheduledMessages();
                 uploadDrafts();
@@ -198,6 +202,38 @@ public class ApiUploadService extends Service {
             } else {
                 Log.v(TAG, result.toString());
                 Log.v(TAG, "conversations upload successful in " +
+                        (System.currentTimeMillis() - startTime) + " ms");
+            }
+        }
+    }
+
+    private void uploadContacts() {
+        long startTime = System.currentTimeMillis();
+        Cursor cursor = source.getContacts();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            ContactBody[] contacts = new ContactBody[cursor.getCount()];
+
+            do {
+                Contact c = new Contact();
+                c.fillFromCursor(cursor);
+                c.encrypt(encryptionUtils);
+                ContactBody conversation = new ContactBody(c.phoneNumber, c.name, c.colors.color,
+                        c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent);
+
+                contacts[cursor.getPosition()] = conversation;
+            } while (cursor.moveToNext());
+
+            AddContactRequest request =
+                    new AddContactRequest(settings.accountId, contacts);
+            Object result = apiUtils.getApi().contact().add(request);
+
+            if (result == null) {
+                Log.v(TAG, "failed to upload contacts in " +
+                        (System.currentTimeMillis() - startTime) + " ms");
+            } else {
+                Log.v(TAG, result.toString());
+                Log.v(TAG, "contacts upload successful in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
