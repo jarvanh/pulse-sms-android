@@ -164,7 +164,10 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
-        source.close();
+
+        if (source != null) {
+            source.close();
+        }
     }
 
     private void requestPermissions() {

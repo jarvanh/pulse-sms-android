@@ -39,6 +39,7 @@ import java.io.InputStream;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 
 /**
@@ -124,6 +125,27 @@ public class ImageUtils {
             } else {
                 conversation.colors = ColorUtils.getRandomMaterialColor(context);
                 conversation.imageUri = null;
+            }
+        }
+    }
+
+    /**
+     * Gets the correct colors for a contact based on their image.
+     *
+     * @param contact      the conversation to fill colors for.
+     * @param context      the current context.
+     */
+    public static void fillContactColors(Contact contact, String imageUri, Context context) {
+        if (imageUri == null) {
+            contact.colors = ColorUtils.getRandomMaterialColor(context);
+        } else {
+            Bitmap bitmap = ImageUtils.getContactImage(imageUri, context);
+            ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
+
+            if (colors != null) {
+                contact.colors = colors;
+            } else {
+                contact.colors = ColorUtils.getRandomMaterialColor(context);
             }
         }
     }

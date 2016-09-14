@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 
 /**
@@ -232,6 +233,42 @@ public class ContactUtils {
     public static boolean shouldDisplayContactLetter(Conversation conversation) {
         return conversation.title.length() > 0 && !conversation.title.contains(", ") &&
                 !PhoneNumberUtils.checkEquality(conversation.phoneNumbers, conversation.title);
+    }
+
+    /**
+     * Get a list of contact objects from Android's database.
+     */
+    public static List<Contact> queryContacts(Context context) {
+        List<Contact> contacts = new ArrayList<>();
+
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = new String[]{
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+        };
+
+        Cursor cursor = context.getContentResolver().query(
+                uri,
+                projection,
+                ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
+                new String[] { Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) },
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Contact contact = new Contact();
+                contact.name = cursor.getString(0);
+                contact.phoneNumber = PhoneNumberUtils.format(cursor.getString(1));
+                ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+
+                contacts.add(contact);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return contacts;
     }
 
 }

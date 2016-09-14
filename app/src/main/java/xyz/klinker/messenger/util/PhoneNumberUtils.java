@@ -17,13 +17,20 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 
 import com.klinker.android.send_message.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import xyz.klinker.messenger.data.model.Contact;
 
 /**
  * Helper for working with phone numbers, mainly formatting them.

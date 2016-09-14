@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,9 +38,11 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
+import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
@@ -153,10 +154,12 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 settings.setValue(getString(R.string.pref_my_name), myName);
                 settings.setValue(getString(R.string.pref_my_phone_number), myPhoneNumber);
 
+                List<Contact> contacts = ContactUtils.queryContacts(context);
                 List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
 
                 DataSource source = DataSource.getInstance(context);
                 source.open();
+                source.insertContacts(contacts, null);
                 source.insertConversations(conversations, context, InitialLoadActivity.this);
                 source.close();
 
