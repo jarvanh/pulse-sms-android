@@ -346,6 +346,44 @@ public class DataSource {
     }
 
     /**
+     * Get a list of contacts from a list of phone numbers
+     *
+     * @param names a comma separated list of names (Ex: Luke Klinker, Jake Klinker)
+     * @return list of any contacts in the database for those phone numbers. Ignores numbers that are
+     *          not in the database.
+     */
+    public List<Contact> getContacts(String names) {
+        if (names == null || names.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String[] array = names.split(", ");
+        String where = "";
+        if (array.length <= 0) {
+            return new ArrayList<>();
+        } else if (array.length == 1) {
+            where += Contact.COLUMN_NAME + "=?";
+        } else {
+            where = Contact.COLUMN_NAME + "=?";
+            for (int i = 1; i < array.length; i++) {
+                where += " OR " + Contact.COLUMN_NAME + "=?";
+            }
+        }
+
+        List<Contact> contacts = new ArrayList<>();
+        Cursor cursor = database.query(Contact.TABLE, null, where, array, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Contact contact = new Contact();
+                contact.fillFromCursor(cursor);
+                contacts.add(contact);
+            } while (cursor.moveToNext());
+        }
+
+        return contacts;
+    }
+
+    /**
      * Deletes a contact from the database.
      *
      * @param phoneNumber the phone number to delete

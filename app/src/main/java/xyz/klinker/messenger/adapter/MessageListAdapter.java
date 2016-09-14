@@ -18,6 +18,7 @@ package xyz.klinker.messenger.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -38,6 +39,7 @@ import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
@@ -45,6 +47,7 @@ import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
@@ -64,6 +67,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private static final String TAG = "MessageListAdapter";
 
     private Cursor messages;
+    private Map<String, Contact> fromColorMapper;
     private int receivedColor;
     private int accentColor;
     private boolean isGroup;
@@ -115,7 +119,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 .inflate(layoutId, parent, false);
 
         messages.moveToFirst();
-        return new MessageViewHolder(fragment, view, color,
+        return new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? -1 : color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
                 viewType, timestampHeight, this);
     }
@@ -133,6 +137,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         holder.messageId = message.id;
         holder.mimeType = message.mimeType;
+
+        if (message.type == Message.TYPE_RECEIVED &&
+                fromColorMapper != null && fromColorMapper.size() > 1) {
+            // group convo, color them differently
+            holder.messageHolder.setBackgroundTintList(
+                    ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
+        }
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
@@ -341,6 +352,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             Log.v(TAG, "position not last, so leaving conversation");
         }
+    }
+
+    public void setFromColorMapper(Map<String, Contact> colorMapper) {
+        this.fromColorMapper = colorMapper;
     }
 
 }

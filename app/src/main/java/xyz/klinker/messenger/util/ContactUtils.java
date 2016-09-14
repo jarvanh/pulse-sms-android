@@ -24,9 +24,13 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 
@@ -269,6 +273,53 @@ public class ContactUtils {
         }
 
         return contacts;
+    }
+
+    /**
+     * Convert a list of contacts to a map with the message.message_from name as the key.
+     *
+     * If a number does not exist in the list, then it is given a new color scheme, added to the
+     * database, and sends it off to the backend for storage. This way the color scheme can be saved
+     * and used on other devices too.
+     *
+     * @param conversationTitle the title from the conversation. Comma seperated list if there is more than one person.
+     * @param contacts List of contacts from the database that should correspond to the people in the conversation
+     */
+    public static Map<String, Contact> getMessageFromMapping(String conversationTitle, List<Contact> contacts,
+                                                             DataSource dataSource, Context context) {
+        Map<String, Contact> contactMap = new HashMap<>();
+        String[] names = conversationTitle.split(", ");
+
+        for (String name : names) {
+            Contact contact = getContactFromList(contacts, name);
+
+            if (contact == null) {
+                contact = new Contact();
+                contact.name = name;
+                contact.phoneNumber = name;
+                contact.colors = ColorUtils.getRandomMaterialColor(context);
+
+                if (Pattern.compile("[0-9]").matcher(name).find()) {
+                    // we can assume this is a contacts phone number and there is no name behind it.
+                    // add it to the database to kick off an upload and store it for next time.
+                    dataSource.insertContact(contact);
+                }
+            }
+
+            contactMap.put(name, contact);
+        }
+
+        return contactMap;
+    }
+
+    private static Contact getContactFromList(List<Contact> list, String name) {
+        for (Contact contact : list) {
+            if (contact.name.equals(name)) {
+                return contact;
+            }
+        }
+
+        return null;
     }
 
 }

@@ -38,6 +38,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 public class SQLiteQueryTest extends MessengerRealDataSuite {
 
@@ -116,6 +117,35 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         // alpabetical order
         assertEquals("Jake K", names.get(0));
         assertEquals("Luke K", names.get(1));
+    }
+
+    @Test
+    public void getContact_noMatches() {
+        List<Contact> contacts = source.getContacts("");
+        assertEquals(0, contacts.size());
+
+        contacts = source.getContacts(null);
+        assertEquals(0, contacts.size());
+
+        contacts = source.getContacts("7729004");
+        assertEquals(0, contacts.size());
+    }
+
+    @Test
+    public void getContact_oneNumber() {
+        List<Contact> contacts = source.getContacts("515-991-1493");
+
+        assertEquals(1, contacts.size());
+        assertEquals("Luke K", contacts.get(0).name);
+    }
+
+    @Test
+    public void getContact_multipleNumbers() {
+        List<Contact> contacts = source.getContacts("515-991-1493, 515-422-4558");
+
+        assertEquals(2, contacts.size());
+        assertEquals("Luke K", contacts.get(0).name);
+        assertEquals("Jake K", contacts.get(1).name);
     }
 
     @Test

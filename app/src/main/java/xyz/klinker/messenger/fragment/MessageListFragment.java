@@ -69,6 +69,7 @@ import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Map;
 
 import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
@@ -79,6 +80,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
@@ -647,6 +649,13 @@ public class MessageListFragment extends Fragment implements
                 if (source.isOpen()) {
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
+
+                    final String title = getArguments().getString(ARG_TITLE);
+                    final List<Contact> contacts = source.getContacts(title);
+                    final Map<String, Contact> contactMap = ContactUtils.getMessageFromMapping(
+                            title, contacts, source, getActivity()
+                    );
+
                     drafts = source.getDrafts(conversationId);
 
                     final int position = findMessagePositionFromId(cursor);
@@ -657,7 +666,7 @@ public class MessageListFragment extends Fragment implements
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            setMessages(cursor);
+                            setMessages(cursor, contactMap);
                             setDrafts(drafts);
 
                             if (position != -1) {
@@ -726,7 +735,7 @@ public class MessageListFragment extends Fragment implements
         return -1;
     }
 
-    private void setMessages(Cursor messages) {
+    private void setMessages(Cursor messages, Map<String, Contact> contactMap) {
         if (adapter != null) {
             adapter.addMessage(messages);
         } else {
@@ -735,6 +744,7 @@ public class MessageListFragment extends Fragment implements
                             Settings.get(getActivity()).globalColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
+            adapter.setFromColorMapper(contactMap);
             messageList.setAdapter(adapter);
 
             messageList.animate().withLayer()
