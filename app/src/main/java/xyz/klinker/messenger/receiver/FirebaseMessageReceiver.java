@@ -185,7 +185,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     updateSetting(json, context);
                     break;
                 case "dismissed_notification":
-                    dismissNotification(json, context);
+                    dismissNotification(json, source, context);
                     break;
                 case "feature_flag":
                     writeFeatureFlag(json, context);
@@ -323,6 +323,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             if (message.type == Message.TYPE_RECEIVED) {
                 context.startService(new Intent(context, NotificationService.class));
             } else if (isSending) {
+                source.readConversation(context, message.conversationId);
                 NotificationManagerCompat.from(context).cancel((int) message.conversationId);
             }
         } else {
@@ -579,8 +580,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         Log.v(TAG, "removed scheduled message");
     }
 
-    private void dismissNotification(JSONObject json, Context context)
+    private void dismissNotification(JSONObject json, DataSource source, Context context)
             throws JSONException {
+        long conversationId = json.getLong("id");
+        source.seenConversation(conversationId);
         NotificationManagerCompat.from(context).cancel(json.getInt("id"));
     }
 
