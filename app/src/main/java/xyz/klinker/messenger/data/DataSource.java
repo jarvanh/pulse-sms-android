@@ -1168,7 +1168,14 @@ public class DataSource {
             conversation.idMatcher = matcher;
             conversation.mute = false;
             conversation.archive = false;
+
             ImageUtils.fillConversationColors(conversation, context);
+
+            List<Contact> contacts = getContacts(conversation.title);
+            if (contacts.size() == 1) {
+                // just one user in this conversation, so lets set the conversation color to that user's color
+                conversation.colors = contacts.get(0).colors;
+            }
 
             conversationId = insertConversation(conversation);
         }
