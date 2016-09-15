@@ -1,1 +1,1 @@
-Version 1.3 contains the ability to archive conversations, an onboarding activity for new users, a "Read" button on the notification, improvements to settings, lots of tweaks, and many bug/crash fixes.
+This release has many background changes. It also makes group conversations have different colors per user.
