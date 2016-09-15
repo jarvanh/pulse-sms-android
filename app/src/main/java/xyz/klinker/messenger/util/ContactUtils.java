@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -242,8 +243,20 @@ public class ContactUtils {
     /**
      * Get a list of contact objects from Android's database.
      */
-    public static List<Contact> queryContacts(Context context) {
+    public static List<Contact> queryContacts(Context context, DataSource dataSource) {
         List<Contact> contacts = new ArrayList<>();
+        List<Conversation> conversations = new ArrayList<>();
+        Cursor convoCursor = dataSource.getAllConversations();
+
+        if (convoCursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(convoCursor);
+                conversations.add(conversation);
+            } while (convoCursor.moveToNext());
+
+            convoCursor.close();
+        }
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String[] projection = new String[]{
@@ -262,9 +275,16 @@ public class ContactUtils {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
+
                 contact.name = cursor.getString(0);
                 contact.phoneNumber = PhoneNumberUtils.format(cursor.getString(1));
-                ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+
+                ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
+                if (colorSet != null) {
+                    contact.colors = colorSet;
+                } else {
+                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+                }
 
                 contacts.add(contact);
             } while (cursor.moveToNext());
@@ -272,7 +292,24 @@ public class ContactUtils {
             cursor.close();
         }
 
+        conversations.clear();
         return contacts;
+    }
+
+    /**
+     * Get a list of colors for a contact, if an individual conversation exists for them.
+     *
+     * @param conversations all the conversations in the database
+     * @return color set from the conversation if one exists, or null if one does not exist.
+     */
+    private static ColorSet getColorsFromConversation(List<Conversation> conversations, String name) {
+        for (Conversation conversation : conversations) {
+            if (conversation.title.equals(name)) {
+                return conversation.colors;
+            }
+        }
+
+        return null;
     }
 
     /**

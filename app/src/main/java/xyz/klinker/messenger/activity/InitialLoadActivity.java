@@ -154,13 +154,14 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 settings.setValue(getString(R.string.pref_my_name), myName);
                 settings.setValue(getString(R.string.pref_my_phone_number), myPhoneNumber);
 
-                List<Contact> contacts = ContactUtils.queryContacts(context);
-                List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
-
                 DataSource source = DataSource.getInstance(context);
                 source.open();
-                source.insertContacts(contacts, null);
+
+                List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
                 source.insertConversations(conversations, context, InitialLoadActivity.this);
+
+                List<Contact> contacts = ContactUtils.queryContacts(context, source);
+                source.insertContacts(contacts, null);
                 source.close();
 
                 handler.post(new Runnable() {

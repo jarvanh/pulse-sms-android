@@ -356,13 +356,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     private void colorMessage(final MessageViewHolder holder, final Message message) {
         if (message.type == Message.TYPE_RECEIVED &&
-                fromColorMapper != null) {
+                fromColorMapper != null && fromColorMapper.size() > 1) {
             if (fromColorMapper.containsKey(message.from)) {
                 // group convo, color them differently
                 // this is the usual result
                 holder.messageHolder.setBackgroundTintList(
                         ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
-            } else if (fromColorMapper.size() > 0) {
+            } else {
                 // group convo without the contact here.. uh oh. Could happen if the conversation
                 // title doesn't match the message.from database column.
                 final Contact contact = new Contact();
@@ -381,9 +381,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         source.close();
                     }
                 }).start();
-            } else {
-                holder.messageHolder.setBackgroundTintList(
-                        ColorStateList.valueOf(receivedColor));
             }
         }
     }
