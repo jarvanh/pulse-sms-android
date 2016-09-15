@@ -152,6 +152,10 @@ public class ColorUtils {
         final View headerView = activity.findViewById(R.id.navigation_view).findViewById(R.id.header);
         NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
 
+        if (revealView == null) {
+            return;
+        }
+
         int cx = revealView.getMeasuredWidth() / 2;
         int cy = revealView.getMeasuredHeight() / 2;
         int radius = (int) Math.sqrt((cx * cx) + (cy * cy));

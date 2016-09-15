@@ -152,6 +152,10 @@ public class ConversationListFragment extends Fragment
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (getActivity() == null) {
+                    return;
+                }
+                
                 long startTime = System.currentTimeMillis();
                 final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
@@ -277,7 +281,7 @@ public class ConversationListFragment extends Fragment
                             public void run() {
                                 deleteSnackbar = null;
 
-                                if (pendingDelete.size() == currentSize) {
+                                if (pendingDelete.size() == currentSize && getActivity() != null) {
                                     DataSource dataSource = DataSource.getInstance(getActivity());
                                     dataSource.open();
 
@@ -350,7 +354,7 @@ public class ConversationListFragment extends Fragment
                             public void run() {
                                 archiveSnackbar = null;
 
-                                if (pendingArchive.size() == currentSize) {
+                                if (pendingArchive.size() == currentSize && getActivity() != null) {
                                     DataSource dataSource = DataSource.getInstance(getActivity());
                                     dataSource.open();
 
@@ -404,9 +408,13 @@ public class ConversationListFragment extends Fragment
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.message_list_container, messageListFragment)
-                .commit();
+        try {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.message_list_container, messageListFragment)
+                    .commit();
+        } catch (Exception e) {
+
+        }
 
         if (!Settings.get(getActivity()).useGlobalThemeColor) {
             ActivityUtils.setTaskDescription(getActivity(),
@@ -420,9 +428,14 @@ public class ConversationListFragment extends Fragment
         expandedConversation = null;
         AnimationUtils.contractActivityFromConversation(getActivity());
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .remove(messageListFragment)
-                .commit();
+        try {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .remove(messageListFragment)
+                    .commit();
+        } catch (Exception e) {
+
+        }
+
         messageListFragment = null;
 
         int color = getResources().getColor(R.color.colorPrimaryDark);
