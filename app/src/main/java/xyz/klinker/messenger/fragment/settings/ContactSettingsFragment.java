@@ -29,12 +29,14 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.List;
 import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
@@ -261,6 +263,14 @@ public class ContactSettingsFragment extends PreferenceFragment {
         DataSource source = DataSource.getInstance(getActivity());
         source.open();
         source.updateConversationSettings(conversation);
+
+        List<Contact> contactList = source.getContacts(conversation.title);
+        if (contactList.size() == 1) {
+            // it is an individual conversation and we have the contact in our database! Yay.
+            contactList.get(0).colors = conversation.colors;
+            source.updateContact(contactList.get(0));
+        }
+
         source.close();
     }
 

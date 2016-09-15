@@ -356,7 +356,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     private void colorMessage(final MessageViewHolder holder, final Message message) {
         if (message.type == Message.TYPE_RECEIVED &&
-                fromColorMapper != null && fromColorMapper.size() > 1) {
+                fromColorMapper != null && fromColorMapper.size() > 1) { // size > 1 so we know it is a group convo
             if (fromColorMapper.containsKey(message.from)) {
                 // group convo, color them differently
                 // this is the usual result
