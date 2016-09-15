@@ -51,6 +51,7 @@ import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -138,17 +139,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         holder.messageId = message.id;
         holder.mimeType = message.mimeType;
 
-        if (message.type == Message.TYPE_RECEIVED &&
-                fromColorMapper != null) {
-            if (fromColorMapper.containsKey(message.from)) {
-                // group convo, color them differently
-                holder.messageHolder.setBackgroundTintList(
-                        ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
-            } else {
-                holder.messageHolder.setBackgroundTintList(
-                        ColorStateList.valueOf(receivedColor));
-            }
-        }
+        colorMessage(holder, message);
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
@@ -361,6 +352,40 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     public void setFromColorMapper(Map<String, Contact> colorMapper) {
         this.fromColorMapper = colorMapper;
+    }
+
+    private void colorMessage(final MessageViewHolder holder, final Message message) {
+        if (message.type == Message.TYPE_RECEIVED &&
+                fromColorMapper != null) {
+            if (fromColorMapper.containsKey(message.from)) {
+                // group convo, color them differently
+                // this is the usual result
+                holder.messageHolder.setBackgroundTintList(
+                        ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
+            } else if (fromColorMapper.size() > 0) {
+                // group convo without the contact here.. uh oh. Could happen if the conversation
+                // title doesn't match the message.from database column.
+                final Contact contact = new Contact();
+                contact.name = message.from;
+                contact.phoneNumber = message.from;
+                contact.colors = ColorUtils.getRandomMaterialColor(holder.itemView.getContext());
+                fromColorMapper.put(message.from, contact);
+
+                // then write it to the database for later
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DataSource source = DataSource.getInstance(holder.itemView.getContext());
+                        source.open();
+                        source.insertContact(contact);
+                        source.close();
+                    }
+                }).start();
+            } else {
+                holder.messageHolder.setBackgroundTintList(
+                        ColorStateList.valueOf(receivedColor));
+            }
+        }
     }
 
 }
