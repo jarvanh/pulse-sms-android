@@ -298,12 +298,7 @@ public class ContactUtils {
                 contact.name = name;
                 contact.phoneNumber = name;
                 contact.colors = ColorUtils.getRandomMaterialColor(context);
-
-                if (Pattern.compile("[0-9]").matcher(name).find()) {
-                    // we can assume this is a contacts phone number and there is no name behind it.
-                    // add it to the database to kick off an upload and store it for next time.
-                    dataSource.insertContact(contact);
-                }
+                dataSource.insertContact(contact);
             }
 
             contactMap.put(name, contact);
