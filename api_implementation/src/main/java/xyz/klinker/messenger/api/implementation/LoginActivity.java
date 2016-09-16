@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final int RESULT_START_NETWORK_SYNC = 32;
     public static final int RESULT_START_DEVICE_SYNC = 33;
+    public static final int REQUEST_ACTIVATE = 34;
 
     private boolean isInitial = true;
     private boolean skipLogin = false;
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean touchscreen = getPackageManager().hasSystemFeature("android.hardware.touchscreen");
         if (!touchscreen) {
-            startActivity(new Intent(this, ActivateActivity.class));
+            startActivityForResult(new Intent(this, ActivateActivity.class), REQUEST_ACTIVATE);
             return;
         }
 
@@ -102,6 +103,17 @@ public class LoginActivity extends AppCompatActivity {
             }, 100);
         } else {
             onBackPressed();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ACTIVATE && resultCode == RESULT_OK) {
+            setResult(RESULT_START_NETWORK_SYNC);
+            finish();
+        } else {
+            setResult(RESULT_CANCELED);
+            finish();
         }
     }
 

@@ -18,6 +18,9 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+
+import java.util.Random;
 
 public class ActivateActivity extends AppCompatActivity {
 
@@ -25,5 +28,19 @@ public class ActivateActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.api_activity_activate);
+
+        TextView activationCode = (TextView) findViewById(R.id.activation_code);
+        activationCode.setText(generateActivationCode());
     }
+
+    private String generateActivationCode(){
+        Random r = new Random();
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 8) {
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+
+        return sb.toString().substring(0, 8).toUpperCase();
+    }
+
 }
