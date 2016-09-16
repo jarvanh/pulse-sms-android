@@ -21,6 +21,7 @@
         description="September 16th, 2016">
         <text>Android TV app</text>
         <text>Better switching to night mode based on device clock</text>
+        <text>Immediate theme feedback in settings when changing a value</text>
     </version>
 
     <version
