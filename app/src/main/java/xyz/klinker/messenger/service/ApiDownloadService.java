@@ -147,6 +147,10 @@ public class ApiDownloadService extends Service {
                     .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
 
             if (messages != null) {
+                if (messages.length == 0) {
+                    break;
+                }
+
                 for (MessageBody body : messages) {
                     Message message = new Message(body);
 
