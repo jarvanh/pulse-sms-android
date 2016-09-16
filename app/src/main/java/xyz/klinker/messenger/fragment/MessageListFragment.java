@@ -501,6 +501,8 @@ public class MessageListFragment extends Fragment implements
         });
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
+            sendBar.setFocusable(false);
+            messageEntry.setFocusable(false);
             sendBar.setVisibility(View.GONE);
         }
     }
@@ -672,7 +674,7 @@ public class MessageListFragment extends Fragment implements
 
                 long conversationId = getConversationId();
 
-                if (source.isOpen()) {
+                try {
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
 
@@ -731,19 +733,12 @@ public class MessageListFragment extends Fragment implements
                             }
                         });
                     }
-                }
 
-                try {
                     Thread.sleep(1000);
-                } catch (Exception e) {
-                }
 
-                try {
-                    if (source.isOpen()) {
-                        dismissNotification();
-                        source.readConversation(getContext(), conversationId);
-                    }
-                } catch (IllegalStateException e) {
+                    dismissNotification();
+                    source.readConversation(getContext(), conversationId);
+                } catch (Exception e) {
 
                 }
             }
@@ -1156,7 +1151,7 @@ public class MessageListFragment extends Fragment implements
 
     @Override
     public View getFocusRootView() {
-        return messageEntry;
+        return messageList;
     }
 
     @Override
