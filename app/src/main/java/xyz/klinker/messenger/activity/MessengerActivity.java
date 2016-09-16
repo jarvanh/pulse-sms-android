@@ -34,6 +34,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +75,7 @@ import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.StringUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -130,6 +132,13 @@ public class MessengerActivity extends AppCompatActivity
 
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
+
+        boolean isDarkTheme = Settings.get(this).darkTheme;
+        if (!isDarkTheme) {
+            boolean isNight = TimeUtils.isNight();
+            getDelegate().setLocalNightMode(isNight ?
+                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         UpdateUtils.checkForUpdate(this);
 
