@@ -654,6 +654,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void loadMessages() {
+        final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -684,7 +685,7 @@ public class MessageListFragment extends Fragment implements
                     Log.v("message_load", "load took " + (
                             System.currentTimeMillis() - startTime) + " ms");
 
-                    getActivity().runOnUiThread(new Runnable() {
+                    handler.post(new Runnable() {
                         @Override
                         public void run() {
                             setMessages(cursor, contactMap);
@@ -719,7 +720,7 @@ public class MessageListFragment extends Fragment implements
                         Log.v(TAG, "contact name and conversation name do not match, updating");
                         source.updateConversationTitle(
                                 getArguments().getLong(ARG_CONVERSATION_ID), name);
-                        getActivity().runOnUiThread(new Runnable() {
+                        handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 toolbar.setTitle(name);

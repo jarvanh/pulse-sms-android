@@ -51,7 +51,7 @@ public class MessengerApplication extends Application {
         ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 
-        if (Settings.get(this).darkTheme || !TvUtils.hasTouchscreen(this)) {
+        if (Settings.get(this).darkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 

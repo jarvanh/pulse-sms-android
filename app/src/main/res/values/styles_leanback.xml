@@ -22,6 +22,7 @@
          styles. Messy, but I don't see any other way -->
     <style name="AppTheme.Leanback" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
 

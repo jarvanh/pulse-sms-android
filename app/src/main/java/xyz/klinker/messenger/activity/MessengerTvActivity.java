@@ -19,6 +19,7 @@ package xyz.klinker.messenger.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.TvBrowseFragment;
@@ -26,7 +27,7 @@ import xyz.klinker.messenger.fragment.TvBrowseFragment;
 /**
  * Activity for displaying content on your tv.
  */
-public class MessengerTvActivity extends FragmentActivity {
+public class MessengerTvActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
