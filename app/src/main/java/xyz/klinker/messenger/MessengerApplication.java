@@ -18,18 +18,14 @@ package xyz.klinker.messenger;
 
 import android.app.Application;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.preference.PreferenceManager;
-
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ContentObserverService;
-import xyz.klinker.messenger.util.TvUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -51,7 +47,8 @@ public class MessengerApplication extends Application {
         ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 
-        if (Settings.get(this).darkTheme) {
+        boolean dark = Settings.get(this).darkTheme;
+        if (dark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 

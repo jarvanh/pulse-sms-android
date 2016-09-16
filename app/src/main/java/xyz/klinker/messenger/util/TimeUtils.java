@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import xyz.klinker.messenger.R;
@@ -171,6 +172,20 @@ public class TimeUtils {
         }
 
         return formatted;
+    }
+
+    /**
+     * Gets whether or not we are currently in the night time. This is defined as before 6 AM or
+     * after 10 PM.
+     */
+    public static boolean isNight() {
+        return isNight(Calendar.getInstance());
+    }
+
+    @VisibleForTesting
+    static boolean isNight(Calendar cal) {
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        return hour <= 5 || hour >= 22;
     }
 
 }
