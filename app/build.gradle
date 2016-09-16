@@ -134,6 +134,8 @@ dependencies {
     compile project(":encryption")
     compile project(":giphy")
 
+    compile(name: 'sofa', ext: 'aar')
+
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.1.1"
     testCompile 'org.mockito:mockito-all:1.9.5'

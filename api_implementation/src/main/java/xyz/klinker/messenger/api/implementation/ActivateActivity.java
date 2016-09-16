@@ -16,18 +16,34 @@
 
 package xyz.klinker.messenger.api.implementation;
 
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Random;
 
+import javax.crypto.SecretKey;
+
 import xyz.klinker.messenger.api.Api;
+import xyz.klinker.messenger.api.entity.ContactBody;
+import xyz.klinker.messenger.api.entity.ConversationBody;
+import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.encryption.KeyUtils;
 
 public class ActivateActivity extends AppCompatActivity {
 
@@ -46,6 +62,7 @@ public class ActivateActivity extends AppCompatActivity {
 
     public static final int RESULT_FAILED = 6666;
 
+    private Api api;
     private String code;
     private int attempts = 0;
 
@@ -55,6 +72,7 @@ public class ActivateActivity extends AppCompatActivity {
         setContentView(R.layout.api_activity_activate);
 
         code = generateActivationCode();
+        api = new ApiUtils().getApi();
 
         TextView activationCode = (TextView) findViewById(R.id.activation_code);
         activationCode.setText(code);
@@ -62,12 +80,12 @@ public class ActivateActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                queryEndpoint(new ApiUtils().getApi());
+                queryEndpoint();
             }
         }).start();
     }
 
-    private void queryEndpoint(final Api api) {
+    private void queryEndpoint() {
         try { Thread.sleep(RETRY_INTERVAL); } catch (Exception e) { }
 
         Log.v(TAG, "checking activate response");
@@ -76,7 +94,7 @@ public class ActivateActivity extends AppCompatActivity {
         if (response == null) {
             if (attempts < RETRY_ATTEMPTS) {
                 attempts++;
-                queryEndpoint(api);
+                queryEndpoint();
             } else {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -96,11 +114,69 @@ public class ActivateActivity extends AppCompatActivity {
         }
     }
 
-    private void activated(LoginResponse response) {
+    private void activated(final LoginResponse response) {
         findViewById(R.id.waiting_to_activate).setVisibility(View.GONE);
         findViewById(R.id.password_confirmation).setVisibility(View.VISIBLE);
-        findViewById(R.id.password).requestFocus();
-        // TODO save values after asking for password confirmation
+        final EditText password = (EditText) findViewById(R.id.password);
+        password.setText(null);
+        password.requestFocus();
+
+        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPassword(response, password.getText().toString());
+            }
+        });
+    }
+
+    private void checkPassword(final LoginResponse response, final String password) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                KeyUtils keyUtils = new KeyUtils();
+                String hash = keyUtils.hashPassword(password, response.salt2);
+                SecretKey key = keyUtils.createKey(hash, response.accountId, response.salt1);
+                EncryptionUtils utils = new EncryptionUtils(key, false);
+
+                try {
+                    ConversationBody[] bodies = api.conversation().list(response.accountId);
+                    if (bodies.length > 0) {
+                        utils.decrypt(bodies[0].title);
+                    } else {
+                        ContactBody[] contacts = api.contact().list(response.accountId);
+                        if (contacts.length > 0) {
+                            utils.decrypt(contacts[0].name);
+                        }
+                    }
+
+                    new ApiUtils().registerDevice(response.accountId,
+                            Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
+                            false, FirebaseInstanceId.getInstance().getToken());
+
+                    SharedPreferences sharedPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext());
+                    sharedPrefs.edit()
+                            .putString("my_name", response.name)
+                            .putString("my_phone_number", response.phoneNumber)
+                            .putString("account_id", response.accountId)
+                            .putString("salt", response.salt1)
+                            .putString("passhash", hash)
+                            .apply();
+
+                    setResult(RESULT_OK);
+                    finish();
+                } catch (Exception e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ActivateActivity.this, R.string.api_wrong_password,
+                                    Toast.LENGTH_LONG).show();
+                            activated(response);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private String generateActivationCode(){

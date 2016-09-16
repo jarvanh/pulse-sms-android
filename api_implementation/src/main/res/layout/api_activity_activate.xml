@@ -188,7 +188,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -201,16 +201,31 @@
                 android:text="@string/api_confirm_password"
                 android:textColor="@android:color/white"
                 android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"/>
+                android:layout_marginStart="4dp"
+                android:id="@+id/confirmation_summary"/>
 
             <EditText
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/api_password"
                 android:id="@+id/password"
+                android:layout_below="@+id/confirmation_summary"
                 android:inputType="textPassword"/>
 
-        </LinearLayout>
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="@string/api_confirm"
+                android:id="@+id/confirm"
+                android:src="@drawable/api_forward"
+                android:layout_toRightOf="@+id/password"
+                android:layout_toEndOf="@+id/password"
+                android:layout_alignTop="@+id/password"
+                android:layout_alignBottom="@+id/password"
+                android:contentDescription="@null"
+                android:background="?selectableItemBackground"/>
+
+        </RelativeLayout>
 
     </FrameLayout>
 

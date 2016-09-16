@@ -54,5 +54,7 @@
     <string name="api_activate_2_2">enter the code to the right</string>
     <string name="api_activate_2_3">to connect your account!</string>
     <string name="api_confirm_password">Please confirm your password:</string>
+    <string name="api_wrong_password">Confirmation failed. Is your password correct?</string>
+    <string name="api_confirm">Confirm</string>
 
 </resources>

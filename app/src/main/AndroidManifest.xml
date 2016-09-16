@@ -142,6 +142,9 @@
         <activity android:name=".activity.InitialLoadActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />
         <activity
+            android:name=".activity.InitialLoadTvActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".activity.ContactSettingsActivity"
             android:theme="@style/AppTheme.NoColors" />
         <activity

@@ -29,6 +29,7 @@ import java.lang.reflect.Field;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ContentObserverService;
+import xyz.klinker.messenger.util.TvUtils;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -50,7 +51,7 @@ public class MessengerApplication extends Application {
         ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 
-        if (Settings.get(this).darkTheme) {
+        if (Settings.get(this).darkTheme || !TvUtils.hasTouchscreen(this)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 

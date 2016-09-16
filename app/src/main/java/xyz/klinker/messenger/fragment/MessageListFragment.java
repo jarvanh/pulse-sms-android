@@ -67,6 +67,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
+import com.sgottard.sofa.ContentFragment;
 
 import java.util.List;
 import java.util.Map;
@@ -92,6 +93,7 @@ import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.util.TvUtils;
 import xyz.klinker.messenger.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.util.listener.TextSelectedListener;
@@ -108,21 +110,21 @@ import static android.app.Activity.RESULT_OK;
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener, AudioRecordedListener, TextSelectedListener {
+        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment {
 
-    private static final String TAG = "MessageListFragment";
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_PHONE_NUMBERS = "phone_numbers";
-    private static final String ARG_COLOR = "color";
-    private static final String ARG_COLOR_DARKER = "color_darker";
-    private static final String ARG_COLOR_ACCENT = "color_accent";
-    private static final String ARG_IS_GROUP = "is_group";
-    private static final String ARG_CONVERSATION_ID = "conversation_id";
-    private static final String ARG_MUTE_CONVERSATION = "mute_conversation";
-    private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
-    private static final String ARG_READ = "read";
-    private static final String ARG_IMAGE_URI = "image_uri";
-    private static final String ARG_IS_ARCHIVED = "is_archived";
+    public static final String TAG = "MessageListFragment";
+    public static final String ARG_TITLE = "title";
+    public static final String ARG_PHONE_NUMBERS = "phone_numbers";
+    public static final String ARG_COLOR = "color";
+    public static final String ARG_COLOR_DARKER = "color_darker";
+    public static final String ARG_COLOR_ACCENT = "color_accent";
+    public static final String ARG_IS_GROUP = "is_group";
+    public static final String ARG_CONVERSATION_ID = "conversation_id";
+    public static final String ARG_MUTE_CONVERSATION = "mute_conversation";
+    public static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
+    public static final String ARG_READ = "read";
+    public static final String ARG_IMAGE_URI = "image_uri";
+    public static final String ARG_IS_ARCHIVED = "is_archived";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -165,6 +167,9 @@ public class MessageListFragment extends Fragment implements
     private AlertDialog detailsChoiceDialog;
     private MaterialTooltip navToolTip;
 
+    private int extraMarginTop = 0;
+    private int extraMarginLeft = 0;
+
     public static MessageListFragment newInstance(Conversation conversation) {
         return newInstance(conversation, -1);
     }
@@ -193,12 +198,16 @@ public class MessageListFragment extends Fragment implements
         return fragment;
     }
 
+    public int getLayout() {
+        return R.layout.fragment_message_list;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
         source = DataSource.getInstance(getContext());
         source.open();
 
-        View view = inflater.inflate(R.layout.fragment_message_list, parent, false);
+        View view = inflater.inflate(getLayout(), parent, false);
 
         appBarLayout = view.findViewById(R.id.app_bar_layout);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -274,6 +283,13 @@ public class MessageListFragment extends Fragment implements
                 MessageListUpdatedReceiver.getIntentFilter());
 
         showTooltip();
+
+        if (extraMarginLeft != 0 || extraMarginTop != 0) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
+                    view.getLayoutParams();
+            params.setMarginStart(extraMarginLeft);
+            view.invalidate();
+        }
     }
 
     @Override
@@ -366,6 +382,10 @@ public class MessageListFragment extends Fragment implements
 
         setNameAndDrawerColor(getActivity());
         ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
+
+        if (!TvUtils.hasTouchscreen(getActivity())) {
+            appBarLayout.setVisibility(View.GONE);
+        }
     }
 
     private void setNameAndDrawerColor(Activity activity) {
@@ -597,6 +617,7 @@ public class MessageListFragment extends Fragment implements
         manager = new LinearLayoutManager(getActivity());
         manager.setStackFromEnd(true);
         messageList.setLayoutManager(manager);
+        adapter = null;
 
         loadMessages();
     }
@@ -633,10 +654,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void loadMessages() {
-        final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.v(TAG, "loading messages");
 
                 try {
                     Thread.sleep(AnimationUtils.EXPAND_CONVERSATION_DURATION);
@@ -663,7 +684,7 @@ public class MessageListFragment extends Fragment implements
                     Log.v("message_load", "load took " + (
                             System.currentTimeMillis() - startTime) + " ms");
 
-                    handler.post(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             setMessages(cursor, contactMap);
@@ -675,9 +696,16 @@ public class MessageListFragment extends Fragment implements
 
                             textChanged = false;
                             messageEntry.addTextChangedListener(new TextWatcher() {
-                                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-                                @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-                                @Override public void afterTextChanged(Editable editable) {
+                                @Override
+                                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable editable) {
                                     textChanged = true;
                                 }
                             });
@@ -691,7 +719,7 @@ public class MessageListFragment extends Fragment implements
                         Log.v(TAG, "contact name and conversation name do not match, updating");
                         source.updateConversationTitle(
                                 getArguments().getLong(ARG_CONVERSATION_ID), name);
-                        handler.post(new Runnable() {
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 toolbar.setTitle(name);
@@ -1089,7 +1117,9 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void showTooltip() {
-        if (!getResources().getBoolean(R.bool.pin_drawer) && !Settings.get(getActivity()).seenConvoNavToolTip) {
+        if (!getResources().getBoolean(R.bool.pin_drawer) &&
+                !Settings.get(getActivity()).seenConvoNavToolTip &&
+                TvUtils.hasTouchscreen(getActivity())) {
             MaterialTooltip.Options options = new MaterialTooltip.Options(
                     56 + 24 + 12,
                     12, 275, Settings.get(getActivity()).useGlobalThemeColor ?
@@ -1113,4 +1143,21 @@ public class MessageListFragment extends Fragment implements
             });
         }
     }
+
+    @Override
+    public boolean isScrolling() {
+        return false;
+    }
+
+    @Override
+    public View getFocusRootView() {
+        return messageEntry;
+    }
+
+    @Override
+    public void setExtraMargin(int marginTop, int marginLeft) {
+        this.extraMarginTop = marginTop;
+        this.extraMarginLeft = marginLeft;
+    }
+
 }

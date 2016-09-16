@@ -22,6 +22,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -227,9 +228,17 @@ public class AnimationUtils {
      * @param view the view to be animated in.
      */
     public static void animateConversationPeripheralIn(View view) {
-        view.animate().withLayer().alpha(1f).translationY(0)
-                .setDuration(EXPAND_CONVERSATION_DURATION)
-                .setInterpolator(new DecelerateInterpolator()).setListener(null);
+        ViewPropertyAnimator animator = view.animate().withLayer().alpha(1f);
+
+        if (TvUtils.hasTouchscreen(view.getContext())) {
+            animator.translationY(0);
+        } else {
+            view.setTranslationY(0);
+        }
+
+        animator.setDuration(EXPAND_CONVERSATION_DURATION)
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(null);
     }
 
 }

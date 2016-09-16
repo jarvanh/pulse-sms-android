@@ -47,6 +47,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
+import xyz.klinker.messenger.util.TvUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
@@ -189,7 +190,12 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
     private void close() {
         Settings.get(this).setValue(getString(R.string.pref_first_start), false);
-        startActivity(new Intent(this, MessengerActivity.class));
+
+        if (TvUtils.hasTouchscreen(this)) {
+            startActivity(new Intent(this, MessengerActivity.class));
+        } else {
+            startActivity(new Intent(this, MessengerTvActivity.class));
+        }
 
         if (startUploadAfterSync) {
             startService(new Intent(this, ApiUploadService.class));
