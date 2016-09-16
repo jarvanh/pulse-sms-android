@@ -77,6 +77,8 @@ public class SettingsFragment extends PreferenceFragment {
                         new ApiUtils().updateBaseTheme(Settings.get(getActivity()).accountId,
                                 newValue);
 
+                        getActivity().recreate();
+
                         return true;
                     }
                 });
