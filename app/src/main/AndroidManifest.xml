@@ -45,11 +45,18 @@
         android:required="false"/>
     <uses-feature android:name="android.hardware.telephony"
         android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps"
+        android:required="false"/>
+    <uses-feature android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen"
+        android:required="false" />
 
     <application
         android:name=".MessengerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:banner="@mipmap/ic_banner"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
@@ -87,6 +94,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_MESSAGING" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.MessengerTvActivity"
+            android:theme="@style/AppTheme.Leanback">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
         <activity

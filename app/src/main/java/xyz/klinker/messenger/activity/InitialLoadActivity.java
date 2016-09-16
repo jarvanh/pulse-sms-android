@@ -35,6 +35,7 @@ import com.klinker.android.send_message.Utils;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.ActivateActivity;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
@@ -117,6 +118,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
                 registerReceiver(downloadReceiver,
                         new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+            } else if (responseCode == ActivateActivity.RESULT_FAILED) {
+                finish();
             }
         }
     }

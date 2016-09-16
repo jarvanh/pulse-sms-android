@@ -42,6 +42,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
+import xyz.klinker.messenger.api.service.ActivateService;
 import xyz.klinker.messenger.api.service.BetaService;
 import xyz.klinker.messenger.api.service.BlacklistService;
 import xyz.klinker.messenger.api.service.ContactService;
@@ -218,6 +219,13 @@ public class Api {
      */
     public BetaService beta() {
         return retrofit.create(BetaService.class);
+    }
+
+    /**
+     * Gets a service that can be used to activate your account on the web instead of on the device.
+     */
+    public ActivateService activate() {
+        return retrofit.create(ActivateService.class);
     }
 
     public String baseUrl() {

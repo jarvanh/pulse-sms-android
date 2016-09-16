@@ -111,6 +111,9 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_ACTIVATE && resultCode == RESULT_OK) {
             setResult(RESULT_START_NETWORK_SYNC);
             finish();
+        } else if (requestCode == REQUEST_ACTIVATE && resultCode == ActivateActivity.RESULT_FAILED) {
+            setResult(ActivateActivity.RESULT_FAILED);
+            finish();
         } else {
             setResult(RESULT_CANCELED);
             finish();
