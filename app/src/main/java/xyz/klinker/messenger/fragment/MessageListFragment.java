@@ -1151,7 +1151,11 @@ public class MessageListFragment extends Fragment implements
 
     @Override
     public View getFocusRootView() {
-        return messageList.getChildAt(messageList.getChildCount() - 1);
+        try {
+            return messageList.getChildAt(messageList.getChildCount() - 1);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Override
