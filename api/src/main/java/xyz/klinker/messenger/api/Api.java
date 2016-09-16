@@ -56,7 +56,7 @@ import xyz.klinker.messenger.api.service.ScheduledMessageService;
  */
 public class Api {
 
-    private static final String API_DEBUG_URL = "http://192.168.86.115:3000/api/v1/";
+    private static final String API_DEBUG_URL = "http://192.168.86.111:3000/api/v1/";
     private static final String API_STAGING_URL = "https://klinkerapps-messenger-staging.herokuapp.com/api/v1/";
     private static final String API_RELEASE_URL = "https://klinkerapps-messenger.herokuapp.com/api/v1/";
 

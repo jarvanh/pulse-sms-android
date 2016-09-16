@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -80,6 +81,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        boolean touchscreen = getPackageManager().hasSystemFeature("android.hardware.touchscreen");
+        if (!touchscreen) {
+            startActivity(new Intent(this, ActivateActivity.class));
+            return;
+        }
+
         setContentView(R.layout.api_activity_login);
 
         skipLogin = getIntent().getBooleanExtra(ARG_SKIP_LOGIN, false);

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +15,13 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
 
-    <color name="api_login_background">#009688</color>
-    <color name="api_login_background_dark">#00695C</color>
-    <color name="api_fab_background">#FF4081</color>
-    <color name="api_text_accent">#FFA1C0</color>
-    <color name="api_divider_color">#22FFFFFF</color>
-    <color name="api_window_background">#55000000</color>
+    <solid
+        android:color="#FFFFFF"/>
 
-</resources>
+    <size
+        android:width="32dp"
+        android:height="32dp"/>
+</shape>
