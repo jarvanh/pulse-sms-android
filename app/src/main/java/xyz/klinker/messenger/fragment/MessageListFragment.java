@@ -499,6 +499,10 @@ public class MessageListFragment extends Fragment implements
                 clearAttachedData();
             }
         });
+
+        if (!TvUtils.hasTouchscreen(getActivity())) {
+            sendBar.setVisibility(View.GONE);
+        }
     }
 
     private void changeCounterText() {
