@@ -23,7 +23,9 @@ import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.util.ColorUtils;
 
 /**
  * Fragment for modifying app settings.
@@ -53,9 +55,17 @@ public class SettingsFragment extends PreferenceFragment {
                 .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
+                        ColorSet initialColors = ColorSet.getFromString(getActivity(),
+                                Settings.get(getActivity()).themeColorString);
                         String colorString = (String) o;
                         new ApiUtils().updateGlobalThemeColor(Settings.get(getActivity()).accountId,
                                 colorString);
+
+                        ColorSet colors = ColorSet.getFromString(getActivity(), colorString);
+                        ColorUtils.animateToolbarColor(getActivity(),
+                                initialColors.color, colors.color);
+                        ColorUtils.animateStatusBarColor(getActivity(),
+                                initialColors.colorDark, colors.colorDark);
 
                         return true;
                     }

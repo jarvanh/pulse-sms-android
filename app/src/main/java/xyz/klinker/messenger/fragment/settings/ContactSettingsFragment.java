@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
-import android.animation.ValueAnimator;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -26,11 +25,9 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.annotation.VisibleForTesting;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
-import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
@@ -38,6 +35,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
@@ -197,7 +195,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                animateToolbar(conversation.colors.color, (int) o);
+                ColorUtils.animateToolbarColor(getActivity(), conversation.colors.color, (int) o);
                 conversation.colors.color = (int) o;
                 return true;
             }
@@ -213,7 +211,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         darkColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                animateStatusBar(conversation.colors.colorDark, (int) o);
+                ColorUtils.animateStatusBarColor(getActivity(), conversation.colors.colorDark, (int) o);
                 conversation.colors.colorDark = (int) o;
                 return true;
             }
@@ -226,37 +224,6 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-    }
-
-    private void animateToolbar(int originalColor, int newColor) {
-        final ColorDrawable drawable = new ColorDrawable(originalColor);
-        final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setBackgroundDrawable(drawable);
-
-        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
-        animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int color = (int) valueAnimator.getAnimatedValue();
-                drawable.setColor(color);
-                actionBar.setBackgroundDrawable(drawable);
-            }
-        });
-        animator.start();
-    }
-
-    private void animateStatusBar(int originalColor, int newColor) {
-        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
-        animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int color = (int) valueAnimator.getAnimatedValue();
-                getActivity().getWindow().setStatusBarColor(color);
-            }
-        });
-        animator.start();
     }
 
     public void saveSettings() {

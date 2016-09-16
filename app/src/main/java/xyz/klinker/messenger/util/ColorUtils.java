@@ -18,6 +18,7 @@ package xyz.klinker.messenger.util;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -30,6 +31,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -330,4 +333,36 @@ public class ColorUtils {
         colors.add(ColorSet.BLUE_GREY(context));
         return colors;
     }
+
+    public static void animateToolbarColor(Activity activity, int originalColor, int newColor) {
+        final ColorDrawable drawable = new ColorDrawable(originalColor);
+        final ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+        actionBar.setBackgroundDrawable(drawable);
+
+        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
+        animator.setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int color = (int) valueAnimator.getAnimatedValue();
+                drawable.setColor(color);
+                actionBar.setBackgroundDrawable(drawable);
+            }
+        });
+        animator.start();
+    }
+
+    public static void animateStatusBarColor(final Activity activity, int originalColor, int newColor) {
+        ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
+        animator.setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int color = (int) valueAnimator.getAnimatedValue();
+                activity.getWindow().setStatusBarColor(color);
+            }
+        });
+        animator.start();
+    }
+
 }
