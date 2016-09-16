@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.4"
+        description="September 16th, 2016">
+        <text>Android TV app</text>
+        <text>Better switching to night mode based on device clock</text>
+    </version>
+
+    <version
         name="1.3.1"
         description="September 15th, 2016">
         <text>Group messages are colored on a per contact basis</text>
