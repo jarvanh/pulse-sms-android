@@ -407,16 +407,16 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             contact.colors.colorAccent = json.getInt("color_accent");
 
             source.updateContact(contact);
-            Log.v(TAG, "updated conversation");
+            Log.v(TAG, "updated contact");
         } catch (RuntimeException e) {
-            Log.e(TAG, "failed to update conversation b/c of decrypting data");
+            Log.e(TAG, "failed to update contact b/c of decrypting data");
         }
     }
 
     private void removeContact(JSONObject json, DataSource source) throws JSONException {
         String phoneNumber = json.getString("phone_number");
         source.deleteContact(phoneNumber);
-        Log.v(TAG, "removed conversation");
+        Log.v(TAG, "removed contact");
     }
 
     private void addContact(JSONObject json, DataSource source)
@@ -431,8 +431,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
         try {
             source.insertContact(contact);
+            Log.v(TAG, "added contact");
         } catch (SQLiteConstraintException e) {
-            // conversation already exists
+            // contact already exists
+            Log.e(TAG, "error adding contact", e);
         }
     }
 
