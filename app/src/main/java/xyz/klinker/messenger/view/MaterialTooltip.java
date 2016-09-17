@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -20,6 +21,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.util.DensityUtil;
 
+@SuppressLint("ViewConstructor")
 public class MaterialTooltip extends FrameLayout {
 
     private static final int ANIMATION_TIME = 300;

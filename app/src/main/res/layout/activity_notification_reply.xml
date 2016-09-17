@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:ellipsize="end"
                     android:drawablePadding="8dp"
                     android:drawableEnd="@drawable/ic_up"

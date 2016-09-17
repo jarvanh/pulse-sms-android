@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="afterDescendants"
@@ -36,14 +37,16 @@
                 android:layout_weight="8"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="0.9"
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/description"

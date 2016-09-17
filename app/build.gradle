@@ -99,7 +99,7 @@ android {
         abortOnError true
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
                 'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
-                'UnusedResources'
+                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

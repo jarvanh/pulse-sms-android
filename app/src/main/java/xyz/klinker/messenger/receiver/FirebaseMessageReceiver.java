@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -593,7 +594,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         String type = json.getString("type");
 
         if (pref != null && type != null && json.has("value")) {
-            switch (type.toLowerCase()) {
+            switch (type.toLowerCase(Locale.getDefault())) {
                 case "boolean":
                     Settings.get(context).setValue(pref, json.getBoolean("value"));
                     break;

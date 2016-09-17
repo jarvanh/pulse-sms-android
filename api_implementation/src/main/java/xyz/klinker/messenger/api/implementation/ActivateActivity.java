@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.Locale;
 import java.util.Random;
 
 import javax.crypto.SecretKey;
@@ -186,7 +187,7 @@ public class ActivateActivity extends AppCompatActivity {
             sb.append(Integer.toHexString(r.nextInt()));
         }
 
-        return sb.toString().substring(0, 8).toUpperCase();
+        return sb.toString().substring(0, 8).toUpperCase(Locale.getDefault());
     }
 
 }

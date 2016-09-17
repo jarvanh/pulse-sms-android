@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -377,6 +378,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 new GestureListener());
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
+            @SuppressLint("ClickableViewAccessibility")
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 detectorCompat.onTouchEvent(motionEvent);
                 return false;
