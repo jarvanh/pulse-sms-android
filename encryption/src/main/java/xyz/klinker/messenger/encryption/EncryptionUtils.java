@@ -40,16 +40,14 @@ public class EncryptionUtils {
     private static final String SEPARATOR = "-:-";
 
     private SecretKey secretKey;
-    private boolean featureFlagTrimDecryption;
 
     /**
      * Creates a utility that can be used to encrypt and decryptData data.
      *
      * @param secretKey the secret key to encrypt and decryptData with.
      */
-    public EncryptionUtils(SecretKey secretKey, boolean featureFlagTrimDecryption) {
+    public EncryptionUtils(SecretKey secretKey) {
         this.secretKey = secretKey;
-        this.featureFlagTrimDecryption = featureFlagTrimDecryption;
     }
 
     /**
@@ -114,11 +112,6 @@ public class EncryptionUtils {
     public byte[] decryptData(String data) {
         String dataOne = data.split(SEPARATOR)[0];
         String dataTwo = data.split(SEPARATOR)[1];
-
-        if (featureFlagTrimDecryption) {
-            dataOne = dataOne.trim();
-            dataTwo = dataTwo.trim();
-        }
 
         byte[] iv = Base64.decode(dataOne, Base64.DEFAULT);
         byte[] ciphertext = Base64.decode(dataTwo, Base64.DEFAULT);

@@ -119,7 +119,7 @@ public class DataSource {
                     }
 
                     SecretKey key = new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES");
-                    encryptionUtils = new EncryptionUtils(key, FeatureFlags.get(context).TRIM_DECRYPTION);
+                    encryptionUtils = new EncryptionUtils(key);
                 }
             }).start();
         }

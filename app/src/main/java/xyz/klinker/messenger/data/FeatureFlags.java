@@ -37,9 +37,6 @@ public class FeatureFlags {
     // 3. Add the switch case for the flag in the updateFlag method
 
 
-    private static final String FLAG_TRIM_DECRYPTION = "flag_trim_decryption";
-    public boolean TRIM_DECRYPTION;
-
     private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "flag_messaging_notifications";
     public boolean MESSAGING_STYLE_NOTIFICATIONS;
 
@@ -48,7 +45,6 @@ public class FeatureFlags {
         this.context = context;
         SharedPreferences sharedPrefs = getSharedPrefs();
 
-        TRIM_DECRYPTION = getValue(sharedPrefs, FLAG_TRIM_DECRYPTION);
         MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
     }
 
@@ -58,9 +54,6 @@ public class FeatureFlags {
                 .apply();
 
         switch (identifier) {
-            case FLAG_TRIM_DECRYPTION:
-                TRIM_DECRYPTION = flag;
-                break;
             case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;
@@ -68,7 +61,11 @@ public class FeatureFlags {
     }
 
     private boolean getValue(SharedPreferences sharedPrefs, String key) {
-        return sharedPrefs.getBoolean(key, context.getResources().getBoolean(R.bool.feature_flag_default));
+        if (context.getResources().getBoolean(R.bool.feature_flag_default)) {
+            return true;
+        } else {
+            return sharedPrefs.getBoolean(key, false);
+        }
     }
 
     private SharedPreferences getSharedPrefs() {
