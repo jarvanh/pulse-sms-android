@@ -17,9 +17,6 @@
 
 <resources>
 
-    <bool name="is_tablet">false</bool>
-    <bool name="pin_drawer">false</bool>
-    <bool name="is_night">false</bool>
     <bool name="feature_flag_default">true</bool>
 
 </resources>

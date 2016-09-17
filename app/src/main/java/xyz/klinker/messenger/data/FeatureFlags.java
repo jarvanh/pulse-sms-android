@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.support.compat.BuildConfig;
 
+import xyz.klinker.messenger.R;
+
 /**
  * We can use these for new features or if we want to test something quick and don't know if it
  * is going to work. These are great for quick changes. Say we have something that could cause force
@@ -46,8 +48,8 @@ public class FeatureFlags {
         this.context = context;
         SharedPreferences sharedPrefs = getSharedPrefs();
 
-        TRIM_DECRYPTION = sharedPrefs.getBoolean(FLAG_TRIM_DECRYPTION, getDefault());
-        MESSAGING_STYLE_NOTIFICATIONS = sharedPrefs.getBoolean(FLAG_MESSAGING_STYLE_NOTIFICATIONS, getDefault());
+        TRIM_DECRYPTION = getValue(sharedPrefs, FLAG_TRIM_DECRYPTION);
+        MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -65,11 +67,11 @@ public class FeatureFlags {
         }
     }
 
-    private SharedPreferences getSharedPrefs() {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+    private boolean getValue(SharedPreferences sharedPrefs, String key) {
+        return sharedPrefs.getBoolean(key, context.getResources().getBoolean(R.bool.feature_flag_default));
     }
 
-    private boolean getDefault() {
-        return BuildConfig.DEBUG;
+    private SharedPreferences getSharedPrefs() {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

@@ -38,6 +38,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -168,6 +169,7 @@ public class NotificationService extends IntentService {
 
         NotificationCompat.BigPictureStyle pictureStyle = null;
         NotificationCompat.InboxStyle inboxStyle = null;
+        NotificationCompat.Style messagingStyle = null;
 
         StringBuilder text = new StringBuilder();
         if (conversation.messages.size() > 1 && conversation.messages.get(0).from != null) {
@@ -206,6 +208,50 @@ public class NotificationService extends IntentService {
             }
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // build a messaging style notifation for Android Nougat
+            messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you))
+                    .setConversationTitle(conversation.title);
+
+            DataSource source = getDataSource();
+            source.open();
+            List<Message> messages = source.getMessages(conversation.id, 4);
+            source.close();
+
+            for (int i = messages.size() - 1; i >= 0; i--) {
+                Message message = messages.get(i);
+
+                String from = null;
+                if (message.type == Message.TYPE_RECEIVED) {
+                    // we split it so that we only get the first name,
+                    // if there is more than one
+
+                    if (message.from != null) {
+                        // it is most likely a group message.
+                        from = message.from.split(" ")[0];
+                    } else {
+                        from = conversation.title.split(" ")[0];
+                    }
+                }
+
+                String messageText = "";
+                if (MimeType.isAudio(message.mimeType)) {
+                    messageText += "<i>" + getString(R.string.audio_message) + "</i>";
+                } else if (MimeType.isVideo(message.mimeType)) {
+                    messageText += "<i>" + getString(R.string.video_message) + "</i>";
+                } else if (MimeType.isVcard(message.mimeType)) {
+                    messageText += "<i>" + getString(R.string.contact_card) + "</i>";
+                } else if (MimeType.isStaticImage(message.mimeType)) {
+                    messageText += "<i>" + getString(R.string.picture_message) + "</i>";
+                } else {
+                    messageText += message.data;
+                }
+
+                ((NotificationCompat.MessagingStyle) messagingStyle)
+                        .addMessage(messageText, message.timestamp, from);
+            }
+        }
+
         String content = text.toString().trim();
         if (content.endsWith(" |")) {
             content = content.substring(0, content.length() - 2);
@@ -219,6 +265,8 @@ public class NotificationService extends IntentService {
 
         if (pictureStyle != null) {
             builder.setStyle(pictureStyle);
+        } else if (messagingStyle != null && FeatureFlags.get(this).MESSAGING_STYLE_NOTIFICATIONS) {
+            builder.setStyle(messagingStyle);
         } else if (inboxStyle != null) {
             builder.setStyle(inboxStyle);
         } else {

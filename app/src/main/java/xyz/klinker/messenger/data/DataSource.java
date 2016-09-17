@@ -1012,6 +1012,26 @@ public class DataSource {
     }
 
     /**
+     * Get the specified number of messages from the conversation.
+     */
+    public List<Message> getMessages(long conversationId, int count) {
+        Cursor c = getMessages(conversationId);
+        List<Message> messages = new ArrayList<>();
+
+        if (c.moveToLast()) {
+            do {
+                Message message = new Message();
+                message.fillFromCursor(c);
+                messages.add(message);
+            } while (c.moveToPrevious() && messages.size() < count);
+
+            c.close();
+        }
+
+        return messages;
+    }
+
+    /**
      * Gets all messages that contain the query text.
      *
      * @param query the text to look for.
