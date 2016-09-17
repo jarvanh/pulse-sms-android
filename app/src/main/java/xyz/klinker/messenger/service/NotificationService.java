@@ -30,6 +30,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
 import android.util.LongSparseArray;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.NotificationWindowManager;
+import xyz.klinker.messenger.util.TvUtils;
+import xyz.klinker.messenger.view.NotificationView;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
@@ -58,6 +62,8 @@ public class NotificationService extends IntentService {
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
+
+    private NotificationWindowManager notificationWindowManager;
 
     public NotificationService() {
         super("NotificationService");
@@ -383,6 +389,22 @@ public class NotificationService extends IntentService {
 
         if (!conversation.mute) {
             NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+
+            try {
+                if (!TvUtils.hasTouchscreen(this)) {
+                    if (notificationWindowManager == null) {
+                        notificationWindowManager = new NotificationWindowManager(this);
+                    }
+
+                    NotificationView.newInstance(notificationWindowManager)
+                            .setImage(null)
+                            .setTitle(conversation.title)
+                            .setDescription(content)
+                            .show();
+                }
+            } catch (WindowManager.BadTokenException e) {
+                e.printStackTrace();
+            }
         }
 
         return "<b>" + conversation.title + "</b>  " + content;

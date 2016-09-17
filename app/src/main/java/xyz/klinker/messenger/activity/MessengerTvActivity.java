@@ -16,9 +16,15 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import xyz.klinker.messenger.data.Settings;
@@ -43,6 +49,19 @@ public class MessengerTvActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new TvBrowseFragment())
                 .commit();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) !=
+                PackageManager.PERMISSION_GRANTED &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                Intent permission =
+                        new Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                permission.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(permission);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
