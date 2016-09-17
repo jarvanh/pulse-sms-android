@@ -310,7 +310,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
                 String numbers = getIntent()
                         .getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
-                sendMessage(mimeType, data, numbers);
+                applyShare(mimeType, data, numbers);
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
@@ -321,40 +321,42 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void setupSend(final String data, final String mimeType) {
-        fab.setImageResource(R.drawable.ic_send);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (contactEntry.getRecipients().length > 0) {
-                    sendMessage(mimeType, data);
+                    applyShare(mimeType, data);
                 }
             }
         });
     }
 
-    private void sendMessage(String mimeType, String data) {
+    private void applyShare(String mimeType, String data) {
         String phoneNumbers = getPhoneNumberFromContactEntry();
-        sendMessage(mimeType, data, phoneNumbers);
+        applyShare(mimeType, data, phoneNumbers);
     }
 
-    private void sendMessage(String mimeType, String data, String phoneNumbers) {
+    private void applyShare(String mimeType, String data, String phoneNumbers) {
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.insertSentMessage(phoneNumbers, data, mimeType, this);
+        Long conversationId = source.findConversationId(phoneNumbers);
 
-        if (mimeType.equals(MimeType.TEXT_PLAIN)) {
-            SendUtils.send(this, data, phoneNumbers);
-        } else {
-            Uri uri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
-            Cursor cursor = source.searchMessages(data);
-            if (cursor != null && cursor.moveToFirst()) {
-                source.updateMessageData(cursor.getLong(0), uri.toString());
-                cursor.close();
-            }
+        if (conversationId == null) {
+            Message message = new Message();
+            message.type = Message.TYPE_INFO;
+            message.data = getString(R.string.no_messages_with_contact);
+            message.timestamp = System.currentTimeMillis();
+            message.mimeType = MimeType.TEXT_PLAIN;
+            message.read = true;
+            message.seen = true;
+
+            conversationId = source.insertMessage(message, phoneNumbers, this);
         }
 
+        source.insertDraft(conversationId, data, mimeType);
         source.close();
-        finish();
+
+        showConversation();
     }
 
     @Override

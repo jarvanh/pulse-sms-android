@@ -216,8 +216,12 @@ public class NotificationService extends IntentService {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // build a messaging style notifation for Android Nougat
-            messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you))
-                    .setConversationTitle(conversation.title);
+            messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
+
+            if (conversation.title.contains(", ")) {
+                ((NotificationCompat.MessagingStyle) messagingStyle)
+                        .setConversationTitle(conversation.title);
+            }
 
             DataSource source = getDataSource();
             source.open();
@@ -234,9 +238,9 @@ public class NotificationService extends IntentService {
 
                     if (message.from != null) {
                         // it is most likely a group message.
-                        from = message.from.split(" ")[0];
+                        from = message.from;
                     } else {
-                        from = conversation.title.split(" ")[0];
+                        from = conversation.title;
                     }
                 }
 
@@ -254,7 +258,7 @@ public class NotificationService extends IntentService {
                 }
 
                 ((NotificationCompat.MessagingStyle) messagingStyle)
-                        .addMessage(messageText, message.timestamp, from);
+                        .addMessage(Html.fromHtml(messageText), message.timestamp, from);
             }
         }
 
