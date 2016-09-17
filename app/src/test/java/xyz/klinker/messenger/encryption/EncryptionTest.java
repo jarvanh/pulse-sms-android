@@ -40,7 +40,7 @@ public class EncryptionTest extends MessengerRobolectricSuite {
         keyUtils = new KeyUtils();
         String hash = keyUtils.hashPassword(PASSWORD, SALT2);
         SecretKey key = keyUtils.createKey(hash, ACCOUNT_ID, SALT1);
-        encryptionUtils = new EncryptionUtils(key, true);
+        encryptionUtils = new EncryptionUtils(key);
     }
 
     @Test
