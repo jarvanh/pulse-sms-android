@@ -26,9 +26,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.TvBrowseFragment;
+import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Activity for displaying content on your tv.
@@ -61,6 +63,18 @@ public class MessengerTvActivity extends AppCompatActivity {
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        
+        boolean isDarkTheme = Settings.get(this).darkTheme;
+        if (!isDarkTheme) {
+            boolean isNight = TimeUtils.isNight();
+            getDelegate().setLocalNightMode(isNight ?
+                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
