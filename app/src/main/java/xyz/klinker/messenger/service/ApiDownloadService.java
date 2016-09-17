@@ -107,7 +107,7 @@ public class ApiDownloadService extends Service {
 
                 apiUtils = new ApiUtils();
                 encryptionUtils = new EncryptionUtils(new KeyUtils().createKey(settings.passhash,
-                        settings.accountId, settings.salt), FeatureFlags.get(getApplicationContext()).TRIM_DECRYPTION);
+                        settings.accountId, settings.salt));
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
                 source.setUpload(false);

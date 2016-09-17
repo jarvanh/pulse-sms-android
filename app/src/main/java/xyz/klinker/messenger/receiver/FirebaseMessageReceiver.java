@@ -89,7 +89,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         }
 
         encryptionUtils = new EncryptionUtils(
-                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"), FeatureFlags.get(context).TRIM_DECRYPTION);
+                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"));
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);

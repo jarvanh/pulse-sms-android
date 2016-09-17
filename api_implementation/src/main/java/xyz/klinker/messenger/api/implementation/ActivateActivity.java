@@ -136,7 +136,7 @@ public class ActivateActivity extends AppCompatActivity {
                 KeyUtils keyUtils = new KeyUtils();
                 String hash = keyUtils.hashPassword(password, response.salt2);
                 SecretKey key = keyUtils.createKey(hash, response.accountId, response.salt1);
-                EncryptionUtils utils = new EncryptionUtils(key, false);
+                EncryptionUtils utils = new EncryptionUtils(key);
 
                 try {
                     ConversationBody[] bodies = api.conversation().list(response.accountId);
