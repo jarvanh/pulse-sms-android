@@ -31,6 +31,10 @@ public class FeatureFlags {
     }
     //endregion
 
+    private static final String[] ALWAYS_ON_FLAGS = new String[] {
+            // none yet
+    };
+
     // ADDING FEATURE FLAGS:
     // 1. Add the static identifiers and flag name right below here.
     // 2. Set up the flag in the constructor
@@ -71,11 +75,21 @@ public class FeatureFlags {
         if (context.getResources().getBoolean(R.bool.feature_flag_default)) {
             return true;
         } else {
-            return sharedPrefs.getBoolean(key, false);
+            return sharedPrefs.getBoolean(key, alwaysOn(key));
         }
     }
 
     private SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    private boolean alwaysOn(String key) {
+        for (String s : ALWAYS_ON_FLAGS) {
+            if (key.equals(s)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
