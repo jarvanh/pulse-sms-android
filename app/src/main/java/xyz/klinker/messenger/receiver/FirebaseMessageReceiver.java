@@ -55,7 +55,9 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
@@ -190,6 +192,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     break;
                 case "feature_flag":
                     writeFeatureFlag(json, context);
+                    break;
+                case "forward_to_phone":
+                    forwardToPhone(json, source, context);
                     break;
                 default:
                     Log.e(TAG, "unsupported operation: " + operation);
@@ -635,6 +640,28 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             // otherwise, don't do anything. We don't want to turn the flag off for those
             // that had gotten it turned on in the past.
         }
+    }
+
+    private void forwardToPhone(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+
+        if (!Settings.get(context).primary) {
+            return;
+        }
+
+        String text = json.getString("message");
+        String to = PhoneNumberUtils.clearFormatting(json.getString("to"));
+
+        Message message = new Message();
+        message.type = Message.TYPE_SENDING;
+        message.data = text;
+        message.timestamp = System.currentTimeMillis();
+        message.mimeType = MimeType.TEXT_PLAIN;
+        message.read = true;
+        message.seen = true;
+
+        source.insertMessage(message, to, context);
+        SendUtils.send(context, message.data, to);
     }
 
 }

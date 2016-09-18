@@ -225,7 +225,7 @@ public class NotificationService extends IntentService {
 
             DataSource source = getDataSource();
             source.open();
-            List<Message> messages = source.getMessages(conversation.id, 4);
+            List<Message> messages = source.getMessages(conversation.id, 10);
             source.close();
 
             for (int i = messages.size() - 1; i >= 0; i--) {
