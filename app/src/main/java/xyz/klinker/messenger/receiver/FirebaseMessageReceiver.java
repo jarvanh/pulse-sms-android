@@ -426,20 +426,23 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void addContact(JSONObject json, DataSource source)
             throws JSONException {
-        Contact contact = new Contact();
-        contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
-        contact.name = encryptionUtils.decrypt(json.getString("name"));
-        contact.colors.color = json.getInt("color");
-        contact.colors.colorDark = json.getInt("color_dark");
-        contact.colors.colorLight = json.getInt("color_light");
-        contact.colors.colorAccent = json.getInt("color_accent");
 
         try {
+            Contact contact = new Contact();
+            contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
+            contact.name = encryptionUtils.decrypt(json.getString("name"));
+            contact.colors.color = json.getInt("color");
+            contact.colors.colorDark = json.getInt("color_dark");
+            contact.colors.colorLight = json.getInt("color_light");
+            contact.colors.colorAccent = json.getInt("color_accent");
+
             source.insertContact(contact);
             Log.v(TAG, "added contact");
         } catch (SQLiteConstraintException e) {
             // contact already exists
             Log.e(TAG, "error adding contact", e);
+        } catch (Exception e) {
+            // error decrypting
         }
     }
 

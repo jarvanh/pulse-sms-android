@@ -243,7 +243,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
         }
 
-        if (messageDeletedListener != null) {
+        if (messageDeletedListener != null && m != null) {
             messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
                     getAdapterPosition());
         }

@@ -102,8 +102,12 @@ public class Draft implements DatabaseSQLiteHelper.DatabaseTable {
 
     @Override
     public void decrypt(EncryptionUtils utils) {
-        this.data = utils.decrypt(this.data);
-        this.mimeType = utils.decrypt(this.mimeType);
+        try {
+            this.data = utils.decrypt(this.data);
+            this.mimeType = utils.decrypt(this.mimeType);
+        } catch (Exception e) {
+
+        }
     }
 
 }

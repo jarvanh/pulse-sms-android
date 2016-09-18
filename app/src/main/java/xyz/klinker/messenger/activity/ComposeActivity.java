@@ -281,32 +281,36 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             showConversation(builder.toString());
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
             final String mimeType = getIntent().getType();
-            String data;
+            String data = "";
 
-            if (mimeType.equals(MimeType.TEXT_PLAIN)) {
-                data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-            } else if (MimeType.isVcard(mimeType)) {
-                data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
-                Log.v(TAG, "got vcard at: " + data);
-            } else {
-                String tempData = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
-                try {
-                    File dst = new File(getFilesDir(),
-                            ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
-                    Bitmap bmp = ImageUtils.getBitmap(this, tempData);
-                    FileOutputStream stream = new FileOutputStream(dst);
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
-                    stream.close();
-                    data = Uri.fromFile(dst).toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    data = tempData;
+            try {
+                if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+                } else if (MimeType.isVcard(mimeType)) {
+                    data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                    Log.v(TAG, "got vcard at: " + data);
+                } else {
+                    String tempData = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                    try {
+                        File dst = new File(getFilesDir(),
+                                ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
+                        Bitmap bmp = ImageUtils.getBitmap(this, tempData);
+                        FileOutputStream stream = new FileOutputStream(dst);
+                        bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+                        stream.close();
+                        data = Uri.fromFile(dst).toString();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        data = tempData;
+                    }
                 }
+            } catch (Exception e) {
+
             }
 
             setupSend(data, mimeType);
 
-            if (getIntent().getExtras()
+            if (getIntent().getExtras() != null && getIntent().getExtras()
                     .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
                 String numbers = getIntent()
                         .getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
@@ -314,7 +318,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
-            if (extras.containsKey("sms_body")) {
+            if (extras != null && extras.containsKey("sms_body")) {
                 setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN);
             }
         }

@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.data;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 
@@ -46,6 +47,10 @@ public class ColorSet {
     }
 
     private int getColor(Context context, @ColorRes int color) {
+        if (context == null) {
+            return Color.WHITE;
+        }
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getColor(color);
         } else {

@@ -85,7 +85,11 @@ public class Blacklist implements DatabaseSQLiteHelper.DatabaseTable {
 
     @Override
     public void decrypt(EncryptionUtils utils) {
-        this.phoneNumber = utils.decrypt(this.phoneNumber);
+        try {
+            this.phoneNumber = utils.decrypt(this.phoneNumber);
+        } catch (Exception e) {
+            
+        }
     }
 
 }

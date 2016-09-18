@@ -45,6 +45,10 @@ public class PhoneNumberUtils {
      * @return the plain phone number.
      */
     public static String clearFormatting(String number) {
+        if (number == null) {
+            return "Unknown Number";
+        }
+
         if (number.matches(".*[a-zA-Z].*")) {
             return number;
         } else if (!isEmailAddress(number)) {

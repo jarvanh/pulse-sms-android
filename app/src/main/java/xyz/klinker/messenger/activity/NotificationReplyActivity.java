@@ -118,6 +118,12 @@ public class NotificationReplyActivity extends AppCompatActivity {
         conversationIndicator = (TextView) findViewById(R.id.conversation_indicator);
 
         setupMessageHistory();
+
+        if (conversation == null) {
+            finish();
+            return;
+        }
+
         setupSendBar();
         setupBackgroundComponents();
         showContactImage();

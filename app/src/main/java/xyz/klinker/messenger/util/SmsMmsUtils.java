@@ -507,6 +507,8 @@ public class SmsMmsUtils {
                     ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
+        } catch (SecurityException e) {
+            // no permission
         }
     }
 

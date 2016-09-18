@@ -113,10 +113,14 @@ public class ScheduledMessage implements DatabaseSQLiteHelper.DatabaseTable {
 
     @Override
     public void decrypt(EncryptionUtils utils) {
-        this.title = utils.decrypt(this.title);
-        this.to = utils.decrypt(this.to);
-        this.data = utils.decrypt(this.data);
-        this.mimeType = utils.decrypt(this.mimeType);
+        try {
+            this.title = utils.decrypt(this.title);
+            this.to = utils.decrypt(this.to);
+            this.data = utils.decrypt(this.data);
+            this.mimeType = utils.decrypt(this.mimeType);
+        } catch (Exception e) {
+
+        }
     }
 
 }
