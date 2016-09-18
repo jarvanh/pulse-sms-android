@@ -1,1 +1,1 @@
-This release has many background changes. It also makes group conversations have different colors per user.
+v1.4 contains a brand new Android TV app, new messaging style notifications for Nougat, tons of improvements on various things, lots of bug fixes, and a ton of background work for future features.
