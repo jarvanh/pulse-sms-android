@@ -37,8 +37,11 @@ public class FeatureFlags {
     // 3. Add the switch case for the flag in the updateFlag method
 
 
-    private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "flag_messaging_notifications";
+    private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
     public boolean MESSAGING_STYLE_NOTIFICATIONS;
+
+    private static final String FLAG_ANDROID_WEAR_SECOND_PAGE = "wear_second_page";
+    public boolean ANDROID_WEAR_SECOND_PAGE;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -46,6 +49,7 @@ public class FeatureFlags {
         SharedPreferences sharedPrefs = getSharedPrefs();
 
         MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
+        ANDROID_WEAR_SECOND_PAGE = getValue(sharedPrefs, FLAG_ANDROID_WEAR_SECOND_PAGE);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -56,6 +60,9 @@ public class FeatureFlags {
         switch (identifier) {
             case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
+                break;
+            case FLAG_ANDROID_WEAR_SECOND_PAGE:
+                ANDROID_WEAR_SECOND_PAGE = flag;
                 break;
         }
     }

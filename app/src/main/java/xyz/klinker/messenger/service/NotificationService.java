@@ -29,6 +29,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.util.LongSparseArray;
 import android.view.WindowManager;
 
@@ -375,6 +377,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.id,
                 carReply, PendingIntent.FLAG_ONE_SHOT);
 
+        // Android Auto extender
         NotificationCompat.CarExtender.UnreadConversation.Builder car = new
                 NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
                 .setReadPendingIntent(pendingDelete)
@@ -389,7 +392,19 @@ public class NotificationService extends IntentService {
             }
         }
 
+        // Android wear extender (add a second page with message history
+        NotificationCompat.BigTextStyle secondPageStyle = new NotificationCompat.BigTextStyle();
+        secondPageStyle.setBigContentTitle(conversation.title)
+                .bigText(getWearableSecondPageConversation(conversation));
+        NotificationCompat.Builder wear =
+                new NotificationCompat.Builder(this)
+                        .setStyle(secondPageStyle);
+
+        // apply the extenders to the notification
         builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
+        if (FeatureFlags.get(this).ANDROID_WEAR_SECOND_PAGE) {
+            builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
+        }
 
         if (!conversation.mute) {
             NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
@@ -494,6 +509,49 @@ public class NotificationService extends IntentService {
                 .build();
 
         NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
+    }
+
+    private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {
+        DataSource source = getDataSource();
+        source.open();
+        List<Message> messages = source.getMessages(conversation.id, 10);
+        source.close();
+
+        String you = getString(R.string.you);
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Message message : messages) {
+            String messageText = "";
+            if (MimeType.isAudio(message.mimeType)) {
+                messageText += "<i>" + getString(R.string.audio_message) + "</i>";
+            } else if (MimeType.isVideo(message.mimeType)) {
+                messageText += "<i>" + getString(R.string.video_message) + "</i>";
+            } else if (MimeType.isVcard(message.mimeType)) {
+                messageText += "<i>" + getString(R.string.contact_card) + "</i>";
+            } else if (MimeType.isStaticImage(message.mimeType)) {
+                messageText += "<i>" + getString(R.string.picture_message) + "</i>";
+            } else {
+                messageText += message.data;
+            }
+
+            if (message.type == Message.TYPE_RECEIVED) {
+                if (message.from != null) {
+                    builder.append("<b>" + message.from + "</b>  " + messageText + "<br>");
+                } else {
+                    builder.append("<b>" + conversation.title + "</b>  " + messageText + "<br>");
+                }
+            } else {
+                builder.append("<b>" + you + "</b>  " + messageText + "<br>");
+            }
+
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(builder.toString(), 0);
+        } else {
+            return Html.fromHtml(builder.toString());
+        }
     }
 
     @VisibleForTesting
