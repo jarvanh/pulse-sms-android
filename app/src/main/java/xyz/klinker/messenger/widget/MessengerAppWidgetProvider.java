@@ -22,6 +22,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -29,6 +31,8 @@ import android.widget.RemoteViews;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.util.ImageUtils;
 
 public class MessengerAppWidgetProvider extends AppWidgetProvider {
 
@@ -91,6 +95,12 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
             rv.setOnClickPendingIntent(R.id.title, pendingOpen);
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty);
+
+            Settings settings = Settings.get(context);
+            if (settings.useGlobalThemeColor) {
+                Bitmap color = ImageUtils.createColoredBitmap(settings.globalColorSet.color);
+                rv.setImageViewBitmap(R.id.toolbar, color);
+            }
 
             Intent openIntent = new Intent(context, MessengerAppWidgetProvider.class);
             openIntent.setAction(MessengerAppWidgetProvider.OPEN_ACTION);
