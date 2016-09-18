@@ -34,7 +34,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@android:color/white"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/compose" />
+            android:layout_toStartOf="@+id/compose"
+            android:id="@+id/title" />
 
         <ImageButton
             android:id="@+id/compose"

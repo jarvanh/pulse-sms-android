@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -120,6 +121,12 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.title));
         rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet));
         rv.setImageViewBitmap(R.id.picture, image);
+
+        if (item.read) {
+            rv.setViewVisibility(R.id.unread_indicator, View.GONE);
+        } else {
+            rv.setViewVisibility(R.id.unread_indicator, View.VISIBLE);
+        }
 
         Bundle extras = new Bundle();
         extras.putLong(MessengerAppWidgetProvider.EXTRA_ITEM_ID, item.id);

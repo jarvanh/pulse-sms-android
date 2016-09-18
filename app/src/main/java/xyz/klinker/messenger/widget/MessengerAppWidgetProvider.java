@@ -81,9 +81,14 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
             Intent compose = new Intent(context, ComposeActivity.class);
             PendingIntent pendingCompose = PendingIntent.getActivity(context, 0, compose, 0);
 
+            Intent open = new Intent(context, MessengerActivity.class);
+            open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingOpen = PendingIntent.getActivity(context, 0, open, 0);
+
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget);
             rv.setRemoteAdapter(R.id.widget_list, intent);
             rv.setOnClickPendingIntent(R.id.compose, pendingCompose);
+            rv.setOnClickPendingIntent(R.id.title, pendingOpen);
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty);
 

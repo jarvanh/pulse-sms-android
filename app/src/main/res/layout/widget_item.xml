@@ -59,14 +59,30 @@
             android:orientation="vertical"
             android:gravity="top">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:id="@+id/conversation_title"
-                android:textSize="16sp"
-                android:textColor="@color/primaryText" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:id="@+id/unread_indicator"
+                    android:src="@drawable/unread_indicator"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:id="@+id/conversation_title"
+                    android:textSize="16sp"
+                    android:textColor="@color/primaryText" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
