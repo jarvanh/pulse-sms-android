@@ -51,7 +51,6 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;

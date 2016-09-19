@@ -41,7 +41,6 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -277,7 +276,7 @@ public class NotificationService extends IntentService {
 
         if (pictureStyle != null) {
             builder.setStyle(pictureStyle);
-        } else if (messagingStyle != null && FeatureFlags.get(this).MESSAGING_STYLE_NOTIFICATIONS) {
+        } else if (messagingStyle != null) {
             builder.setStyle(messagingStyle);
         } else if (inboxStyle != null) {
             builder.setStyle(inboxStyle);
@@ -402,9 +401,7 @@ public class NotificationService extends IntentService {
 
         // apply the extenders to the notification
         builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
-        if (FeatureFlags.get(this).ANDROID_WEAR_SECOND_PAGE) {
-            builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
-        }
+        builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
 
         if (!conversation.mute) {
             NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
