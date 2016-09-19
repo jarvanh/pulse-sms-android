@@ -663,7 +663,10 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         message.read = true;
         message.seen = true;
 
+        source.setUpload(true);
         source.insertMessage(message, to, context);
+        source.setUpload(false);
+
         SendUtils.send(context, message.data, to);
     }
 
