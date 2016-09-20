@@ -170,7 +170,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private String getPhoneNumberFromContactEntry() {
-        if (getIntent().getExtras().containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
             return getIntent().getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
         }
 
