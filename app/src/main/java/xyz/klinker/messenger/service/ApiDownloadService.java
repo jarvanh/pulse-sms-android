@@ -69,7 +69,7 @@ public class ApiDownloadService extends Service {
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
-    public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 2000;
+    public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 500;
 
     private Settings settings;
     private ApiUtils apiUtils;

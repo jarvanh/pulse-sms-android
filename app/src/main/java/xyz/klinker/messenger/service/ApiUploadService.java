@@ -72,7 +72,7 @@ public class ApiUploadService extends Service {
     private static final int MEDIA_UPLOAD_ID = 7236;
     public static final int NUM_MEDIA_TO_UPLOAD = 20;
 
-    public static final int MESSAGE_UPLOAD_PAGE_SIZE = 1000;
+    public static final int MESSAGE_UPLOAD_PAGE_SIZE = 500;
 
     private Settings settings;
     private ApiUtils apiUtils;
