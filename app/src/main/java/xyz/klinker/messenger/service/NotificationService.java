@@ -29,7 +29,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 import android.util.LongSparseArray;
 import android.view.WindowManager;
@@ -317,7 +316,7 @@ public class NotificationService extends IntentService {
             pendingReply = PendingIntent.getService(this,
                     (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
 
-            NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+            NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     getString(R.string.reply), pendingReply)
                     .addRemoteInput(remoteInput)
                     .build();
@@ -335,13 +334,13 @@ public class NotificationService extends IntentService {
             if (DEBUG_QUICK_REPLY) {
                 // if we are debugging, the assumption is that we are on android N, we have to be stop showing
                 // the remote input or else it will keep using the direct reply
-                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
                         .build();
 
                 builder.addAction(action);
             } else {
-                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply,
+                NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
                         .addRemoteInput(remoteInput)
                         .build();
@@ -367,7 +366,14 @@ public class NotificationService extends IntentService {
         PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
                 open, PendingIntent.FLAG_ONE_SHOT);
 
-        builder.addAction(new NotificationCompat.Action(R.drawable.ic_done, getString(R.string.read), pendingRead));
+        // we want to provide different resources so that wearable can have a white icon in most places
+        // since these icons aren't even shown in Nougat.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
+        } else {
+            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
+        }
+
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
