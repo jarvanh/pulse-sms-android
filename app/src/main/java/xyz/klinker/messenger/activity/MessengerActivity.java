@@ -482,7 +482,11 @@ public class MessengerActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+        try {
+            getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void clickDefaultDrawerItem() {
