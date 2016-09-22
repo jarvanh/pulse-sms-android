@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.4.1"
+        description="September 20th, 2016">
+        <text>Bug fixes</text>
+        <text>Android Wear improvements</text>
+    </version>
+
+    <version
         name="1.4"
         description="September 16th, 2016">
         <text>Android TV app</text>
