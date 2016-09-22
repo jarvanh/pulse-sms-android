@@ -64,11 +64,13 @@ import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.fragment.BlacklistFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
+import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.SearchFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -130,6 +132,10 @@ public class MessengerActivity extends AppCompatActivity
         super.onStart();
         requestPermissions();
 
+        if (conversationListFragment != null && conversationListFragment.isExpanded()) {
+            NotificationService.CONVERSATION_ID_OPEN = conversationListFragment.getExpandedId();
+        }
+
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
 
@@ -168,6 +174,8 @@ public class MessengerActivity extends AppCompatActivity
     public void onStop() {
         super.onStop();
         MessengerAppWidgetProvider.refreshWidget(this);
+
+        NotificationService.CONVERSATION_ID_OPEN = 0L;
     }
 
     @Override
@@ -502,6 +510,8 @@ public class MessengerActivity extends AppCompatActivity
      *****************************************************************/
 
     public boolean displayConversations() {
+        NotificationService.CONVERSATION_ID_OPEN = 0L;
+
         fab.show();
         invalidateOptionsMenu();
         inSettings = false;

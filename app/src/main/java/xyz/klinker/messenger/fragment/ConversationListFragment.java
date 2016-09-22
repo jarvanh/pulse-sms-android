@@ -40,6 +40,7 @@ import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
@@ -397,6 +398,10 @@ public class ConversationListFragment extends Fragment
             deleteSnackbar.dismiss();
         }
 
+        if (viewHolder.conversation != null) {
+            NotificationService.CONVERSATION_ID_OPEN = viewHolder.conversation.id;
+        }
+
         expandedConversation = viewHolder;
         AnimationUtils.expandActivityForConversation(getActivity());
 
@@ -444,6 +449,10 @@ public class ConversationListFragment extends Fragment
 
         if (!Settings.get(getActivity()).useGlobalThemeColor) {
             ActivityUtils.setTaskDescription(getActivity());
+        }
+
+        if (viewHolder.conversation != null) {
+            NotificationService.CONVERSATION_ID_OPEN = 0L;
         }
     }
 

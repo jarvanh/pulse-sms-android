@@ -40,6 +40,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -60,10 +61,14 @@ public class NotificationService extends IntentService {
 
     private static final boolean DEBUG_QUICK_REPLY = false;
 
+    public static Long CONVERSATION_ID_OPEN = 0L;
+
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
 
     private NotificationWindowManager notificationWindowManager;
+
+    private boolean skipSummaryNotification = false;
 
     public NotificationService() {
         super("NotificationService");
@@ -75,6 +80,8 @@ public class NotificationService extends IntentService {
         if (snoozeTil > System.currentTimeMillis()) {
             return;
         }
+
+        skipSummaryNotification = false;
 
         LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
         List<String> rows = new ArrayList<>();
@@ -410,7 +417,12 @@ public class NotificationService extends IntentService {
         builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
 
         if (!conversation.mute) {
-            NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+            if (FeatureFlags.get(this).NO_NOTIFICATION_WHEN_CONVO_OPEN && CONVERSATION_ID_OPEN == conversation.id) {
+                // skip this notification since we are already on the conversation.
+                skipSummaryNotification = true;
+            } else {
+                NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+            }
 
             try {
                 if (!TvUtils.hasTouchscreen(this)) {
@@ -511,7 +523,9 @@ public class NotificationService extends IntentService {
                 .setContentIntent(pendingOpen)
                 .build();
 
-        NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
+        if (!skipSummaryNotification) {
+            NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
+        }
     }
 
     private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {

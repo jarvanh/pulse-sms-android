@@ -45,6 +45,9 @@ public class FeatureFlags {
     /*private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
     public boolean MESSAGING_STYLE_NOTIFICATIONS;*/
 
+    private static final String FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification";
+    public boolean NO_NOTIFICATION_WHEN_CONVO_OPEN;
+
     private Context context;
     private FeatureFlags(final Context context) {
         this.context = context;
@@ -52,6 +55,7 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
+        NO_NOTIFICATION_WHEN_CONVO_OPEN = getValue(sharedPrefs, FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -60,9 +64,13 @@ public class FeatureFlags {
                 .apply();
 
         switch (identifier) {
+            // step 3
             /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
+            case FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN:
+                NO_NOTIFICATION_WHEN_CONVO_OPEN = flag;
+                break;
         }
     }
 
