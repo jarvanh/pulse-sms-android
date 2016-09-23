@@ -22,35 +22,51 @@
         android:title="@string/pin_conversation"
         android:summary="@string/pin_conversation_summary" />
 
-    <SwitchPreference
-        android:key="@string/pref_contact_mute_conversation"
-        android:title="@string/mute_conversation"
-        android:summary="@string/mute_conversation_summary" />
-
     <EditTextPreference
         android:key="@string/pref_contact_group_name"
         android:title="@string/group_name" />
 
-    <android.preference.RingtonePreference
-        android:key="@string/pref_contact_ringtone"
-        android:title="@string/ringtone"
-        android:ringtoneType="notification"
-        android:showDefault="true"
-        android:showSilent="true" />
+    <PreferenceCategory
+        android:title="@string/notification_settings">
 
-    <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_contact_primary_color"
-        android:title="@string/primary_color"
-        app:display_normalize="true"/>
+        <SwitchPreference
+            android:key="@string/pref_contact_mute_conversation"
+            android:title="@string/mute_conversation"
+            android:summary="@string/mute_conversation_summary" />
 
-    <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_contact_primary_dark_color"
-        android:title="@string/primary_dark_color"
-        app:display_normalize="false" />
+        <SwitchPreference
+            android:key="@string/pref_contact_private_conversation"
+            android:title="@string/private_conversation"
+            android:summary="@string/private_conversation_summary" />
 
-    <xyz.klinker.messenger.view.ColorPreference
-        android:key="@string/pref_contact_accent_color"
-        android:title="@string/accent_color"
-        app:display_normalize="false" />
+        <android.preference.RingtonePreference
+            android:key="@string/pref_contact_ringtone"
+            android:title="@string/ringtone"
+            android:ringtoneType="notification"
+            android:showDefault="true"
+            android:showSilent="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/theme_settings">
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_primary_color"
+            android:title="@string/primary_color"
+            app:display_normalize="true"/>
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_primary_dark_color"
+            android:title="@string/primary_dark_color"
+            app:display_normalize="false" />
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_accent_color"
+            android:title="@string/accent_color"
+            app:display_normalize="false" />
+
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

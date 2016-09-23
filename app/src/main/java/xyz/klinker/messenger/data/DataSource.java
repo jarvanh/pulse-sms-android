@@ -547,13 +547,15 @@ public class DataSource {
         values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher);
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
+        values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications);
 
         apiUtils.addConversation(accountId,conversation.id, conversation.colors.color,
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
-                conversation.mute, conversation.archive, encryptionUtils);
+                conversation.mute, conversation.archive, conversation.privateNotifications,
+                encryptionUtils);
 
         try {
             return database.insert(Conversation.TABLE, null, values);
@@ -753,6 +755,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
         values.put(Conversation.COLUMN_READ, conversation.read);
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
+        values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversation.id)});
@@ -761,7 +764,7 @@ public class DataSource {
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, null, null,
                 conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
-                encryptionUtils);
+                conversation.privateNotifications, encryptionUtils);
     }
 
     /**

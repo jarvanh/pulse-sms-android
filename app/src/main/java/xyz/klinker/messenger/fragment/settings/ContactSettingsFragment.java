@@ -70,6 +70,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         setUpToolbar();
         setUpPin();
         setUpMute();
+        setUpPrivate();
         setUpGroupName();
         setUpRingtone();
         setUpColors();
@@ -96,6 +97,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
     private void setUpDefaults() {
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
+                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.privateNotifications)
                 .putString(getString(R.string.pref_contact_group_name), conversation.title)
                 .putString(getString(R.string.pref_contact_ringtone),
                         conversation.ringtoneUri == null ?
@@ -146,6 +148,20 @@ public class ContactSettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 conversation.mute = (boolean) o;
+                return true;
+            }
+        });
+    }
+
+    private void setUpPrivate() {
+        SwitchPreference preference = (SwitchPreference)
+                findPreference(getString(R.string.pref_contact_private_conversation));
+        preference.setChecked(conversation.privateNotifications);
+
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                conversation.privateNotifications = (boolean) o;
                 return true;
             }
         });

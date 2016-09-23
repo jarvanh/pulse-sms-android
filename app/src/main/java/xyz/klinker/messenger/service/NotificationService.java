@@ -39,6 +39,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
+import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
@@ -134,6 +135,17 @@ public class NotificationService extends IntentService {
                         conversation.ringtoneUri = c.ringtoneUri;
                         conversation.timestamp = c.timestamp;
                         conversation.mute = c.mute;
+
+                        if (c.privateNotifications) {
+                            conversation.title = getString(R.string.new_message);
+                            conversation.imageUri = null;
+                            conversation.ringtoneUri = null;
+                            conversation.color = Settings.get(this).globalColorSet.color;
+                            conversation.privateNotification = true;
+                        } else {
+                            conversation.privateNotification = false;
+                        }
+
                         conversations.put(conversationId, conversation);
                     }
                 }
@@ -147,6 +159,7 @@ public class NotificationService extends IntentService {
         }
 
         source.close();
+
         return conversations;
     }
 
@@ -274,10 +287,12 @@ public class NotificationService extends IntentService {
             content = content.substring(0, content.length() - 2);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            builder.setContentText(Html.fromHtml(content, 0));
-        } else {
-            builder.setContentText(Html.fromHtml(content));
+        if (!conversation.privateNotification) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.setContentText(Html.fromHtml(content, 0));
+            } else {
+                builder.setContentText(Html.fromHtml(content));
+            }
         }
 
         if (pictureStyle != null) {
@@ -328,7 +343,7 @@ public class NotificationService extends IntentService {
                     .addRemoteInput(remoteInput)
                     .build();
 
-            builder.addAction(action);
+            if (!conversation.privateNotification) builder.addAction(action);
         } else {
             // on older versions, we have to show the reply activity button as an action and add the remote input to it
             // this will allow it to be used on android wear (we will have to handle this from the activity)
@@ -345,14 +360,14 @@ public class NotificationService extends IntentService {
                         getString(R.string.reply), pendingReply)
                         .build();
 
-                builder.addAction(action);
+                if (!conversation.privateNotification) builder.addAction(action);
             } else {
                 NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
                         .addRemoteInput(remoteInput)
                         .build();
 
-                builder.addAction(action);
+                if (!conversation.privateNotification) builder.addAction(action);
             }
         }
 
@@ -375,10 +390,12 @@ public class NotificationService extends IntentService {
 
         // we want to provide different resources so that wearable can have a white icon in most places
         // since these icons aren't even shown in Nougat.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
-        } else {
-            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
+        if (!conversation.privateNotification) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
+            } else {
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
+            }
         }
 
         builder.setDeleteIntent(pendingDelete);
@@ -452,7 +469,12 @@ public class NotificationService extends IntentService {
                                          List<String> rows) {
         StringBuilder summaryBuilder = new StringBuilder();
         for (int i = 0; i < conversations.size(); i++) {
-            summaryBuilder.append(conversations.get(conversations.keyAt(i)).title);
+            if (conversations.get(i).privateNotification) {
+                summaryBuilder.append(getString(R.string.new_message));
+            } else {
+                summaryBuilder.append(conversations.get(conversations.keyAt(i)).title);
+            }
+            
             summaryBuilder.append(", ");
         }
 
@@ -585,6 +607,7 @@ public class NotificationService extends IntentService {
         public String ringtoneUri;
         public long timestamp;
         public boolean mute;
+        public boolean privateNotification;
         public List<NotificationMessage> messages;
 
         private NotificationConversation() {

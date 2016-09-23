@@ -184,6 +184,8 @@
     </string-array>
     <string name="new_mms_message">New MMS message</string>
     <string name="you">You</string>
+    <string name="new_message">New Message</string>
+    <string name="received_new_message">You received a new text!</string>
 
 
     <!-- About, Help and Feedback and Settings -->
@@ -216,6 +218,8 @@
     <string name="pin_conversation_summary">Keeps this conversation at the top of the list</string>
     <string name="mute_conversation">Mute Conversation</string>
     <string name="mute_conversation_summary">Hides notifications for this conversation</string>
+    <string name="private_conversation">Private Conversation</string>
+    <string name="private_conversation_summary">Hide conversation content on notifications</string>
     <string name="primary_color">Primary Color</string>
     <string name="primary_dark_color">Primary Color Dark</string>
     <string name="accent_color">Accent Color</string>
