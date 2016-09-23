@@ -133,31 +133,32 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getContact_oneNumber() {
-        List<Contact> contacts = source.getContacts("Luke K");
+        List<Contact> contacts = source.getContacts("5159911493");
 
         assertEquals(1, contacts.size());
-        assertEquals("515-991-1493", contacts.get(0).phoneNumber);
+        assertEquals("Luke K", contacts.get(0).name);
     }
 
     @Test
     public void getContact_multipleNumbers() {
-        List<Contact> contacts = source.getContacts("Luke K, Jake K");
+        List<Contact> contacts = source.getContacts("5159911493, 5154224558");
 
         assertEquals(2, contacts.size());
-        assertEquals("515-991-1493", contacts.get(0).phoneNumber);
-        assertEquals("515-422-4558", contacts.get(1).phoneNumber);
+        assertEquals("Luke K", contacts.get(0).name);
+        assertEquals("Jake K", contacts.get(1).name);
     }
 
     @Test
     public void getContact() {
-        Contact contact = source.getContact("515-991-1493");
+        Contact contact = source.getContact("5159911493");
         assertEquals("Luke K", contact.name);
     }
 
     @Test
     public void updateContact() {
-        source.updateContact("515-991-1493", "Lucas Klinker", 2, 3, 4, 5);
-        Contact contact = source.getContact("515-991-1493");
+        source.updateContact("5159911493", "Lucas Klinker", 2, 3, 4, 5);
+        Contact contact = source.getContact("5159911493");
+        assertEquals("5159911493", contact.phoneNumber);
         assertEquals("Lucas Klinker", contact.name);
         assertEquals(2, contact.colors.color);
         assertEquals(3, contact.colors.colorDark);
@@ -167,14 +168,14 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getContactNull() {
-        Contact contact = source.getContact("5159911493");
+        Contact contact = source.getContact("1111111111");
         assertNull(contact);
     }
 
     @Test
     public void deleteContact() {
         int initialContactSize = source.getContacts().getCount();
-        source.deleteContact("515-991-1493");
+        source.deleteContact("5159911493");
         int newContactSize = source.getContacts().getCount();
 
         assertEquals(-1, newContactSize - initialContactSize);

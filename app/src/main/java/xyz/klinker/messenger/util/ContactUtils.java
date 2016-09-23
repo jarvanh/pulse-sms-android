@@ -277,7 +277,7 @@ public class ContactUtils {
                 Contact contact = new Contact();
 
                 contact.name = cursor.getString(0);
-                contact.phoneNumber = PhoneNumberUtils.format(cursor.getString(1));
+                contact.phoneNumber = PhoneNumberUtils.clearFormatting(cursor.getString(1));
 
                 ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
                 if (colorSet != null) {
@@ -319,34 +319,34 @@ public class ContactUtils {
      * database, and sends it off to the backend for storage. This way the color scheme can be saved
      * and used on other devices too.
      *
-     * @param conversationTitle the title from the conversation. Comma seperated list if there is more than one person.
+     * @param numbers the phone numbers from the conversation. Comma seperated list if there is more than one person.
      * @param contacts List of contacts from the database that should correspond to the people in the conversation
      */
-    public static Map<String, Contact> getMessageFromMapping(String conversationTitle, List<Contact> contacts,
+    public static Map<String, Contact> getMessageFromMapping(String numbers, List<Contact> contacts,
                                                              DataSource dataSource, Context context) {
         Map<String, Contact> contactMap = new HashMap<>();
-        String[] names = conversationTitle.split(", ");
+        String[] phoneNumbers = numbers.split(", ");
 
-        for (String name : names) {
-            Contact contact = getContactFromList(contacts, name);
+        for (String number : phoneNumbers) {
+            Contact contact = getContactFromList(contacts, number);
 
             if (contact == null) {
                 contact = new Contact();
-                contact.name = name;
-                contact.phoneNumber = name;
+                contact.name = number;
+                contact.phoneNumber = number;
                 contact.colors = ColorUtils.getRandomMaterialColor(context);
                 dataSource.insertContact(contact);
             }
 
-            contactMap.put(name, contact);
+            contactMap.put(contact.name, contact);
         }
 
         return contactMap;
     }
 
-    private static Contact getContactFromList(List<Contact> list, String name) {
+    private static Contact getContactFromList(List<Contact> list, String number) {
         for (Contact contact : list) {
-            if (contact.name.equals(name)) {
+            if (PhoneNumberUtils.checkEquality(contact.phoneNumber, number)) {
                 return contact;
             }
         }
