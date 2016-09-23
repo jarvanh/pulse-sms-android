@@ -18,15 +18,17 @@ package xyz.klinker.messenger.util;
 
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.Settings;
 
 /**
  * Helper for working with timestamps on messages.
@@ -186,6 +188,18 @@ public class TimeUtils {
     static boolean isNight(Calendar cal) {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         return hour <= 5 || hour >= 22;
+    }
+
+    public static void setupNightTheme(AppCompatActivity activity) {
+        Settings.BaseTheme base = Settings.get(activity).baseTheme;
+
+        if (!base.isDark) {
+            boolean isNight = TimeUtils.isNight() && base != Settings.BaseTheme.ALWAYS_LIGHT;
+            activity.getDelegate().setLocalNightMode(isNight ?
+                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(isNight ?
+                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
 }

@@ -111,7 +111,13 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
             String[] items;
             if (message.getVisibility() == View.VISIBLE) {
-                items = new String[3];
+                if (type == Message.TYPE_ERROR) {
+                    items = new String[4];
+                    items[3] = view.getContext().getString(R.string.resend);
+                } else {
+                    items = new String[3];
+                }
+
                 items[0] = view.getContext().getString(R.string.view_details);
                 items[1] = view.getContext().getString(R.string.delete);
                 items[2] = view.getContext().getString(R.string.copy_message);
@@ -132,6 +138,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                                     deleteMessage();
                                 } else if (which == 2) {
                                     copyMessageText();
+                                } else if (which == 3) {
+                                    resendMessage();
                                 }
                             }
                         })
@@ -259,6 +267,10 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         clipboard.setPrimaryClip(clip);
         Toast.makeText(message.getContext(), R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void resendMessage() {
+        fragment.resendMessage(messageId, message.getText().toString());
     }
 
 }

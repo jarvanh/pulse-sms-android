@@ -139,13 +139,7 @@ public class MessengerActivity extends AppCompatActivity
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
 
-        boolean isDarkTheme = Settings.get(this).darkTheme;
-        if (!isDarkTheme) {
-            boolean isNight = TimeUtils.isNight();
-            getDelegate().setLocalNightMode(isNight ?
-                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
+        TimeUtils.setupNightTheme(this);
         UpdateUtils.checkForUpdate(this);
 
         if (checkInitialStart()) {
@@ -482,7 +476,11 @@ public class MessengerActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+        try {
+            getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void clickDefaultDrawerItem() {
@@ -591,7 +589,7 @@ public class MessengerActivity extends AppCompatActivity
         return displayFragmentWithBackStack(new AboutFragment());
     }
 
-    private boolean displayFragmentWithBackStack(Fragment fragment) {
+    private boolean displayFragmentWithBackStack(final Fragment fragment) {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         }
@@ -601,9 +599,15 @@ public class MessengerActivity extends AppCompatActivity
         inSettings = true;
 
         otherFragment = fragment;
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conversation_list_container, fragment)
-                .commit();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conversation_list_container, fragment)
+                        .commit();
+            }
+        }, 200);
+
 
         return true;
     }
@@ -675,10 +679,28 @@ public class MessengerActivity extends AppCompatActivity
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
 
-            new AlertDialog.Builder(this)
-                    .setView(recyclerView)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            if (adapter.getItemCount() == 1) {
+                Intent intent;
+
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                            String.valueOf(ContactUtils.findContactId(conversation.phoneNumbers,
+                                    MessengerActivity.this)));
+                    intent.setData(uri);
+                } catch (NoSuchElementException e) {
+                    e.printStackTrace();
+                    intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                    intent.setData(Uri.parse("tel:" + conversation.phoneNumbers));
+                }
+
+                startActivity(intent);
+            } else {
+                new AlertDialog.Builder(this)
+                        .setView(recyclerView)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
 
             return true;
         } else {

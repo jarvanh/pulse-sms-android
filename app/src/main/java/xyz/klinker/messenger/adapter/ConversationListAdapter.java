@@ -167,7 +167,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
 
         holder.name.setText(conversation.title);
-        holder.summary.setText(conversation.snippet);
+        if (conversation.privateNotifications) {
+            holder.summary.setText("");
+        } else {
+            holder.summary.setText(conversation.snippet);
+        }
 
         if (conversation.read && holder.isBold()) {
             holder.setBold(false);

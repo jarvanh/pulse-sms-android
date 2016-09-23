@@ -45,6 +45,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_ID_MATCHER = "id_matcher";
     public static final String COLUMN_MUTE = "mute";
     public static final String COLUMN_ARCHIVED = "archive"; // created in database v2
+    public static final String COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications"; // created in database v3
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -63,7 +64,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_IMAGE_URI + " text, " +
             COLUMN_ID_MATCHER + " text not null unique, " +
             COLUMN_MUTE + " integer not null, " +
-            COLUMN_ARCHIVED + " integer not null default 0" +
+            COLUMN_ARCHIVED + " integer not null default 0, " +
+            COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0" +
             ");";
 
     public long id;
@@ -79,6 +81,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public String idMatcher;
     public boolean mute;
     public boolean archive;
+    public boolean privateNotifications;
 
     public Conversation() {
 
@@ -101,6 +104,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
         this.idMatcher = body.idMatcher;
         this.mute = body.mute;
         this.archive = body.archive;
+        this.privateNotifications = body.privateNotifications;
     }
 
     @Override
@@ -155,6 +159,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 this.mute = cursor.getInt(i) == 1;
             } else if (column.equals(COLUMN_ARCHIVED)) {
                 this.archive = cursor.getInt(i) == 1;
+            } else if (column.equals(COLUMN_PRIVATE_NOTIFICATIONS)) {
+                this.privateNotifications = cursor.getInt(i) == 1;
             }
         }
     }

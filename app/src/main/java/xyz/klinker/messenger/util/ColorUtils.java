@@ -44,7 +44,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
@@ -305,7 +304,7 @@ public class ColorUtils {
      * Changes the window background to black if applicable
      */
     public static void checkBlackBackground(Activity activity) {
-        if (Settings.get(activity).blackTheme) {
+        if (Settings.get(activity).baseTheme == Settings.BaseTheme.BLACK) {
             activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         }
     }

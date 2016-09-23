@@ -47,8 +47,10 @@ public class MessengerApplication extends Application {
         ApiUtils.environment = getString(R.string.environment);
         enableSecurity();
 
-        boolean dark = Settings.get(this).darkTheme;
-        if (dark || TimeUtils.isNight()) {
+        Settings.BaseTheme theme = Settings.get(this).baseTheme;
+        if (theme == Settings.BaseTheme.ALWAYS_LIGHT) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (theme.isDark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 

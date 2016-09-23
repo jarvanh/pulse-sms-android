@@ -35,7 +35,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "messenger.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     private DatabaseTable[] tables = {
             new Contact(),
@@ -79,6 +79,10 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
         if (oldVersion < 3) {
             db.execSQL(new Contact().getCreateStatement());
+        }
+
+        if (oldVersion < 4) {
+            db.execSQL("ALTER TABLE conversation ADD COLUMN private_notifications integer not null DEFAULT 0");
         }
     }
 

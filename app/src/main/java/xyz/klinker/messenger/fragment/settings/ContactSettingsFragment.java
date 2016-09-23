@@ -70,6 +70,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         setUpToolbar();
         setUpPin();
         setUpMute();
+        setUpPrivate();
         setUpGroupName();
         setUpRingtone();
         setUpColors();
@@ -96,6 +97,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
     private void setUpDefaults() {
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
+                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.privateNotifications)
                 .putString(getString(R.string.pref_contact_group_name), conversation.title)
                 .putString(getString(R.string.pref_contact_ringtone),
                         conversation.ringtoneUri == null ?
@@ -141,11 +143,44 @@ public class ContactSettingsFragment extends PreferenceFragment {
         SwitchPreference preference = (SwitchPreference)
                 findPreference(getString(R.string.pref_contact_mute_conversation));
         preference.setChecked(conversation.mute);
+        enableNotificationBasedOnMute(conversation.mute);
 
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 conversation.mute = (boolean) o;
+                enableNotificationBasedOnMute(conversation.mute);
+
+                return true;
+            }
+        });
+    }
+
+    private void enableNotificationBasedOnMute(boolean mute) {
+        if (mute) {
+            SwitchPreference privateNotifications = (SwitchPreference)
+                    findPreference(getString(R.string.pref_contact_private_conversation));
+
+            privateNotifications.setChecked(false);
+            privateNotifications.setEnabled(false);
+            findPreference(getString(R.string.pref_contact_ringtone)).setEnabled(false);
+
+            conversation.privateNotifications = false;
+        } else {
+            findPreference(getString(R.string.pref_contact_private_conversation)).setEnabled(true);
+            findPreference(getString(R.string.pref_contact_ringtone)).setEnabled(true);
+        }
+    }
+
+    private void setUpPrivate() {
+        SwitchPreference preference = (SwitchPreference)
+                findPreference(getString(R.string.pref_contact_private_conversation));
+        preference.setChecked(conversation.privateNotifications);
+
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                conversation.privateNotifications = (boolean) o;
                 return true;
             }
         });
