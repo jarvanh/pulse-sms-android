@@ -687,10 +687,28 @@ public class MessengerActivity extends AppCompatActivity
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
 
-            new AlertDialog.Builder(this)
-                    .setView(recyclerView)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            if (adapter.getItemCount() == 1) {
+                Intent intent;
+
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                            String.valueOf(ContactUtils.findContactId(conversation.phoneNumbers,
+                                    MessengerActivity.this)));
+                    intent.setData(uri);
+                } catch (NoSuchElementException e) {
+                    e.printStackTrace();
+                    intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                    intent.setData(Uri.parse("tel:" + conversation.phoneNumbers));
+                }
+
+                startActivity(intent);
+            } else {
+                new AlertDialog.Builder(this)
+                        .setView(recyclerView)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
 
             return true;
         } else {
