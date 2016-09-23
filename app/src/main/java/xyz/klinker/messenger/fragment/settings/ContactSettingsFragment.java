@@ -231,7 +231,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         source.open();
         source.updateConversationSettings(conversation);
 
-        List<Contact> contactList = source.getContacts(conversation.title);
+        List<Contact> contactList = source.getContacts(conversation.phoneNumbers);
         if (contactList.size() == 1) {
             // it is an individual conversation and we have the contact in our database! Yay.
             contactList.get(0).colors = conversation.colors;

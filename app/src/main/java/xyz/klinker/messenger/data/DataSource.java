@@ -348,25 +348,27 @@ public class DataSource {
     /**
      * Get a list of contacts from a list of phone numbers
      *
-     * @param names a comma separated list of names (Ex: Luke Klinker, Jake Klinker)
+     * @param numbers a comma separated list of phone numbers (Ex: 5154224558, 5159911493)
      * @return list of any contacts in the database for those phone numbers. Ignores numbers that are
      *          not in the database.
      */
-    public List<Contact> getContacts(String names) {
-        if (names == null || names.isEmpty()) {
+    public List<Contact> getContacts(String numbers) {
+        if (numbers == null || numbers.isEmpty()) {
             return new ArrayList<>();
         }
 
-        String[] array = names.split(", ");
+        // Could we miss matching a contact here? Sometimes phone numbers are resolved as
+        // 5154224558 and other times it is +15154224558 depending on the carrier.
+        String[] array = numbers.split(", ");
         String where = "";
         if (array.length <= 0) {
             return new ArrayList<>();
         } else if (array.length == 1) {
-            where += Contact.COLUMN_NAME + "=?";
+            where += Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
         } else {
-            where = Contact.COLUMN_NAME + "=?";
+            where = Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
             for (int i = 1; i < array.length; i++) {
-                where += " OR " + Contact.COLUMN_NAME + "=?";
+                where += " OR " + Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
             }
         }
 

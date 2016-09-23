@@ -679,10 +679,10 @@ public class MessageListFragment extends Fragment implements
                     long startTime = System.currentTimeMillis();
                     final Cursor cursor = source.getMessages(conversationId);
 
-                    final String title = getArguments().getString(ARG_TITLE);
-                    final List<Contact> contacts = source.getContacts(title);
+                    final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
+                    final List<Contact> contacts = source.getContacts(numbers);
                     final Map<String, Contact> contactMap = ContactUtils.getMessageFromMapping(
-                            title, contacts, source, getActivity()
+                            numbers, contacts, source, getActivity()
                     );
 
                     drafts = source.getDrafts(conversationId);
