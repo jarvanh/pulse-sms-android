@@ -144,6 +144,8 @@ public class MessengerActivity extends AppCompatActivity
             boolean isNight = TimeUtils.isNight();
             getDelegate().setLocalNightMode(isNight ?
                     AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(isNight ?
+                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         UpdateUtils.checkForUpdate(this);
@@ -595,7 +597,7 @@ public class MessengerActivity extends AppCompatActivity
         return displayFragmentWithBackStack(new AboutFragment());
     }
 
-    private boolean displayFragmentWithBackStack(Fragment fragment) {
+    private boolean displayFragmentWithBackStack(final Fragment fragment) {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         }
@@ -605,9 +607,15 @@ public class MessengerActivity extends AppCompatActivity
         inSettings = true;
 
         otherFragment = fragment;
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conversation_list_container, fragment)
-                .commit();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conversation_list_container, fragment)
+                        .commit();
+            }
+        }, 200);
+
 
         return true;
     }
