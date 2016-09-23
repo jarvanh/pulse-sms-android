@@ -20,6 +20,7 @@
         name="1.5.0"
         description="September 23rd, 2016">
         <text>Private conversation notifications</text>
+        <text>Resend failed SMS</text>
         <text>Option to only use light theme</text>
         <text>Theme improvements</text>
         <text>Bug fixes</text>

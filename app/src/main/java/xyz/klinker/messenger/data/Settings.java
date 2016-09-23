@@ -29,6 +29,15 @@ import xyz.klinker.messenger.R;
  */
 public class Settings {
 
+    public enum BaseTheme {
+        DAY_NIGHT(false), ALWAYS_LIGHT(false), ALWAYS_DARK(true), BLACK(true);
+
+        public boolean isDark;
+        BaseTheme(boolean isDark) {
+            this.isDark = isDark;
+        }
+    }
+
     private static volatile Settings settings;
 
     private Context context;
@@ -46,7 +55,6 @@ public class Settings {
     public String ringtone;
     public String fontSize;
     public String themeColorString;
-    public String baseTheme;
 
     // account info
     public boolean primary;
@@ -63,9 +71,7 @@ public class Settings {
     public int mediumFont;
     public int largeFont;
     public ColorSet globalColorSet;
-    public boolean onlyLightTheme;
-    public boolean darkTheme;
-    public boolean blackTheme;
+    public BaseTheme baseTheme;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -107,7 +113,6 @@ public class Settings {
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
         this.useGlobalThemeColor = !themeColorString.equals("default");
-        this.baseTheme = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
 
         // account info
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
@@ -144,32 +149,22 @@ public class Settings {
             this.largeFont = 20;
         }
 
-        // we want to keep these seperate for day/night functionality
+        String baseTheme = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
         switch (baseTheme) {
             case "day_night":
-                this.onlyLightTheme = false;
-                this.darkTheme = false;
-                this.blackTheme = false;
+                this.baseTheme = BaseTheme.DAY_NIGHT;
                 break;
             case "light":
-                this.onlyLightTheme = true;
-                this.darkTheme = false;
-                this.blackTheme = false;
+                this.baseTheme = BaseTheme.ALWAYS_LIGHT;
                 break;
             case "dark":
-                this.onlyLightTheme = false;
-                this.darkTheme = true;
-                this.blackTheme = false;
+                this.baseTheme = BaseTheme.ALWAYS_DARK;
                 break;
             case "black":
-                this.onlyLightTheme = false;
-                this.darkTheme = true;
-                this.blackTheme = true;
+                this.baseTheme = BaseTheme.BLACK;
                 break;
             default:
-                this.onlyLightTheme = false;
-                this.darkTheme = false;
-                this.blackTheme = false;
+                this.baseTheme = BaseTheme.DAY_NIGHT;
                 break;
         }
 

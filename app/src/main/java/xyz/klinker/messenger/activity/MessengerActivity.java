@@ -139,15 +139,7 @@ public class MessengerActivity extends AppCompatActivity
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
 
-        boolean isDarkTheme = Settings.get(this).darkTheme;
-        if (!isDarkTheme) {
-            boolean isNight = TimeUtils.isNight() && !Settings.get(this).onlyLightTheme;
-            getDelegate().setLocalNightMode(isNight ?
-                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-            AppCompatDelegate.setDefaultNightMode(isNight ?
-                    AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
+        TimeUtils.setupNightTheme(this);
         UpdateUtils.checkForUpdate(this);
 
         if (checkInitialStart()) {

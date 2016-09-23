@@ -53,8 +53,7 @@ public class SwipeItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void init(Context context) {
-        Settings settings = Settings.get(context);
-        if (settings.blackTheme) {
+        if (Settings.get(context).baseTheme == Settings.BaseTheme.BLACK) {
             background = new ColorDrawable(Color.BLACK);
         } else {
             background = new ColorDrawable(context.getResources().getColor(R.color.swipeBackground));

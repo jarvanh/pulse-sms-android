@@ -22,7 +22,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -111,7 +110,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             summary.setTextSize(settings.mediumFont);
         }
 
-        if (settings.blackTheme && headerBackground != null) {
+        if (settings.baseTheme == Settings.BaseTheme.BLACK && headerBackground != null) {
             headerBackground.setBackgroundColor(Color.BLACK);
         }
     }
