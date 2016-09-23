@@ -286,11 +286,14 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
             final String mimeType = getIntent().getType();
             String data = "";
+            boolean isVcard = false;
 
             try {
                 if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
                 } else if (MimeType.isVcard(mimeType)) {
+                    fab.setImageResource(R.drawable.ic_send);
+                    isVcard = true;
                     data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
                     Log.v(TAG, "got vcard at: " + data);
                 } else {
@@ -312,7 +315,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             }
 
-            setupSend(data, mimeType);
+            setupSend(data, mimeType, isVcard);
 
             if (getIntent().getExtras() != null && getIntent().getExtras()
                     .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
@@ -323,20 +326,45 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
             if (extras != null && extras.containsKey("sms_body")) {
-                setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN);
+                setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN, false);
             }
         }
     }
 
-    private void setupSend(final String data, final String mimeType) {
+    private void setupSend(final String data, final String mimeType, final boolean isvCard) {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (contactEntry.getRecipients().length > 0) {
-                    applyShare(mimeType, data);
+                    if (isvCard) {
+                        sendvCard(mimeType, data);
+                    } else {
+                        applyShare(mimeType, data);
+                    }
                 }
             }
         });
+    }
+
+    private void sendvCard(String mimeType, String data) {
+        String phoneNumbers = getPhoneNumberFromContactEntry();
+        sendvCard(mimeType, data, phoneNumbers);
+    }
+
+    private void sendvCard(String mimeType, String data, String phoneNumbers) {
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        source.insertSentMessage(phoneNumbers, data, mimeType, this);
+
+        Uri uri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
+        Cursor cursor = source.searchMessages(data);
+        if (cursor != null && cursor.moveToFirst()) {
+            source.updateMessageData(cursor.getLong(0), uri.toString());
+            cursor.close();
+        }
+
+        source.close();
+        finish();
     }
 
     private void applyShare(String mimeType, String data) {
