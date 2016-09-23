@@ -50,6 +50,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -364,11 +365,11 @@ public class DataSource {
         if (array.length <= 0) {
             return new ArrayList<>();
         } else if (array.length == 1) {
-            where += Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
+            where += Contact.COLUMN_PHONE_NUMBER + " = ?";
         } else {
-            where = Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
+            where = Contact.COLUMN_PHONE_NUMBER + " = ?";
             for (int i = 1; i < array.length; i++) {
-                where += " OR " + Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
+                where += " OR " + Contact.COLUMN_PHONE_NUMBER + " = ?";
             }
         }
 
