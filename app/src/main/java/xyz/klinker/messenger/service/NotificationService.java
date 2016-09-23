@@ -293,17 +293,17 @@ public class NotificationService extends IntentService {
             } else {
                 builder.setContentText(Html.fromHtml(content));
             }
-        }
 
-        if (pictureStyle != null) {
-            builder.setStyle(pictureStyle);
-        } else if (messagingStyle != null) {
-            builder.setStyle(messagingStyle);
-        } else if (inboxStyle != null) {
-            builder.setStyle(inboxStyle);
-        } else {
-            builder.setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(Html.fromHtml(content)));
+            if (pictureStyle != null) {
+                builder.setStyle(pictureStyle);
+            } else if (messagingStyle != null) {
+                builder.setStyle(messagingStyle);
+            } else if (inboxStyle != null) {
+                builder.setStyle(inboxStyle);
+            } else {
+                builder.setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(Html.fromHtml(content)));
+            }
         }
 
         builder.setPublicVersion(new NotificationCompat.Builder(this)
