@@ -48,7 +48,9 @@ public class MessengerApplication extends Application {
         enableSecurity();
 
         boolean dark = Settings.get(this).darkTheme;
-        if (dark || TimeUtils.isNight()) {
+        if (Settings.get(this).onlyLightTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (dark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 

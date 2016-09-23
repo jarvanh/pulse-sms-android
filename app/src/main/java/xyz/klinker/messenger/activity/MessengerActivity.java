@@ -141,7 +141,7 @@ public class MessengerActivity extends AppCompatActivity
 
         boolean isDarkTheme = Settings.get(this).darkTheme;
         if (!isDarkTheme) {
-            boolean isNight = TimeUtils.isNight();
+            boolean isNight = TimeUtils.isNight() && !Settings.get(this).onlyLightTheme;
             getDelegate().setLocalNightMode(isNight ?
                     AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
             AppCompatDelegate.setDefaultNightMode(isNight ?

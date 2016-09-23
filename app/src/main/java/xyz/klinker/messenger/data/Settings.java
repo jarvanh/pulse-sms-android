@@ -63,6 +63,7 @@ public class Settings {
     public int mediumFont;
     public int largeFont;
     public ColorSet globalColorSet;
+    public boolean onlyLightTheme;
     public boolean darkTheme;
     public boolean blackTheme;
 
@@ -146,18 +147,27 @@ public class Settings {
         // we want to keep these seperate for day/night functionality
         switch (baseTheme) {
             case "day_night":
+                this.onlyLightTheme = false;
+                this.darkTheme = false;
+                this.blackTheme = false;
+                break;
+            case "light":
+                this.onlyLightTheme = true;
                 this.darkTheme = false;
                 this.blackTheme = false;
                 break;
             case "dark":
+                this.onlyLightTheme = false;
                 this.darkTheme = true;
                 this.blackTheme = false;
                 break;
             case "black":
+                this.onlyLightTheme = false;
                 this.darkTheme = true;
                 this.blackTheme = true;
                 break;
             default:
+                this.onlyLightTheme = false;
                 this.darkTheme = false;
                 this.blackTheme = false;
                 break;

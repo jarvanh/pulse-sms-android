@@ -78,7 +78,7 @@ public class SettingsFragment extends PreferenceFragment {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
                         String newValue = (String) o;
-                        if (!newValue.equals("day_night")) {
+                        if (!newValue.equals("day_night") && !newValue.equals("light")) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         } else {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);

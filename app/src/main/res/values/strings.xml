@@ -263,6 +263,7 @@
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>
+    <string name="always_light">Always Light</string>
     <string name="always_dark">Always Dark</string>
     <string name="always_black">Always Black</string>
     <string name="set_color_per_conversation">Set color per conversation</string>

@@ -3,12 +3,14 @@
 
     <string-array name="base_theme">
         <item>@string/day_night</item>
+        <item>@string/always_light</item>
         <item>@string/always_dark</item>
         <item>@string/always_black</item>
     </string-array>
 
     <string-array name="base_theme_values">
         <item>day_night</item>
+        <item>light</item>
         <item>dark</item>
         <item>black</item>
     </string-array>
