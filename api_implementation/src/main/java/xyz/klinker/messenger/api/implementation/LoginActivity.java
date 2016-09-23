@@ -332,7 +332,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             DeviceBody[] devices = utils.getDevices(accountId);
             if (devices == null) {
-                failAddDevice();
+                failAddDevice(utils, accountId);
             } else {
                 int primaryLocation = -1;
                 for (int i = 0; i < devices.length; i++) {
@@ -343,7 +343,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (primaryLocation == -1) {
-                    failAddDevice();
+                    failAddDevice(utils, accountId);
                     return;
                 }
 
@@ -392,8 +392,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void failAddDevice() {
+    private void failAddDevice(ApiUtils apiUtils, String accountId) {
         Log.v("LoginActivity", "failed and closing");
+        apiUtils.deleteAccount(accountId);
+
         PreferenceManager.getDefaultSharedPreferences(this)
                 .edit()
                 .putString("device_id", null)
@@ -405,8 +407,8 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 Toast.makeText(getApplicationContext(), R.string.api_device_error,
                         Toast.LENGTH_SHORT).show();
-                setResult(RESULT_CANCELED);
-                close();
+
+                recreate();
             }
         });
     }

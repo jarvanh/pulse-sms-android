@@ -30,7 +30,7 @@
     <string name="api_phone_number">Phone Number</string>
     <string name="api_connecting">Connecting to server…</string>
     <string name="api_error">An error occurred during the operation</string>
-    <string name="api_device_error">An error occurred while adding this device</string>
+    <string name="api_device_error">An error occurred while adding this device. Let\'s retry!</string>
     <string name="api_add_second_primary_device">Looks like you already have a primary device
         (%1$s) for your account and only one is permitted! Do you want to remove the current
         primary device and set this as the new primary?</string>
