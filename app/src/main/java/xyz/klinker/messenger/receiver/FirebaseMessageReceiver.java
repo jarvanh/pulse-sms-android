@@ -463,6 +463,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             conversation.read = json.getBoolean("read");
             conversation.read = json.getBoolean("read");
             conversation.archive = json.getBoolean("archive");
+            conversation.privateNotifications = json.getBoolean("private_notifications");
 
             source.updateConversationSettings(conversation);
 
