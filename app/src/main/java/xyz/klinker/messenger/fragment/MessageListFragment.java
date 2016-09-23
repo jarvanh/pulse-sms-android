@@ -791,6 +791,12 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
+    public void resendMessage(long originalMessageId, String text) {
+        source.deleteMessage(originalMessageId);
+        messageEntry.setText(text);
+        sendMessage();
+    }
+
     private void sendMessage() {
         if (PermissionsUtils.checkRequestMainPermissions(getActivity())) {
             PermissionsUtils.startMainPermissionRequest(getActivity());
