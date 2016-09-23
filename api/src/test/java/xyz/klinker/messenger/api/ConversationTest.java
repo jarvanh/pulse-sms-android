@@ -40,7 +40,7 @@ public class ConversationTest extends ApiTest {
         assertNotNull(response);
 
         UpdateConversationRequest update = new UpdateConversationRequest(null, null, null, null,
-                false, true, null, null, null, null, null, null);
+                false, true, null, null, null, null, null, null, null);
         api.conversation().update(1, accountId, update);
 
         ConversationBody[] conversations = api.conversation().list(accountId);
