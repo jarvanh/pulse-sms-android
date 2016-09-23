@@ -469,7 +469,7 @@ public class NotificationService extends IntentService {
                                          List<String> rows) {
         StringBuilder summaryBuilder = new StringBuilder();
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(i).privateNotification) {
+            if (conversations.get(conversations.keyAt(i)).privateNotification) {
                 summaryBuilder.append(getString(R.string.new_message));
             } else {
                 summaryBuilder.append(conversations.get(conversations.keyAt(i)).title);
