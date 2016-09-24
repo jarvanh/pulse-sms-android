@@ -185,9 +185,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private String getPhoneNumberFromContactEntry() {
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
-            return getIntent().getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
-        }
 
         DrawableRecipientChip[] chips = contactEntry.getRecipients();
         StringBuilder phoneNumbers = new StringBuilder();
@@ -239,6 +236,15 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         startActivity(open);
 
+        finish();
+    }
+
+    private void showConversation(long conversationId) {
+        Intent open = new Intent(this, MessengerActivity.class);
+        open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(open);
         finish();
     }
 
@@ -333,10 +339,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             setupSend(data, mimeType, isVcard);
 
             if (getIntent().getExtras() != null && getIntent().getExtras()
-                    .containsKey(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS)) {
-                String numbers = getIntent()
-                        .getStringExtra(MessengerChooserTargetService.EXTRA_PHONE_NUMBERS);
-                applyShare(mimeType, data, numbers);
+                    .containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+                shareWithDirectShare(data, mimeType);
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
@@ -408,6 +412,17 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         source.close();
 
         showConversation();
+    }
+
+    private void shareWithDirectShare(String data, String mimeType) {
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.EXTRA_CONVO_ID);
+
+        source.insertDraft(conversationId, data, mimeType);
+        source.close();
+
+        showConversation(conversationId);
     }
 
     @Override

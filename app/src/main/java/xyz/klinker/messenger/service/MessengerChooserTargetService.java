@@ -21,6 +21,9 @@ import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,12 +35,13 @@ import java.util.List;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
 
 @TargetApi(Build.VERSION_CODES.M)
 public class MessengerChooserTargetService extends ChooserTargetService {
 
-    public static final String EXTRA_PHONE_NUMBERS = "chooser_target_phone_numbers";
+    public static final String EXTRA_CONVO_ID = "chooser_target_convo_id";
 
     @Override
     public List<ChooserTarget> onGetChooserTargets(ComponentName componentName,
@@ -54,11 +58,17 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                         cursor.getColumnIndex(Conversation.COLUMN_TITLE));
                 Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
-                final Icon targetIcon = Icon.createWithBitmap(image);
-                final float targetRanking = 1.0f;
+
+                Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
+                color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
+                color = ImageUtils.clipToCircle(color);
+
+                final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
+                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
                 final Bundle targetExtras = new Bundle();
-                targetExtras.putString(EXTRA_PHONE_NUMBERS, cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_PHONE_NUMBERS)));
+                targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
+                        cursor.getColumnIndex(Conversation.COLUMN_ID)));
 
                 targets.add(new ChooserTarget(targetName, targetIcon, targetRanking,
                         componentName, targetExtras));
@@ -73,11 +83,17 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                         cursor.getColumnIndex(Conversation.COLUMN_TITLE));
                 Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
-                final Icon targetIcon = Icon.createWithBitmap(image);
-                final float targetRanking = 1.0f;
+
+                Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
+                color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
+                color = ImageUtils.clipToCircle(color);
+
+                final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
+                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
                 final Bundle targetExtras = new Bundle();
-                targetExtras.putString(EXTRA_PHONE_NUMBERS, cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_PHONE_NUMBERS)));
+                targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
+                        cursor.getColumnIndex(Conversation.COLUMN_ID)));
 
                 targets.add(new ChooserTarget(targetName, targetIcon, targetRanking,
                         componentName, targetExtras));
