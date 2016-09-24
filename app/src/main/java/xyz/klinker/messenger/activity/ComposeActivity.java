@@ -411,22 +411,39 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     @Override
     public void onClicked(String title, String phoneNumber, String imageUri) {
-        String[] names = title.split(", ");
+        // we have a few different cases:
+        // 1.) Single recepient (with single number)
+        // 2.) Group convo with custom title (1 name, multiple numbers)
+        // 3.) Group convo with non custom title (x names, x numbers)
 
-        if (names.length == 1) {
+        String[] names = title.split(", ");
+        String[] numbers = phoneNumber.split(", ");
+
+        if (names.length == 1 && numbers.length == 1) {
+            // Case 1
             if (imageUri == null) {
                 contactEntry.submitItem(title, phoneNumber);
             } else {
                 contactEntry.submitItem(title, phoneNumber, Uri.parse(imageUri));
             }
         } else {
-            String[] phoneNumbers = phoneNumber.split(", ");
-            for (int i = 0; i < names.length; i++) {
-                String name = names[i];
-                String number = phoneNumbers[i];
-                String image = ContactUtils.findImageUri(number, this) + "/photo";
+            if (names.length == numbers.length) {
+                // case 3
+                for (int i = 0; i < names.length; i++) {
+                    String name = names[i];
+                    String number = numbers[i];
+                    String image = ContactUtils.findImageUri(number, this) + "/photo";
 
-                contactEntry.submitItem(name, number, Uri.parse(image));
+                    contactEntry.submitItem(name, number, Uri.parse(image));
+                }
+            } else {
+                // case 2
+                for (int i = 0; i < numbers.length; i++) {
+                    String number = numbers[i];
+                    String image = ContactUtils.findImageUri(number, this) + "/photo";
+
+                    contactEntry.submitItem(names[0], number, Uri.parse(image));
+                }
             }
         }
     }
