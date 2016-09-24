@@ -55,8 +55,7 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                 Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
                 final Icon targetIcon = Icon.createWithBitmap(image);
-                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
-                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
+                final float targetRanking = 1.0f;
                 final Bundle targetExtras = new Bundle();
                 targetExtras.putString(EXTRA_PHONE_NUMBERS, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_PHONE_NUMBERS)));
@@ -75,8 +74,7 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                 Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
                 final Icon targetIcon = Icon.createWithBitmap(image);
-                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
-                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
+                final float targetRanking = 1.0f;
                 final Bundle targetExtras = new Bundle();
                 targetExtras.putString(EXTRA_PHONE_NUMBERS, cursor.getString(
                         cursor.getColumnIndex(Conversation.COLUMN_PHONE_NUMBERS)));
