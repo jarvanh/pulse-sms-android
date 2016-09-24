@@ -30,6 +30,7 @@ import android.util.Log;
 import com.klinker.android.send_message.Utils;
 
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -98,7 +99,7 @@ public class ContentObserverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(FeatureFlags.get(ContentObserverService.this).CONTENT_OBSERVER_TIMEOUT ? 5000 : 10000);
                     } catch (Exception e) {
 
                     }

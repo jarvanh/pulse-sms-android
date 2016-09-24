@@ -30,11 +30,12 @@ public class FeatureFlags {
         return featureFlags;
     }
     //endregion
-    // region old feature flags
+    // region feature flag strings
     private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
     private static final String FLAG_ANDROID_WEAR_SECOND_PAGE = "wear_second_page";
     private static final String FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification";
     private static final String FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES = "reorder_conversations";
+    private static final String FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT = "content_observer_timeout";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -50,6 +51,7 @@ public class FeatureFlags {
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean REORDER_CONVERSATIONS_ON_SENT_MESSAGE;
+    public boolean CONTENT_OBSERVER_TIMEOUT;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -59,6 +61,7 @@ public class FeatureFlags {
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         REORDER_CONVERSATIONS_ON_SENT_MESSAGE = getValue(sharedPrefs, FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES);
+        CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -73,6 +76,9 @@ public class FeatureFlags {
                 break;*/
             case FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES:
                 REORDER_CONVERSATIONS_ON_SENT_MESSAGE = flag;
+                break;
+            case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
+                CONTENT_OBSERVER_TIMEOUT = flag;
                 break;
         }
     }
