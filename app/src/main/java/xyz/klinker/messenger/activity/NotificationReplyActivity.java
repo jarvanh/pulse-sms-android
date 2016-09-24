@@ -75,6 +75,14 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        String text = messageInput.getText().toString();
+        if (!text.isEmpty()) {
+            DataSource source = DataSource.getInstance(this);
+            source.open();
+            source.insertDraft(conversationId, text, MimeType.TEXT_PLAIN);
+            source.close();
+        }
+
         hideKeyboard();
         slideOut();
         content.postDelayed(new Runnable() {
