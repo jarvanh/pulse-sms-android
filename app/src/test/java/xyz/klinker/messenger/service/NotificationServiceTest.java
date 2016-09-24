@@ -132,18 +132,21 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     private Conversation getConversation1() {
         Conversation conversation = new Conversation();
         conversation.title = "Luke Klinker";
+        conversation.phoneNumbers = "test";
         return conversation;
     }
 
     private Conversation getConversation2() {
         Conversation conversation = new Conversation();
         conversation.title = "Aaron Klinker";
+        conversation.phoneNumbers = "test";
         return conversation;
     }
 
     private Conversation getConversation3() {
         Conversation conversation = new Conversation();
         conversation.title = "Andrew Klinker";
+        conversation.phoneNumbers = "test";
         return conversation;
     }
 
