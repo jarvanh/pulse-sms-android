@@ -29,8 +29,11 @@ import android.text.format.Formatter;
 import android.util.Base64;
 import android.util.Log;
 
+import com.android.internal.util.ArrayUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -365,11 +368,14 @@ public class DataSource {
         if (array.length <= 0) {
             return new ArrayList<>();
         } else if (array.length == 1) {
-            where += Contact.COLUMN_PHONE_NUMBER + " = ?";
+            array[0] = "%" + ContactUtils.getPlainNumber(array[0]) + "%";
+            where += Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
         } else {
-            where = Contact.COLUMN_PHONE_NUMBER + " = ?";
+            array[0] = "%" + ContactUtils.getPlainNumber(array[0]) + "%";
+            where = Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
             for (int i = 1; i < array.length; i++) {
-                where += " OR " + Contact.COLUMN_PHONE_NUMBER + " = ?";
+                array[i] = "%" + ContactUtils.getPlainNumber(array[i]) + "%";
+                where += " OR " + Contact.COLUMN_PHONE_NUMBER + " LIKE ?";
             }
         }
 

@@ -277,7 +277,7 @@ public class ContactUtils {
                 Contact contact = new Contact();
 
                 contact.name = cursor.getString(0);
-                contact.phoneNumber = PhoneNumberUtils.clearFormatting(cursor.getString(1));
+                contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
 
                 ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
                 if (colorSet != null) {
@@ -354,4 +354,17 @@ public class ContactUtils {
         return null;
     }
 
+    /**
+     * Remove the country code and just grab the last 10 characters, since that is probably
+     * all we need to match in the database contact
+     */
+    public static String getPlainNumber(String number) {
+        number = number.replace("+", "");
+
+        if (number.length() > 10) {
+            return number.substring(number.length() - 10, number.length());
+        } else {
+            return number;
+        }
+    }
 }
