@@ -47,6 +47,8 @@ import xyz.klinker.messenger.util.SmsMmsUtils;
  */
 public class ContentObserverService extends Service {
 
+    public static boolean IS_RUNNING = false;
+
     private SmsContentObserver observer;
 
     @Nullable
@@ -63,12 +65,17 @@ public class ContentObserverService extends Service {
             getContentResolver().registerContentObserver(Telephony.Sms.CONTENT_URI, true, observer);
         }
 
+        IS_RUNNING = true;
+        ContentObserverRunCheckService.scheduleNextRun(this);
+
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        IS_RUNNING = false;
 
         if (observer != null) {
             getContentResolver().unregisterContentObserver(observer);
