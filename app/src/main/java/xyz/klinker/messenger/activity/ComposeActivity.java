@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -34,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
@@ -93,9 +95,16 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (contactEntry.getText().length() > 0) {
-                    showConversation();
-                }
+                dismissKeyboard();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (contactEntry.getText().length() > 0) {
+                            showConversation();
+                        }
+                    }
+                }, 100);
             }
         });
 
@@ -162,6 +171,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 }
             }
         }).start();
+    }
+
+    private void dismissKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(contactEntry.getWindowToken(), 0);
     }
 
     private void showConversation() {

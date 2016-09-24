@@ -159,9 +159,6 @@ public class MessengerActivity extends AppCompatActivity
 
             displayConversations();
         }
-
-        getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
-        getIntent().putExtra(EXTRA_FROM_NOTIFICATION, false);
     }
 
     @Override
@@ -514,19 +511,16 @@ public class MessengerActivity extends AppCompatActivity
         invalidateOptionsMenu();
         inSettings = false;
 
-        Bundle extras = getIntent().getExtras();
+        long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
+        long messageId = getIntent().getLongExtra(EXTRA_MESSAGE_ID, -1L);
 
-        if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID) &&
-                extras.containsKey(EXTRA_MESSAGE_ID)) {
-            conversationListFragment = ConversationListFragment
-                    .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0),
-                            getIntent().getLongExtra(EXTRA_MESSAGE_ID, 0));
-            getIntent().getExtras().putLong(EXTRA_CONVERSATION_ID, -1);
-            getIntent().getExtras().putLong(EXTRA_MESSAGE_ID, -1);
-        } else if (extras != null && extras.containsKey(EXTRA_CONVERSATION_ID)) {
-            conversationListFragment = ConversationListFragment
-                    .newInstance(getIntent().getLongExtra(EXTRA_CONVERSATION_ID, 0));
-            getIntent().getExtras().putLong(EXTRA_CONVERSATION_ID, -1);
+        if (messageId != -1L && convoId != -1L) {
+            conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
+            getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
+            getIntent().putExtra(EXTRA_MESSAGE_ID, -1L);
+        } else if (convoId != -1L) {
+            conversationListFragment = ConversationListFragment.newInstance(convoId);
+            getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
         } else {
             conversationListFragment = ConversationListFragment.newInstance();
         }

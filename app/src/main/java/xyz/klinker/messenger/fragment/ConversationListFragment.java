@@ -207,7 +207,6 @@ public class ConversationListFragment extends Fragment
             long conversationToOpen = getArguments().getLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
             if (conversationToOpen != 0) {
                 clickConversationWithId(conversationToOpen);
-                getArguments().remove(ARG_CONVERSATION_TO_OPEN_ID);
             }
         } else {
             Log.v("Conversation List", "no conversations to open");
@@ -225,8 +224,15 @@ public class ConversationListFragment extends Fragment
         }
     }
 
+    private Handler clickHandler;
     private void clickConversationAtPosition(final int position) {
-        new Handler().postDelayed(new Runnable() {
+        if (clickHandler == null) {
+            clickHandler = new Handler();
+        } else {
+            clickHandler.removeCallbacksAndMessages(null);
+        }
+
+        clickHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -408,7 +414,6 @@ public class ConversationListFragment extends Fragment
         if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
                     getArguments().getLong(ARG_MESSAGE_TO_OPEN_ID));
-            getArguments().remove(ARG_MESSAGE_TO_OPEN_ID);
         } else {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
@@ -418,7 +423,7 @@ public class ConversationListFragment extends Fragment
                     .replace(R.id.message_list_container, messageListFragment)
                     .commit();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         if (!Settings.get(getActivity()).useGlobalThemeColor) {
@@ -432,6 +437,7 @@ public class ConversationListFragment extends Fragment
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
         AnimationUtils.contractActivityFromConversation(getActivity());
+
 
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
