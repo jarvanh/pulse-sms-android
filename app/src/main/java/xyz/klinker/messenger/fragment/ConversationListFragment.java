@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
@@ -422,6 +423,9 @@ public class ConversationListFragment extends Fragment
         } else {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
+
+        getActivity().getIntent().putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, -1L);
+        getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
 
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
