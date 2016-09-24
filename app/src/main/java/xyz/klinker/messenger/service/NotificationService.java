@@ -319,6 +319,7 @@ public class NotificationService extends IntentService {
                 .setColor(conversation.color)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                 .setGroup(GROUP_KEY_MESSAGES)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build());
 
 
@@ -435,7 +436,7 @@ public class NotificationService extends IntentService {
         builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
 
         if (!conversation.mute) {
-            if (FeatureFlags.get(this).NO_NOTIFICATION_WHEN_CONVO_OPEN && CONVERSATION_ID_OPEN == conversation.id) {
+            if (CONVERSATION_ID_OPEN == conversation.id) {
                 // skip this notification since we are already on the conversation.
                 skipSummaryNotification = true;
             } else {
@@ -515,6 +516,7 @@ public class NotificationService extends IntentService {
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setPriority(Notification.PRIORITY_HIGH)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
 
         Intent delete = new Intent(this, NotificationDismissedService.class);

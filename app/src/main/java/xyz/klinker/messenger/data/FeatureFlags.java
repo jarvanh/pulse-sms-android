@@ -30,6 +30,12 @@ public class FeatureFlags {
         return featureFlags;
     }
     //endregion
+    // region old feature flags
+    private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
+    private static final String FLAG_ANDROID_WEAR_SECOND_PAGE = "wear_second_page";
+    private static final String FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification";
+    private static final String FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES = "reorder_conversations";
+    // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
             // none yet
@@ -42,11 +48,8 @@ public class FeatureFlags {
 
 
     // step 1
-    /*private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
-    public boolean MESSAGING_STYLE_NOTIFICATIONS;*/
-
-    private static final String FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification";
-    public boolean NO_NOTIFICATION_WHEN_CONVO_OPEN;
+    //public boolean MESSAGING_STYLE_NOTIFICATIONS;
+    public boolean REORDER_CONVERSATIONS_ON_NEW_MESSAGE;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -55,7 +58,7 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
-        NO_NOTIFICATION_WHEN_CONVO_OPEN = getValue(sharedPrefs, FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN);
+        REORDER_CONVERSATIONS_ON_NEW_MESSAGE = getValue(sharedPrefs, FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -68,8 +71,8 @@ public class FeatureFlags {
             /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
-            case FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN:
-                NO_NOTIFICATION_WHEN_CONVO_OPEN = flag;
+            case FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES:
+                REORDER_CONVERSATIONS_ON_NEW_MESSAGE = flag;
                 break;
         }
     }
