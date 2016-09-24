@@ -135,6 +135,7 @@ public class NotificationService extends IntentService {
                         conversation.ringtoneUri = c.ringtoneUri;
                         conversation.timestamp = c.timestamp;
                         conversation.mute = c.mute;
+                        conversation.groupConversation = c.phoneNumbers.contains(",");
 
                         if (c.privateNotifications) {
                             conversation.title = getString(R.string.new_message);
@@ -238,7 +239,7 @@ public class NotificationService extends IntentService {
             // build a messaging style notifation for Android Nougat
             messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
 
-            if (conversation.title.contains(", ")) {
+            if (conversation.groupConversation) {
                 ((NotificationCompat.MessagingStyle) messagingStyle)
                         .setConversationTitle(conversation.title);
             }
@@ -608,6 +609,7 @@ public class NotificationService extends IntentService {
         public long timestamp;
         public boolean mute;
         public boolean privateNotification;
+        public boolean groupConversation;
         public List<NotificationMessage> messages;
 
         private NotificationConversation() {
