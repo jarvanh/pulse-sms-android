@@ -26,6 +26,7 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 
 import java.util.List;
 
@@ -195,6 +196,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
             return;
         }
 
+        preference.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         preference.setSummary(conversation.title);
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
