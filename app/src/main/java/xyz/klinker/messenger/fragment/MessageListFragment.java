@@ -85,6 +85,7 @@ import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.AnimationUtils;
@@ -1171,6 +1172,16 @@ public class MessageListFragment extends Fragment implements
     public void setExtraMargin(int marginTop, int marginLeft) {
         this.extraMarginTop = marginTop;
         this.extraMarginLeft = marginLeft;
+    }
+
+    public void setConversationUpdateInfo(String newMessage) {
+        ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+
+        if (fragment != null && newMessage != null) {
+            fragment.setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
+                    getConversationId(), newMessage, true));
+        }
     }
 
 }

@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 
 /**
@@ -31,6 +33,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
     private static final String ACTION_UPDATED = "xyz.klinker.messenger.MESSAGE_UPDATED";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
+    private static final String ARG_NEW_MESSAGE_TEXT = "new_message_text";
 
     private MessageListFragment fragment;
 
@@ -41,6 +44,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         long conversationId = intent.getLongExtra(ARG_CONVERSATION_ID, -1);
+        String newMessageText = intent.getStringExtra(ARG_NEW_MESSAGE_TEXT);
 
         if (conversationId == -1) {
             return;
@@ -48,6 +52,10 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
         if (conversationId == fragment.getConversationId()) {
             fragment.loadMessages();
+
+            if (newMessageText != null) {
+                fragment.setConversationUpdateInfo(newMessageText);
+            }
         }
     }
 
@@ -55,8 +63,27 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
     public static void sendBroadcast(Context context, long conversationId) {
+        sendBroadcast(context, conversationId, null);
+    }
+
+    /**
+     * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
+     */
+    public static void sendBroadcast(Context context, Message message) {
+        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+            sendBroadcast(context, message.conversationId, message.data);
+        } else {
+            sendBroadcast(context, message.conversationId);
+        }
+    }
+
+    /**
+     * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
+     */
+    public static void sendBroadcast(Context context, long conversationId, String newMessageText) {
         Intent intent = new Intent(ACTION_UPDATED);
         intent.putExtra(ARG_CONVERSATION_ID, conversationId);
+        intent.putExtra(ARG_NEW_MESSAGE_TEXT, newMessageText);
         context.sendBroadcast(intent);
     }
 

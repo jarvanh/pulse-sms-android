@@ -172,7 +172,7 @@ public class ContentObserverService extends Service {
             insert.seen = true;
 
             source.insertMessage(insert, address, context);
-            MessageListUpdatedReceiver.sendBroadcast(context, insert.conversationId);
+            MessageListUpdatedReceiver.sendBroadcast(context, insert);
         }
 
     }

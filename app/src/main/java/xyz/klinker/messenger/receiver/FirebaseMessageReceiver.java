@@ -321,7 +321,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 Log.v(TAG, "sent message");
             }
 
-            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+            MessageListUpdatedReceiver.sendBroadcast(context, message);
             ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
                     message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
                     message.type != Message.TYPE_RECEIVED);
@@ -343,7 +343,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         source.updateMessageType(id, json.getInt("type"));
         Message message = source.getMessage(id);
         if (message != null) {
-            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+            MessageListUpdatedReceiver.sendBroadcast(context, message);
         }
         Log.v(TAG, "updated message type");
     }
@@ -354,7 +354,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         source.updateMessageType(id, json.getInt("message_type"));
         Message message = source.getMessage(id);
         if (message != null) {
-            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+            MessageListUpdatedReceiver.sendBroadcast(context, message);
         }
         Log.v(TAG, "updated message type");
     }
