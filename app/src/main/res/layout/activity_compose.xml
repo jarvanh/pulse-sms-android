@@ -59,6 +59,7 @@
         app:pressedTranslationZ="12dp"
         app:fabSize="normal"
         app:borderWidth="0dp"
+        android:contentDescription="@string/send_message"
         android:layout_below="@+id/toolbar_holder"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/compose_forward_margin"
