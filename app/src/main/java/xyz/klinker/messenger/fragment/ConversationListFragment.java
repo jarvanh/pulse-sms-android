@@ -36,6 +36,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -72,6 +73,8 @@ public class ConversationListFragment extends Fragment
     public  Snackbar archiveSnackbar;
     private ConversationListAdapter adapter;
     private ConversationListUpdatedReceiver updatedReceiver;
+
+    public ConversationListUpdatedReceiver.ConversationUpdateInfo updateInfo = null;
 
     public static ConversationListFragment newInstance() {
         return newInstance(-1);
@@ -396,6 +399,8 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public boolean onConversationExpanded(ConversationViewHolder viewHolder) {
+        updateInfo = null;
+
         if (expandedConversation != null) {
             return false;
         }
@@ -430,6 +435,7 @@ public class ConversationListFragment extends Fragment
             ActivityUtils.setTaskDescription(getActivity(),
                     viewHolder.conversation.title, viewHolder.conversation.colors.color);
         }
+
         return true;
     }
 
@@ -437,7 +443,6 @@ public class ConversationListFragment extends Fragment
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
         AnimationUtils.contractActivityFromConversation(getActivity());
-
 
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -459,6 +464,10 @@ public class ConversationListFragment extends Fragment
 
         if (viewHolder.conversation != null) {
             NotificationService.CONVERSATION_ID_OPEN = 0L;
+        }
+
+        if (FeatureFlags.get(getActivity()).REORDER_CONVERSATIONS_ON_SENT_MESSAGE && updateInfo != null) {
+            ConversationListUpdatedReceiver.sendBroadcast(getActivity(), updateInfo);
         }
     }
 
@@ -498,10 +507,17 @@ public class ConversationListFragment extends Fragment
             expandedConversation.conversation.snippet = m.data;
             expandedConversation.summary.setText(m.data);
         }
+
+        setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
+                expandedConversation.conversation.id, m.data, true));
     }
 
     public ConversationListAdapter getAdapter() {
         return adapter;
+    }
+
+    public void setConversationUpdateInfo(ConversationListUpdatedReceiver.ConversationUpdateInfo info) {
+        this.updateInfo = info;
     }
 
 }

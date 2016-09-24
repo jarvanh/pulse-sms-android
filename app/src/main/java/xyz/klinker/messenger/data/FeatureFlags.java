@@ -49,7 +49,7 @@ public class FeatureFlags {
 
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
-    public boolean REORDER_CONVERSATIONS_ON_NEW_MESSAGE;
+    public boolean REORDER_CONVERSATIONS_ON_SENT_MESSAGE;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -58,7 +58,7 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
-        REORDER_CONVERSATIONS_ON_NEW_MESSAGE = getValue(sharedPrefs, FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES);
+        REORDER_CONVERSATIONS_ON_SENT_MESSAGE = getValue(sharedPrefs, FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -72,7 +72,7 @@ public class FeatureFlags {
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
             case FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES:
-                REORDER_CONVERSATIONS_ON_NEW_MESSAGE = flag;
+                REORDER_CONVERSATIONS_ON_SENT_MESSAGE = flag;
                 break;
         }
     }

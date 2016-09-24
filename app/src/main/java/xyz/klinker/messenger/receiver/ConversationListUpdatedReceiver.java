@@ -152,10 +152,28 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
     }
 
     /**
+     * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
+     */
+    public static void sendBroadcast(Context context, ConversationUpdateInfo updateInfo) {
+        sendBroadcast(context, updateInfo.conversationId, updateInfo.snippet, updateInfo.read);
+    }
+
+    /**
      * Gets an intent filter that will pick up these broadcasts.
      */
     public static IntentFilter getIntentFilter() {
         return new IntentFilter(ACTION_UPDATED);
     }
 
+    public static class ConversationUpdateInfo {
+        public long conversationId;
+        public String snippet;
+        public boolean read;
+
+        public ConversationUpdateInfo(long conversationId, String snippet, boolean read) {
+            this.conversationId = conversationId;
+            this.snippet = snippet;
+            this.read = read;
+        }
+    }
 }
