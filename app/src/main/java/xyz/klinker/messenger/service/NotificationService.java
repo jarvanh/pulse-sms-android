@@ -174,6 +174,12 @@ public class NotificationService extends IntentService {
         Bitmap contactImage = ImageUtils.clipToCircle(
                 ImageUtils.getBitmap(this, conversation.imageUri));
 
+        try {
+            float height = getResources().getDimension(android.R.dimen.notification_large_icon_height);
+            float width = getResources().getDimension(android.R.dimen.notification_large_icon_width);
+            contactImage = Bitmap.createScaledBitmap(contactImage, (int) width, (int) height, true);
+        } catch (Exception e) { }
+        
         int defaults = Notification.DEFAULT_LIGHTS;
         if (Settings.get(this).vibrate) {
             defaults = defaults | Notification.DEFAULT_VIBRATE;
