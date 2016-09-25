@@ -50,36 +50,30 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_attach_image, parent, false);
 
-        return new ImageViewHolder(view);
+        final ImageViewHolder holder = new ImageViewHolder(view);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (callback != null) {
+                    callback.onImageSelected(holder.uri);
+                }
+            }
+        });
+
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        if (position == 0) {
-            Glide.with(holder.image.getContext())
-                    .load(R.drawable.ic_photo_gallery)
-                    .centerCrop()
-                    .into(holder.image);
-        } else {
-            images.moveToPosition(position - 1);
-            File file = new File(images.getString(images.getColumnIndex(MediaStore.MediaColumns.DATA)));
-            Uri uri = Uri.fromFile(file);
+    public void onBindViewHolder(ImageViewHolder holder, int position) {
+        images.moveToPosition(position);
+        File file = new File(images.getString(images.getColumnIndex(MediaStore.MediaColumns.DATA)));
+        Uri uri = Uri.fromFile(file);
 
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (callback != null) {
-                        callback.onImageSelected(holder.uri);
-                    }
-                }
-            });
-
-            holder.uri = uri;
-            Glide.with(holder.image.getContext())
-                    .load(uri)
-                    .centerCrop()
-                    .into(holder.image);
-        }
+        holder.uri = uri;
+        Glide.with(holder.image.getContext())
+                .load(uri)
+                .centerCrop()
+                .into(holder.image);
     }
 
     @Override
@@ -87,7 +81,7 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
         if (images == null) {
             return 0;
         } else {
-            return images.getCount() + 1;
+            return images.getCount();
         }
     }
 
