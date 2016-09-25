@@ -135,6 +135,7 @@ public class NotificationService extends IntentService {
                         conversation.ringtoneUri = c.ringtoneUri;
                         conversation.timestamp = c.timestamp;
                         conversation.mute = c.mute;
+                        conversation.phoneNumbers = c.phoneNumbers;
                         conversation.groupConversation = c.phoneNumbers.contains(",");
 
                         if (c.privateNotifications) {
@@ -193,6 +194,10 @@ public class NotificationService extends IntentService {
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
+
+        if (!conversation.groupConversation) {
+            builder.addPerson("tel:" + conversation.phoneNumbers);
+        }
 
         NotificationCompat.BigPictureStyle pictureStyle = null;
         NotificationCompat.InboxStyle inboxStyle = null;
@@ -307,7 +312,7 @@ public class NotificationService extends IntentService {
             }
         }
 
-        builder.setPublicVersion(new NotificationCompat.Builder(this)
+        NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setContentTitle(conversation.title)
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
@@ -319,8 +324,13 @@ public class NotificationService extends IntentService {
                 .setColor(conversation.color)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                 .setGroup(GROUP_KEY_MESSAGES)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .build());
+                .setVisibility(Notification.VISIBILITY_PUBLIC);
+
+        if (!conversation.groupConversation) {
+            publicVersion.addPerson("tel:" + conversation.phoneNumbers);
+        }
+
+        builder.setPublicVersion(publicVersion.build());
 
 
         // one thing to keep in mind here... my adding only a wearable extender to the notification,
@@ -518,7 +528,7 @@ public class NotificationService extends IntentService {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
-
+        
         Intent delete = new Intent(this, NotificationDismissedService.class);
         PendingIntent pendingDelete = PendingIntent.getService(this, 0,
                 delete, PendingIntent.FLAG_ONE_SHOT);
@@ -612,6 +622,7 @@ public class NotificationService extends IntentService {
         public boolean mute;
         public boolean privateNotification;
         public boolean groupConversation;
+        public String phoneNumbers;
         public List<NotificationMessage> messages;
 
         private NotificationConversation() {
