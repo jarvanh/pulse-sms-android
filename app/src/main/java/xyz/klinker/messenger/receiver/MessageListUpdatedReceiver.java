@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.service.NotificationService;
 
 /**
  * Receiver that handles updating the message list when a new message is received for the
@@ -52,6 +53,10 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
         if (conversationId == fragment.getConversationId()) {
             fragment.loadMessages();
+
+            if (NotificationService.CONVERSATION_ID_OPEN == conversationId) {
+                fragment.setDismissOnStartup();
+            }
 
             if (newMessageText != null) {
                 fragment.setConversationUpdateInfo(newMessageText);

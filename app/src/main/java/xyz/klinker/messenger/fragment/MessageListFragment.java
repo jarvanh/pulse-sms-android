@@ -160,6 +160,7 @@ public class MessageListFragment extends Fragment implements
     private View removeImage;
     private BroadcastReceiver updatedReceiver;
     private boolean dismissNotification = false;
+    private boolean dismissOnStartup = false;
     private boolean textChanged = false;
     private List<Draft> drafts;
 
@@ -298,6 +299,11 @@ public class MessageListFragment extends Fragment implements
     public void onStart() {
         super.onStart();
         dismissNotification = true;
+
+        if (dismissOnStartup) {
+            dismissNotification();
+            dismissOnStartup = false;
+        }
     }
 
     @Override
@@ -1182,6 +1188,10 @@ public class MessageListFragment extends Fragment implements
             fragment.setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
                     getConversationId(), newMessage, true));
         }
+    }
+
+    public void setDismissOnStartup() {
+        this.dismissOnStartup = true;
     }
 
 }
