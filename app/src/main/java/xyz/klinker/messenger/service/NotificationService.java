@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
@@ -33,6 +34,7 @@ import android.text.Spanned;
 import android.util.LongSparseArray;
 import android.view.WindowManager;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,8 +191,7 @@ public class NotificationService extends IntentService {
                 .setOnlyAlertOnce(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
-                .setSound(Uri.parse(conversation.ringtoneUri == null ?
-                        Settings.get(this).ringtone : conversation.ringtoneUri))
+                .setSound(getRingtone(conversation))
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
@@ -528,7 +529,7 @@ public class NotificationService extends IntentService {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
-        
+
         Intent delete = new Intent(this, NotificationDismissedService.class);
         PendingIntent pendingDelete = PendingIntent.getService(this, 0,
                 delete, PendingIntent.FLAG_ONE_SHOT);
@@ -604,6 +605,43 @@ public class NotificationService extends IntentService {
         } else {
             return Html.fromHtml(builder.toString());
         }
+    }
+
+    private Uri getRingtone(NotificationConversation conversation) {
+        String globalUri = Settings.get(this).ringtone;
+
+        if (conversation.ringtoneUri == null || conversation.ringtoneUri.isEmpty()) {
+            // there is no conversation specific ringtone defined
+
+            if (globalUri == null || globalUri.isEmpty() || !ringtoneExists(globalUri)) {
+                // there is no global ringtone defined, or it doesn't exist on the system
+                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            } else {
+                // the global ringtone is available to use
+                return Uri.parse(globalUri);
+            }
+        } else {
+            if (ringtoneExists(conversation.ringtoneUri)) {
+                // conversation ringtone exists and can be played
+                return Uri.parse(conversation.ringtoneUri);
+            } else {
+                // the global ringtone is available to use
+                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            }
+        }
+    }
+
+    private boolean ringtoneExists(String uri) {
+        try {
+            InputStream stream = getContentResolver().openInputStream(Uri.parse(uri));
+
+            if (stream != null) {
+                stream.close();
+                return true;
+            }
+        } catch (Exception e) { }
+
+        return false;
     }
 
     @VisibleForTesting

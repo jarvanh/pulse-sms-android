@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import xyz.klinker.messenger.R;
 
