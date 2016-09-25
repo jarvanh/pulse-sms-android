@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:id="@+id/edit_text"
-        android:hint="@null" />
+        android:hint="@null"
+        android:inputType="textCapSentences" />
 
 </FrameLayout>
