@@ -1,1 +1,1 @@
-v1.4 contains a brand new Android TV app, new messaging style notifications for Nougat, tons of improvements on various things, lots of bug fixes, and a ton of background work for future features.
+v1.5 adds a conversation setting for "private conversations" that disables notification text, adds the ability to resend failed SMS, an option for an "only light" theme, and more little feature requests, bug fixes, and improvements than I want to count.
