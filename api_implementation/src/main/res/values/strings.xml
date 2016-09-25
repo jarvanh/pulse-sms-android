@@ -56,5 +56,6 @@
     <string name="api_confirm_password">Please confirm your password:</string>
     <string name="api_wrong_password">Confirmation failed. Is your password correct?</string>
     <string name="api_confirm">Confirm</string>
+    <string name="api_continue">Continue</string>
 
 </resources>
