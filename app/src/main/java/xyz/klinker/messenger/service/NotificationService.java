@@ -353,6 +353,18 @@ public class NotificationService extends IntentService {
                 .setAllowFreeFormInput(true)
                 .build();
 
+
+        // Android wear extender (add a second page with message history
+        NotificationCompat.BigTextStyle secondPageStyle = new NotificationCompat.BigTextStyle();
+        secondPageStyle.setBigContentTitle(conversation.title)
+                .bigText(getWearableSecondPageConversation(conversation));
+        NotificationCompat.Builder wear =
+                new NotificationCompat.Builder(this)
+                        .setStyle(secondPageStyle);
+
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender().addPage(wear.build());
+
         PendingIntent pendingReply;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !DEBUG_QUICK_REPLY) {
             // with Android N, we only need to show the the reply service intent through the wearable extender
@@ -367,6 +379,8 @@ public class NotificationService extends IntentService {
                     .build();
 
             if (!conversation.privateNotification) builder.addAction(action);
+
+            wearableExtender.addAction(action);
         } else {
             // on older versions, we have to show the reply activity button as an action and add the remote input to it
             // this will allow it to be used on android wear (we will have to handle this from the activity)
@@ -384,6 +398,9 @@ public class NotificationService extends IntentService {
                         .build();
 
                 if (!conversation.privateNotification) builder.addAction(action);
+
+                action.icon = R.drawable.ic_reply_white;
+                wearableExtender.addAction(action);
             } else {
                 NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
@@ -391,6 +408,9 @@ public class NotificationService extends IntentService {
                         .build();
 
                 if (!conversation.privateNotification) builder.addAction(action);
+
+                action.icon = R.drawable.ic_reply_white;
+                wearableExtender.addAction(action);
             }
         }
 
@@ -411,15 +431,8 @@ public class NotificationService extends IntentService {
         PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
                 open, PendingIntent.FLAG_ONE_SHOT);
 
-        // we want to provide different resources so that wearable can have a white icon in most places
-        // since these icons aren't even shown in Nougat.
-        if (!conversation.privateNotification) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
-            } else {
-                builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
-            }
-        }
+        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
+        builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
 
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
@@ -444,17 +457,9 @@ public class NotificationService extends IntentService {
             }
         }
 
-        // Android wear extender (add a second page with message history
-        NotificationCompat.BigTextStyle secondPageStyle = new NotificationCompat.BigTextStyle();
-        secondPageStyle.setBigContentTitle(conversation.title)
-                .bigText(getWearableSecondPageConversation(conversation));
-        NotificationCompat.Builder wear =
-                new NotificationCompat.Builder(this)
-                        .setStyle(secondPageStyle);
-
         // apply the extenders to the notification
         builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
-        builder.extend(new NotificationCompat.WearableExtender().addPage(wear.build()));
+        builder.extend(wearableExtender);
 
         if (!conversation.mute) {
             if (CONVERSATION_ID_OPEN == conversation.id) {
