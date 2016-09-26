@@ -153,9 +153,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.position = absolutePosition;
 
         if (conversation.imageUri == null) {
-            Glide.with(holder.image.getContext())
-                    .load(new ColorDrawable(conversation.colors.color))
-                    .into(holder.image);
+            holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
             } else {

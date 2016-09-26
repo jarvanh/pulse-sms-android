@@ -202,9 +202,11 @@ public class NotificationService extends IntentService {
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
 
-        if (!conversation.groupConversation) {
-            builder.addPerson("tel:" + conversation.phoneNumbers);
-        }
+        try {
+            if (!conversation.groupConversation) {
+                builder.addPerson("tel:" + conversation.phoneNumbers);
+            }
+        } catch (Exception e) { }
 
         NotificationCompat.BigPictureStyle pictureStyle = null;
         NotificationCompat.InboxStyle inboxStyle = null;
@@ -333,9 +335,11 @@ public class NotificationService extends IntentService {
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
-        if (!conversation.groupConversation) {
-            publicVersion.addPerson("tel:" + conversation.phoneNumbers);
-        }
+        try {
+            if (!conversation.groupConversation) {
+                publicVersion.addPerson("tel:" + conversation.phoneNumbers);
+            }
+        } catch (Exception e) { }
 
         builder.setPublicVersion(publicVersion.build());
 
@@ -614,26 +618,30 @@ public class NotificationService extends IntentService {
     }
 
     private Uri getRingtone(NotificationConversation conversation) {
-        String globalUri = Settings.get(this).ringtone;
+        try {
+            String globalUri = Settings.get(this).ringtone;
 
-        if (conversation.ringtoneUri == null || conversation.ringtoneUri.isEmpty()) {
-            // there is no conversation specific ringtone defined
+            if (conversation.ringtoneUri == null || conversation.ringtoneUri.isEmpty()) {
+                // there is no conversation specific ringtone defined
 
-            if (globalUri == null || globalUri.isEmpty() || !ringtoneExists(globalUri)) {
-                // there is no global ringtone defined, or it doesn't exist on the system
-                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                if (globalUri == null || globalUri.isEmpty() || !ringtoneExists(globalUri)) {
+                    // there is no global ringtone defined, or it doesn't exist on the system
+                    return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                } else {
+                    // the global ringtone is available to use
+                    return Uri.parse(globalUri);
+                }
             } else {
-                // the global ringtone is available to use
-                return Uri.parse(globalUri);
+                if (ringtoneExists(conversation.ringtoneUri)) {
+                    // conversation ringtone exists and can be played
+                    return Uri.parse(conversation.ringtoneUri);
+                } else {
+                    // the global ringtone is available to use
+                    return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                }
             }
-        } else {
-            if (ringtoneExists(conversation.ringtoneUri)) {
-                // conversation ringtone exists and can be played
-                return Uri.parse(conversation.ringtoneUri);
-            } else {
-                // the global ringtone is available to use
-                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            }
+        } catch (Exception e) {
+            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
     }
 

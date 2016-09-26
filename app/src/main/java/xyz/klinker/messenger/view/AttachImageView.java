@@ -26,6 +26,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.AttachImageListAdapter;
@@ -70,6 +71,8 @@ public class AttachImageView extends RecyclerView {
                         setLayoutManager(new GridLayoutManager(getContext(),
                                 getResources().getInteger(R.integer.images_column_count)));
                         setAdapter(new AttachImageListAdapter(images, callback));
+
+                        Log.v("adapter", "count: " + getAdapter().getItemCount());
                     }
                 });
             }
