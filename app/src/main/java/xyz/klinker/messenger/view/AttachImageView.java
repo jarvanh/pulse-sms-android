@@ -51,7 +51,7 @@ public class AttachImageView extends RecyclerView {
         init(color);
     }
 
-    private void init(int color) {
+    private void init(final int color) {
         ColorUtils.changeRecyclerOverscrollColors(this, color);
         final Handler handler = new Handler();
 
@@ -70,7 +70,7 @@ public class AttachImageView extends RecyclerView {
                     public void run() {
                         setLayoutManager(new GridLayoutManager(getContext(),
                                 getResources().getInteger(R.integer.images_column_count)));
-                        setAdapter(new AttachImageListAdapter(images, callback));
+                        setAdapter(new AttachImageListAdapter(images, callback, color));
 
                         Log.v("adapter", "count: " + getAdapter().getItemCount());
                     }

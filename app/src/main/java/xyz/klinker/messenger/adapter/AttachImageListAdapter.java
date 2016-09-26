@@ -17,12 +17,14 @@
 package xyz.klinker.messenger.adapter;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
@@ -39,10 +41,12 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
 
     private Cursor images;
     private ImageSelectedListener callback;
+    private int colorForMediaTile;
 
-    public AttachImageListAdapter(Cursor images, ImageSelectedListener callback) {
+    public AttachImageListAdapter(Cursor images, ImageSelectedListener callback, int colorForMediaTile) {
         this.images = images;
         this.callback = callback;
+        this.colorForMediaTile = colorForMediaTile;
     }
 
     @Override
@@ -56,7 +60,18 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
         if (position == 0) {
+            holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.image.setImageResource(R.drawable.ic_photo_gallery);
+            holder.image.setBackgroundColor(colorForMediaTile);
+
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (callback != null) {
+                        callback.onGalleryPicker();
+                    }
+                }
+            });
         } else {
             images.moveToPosition(position - 1);
             File file = new File(images.getString(images.getColumnIndex(MediaStore.MediaColumns.DATA)));
@@ -72,6 +87,7 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
             });
 
             holder.uri = uri;
+            holder.image.setBackgroundColor(Color.TRANSPARENT);
             Glide.with(holder.image.getContext())
                     .load(uri)
                     .centerCrop()

@@ -133,6 +133,7 @@ public class MessageListFragment extends Fragment implements
     private static final int RESULT_VIDEO_REQUEST = 3;
     private static final int RESULT_GIPHY_REQUEST = 4;
     private static final int PERMISSION_LOCATION_REQUEST = 5;
+    private static final int RESULT_GALLERY_PICKER_REQUEST = 6;
 
     private DataSource source;
     private View appBarLayout;
@@ -1020,6 +1021,10 @@ public class MessageListFragment extends Fragment implements
                 attachImage(data.getData());
                 attachedMimeType = MimeType.IMAGE_GIF;
             }
+        } else if (requestCode == RESULT_GALLERY_PICKER_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            onBackPressed();
+            attachImage(data.getData());
         }
     }
 
@@ -1055,6 +1060,14 @@ public class MessageListFragment extends Fragment implements
     public void onImageSelected(Uri uri) {
         onBackPressed();
         attachImage(uri);
+    }
+
+    @Override
+    public void onGalleryPicker() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_GALLERY_PICKER_REQUEST);
     }
 
     @Override

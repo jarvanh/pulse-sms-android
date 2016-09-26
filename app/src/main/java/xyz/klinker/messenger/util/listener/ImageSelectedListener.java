@@ -23,4 +23,5 @@ import android.net.Uri;
  */
 public interface ImageSelectedListener {
     void onImageSelected(Uri uri);
+    void onGalleryPicker();
 }
