@@ -74,15 +74,21 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         // newest version
 
         if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE conversation ADD COLUMN archive integer not null DEFAULT 0");
+             try {
+                 db.execSQL("ALTER TABLE conversation ADD COLUMN archive integer not null DEFAULT 0");
+             } catch(Exception e) { }
         }
 
         if (oldVersion < 3) {
-            db.execSQL(new Contact().getCreateStatement());
+             try {
+                 db.execSQL(new Contact().getCreateStatement());
+             } catch(Exception e) { }
         }
 
         if (oldVersion < 4) {
-            db.execSQL("ALTER TABLE conversation ADD COLUMN private_notifications integer not null DEFAULT 0");
+             try {
+                db.execSQL("ALTER TABLE conversation ADD COLUMN private_notifications integer not null DEFAULT 0");
+             } catch(Exception e) { }
         }
     }
 
