@@ -828,8 +828,7 @@ public class MessageListFragment extends Fragment implements
                 m.from = null;
                 m.color = null;
 
-                if (adapter.getItemCount() == 1 &&
-                        adapter.getItemViewType(0) == Message.TYPE_INFO) {
+                if (adapter.getItemViewType(0) == Message.TYPE_INFO) {
                     source.deleteMessage(adapter.getItemId(0));
                 }
 

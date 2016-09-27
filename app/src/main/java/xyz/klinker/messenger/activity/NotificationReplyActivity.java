@@ -76,7 +76,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String text = messageInput.getText().toString();
-        if (!text.isEmpty()) {
+        if (!text.isEmpty() && sendButton.isEnabled()) {
             DataSource source = DataSource.getInstance(this);
             source.open();
             source.insertDraft(conversationId, text, MimeType.TEXT_PLAIN);
