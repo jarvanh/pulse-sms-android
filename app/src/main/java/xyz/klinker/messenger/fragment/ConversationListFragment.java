@@ -424,8 +424,10 @@ public class ConversationListFragment extends Fragment
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
 
-        getActivity().getIntent().putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, -1L);
-        getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
+        if (getActivity() != null)
+                getActivity().getIntent().putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, -1L);
+        if (getArguments() != null)
+                getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
 
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
