@@ -40,6 +40,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -137,7 +138,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         showContactImage();
 
         NotificationManagerCompat.from(this).cancel((int) conversationId);
-        new ApiUtils().dismissNotification(Settings.get(this).accountId, conversationId);
+        new ApiUtils().dismissNotification(Account.get(this).accountId, conversationId);
 
         alphaIn(dimBackground, 300, 0);
 

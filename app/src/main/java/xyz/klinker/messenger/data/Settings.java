@@ -57,16 +57,6 @@ public class Settings {
     public String fontSize;
     public String themeColorString;
 
-    // account info
-    public boolean primary;
-    public String myName;
-    public String myPhoneNumber;
-    public String deviceId;
-    public String accountId;
-    public String salt;
-    public String passhash;
-    public String key;
-
     // configuration
     public int smallFont;
     public int mediumFont;
@@ -114,16 +104,6 @@ public class Settings {
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
         this.useGlobalThemeColor = !themeColorString.equals("default");
-
-        // account info
-        this.primary = sharedPrefs.getBoolean(context.getString(R.string.pref_primary), false);
-        this.myName = sharedPrefs.getString(context.getString(R.string.pref_my_name), null);
-        this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.pref_my_phone_number), null);
-        this.deviceId = sharedPrefs.getString(context.getString(R.string.pref_device_id), null);
-        this.accountId = sharedPrefs.getString(context.getString(R.string.pref_account_id), null);
-        this.salt = sharedPrefs.getString(context.getString(R.string.pref_salt), null);
-        this.passhash = sharedPrefs.getString(context.getString(R.string.pref_passhash), null);
-        this.key = sharedPrefs.getString("key", null);
 
         // configuration
         if (this.ringtone == null) {

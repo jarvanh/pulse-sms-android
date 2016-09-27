@@ -46,9 +46,9 @@ import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -56,7 +56,6 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
-import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.listener.DirectExecutor;
@@ -71,7 +70,7 @@ public class ApiDownloadService extends Service {
 
     public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 500;
 
-    private Settings settings;
+    private Account account;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
@@ -102,11 +101,10 @@ public class ApiDownloadService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                settings = Settings.get(getApplicationContext());
+                account = Account.get(getApplicationContext());
 
                 apiUtils = new ApiUtils();
-                encryptionUtils = new EncryptionUtils(new KeyUtils().createKey(settings.passhash,
-                        settings.accountId, settings.salt));
+                encryptionUtils = account.getEncryptor();
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
                 source.setUpload(false);
@@ -143,7 +141,7 @@ public class ApiDownloadService extends Service {
         int pageNumber = 1;
         do {
             MessageBody[] messages = apiUtils.getApi().message()
-                    .list(settings.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
+                    .list(account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
 
             if (messages != null) {
                 if (messages.length == 0) {
@@ -187,7 +185,7 @@ public class ApiDownloadService extends Service {
     private void downloadConversations() {
         long startTime = System.currentTimeMillis();
         ConversationBody[] conversations = apiUtils.getApi().conversation()
-                .list(settings.accountId);
+                .list(account.accountId);
 
         if (conversations != null) {
             for (ConversationBody body : conversations) {
@@ -226,7 +224,7 @@ public class ApiDownloadService extends Service {
     private void retryConversationDownloadFromBadDecryption() {
         long startTime = System.currentTimeMillis();
         ConversationBody[] conversations = apiUtils.getApi().conversation()
-                .list(settings.accountId);
+                .list(account.accountId);
 
         if (conversations != null) {
             for (ConversationBody body : conversations) {
@@ -258,7 +256,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadBlacklists() {
         long startTime = System.currentTimeMillis();
-        BlacklistBody[] blacklists = apiUtils.getApi().blacklist().list(settings.accountId);
+        BlacklistBody[] blacklists = apiUtils.getApi().blacklist().list(account.accountId);
 
         if (blacklists != null) {
             for (BlacklistBody body : blacklists) {
@@ -275,7 +273,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadScheduledMessages() {
         long startTime = System.currentTimeMillis();
-        ScheduledMessageBody[] messages = apiUtils.getApi().scheduled().list(settings.accountId);
+        ScheduledMessageBody[] messages = apiUtils.getApi().scheduled().list(account.accountId);
 
         if (messages != null) {
             for (ScheduledMessageBody body : messages) {
@@ -292,7 +290,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadDrafts() {
         long startTime = System.currentTimeMillis();
-        DraftBody[] drafts = apiUtils.getApi().draft().list(settings.accountId);
+        DraftBody[] drafts = apiUtils.getApi().draft().list(account.accountId);
 
         if (drafts != null) {
             for (DraftBody body : drafts) {
@@ -309,7 +307,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadContacts() {
         long startTime = System.currentTimeMillis();
-        ContactBody[] contacts = apiUtils.getApi().contact().list(settings.accountId);
+        ContactBody[] contacts = apiUtils.getApi().contact().list(account.accountId);
 
         if (contacts != null) {
             List<Contact> contactList = new ArrayList<>();
@@ -359,7 +357,7 @@ public class ApiDownloadService extends Service {
 
     private void processMediaDownload(NotificationManagerCompat manager,
                                       NotificationCompat.Builder builder) {
-        apiUtils.saveFirebaseFolderRef(Settings.get(this).accountId);
+        apiUtils.saveFirebaseFolderRef(account.accountId);
 
         Cursor media = source.getFirebaseMediaMessages();
         if (media.moveToFirst()) {

@@ -27,6 +27,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
@@ -53,9 +54,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
     private boolean initSetupPreference() {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
-        Settings settings = Settings.get(getActivity());
+        Account account = Account.get(getActivity());
 
-        if ((settings.accountId == null || settings.deviceId == null) && preference != null) {
+        if ((account.accountId == null || account.deviceId == null) && preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -113,10 +114,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Settings settings = Settings.get(getActivity());
-                                final String accountId = settings.accountId;
-                                settings.setValue(getString(R.string.pref_account_id), null);
-                                settings.setValue(getString(R.string.pref_device_id), null);
+                                final Account account = Account.get(getActivity());
+                                final String accountId = account.accountId;
+                                account.clearAccount();
 
                                 new Thread(new Runnable() {
                                     @Override
@@ -147,7 +147,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
      * @return the device id.
      */
     private String getDeviceId() {
-        return Settings.get(getContext()).deviceId;
+        return Account.get(getContext()).deviceId;
     }
 
     @Override

@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Base64;
 import android.util.Log;
 
 import com.klinker.android.send_message.Utils;
@@ -33,14 +32,12 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.crypto.spec.SecretKeySpec;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
@@ -57,7 +54,6 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
-import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
@@ -84,15 +80,14 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void process(Context context, Intent intent) {
-        Settings settings = Settings.get(context);
+        Account account = Account.get(context);
 
         // received a message without having initialized an account yet
-        if (settings.key == null) {
+        if (account.key == null) {
             return;
         }
 
-        encryptionUtils = new EncryptionUtils(
-                new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES"));
+        encryptionUtils = account.getEncryptor();
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);
@@ -212,13 +207,12 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void removeAccount(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        Settings settings = Settings.get(context);
+        Account account = Account.get(context);
 
-        if (json.getString("id").equals(settings.accountId)) {
+        if (json.getString("id").equals(account.accountId)) {
             Log.v(TAG, "clearing account");
             source.clearTables();
-            settings.removeValue("account_id");
-            settings.removeValue("device_id");
+            account.clearAccount();
         } else {
             Log.v(TAG, "ids do not match, did not clear account");
         }
@@ -261,7 +255,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     @Override
                     public void run() {
                         ApiUtils apiUtils = new ApiUtils();
-                        apiUtils.saveFirebaseFolderRef(Settings.get(context).accountId);
+                        apiUtils.saveFirebaseFolderRef(Account.get(context).accountId);
 
                         final File file = new File(context.getFilesDir(),
                                 message.id + MimeType.getExtension(message.mimeType));
@@ -299,7 +293,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 message.type = Message.TYPE_SENT;
             }
 
-            if (Settings.get(context).primary && isSending) {
+            if (Account.get(context).primary && isSending) {
                 while (downloading.get()) {
                     Log.v(TAG, "waiting for download before sending");
                     try { Thread.sleep(1000); } catch (Exception e) { }
@@ -649,7 +643,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void forwardToPhone(JSONObject json, DataSource source, Context context)
             throws JSONException {
 
-        if (!Settings.get(context).primary) {
+        if (!Account.get(context).primary) {
             return;
         }
 

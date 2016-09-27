@@ -28,6 +28,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.TvBrowseFragment;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -41,8 +42,8 @@ public class MessengerTvActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Settings settings = Settings.get(this);
-        if (settings.accountId == null) {
+        Account account = Account.get(this);
+        if (account.accountId == null) {
             startActivity(new Intent(this, InitialLoadTvActivity.class));
             finish();
             return;

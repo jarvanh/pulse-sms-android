@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.NotificationManagerCompat;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -42,7 +43,7 @@ public class NotificationMarkReadService extends IntentService {
         unseenMessages.close();
         source.close();
 
-        new ApiUtils().dismissNotification(Settings.get(this).accountId,
+        new ApiUtils().dismissNotification(Account.get(this).accountId,
                 conversationId);
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, conversation.snippet, true);

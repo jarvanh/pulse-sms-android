@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.MimeType;
 
 /**
@@ -71,7 +72,7 @@ public class SendUtils {
             }
         }
 
-        if (xyz.klinker.messenger.data.Settings.get(context).primary) {
+        if (Account.get(context).primary) {
             transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
         }
 

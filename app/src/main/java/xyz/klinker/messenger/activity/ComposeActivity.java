@@ -52,6 +52,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -279,7 +280,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 contactEntry.getAdapter().setShowMobileOnly(item.isChecked());
                 contactEntry.getAdapter().notifyDataSetChanged();
 
-                new ApiUtils().updateMobileOnly(settings.accountId, newValue);
+                new ApiUtils().updateMobileOnly(Account.get(this).accountId, newValue);
 
                 return true;
         }

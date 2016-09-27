@@ -50,9 +50,9 @@ import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -60,7 +60,6 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
-import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.util.PaginationUtils;
 import xyz.klinker.messenger.util.listener.DirectExecutor;
@@ -74,7 +73,7 @@ public class ApiUploadService extends Service {
 
     public static final int MESSAGE_UPLOAD_PAGE_SIZE = 500;
 
-    private Settings settings;
+    private Account account;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
@@ -105,10 +104,9 @@ public class ApiUploadService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                settings = Settings.get(getApplicationContext());
+                account = Account.get(getApplicationContext());
                 apiUtils = new ApiUtils();
-                encryptionUtils = new EncryptionUtils(new KeyUtils().createKey(settings.passhash,
-                        settings.accountId, settings.salt));
+                encryptionUtils = account.getEncryptor();
                 source = DataSource.getInstance(getApplicationContext());
                 source.open();
 
@@ -156,7 +154,7 @@ public class ApiUploadService extends Service {
             List<List<MessageBody>> pages = PaginationUtils.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<MessageBody> page : pages) {
-                AddMessagesRequest request = new AddMessagesRequest(settings.accountId, page.toArray(new MessageBody[0]));
+                AddMessagesRequest request = new AddMessagesRequest(account.accountId, page.toArray(new MessageBody[0]));
                 results.add(apiUtils.getApi().message().add(request));
 
                 Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
@@ -192,7 +190,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddConversationRequest request =
-                    new AddConversationRequest(settings.accountId, conversations);
+                    new AddConversationRequest(account.accountId, conversations);
             Object result = apiUtils.getApi().conversation().add(request);
 
             if (result == null) {
@@ -224,7 +222,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddContactRequest request =
-                    new AddContactRequest(settings.accountId, contacts);
+                    new AddContactRequest(account.accountId, contacts);
             Object result = apiUtils.getApi().contact().add(request);
 
             if (result == null) {
@@ -255,7 +253,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddBlacklistRequest request =
-                    new AddBlacklistRequest(settings.accountId, blacklists);
+                    new AddBlacklistRequest(account.accountId, blacklists);
             Object result = apiUtils.getApi().blacklist().add(request);
 
             if (result == null) {
@@ -286,7 +284,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddScheduledMessageRequest request =
-                    new AddScheduledMessageRequest(settings.accountId, messages);
+                    new AddScheduledMessageRequest(account.accountId, messages);
             Object result = apiUtils.getApi().scheduled().add(request);
 
             if (result == null) {
@@ -315,7 +313,7 @@ public class ApiUploadService extends Service {
                 drafts[cursor.getPosition()] = draft;
             } while (cursor.moveToNext());
 
-            AddDraftRequest request = new AddDraftRequest(settings.accountId, drafts);
+            AddDraftRequest request = new AddDraftRequest(account.accountId, drafts);
             Object result = apiUtils.getApi().draft().add(request);
 
             if (result == null) {
@@ -362,7 +360,7 @@ public class ApiUploadService extends Service {
 
     private void processMediaUpload(NotificationManagerCompat manager,
                                     NotificationCompat.Builder builder) {
-        apiUtils.saveFirebaseFolderRef(Settings.get(this).accountId);
+        apiUtils.saveFirebaseFolderRef(account.accountId);
 
         Cursor media = source.getAllMediaMessages(NUM_MEDIA_TO_UPLOAD);
         if (media.moveToFirst()) {

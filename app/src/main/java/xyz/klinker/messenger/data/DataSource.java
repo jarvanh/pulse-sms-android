@@ -26,21 +26,15 @@ import android.support.annotation.VisibleForTesting;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.Formatter;
-import android.util.Base64;
 import android.util.Log;
-
-import com.android.internal.util.ArrayUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
 import xyz.klinker.messenger.data.model.Blacklist;
@@ -50,10 +44,8 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
-import xyz.klinker.messenger.encryption.KeyUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
@@ -92,7 +84,7 @@ public class DataSource {
             instance = new DataSource(context);
         }
 
-        instance.accountId = Settings.get(context).accountId;
+        instance.accountId = Account.get(context).accountId;
         return instance;
     }
 
@@ -109,24 +101,8 @@ public class DataSource {
     }
 
     public void createEncryptionUtils(final Context context) {
-        if (Settings.get(context).accountId != null && encryptionUtils == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Settings settings = Settings.get(context);
-
-                    if (settings.key == null) {
-                        KeyUtils keyUtils = new KeyUtils();
-                        SecretKey key = keyUtils.createKey(settings.passhash,
-                                settings.accountId, settings.salt);
-                        settings.setValue("key", Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
-                    }
-
-                    SecretKey key = new SecretKeySpec(Base64.decode(settings.key, Base64.DEFAULT), "AES");
-                    encryptionUtils = new EncryptionUtils(key);
-                }
-            }).start();
-        }
+        final Account account = Account.get(context);
+        encryptionUtils = account.getEncryptor();
     }
 
     /**

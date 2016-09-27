@@ -55,6 +55,7 @@ import java.util.NoSuchElementException;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
@@ -187,7 +188,7 @@ public class MessengerActivity extends AppCompatActivity
             PermissionsUtils.startMainPermissionRequest(this);
         }
 
-        if (Settings.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
+        if (Account.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
             PermissionsUtils.setDefaultSmsApp(this);
         }
     }
@@ -228,12 +229,12 @@ public class MessengerActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Settings settings = Settings.get(getApplicationContext());
+                Account account = Account.get(getApplicationContext());
                 try {
                     ((TextView) findViewById(R.id.drawer_header_my_name))
-                            .setText(settings.myName);
+                            .setText(account.myName);
                     ((TextView) findViewById(R.id.drawer_header_my_phone_number))
-                            .setText(PhoneNumberUtils.format(settings.myPhoneNumber));
+                            .setText(PhoneNumberUtils.format(account.myPhoneNumber));
                     initSnooze();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -284,7 +285,7 @@ public class MessengerActivity extends AppCompatActivity
 
                         Settings.get(getApplicationContext()).setValue(
                                 getString(R.string.pref_snooze), snoozeTil);
-                        new ApiUtils().updateSnooze(Settings.get(getApplicationContext()).accountId,
+                        new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
                                 snoozeTil);
                         return true;
                     }
@@ -917,7 +918,7 @@ public class MessengerActivity extends AppCompatActivity
         long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
 
         if (fromNotification && convoId != -1) {
-            new ApiUtils().dismissNotification(Settings.get(this).accountId, convoId);
+            new ApiUtils().dismissNotification(Account.get(this).accountId, convoId);
         }
     }
 

@@ -39,6 +39,7 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -50,6 +51,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import javax.crypto.SecretKey;
 
 import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
@@ -248,17 +251,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    KeyUtils keyUtils = new KeyUtils();
-                    SharedPreferences sharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(getApplicationContext());
-                    sharedPrefs.edit()
-                            .putString("my_name", response.name)
-                            .putString("my_phone_number", response.phoneNumber)
-                            .putString("account_id", response.accountId)
-                            .putString("salt", response.salt1)
-                            .putString("passhash", keyUtils.hashPassword(
-                                    password.getText().toString(), response.salt2))
-                            .apply();
+                    AccountEncryptionCreator encryptionCreator =
+                            new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
+                    encryptionCreator.createAccountEncryption(response);
 
                     addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
                 }

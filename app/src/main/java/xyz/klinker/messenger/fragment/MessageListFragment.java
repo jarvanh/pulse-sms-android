@@ -77,6 +77,7 @@ import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -642,7 +643,7 @@ public class MessageListFragment extends Fragment implements
             if (dismissNotification && notificationActive()) {
                 NotificationManagerCompat.from(getContext())
                         .cancel((int) getConversationId());
-                new ApiUtils().dismissNotification(Settings.get(getActivity()).accountId,
+                new ApiUtils().dismissNotification(Account.get(getActivity()).accountId,
                         getConversationId());
             }
         } catch (Exception e) {
@@ -808,7 +809,7 @@ public class MessageListFragment extends Fragment implements
     private void sendMessage() {
         if (PermissionsUtils.checkRequestMainPermissions(getActivity())) {
             PermissionsUtils.startMainPermissionRequest(getActivity());
-        } else if (Settings.get(getActivity()).primary &&
+        } else if (Account.get(getActivity()).primary &&
                 !PermissionsUtils.isDefaultSmsApp(getActivity())) {
             PermissionsUtils.setDefaultSmsApp(getActivity());
         } else {
@@ -1163,7 +1164,7 @@ public class MessageListFragment extends Fragment implements
                         Settings.get(getActivity())
                                 .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
 
-                        new ApiUtils().updateSeenTooltip(Settings.get(getActivity()).accountId, true);
+                        new ApiUtils().updateSeenTooltip(Account.get(getActivity()).accountId, true);
                     } catch (IllegalStateException e) {
                         // not attached to activity
                     }

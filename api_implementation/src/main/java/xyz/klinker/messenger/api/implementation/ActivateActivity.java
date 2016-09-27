@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -134,10 +135,10 @@ public class ActivateActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                KeyUtils keyUtils = new KeyUtils();
-                String hash = keyUtils.hashPassword(password, response.salt2);
-                SecretKey key = keyUtils.createKey(hash, response.accountId, response.salt1);
-                EncryptionUtils utils = new EncryptionUtils(key);
+
+                AccountEncryptionCreator encryptionCreator =
+                        new AccountEncryptionCreator(ActivateActivity.this, password);
+                EncryptionUtils utils = encryptionCreator.createAccountEncryption(response);
 
                 try {
                     ConversationBody[] bodies = api.conversation().list(response.accountId);
@@ -153,16 +154,6 @@ public class ActivateActivity extends AppCompatActivity {
                     new ApiUtils().registerDevice(response.accountId,
                             Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                             false, FirebaseInstanceId.getInstance().getToken());
-
-                    SharedPreferences sharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(getApplicationContext());
-                    sharedPrefs.edit()
-                            .putString("my_name", response.name)
-                            .putString("my_phone_number", response.phoneNumber)
-                            .putString("account_id", response.accountId)
-                            .putString("salt", response.salt1)
-                            .putString("passhash", hash)
-                            .apply();
 
                     setResult(RESULT_OK);
                     finish();

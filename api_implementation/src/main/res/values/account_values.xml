@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_pref_my_name" translatable="false">my_name</string>
+    <string name="api_pref_my_phone_number" translatable="false">my_phone_number</string>
+    <string name="api_pref_account_id" translatable="false">account_id</string>
+    <string name="api_pref_salt" translatable="false">salt</string>
+    <string name="api_pref_passhash" translatable="false">passhash</string>
+    <string name="api_pref_primary" translatable="false">primary</string>
+    <string name="api_pref_device_id" translatable="false">device_id</string>
+    <string name="api_pref_key" translatable="false">key</string>
+</resources>

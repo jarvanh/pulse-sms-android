@@ -22,6 +22,7 @@ import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.Settings;
@@ -58,7 +59,7 @@ public class SettingsFragment extends PreferenceFragment {
                         ColorSet initialColors = ColorSet.getFromString(getActivity(),
                                 Settings.get(getActivity()).themeColorString);
                         String colorString = (String) o;
-                        new ApiUtils().updateGlobalThemeColor(Settings.get(getActivity()).accountId,
+                        new ApiUtils().updateGlobalThemeColor(Account.get(getActivity()).accountId,
                                 colorString);
 
                         ColorSet colors = ColorSet.getFromString(getActivity(), colorString);
@@ -84,7 +85,7 @@ public class SettingsFragment extends PreferenceFragment {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         }
 
-                        new ApiUtils().updateBaseTheme(Settings.get(getActivity()).accountId,
+                        new ApiUtils().updateBaseTheme(Account.get(getActivity()).accountId,
                                 newValue);
 
                         getActivity().recreate();
@@ -100,7 +101,7 @@ public class SettingsFragment extends PreferenceFragment {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
                         String size = (String) o;
-                        new ApiUtils().updateFontSize(Settings.get(getActivity()).accountId,
+                        new ApiUtils().updateFontSize(Account.get(getActivity()).accountId,
                                 size);
 
                         return true;
@@ -114,7 +115,7 @@ public class SettingsFragment extends PreferenceFragment {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
                         boolean vibrate = (boolean) o;
-                        new ApiUtils().updateVibrate(Settings.get(getActivity()).accountId,
+                        new ApiUtils().updateVibrate(Account.get(getActivity()).accountId,
                                 vibrate);
                         return true;
                     }
@@ -127,7 +128,7 @@ public class SettingsFragment extends PreferenceFragment {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
                         boolean delivery = (boolean) o;
-                        new ApiUtils().updateDeliveryReports(Settings.get(getActivity()).accountId,
+                        new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
                                 delivery);
                         return true;
                     }

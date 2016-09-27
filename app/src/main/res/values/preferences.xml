@@ -17,14 +17,6 @@
 <resources>
 
     <string name="pref_first_start" translatable="false">first_start</string>
-    <string name="pref_my_name" translatable="false">my_name</string>
-    <string name="pref_my_phone_number" translatable="false">my_phone_number</string>
-    <string name="pref_account_id" translatable="false">account_id</string>
-    <string name="pref_salt" translatable="false">salt</string>
-    <string name="pref_passhash" translatable="false">passhash</string>
-    <string name="pref_primary" translatable="false">primary</string>
-
-    <string name="pref_device_id" translatable="false">device_id</string>
     <string name="pref_my_account_setup" translatable="false">my_account_setup</string>
     <string name="pref_delete_account" translatable="false">delete_account</string>
 

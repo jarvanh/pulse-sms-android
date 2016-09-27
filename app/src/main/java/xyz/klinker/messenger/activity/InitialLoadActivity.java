@@ -37,6 +37,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ActivateActivity;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -154,9 +155,9 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 String myName = getName();
                 String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
-                final Settings settings = Settings.get(context);
-                settings.setValue(getString(R.string.pref_my_name), myName);
-                settings.setValue(getString(R.string.pref_my_phone_number), myPhoneNumber);
+                final Account account = Account.get(context);
+                account.setName(myName);
+                account.setPhoneNumber(myPhoneNumber);
 
                 DataSource source = DataSource.getInstance(context);
                 source.open();

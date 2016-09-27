@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -72,7 +73,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
             NotificationManagerCompat.from(context).cancel((int) conversationId);
         }
 
-        new ApiUtils().dismissNotification(Settings.get(context).accountId,
+        new ApiUtils().dismissNotification(Account.get(context).accountId,
                 conversationId);
 
         unseenMessages.close();
