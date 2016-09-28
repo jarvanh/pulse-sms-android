@@ -58,7 +58,7 @@ public class Account {
         this.accountId = sharedPrefs.getString(context.getString(R.string.api_pref_account_id), null);
         this.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null);
         this.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null);
-        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null);
+        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), "");
 
         SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
         encryptionUtils = new EncryptionUtils(secretKey);
