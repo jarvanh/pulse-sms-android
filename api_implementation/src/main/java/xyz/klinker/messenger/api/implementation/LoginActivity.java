@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             dialog.dismiss();
                             setResult(RESULT_CANCELED);
-                            Toast.makeText(getApplicationContext(), R.string.api_error,
+                            Toast.makeText(getApplicationContext(), R.string.api_email_taken,
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
