@@ -17,8 +17,19 @@
 <changelog>
 
     <version
-        name="1.5.0"
-        description="September 23rd, 2016">
+        name="1.5.1"
+        description="September 27rd, 2016">
+        <text>Changes to encryption.</text>
+        <text>If you have had issues, in the past, sending messages from your tablet, the web, or the chrome app/extension, please do the following:</text>
+        <text>1. On your phone, go to "My Account", then "Delete Account"</text>
+        <text>2. Clear the app data from your system's settings</text>
+        <text>3. Open up the phone and go through the setup process again (you can use the same email.)</text>
+        <text>You will have to log in again on all your devices if you do this.</text>
+    </version>
+
+    <version
+        name="1.5"
+        description="September 26rd, 2016">
         <text>Private conversation notifications</text>
         <text>Be able to select images from a gallery when attaching to a MMS message</text>
         <text>Resend failed SMS</text>
