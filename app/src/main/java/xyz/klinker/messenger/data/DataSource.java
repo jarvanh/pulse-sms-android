@@ -70,7 +70,6 @@ public class DataSource {
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
     private String accountId = null;
-    private EncryptionUtils encryptionUtils;
     private ApiUtils apiUtils;
 
     /**
@@ -96,13 +95,10 @@ public class DataSource {
     private DataSource(Context context) {
         this.dbHelper = new DatabaseSQLiteHelper(context);
         this.apiUtils = new ApiUtils();
-
-        createEncryptionUtils(context);
     }
 
-    public void createEncryptionUtils(final Context context) {
-        final Account account = Account.get(context);
-        encryptionUtils = account.getEncryptor();
+    public EncryptionUtils getEncryptionUtils(final Context context) {
+        return Account.get(context).getEncryptor();
     }
 
     /**
@@ -286,7 +282,7 @@ public class DataSource {
 
         apiUtils.addContact(accountId,contact.phoneNumber, contact.name, contact.colors.color,
                 contact.colors.colorDark, contact.colors.colorLight,
-                contact.colors.colorAccent, encryptionUtils);
+                contact.colors.colorAccent, getEncryptionUtils(context));
 
         try {
             return database.insert(Contact.TABLE, null, values);
@@ -377,7 +373,7 @@ public class DataSource {
         database.delete(Contact.TABLE, Contact.COLUMN_PHONE_NUMBER + "=?",
                 new String[]{phoneNumber});
 
-        apiUtils.deleteContact(accountId, phoneNumber, encryptionUtils);
+        apiUtils.deleteContact(accountId, phoneNumber, getEncryptionUtils(context));
     }
 
     /**
@@ -415,7 +411,7 @@ public class DataSource {
 
         if (updated > 0) {
             apiUtils.updateContact(accountId, phoneNumber, name, color, colorDark,
-                    colorLight, colorAccent, encryptionUtils);
+                    colorLight, colorAccent, getEncryptionUtils(context));
         }
     }
 
@@ -540,7 +536,7 @@ public class DataSource {
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
                 conversation.mute, conversation.archive, conversation.privateNotifications,
-                encryptionUtils);
+                getEncryptionUtils(context));
 
         try {
             return database.insert(Conversation.TABLE, null, values);
@@ -721,7 +717,7 @@ public class DataSource {
 
         if (updated > 0) {
             apiUtils.updateConversationSnippet(accountId, conversationId,
-                    read, archive, timestamp, snippet, encryptionUtils);
+                    read, archive, timestamp, snippet, getEncryptionUtils(context));
         }
     }
 
@@ -749,7 +745,7 @@ public class DataSource {
                 conversation.colors.colorDark, conversation.colors.colorLight,
                 conversation.colors.colorAccent, conversation.pinned, null, null,
                 conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
-                conversation.privateNotifications, encryptionUtils);
+                conversation.privateNotifications, getEncryptionUtils(context));
     }
 
     /**
@@ -765,7 +761,7 @@ public class DataSource {
                 new String[] {Long.toString(conversationId), title});
 
         if (updated > 0) {
-            apiUtils.updateConversationTitle(accountId, conversationId, title, encryptionUtils);
+            apiUtils.updateConversationTitle(accountId, conversationId, title, getEncryptionUtils(context));
         }
     }
 
@@ -1223,7 +1219,7 @@ public class DataSource {
 
         apiUtils.addMessage(context, accountId, message.id, conversationId, message.type, message.data,
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                message.color, encryptionUtils);
+                message.color, getEncryptionUtils(context));
 
         updateConversation(conversationId, message.read, message.timestamp, message.data,
                 message.mimeType, false);
@@ -1264,7 +1260,7 @@ public class DataSource {
 
             apiUtils.addMessage(context, accountId, message.id, message.conversationId, message.type, message.data,
                     message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                    message.color, encryptionUtils);
+                    message.color, getEncryptionUtils(context));
 
             updateConversation(message.conversationId, message.read, message.timestamp, message.data,
                     message.mimeType, false);
@@ -1384,7 +1380,7 @@ public class DataSource {
         values.put(Draft.COLUMN_DATA, data);
         values.put(Draft.COLUMN_MIME_TYPE, mimeType);
 
-        apiUtils.addDraft(accountId, id, conversationId, data, mimeType, encryptionUtils);
+        apiUtils.addDraft(accountId, id, conversationId, data, mimeType, getEncryptionUtils(context));
         return database.insert(Draft.TABLE, null, values);
     }
 
@@ -1476,7 +1472,7 @@ public class DataSource {
         values.put(Blacklist.COLUMN_ID, blacklist.id);
         values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber);
         database.insert(Blacklist.TABLE, null, values);
-        apiUtils.addBlacklist(accountId, blacklist.id, blacklist.phoneNumber, encryptionUtils);
+        apiUtils.addBlacklist(accountId, blacklist.id, blacklist.phoneNumber, getEncryptionUtils(context));
     }
 
     /**
@@ -1515,7 +1511,7 @@ public class DataSource {
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
 
         apiUtils.addScheduledMessage(accountId, message.id, message.title, message.to, message.data,
-                message.mimeType, message.timestamp, encryptionUtils);
+                message.mimeType, message.timestamp, getEncryptionUtils(context));
 
         return database.insert(ScheduledMessage.TABLE, null, values);
     }
