@@ -32,6 +32,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService.NotificationConversation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -51,6 +52,11 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void notNull() {
         assertNotNull(service);
+    }
+
+    @Test
+    public void shouldNotDebugNotifications() {
+        assertFalse(NotificationService.DEBUG_QUICK_REPLY);
     }
 
     @Test

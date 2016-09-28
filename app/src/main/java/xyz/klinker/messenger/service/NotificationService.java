@@ -62,7 +62,7 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
  */
 public class NotificationService extends IntentService {
 
-    private static final boolean DEBUG_QUICK_REPLY = false;
+    protected static final boolean DEBUG_QUICK_REPLY = false;
 
     public static Long CONVERSATION_ID_OPEN = 0L;
 
@@ -409,14 +409,17 @@ public class NotificationService extends IntentService {
 
                 if (!conversation.privateNotification) builder.addAction(action);
 
-                reply = new Intent(this, ReplyService.class);
+                Intent wearReply = new Intent(this, ReplyService.class);
                 reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
-                pendingReply = PendingIntent.getService(this,
-                        (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent wearPendingReply = PendingIntent.getService(this,
+                        (int) conversation.id, wearReply, PendingIntent.FLAG_ONE_SHOT);
 
-                action.icon = R.drawable.ic_reply_white;
-                action.actionIntent = pendingReply;
-                wearableExtender.addAction(action);
+                NotificationCompat.Action wearAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
+                        getString(R.string.reply), wearPendingReply)
+                        .addRemoteInput(remoteInput)
+                        .build();
+
+                wearableExtender.addAction(wearAction);
             }
         }
 
