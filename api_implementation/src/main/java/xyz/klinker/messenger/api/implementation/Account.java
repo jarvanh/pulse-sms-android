@@ -107,4 +107,20 @@ public class Account {
                 .putString(context.getString(R.string.api_pref_my_name), phoneNumber)
                 .commit();
     }
+
+    public void setPrimary(boolean primary) {
+        this.primary = primary;
+
+        getSharedPrefs().edit()
+                .putBoolean(context.getString(R.string.api_pref_primary), primary)
+                .commit();
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+
+        getSharedPrefs().edit()
+                .putString(context.getString(R.string.api_pref_device_id), deviceId)
+                .commit();
+    }
 }

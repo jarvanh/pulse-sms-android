@@ -299,11 +299,9 @@ public class LoginActivity extends AppCompatActivity {
                 primary, getFirebaseId());
 
         if (deviceId != null) {
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putString("device_id", Integer.toString(deviceId))
-                    .putBoolean("primary", primary)
-                    .apply();
+            Account account = Account.get(this);
+            account.setDeviceId(Integer.toString(deviceId));
+            account.setPrimary(primary);
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -380,11 +378,9 @@ public class LoginActivity extends AppCompatActivity {
         Log.v("LoginActivity", "failed and closing");
         apiUtils.deleteAccount(accountId);
 
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putString("device_id", null)
-                .putBoolean("primary", false)
-                .apply();
+        Account account = Account.get(this);
+        account.setDeviceId(null);
+        account.setPrimary(false);
 
         runOnUiThread(new Runnable() {
             @Override

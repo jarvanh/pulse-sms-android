@@ -27,19 +27,19 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
 
     @Override
     public void onTokenRefresh() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String deviceId = sharedPrefs.getString("device_id", null);
+        Account account = Account.get(this);
+        String deviceId = Account.get(this).deviceId;
 
         try {
             Integer.parseInt(deviceId);
         } catch (Exception e) {
-            sharedPrefs.edit().remove("device_id").apply();
+            account.setDeviceId(null);
             deviceId = null;
         }
 
         if (deviceId != null) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            String accountId = sharedPrefs.getString("account_id", null);
+            String accountId = account.accountId;
 
             new ApiUtils().updateDevice(accountId, Integer.parseInt(deviceId),
                     null, refreshedToken);

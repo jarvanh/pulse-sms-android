@@ -99,11 +99,9 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             DataSource.getInstance(this).createEncryptionUtils(this);
 
             if (responseCode == RESULT_CANCELED) {
-                PreferenceManager.getDefaultSharedPreferences(this)
-                        .edit()
-                        .putString("device_id", null)
-                        .putBoolean("primary", true)
-                        .apply();
+                Account account = Account.get(this);
+                account.setDeviceId(null);
+                account.setPrimary(true);
 
                 startDatabaseSync();
             } else if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
