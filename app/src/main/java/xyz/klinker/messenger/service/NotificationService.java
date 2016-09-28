@@ -409,7 +409,13 @@ public class NotificationService extends IntentService {
 
                 if (!conversation.privateNotification) builder.addAction(action);
 
+                reply = new Intent(this, ReplyService.class);
+                reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+                pendingReply = PendingIntent.getService(this,
+                        (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
+
                 action.icon = R.drawable.ic_reply_white;
+                action.actionIntent = pendingReply;
                 wearableExtender.addAction(action);
             }
         }
