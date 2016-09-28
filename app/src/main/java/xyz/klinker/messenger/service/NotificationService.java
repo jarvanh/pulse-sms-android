@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -404,15 +405,16 @@ public class NotificationService extends IntentService {
             } else {
                 NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
-                        .addRemoteInput(remoteInput)
                         .build();
 
                 if (!conversation.privateNotification) builder.addAction(action);
 
                 Intent wearReply = new Intent(this, ReplyService.class);
-                reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+                Bundle extras = new Bundle();
+                extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+                wearReply.putExtras(extras);
                 PendingIntent wearPendingReply = PendingIntent.getService(this,
-                        (int) conversation.id, wearReply, PendingIntent.FLAG_ONE_SHOT);
+                        (int) conversation.id + 1, wearReply, PendingIntent.FLAG_ONE_SHOT);
 
                 NotificationCompat.Action wearAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         getString(R.string.reply), wearPendingReply)
