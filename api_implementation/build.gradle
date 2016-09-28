@@ -17,13 +17,24 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    try {
+        compileSdkVersion Integer.parseInt(COMPILE_SDK)
+    } catch (Exception e) {
+        compileSdkVersion COMPILE_SDK
+    }
+
+    buildToolsVersion BUILD_TOOLS_VERSION
     resourcePrefix 'api_'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 24
+        minSdkVersion Integer.parseInt(project.MIN_SDK)
+
+        try {
+            targetSdkVersion Integer.parseInt(TARGET_SDK)
+        } catch (Exception e) {
+            targetSdkVersion TARGET_SDK
+        }
+
         versionCode 1
         versionName "1.0"
 
