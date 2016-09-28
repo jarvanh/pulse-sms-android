@@ -66,6 +66,7 @@ public class DataSource {
     private static final long MAX_ID = Long.MAX_VALUE / 10000;
     private static volatile DataSource instance;
 
+    private Context context;
     private SQLiteDatabase database;
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
@@ -93,6 +94,7 @@ public class DataSource {
      * @param context Current calling context
      */
     private DataSource(Context context) {
+        this.context = context;
         this.dbHelper = new DatabaseSQLiteHelper(context);
         this.apiUtils = new ApiUtils();
     }
