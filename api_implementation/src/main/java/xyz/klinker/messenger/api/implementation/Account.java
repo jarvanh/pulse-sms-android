@@ -12,6 +12,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.encryption.KeyUtils;
 
 public class Account {
 
@@ -121,6 +122,17 @@ public class Account {
 
         getSharedPrefs().edit()
                 .putString(context.getString(R.string.api_pref_device_id), deviceId)
+                .commit();
+    }
+
+    public void recomputeKey() {
+        KeyUtils keyUtils = new KeyUtils();
+        SecretKey key = keyUtils.createKey(passhash, accountId, salt);
+
+        String encodedKey = Base64.encodeToString(key.getEncoded(), Base64.DEFAULT);
+
+        getSharedPrefs().edit()
+                .putString(context.getString(R.string.api_pref_key), encodedKey)
                 .commit();
     }
 }
