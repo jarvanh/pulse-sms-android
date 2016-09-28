@@ -117,6 +117,11 @@ public class ContentObserverService extends Service {
                 String body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY));
                 String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
 
+                if (address == null || address.isEmpty()) {
+                    cursor.close();
+                    return;
+                }
+
                 DataSource source = DataSource.getInstance(context);
                 source.open();
 

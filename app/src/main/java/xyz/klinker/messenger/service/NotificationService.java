@@ -662,7 +662,7 @@ public class NotificationService extends IntentService {
     }
 
     private boolean ringtoneExists(String uri) {
-        return RingtoneManager.getRingtone(this.getContext(), Uri.parse(uri)) != null;
+        return RingtoneManager.getRingtone(this, Uri.parse(uri)) != null;
     }
 
     @VisibleForTesting

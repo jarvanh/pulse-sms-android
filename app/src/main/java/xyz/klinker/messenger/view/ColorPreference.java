@@ -174,6 +174,10 @@ public class ColorPreference extends Preference {
     }
 
     private void setPreviewView() {
+        if (view == null) {
+            return;
+        }
+
         LinearLayout widgetFrameView = ((LinearLayout) view.findViewById(android.R.id.widget_frame));
         widgetFrameView.removeAllViews();
         widgetFrameView.setVisibility(View.VISIBLE);
