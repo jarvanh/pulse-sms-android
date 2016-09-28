@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -58,7 +60,8 @@ public class Account {
         this.accountId = sharedPrefs.getString(context.getString(R.string.api_pref_account_id), null);
         this.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null);
         this.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null);
-        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), "");
+        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key),
+                Base64.encodeToString("no key yet.".getBytes(StandardCharsets.UTF_8), Base64.DEFAULT));
 
         SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
         encryptionUtils = new EncryptionUtils(secretKey);
@@ -67,6 +70,11 @@ public class Account {
     @VisibleForTesting
     protected SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    }
+
+    public void forceUpdate(Context context) {
+        account = null;
+        account = new Account(context);
     }
 
     public EncryptionUtils getEncryptor() {

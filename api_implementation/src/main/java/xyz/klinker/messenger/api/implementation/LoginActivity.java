@@ -23,7 +23,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
@@ -39,7 +38,6 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -52,12 +50,9 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import javax.crypto.SecretKey;
-
 import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
-import xyz.klinker.messenger.encryption.KeyUtils;
 
 /**
  * Activity for logging a user in using the API
@@ -253,7 +248,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     AccountEncryptionCreator encryptionCreator =
                             new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
-                    encryptionCreator.createAccountEncryption(response);
+                    encryptionCreator.createAccountEncryptionFromLogin(response);
 
                     addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
                 }
@@ -285,17 +280,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    KeyUtils keyUtils = new KeyUtils();
-                    SharedPreferences sharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(getApplicationContext());
-                    sharedPrefs.edit()
-                            .putString("my_name", name.getText().toString())
-                            .putString("my_phone_number", phoneNumber.getText().toString())
-                            .putString("account_id", response.accountId)
-                            .putString("salt", response.salt1)
-                            .putString("passhash", keyUtils.hashPassword(
-                                    password.getText().toString(), response.salt2))
-                            .apply();
+                    AccountEncryptionCreator encryptionCreator =
+                            new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
+                    encryptionCreator.createAccountEncryptionFromSignup(
+                            name.getText().toString(), phoneNumber.getText().toString(),
+                            response);
 
                     addDevice(utils, response.accountId, true, true);
                 }

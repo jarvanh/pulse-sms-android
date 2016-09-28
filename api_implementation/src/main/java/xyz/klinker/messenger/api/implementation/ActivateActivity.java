@@ -16,18 +16,11 @@
 
 package xyz.klinker.messenger.api.implementation;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,15 +30,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.Locale;
 import java.util.Random;
 
-import javax.crypto.SecretKey;
-
 import xyz.klinker.messenger.api.Api;
 import xyz.klinker.messenger.api.entity.ContactBody;
 import xyz.klinker.messenger.api.entity.ConversationBody;
-import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
-import xyz.klinker.messenger.encryption.KeyUtils;
 
 public class ActivateActivity extends AppCompatActivity {
 
@@ -138,7 +127,7 @@ public class ActivateActivity extends AppCompatActivity {
 
                 AccountEncryptionCreator encryptionCreator =
                         new AccountEncryptionCreator(ActivateActivity.this, password);
-                EncryptionUtils utils = encryptionCreator.createAccountEncryption(response);
+                EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);
 
                 try {
                     ConversationBody[] bodies = api.conversation().list(response.accountId);
