@@ -521,7 +521,13 @@ public class MessageListFragment extends Fragment implements
 
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP)) {
-            int[] count = SmsMessage.calculateLength(messageEntry.getText().toString(), false);
+            int[] count;
+                
+            try {
+                count = SmsMessage.calculateLength(messageEntry.getText().toString(), false);
+            } catch (Exception e) {
+                return;
+            }
 
             if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
                 //noinspection AndroidLintSetTextI18n
