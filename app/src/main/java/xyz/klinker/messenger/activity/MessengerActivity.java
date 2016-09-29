@@ -232,7 +232,7 @@ public class MessengerActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        new Handler().postDelayed(new Runnable() {
+        navigationView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Account account = Account.get(getApplicationContext());
