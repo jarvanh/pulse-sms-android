@@ -169,6 +169,20 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void findConversationByNumbers() {
+        source.findConversationId("515");
+        verify(database).query("conversation", new String[]{"_id", "id_matcher"},
+                "id_matcher=?", new String[]{"515"}, null, null, null);
+    }
+
+    @Test
+    public void findConversationByTitle() {
+        source.findConversationIdByTitle("test");
+        verify(database).query("conversation", new String[]{"_id", "title"},
+                "title=?", new String[]{"test"}, null, null, null);
+    }
+
+    @Test
     public void updateContact() {
         source.updateContact("515", "Test", 1, 2, 3, 4);
         verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),

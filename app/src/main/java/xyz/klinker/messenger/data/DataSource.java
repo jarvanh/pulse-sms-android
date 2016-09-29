@@ -1135,6 +1135,24 @@ public class DataSource {
     }
 
     /**
+     * Checks whether or not a conversation exists for this title. If so, the
+     * conversation id will be returned. If not, null will be returned.
+     */
+    public Long findConversationIdByTitle(String title) {
+        Cursor cursor = database.query(Conversation.TABLE,
+                new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_TITLE},
+                Conversation.COLUMN_TITLE + "=?", new String[]{title}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            long conversationId = cursor.getLong(0);
+            cursor.close();
+            return conversationId;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Gets a current conversation id if one exists for the phone number, or inserts a new
      * conversation and returns that id if one does not exist.
      *

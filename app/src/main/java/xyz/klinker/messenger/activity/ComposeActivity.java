@@ -45,8 +45,6 @@ import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,6 +208,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         DataSource source = DataSource.getInstance(this);
         source.open();
         Long conversationId = source.findConversationId(phoneNumbers);
+
+        if (conversationId == null && contactEntry.getRecipients().length == 1) {
+            conversationId = source.findConversationIdByTitle(
+                    contactEntry.getRecipients()[0].getEntry().getDisplayName());
+        }
 
         if (conversationId == null) {
             Message message = new Message();

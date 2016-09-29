@@ -226,6 +226,18 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void findConversationByNumber() {
+        Long id = source.findConversationId("11111");
+        assertEquals(id, Long.valueOf(1));
+    }
+
+    @Test
+    public void findConversationByName() {
+        Long id = source.findConversationIdByTitle("Luke Klinker");
+        assertEquals(id, Long.valueOf(1));
+    }
+
+    @Test
     public void getPinnedConversations() {
         Cursor pinned = source.getPinnedConversations();
         assertEquals(1, pinned.getCount());
