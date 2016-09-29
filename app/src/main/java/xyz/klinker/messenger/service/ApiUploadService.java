@@ -215,10 +215,10 @@ public class ApiUploadService extends Service {
                 Contact c = new Contact();
                 c.fillFromCursor(cursor);
                 c.encrypt(encryptionUtils);
-                ContactBody conversation = new ContactBody(c.phoneNumber, c.name, c.colors.color,
+                ContactBody contactBody = new ContactBody(c.phoneNumber, c.name, c.colors.color,
                         c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent);
 
-                contacts[cursor.getPosition()] = conversation;
+                contacts[cursor.getPosition()] = contactBody;
             } while (cursor.moveToNext());
 
             AddContactRequest request =

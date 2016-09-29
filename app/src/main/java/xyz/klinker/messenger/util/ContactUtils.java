@@ -297,6 +297,64 @@ public class ContactUtils {
     }
 
     /**
+     * Get a list of contact objects from Android's database.
+     */
+    public static List<Contact> queryNewContacts(Context context, DataSource dataSource, long since) {
+        List<Contact> contacts = new ArrayList<>();
+        List<Conversation> conversations = new ArrayList<>();
+        Cursor convoCursor = dataSource.getAllConversations();
+
+        if (convoCursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(convoCursor);
+                conversations.add(conversation);
+            } while (convoCursor.moveToNext());
+
+            convoCursor.close();
+        }
+
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = new String[]{
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP
+        };
+
+        Cursor cursor = context.getContentResolver().query(
+                uri,
+                projection,
+                ContactsContract.CommonDataKinds.Phone.TYPE + "=? AND " +
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
+                new String[] { Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE), Long.toString(since) },
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Contact contact = new Contact();
+
+                contact.name = cursor.getString(0);
+                contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
+
+                ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
+                if (colorSet != null) {
+                    contact.colors = colorSet;
+                } else {
+                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+                }
+
+                contacts.add(contact);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        conversations.clear();
+        return contacts;
+    }
+
+    /**
      * Get a list of colors for a contact, if an individual conversation exists for them.
      *
      * @param conversations all the conversations in the database

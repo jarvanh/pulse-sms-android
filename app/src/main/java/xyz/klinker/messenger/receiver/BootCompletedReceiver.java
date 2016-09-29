@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import xyz.klinker.messenger.service.ContactSyncService;
 import xyz.klinker.messenger.service.ContentObserverRunCheckService;
 import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.service.ScheduledMessageService;
@@ -37,6 +38,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             context.startService(new Intent(context, ScheduledMessageService.class));
 
             ContentObserverRunCheckService.scheduleNextRun(context);
+            ContactSyncService.scheduleNextRun(context);
         }
     }
 
