@@ -3,6 +3,7 @@ package xyz.klinker.messenger.api.implementation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
 
 import javax.crypto.SecretKey;
@@ -22,7 +23,12 @@ public class AccountEncryptionCreator {
         this.context = context;
         this.password = password;
 
-        sharedPrefs = PreferenceManager
+        sharedPrefs = getSharedPrefs(context);
+    }
+
+    @VisibleForTesting
+    protected SharedPreferences getSharedPrefs(Context context) {
+        return PreferenceManager
                 .getDefaultSharedPreferences(context.getApplicationContext());
     }
 

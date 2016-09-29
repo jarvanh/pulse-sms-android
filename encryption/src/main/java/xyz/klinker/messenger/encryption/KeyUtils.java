@@ -77,6 +77,7 @@ public class KeyUtils {
         throw new RuntimeException("error creating hash!");
     }
 
+
     /**
      * Uses a combination of the stored password hash and account id to salt and create a secret
      * key that will actually be used for encryption. This process is lengthy, so the key should
