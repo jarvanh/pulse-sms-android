@@ -161,9 +161,15 @@ public class MessengerActivity extends AppCompatActivity
             displayConversations();
         }
 
-        if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown()) {
-            fab.show();
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown()) {
+                    fab.show();
+                }
+            }
+        }, 1000);
+
     }
 
     @Override
