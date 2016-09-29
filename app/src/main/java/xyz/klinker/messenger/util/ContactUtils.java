@@ -213,25 +213,30 @@ public class ContactUtils {
         if (number.split(", ").length > 1) {
             return null;
         } else {
-            Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-            ContentResolver cr = context.getContentResolver();
+            String contactNumberUri = Uri.encode(number);
 
             try {
-                Cursor contact = cr.query(phoneUri,
-                        new String[]{ContactsContract.Contacts._ID}, null, null, null);
+                long contactId = 0L;
+                Cursor contactCursor = context.getContentResolver().query(Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, contactNumberUri),
+                        new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null, null, null);
 
-                if (contact.moveToFirst()) {
-                    long userId = contact.getLong(contact.getColumnIndex(ContactsContract.Contacts._ID));
-                    Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, userId);
-                    contact.close();
+                if (contactCursor != null) {
+                    while (contactCursor.moveToNext()) {
+                        contactId = contactCursor.getLong(contactCursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                    }
 
-                    return photoUri.toString();
-                } else {
-                    return null;
+                    contactCursor.close();
+
+                    if (contactId != 0L) {
+                        Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
+                        return photoUri.toString();
+                    }
                 }
             } catch (Exception e) {
-                return null;
+
             }
+
+            return null;
         }
     }
 

@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.adapter;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -152,6 +153,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
+        holder.image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (conversation.imageUri == null) {
             holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {

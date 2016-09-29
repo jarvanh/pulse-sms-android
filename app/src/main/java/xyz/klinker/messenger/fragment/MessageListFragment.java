@@ -423,12 +423,11 @@ public class MessageListFragment extends Fragment implements
 
             phoneNumberView.setText(phoneNumber);
 
+            image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
             if (imageUri != null) {
                 Glide.with(getActivity())
                         .load(Uri.parse(imageUri))
                         .into(image);
-            } else {
-                image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
             }
 
             ColorUtils.adjustStatusBarColor(colorDarker, activity);
