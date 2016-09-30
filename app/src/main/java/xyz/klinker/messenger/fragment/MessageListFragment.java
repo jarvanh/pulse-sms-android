@@ -435,8 +435,9 @@ public class MessageListFragment extends Fragment implements
         }
 
         NavigationView nav = (NavigationView) activity.findViewById(R.id.navigation_view);
-        if (nav != null && getArguments().getBoolean(ARG_IS_ARCHIVED)) {
-            nav.getMenu().findItem(R.id.drawer_archive_conversation).setTitle(R.string.menu_move_to_inbox);
+        MenuItem item = nav.getMenu().findItem(R.id.drawer_archive_conversation);
+        if (nav != null && item != null && getArguments().getBoolean(ARG_IS_ARCHIVED) ) {
+            item.setTitle(R.string.menu_move_to_inbox);
         }
     }
 
@@ -696,10 +697,15 @@ public class MessageListFragment extends Fragment implements
                     final Cursor cursor = source.getMessages(conversationId);
 
                     final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
+                    final String title = getArguments().getString(ARG_TITLE);
                     final List<Contact> contacts = source.getContacts(numbers);
+                    final List<Contact> contactsByName = source.getContactsByNames(title);
                     final Map<String, Contact> contactMap = ContactUtils.getMessageFromMapping(
                             numbers, contacts, source, getActivity()
                     );
+                    final Map<String, Contact> contactByNameMap = title != null && title.contains(", ") ? ContactUtils.getMessageFromMappingByTitle(
+                            title, contactsByName
+                    ) : null;
 
                     drafts = source.getDrafts(conversationId);
 
@@ -711,7 +717,7 @@ public class MessageListFragment extends Fragment implements
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            setMessages(cursor, contactMap);
+                            setMessages(cursor, contactMap, contactByNameMap);
                             setDrafts(drafts);
 
                             if (position != -1) {
@@ -780,7 +786,7 @@ public class MessageListFragment extends Fragment implements
         return -1;
     }
 
-    private void setMessages(Cursor messages, Map<String, Contact> contactMap) {
+    private void setMessages(Cursor messages, Map<String, Contact> contactMap, Map<String, Contact> contactMapByName) {
         if (adapter != null) {
             adapter.addMessage(messages);
         } else {
@@ -789,7 +795,7 @@ public class MessageListFragment extends Fragment implements
                             Settings.get(getActivity()).globalColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
-            adapter.setFromColorMapper(contactMap);
+            adapter.setFromColorMapper(contactMap, contactMapByName);
             messageList.setAdapter(adapter);
 
             messageList.animate().withLayer()

@@ -120,7 +120,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
-    public void getContact_noMatches() {
+    public void getContact_number_noMatches() {
         List<Contact> contacts = source.getContacts("");
         assertEquals(0, contacts.size());
 
@@ -132,7 +132,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
-    public void getContact_oneNumber() {
+    public void getContact_number_oneNumber() {
         List<Contact> contacts = source.getContacts("5159911493");
 
         assertEquals(1, contacts.size());
@@ -140,12 +140,41 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
-    public void getContact_multipleNumbers() {
+    public void getContact_number_multipleNumbers() {
         List<Contact> contacts = source.getContacts("5159911493, 5154224558");
 
         assertEquals(2, contacts.size());
         assertEquals("Luke K", contacts.get(0).name);
         assertEquals("Jake K", contacts.get(1).name);
+    }
+
+    @Test
+    public void getContact_name_noMatches() {
+        List<Contact> contacts = source.getContactsByNames("");
+        assertEquals(0, contacts.size());
+
+        contacts = source.getContactsByNames(null);
+        assertEquals(0, contacts.size());
+
+        contacts = source.getContactsByNames("test");
+        assertEquals(0, contacts.size());
+    }
+
+    @Test
+    public void getContact_name_oneNumber() {
+        List<Contact> contacts = source.getContactsByNames("Luke K");
+
+        assertEquals(1, contacts.size());
+        assertEquals("5159911493", contacts.get(0).phoneNumber);
+    }
+
+    @Test
+    public void getContact_name_multipleNumbers() {
+        List<Contact> contacts = source.getContactsByNames("Luke K, Jake K");
+
+        assertEquals(2, contacts.size());
+        assertEquals("5159911493", contacts.get(0).phoneNumber);
+        assertEquals("5154224558", contacts.get(1).phoneNumber);
     }
 
     @Test

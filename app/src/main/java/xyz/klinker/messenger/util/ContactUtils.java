@@ -407,6 +407,38 @@ public class ContactUtils {
         return contactMap;
     }
 
+    /**
+     * Convert a list of contacts to a map with the message.message_from name as the key.
+     *
+     * If a number does not exist in the list, then it is given a new color scheme, added to the
+     * database, and sends it off to the backend for storage. This way the color scheme can be saved
+     * and used on other devices too.
+     *
+     * @param convoTitle the title from the conversation. Comma seperated list if there is more than one person.
+     * @param contacts List of contacts from the database that should correspond to the people in the conversation
+     */
+    public static Map<String, Contact> getMessageFromMappingByTitle(String convoTitle, List<Contact> contacts) {
+        Map<String, Contact> contactMap = new HashMap<>();
+        String[] names = convoTitle.split(", ");
+
+        for (String name : names) {
+            Contact contact = getContactFromListByName(contacts, name);
+            contactMap.put(contact.name, contact);
+        }
+
+        return contactMap;
+    }
+
+    private static Contact getContactFromListByName(List<Contact> list, String name) {
+        for (Contact contact : list) {
+            if (contact.name.equals(name)) {
+                return contact;
+            }
+        }
+
+        return null;
+    }
+
     private static Contact getContactFromList(List<Contact> list, String number) {
         for (Contact contact : list) {
             if (PhoneNumberUtils.checkEquality(contact.phoneNumber, number)) {
