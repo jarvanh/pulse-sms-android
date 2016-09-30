@@ -1065,10 +1065,11 @@ public class DataSource {
         if (query == null || query.length() == 0) {
             return null;
         } else {
-            return database.query(Message.TABLE, null, Message.COLUMN_DATA + " LIKE '%" +
-                            query.replace("'", "''") + "%' AND " +
-                            Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null,
-                    Message.COLUMN_TIMESTAMP + " desc");
+            return database.query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
+                    new String[] { "m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title" },
+                    Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
+                            Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'",
+                    null, null, null, Message.COLUMN_TIMESTAMP + " desc");
         }
     }
 

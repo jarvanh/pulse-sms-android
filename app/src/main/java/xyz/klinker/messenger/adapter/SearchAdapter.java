@@ -129,14 +129,17 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                         .into(h.image);
             }
 
-            h.itemView.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener click = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
                         listener.onSearchSelected(conversation);
                     }
                 }
-            });
+            };
+
+            h.itemView.setOnClickListener(click);
+            h.name.setOnClickListener(click);
 
         } else if (holder instanceof MessageViewHolder) {
             messages.moveToPosition(relativePosition);
@@ -146,9 +149,16 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             MessageViewHolder h = (MessageViewHolder) holder;
             h.messageId = message.id;
             h.message.setText(message.data);
-            h.timestamp.setText(TimeUtils.formatTimestamp(h.timestamp.getContext(),
-                    message.timestamp));
 
+            String timestamp = TimeUtils.formatTimestamp(h.timestamp.getContext(), message.timestamp);
+            if (message.from != null && !message.from.isEmpty()) {
+                h.timestamp.setText(timestamp + " - " + message.from +
+                        " (" + messages.getString(messages.getColumnIndex("convo_title")) + ")");
+            } else {
+                h.timestamp.setText(timestamp + " - " + messages.getString(messages.getColumnIndex("convo_title")));
+            }
+
+            h.timestamp.setSingleLine(true);
             if (h.timestamp.getVisibility() != View.VISIBLE) {
                 h.timestamp.setVisibility(View.VISIBLE);
             }
