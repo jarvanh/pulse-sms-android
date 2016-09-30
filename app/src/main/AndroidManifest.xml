@@ -107,7 +107,13 @@
 
         <activity
             android:name=".activity.ComposeActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />

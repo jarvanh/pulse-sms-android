@@ -17,9 +17,10 @@
 <changelog>
 
     <version
-        name="1.5.2"
+        name="1.5.3"
         description="September 30rd, 2016">
         <text>Italicize muted conversation</text>
+        <text>Various searching improvements</text>
         <text>Bug fixes</text>
         <text>More encryption fixes</text>
         <text>Crash fixes</text>
