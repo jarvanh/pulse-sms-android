@@ -74,9 +74,7 @@ public class Account {
     }
 
     public void forceUpdate(Context context) {
-        account = null;
         account = new Account(context);
-        init(context);
     }
 
     public EncryptionUtils getEncryptor() {
