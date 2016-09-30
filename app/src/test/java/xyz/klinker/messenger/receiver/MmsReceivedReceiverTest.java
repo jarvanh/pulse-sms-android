@@ -19,9 +19,11 @@ package xyz.klinker.messenger.receiver;
 import org.junit.Before;
 import org.junit.Test;
 
+import xyz.klinker.messenger.MessengerRobolectricSuite;
+
 import static org.junit.Assert.assertEquals;
 
-public class MmsReceivedReceiverTest {
+public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
 
     private MmsReceivedReceiver receiver;
 
