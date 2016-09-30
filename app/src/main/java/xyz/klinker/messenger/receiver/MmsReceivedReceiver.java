@@ -105,9 +105,12 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     String getPhoneNumbers(String from, String to, String myNumber) {
         String[] toNumbers = to.split(", ");
         StringBuilder builder = new StringBuilder();
-
+        
         for (String number : toNumbers) {
-            if (!number.contains(myNumber) && !myNumber.contains(number)) {
+            String cleanNumber = PhoneNumberUtils.clearFormatting(number);
+            String myCleanNumber = PhoneNumberUtils.clearFormatting(myNumber);
+            
+            if (!cleanNumber.contains(myCleanNumber) && !myCleanNumber.contains(cleanNumber)) {
                 builder.append(number);
                 builder.append(", ");
             }
