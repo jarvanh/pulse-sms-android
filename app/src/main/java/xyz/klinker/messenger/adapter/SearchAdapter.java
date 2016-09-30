@@ -37,6 +37,7 @@ import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.SearchListener;
 
 public class SearchAdapter extends SectionedRecyclerViewAdapter {
@@ -145,7 +146,12 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             MessageViewHolder h = (MessageViewHolder) holder;
             h.messageId = message.id;
             h.message.setText(message.data);
-            h.timestamp.setVisibility(View.GONE);
+            h.timestamp.setText(TimeUtils.formatTimestamp(h.timestamp.getContext(),
+                    message.timestamp));
+
+            if (h.timestamp.getVisibility() != View.VISIBLE) {
+                h.timestamp.setVisibility(View.VISIBLE);
+            }
 
             LinkBuilder.on(h.message)
                     .addLink(highlight)
