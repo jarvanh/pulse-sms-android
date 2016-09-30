@@ -45,6 +45,7 @@ import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -158,7 +159,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void bindConversationRead() {
+    public void bindConversationRead_unmuted() {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 0, 0, 0);
 
@@ -166,13 +167,27 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(image, times(2)).setImageDrawable(any(Drawable.class));
         verify(name).setText("Luke Klinker");
         verify(summary).setText("So maybe not going to be able to get platinum huh?");
-        verify(name, times(0)).setTypeface(Typeface.DEFAULT);
-        verify(summary, times(0)).setTypeface(Typeface.DEFAULT);
+        verify(name, times(0)).setTypeface(any(Typeface.class), anyInt());
+        verify(summary, times(0)).setTypeface(any(Typeface.class), anyInt());
         verify(imageLetter).setText("L");
     }
 
     @Test
-    public void bindConversationUnread() {
+    public void bindConversationRead_muted() {
+        ConversationViewHolder holder = getMockedViewHolder();
+        adapter.onBindViewHolder(holder, 0, 0, 1);
+
+        assertNotNull(holder.conversation);
+        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(name).setText("Matt Swiontek");
+        verify(summary).setText("Whoops ya idk what happened but anysho drive safe");
+        verify(name).setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+        verify(summary).setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+        verify(imageLetter).setText("M");
+    }
+
+    @Test
+    public void bindConversationUnread_unmuted() {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 1, 0, 2);
 
@@ -180,9 +195,23 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(image, times(2)).setImageDrawable(any(Drawable.class));
         verify(name).setText("Kris Klinker");
         verify(summary).setText("Will probably be there from 6:30-9, just stop by when you can!");
-        verify(name).setTypeface(Typeface.DEFAULT_BOLD);
-        verify(summary).setTypeface(Typeface.DEFAULT_BOLD);
+        verify(name).setTypeface(Typeface.DEFAULT_BOLD, Typeface.NORMAL);
+        verify(summary).setTypeface(Typeface.DEFAULT_BOLD, Typeface.NORMAL);
         verify(imageLetter).setText("K");
+    }
+
+    @Test
+    public void bindConversationUnread_muted() {
+        ConversationViewHolder holder = getMockedViewHolder();
+        adapter.onBindViewHolder(holder, 1, 0, 8);
+
+        assertNotNull(holder.conversation);
+        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(name).setText("test 2");
+        verify(summary).setText("Maybe they'll run into each other on the way back... idk");
+        verify(name).setTypeface(Typeface.DEFAULT_BOLD, Typeface.ITALIC);
+        verify(summary).setTypeface(Typeface.DEFAULT_BOLD, Typeface.ITALIC);
+        verify(imageLetter).setText("t");
     }
 
     @Test
@@ -291,7 +320,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_TITLE,
                 Conversation.COLUMN_PHONE_NUMBERS,
                 Conversation.COLUMN_SNIPPET,
-                Conversation.COLUMN_RINGTONE
+                Conversation.COLUMN_RINGTONE,
+                Conversation.COLUMN_MUTE
         });
 
         cursor.addRow(new Object[]{
@@ -306,7 +336,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Luke Klinker",
                 "(515) 991-1493",
                 "So maybe not going to be able to get platinum huh?",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[]{
@@ -321,7 +352,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Matt Swiontek",
                 "(708) 928-0846",
                 "Whoops ya idk what happened but anysho drive safe",
-                null
+                null,
+                1
         });
 
         cursor.addRow(new Object[]{
@@ -336,7 +368,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Kris Klinker",
                 "(515) 419-6726",
                 "Will probably be there from 6:30-9, just stop by when you can!",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[]{
@@ -351,7 +384,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Andrew Klinker",
                 "(515) 991-8235",
                 "Just finished, it was a lot of fun",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[]{
@@ -366,7 +400,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Aaron Klinker",
                 "(515) 556-7749",
                 "Yeah I'll do it when I get home",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[]{
@@ -381,7 +416,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Mike Klinker",
                 "(515) 480-8532",
                 "Yeah so hiking around in some place called beaver meadows now.",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[]{
@@ -396,7 +432,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "Ben Madden",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
-                null
+                null,
+                0
         });
 
         cursor.addRow(new Object[] {
@@ -411,7 +448,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 "test 1",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
-                null
+                null,
+                0
         });
 
         Calendar cal = Calendar.getInstance();
@@ -423,12 +461,13 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.PURPLE(context).colorLight,
                 ColorSet.PURPLE(context).colorAccent,
                 0,
-                1,
+                0,
                 cal.getTimeInMillis(),
                 "test 2",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
-                null
+                null,
+                1
         });
 
         return cursor;

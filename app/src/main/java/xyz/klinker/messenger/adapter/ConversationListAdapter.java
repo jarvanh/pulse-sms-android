@@ -30,11 +30,9 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -175,10 +173,22 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             holder.summary.setText(conversation.snippet);
         }
 
-        if (conversation.read && holder.isBold()) {
-            holder.setBold(false);
-        } else if (!conversation.read && !holder.isBold()) {
-            holder.setBold(true);
+        // read not muted
+        // not read, not muted
+        // muted not read
+        // read and muted
+        if (conversation.read && conversation.mute && (holder.isBold() || !holder.isItalic())) {
+            // should be italic
+            holder.setTypeface(false, true);
+        } else if (conversation.mute && !conversation.read && (!holder.isItalic() || !holder.isBold())) {
+            // should be just italic
+            holder.setTypeface(true, true);
+        } else if (!conversation.mute && conversation.read && (holder.isItalic() || holder.isBold())) {
+            // should be not italic and not bold
+            holder.setTypeface(false, false);
+        } else if (!conversation.mute && !conversation.read && (holder.isItalic() || !holder.isBold())) {
+            // should be bold, not italic
+            holder.setTypeface(true, false);
         }
     }
 

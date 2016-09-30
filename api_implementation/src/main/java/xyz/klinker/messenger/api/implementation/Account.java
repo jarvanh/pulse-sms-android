@@ -77,7 +77,7 @@ public class Account {
             // This will do little good if they are on the api utils and trying to send a message or
             // something, or receiving a message. But they will have to re-login sometime I guess
             context.startActivity(new Intent(context, LoginActivity.class));
-        } else {
+        } else if (key != null) {
             SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
             encryptionUtils = new EncryptionUtils(secretKey);
         }

@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="1.5.2"
+        description="September 30rd, 2016">
+        <text>Italicize muted conversation</text>
+        <text>Bug fixes</text>
+        <text>More encryption fixes</text>
+        <text>Crash fixes</text>
+    </version>
+
+    <version
         name="1.5.1"
         description="September 27rd, 2016">
         <text>Changes to encryption.</text>

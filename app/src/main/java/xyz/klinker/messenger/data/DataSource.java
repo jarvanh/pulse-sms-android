@@ -66,7 +66,7 @@ public class DataSource {
     private static final long MAX_ID = Long.MAX_VALUE / 10000;
     private static volatile DataSource instance;
 
-    private Context context;
+    protected Context context;
     private SQLiteDatabase database;
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();

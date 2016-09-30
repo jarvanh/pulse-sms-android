@@ -61,6 +61,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         source = new DataSource(helper);
+        source.context = RuntimeEnvironment.application;
         when(helper.getWritableDatabase()).thenReturn(database);
         source.open();
     }

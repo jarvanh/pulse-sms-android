@@ -81,7 +81,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                         adapter.getConversations().get(position).read = true;
                     }
 
-                    setBold(false);
+                    setTypeface(false, isItalic());
                 }
 
                 if (listener != null) {
@@ -119,16 +119,20 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         return name.getTypeface() != null && name.getTypeface().isBold();
     }
 
-    public void setBold(boolean bold) {
+    public boolean isItalic() {
+        return name.getTypeface() != null && name.getTypeface().getStyle() == Typeface.ITALIC;
+    }
+
+    public void setTypeface(boolean bold, boolean italic) {
         if (bold) {
-            name.setTypeface(Typeface.DEFAULT_BOLD);
-            summary.setTypeface(Typeface.DEFAULT_BOLD);
+            name.setTypeface(Typeface.DEFAULT_BOLD, italic ? Typeface.ITALIC : Typeface.NORMAL);
+            summary.setTypeface(Typeface.DEFAULT_BOLD, italic ? Typeface.ITALIC : Typeface.NORMAL);
             unreadIndicator.setVisibility(View.VISIBLE);
 
             ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
         } else {
-            name.setTypeface(Typeface.DEFAULT);
-            summary.setTypeface(Typeface.DEFAULT);
+            name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
+            summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             unreadIndicator.setVisibility(View.GONE);
         }
     }
