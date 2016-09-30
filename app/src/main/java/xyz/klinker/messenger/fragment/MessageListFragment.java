@@ -435,9 +435,11 @@ public class MessageListFragment extends Fragment implements
         }
 
         NavigationView nav = (NavigationView) activity.findViewById(R.id.navigation_view);
-        MenuItem item = nav.getMenu().findItem(R.id.drawer_archive_conversation);
-        if (nav != null && item != null && getArguments().getBoolean(ARG_IS_ARCHIVED) ) {
-            item.setTitle(R.string.menu_move_to_inbox);
+        if (nav != null && getArguments().getBoolean(ARG_IS_ARCHIVED)) {
+            MenuItem item = nav.getMenu().findItem(R.id.drawer_archive_conversation);
+            if (item != null) {
+                item.setTitle(R.string.menu_move_to_inbox);
+            }
         }
     }
 
