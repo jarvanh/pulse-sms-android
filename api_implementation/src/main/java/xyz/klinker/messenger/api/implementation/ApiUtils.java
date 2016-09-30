@@ -184,7 +184,7 @@ public class ApiUtils {
      */
     public void deleteContact(final String accountId, final String phoneNumber,
                               final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null) {
+        if (!active || accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -764,7 +764,7 @@ public class ApiUtils {
      */
     public void uploadBytesToFirebase(byte[] bytes, final long messageId,
                                       EncryptionUtils encryptionUtils) {
-        if (!active) {
+        if (!active || encryptionUtils == null) {
             return;
         }
 
@@ -810,7 +810,7 @@ public class ApiUtils {
      */
     public void downloadFileFromFirebase(final File file, final long messageId,
                                          final EncryptionUtils encryptionUtils) {
-        if (folderRef == null) {
+        if (folderRef == null || encryptionUtils == null) {
             throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
         }
 
