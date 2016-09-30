@@ -46,6 +46,10 @@ public class ContactSyncService extends IntentService {
         // upload those contacts
 
         Account account = Account.get(this);
+        if (account.getEncryptor() == null) {
+            return;
+        }
+
         DataSource source = DataSource.getInstance(this);
         source.open();
 

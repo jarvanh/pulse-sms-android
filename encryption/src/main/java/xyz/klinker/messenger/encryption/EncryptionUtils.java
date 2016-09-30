@@ -84,7 +84,8 @@ public class EncryptionUtils {
         } catch (InvalidKeyException | InvalidParameterSpecException |
                 IllegalBlockSizeException | BadPaddingException |
                 NoSuchAlgorithmException | NoSuchPaddingException e) {
-            throw new RuntimeException("could not encrypt data", e);
+            throw new RuntimeException("could not encrypt data. Key: " +
+                    Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT), e);
         }
     }
 
@@ -123,7 +124,8 @@ public class EncryptionUtils {
         } catch (InvalidKeyException | InvalidAlgorithmParameterException |
                 IllegalBlockSizeException | BadPaddingException |
                 NoSuchAlgorithmException | NoSuchPaddingException e) {
-            throw new RuntimeException("could not decryptData data", e);
+            throw new RuntimeException("could not decryptData data. Key: " +
+                    Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT), e);
         }
     }
 

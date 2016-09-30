@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.api.implementation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
@@ -61,11 +62,25 @@ public class Account {
         this.accountId = sharedPrefs.getString(context.getString(R.string.api_pref_account_id), null);
         this.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null);
         this.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null);
-        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key),
-                Base64.encodeToString("no key yet.".getBytes(StandardCharsets.UTF_8), Base64.DEFAULT));
+        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null);
 
-        SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
-        encryptionUtils = new EncryptionUtils(secretKey);
+        if (key == null && passhash != null && accountId != null && salt != null) {
+            // we have all the requirements to recompute the key,
+            // not sure why this wouldn't have worked in the first place..
+            recomputeKey();
+            this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null);
+
+            SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
+            encryptionUtils = new EncryptionUtils(secretKey);
+        } else if (key == null && accountId != null) {
+            // we cannot compute the key, uh oh. lets just start up the login activity and grab them...
+            // This will do little good if they are on the api utils and trying to send a message or
+            // something, or receiving a message. But they will have to re-login sometime I guess
+            context.startActivity(new Intent(context, LoginActivity.class));
+        } else {
+            SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
+            encryptionUtils = new EncryptionUtils(secretKey);
+        }
     }
 
     @VisibleForTesting

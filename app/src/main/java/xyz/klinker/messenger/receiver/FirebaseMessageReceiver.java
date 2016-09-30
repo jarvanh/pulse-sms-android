@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
@@ -88,6 +89,11 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         }
 
         encryptionUtils = account.getEncryptor();
+
+        if (encryptionUtils == null && account.accountId != null) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+            return;
+        }
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);
