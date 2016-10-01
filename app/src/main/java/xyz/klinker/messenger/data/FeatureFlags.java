@@ -62,7 +62,7 @@ public class FeatureFlags {
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
-        REMOVE_MESSAGE_LIST_DRAWER = false;//getValue(sharedPrefs, FLAG_REMOVE_MESSAGE_LIST_DRAWER);
+        REMOVE_MESSAGE_LIST_DRAWER = getValue(sharedPrefs, FLAG_REMOVE_MESSAGE_LIST_DRAWER);
     }
 
     public void updateFlag(String identifier, boolean flag) {
