@@ -472,7 +472,7 @@ public class ConversationListFragment extends Fragment
             NotificationService.CONVERSATION_ID_OPEN = 0L;
         }
 
-        if (FeatureFlags.get(getActivity()).REORDER_CONVERSATIONS_ON_SENT_MESSAGE && updateInfo != null) {
+        if (updateInfo != null) {
             ConversationListUpdatedReceiver.sendBroadcast(getActivity(), updateInfo);
         }
     }

@@ -51,7 +51,6 @@ public class FeatureFlags {
 
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
-    public boolean REORDER_CONVERSATIONS_ON_SENT_MESSAGE;
     public boolean CONTENT_OBSERVER_TIMEOUT;
     public boolean REMOVE_MESSAGE_LIST_DRAWER;
 
@@ -62,7 +61,6 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
-        REORDER_CONVERSATIONS_ON_SENT_MESSAGE = getValue(sharedPrefs, FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
         REMOVE_MESSAGE_LIST_DRAWER = false;//getValue(sharedPrefs, FLAG_REMOVE_MESSAGE_LIST_DRAWER);
     }
@@ -77,9 +75,6 @@ public class FeatureFlags {
             /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
-            case FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES:
-                REORDER_CONVERSATIONS_ON_SENT_MESSAGE = flag;
-                break;
             case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
                 CONTENT_OBSERVER_TIMEOUT = flag;
                 break;
