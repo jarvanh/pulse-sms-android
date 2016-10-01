@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <shortcut
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/shortcut_compose"
         android:enabled="true"
         shortcutId="manifest-shortcut-compose-sms"
         shortcutShortLabel="@string/shortcut_compose_short"
-        shortcutLongLabel="@string/shortcut_compose_long">
+        shortcutLongLabel="@string/shortcut_compose_short">
 
         <intent
             android:targetPackage="xyz.klinker.messenger"
