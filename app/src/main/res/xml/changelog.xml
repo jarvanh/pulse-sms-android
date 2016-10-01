@@ -17,8 +17,9 @@
 <changelog>
 
     <version
-        name="1.5.3"
-        description="September 30rd, 2016">
+        name="1.6.0"
+        description="October 1st, 2016">
+        <text>Changes to the message list</text>
         <text>Italicize muted conversation</text>
         <text>Various searching improvements</text>
         <text>Bug fixes</text>
