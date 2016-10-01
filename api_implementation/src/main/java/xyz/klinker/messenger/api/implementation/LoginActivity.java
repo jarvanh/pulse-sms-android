@@ -468,14 +468,18 @@ public class LoginActivity extends AppCompatActivity {
         View view = findViewById(R.id.initial_layout);
         view.setVisibility(View.VISIBLE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int cx = view.getWidth() / 2;
-            int cy = view.getHeight() / 2;
-            float finalRadius = (float) Math.hypot(cx, cy);
-            ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius).start();
-        } else {
-            view.setAlpha(0f);
-            view.animate().alpha(1f).start();
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                int cx = view.getWidth() / 2;
+                int cy = view.getHeight() / 2;
+                float finalRadius = (float) Math.hypot(cx, cy);
+                ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius).start();
+            } else {
+                view.setAlpha(0f);
+                view.animate().alpha(1f).start();
+            }
+        } catch (Exception e) {
+            finish();
         }
     }
 

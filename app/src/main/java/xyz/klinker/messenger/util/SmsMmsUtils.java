@@ -146,6 +146,10 @@ public class SmsMmsUtils {
      * @return the conversation as a cursor.
      */
     public static Cursor queryConversation(long conversationId, Context context) {
+        if (conversationId == -1) {
+            return null;
+        }
+
         String[] projection = new String[]{
                 Telephony.MmsSms._ID,
                 Telephony.Sms.BODY,

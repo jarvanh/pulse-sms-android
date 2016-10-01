@@ -855,12 +855,8 @@ public class MessageListFragment extends Fragment implements
 
                 messageEntry.setText(null);
 
-                ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                Fragment fragment = getActivity()
                         .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
-
-                if (fragment != null) {
-                    fragment.notifyOfSentMessage(m);
-                }
 
                 if (uri != null) {
                     m.data = uri.toString();
@@ -876,8 +872,8 @@ public class MessageListFragment extends Fragment implements
 
                 clearAttachedData();
 
-                if (fragment != null) {
-                    fragment.notifyOfSentMessage(m);
+                if (fragment != null && fragment instanceof ConversationListFragment) {
+                    ((ConversationListFragment) fragment).notifyOfSentMessage(m);
                 }
 
                 new Thread(new Runnable() {

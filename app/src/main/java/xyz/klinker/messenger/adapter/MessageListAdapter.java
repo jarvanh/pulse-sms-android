@@ -289,20 +289,28 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public int getItemCount() {
-        if (messages == null || messages.isClosed() || !messages.moveToFirst()) {
-            return 0;
-        } else {
+        try {
             return messages.getCount();
+        } catch (Exception e) {
+            return 0;
         }
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (messages.getCount() == 0) {
+            return -1;
+        }
+
         messages.moveToPosition(position);
         return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
     }
 
     public long getItemId(int position) {
+        if (messages.getCount() == 0) {
+            return -1;
+        }
+
         messages.moveToPosition(position);
         return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
     }

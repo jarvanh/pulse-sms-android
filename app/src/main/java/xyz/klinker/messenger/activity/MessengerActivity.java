@@ -18,6 +18,7 @@ package xyz.klinker.messenger.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -197,11 +198,15 @@ public class MessengerActivity extends AppCompatActivity
         if (Account.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
             PermissionsUtils.setDefaultSmsApp(this);
         }
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
         PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

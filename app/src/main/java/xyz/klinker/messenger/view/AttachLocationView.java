@@ -86,7 +86,13 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
 
     private void init(int color) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.view_attach_location, this, true);
+
+        try {
+            inflater.inflate(R.layout.view_attach_location, this, true);
+        } catch (Exception e) {
+            // this was probably removed already
+            return;
+        }
 
         mapFragment = (MapFragment) ((Activity) getContext()).getFragmentManager()
                 .findFragmentById(R.id.map);
@@ -230,13 +236,15 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                             addressFragments);
                     Log.v(TAG, "got address: " + a);
 
-                    getHandler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.v(TAG, "posting back to fragment");
-                            textListener.onTextSelected(a);
-                        }
-                    });
+                    if (getHandler() != null) {
+                        getHandler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.v(TAG, "posting back to fragment");
+                                textListener.onTextSelected(a);
+                            }
+                        });
+                    }
                 } else {
                     Log.e(TAG, "could not find any addresses");
                 }

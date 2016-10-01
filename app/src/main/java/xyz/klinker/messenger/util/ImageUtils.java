@@ -98,9 +98,13 @@ public class ImageUtils {
             return null;
         }
 
-        InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
-                context.getContentResolver(), Uri.parse(imageUri), true);
-        return BitmapFactory.decodeStream(stream);
+        try {
+            InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
+                    context.getContentResolver(), Uri.parse(imageUri), true);
+            return BitmapFactory.decodeStream(stream);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

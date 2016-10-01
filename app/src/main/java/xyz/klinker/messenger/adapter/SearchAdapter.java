@@ -51,7 +51,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
     public SearchAdapter(String search, Cursor conversations, Cursor messages,
                          SearchListener listener) {
-        this.search = search;
+        this.search = search == null ? "" : search;
         this.conversations = conversations;
         this.messages = messages;
         this.listener = listener;
@@ -244,7 +244,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     }
 
     public void updateCursors(String search, Cursor conversations, Cursor messages) {
-        this.search = search;
+        this.search = search == null ? "" : search;
         this.conversations = conversations;
         this.messages = messages;
         notifyDataSetChanged();

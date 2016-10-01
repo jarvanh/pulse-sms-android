@@ -44,7 +44,11 @@ public class SmsSentReceiver extends SentReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
+        try {
+            super.onReceive(context, intent);
+        } catch (Exception e) {
+
+        }
 
         Uri uri = Uri.parse(intent.getStringExtra("message_uri"));
 
