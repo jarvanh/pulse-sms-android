@@ -165,7 +165,8 @@ public class MessengerActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown()) {
+                if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
+                        !(otherFragment instanceof ArchivedConversationListFragment)) {
                     fab.show();
                 }
             }
@@ -412,7 +413,11 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
 
-        switch (item.getItemId()) {
+        return menuItemClicked(item.getItemId());
+    }
+
+    public boolean menuItemClicked(int id) {
+        switch (id) {
             case R.id.drawer_conversation:
                 if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null
                         && conversationListFragment.archiveSnackbar.isShown()) {
@@ -439,20 +444,30 @@ public class MessengerActivity extends AppCompatActivity
                 return displayHelpAndFeedback();
             case R.id.drawer_about:
                 return displayAbout();
+            case R.id.menu_call:
+                return callContact();
+            case R.id.menu_view_contact:
             case R.id.drawer_view_contact:
                 return viewContact();
+            case R.id.menu_view_media:
             case R.id.drawer_view_media:
                 return viewMedia();
+            case R.id.menu_delete_conversation:
             case R.id.drawer_delete_conversation:
                 return deleteConversation();
+            case R.id.menu_archive_conversation:
             case R.id.drawer_archive_conversation:
                 return archiveConversation();
+            case R.id.menu_conversation_information:
             case R.id.drawer_conversation_information:
                 return conversationInformation();
+            case R.id.menu_conversation_blacklist:
             case R.id.drawer_conversation_blacklist:
                 return conversationBlacklist();
+            case R.id.menu_conversation_schedule:
             case R.id.drawer_conversation_schedule:
                 return conversationSchedule();
+            case R.id.menu_contact_settings:
             case R.id.drawer_contact_settings:
                 return contactSettings();
             default:

@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -82,6 +83,7 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -370,13 +372,23 @@ public class MessageListFragment extends Fragment implements
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
             final DrawerLayout drawerLayout = (DrawerLayout) getActivity()
                     .findViewById(R.id.drawer_layout);
-            toolbar.setNavigationIcon(R.drawable.ic_menu);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            });
+            if (FeatureFlags.get(getActivity()).REMOVE_MESSAGE_LIST_DRAWER) {
+                toolbar.setNavigationIcon(R.drawable.ic_collapse);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getActivity().onBackPressed();
+                    }
+                });
+            } else {
+                toolbar.setNavigationIcon(R.drawable.ic_menu);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        drawerLayout.openDrawer(GravityCompat.START);
+                    }
+                });
+            }
         }
 
         toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
@@ -384,13 +396,23 @@ public class MessageListFragment extends Fragment implements
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.menu_call) {
-                    ((MessengerActivity) getActivity()).callContact();
-                }
-
-                return true;
+                return ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
             }
         });
+
+        if (!FeatureFlags.get(getActivity()).REMOVE_MESSAGE_LIST_DRAWER) {
+            removeMenuItem(R.id.menu_view_contact);
+            removeMenuItem(R.id.menu_view_media);
+            removeMenuItem(R.id.menu_delete_conversation);
+            removeMenuItem(R.id.menu_archive_conversation);
+            removeMenuItem(R.id.menu_conversation_blacklist);
+            removeMenuItem(R.id.menu_conversation_schedule);
+            removeMenuItem(R.id.menu_conversation_information);
+            removeMenuItem(R.id.menu_contact_settings);
+
+            if (toolbar.getMenu().findItem(R.id.menu_call) != null)
+                toolbar.getMenu().findItem(R.id.menu_call).setVisible(true);
+        }
 
         setNameAndDrawerColor(getActivity());
         ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
@@ -398,6 +420,11 @@ public class MessageListFragment extends Fragment implements
         if (!TvUtils.hasTouchscreen(getActivity())) {
             appBarLayout.setVisibility(View.GONE);
         }
+    }
+
+    private void removeMenuItem(@IdRes int menuItemId) {
+        if (toolbar.getMenu().findItem(menuItemId) != null)
+            toolbar.getMenu().findItem(menuItemId).setVisible(false);
     }
 
     private void setNameAndDrawerColor(Activity activity) {
@@ -436,9 +463,15 @@ public class MessageListFragment extends Fragment implements
 
         NavigationView nav = (NavigationView) activity.findViewById(R.id.navigation_view);
         if (nav != null && getArguments().getBoolean(ARG_IS_ARCHIVED)) {
-            MenuItem item = nav.getMenu().findItem(R.id.drawer_archive_conversation);
-            if (item != null) {
-                item.setTitle(R.string.menu_move_to_inbox);
+            MenuItem navItem = nav.getMenu().findItem(R.id.drawer_archive_conversation);
+            MenuItem toolbarItem = toolbar.getMenu().findItem(R.id.menu_archive_conversation);
+
+            if (navItem != null) {
+                navItem.setTitle(R.string.menu_move_to_inbox);
+            }
+
+            if (toolbarItem != null) {
+                toolbarItem.setTitle(R.string.menu_move_to_inbox);
             }
         }
     }
