@@ -60,6 +60,10 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="android.app.shortcuts"
+            android:resource="@xml/shortcuts"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -109,10 +113,6 @@
             android:name=".activity.ComposeActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
