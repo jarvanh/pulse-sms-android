@@ -209,27 +209,31 @@ public class ApiUploadService extends Service {
         Cursor cursor = source.getContacts();
 
         if (cursor != null && cursor.moveToFirst()) {
-            ContactBody[] contacts = new ContactBody[cursor.getCount()];
+            List<ContactBody> contacts = new ArrayList<>();
 
             do {
                 Contact c = new Contact();
                 c.fillFromCursor(cursor);
                 c.encrypt(encryptionUtils);
-                ContactBody contactBody = new ContactBody(c.phoneNumber, c.name, c.colors.color,
+                ContactBody contact = new ContactBody(c.phoneNumber, c.name, c.colors.color,
                         c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent);
-
-                contacts[cursor.getPosition()] = contactBody;
+                contacts.add(contact);
             } while (cursor.moveToNext());
 
-            AddContactRequest request =
-                    new AddContactRequest(account.accountId, contacts);
-            Object result = apiUtils.getApi().contact().add(request);
+            List<Object> results = new ArrayList<>();
+            List<List<ContactBody>> pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE);
 
-            if (result == null) {
+            for (List<ContactBody> page : pages) {
+                AddContactRequest request = new AddContactRequest(account.accountId, page.toArray(new ContactBody[0]));
+                results.add(apiUtils.getApi().contact().add(request));
+
+                Log.v(TAG, "uploaded " + page.size() + " contacts for page " + results.size());
+            }
+
+            if (results.size() != pages.size() || !noNull(results)) {
                 Log.v(TAG, "failed to upload contacts in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
-                Log.v(TAG, result.toString());
                 Log.v(TAG, "contacts upload successful in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             }
