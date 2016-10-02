@@ -194,13 +194,12 @@ public class MessengerActivity extends AppCompatActivity
     private void requestPermissions() {
         if (PermissionsUtils.checkRequestMainPermissions(this)) {
             PermissionsUtils.startMainPermissionRequest(this);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         }
 
         if (Account.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
             PermissionsUtils.setDefaultSmsApp(this);
         }
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 
     @Override

@@ -20,7 +20,7 @@
     <color name="colorPrimary">@color/materialTeal</color>
     <color name="colorPrimaryDark">@color/materialTealDark</color>
     <color name="colorPrimaryLight">@color/materialTealLight</color>
-    <color name="colorAccent">@color/materialPinkAccent</color>
+    <color name="colorAccent">@color/materialOrangeAccent</color>
 
     <!-- Material Design Colors -->
     <color name="materialRed">#F44336</color>
