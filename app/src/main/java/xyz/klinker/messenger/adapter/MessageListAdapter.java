@@ -299,7 +299,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if (messages.getCount() == 0) {
+        if (messages == null || messages.getCount() == 0) {
             return -1;
         }
 
@@ -308,7 +308,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     }
 
     public long getItemId(int position) {
-        if (messages.getCount() == 0) {
+        if (messages == null || messages.getCount() == 0) {
             return -1;
         }
 
