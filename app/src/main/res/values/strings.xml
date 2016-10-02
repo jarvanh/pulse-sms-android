@@ -30,7 +30,7 @@
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_settings">Global Settings</string>
     <string name="menu_account">My account</string>
     <string name="menu_help">Help &amp; feedback</string>
     <string name="menu_about">About</string>
@@ -237,7 +237,7 @@
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
     <string name="base_theme">Base Theme</string>
-    <string name="global_theme_color">Global Theme Color</string>
+    <string name="global_theme_color">Theme Color</string>
     <string name="font_size">Font Size</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
