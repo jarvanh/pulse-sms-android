@@ -650,7 +650,7 @@ public class MessengerActivity extends AppCompatActivity
         if (conversationListFragment.isExpanded()) {
             String uri = "tel:" +
                     conversationListFragment.getExpandedItem().conversation.phoneNumbers;
-            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse(uri));
             try {
                 startActivity(intent);

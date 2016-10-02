@@ -15,6 +15,55 @@
   ~ limitations under the License.
   -->
 
-<menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_view_contact"
+        android:icon="@drawable/ic_contacts"
+        android:title="@string/menu_view_contact"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_view_media"
+        android:icon="@drawable/ic_media"
+        android:title="@string/menu_view_media"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_delete_conversation"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/menu_delete_conversation"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_archive_conversation"
+        android:icon="@drawable/ic_archive"
+        android:title="@string/menu_archive_conversation"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_conversation_blacklist"
+        android:icon="@drawable/ic_block"
+        android:title="@string/menu_conversation_blacklist"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_conversation_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/menu_conversation_schedule"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_conversation_information"
+        android:icon="@drawable/ic_about"
+        android:title="@string/menu_conversation_information"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_contact_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/menu_contact_settings"
+        app:showAsAction="never" />
 
 </menu>

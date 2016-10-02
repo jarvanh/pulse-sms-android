@@ -22,14 +22,7 @@
         android:id="@+id/menu_call"
         android:icon="@drawable/ic_call"
         android:title="@string/menu_call"
-        android:visible="false"
         app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/menu_view_contact"
-        android:icon="@drawable/ic_contacts"
-        android:title="@string/menu_view_contact"
-        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_view_media"
@@ -59,6 +52,12 @@
         android:id="@+id/menu_conversation_schedule"
         android:icon="@drawable/ic_schedule"
         android:title="@string/menu_conversation_schedule"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_view_contact"
+        android:icon="@drawable/ic_contacts"
+        android:title="@string/menu_view_contact"
         app:showAsAction="never" />
 
     <item
