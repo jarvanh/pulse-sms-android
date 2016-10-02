@@ -19,18 +19,22 @@ package xyz.klinker.messenger.fragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +53,7 @@ import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.IllegalFormatConversionException;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
@@ -248,8 +253,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void displayDateDialog(final ScheduledMessage message) {
+        Context context = getContextToFixDatePickerCrash();
+
         Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 message.timestamp = new GregorianCalendar(year, month, day)
@@ -320,6 +327,37 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         InputMethodManager imm = (InputMethodManager)
                 getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    // samsung messed up the date picker in some languages on Lollipop 5.0 and 5.1. Ugh.
+    // fixes this issue: http://stackoverflow.com/a/34853067
+    private ContextWrapper getContextToFixDatePickerCrash() {
+        return new ContextWrapper(getActivity()) {
+
+            private Resources wrappedResources;
+
+            @Override
+            public Resources getResources() {
+                Resources r = super.getResources();
+                if(wrappedResources == null) {
+                    wrappedResources = new Resources(r.getAssets(), r.getDisplayMetrics(), r.getConfiguration()) {
+                        @NonNull
+                        @Override
+                        public String getString(int id, Object... formatArgs) throws NotFoundException {
+                            try {
+                                return super.getString(id, formatArgs);
+                            } catch (IllegalFormatConversionException ifce) {
+                                Log.e("DatePickerDialogFix", "IllegalFormatConversionException Fixed!", ifce);
+                                String template = super.getString(id);
+                                template = template.replaceAll("%" + ifce.getConversion(), "%s");
+                                return String.format(getConfiguration().locale, template, formatArgs);
+                            }
+                        }
+                    };
+                }
+                return wrappedResources;
+            }
+        };
     }
 
 }

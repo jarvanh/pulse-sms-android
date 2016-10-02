@@ -117,6 +117,7 @@ dependencies {
     compile "com.android.support:percent:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:leanback-v17:${ANDROID_SUPPORT_VERSION}"
     compile 'com.github.paolorotolo:appintro:4.0.0'
+    compile 'com.yalantis:ucrop:2.2.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'
     compile 'com.afollestad:easyvideoplayer:0.2.9'
