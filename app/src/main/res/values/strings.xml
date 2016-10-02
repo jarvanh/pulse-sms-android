@@ -16,9 +16,9 @@
 
 <resources>
 
-    <string name="app_name">Messenger</string>
+    <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
-    <string name="app_title">Messaging</string>
+    <string name="app_title">Pulse</string>
 
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">New Message</string>

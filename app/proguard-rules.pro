@@ -50,3 +50,8 @@
 -keepclassmembers class * extends com.stephentuso.welcome.ui.WelcomeActivity {
     public static java.lang.String welcomeKey();
 }
+
+# uCrop rules
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
