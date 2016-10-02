@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -71,7 +72,9 @@ import android.widget.Toast;
 import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 import com.sgottard.sofa.ContentFragment;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -163,6 +166,7 @@ public class MessageListFragment extends Fragment implements
     private ImageButton attachLocation;
     private View attachedImageHolder;
     private ImageView attachedImage;
+    private View editImage;
     private View removeImage;
     private BroadcastReceiver updatedReceiver;
     private boolean dismissNotification = false;
@@ -238,6 +242,7 @@ public class MessageListFragment extends Fragment implements
         attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
         removeImage = view.findViewById(R.id.remove_image);
+        editImage = view.findViewById(R.id.edit_image);
 
         dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
@@ -538,6 +543,28 @@ public class MessageListFragment extends Fragment implements
             }
         });
         messageEntry.setHighlightColor(accent);
+
+        editImage.setBackgroundColor(accent);
+        editImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    UCrop.Options options = new UCrop.Options();
+                    options.setToolbarColor(getArguments().getInt(ARG_COLOR));
+                    options.setStatusBarColor(getArguments().getInt(ARG_COLOR_DARKER));
+                    options.setActiveWidgetColor(getArguments().getInt(ARG_COLOR_ACCENT));
+                    options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+                    options.setCompressionQuality(100);
+
+                    File destination = File.createTempFile("ucrop", "jpg", getActivity().getCacheDir());
+                    UCrop.of(attachedUri, Uri.fromFile(destination))
+                            .withOptions(options)
+                            .start(getActivity());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         removeImage.setBackgroundColor(accent);
         removeImage.setOnClickListener(new View.OnClickListener() {
@@ -1045,7 +1072,9 @@ public class MessageListFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_VIDEO_REQUEST) {
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            attachImage(UCrop.getOutput(data));
+        } else if (requestCode == RESULT_VIDEO_REQUEST) {
             onBackPressed();
 
             if (resultCode == RESULT_OK) {

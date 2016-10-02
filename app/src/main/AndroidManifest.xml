@@ -141,6 +141,10 @@
                 android:value=".service.MessengerChooserTargetService" />
         </activity>
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".activity.OnboardingActivity"
             android:theme="@style/AppIntro" />
         <activity android:name=".activity.InitialLoadActivity"
