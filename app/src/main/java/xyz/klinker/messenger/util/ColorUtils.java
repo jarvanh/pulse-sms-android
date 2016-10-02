@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.Settings;
 
@@ -179,7 +181,12 @@ public class ColorUtils {
 
             navView.getMenu().clear();
             navView.inflateMenu(R.menu.navigation_drawer_conversations);
-            navView.getMenu().getItem(0).setChecked(true);
+            navView.getMenu().getItem(1).setChecked(true);
+
+            // change the text to
+            if (Account.get(activity).accountId != null) {
+                navView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+            }
         } else {
             revealView.setBackgroundColor(color);
             Animator anim =

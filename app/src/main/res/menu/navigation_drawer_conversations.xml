@@ -18,6 +18,15 @@
 
     <group android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/drawer_account"
+            android:icon="@drawable/ic_devices"
+            android:title="@string/menu_device_texting" />
+
+    </group>
+
+    <group android:checkableBehavior="single">
+
         <group
             android:id="@+id/primary_section"
             android:checkableBehavior="single">
@@ -58,11 +67,6 @@
                 android:id="@+id/drawer_settings"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/menu_settings" />
-
-            <item
-                android:id="@+id/drawer_account"
-                android:icon="@drawable/ic_account"
-                android:title="@string/menu_account" />
 
             <item
                 android:id="@+id/drawer_help"

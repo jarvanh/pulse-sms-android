@@ -49,7 +49,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     public boolean onBackPressed() {
         if (!super.onBackPressed()) {
             NavigationView navView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-            navView.getMenu().getItem(0).setChecked(true);
+            navView.getMenu().getItem(1).setChecked(true);
 
             getActivity().setTitle(getString(R.string.app_title));
             ((MessengerActivity) getActivity()).displayConversations();
@@ -63,7 +63,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
         super.onConversationContracted(viewHolder);
 
         NavigationView navView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-        navView.getMenu().getItem(1).setChecked(true);
+        navView.getMenu().getItem(2).setChecked(true);
     }
 
 }

@@ -246,6 +246,12 @@ public class MessengerActivity extends AppCompatActivity
                             .setText(account.myName);
                     ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                             .setText(PhoneNumberUtils.format(account.myPhoneNumber));
+
+                    // change the text to
+                    if (Account.get(MessengerActivity.this).accountId != null) {
+                        navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                    }
+
                     initSnooze();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
