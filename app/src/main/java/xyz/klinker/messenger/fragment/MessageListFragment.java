@@ -1093,6 +1093,7 @@ public class MessageListFragment extends Fragment implements
                 Log.v("gif result", "saved to " + data.getDataString());
                 attachImage(data.getData());
                 attachedMimeType = MimeType.IMAGE_GIF;
+                editImage.setVisibility(View.GONE);
             }
         } else if (requestCode == RESULT_GALLERY_PICKER_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
@@ -1155,6 +1156,8 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachImage(Uri uri) {
+        editImage.setVisibility(View.VISIBLE);
+        
         clearAttachedData();
         attachedUri = uri;
         attachedMimeType = MimeType.IMAGE_JPG;

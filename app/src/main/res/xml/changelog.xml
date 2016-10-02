@@ -20,6 +20,7 @@
         name="1.6.0"
         description="October 1st, 2016">
         <text>Changes to the message list</text>
+        <text>Edit image attachments</text>
         <text>Italicize muted conversation</text>
         <text>Various searching improvements</text>
         <text>Lot of other, small, features</text>
