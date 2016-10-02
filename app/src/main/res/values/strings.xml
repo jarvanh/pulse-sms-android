@@ -234,6 +234,8 @@
     <string name="accent_color">Accent Color</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Group Name</string>
+    <string name="global_color_set">These colors will be ignored in this individual conversation,
+        since you have a global color set. They will be used in group conversations with this contact.</string>
     <string name="notification_settings">Notifications</string>
     <string name="vibrate">Vibrate</string>
     <string name="delivery_reports">Delivery Reports</string>

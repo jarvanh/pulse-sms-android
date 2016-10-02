@@ -68,5 +68,8 @@
 
     </PreferenceCategory>
 
+    <Preference
+        android:key="@string/pref_contact_global_colors_set"
+        android:summary="@string/global_color_set" />
 
 </PreferenceScreen>
