@@ -28,6 +28,11 @@
         android:title="@string/device_id" />
 
     <Preference
+        android:key="@string/pref_resync_account"
+        android:title="@string/resync_account"
+        android:summary="@string/resync_account_summary"/>
+
+    <Preference
         android:key="@string/pref_delete_account"
         android:title="@string/delete_account"
         android:summary="@string/delete_account_summary"/>

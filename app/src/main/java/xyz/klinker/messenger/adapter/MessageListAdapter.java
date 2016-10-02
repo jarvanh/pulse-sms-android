@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
@@ -354,6 +355,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     message.data, message.mimeType, conversation.archive);
 
             source.close();
+        } else if (position == 0 && (getItemCount() == 1 || getItemCount() == 0)) {
+            ((MessengerActivity) fragment.getActivity()).menuItemClicked(R.id.menu_delete_conversation);
         } else {
             Log.v(TAG, "position not last, so leaving conversation");
         }

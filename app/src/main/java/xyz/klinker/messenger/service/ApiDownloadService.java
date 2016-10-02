@@ -139,13 +139,15 @@ public class ApiDownloadService extends Service {
         List<Message> messageList = new ArrayList<>();
 
         int pageNumber = 1;
+        boolean noMessages = false;
+
         do {
             MessageBody[] messages = apiUtils.getApi().message()
                     .list(account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
 
             if (messages != null) {
                 if (messages.length == 0) {
-                    break;
+                    noMessages = true;
                 }
 
                 for (MessageBody body : messages) {
@@ -170,7 +172,7 @@ public class ApiDownloadService extends Service {
 
             Log.v(TAG,  messageList.size() + " messages downloaded. " + pageNumber + " pages so far.");
             pageNumber++;
-        } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0);
+        } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages);
 
         if (messageList.size() > 0) {
             source.insertMessages(this, messageList);

@@ -182,6 +182,7 @@ public class DataSource {
         database.delete(Blacklist.TABLE, null, null);
         database.delete(Draft.TABLE, null, null);
         database.delete(ScheduledMessage.TABLE, null, null);
+        database.delete(Contact.TABLE, null, null);
     }
 
     /**

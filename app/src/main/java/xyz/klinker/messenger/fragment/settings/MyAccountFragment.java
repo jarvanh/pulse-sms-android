@@ -49,6 +49,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
             initMessageCountPreference();
             initRemoveAccountPreference();
+            initResyncAccountPreference();
         }
     }
 
@@ -81,6 +82,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 .removePreference(findPreference(getString(R.string.pref_message_count)));
         getPreferenceScreen()
                 .removePreference(findPreference(getString(R.string.pref_about_device_id)));
+        getPreferenceScreen()
+                .removePreference(findPreference(getString(R.string.pref_resync_account)));
         getPreferenceScreen()
                 .removePreference(findPreference(getString(R.string.pref_delete_account)));
     }
@@ -139,6 +142,33 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+    }
+
+    private void initResyncAccountPreference() {
+        Preference preference = findPreference(getString(R.string.pref_resync_account));
+
+        if (Account.get(getActivity()).primary) {
+            getPreferenceScreen().removePreference(preference);
+        } else {
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.resync_account_confirmation)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    getActivity()
+                                            .startService(new Intent(getActivity(), ApiDownloadService.class));
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .show();
+
+                    return true;
+                }
+            });
+        }
     }
 
     /**

@@ -45,6 +45,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class DataSourceTest extends MessengerRobolectricSuite {
@@ -92,6 +93,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         verify(database).delete("blacklist", null, null);
         verify(database).delete("draft", null, null);
         verify(database).delete("scheduled_message", null, null);
+        verify(database).delete("contact", null, null);
+
+        verifyNoMoreInteractions(database);
     }
 
     @Test

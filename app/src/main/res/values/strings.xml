@@ -257,6 +257,11 @@
         devices, and the server. This is not reversible!</string>
     <string name="delete_account_confirmation">Are you sure you want to delete your account and
         everything else with it? You can always sign up again later!</string>
+    <string name="resync_account">Resync Account</string>
+    <string name="resync_account_summary">Missing messages? Use this to bring this device up to date
+        with what is on your primary device.</string>
+    <string name="resync_account_confirmation">This will delete all messages from this device, and
+        start with a clean copy of what is currently on your primary device. Are you sure this is what you want?</string>
     <string name="normalize_color_scheme">Or, you can choose a single color that you want to
         base the contact on:</string>
     <string name="no_apps_found">No apps found to handle this action</string>
