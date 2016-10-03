@@ -1081,6 +1081,7 @@ public class MessageListFragment extends Fragment implements
                 Log.v("video result", "saved to " + data.getDataString());
                 attachImage(data.getData());
                 attachedMimeType = MimeType.VIDEO_MP4;
+                editImage.setVisibility(View.GONE);
             } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 e.printStackTrace();
@@ -1181,6 +1182,7 @@ public class MessageListFragment extends Fragment implements
         clearAttachedData();
         attachedUri = uri;
         attachedMimeType = MimeType.AUDIO_MP4;
+        editImage.setVisibility(View.GONE);
 
         attachedImageHolder.setVisibility(View.VISIBLE);
         attachedImage.setImageResource(R.drawable.ic_audio_sent);
