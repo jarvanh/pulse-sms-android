@@ -79,12 +79,9 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
         if (Settings.get(getActivity()).useGlobalThemeColor) {
             // remove the color customizations since they don't apply to anything except group messages
-            PreferenceCategory category = (PreferenceCategory)
+            PreferenceCategory customizationCategory = (PreferenceCategory)
                     findPreference(getString(R.string.pref_contact_customization_group));
-
-            category.removePreference(findPreference(getString(R.string.pref_contact_global_colors_set)));
-            category.removePreference(findPreference(getString(R.string.pref_contact_primary_dark_color)));
-            category.removePreference(findPreference(getString(R.string.pref_contact_accent_color)));
+            getPreferenceScreen().removePreference(customizationCategory);
         }
     }
 
