@@ -48,6 +48,7 @@
     <string name="pref_contact_ringtone" translatable="false">contact_ringtone</string>
     <string name="pref_contact_group_name" translatable="false">contact_group_name</string>
     <string name="pref_contact_global_colors_set" translatable="false">global_colors_set</string>
+    <string name="pref_contact_customization_group" translatable="false">customization_group</string>
 
     <string name="pref_ringtone">ringtone</string>
     <string name="pref_base_theme">base_theme</string>

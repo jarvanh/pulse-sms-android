@@ -49,6 +49,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">
 
         <xyz.klinker.messenger.view.ColorPreference
@@ -67,9 +68,5 @@
             app:display_normalize="false" />
 
     </PreferenceCategory>
-
-    <Preference
-        android:key="@string/pref_contact_global_colors_set"
-        android:summary="@string/global_color_set" />
 
 </PreferenceScreen>

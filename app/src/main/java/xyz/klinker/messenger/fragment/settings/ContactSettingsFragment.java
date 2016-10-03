@@ -20,6 +20,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
@@ -76,9 +77,14 @@ public class ContactSettingsFragment extends PreferenceFragment {
         setUpRingtone();
         setUpColors();
 
-        if (!Settings.get(getActivity()).useGlobalThemeColor) {
-             getPreferenceScreen().removePreference(
-                    findPreference(getString(R.string.pref_contact_global_colors_set)));
+        if (Settings.get(getActivity()).useGlobalThemeColor) {
+            // remove the color customizations since they don't apply to anything except group messages
+            PreferenceCategory category = (PreferenceCategory)
+                    findPreference(getString(R.string.pref_contact_customization_group));
+
+            category.removePreference(findPreference(getString(R.string.pref_contact_global_colors_set)));
+            category.removePreference(findPreference(getString(R.string.pref_contact_primary_dark_color)));
+            category.removePreference(findPreference(getString(R.string.pref_contact_accent_color)));
         }
     }
 
