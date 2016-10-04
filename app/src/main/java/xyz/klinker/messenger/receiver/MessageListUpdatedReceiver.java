@@ -68,7 +68,11 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
             }
 
             if (newMessageText != null) {
-                fragment.setConversationUpdateInfo(newMessageText);
+                if (messageType == Message.TYPE_SENDING || messageType == Message.TYPE_SENT) {
+                    fragment.setConversationUpdateInfo(context.getString(R.string.you) + ": " + newMessageText);
+                } else {
+                    fragment.setConversationUpdateInfo(newMessageText);
+                }
             }
         }
     }

@@ -352,7 +352,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             Conversation conversation = source.getConversation(conversationId);
             source.updateConversation(conversationId, conversation.read, message.timestamp,
-                    message.data, message.mimeType, conversation.archive);
+                    message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                            context.getString(R.string.you) + ": " + message.data : message.data,
+                    message.mimeType, conversation.archive);
 
             source.close();
         } else if (position == 0 && (getItemCount() == 1 || getItemCount() == 0)) {

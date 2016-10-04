@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
@@ -1210,7 +1211,9 @@ public class DataSource {
 
         if (cursor != null && cursor.moveToFirst()) {
             conversationId = cursor.getLong(0);
-            updateConversation(conversationId, message.read, message.timestamp, message.data,
+            updateConversation(conversationId, message.read, message.timestamp,
+                    message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                            context.getString(R.string.you) + ": " + message.data : message.data,
                     message.mimeType, false);
             cursor.close();
         } else {
@@ -1220,7 +1223,8 @@ public class DataSource {
             conversation.timestamp = message.timestamp;
 
             if (message.mimeType.equals(MimeType.TEXT_PLAIN) && message.type != Message.TYPE_INFO) {
-                conversation.snippet = message.data;
+                conversation.snippet = message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                        context.getString(R.string.you) + ": " + message.data : message.data;
             } else {
                 conversation.snippet = "";
             }
@@ -1281,7 +1285,9 @@ public class DataSource {
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
                 message.color, getEncryptionUtils(context));
 
-        updateConversation(conversationId, message.read, message.timestamp, message.data,
+        updateConversation(conversationId, message.read, message.timestamp,
+                message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                        context.getString(R.string.you) + ": " + message.data : message.data,
                 message.mimeType, false);
 
         return conversationId;
@@ -1322,7 +1328,9 @@ public class DataSource {
                     message.timestamp, message.mimeType, message.read, message.seen, message.from,
                     message.color, getEncryptionUtils(context));
 
-            updateConversation(message.conversationId, message.read, message.timestamp, message.data,
+            updateConversation(message.conversationId, message.read, message.timestamp,
+                    message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                            context.getString(R.string.you) + ": " + message.data : message.data,
                     message.mimeType, false);
         }
 
