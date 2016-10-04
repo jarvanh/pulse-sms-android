@@ -475,7 +475,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         Cursor conversation = source.getUnarchivedConversations();
         conversation.moveToFirst();
-        assertEquals("test message", conversation
+        assertEquals("You: test message", conversation
                 .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
     }
 

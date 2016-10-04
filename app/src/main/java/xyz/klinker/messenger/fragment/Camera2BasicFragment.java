@@ -462,6 +462,7 @@ public class Camera2BasicFragment extends Fragment
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
         view.findViewById(R.id.flip_picture).setOnClickListener(this);
+        view.findViewById(R.id.fullscreen).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
     }
 
@@ -947,6 +948,9 @@ public class Camera2BasicFragment extends Fragment
                 PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
                         .putBoolean(PREF_FRONT_FACING, mUseFrontFacing).apply();
                 openCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                break;
+            }
+            case R.id.fullscreen: {
                 break;
             }
         }
