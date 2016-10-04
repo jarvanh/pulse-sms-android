@@ -602,7 +602,7 @@ public class MessageListFragment extends Fragment implements
                     });
                 } else {
                     dragDismissFrameLayout.setEnabled(false);
-                    attachImage();
+                    attachImage(true);
                     attachLayout.setVisibility(View.VISIBLE);
                     animator = ValueAnimator.ofInt(0,
                             getResources().getDimensionPixelSize(R.dimen.attach_menu_height));
@@ -934,6 +934,14 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachImage() {
+        attachImage(false);
+    }
+
+    private void attachImage(boolean alwaysOpen) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 0) {
+            return;
+        }
+
         prepareAttachHolder(0);
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -948,6 +956,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void captureImage() {
+        if (getBoldedAttachHolderPosition() == 1) {
+            return;
+        }
+
         prepareAttachHolder(1);
 
         Camera2BasicFragment fragment = Camera2BasicFragment.newInstance();
@@ -956,6 +968,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachGif() {
+        if (getBoldedAttachHolderPosition() == 2) {
+            return;
+        }
+
         prepareAttachHolder(2);
         new Giphy.Builder(getActivity(), BuildConfig.GIPHY_API_KEY)
                 .maxFileSize(1024 * 1024)
@@ -963,6 +979,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void recordVideo() {
+        if (getBoldedAttachHolderPosition() == 3) {
+            return;
+        }
+
         prepareAttachHolder(3);
 
         MaterialCamera camera = new MaterialCamera(getActivity())
@@ -983,6 +1003,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void recordAudio() {
+        if (getBoldedAttachHolderPosition() == 4) {
+            return;
+        }
+
         prepareAttachHolder(4);
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
@@ -999,6 +1023,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachLocation() {
+        if (getBoldedAttachHolderPosition() == 5) {
+            return;
+        }
+
         prepareAttachHolder(5);
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -1086,6 +1114,16 @@ public class MessageListFragment extends Fragment implements
                 attachButtonHolder.getChildAt(i).setAlpha(0.5f);
             }
         }
+    }
+
+    private int getBoldedAttachHolderPosition() {
+        for (int i = 0; i < attachButtonHolder.getChildCount(); i++) {
+            if (attachButtonHolder.getChildAt(i).getAlpha() == 1.0f) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     private void clearAttachedData() {
