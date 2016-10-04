@@ -63,7 +63,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
                 fragment.setDismissOnStartup();
 
                 if (messageType == Message.TYPE_RECEIVED) {
-                    new AudioWrapper(context, R.raw.message_ping).play();
+                    new AudioWrapper(context, conversationId).play();
                 }
             }
 
