@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
@@ -79,7 +80,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
         unseenMessages.close();
         source.close();
 
-        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, reply, true);
+        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, context.getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
     }
 }

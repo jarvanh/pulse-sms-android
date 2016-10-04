@@ -24,6 +24,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
@@ -105,7 +106,7 @@ public class ReplyService extends IntentService {
         unseenMessages.close();
         source.close();
 
-        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, reply, true);
+        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
     }
 
