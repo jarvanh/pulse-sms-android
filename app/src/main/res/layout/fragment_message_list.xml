@@ -55,7 +55,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".33"
             android:id="@+id/attached_image_holder"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/message_list_padding"
@@ -95,6 +95,7 @@
                     android:src="@drawable/ic_edit"
                     android:layout_gravity="bottom"
                     android:id="@+id/edit_image"
+                    android:padding="3dp"
                     android:contentDescription="@string/edit_image" />
 
             </LinearLayout>
