@@ -421,6 +421,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         DataSource source = DataSource.getInstance(this);
         source.open();
         source.insertMessage(this, m, m.conversationId);
+        source.readConversation(NotificationReplyActivity.this, conversationId);
         source.close();
 
         new Thread(new Runnable() {
@@ -428,10 +429,6 @@ public class NotificationReplyActivity extends AppCompatActivity {
             public void run() {
                 SendUtils.send(NotificationReplyActivity.this, message,
                         conversation.phoneNumbers);
-                DataSource source = DataSource.getInstance(NotificationReplyActivity.this);
-                source.open();
-                source.readConversation(NotificationReplyActivity.this, conversationId);
-                source.close();
             }
         }).start();
     }
