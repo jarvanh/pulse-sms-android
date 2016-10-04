@@ -574,9 +574,8 @@ public class MessengerActivity extends AppCompatActivity
             conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
             getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
             getIntent().putExtra(EXTRA_MESSAGE_ID, -1L);
-        } else if (convoId != -1L) {
+        } else if (convoId != -1L && convoId != 0) {
             conversationListFragment = ConversationListFragment.newInstance(convoId);
-            getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
         } else {
             conversationListFragment = ConversationListFragment.newInstance();
         }
