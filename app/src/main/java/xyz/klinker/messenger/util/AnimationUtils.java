@@ -177,7 +177,7 @@ public class AnimationUtils {
      * @param fragmentContainer  the fragment container to animate.
      * @param fab                the floating action button to animate.
      * @param toolbarTranslate   the distance to translate the toolbar.
-     * @param containerStart     the start point of the container.
+     * @param containerStart     the play point of the container.
      * @param containerTranslate the distance the container should translate.
      * @param fabTranslate       the distance the fab should translate.
      * @param interpolator       the interpolator to use.

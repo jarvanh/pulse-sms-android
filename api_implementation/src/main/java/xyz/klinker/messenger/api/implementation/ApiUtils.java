@@ -916,6 +916,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the sound effects setting.
+     */
+    public void updateSoundEffects(final String accountId, final boolean effects) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "sound_effects", "boolean", effects);
+        }
+    }
+
+    /**
      * Update the mobile only setting
      */
     public void updateMobileOnly(final String accountId, final boolean mobileOnly) {

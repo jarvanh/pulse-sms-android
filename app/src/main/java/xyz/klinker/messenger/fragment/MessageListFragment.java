@@ -95,11 +95,10 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.AnimationUtils;
+import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -168,7 +167,7 @@ public class MessageListFragment extends Fragment implements
     private ImageView attachedImage;
     private View editImage;
     private View removeImage;
-    private BroadcastReceiver updatedReceiver;
+    private MessageListUpdatedReceiver updatedReceiver;
     private boolean dismissNotification = false;
     private boolean dismissOnStartup = false;
     private boolean textChanged = false;
@@ -952,6 +951,8 @@ public class MessageListFragment extends Fragment implements
                         }
                     }
                 }).start();
+
+                new AudioWrapper(getActivity(), R.raw.message_ping).play();
 
                 if (notificationActive()) {
                     NotificationManagerCompat.from(getContext())

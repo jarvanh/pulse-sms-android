@@ -102,7 +102,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         source.close();
 
         ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
-        MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data);
+        MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
     }
 
 }

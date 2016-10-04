@@ -43,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment {
         initFontSize();
         initVibrate();
         initDeliveryReports();
+        initSoundEffects();
     }
 
     @Override
@@ -130,6 +131,19 @@ public class SettingsFragment extends PreferenceFragment {
                         boolean delivery = (boolean) o;
                         new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
                                 delivery);
+                        return true;
+                    }
+                });
+    }
+
+    private void initSoundEffects() {
+        findPreference(getString(R.string.pref_sound_effects))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        boolean effects = (boolean) o;
+                        new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
+                                effects);
                         return true;
                     }
                 });

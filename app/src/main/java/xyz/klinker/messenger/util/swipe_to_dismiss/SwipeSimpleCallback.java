@@ -94,7 +94,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         if (viewHolder.itemView instanceof FrameLayout) {
             return 0;
         } else {
-            // swipe TOWARDS the start or TOWARDS the end
+            // swipe TOWARDS the play or TOWARDS the end
             return ItemTouchHelper.START | ItemTouchHelper.END;
         }
     }
@@ -114,7 +114,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         }
 
 
-        if (dX < 0) { // we are swiping towards the start (delete)
+        if (dX < 0) { // we are swiping towards the play (delete)
             int left = Math.min(itemView.getRight() + (int) dX,
                     itemView.getRight() + itemView.getWidth());
 

@@ -39,6 +39,11 @@
             android:entryValues="@array/font_size_values"
             android:defaultValue="normal" />
 
+        <SwitchPreference
+            android:key="@string/pref_sound_effects"
+            android:title="@string/sound_effects"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/notification_settings">

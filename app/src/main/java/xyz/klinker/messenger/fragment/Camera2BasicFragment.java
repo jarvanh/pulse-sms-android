@@ -196,7 +196,7 @@ public class Camera2BasicFragment extends Fragment
 
         @Override
         public void onOpened(@NonNull CameraDevice cameraDevice) {
-            // This method is called when the camera is opened.  We start camera preview here.
+            // This method is called when the camera is opened.  We play camera preview here.
             mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
             createCameraPreviewSession();
@@ -479,7 +479,7 @@ public class Camera2BasicFragment extends Fragment
 
         // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
-        // a camera and start preview from here (otherwise, we wait until the surface is ready in
+        // a camera and play preview from here (otherwise, we wait until the surface is ready in
         // the SurfaceTextureListener).
         if (mTextureView.isAvailable()) {
             openCamera(mTextureView.getWidth(), mTextureView.getHeight());
@@ -717,7 +717,7 @@ public class Camera2BasicFragment extends Fragment
             // We configure the size of default buffer to be the size of camera preview we want.
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
 
-            // This is the output Surface we need to start preview.
+            // This is the output Surface we need to play preview.
             Surface surface = new Surface(texture);
 
             // We set up a CaptureRequest.Builder with the output Surface.
@@ -736,7 +736,7 @@ public class Camera2BasicFragment extends Fragment
                                 return;
                             }
 
-                            // When the session is ready, we start displaying the preview.
+                            // When the session is ready, we play displaying the preview.
                             mCaptureSession = cameraCaptureSession;
                             try {
                                 // Auto focus should be continuous for camera preview.
@@ -745,7 +745,7 @@ public class Camera2BasicFragment extends Fragment
                                 // Flash is automatically enabled when necessary.
                                 setAutoFlash(mPreviewRequestBuilder);
 
-                                // Finally, we start displaying the camera preview.
+                                // Finally, we play displaying the camera preview.
                                 mPreviewRequest = mPreviewRequestBuilder.build();
                                 mCaptureSession.setRepeatingRequest(mPreviewRequest,
                                         mCaptureCallback, mBackgroundHandler);

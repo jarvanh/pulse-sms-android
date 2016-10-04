@@ -191,7 +191,7 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
         totalDrag += scroll;
 
         // track the direction & set the pivot point for scaling
-        // don't double track i.e. if start dragging down and then reverse, keep tracking as
+        // don't double track i.e. if play dragging down and then reverse, keep tracking as
         // dragging down until they reach the 'natural' position
         if (scroll < 0 && !draggingUp && !draggingDown) {
             draggingDown = true;

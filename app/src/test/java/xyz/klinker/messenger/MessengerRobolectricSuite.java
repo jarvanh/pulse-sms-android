@@ -50,7 +50,7 @@ public abstract class MessengerRobolectricSuite {
     /**
      * Helper for starting a fragment inside a FragmentActivity.
      *
-     * @param fragment the fragment to start.
+     * @param fragment the fragment to play.
      */
     public static <T extends Fragment> T startFragment(T fragment) {
         return startFragment(fragment, FragmentActivity.class);

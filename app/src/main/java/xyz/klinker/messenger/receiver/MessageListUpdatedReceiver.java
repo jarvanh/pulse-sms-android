@@ -20,11 +20,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.util.AudioWrapper;
 
 /**
  * Receiver that handles updating the message list when a new message is received for the
@@ -35,6 +38,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
     private static final String ACTION_UPDATED = "xyz.klinker.messenger.MESSAGE_UPDATED";
     private static final String ARG_CONVERSATION_ID = "conversation_id";
     private static final String ARG_NEW_MESSAGE_TEXT = "new_message_text";
+    private static final String ARG_MESSAGE_TYPE = "message_type";
 
     private MessageListFragment fragment;
 
@@ -46,6 +50,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         long conversationId = intent.getLongExtra(ARG_CONVERSATION_ID, -1);
         String newMessageText = intent.getStringExtra(ARG_NEW_MESSAGE_TEXT);
+        int messageType = intent.getIntExtra(ARG_MESSAGE_TYPE, -1);
 
         if (conversationId == -1) {
             return;
@@ -56,6 +61,10 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
             if (NotificationService.CONVERSATION_ID_OPEN == conversationId) {
                 fragment.setDismissOnStartup();
+
+                if (messageType == Message.TYPE_RECEIVED) {
+                    new AudioWrapper(context, R.raw.message_ping).play();
+                }
             }
 
             if (newMessageText != null) {
@@ -68,7 +77,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
     public static void sendBroadcast(Context context, long conversationId) {
-        sendBroadcast(context, conversationId, null);
+        sendBroadcast(context, conversationId, null, Message.TYPE_SENT);
     }
 
     /**
@@ -76,7 +85,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
      */
     public static void sendBroadcast(Context context, Message message) {
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            sendBroadcast(context, message.conversationId, message.data);
+            sendBroadcast(context, message.conversationId, message.data, message.type);
         } else {
             sendBroadcast(context, message.conversationId);
         }
@@ -85,10 +94,11 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
     /**
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
-    public static void sendBroadcast(Context context, long conversationId, String newMessageText) {
+    public static void sendBroadcast(Context context, long conversationId, String newMessageText, int messageType) {
         Intent intent = new Intent(ACTION_UPDATED);
         intent.putExtra(ARG_CONVERSATION_ID, conversationId);
         intent.putExtra(ARG_NEW_MESSAGE_TEXT, newMessageText);
+        intent.putExtra(ARG_MESSAGE_TYPE, messageType);
         context.sendBroadcast(intent);
     }
 
