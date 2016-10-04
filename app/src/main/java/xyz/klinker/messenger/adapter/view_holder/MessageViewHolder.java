@@ -16,14 +16,23 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +46,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,6 +62,8 @@ import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.FileUtils;
+import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.MediaSaver;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
 
@@ -122,7 +136,13 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 items[1] = view.getContext().getString(R.string.delete);
                 items[2] = view.getContext().getString(R.string.copy_message);
             } else {
-                items = new String[2];
+                if (image.getVisibility() == View.VISIBLE) {
+                    items = new String[3];
+                    items[2] = view.getContext().getString(R.string.save);
+                } else {
+                    items = new String[2];
+                }
+
                 items[0] = view.getContext().getString(R.string.view_details);
                 items[1] = view.getContext().getString(R.string.delete);
             }
@@ -136,6 +156,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                                     showMessageDetails();
                                 } else if (which == 1) {
                                     deleteMessage();
+                                } else if (which == 2 && image.getVisibility() == View.VISIBLE) {
+                                    new MediaSaver(fragment.getActivity()).saveMedia(messageId);
                                 } else if (which == 2) {
                                     copyMessageText();
                                 } else if (which == 3) {
@@ -272,5 +294,4 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     private void resendMessage() {
         fragment.resendMessage(messageId, message.getText().toString());
     }
-
 }

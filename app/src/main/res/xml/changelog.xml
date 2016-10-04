@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.6.1"
+        description="October 4st, 2016">
+        <text>Global notification vibration patterns</text>
+        <text>Save media in messages with a long click</text>
+    </version>
+
+    <version
         name="1.6.0"
         description="October 1st, 2016">
         <text>Changes to the message list</text>

@@ -56,6 +56,7 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.MediaSaver;
 
 /**
  * Activity that allows you to scroll between images in a given conversation.
@@ -148,18 +149,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             finish();
         } else if (item.getItemId() == R.id.save) {
             Message message = messages.get(viewPager.getCurrentItem());
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                saveMessage(message);
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            PERMISSION_STORAGE_REQUEST);
-                } else {
-                    saveMessage(message);
-                }
-            }
+            new MediaSaver(this).saveMedia(message);
         } else if (item.getItemId() == R.id.share) {
             Message message = messages.get(viewPager.getCurrentItem());
             shareMessage(message);
@@ -174,61 +164,10 @@ public class ImageViewerActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_STORAGE_REQUEST && grantResults[0] ==
                 PackageManager.PERMISSION_GRANTED) {
-            saveMessage(messages.get(viewPager.getCurrentItem()));
+            new MediaSaver(this).saveMedia(messages.get(viewPager.getCurrentItem()));
         } else {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_STORAGE_REQUEST);
-        }
-    }
-
-    private void saveMessage(Message message) {
-        String extension = MimeType.getExtension(message.mimeType);
-        File dst = new File(Environment.getExternalStorageDirectory() + "/Download",
-                SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + extension);
-
-        int count = 1;
-        while (dst.exists()) {
-            dst = new File(Environment.getExternalStorageDirectory() + "/Download",
-                    SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) +
-                            "-" + Integer.toString(count) + extension);
-            count++;
-        }
-
-        try {
-            dst.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (MimeType.isStaticImage(message.mimeType)) {
-            try {
-                Bitmap bmp = ImageUtils.getBitmap(this, message.data);
-                FileOutputStream stream = new FileOutputStream(dst);
-                bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
-                stream.close();
-
-                ContentValues values = new ContentValues(3);
-
-                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                values.put(MediaStore.Images.Media.MIME_TYPE, message.mimeType);
-                values.put(MediaStore.MediaColumns.DATA, dst.getPath());
-
-                getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            try {
-                InputStream in = getContentResolver().openInputStream(Uri.parse(message.data));
-                FileUtils.copy(in, dst);
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
