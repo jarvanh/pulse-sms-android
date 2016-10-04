@@ -515,7 +515,7 @@ public class ConversationListFragment extends Fragment
         }
 
         setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
-                expandedConversation.conversation.id, m.data, true));
+                expandedConversation.conversation.id, getString(R.string.you) + ": " + m.data, true));
     }
 
     public ConversationListAdapter getAdapter() {
