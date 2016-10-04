@@ -16,20 +16,25 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -103,6 +108,7 @@ public class MessengerActivity extends AppCompatActivity
     public static final int REQUEST_ONBOARDING = 101;
     public static final int RESULT_START_TRIAL = 102;
     public static final int RESULT_SKIP_TRIAL = 103;
+    public static final int REQUEST_CALL_PERMISSION = 104;
 
     private DataSource source;
     private Toolbar toolbar;
@@ -209,6 +215,10 @@ public class MessengerActivity extends AppCompatActivity
 
         PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CALL_PERMISSION) {
+            callContact();
+        }
     }
 
     private boolean checkInitialStart() {
@@ -450,7 +460,17 @@ public class MessengerActivity extends AppCompatActivity
             case R.id.drawer_about:
                 return displayAbout();
             case R.id.menu_call:
-                return callContact();
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    return callContact();
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
+                        return false;
+                    } else {
+                        return callContact();
+                    }
+                }
             case R.id.menu_view_contact:
             case R.id.drawer_view_contact:
                 return viewContact();
@@ -650,12 +670,14 @@ public class MessengerActivity extends AppCompatActivity
         if (conversationListFragment.isExpanded()) {
             String uri = "tel:" +
                     conversationListFragment.getExpandedItem().conversation.phoneNumbers;
-            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse(uri));
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(this, R.string.no_apps_found, Toast.LENGTH_SHORT).show();
+            } catch (SecurityException e) {
+                Toast.makeText(this, R.string.you_denied_permission, Toast.LENGTH_SHORT).show();
             }
 
             return true;

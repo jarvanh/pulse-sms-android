@@ -275,6 +275,7 @@
     <string name="normalize_color_scheme">Or, you can choose a single color that you want to
         base the contact on:</string>
     <string name="no_apps_found">No apps found to handle this action</string>
+    <string name="you_denied_permission">You have denied this permission</string>
     <string name="supported_platforms">Supported Platforms</string>
     <string name="supported_platforms_summary">All the official places that you can access the app</string>
     <string name="font_size_small">Small</string>
