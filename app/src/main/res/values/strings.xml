@@ -238,6 +238,10 @@
         since you have a global color set. They will be used in group conversations with this contact.</string>
     <string name="notification_settings">Notifications</string>
     <string name="vibrate">Vibrate</string>
+    <string name="vibrate_off">No vibration</string>
+    <string name="vibrate_default">Default vibration</string>
+    <string name="vibrate_two_long">Two long vibrations</string>
+    <string name="vibrate_three_short">Three short vibrations</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
     <string name="base_theme">Base Theme</string>

@@ -77,4 +77,17 @@
         <item>black</item>
     </string-array>
 
+    <string-array name="vibrate">
+        <item>@string/vibrate_off</item>
+        <item>@string/vibrate_default</item>
+        <item>@string/vibrate_three_short</item>
+        <item>@string/vibrate_two_long</item>
+    </string-array>
+
+    <string-array name="vibrate_values">
+        <item>vibrate_off</item>
+        <item>vibrate_default</item>
+        <item>vibrate_three_short</item>
+        <item>vibrate_two_long</item>
+    </string-array>
 </resources>

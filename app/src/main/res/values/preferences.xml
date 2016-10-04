@@ -54,7 +54,7 @@
     <string name="pref_base_theme">base_theme</string>
     <string name="pref_global_color_theme">global_color_theme</string>
     <string name="pref_font_size">font_size</string>
-    <string name="pref_vibrate">vibrate</string>
+    <string name="pref_vibrate">vibrate_pattern_identifier</string>
     <string name="pref_delivery_reports">delivery_reports</string>
     <string name="pref_mobile_only">mobile_only</string>
     <string name="pref_seen_convo_nav_tooltip">seen_convo_nav_tooltip</string>

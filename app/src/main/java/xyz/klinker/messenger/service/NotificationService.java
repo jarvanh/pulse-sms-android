@@ -181,13 +181,14 @@ public class NotificationService extends IntentService {
             contactImage = Bitmap.createScaledBitmap(contactImage, (int) width, (int) height, true);
         } catch (Exception e) { }
 
+        Settings.VibratePattern vibratePattern = Settings.get(this).vibrate;
         int defaults = Notification.DEFAULT_LIGHTS;
-        if (Settings.get(this).vibrate) {
+        if (vibratePattern == Settings.VibratePattern.DEFAULT) {
             defaults = defaults | Notification.DEFAULT_VIBRATE;
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(/*!conversation.groupConversation ? R.drawable.ic_stat_notify : */R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
@@ -202,6 +203,12 @@ public class NotificationService extends IntentService {
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
+
+        if (vibratePattern.pattern != null) {
+            builder.setVibrate(vibratePattern.pattern);
+        } else if (vibratePattern == Settings.VibratePattern.OFF) {
+            builder.setVibrate(new long[0]);
+        }
 
         try {
             if (!conversation.groupConversation) {
@@ -323,7 +330,7 @@ public class NotificationService extends IntentService {
         }
 
         NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(/*!conversation.groupConversation ? R.drawable.ic_stat_notify : */R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
@@ -544,7 +551,7 @@ public class NotificationService extends IntentService {
         }
 
         Notification publicVersion = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
@@ -566,7 +573,7 @@ public class NotificationService extends IntentService {
                 open, PendingIntent.FLAG_ONE_SHOT);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)

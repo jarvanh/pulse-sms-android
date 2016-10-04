@@ -896,11 +896,11 @@ public class ApiUtils {
     /**
      * Update the vibrate setting.
      */
-    public void updateVibrate(final String accountId, final boolean vibrate) {
+    public void updateVibrate(final String accountId, final String vibratePattern) {
         if (!active || accountId == null) {
             return;
         } else {
-            updateSetting(accountId, "vibrate", "boolean", vibrate);
+            updateSetting(accountId, "vibrate_pattern_identifier", "string", vibratePattern);
         }
     }
 

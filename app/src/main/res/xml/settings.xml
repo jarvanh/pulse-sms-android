@@ -43,10 +43,12 @@
 
     <PreferenceCategory android:title="@string/notification_settings">
 
-        <SwitchPreference
+        <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_vibrate"
             android:title="@string/vibrate"
-            android:defaultValue="true" />
+            android:entries="@array/vibrate"
+            android:entryValues="@array/vibrate_values"
+            android:defaultValue="vibrate_default" />
 
         <RingtonePreference
             android:key="@string/pref_ringtone"

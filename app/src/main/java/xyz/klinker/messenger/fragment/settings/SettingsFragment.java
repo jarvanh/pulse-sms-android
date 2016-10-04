@@ -114,9 +114,9 @@ public class SettingsFragment extends PreferenceFragment {
                 .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
-                        boolean vibrate = (boolean) o;
+                        String pattern = (String) o;
                         new ApiUtils().updateVibrate(Account.get(getActivity()).accountId,
-                                vibrate);
+                                pattern);
                         return true;
                     }
                 });

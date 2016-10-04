@@ -18,6 +18,7 @@ package xyz.klinker.messenger.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
@@ -39,6 +40,15 @@ public class Settings {
         }
     }
 
+    public enum VibratePattern {
+        OFF(null), DEFAULT(null), THREE_SHORT(new long[] {0, 300, 200, 300, 200, 300}), TWO_LONG(new long[] {0, 1000, 500, 1000});
+
+        public long[] pattern;
+        VibratePattern(long[] pattern) {
+            this.pattern = pattern;
+        }
+    }
+
     private static volatile Settings settings;
 
     private Context context;
@@ -48,7 +58,7 @@ public class Settings {
     public boolean seenConvoNavToolTip;
 
     // settings
-    public boolean vibrate;
+    public VibratePattern vibrate;
     public boolean useGlobalThemeColor;
     public boolean deliveryReports;
     public boolean mobileOnly;
@@ -96,7 +106,6 @@ public class Settings {
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
 
         // settings
-        this.vibrate = sharedPrefs.getBoolean(context.getString(R.string.pref_vibrate), true);
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
@@ -128,6 +137,25 @@ public class Settings {
             this.smallFont = 16;
             this.mediumFont = 18;
             this.largeFont = 20;
+        }
+
+        String vibrateString = sharedPrefs.getString(context.getString(R.string.pref_vibrate), "vibrate_default");
+        switch (vibrateString) {
+            case "vibrate_off":
+                this.vibrate = VibratePattern.OFF;
+                break;
+            case "vibrate_default":
+                this.vibrate = VibratePattern.DEFAULT;
+                break;
+            case "vibrate_three_short":
+                this.vibrate = VibratePattern.THREE_SHORT;
+                break;
+            case "vibrate_two_long":
+                this.vibrate = VibratePattern.TWO_LONG;
+                break;
+            default:
+                this.vibrate = VibratePattern.DEFAULT;
+                break;
         }
 
         String baseTheme = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
