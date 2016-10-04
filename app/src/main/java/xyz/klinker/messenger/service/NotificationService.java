@@ -42,6 +42,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
@@ -437,7 +438,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
                 read, PendingIntent.FLAG_ONE_SHOT);
 
-        if (!conversation.groupConversation) {
+        if (!conversation.groupConversation && Account.get(this).primary) {
             Intent call = new Intent(this, NotificationCallService.class);
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
             call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);
