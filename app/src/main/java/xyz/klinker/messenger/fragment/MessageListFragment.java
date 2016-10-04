@@ -1013,7 +1013,11 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void recordAudio() {
-        if (getBoldedAttachHolderPosition() == 4) {
+        recordAudio(false);
+    }
+
+    private void recordAudio(boolean alwaysOpen) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 4) {
             return;
         }
 
@@ -1033,7 +1037,11 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachLocation() {
-        if (getBoldedAttachHolderPosition() == 5) {
+        attachLocation(false);
+    }
+
+    private void attachLocation(boolean alwaysOpen) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 5) {
             return;
         }
 
@@ -1068,11 +1076,11 @@ public class MessageListFragment extends Fragment implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_STORAGE_REQUEST) {
-            attachImage();
+            attachImage(true);
         } else if (requestCode == PERMISSION_AUDIO_REQUEST) {
-            recordAudio();
+            recordAudio(true);
         } else if (requestCode == PERMISSION_LOCATION_REQUEST) {
-            attachLocation();
+            attachLocation(true);
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
