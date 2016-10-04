@@ -374,13 +374,21 @@ public class MessageListFragment extends Fragment implements
         toolbar.setBackgroundColor(color);
 
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
-            final DrawerLayout drawerLayout = (DrawerLayout) getActivity()
-                    .findViewById(R.id.drawer_layout);
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getActivity().onBackPressed();
+                    boolean focused = messageEntry.hasFocus();
+
+                    dismissKeyboard();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (getActivity() != null) {
+                                getActivity().onBackPressed();
+                            }
+                        }
+                    }, focused ? 300 : 100);
                 }
             });
         }
