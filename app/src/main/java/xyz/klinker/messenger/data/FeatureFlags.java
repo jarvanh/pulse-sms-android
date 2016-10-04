@@ -52,7 +52,6 @@ public class FeatureFlags {
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean CONTENT_OBSERVER_TIMEOUT;
-    public boolean REMOVE_MESSAGE_LIST_DRAWER;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -62,7 +61,6 @@ public class FeatureFlags {
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
-        REMOVE_MESSAGE_LIST_DRAWER = getValue(sharedPrefs, FLAG_REMOVE_MESSAGE_LIST_DRAWER);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -77,9 +75,6 @@ public class FeatureFlags {
                 break;*/
             case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
                 CONTENT_OBSERVER_TIMEOUT = flag;
-                break;
-            case FLAG_REMOVE_MESSAGE_LIST_DRAWER:
-                REMOVE_MESSAGE_LIST_DRAWER = flag;
                 break;
         }
     }

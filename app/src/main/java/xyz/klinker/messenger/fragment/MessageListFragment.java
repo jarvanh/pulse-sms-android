@@ -376,23 +376,13 @@ public class MessageListFragment extends Fragment implements
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
             final DrawerLayout drawerLayout = (DrawerLayout) getActivity()
                     .findViewById(R.id.drawer_layout);
-            if (FeatureFlags.get(getActivity()).REMOVE_MESSAGE_LIST_DRAWER) {
-                toolbar.setNavigationIcon(R.drawable.ic_collapse);
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getActivity().onBackPressed();
-                    }
-                });
-            } else {
-                toolbar.setNavigationIcon(R.drawable.ic_menu);
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
-                });
-            }
+            toolbar.setNavigationIcon(R.drawable.ic_collapse);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().onBackPressed();
+                }
+            });
         }
 
         toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
@@ -404,31 +394,12 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        if (!FeatureFlags.get(getActivity()).REMOVE_MESSAGE_LIST_DRAWER) {
-            removeMenuItem(R.id.menu_view_contact);
-            removeMenuItem(R.id.menu_view_media);
-            removeMenuItem(R.id.menu_delete_conversation);
-            removeMenuItem(R.id.menu_archive_conversation);
-            removeMenuItem(R.id.menu_conversation_blacklist);
-            removeMenuItem(R.id.menu_conversation_schedule);
-            removeMenuItem(R.id.menu_conversation_information);
-            removeMenuItem(R.id.menu_contact_settings);
-
-            if (toolbar.getMenu().findItem(R.id.menu_call) != null)
-                toolbar.getMenu().findItem(R.id.menu_call).setVisible(true);
-        }
-
         setNameAndDrawerColor(getActivity());
         ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
             appBarLayout.setVisibility(View.GONE);
         }
-    }
-
-    private void removeMenuItem(@IdRes int menuItemId) {
-        if (toolbar.getMenu().findItem(menuItemId) != null)
-            toolbar.getMenu().findItem(menuItemId).setVisible(false);
     }
 
     private void setNameAndDrawerColor(Activity activity) {
