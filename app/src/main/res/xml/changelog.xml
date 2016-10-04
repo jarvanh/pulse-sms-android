@@ -20,6 +20,7 @@
         name="1.6.1"
         description="October 4th, 2016">
         <text>Global notification vibration patterns</text>
+        <text>Quick Settings tile to compose new message on Android N</text>
         <text>Send/received sound option</text>
         <text>Call button on notification</text>
         <text>Save media in messages with a long click</text>

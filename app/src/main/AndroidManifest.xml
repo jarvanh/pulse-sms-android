@@ -285,6 +285,17 @@
         <service android:name=".service.ApiUploadService" />
         <service android:name=".service.ApiDownloadService" />
 
+        <service
+            android:name=".service.ComposeTileService"
+            android:icon="@drawable/ic_stat_notify_group"
+            android:label="@string/shortcut_compose_short"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action
+                    android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
         <!-- Widget -->
         <receiver android:name=".widget.MessengerAppWidgetProvider">
             <intent-filter>
