@@ -23,7 +23,15 @@
         <text>Quick Settings tile to compose new message on Android N</text>
         <text>Send/received sound option</text>
         <text>Call button on notification</text>
+        <text>Option to go fullscreen when capturing an image</text>
+        <text>Prepend 'You: ' on conversation list snippets for the messages you send</text>
         <text>Save media in messages with a long click</text>
+        <text>Handle drafts of, and sharing, GIFs, videos, and audio</text>
+        <text>Directly dial a number on the message list</text>
+        <text>Improvements to marking read on secondary devices</text>
+        <text>UI Improvements</text>
+        <text>Bug fixes</text>
+        <text>Some crash fixes</text>
     </version>
 
     <version
