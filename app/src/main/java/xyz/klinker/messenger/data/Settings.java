@@ -109,7 +109,7 @@ public class Settings {
         // settings
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
-        this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), false);
+        this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");

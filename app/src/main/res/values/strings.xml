@@ -243,7 +243,7 @@
     <string name="vibrate_default">Default vibration</string>
     <string name="vibrate_two_long">Two long vibrations</string>
     <string name="vibrate_three_short">Three short vibrations</string>
-    <string name="sound_effects">Messaging Sound Effects</string>
+    <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
     <string name="base_theme">Base Theme</string>
