@@ -841,6 +841,16 @@ public class MessageListFragment extends Fragment implements
                 messageEntry.setText(draft.data);
             } else if (MimeType.isStaticImage(draft.mimeType)) {
                 attachImage(Uri.parse(draft.data));
+            } else if (draft.mimeType.equals(MimeType.IMAGE_GIF)) {
+                attachImage(Uri.parse(draft.data));
+                editImage.setVisibility(View.GONE);
+            } else if (draft.mimeType.contains("audio/")) {
+                attachAudio(Uri.parse(draft.data));
+                editImage.setVisibility(View.GONE);
+            } else if (draft.mimeType.contains("video/")) {
+                attachImage(Uri.parse(draft.data));
+                attachedMimeType = draft.mimeType;
+                editImage.setVisibility(View.GONE);
             }
         }
     }

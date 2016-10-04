@@ -127,13 +127,19 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         if (bold) {
             name.setTypeface(Typeface.DEFAULT_BOLD, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT_BOLD, italic ? Typeface.ITALIC : Typeface.NORMAL);
-            unreadIndicator.setVisibility(View.VISIBLE);
+
+            if (unreadIndicator != null) {
+                unreadIndicator.setVisibility(View.VISIBLE);
+            }
 
             ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
-            unreadIndicator.setVisibility(View.GONE);
+
+            if (unreadIndicator != null) {
+                unreadIndicator.setVisibility(View.GONE);
+            }
         }
     }
 

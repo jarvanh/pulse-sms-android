@@ -413,7 +413,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             conversationId = source.insertMessage(message, phoneNumbers, this);
         }
 
-        source.insertDraft(conversationId, data, mimeType);
+        long id = source.insertDraft(conversationId, data, mimeType);
         source.close();
 
         showConversation();
