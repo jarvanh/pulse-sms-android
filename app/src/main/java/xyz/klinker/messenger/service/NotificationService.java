@@ -437,6 +437,17 @@ public class NotificationService extends IntentService {
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
                 read, PendingIntent.FLAG_ONE_SHOT);
 
+        if (!conversation.groupConversation) {
+            Intent call = new Intent(this, NotificationCallService.class);
+            call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
+            call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);
+            PendingIntent callPending = PendingIntent.getService(this, (int) conversation.id,
+                    call, PendingIntent.FLAG_ONE_SHOT);
+
+            builder.addAction(new NotificationCompat.Action(
+                    R.drawable.ic_call_dark, getString(R.string.call), callPending));
+        }
+
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
         PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.id,

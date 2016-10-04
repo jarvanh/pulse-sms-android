@@ -20,6 +20,7 @@
         name="1.6.1"
         description="October 4st, 2016">
         <text>Global notification vibration patterns</text>
+        <text>Send/received sound option</text>
         <text>Save media in messages with a long click</text>
     </version>
 
