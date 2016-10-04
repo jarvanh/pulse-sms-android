@@ -595,7 +595,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void dismissNotification(JSONObject json, DataSource source, Context context)
             throws JSONException {
         long conversationId = json.getLong("id");
-        source.seenConversation(conversationId);
+        source.readConversation(context, conversationId);
         NotificationManagerCompat.from(context).cancel(json.getInt("id"));
     }
 
