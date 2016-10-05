@@ -377,6 +377,16 @@ public class MessageListFragment extends Fragment implements
         toolbar.setBackgroundColor(color);
 
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
+            DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+            drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override public void onDrawerSlide(View drawerView, float slideOffset) { }
+                @Override public void onDrawerClosed(View drawerView) { }
+                @Override public void onDrawerStateChanged(int newState) { }
+                @Override public void onDrawerOpened(View drawerView) {
+                    dismissKeyboard();
+                }
+            });
+
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -407,6 +417,7 @@ public class MessageListFragment extends Fragment implements
 
         setNameAndDrawerColor(getActivity());
         ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
+        ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent);
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
             appBarLayout.setVisibility(View.GONE);
