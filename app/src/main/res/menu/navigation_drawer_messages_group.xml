@@ -26,6 +26,11 @@
             android:title="@string/menu_view_contacts" />
 
         <item
+            android:id="@+id/drawer_view_media"
+            android:icon="@drawable/ic_media"
+            android:title="@string/menu_view_media" />
+
+        <item
             android:id="@+id/drawer_delete_conversation"
             android:icon="@drawable/ic_delete"
             android:title="@string/menu_delete_conversation" />

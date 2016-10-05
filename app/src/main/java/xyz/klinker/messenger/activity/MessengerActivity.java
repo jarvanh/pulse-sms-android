@@ -761,8 +761,8 @@ public class MessengerActivity extends AppCompatActivity
 
     private boolean viewMedia() {
         if (conversationListFragment.isExpanded()) {
-            Intent intent = new Intent(this, ImageViewerActivity.class);
-            intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+            Intent intent = new Intent(this, MediaGridActivity.class);
+            intent.putExtra(MediaGridActivity.EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
             startActivity(intent);
 
             return true;
