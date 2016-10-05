@@ -34,6 +34,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.IdRes;
@@ -99,6 +100,7 @@ import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -141,6 +143,7 @@ public class MessageListFragment extends Fragment implements
     private static final int RESULT_GIPHY_REQUEST = 4;
     private static final int PERMISSION_LOCATION_REQUEST = 5;
     private static final int RESULT_GALLERY_PICKER_REQUEST = 6;
+    public  static final int RESULT_CAPTURE_IMAGE_REQUEST = 7;
 
     private DataSource source;
     private View appBarLayout;
@@ -1126,6 +1129,9 @@ public class MessageListFragment extends Fragment implements
                 && data != null && data.getData() != null) {
             onBackPressed();
             attachImage(data.getData());
+        } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            onBackPressed();
+            attachImage(ImageUtils.getUriForPhotoCaptureIntent(getActivity()));
         }
     }
 

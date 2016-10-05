@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -43,13 +44,16 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Size;
@@ -74,6 +78,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AutoFitTextureView;
 
@@ -758,7 +763,7 @@ public class Camera2BasicFragment extends Fragment
                         @Override
                         public void onConfigureFailed(
                                 @NonNull CameraCaptureSession cameraCaptureSession) {
-                            showToast("Failed");
+
                         }
                     }, null
             );
@@ -951,6 +956,10 @@ public class Camera2BasicFragment extends Fragment
                 break;
             }
             case R.id.fullscreen: {
+                Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startCamera.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.getUriForPhotoCaptureIntent(getActivity()));
+                getActivity().startActivityForResult(startCamera, MessageListFragment.RESULT_CAPTURE_IMAGE_REQUEST);
+
                 break;
             }
         }

@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
@@ -300,6 +301,21 @@ public class ImageUtils {
     public static Uri createContentUri(Context context, File file) {
         return  FileProvider.getUriForFile(context,
                 BuildConfig.APPLICATION_ID + ".provider", file);
+    }
+
+    public static Uri getUriForPhotoCaptureIntent(Context context) {
+        try {
+            File image = new File(context.getCacheDir(), "pulse_sms.jpg");
+            if (!image.exists()) {
+                image.getParentFile().mkdirs();
+                image.createNewFile();
+            }
+
+            return createContentUri(context, image);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
 }
