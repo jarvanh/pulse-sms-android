@@ -743,12 +743,8 @@ public class MessageListFragment extends Fragment implements
                     final String title = getArguments().getString(ARG_TITLE);
                     final List<Contact> contacts = source.getContacts(numbers);
                     final List<Contact> contactsByName = source.getContactsByNames(title);
-                    final Map<String, Contact> contactMap = ContactUtils.getMessageFromMapping(
-                            numbers, contacts, source, getActivity()
-                    );
-                    final Map<String, Contact> contactByNameMap = title != null && title.contains(", ") ? ContactUtils.getMessageFromMappingByTitle(
-                            title, contactsByName
-                    ) : null;
+                    final Map<String, Contact> contactMap = fillMapByNumber(numbers, contacts);
+                    final Map<String, Contact> contactByNameMap = fillMapByName(title, contactsByName);
 
                     drafts = source.getDrafts(conversationId);
 
@@ -811,6 +807,26 @@ public class MessageListFragment extends Fragment implements
                 }
             }
         }).start();
+    }
+
+    private Map<String, Contact> fillMapByName(String title, List<Contact> contacts) {
+        try {
+            return title != null && title.contains(", ") ? ContactUtils.getMessageFromMappingByTitle(
+                    title, contacts
+            ) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Map<String, Contact> fillMapByNumber(String numbers, List<Contact> contacts) {
+        try {
+            return ContactUtils.getMessageFromMapping(
+                    numbers, contacts, source, getActivity()
+            );
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private int findMessagePositionFromId(Cursor cursor) {

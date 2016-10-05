@@ -39,6 +39,7 @@ import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -389,6 +390,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 contact.name = message.from;
                 contact.phoneNumber = message.from;
                 contact.colors = ColorUtils.getRandomMaterialColor(holder.itemView.getContext());
+
+                if (fromColorMapper == null) {
+                    fromColorMapper = new HashMap<>();
+                }
+
                 fromColorMapper.put(message.from, contact);
 
                 // then write it to the database for later
