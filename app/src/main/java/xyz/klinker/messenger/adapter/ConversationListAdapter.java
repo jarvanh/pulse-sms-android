@@ -167,7 +167,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
 
         holder.name.setText(conversation.title);
-        if (conversation.privateNotifications || conversation.snippet == null || conversation.snippet.contains("file:///")) {
+        if (conversation.privateNotifications || conversation.snippet == null ||
+                conversation.snippet.contains("file://") || conversation.snippet.contains("content://")) {
             holder.summary.setText("");
         } else {
             holder.summary.setText(conversation.snippet);
