@@ -1197,9 +1197,13 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager)
-                getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
+        try {
+            InputMethodManager imm = (InputMethodManager)
+                    getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
