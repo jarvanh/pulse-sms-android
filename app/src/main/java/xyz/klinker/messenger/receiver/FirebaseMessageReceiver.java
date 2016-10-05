@@ -102,7 +102,6 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         try {
             json = new JSONObject(data);
 
-
             final DataSource source = DataSource.getInstance(context);
             source.open();
             source.setUpload(false);
@@ -340,7 +339,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void updateMessage(JSONObject json, DataSource source, Context context)
             throws JSONException {
         long id = json.getLong("id");
-        source.updateMessageType(id, json.getInt("type"));
+        int type = json.getInt("type");
+        source.updateMessageType(id, type);
         Message message = source.getMessage(id);
         if (message != null) {
             MessageListUpdatedReceiver.sendBroadcast(context, message);
@@ -351,7 +351,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void updateMessageType(JSONObject json, DataSource source, Context context)
             throws JSONException {
         long id = json.getLong("id");
-        source.updateMessageType(id, json.getInt("message_type"));
+        int type = json.getInt("message_type");
+        source.updateMessageType(id, type);
         Message message = source.getMessage(id);
         if (message != null) {
             MessageListUpdatedReceiver.sendBroadcast(context, message);
