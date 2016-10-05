@@ -184,8 +184,8 @@ public class ColorUtils {
             navView.getMenu().getItem(1).setChecked(true);
 
             // change the text to
-            if (Account.get(activity).accountId != null) {
-                navView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+            if (Account.get(activity).accountId == null) {
+                navView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
             }
         } else {
             revealView.setBackgroundColor(color);

@@ -258,8 +258,8 @@ public class MessengerActivity extends AppCompatActivity
                             .setText(PhoneNumberUtils.format(account.myPhoneNumber));
 
                     // change the text to
-                    if (Account.get(MessengerActivity.this).accountId != null) {
-                        navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                    if (Account.get(MessengerActivity.this).accountId == null) {
+                        navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
                     }
 
                     initSnooze();
