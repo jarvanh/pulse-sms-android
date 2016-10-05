@@ -225,13 +225,13 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void addMessage(JSONObject json, final DataSource source, final Context context)
             throws JSONException {
-        final long id = json.getLong("id");
+        final long id = getLong(json, "id");
         if (source.getMessage(id) == null) {
             final Message message = new Message();
             message.id = id;
-            message.conversationId = json.getLong("conversation_id");
+            message.conversationId = getLong(json, "conversation_id");
             message.type = json.getInt("type");
-            message.timestamp = json.getLong("timestamp");
+            message.timestamp = getLong(json, "timestamp");
             message.read = json.getBoolean("read");
             message.seen = json.getBoolean("seen");
 
@@ -338,7 +338,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void updateMessage(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         int type = json.getInt("type");
         source.updateMessageType(id, type);
         Message message = source.getMessage(id);
@@ -350,7 +350,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void updateMessageType(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         int type = json.getInt("message_type");
         source.updateMessageType(id, type);
         Message message = source.getMessage(id);
@@ -361,7 +361,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeMessage(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.deleteMessage(id);
         Log.v(TAG, "removed message");
     }
@@ -369,14 +369,14 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     private void addConversation(JSONObject json, DataSource source, Context context)
             throws JSONException {
         Conversation conversation = new Conversation();
-        conversation.id = json.getLong("id");
+        conversation.id = getLong(json, "id");
         conversation.colors.color = json.getInt("color");
         conversation.colors.colorDark = json.getInt("color_dark");
         conversation.colors.colorLight = json.getInt("color_light");
         conversation.colors.colorAccent = json.getInt("color_accent");
         conversation.pinned = json.getBoolean("pinned");
         conversation.read = json.getBoolean("read");
-        conversation.timestamp = json.getLong("timestamp");
+        conversation.timestamp = getLong(json, "timestamp");
         conversation.title = encryptionUtils.decrypt(json.getString("title"));
         conversation.phoneNumbers = encryptionUtils.decrypt(json.getString("phone_numbers"));
         conversation.snippet = encryptionUtils.decrypt(json.getString("snippet"));
@@ -451,7 +451,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             throws JSONException {
         try {
             Conversation conversation = new Conversation();
-            conversation.id = json.getLong("id");
+            conversation.id = getLong(json, "id");
             conversation.title = encryptionUtils.decrypt(json.getString("title"));
             conversation.colors.color = json.getInt("color");
             conversation.colors.colorDark = json.getInt("color_dark");
@@ -481,7 +481,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             throws JSONException {
         try {
             source.updateConversationTitle(
-                    json.getLong("id"),
+                    getLong(json, "id"),
                     encryptionUtils.decrypt(json.getString("title"))
             );
 
@@ -495,9 +495,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             throws JSONException {
         try {
             source.updateConversation(
-                    json.getLong("id"),
+                    getLong(json, "id"),
                     json.getBoolean("read"),
-                    json.getLong("timestamp"),
+                    getLong(json, "timestamp"),
                     encryptionUtils.decrypt(json.getString("snippet")),
                     MimeType.TEXT_PLAIN,
                     json.getBoolean("archive")
@@ -510,25 +510,25 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeConversation(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.deleteConversation(id);
         Log.v(TAG, "removed conversation");
     }
 
     private void readConversation(JSONObject json, DataSource source, Context context) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.readConversation(context, id);
         Log.v(TAG, "read conversation");
     }
 
     private void seenConversation(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.seenConversation(id);
         Log.v(TAG, "seen conversation");
     }
 
     private void archiveConversation(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         boolean archive = json.getBoolean("archive");
         source.archiveConversation(id, archive);
         Log.v(TAG, "archive conversation: " + archive);
@@ -541,8 +541,8 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
 
     private void addDraft(JSONObject json, DataSource source) throws JSONException {
         Draft draft = new Draft();
-        draft.id = json.getLong("id");
-        draft.conversationId = json.getLong("conversation_id");
+        draft.id = getLong(json, "id");
+        draft.conversationId = getLong(json, "conversation_id");
         draft.data = encryptionUtils.decrypt(json.getString("data"));
         draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
 
@@ -551,13 +551,13 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.deleteDrafts(id);
         Log.v(TAG, "removed drafts");
     }
 
     private void addBlacklist(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         String phoneNumber = json.getString("phone_number");
         phoneNumber = encryptionUtils.decrypt(phoneNumber);
 
@@ -569,18 +569,18 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeBlacklist(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.deleteBlacklist(id);
         Log.v(TAG, "removed blacklist");
     }
 
     private void addScheduledMessage(JSONObject json, DataSource source) throws JSONException {
         ScheduledMessage message = new ScheduledMessage();
-        message.id = json.getLong("id");
+        message.id = getLong(json, "id");
         message.to = encryptionUtils.decrypt(json.getString("to"));
         message.data = encryptionUtils.decrypt(json.getString("data"));
         message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
-        message.timestamp = json.getLong("timestamp");
+        message.timestamp = getLong(json, "timestamp");
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.insertScheduledMessage(message);
@@ -588,16 +588,17 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
-        long id = json.getLong("id");
+        long id = getLong(json, "id");
         source.deleteScheduledMessage(id);
         Log.v(TAG, "removed scheduled message");
     }
 
     private void dismissNotification(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        long conversationId = json.getLong("id");
+        long conversationId = getLong(json, "id");
         source.readConversation(context, conversationId);
-        NotificationManagerCompat.from(context).cancel(json.getInt("id"));
+        NotificationManagerCompat.from(context).cancel((int) conversationId);
+        Log.v(TAG, "dismissed_notification: " + conversationId);
     }
 
     private void updateSetting(JSONObject json, Context context)
@@ -611,7 +612,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     Settings.get(context).setValue(pref, json.getBoolean("value"));
                     break;
                 case "long":
-                    Settings.get(context).setValue(pref, json.getLong("value"));
+                    Settings.get(context).setValue(pref, getLong(json, "value"));
                     break;
                 case "int":
                     Settings.get(context).setValue(pref, json.getInt("value"));
@@ -670,6 +671,15 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         source.setUpload(false);
 
         SendUtils.send(context, message.data, to);
+    }
+    
+    private long getLong(JSONObject json, String identifier) {
+        try {
+            String str = json.getString(identifier);
+            return Long.parseLong(str);
+        } catch (Exception e) {
+            return 0L;
+        }
     }
 
 }

@@ -18,6 +18,7 @@ package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -49,6 +50,8 @@ public class NotificationDismissedService extends IntentService {
         }
 
         source.close();
+
+        Log.v("dismissed_notification", "id: " + conversationId);
 
         new ApiUtils().dismissNotification(Account.get(this).accountId, conversationId);
     }

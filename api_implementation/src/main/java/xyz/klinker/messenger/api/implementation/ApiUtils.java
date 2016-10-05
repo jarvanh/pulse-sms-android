@@ -872,7 +872,7 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Object response = api.account().dismissedNotification(accountId, (int) id);
+                Object response = api.account().dismissedNotification(accountId, id);
                 if (response == null) {
                     Log.e(TAG, "error dismissing notification");
                 } else {
