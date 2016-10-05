@@ -27,7 +27,7 @@
 
         <item
             android:id="@+id/drawer_view_media"
-            android:icon="@drawable/ic_media"
+            android:icon="@drawable/ic_camera"
             android:title="@string/menu_view_media" />
 
         <item
