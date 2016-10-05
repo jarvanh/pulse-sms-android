@@ -239,7 +239,7 @@
     <string name="global_color_set">These colors will be ignored in this individual conversation,
         since you have a global color set. They will be used in group conversations with this contact.</string>
     <string name="notification_settings">Notifications</string>
-    <string name="vibrate">Vibrate</string>
+    <string name="vibrate">Vibrate Pattern</string>
     <string name="vibrate_off">No vibration</string>
     <string name="vibrate_default">Default vibration</string>
     <string name="vibrate_two_long">Two long vibrations</string>
