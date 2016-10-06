@@ -190,7 +190,7 @@ public class NotificationService extends IntentService {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(/*!conversation.groupConversation ? R.drawable.ic_stat_notify : */R.drawable.ic_stat_notify_group)
+                .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
