@@ -180,11 +180,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             LinkBuilder.on(holder.message).addLink(urls).addLink(phoneNumbers).build();
 
-            if (holder.image.getVisibility() == View.VISIBLE) {
+            if (holder.image != null && holder.image.getVisibility() == View.VISIBLE) {
                 holder.image.setVisibility(View.GONE);
             }
 
-            if (holder.messageHolder.getVisibility() == View.GONE) {
+            if (holder.messageHolder != null && holder.messageHolder.getVisibility() == View.GONE) {
                 holder.messageHolder.setVisibility(View.VISIBLE);
             }
         } else {
