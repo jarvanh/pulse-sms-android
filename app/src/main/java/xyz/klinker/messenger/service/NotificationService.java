@@ -333,7 +333,7 @@ public class NotificationService extends IntentService {
         }
 
         NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this)
-                .setSmallIcon(/*!conversation.groupConversation ? R.drawable.ic_stat_notify : */R.drawable.ic_stat_notify_group)
+                .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
