@@ -17,8 +17,8 @@
 <changelog>
 
     <version
-        name="1.6.1"
-        description="October 4th, 2016">
+        name="1.7.0"
+        description="October 5th, 2016">
         <text>Global notification vibration patterns</text>
         <text>Grid of images when you click the "View Media" button on the message list</text>
         <text>Quick Settings tile to compose new message on Android N</text>
