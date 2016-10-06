@@ -95,7 +95,7 @@ public class AccountTest extends ApiTest {
 
     @Test
     public void dismissNotification() {
-        assertNotNull(api.account().dismissedNotification(getAccountId(), 1));
+        assertNotNull(api.account().dismissedNotification(getAccountId(), "1", 1));
     }
 
 }
