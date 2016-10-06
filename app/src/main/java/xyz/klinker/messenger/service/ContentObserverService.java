@@ -116,9 +116,9 @@ public class ContentObserverService extends Service {
                 int type = cursor.getInt(cursor.getColumnIndex(Telephony.Sms.TYPE));
                 String body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY));
                 String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
+                cursor.close();
 
                 if (address == null || address.isEmpty()) {
-                    cursor.close();
                     return;
                 }
 
@@ -130,6 +130,8 @@ public class ContentObserverService extends Service {
                     Message message = new Message();
                     message.fillFromCursor(search);
                     Conversation conversation = source.getConversation(message.conversationId);
+                    
+                    search.close();
 
                     if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
                         // if a message with the same body was received from the same person in the
@@ -153,8 +155,6 @@ public class ContentObserverService extends Service {
                             insertSentMessage(source, body, address);
                         }
                     }
-
-                    search.close();
                 } else {
                     if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
                         insertReceivedMessage(source, body, address);
@@ -162,9 +162,20 @@ public class ContentObserverService extends Service {
                         insertSentMessage(source, body, address);
                     }
                 }
+                
+                try {
+                    search.close();
+                } catch (Exception e) {
+                    
+                }
 
                 source.close();
+            }
+            
+            try {
                 cursor.close();
+            } catch (Exception e) {
+                
             }
         }
 
