@@ -864,7 +864,7 @@ public class ApiUtils {
     /**
      * Dismiss a notification across all devices.
      */
-    public void dismissNotification(final String accountId, final long id) {
+    public void dismissNotification(final String accountId, final String deviceId, final long conversationId) {
         if (!active || accountId == null) {
             return;
         }
@@ -872,7 +872,7 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Object response = api.account().dismissedNotification(accountId, id);
+                Object response = api.account().dismissedNotification(accountId, deviceId, conversationId);
                 if (response == null) {
                     Log.e(TAG, "error dismissing notification");
                 } else {

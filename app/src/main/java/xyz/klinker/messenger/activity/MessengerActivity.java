@@ -970,7 +970,7 @@ public class MessengerActivity extends AppCompatActivity
         long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
 
         if (fromNotification && convoId != -1) {
-            new ApiUtils().dismissNotification(Account.get(this).accountId, convoId);
+            new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
         }
     }
 

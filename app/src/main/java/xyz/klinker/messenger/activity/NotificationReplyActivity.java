@@ -138,7 +138,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         showContactImage();
 
         NotificationManagerCompat.from(this).cancel((int) conversationId);
-        new ApiUtils().dismissNotification(Account.get(this).accountId, conversationId);
+        new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, conversationId);
 
         alphaIn(dimBackground, 300, 0);
 

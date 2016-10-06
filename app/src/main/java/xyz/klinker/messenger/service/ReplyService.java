@@ -101,6 +101,7 @@ public class ReplyService extends IntentService {
         }
 
         new ApiUtils().dismissNotification(Account.get(this).accountId,
+                Account.get(this).deviceId,
                 conversationId);
 
         unseenMessages.close();

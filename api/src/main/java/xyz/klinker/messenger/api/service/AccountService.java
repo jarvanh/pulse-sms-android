@@ -52,6 +52,6 @@ public interface AccountService {
     Object updateSetting(@Query("account_id") String accountId, @Query("pref") String pref, @Query("type") String type, @Query("value") Object value);
 
     @POST("accounts/dismissed_notification")
-    Object dismissedNotification(@Query("account_id") String accountId, @Query("id") long id);
+    Object dismissedNotification(@Query("account_id") String accountId, @Query("device_id") String deviceId, @Query("id") long conversationId);
 
 }

@@ -75,6 +75,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
         }
 
         new ApiUtils().dismissNotification(Account.get(context).accountId,
+                Account.get(context).deviceId,
                 conversationId);
 
         unseenMessages.close();
