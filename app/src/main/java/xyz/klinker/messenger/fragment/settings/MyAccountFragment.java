@@ -78,14 +78,18 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     }
 
     private void removeAccountOptions() {
-        getPreferenceScreen()
-                .removePreference(findPreference(getString(R.string.pref_message_count)));
-        getPreferenceScreen()
-                .removePreference(findPreference(getString(R.string.pref_about_device_id)));
-        getPreferenceScreen()
-                .removePreference(findPreference(getString(R.string.pref_resync_account)));
-        getPreferenceScreen()
-                .removePreference(findPreference(getString(R.string.pref_delete_account)));
+        try {
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_message_count)));
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_about_device_id)));
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
+        } catch (Exception e) {
+
+        }
     }
 
     private void initMessageCountPreference() {

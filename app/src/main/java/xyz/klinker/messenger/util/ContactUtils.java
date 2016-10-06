@@ -326,33 +326,38 @@ public class ContactUtils {
                 ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP
         };
 
-        Cursor cursor = context.getContentResolver().query(
-                uri,
-                projection,
-                ContactsContract.CommonDataKinds.Phone.TYPE + "=? AND " +
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
-                new String[] { Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE), Long.toString(since) },
-                null
-        );
+        try {
+            Cursor cursor = context.getContentResolver().query(
+                    uri,
+                    projection,
+                    ContactsContract.CommonDataKinds.Phone.TYPE + "=? AND " +
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
+                    new String[]{Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE), Long.toString(since)},
+                    null
+            );
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Contact contact = new Contact();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Contact contact = new Contact();
 
-                contact.name = cursor.getString(0);
-                contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
+                    contact.name = cursor.getString(0);
+                    contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
 
-                ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
-                if (colorSet != null) {
-                    contact.colors = colorSet;
-                } else {
-                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
-                }
+                    ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
+                    if (colorSet != null) {
+                        contact.colors = colorSet;
+                    } else {
+                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+                    }
 
-                contacts.add(contact);
-            } while (cursor.moveToNext());
+                    contacts.add(contact);
+                } while (cursor.moveToNext());
 
-            cursor.close();
+                cursor.close();
+            }
+        } catch (SecurityException e) {
+            // need permission, but don't have it in the background?
+            // why wouldn't they grant permission to an sms app?
         }
 
         conversations.clear();
