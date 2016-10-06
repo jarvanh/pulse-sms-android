@@ -234,6 +234,7 @@
     <string name="primary_color">Primary Color</string>
     <string name="primary_dark_color">Primary Color Dark</string>
     <string name="accent_color">Accent Color</string>
+    <string name="led_color">LED Color</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Group Name</string>
     <string name="global_color_set">These colors will be ignored in this individual conversation,

@@ -110,6 +110,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 .putInt(getString(R.string.pref_contact_primary_dark_color), conversation.colors.colorDark)
                 .putInt(getString(R.string.pref_contact_primary_light_color), conversation.colors.colorLight)
                 .putInt(getString(R.string.pref_contact_accent_color), conversation.colors.colorAccent)
+                .putInt(getString(R.string.pref_contact_led_color), conversation.ledColor)
                 .apply();
     }
 
@@ -224,12 +225,14 @@ public class ContactSettingsFragment extends PreferenceFragment {
     }
 
     private void setUpColors() {
-        ColorPreference preference = (ColorPreference)
+        final ColorPreference preference = (ColorPreference)
                 findPreference(getString(R.string.pref_contact_primary_color));
         final ColorPreference darkColorPreference = (ColorPreference)
                 findPreference(getString(R.string.pref_contact_primary_dark_color));
         final ColorPreference accentColorPreference = (ColorPreference)
                 findPreference(getString(R.string.pref_contact_accent_color));
+        final ColorPreference ledColorPreference = (ColorPreference)
+                findPreference(getString(R.string.pref_contact_led_color));
 
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -239,6 +242,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+
         preference.setColorSelectedListener(new ColorSelectedListener() {
             @Override
             public void onColorSelected(ColorSet colors) {
@@ -260,6 +264,14 @@ public class ContactSettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 conversation.colors.colorAccent = (int) o;
+                return true;
+            }
+        });
+
+        ledColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                conversation.ledColor = (int) newValue;
                 return true;
             }
         });

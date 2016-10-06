@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.text.Html;
@@ -491,6 +492,7 @@ public class DataSource {
             values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
             values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
             values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+            values.put(Conversation.COLUMN_LED_COLOR, conversation.ledColor);
             values.put(Conversation.COLUMN_PINNED, conversation.pinned);
             values.put(Conversation.COLUMN_READ, conversation.read);
             values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp);
@@ -559,6 +561,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
         values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
         values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+        values.put(Conversation.COLUMN_LED_COLOR, conversation.ledColor);
         values.put(Conversation.COLUMN_PINNED, conversation.pinned);
         values.put(Conversation.COLUMN_READ, conversation.read);
         values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp);
@@ -573,8 +576,8 @@ public class DataSource {
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications);
 
         apiUtils.addConversation(accountId,conversation.id, conversation.colors.color,
-                conversation.colors.colorDark, conversation.colors.colorLight,
-                conversation.colors.colorAccent, conversation.pinned, conversation.read,
+                conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
+                conversation.ledColor, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
                 conversation.mute, conversation.archive, conversation.privateNotifications,
@@ -775,6 +778,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark);
         values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight);
         values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent);
+        values.put(Conversation.COLUMN_LED_COLOR, conversation.ledColor);
         values.put(Conversation.COLUMN_MUTE, conversation.mute);
         values.put(Conversation.COLUMN_READ, conversation.read);
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
@@ -784,8 +788,8 @@ public class DataSource {
                 new String[]{Long.toString(conversation.id)});
 
         apiUtils.updateConversation(accountId, conversation.id, conversation.colors.color,
-                conversation.colors.colorDark, conversation.colors.colorLight,
-                conversation.colors.colorAccent, conversation.pinned, null, null,
+                conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
+                conversation.ledColor, conversation.pinned, null, null,
                 conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
                 conversation.privateNotifications, getEncryptionUtils(context));
     }
@@ -1236,6 +1240,7 @@ public class DataSource {
             conversation.idMatcher = matcher;
             conversation.mute = false;
             conversation.archive = false;
+            conversation.ledColor = Color.WHITE;
 
             ImageUtils.fillConversationColors(conversation, context);
 

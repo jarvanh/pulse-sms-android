@@ -234,7 +234,7 @@ public class ApiUtils {
      */
     public void addConversation(final String accountId, final long deviceId, final int color,
                                 final int colorDark, final int colorLight, final int colorAccent,
-                                final boolean pinned, final boolean read, final long timestamp,
+                                final int ledColor, final boolean pinned, final boolean read, final long timestamp,
                                 final String title, final String phoneNumbers, final String snippet,
                                 final String ringtone, final String idMatcher, final boolean mute,
                                 final boolean archive, final boolean privateNotifications,
@@ -247,8 +247,8 @@ public class ApiUtils {
             @Override
             public void run() {
                 ConversationBody body = new ConversationBody(
-                        deviceId, color, colorDark, colorLight, colorAccent, pinned, read,
-                        timestamp, encryptionUtils.encrypt(title),
+                        deviceId, color, colorDark, colorLight, colorAccent, ledColor,
+                        pinned, read, timestamp, encryptionUtils.encrypt(title),
                         encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
                         encryptionUtils.encrypt(ringtone), null,
                         encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications);
@@ -332,7 +332,7 @@ public class ApiUtils {
      */
     public void updateConversation(final String accountId, final long deviceId, final Integer color,
                                    final Integer colorDark, final Integer colorLight,
-                                   final Integer colorAccent, final Boolean pinned,
+                                   final Integer colorAccent, final Integer ledColor, final Boolean pinned,
                                    final Boolean read, final Long timestamp, final String title,
                                    final String snippet, final String ringtone, final Boolean mute,
                                    final Boolean archive, final Boolean privateNotifications,
@@ -345,7 +345,7 @@ public class ApiUtils {
             @Override
             public void run() {
                 UpdateConversationRequest request = new UpdateConversationRequest(color,
-                        colorDark, colorLight, colorAccent, pinned, read, timestamp,
+                        colorDark, colorLight, colorAccent, ledColor, pinned, read, timestamp,
                         encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
                         encryptionUtils.encrypt(ringtone), mute, archive, privateNotifications);
 
@@ -373,7 +373,7 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UpdateConversationRequest request = new UpdateConversationRequest(null, null,
+                UpdateConversationRequest request = new UpdateConversationRequest(null, null, null,
                         null, null, null, read, timestamp, null, encryptionUtils.encrypt(snippet),
                         null, null, archive, null);
 
@@ -399,7 +399,7 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UpdateConversationRequest request = new UpdateConversationRequest(null, null,
+                UpdateConversationRequest request = new UpdateConversationRequest(null, null, null,
                         null, null, null, null, null, encryptionUtils.encrypt(title), null,
                         null, null, null, null);
 

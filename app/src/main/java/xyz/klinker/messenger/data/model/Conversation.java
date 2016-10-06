@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.data.model;
 
 import android.database.Cursor;
+import android.graphics.Color;
 
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.data.ColorSet;
@@ -45,7 +46,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_ID_MATCHER = "id_matcher";
     public static final String COLUMN_MUTE = "mute";
     public static final String COLUMN_ARCHIVED = "archive"; // created in database v2
-    public static final String COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications"; // created in database v3
+    public static final String COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications"; // created in database v4
+    public static final String COLUMN_LED_COLOR = "led_color"; // created in database v5
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -65,11 +67,13 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_ID_MATCHER + " text not null unique, " +
             COLUMN_MUTE + " integer not null, " +
             COLUMN_ARCHIVED + " integer not null default 0, " +
-            COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0" +
+            COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0, " +
+            COLUMN_LED_COLOR + " integer not null default " + Color.WHITE +
             ");";
 
     public long id;
     public ColorSet colors = new ColorSet();
+    public int ledColor;
     public boolean pinned;
     public boolean read;
     public long timestamp;
@@ -93,6 +97,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
         this.colors.colorDark = body.colorDark;
         this.colors.colorLight = body.colorLight;
         this.colors.colorAccent = body.colorAccent;
+        this.ledColor = body.ledColor;
         this.pinned = body.pinned;
         this.read = body.read;
         this.timestamp = body.timestamp;
@@ -137,6 +142,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 this.colors.colorLight = cursor.getInt(i);
             } else if (column.equals(COLUMN_COLOR_ACCENT)) {
                 this.colors.colorAccent = cursor.getInt(i);
+            } else if (column.equals(COLUMN_LED_COLOR)) {
+                this.ledColor = cursor.getInt(i);
             } else if (column.equals(COLUMN_PINNED)) {
                 this.pinned = cursor.getInt(i) == 1;
             } else if (column.equals(COLUMN_READ)) {

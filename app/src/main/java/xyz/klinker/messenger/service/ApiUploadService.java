@@ -182,7 +182,7 @@ public class ApiUploadService extends Service {
                 c.fillFromCursor(cursor);
                 c.encrypt(encryptionUtils);
                 ConversationBody conversation = new ConversationBody(c.id, c.colors.color,
-                        c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.pinned,
+                        c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.ledColor, c.pinned,
                         c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri,
                         /*c.imageUri*/null, c.idMatcher, c.mute, c.archive, c.privateNotifications);
 

@@ -137,6 +137,7 @@ public class NotificationService extends IntentService {
                         conversation.imageUri = c.imageUri;
                         conversation.color = c.colors.color;
                         conversation.ringtoneUri = c.ringtoneUri;
+                        conversation.ledColor = c.ledColor;
                         conversation.timestamp = c.timestamp;
                         conversation.mute = c.mute;
                         conversation.phoneNumbers = c.phoneNumbers;
@@ -183,9 +184,9 @@ public class NotificationService extends IntentService {
         } catch (Exception e) { }
 
         Settings.VibratePattern vibratePattern = Settings.get(this).vibrate;
-        int defaults = Notification.DEFAULT_LIGHTS;
+        int defaults = 0;
         if (vibratePattern == Settings.VibratePattern.DEFAULT) {
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = Notification.DEFAULT_VIBRATE;
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -201,6 +202,7 @@ public class NotificationService extends IntentService {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
                 .setSound(getRingtone(conversation))
+                .setLights(conversation.ledColor, 1000, 500)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
@@ -340,7 +342,8 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(conversation.color)
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
+                .setLights(conversation.ledColor, 1000, 500)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
@@ -696,6 +699,7 @@ public class NotificationService extends IntentService {
         public String imageUri;
         public int color;
         public String ringtoneUri;
+        public int ledColor;
         public long timestamp;
         public boolean mute;
         public boolean privateNotification;

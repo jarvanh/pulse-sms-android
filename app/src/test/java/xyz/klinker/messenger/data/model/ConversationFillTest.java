@@ -42,6 +42,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         assertEquals(Color.BLUE, conversation.colors.colorDark);
         assertEquals(Color.YELLOW, conversation.colors.colorLight);
         assertEquals(Color.GREEN, conversation.colors.colorAccent);
+        assertEquals(Color.WHITE, conversation.ledColor);
         assertTrue(conversation.pinned);
         assertTrue(conversation.read);
         assertEquals(1000L, conversation.timestamp);
@@ -51,6 +52,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         assertEquals("image_uri", conversation.imageUri);
         assertEquals("11493", conversation.idMatcher);
         assertFalse(conversation.mute);
+        assertFalse(conversation.privateNotifications);
     }
 
     private Cursor createCursor() {
@@ -60,6 +62,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_COLOR_DARK,
                 Conversation.COLUMN_COLOR_LIGHT,
                 Conversation.COLUMN_COLOR_ACCENT,
+                Conversation.COLUMN_LED_COLOR,
                 Conversation.COLUMN_PINNED,
                 Conversation.COLUMN_READ,
                 Conversation.COLUMN_TIMESTAMP,
@@ -69,7 +72,8 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_RINGTONE,
                 Conversation.COLUMN_IMAGE_URI,
                 Conversation.COLUMN_ID_MATCHER,
-                Conversation.COLUMN_MUTE
+                Conversation.COLUMN_MUTE,
+                Conversation.COLUMN_PRIVATE_NOTIFICATIONS
         });
 
         cursor.addRow(new Object[]{
@@ -78,6 +82,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Color.BLUE,
                 Color.YELLOW,
                 Color.GREEN,
+                Color.WHITE,
                 1,
                 1,
                 1000L,
@@ -87,6 +92,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 "uri",
                 "image_uri",
                 "11493",
+                0,
                 0
         });
 

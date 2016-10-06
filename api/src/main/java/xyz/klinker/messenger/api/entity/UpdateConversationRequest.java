@@ -33,7 +33,7 @@ public class UpdateConversationRequest {
     public Boolean privateNotifications;
 
     public UpdateConversationRequest(Integer color, Integer colorDark, Integer colorLight,
-                                     Integer colorAccent, Boolean pinned, Boolean read,
+                                     Integer colorAccent, Integer led, Boolean pinned, Boolean read,
                                      Long timestamp, String title, String snippet, String ringtone,
                                      Boolean mute, Boolean archive, Boolean privateNotifications) {
         this.color = color;

@@ -374,6 +374,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
         conversation.colors.colorDark = json.getInt("color_dark");
         conversation.colors.colorLight = json.getInt("color_light");
         conversation.colors.colorAccent = json.getInt("color_accent");
+        conversation.ledColor = json.getInt("led_color");
         conversation.pinned = json.getBoolean("pinned");
         conversation.read = json.getBoolean("read");
         conversation.timestamp = getLong(json, "timestamp");
@@ -457,6 +458,7 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             conversation.colors.colorDark = json.getInt("color_dark");
             conversation.colors.colorLight = json.getInt("color_light");
             conversation.colors.colorAccent = json.getInt("color_accent");
+            conversation.ledColor = json.getInt("led_color");
             conversation.pinned = json.getBoolean("pinned");
             conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
                     json.getString("ringtone") : null);

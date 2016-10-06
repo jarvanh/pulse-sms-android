@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.text.TextUtils;
@@ -93,6 +94,8 @@ public class SmsMmsUtils {
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
                 conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
                 conversation.mute = false;
+                conversation.privateNotifications = false;
+                conversation.ledColor = Color.WHITE;
                 ImageUtils.fillConversationColors(conversation, context);
 
                 conversations.add(conversation);

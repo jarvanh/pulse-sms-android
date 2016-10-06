@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.data;
 
 import android.database.Cursor;
+import android.graphics.Color;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -228,6 +229,8 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         conversation.imageUri = null;
         conversation.idMatcher = "24558";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
 
         int initialSize = source.getUnarchivedConversations().getCount();
         source.insertConversation(conversation);

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 
 import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.Contact;
@@ -35,7 +36,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "messenger.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private DatabaseTable[] tables = {
             new Contact(),
@@ -86,9 +87,15 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         }
 
         if (oldVersion < 4) {
-             try {
+            try {
                 db.execSQL("ALTER TABLE conversation ADD COLUMN private_notifications integer not null DEFAULT 0");
-             } catch(Exception e) { }
+            } catch(Exception e) { }
+        }
+
+        if (oldVersion < 5) {
+            try {
+                db.execSQL("ALTER TABLE conversation ADD COLUMN led_color integer not null DEFAULT " + Color.WHITE); // white default
+            } catch(Exception e) { }
         }
     }
 

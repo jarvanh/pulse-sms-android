@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 
 import org.junit.After;
 import org.junit.Before;
@@ -530,6 +531,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "So maybe not going to be able to get platinum huh?";
         conversation.idMatcher = "11493";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -544,6 +547,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Whoops ya idk what happened but anysho drive safe";
         conversation.idMatcher = "80846";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -558,6 +563,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Will probably be there from 6:30-9, just stop by when you can!";
         conversation.idMatcher = "96726";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -572,6 +579,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Just finished, it was a lot of fun";
         conversation.idMatcher = "18235";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -586,6 +595,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Yeah I'll do it when I get home";
         conversation.idMatcher = "67749";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -600,6 +611,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Yeah so hiking around in some place called beaver meadows now.";
         conversation.idMatcher = "08532";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         conversation = new Conversation();
@@ -614,6 +627,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.snippet = "Maybe they'll run into each other on the way back... idk";
         conversation.idMatcher = "90939";
         conversation.mute = false;
+        conversation.privateNotifications = false;
+        conversation.ledColor = Color.WHITE;
         conversations.add(conversation);
 
         return conversations;

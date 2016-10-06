@@ -23,6 +23,7 @@ public class ConversationBody {
     public int colorDark;
     public int colorLight;
     public int colorAccent;
+    public int ledColor;
     public boolean pinned;
     public boolean read;
     public long timestamp;
@@ -37,7 +38,7 @@ public class ConversationBody {
     public boolean privateNotifications;
 
     public ConversationBody(long deviceId, int color, int colorDark, int colorLight, int colorAccent,
-                            boolean pinned, boolean read, long timestamp, String title,
+                            int ledColor, boolean pinned, boolean read, long timestamp, String title,
                             String phoneNumbers, String snippet, String ringtone, String imageUri,
                             String idMatcher, boolean mute, boolean archive, boolean privateNotifications) {
         this.deviceId = deviceId;
@@ -45,6 +46,7 @@ public class ConversationBody {
         this.colorDark = colorDark;
         this.colorLight = colorLight;
         this.colorAccent = colorAccent;
+        this.ledColor = ledColor;
         this.pinned = pinned;
         this.read = read;
         this.timestamp = timestamp;
@@ -62,7 +64,7 @@ public class ConversationBody {
     @Override
     public String toString() {
         return deviceId + ", " + color + ", " + colorDark + ", " + colorLight + ", " + colorAccent +
-                ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
+                ", " + ledColor + ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
                 phoneNumbers + ", " + snippet + ", " + ringtone + ", " + imageUri + ", " +
                 idMatcher + ", " + mute + ", " + archive + ", " + privateNotifications;
     }

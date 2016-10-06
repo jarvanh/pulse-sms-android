@@ -27,6 +27,27 @@
         android:title="@string/group_name" />
 
     <PreferenceCategory
+        android:key="@string/pref_contact_customization_group"
+        android:title="@string/theme_settings">
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_primary_color"
+            android:title="@string/primary_color"
+            app:display_normalize="true"/>
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_primary_dark_color"
+            android:title="@string/primary_dark_color"
+            app:display_normalize="false" />
+
+        <xyz.klinker.messenger.view.ColorPreference
+            android:key="@string/pref_contact_accent_color"
+            android:title="@string/accent_color"
+            app:display_normalize="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/notification_settings">
 
         <SwitchPreference
@@ -46,26 +67,10 @@
             android:showDefault="true"
             android:showSilent="true" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="@string/pref_contact_customization_group"
-        android:title="@string/theme_settings">
-
         <xyz.klinker.messenger.view.ColorPreference
-            android:key="@string/pref_contact_primary_color"
-            android:title="@string/primary_color"
+            android:key="@string/pref_contact_led_color"
+            android:title="@string/led_color"
             app:display_normalize="true"/>
-
-        <xyz.klinker.messenger.view.ColorPreference
-            android:key="@string/pref_contact_primary_dark_color"
-            android:title="@string/primary_dark_color"
-            app:display_normalize="false" />
-
-        <xyz.klinker.messenger.view.ColorPreference
-            android:key="@string/pref_contact_accent_color"
-            android:title="@string/accent_color"
-            app:display_normalize="false" />
 
     </PreferenceCategory>
 
