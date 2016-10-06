@@ -22,6 +22,7 @@ public class UpdateConversationRequest {
     public Integer colorDark;
     public Integer colorLight;
     public Integer colorAccent;
+    public Integer ledColor;
     public Boolean pinned;
     public Boolean read;
     public Long timestamp;
@@ -40,6 +41,7 @@ public class UpdateConversationRequest {
         this.colorDark = colorDark;
         this.colorLight = colorLight;
         this.colorAccent = colorAccent;
+        this.ledColor = led;
         this.pinned = pinned;
         this.read = read;
         this.timestamp = timestamp;
