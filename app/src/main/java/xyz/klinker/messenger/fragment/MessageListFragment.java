@@ -1038,7 +1038,7 @@ public class MessageListFragment extends Fragment implements
 
         MaterialCamera camera = new MaterialCamera(getActivity())
                 .saveDir(getActivity().getFilesDir().getPath())
-                .qualityProfile(MaterialCamera.QUALITY_LOW)
+                .qualityProfile(MaterialCamera.QUALITY_480P)
                 .maxAllowedFileSize(1024 * 1024)
                 .allowRetry(false)
                 .autoSubmit(true)
