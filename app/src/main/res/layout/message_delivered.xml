@@ -26,44 +26,36 @@
     android:focusable="true"
     android:background="@drawable/focusable_background">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/message_sent_background"
+        android:backgroundTint="@color/drawerBackground"
+        android:maxWidth="@dimen/max_message_width"
+        android:padding="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="20dp"
+        android:clickable="true"
+        android:id="@+id/message_holder">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxHeight="@dimen/max_message_width"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:id="@+id/image"
-            android:background="@drawable/rounded_rect"
-            android:layout_marginEnd="10dp"
             android:contentDescription="@string/mms_image" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/message_sent_background"
-            android:backgroundTint="@color/drawerBackground"
             android:maxWidth="@dimen/max_message_width"
-            android:padding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="20dp"
-            android:clickable="true"
-            android:id="@+id/message_holder">
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            android:id="@+id/message" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/max_message_width"
-                android:textSize="16sp"
-                android:textColor="@color/primaryText"
-                android:id="@+id/message" />
-
-        </LinearLayout>
-
-    </FrameLayout>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="16dp"

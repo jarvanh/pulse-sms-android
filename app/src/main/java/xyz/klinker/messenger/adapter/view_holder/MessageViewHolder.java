@@ -198,10 +198,6 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         image = (ImageView) itemView.findViewById(R.id.image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
-        if (image != null) {
-            image.setClipToOutline(true);
-        }
-
         Settings settings = Settings.get(itemView.getContext());
         message.setTextSize(settings.largeFont);
         timestamp.setTextSize(settings.smallFont);

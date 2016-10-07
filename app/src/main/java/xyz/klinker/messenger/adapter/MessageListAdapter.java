@@ -184,20 +184,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 holder.image.setVisibility(View.GONE);
             }
 
-            if (holder.messageHolder != null && holder.messageHolder.getVisibility() == View.GONE) {
-                holder.messageHolder.setVisibility(View.VISIBLE);
+            if (holder.message != null && holder.message.getVisibility() == View.GONE) {
+                holder.message.setVisibility(View.VISIBLE);
             }
         } else {
             holder.image.setImageDrawable(null);
             holder.image.setMinimumWidth(0);
-
-            holder.image.setBackground(holder.image.getResources().getDrawable(R.drawable.rounded_rect));
-            holder.image.setClipToOutline(true);
-
             if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                        .fitCenter()
                         .into(holder.image);
             } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 holder.image.setMaxWidth(holder.image.getContext()
@@ -222,6 +219,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         .error(placeholder)
                         .placeholder(placeholder)
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                        .fitCenter()
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource,
@@ -254,9 +252,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
             }
 
-
-            if (holder.messageHolder.getVisibility() == View.VISIBLE) {
-                holder.messageHolder.setVisibility(View.GONE);
+            if (holder.message.getVisibility() == View.VISIBLE) {
+                holder.message.setVisibility(View.GONE);
             }
 
             if (holder.image.getVisibility() == View.GONE) {
