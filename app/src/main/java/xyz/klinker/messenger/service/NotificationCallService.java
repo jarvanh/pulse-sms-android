@@ -16,6 +16,7 @@ public class NotificationCallService extends NotificationMarkReadService {
 
         if (phoneNumber != null) {
             Intent call = new Intent(Intent.ACTION_DIAL);
+            call.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             call.setData(Uri.parse("tel:" + phoneNumber));
 
             startActivity(call);
