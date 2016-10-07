@@ -30,6 +30,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView image;
     public Uri uri;
+    public String mimeType;
 
     public ImageViewHolder(View itemView) {
         super(itemView);

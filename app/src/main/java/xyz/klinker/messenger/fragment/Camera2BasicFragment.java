@@ -78,6 +78,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.view.AutoFitTextureView;
@@ -1026,7 +1027,7 @@ public class Camera2BasicFragment extends Fragment
                 mFragment.getUiHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onImageSelected(Uri.fromFile(mFile));
+                        mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.IMAGE_JPEG);
                     }
                 });
             }

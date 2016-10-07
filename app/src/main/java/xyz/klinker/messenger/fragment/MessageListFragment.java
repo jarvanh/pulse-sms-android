@@ -1208,9 +1208,17 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
-    public void onImageSelected(Uri uri) {
+    public void onImageSelected(Uri uri, String mimeType) {
         onBackPressed();
-        attachImage(uri);
+
+        if (MimeType.isStaticImage(mimeType)) {
+            attachImage(uri);
+        } else if (MimeType.isVideo(mimeType)) {
+            Log.v("video result", "saved to " + uri.toString());
+            attachImage(uri);
+            attachedMimeType = MimeType.VIDEO_MP4;
+            editImage.setVisibility(View.GONE);
+        }
     }
 
     @Override

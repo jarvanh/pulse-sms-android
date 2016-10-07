@@ -22,6 +22,6 @@ import android.net.Uri;
  * Callback for easily notifying the caller when an image has been saved so we can act on it.
  */
 public interface ImageSelectedListener {
-    void onImageSelected(Uri uri);
+    void onImageSelected(Uri uri, String mimeType);
     void onGalleryPicker();
 }

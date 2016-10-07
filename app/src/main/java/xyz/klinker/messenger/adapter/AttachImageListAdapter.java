@@ -32,6 +32,7 @@ import java.io.File;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 
 /**
@@ -74,18 +75,19 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
             });
         } else {
             images.moveToPosition(position - 1);
-            File file = new File(images.getString(images.getColumnIndex(MediaStore.MediaColumns.DATA)));
+            File file = new File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)));
             Uri uri = Uri.fromFile(file);
 
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (callback != null) {
-                        callback.onImageSelected(holder.uri);
+                        callback.onImageSelected(holder.uri, holder.mimeType);
                     }
                 }
             });
 
+            holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE));
             holder.uri = uri;
             holder.image.setBackgroundColor(Color.TRANSPARENT);
             Glide.with(holder.image.getContext())

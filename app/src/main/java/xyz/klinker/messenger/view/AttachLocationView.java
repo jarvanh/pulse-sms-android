@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Locale;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.util.listener.TextSelectedListener;
@@ -110,7 +111,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                         public void onSnapshotReady(Bitmap bitmap) {
                             File file = new File(getFileName());
                             FileUtils.writeBitmap(file, bitmap);
-                            imageListener.onImageSelected(Uri.fromFile(file));
+                            imageListener.onImageSelected(Uri.fromFile(file), MimeType.IMAGE_JPEG);
                         }
                     });
                 }
