@@ -36,14 +36,21 @@ public class AudioWrapper {
             Conversation conversation = source.getConversation(conversationId);
             source.close();
 
+            Uri tone = null;
             if (conversation.ringtoneUri != null && !conversation.ringtoneUri.isEmpty()) {
-                mediaPlayer = MediaPlayer.create(context, Uri.parse(conversation.ringtoneUri));
+                tone = Uri.parse(conversation.ringtoneUri);
             } else if (settings.ringtone != null && !settings.ringtone.isEmpty()) {
-                mediaPlayer = MediaPlayer.create(context, Uri.parse(settings.ringtone));
+                tone = Uri.parse(settings.ringtone);
             } else {
-                mediaPlayer = MediaPlayer.create(context,
-                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                tone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             }
+
+            mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                    .setLegacyStreamType(AudioManager.STREAM_RING)
+                    .build(), 1);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,8 +64,9 @@ public class AudioWrapper {
 
         mediaPlayer = MediaPlayer.create(context, resourceId,
                 new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                        .setLegacyStreamType(AudioManager.STREAM_RING)
                         .build(),
                 1
         );
