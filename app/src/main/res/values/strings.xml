@@ -145,6 +145,7 @@
     <string name="no_media">No media in this conversation!</string>
     <string name="error_decrypting">Error running decryption! Please view this message on your phone.</string>
     <string name="message_sending_failed">Failed to send message!</string>
+    <string name="preparing_video">Preparing video&#8230;</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>

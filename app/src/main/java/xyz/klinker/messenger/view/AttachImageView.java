@@ -58,14 +58,21 @@ public class AttachImageView extends RecyclerView {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String[] select = new String[] {
+                        BaseColumns._ID, MediaStore.Files.FileColumns.DATA,
+                        MediaStore.Files.FileColumns.MEDIA_TYPE, MediaStore.Files.FileColumns.MIME_TYPE
+                };
+
+                String[] where = new String[] {
+                        "" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
+                        "" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+                };
+
                 ContentResolver cr = getContext().getContentResolver();
                 images = Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
-                        new String[]{BaseColumns._ID, MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.MEDIA_TYPE, MediaStore.Files.FileColumns.MIME_TYPE},
-                        MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                                + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-                                + " OR "
-                                + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                                + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO, null, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC");
+                        select, MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
+                                MediaStore.Files.FileColumns.MEDIA_TYPE + "=?",
+                        where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC");
 
                 handler.post(new Runnable() {
                     @Override

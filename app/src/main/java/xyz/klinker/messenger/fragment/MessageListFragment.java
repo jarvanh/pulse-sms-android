@@ -22,7 +22,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -75,7 +78,14 @@ import com.bumptech.glide.Glide;
 import com.sgottard.sofa.ContentFragment;
 import com.yalantis.ucrop.UCrop;
 
+import net.ypresto.androidtranscoder.MediaTranscoder;
+import net.ypresto.androidtranscoder.format.AndroidStandardFormatStrategy;
+import net.ypresto.androidtranscoder.format.MediaFormatStrategyPresets;
+
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -1215,9 +1225,7 @@ public class MessageListFragment extends Fragment implements
             attachImage(uri);
         } else if (MimeType.isVideo(mimeType)) {
             Log.v("video result", "saved to " + uri.toString());
-            attachImage(uri);
-            attachedMimeType = MimeType.VIDEO_MP4;
-            editImage.setVisibility(View.GONE);
+            startVideoEncoding(uri);
         }
     }
 
@@ -1367,6 +1375,63 @@ public class MessageListFragment extends Fragment implements
 
     public void setDismissOnStartup() {
         this.dismissOnStartup = true;
+    }
+
+    public void startVideoEncoding(final Uri uri) {
+        startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_HIGH);
+    }
+
+    public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
+        final File file;
+        try {
+            File outputDir = new File(getActivity().getExternalFilesDir(null), "outputs");
+            outputDir.mkdir();
+            file = File.createTempFile("transcode_video", ".mp4", outputDir);
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), "Failed to create temporary file.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        ContentResolver resolver = getActivity().getContentResolver();
+        final ParcelFileDescriptor parcelFileDescriptor;
+        try {
+            parcelFileDescriptor = resolver.openFileDescriptor(uri, "r");
+        } catch (FileNotFoundException e) {
+            Toast.makeText(getActivity(), "File not found.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(getActivity().getString(R.string.preparing_video));
+
+        final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
+            @Override public void onTranscodeCanceled() { }
+            @Override public void onTranscodeFailed(Exception exception) { }
+            @Override public void onTranscodeProgress(double progress) { }
+            @Override public void onTranscodeCompleted() {
+                if (file.length() >= 1024 * 1024) {
+                    startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_LOW);
+                } else {
+                    attachImage(ImageUtils.createContentUri(getActivity(), file));
+                    attachedMimeType = MimeType.VIDEO_MP4;
+                    editImage.setVisibility(View.GONE);
+                }
+
+                try {
+                    progressDialog.cancel();
+                } catch (Exception e) {
+
+                }
+            }
+        };
+
+        progressDialog.show();
+        MediaTranscoder.getInstance().transcodeVideo(fileDescriptor, file.getAbsolutePath(),
+                MediaFormatStrategyPresets.createStandardFormatStrategy(encoding), listener);
+
     }
 
 }

@@ -29,12 +29,14 @@ import xyz.klinker.messenger.R;
 public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView image;
+    public ImageView playButton;
     public Uri uri;
     public String mimeType;
 
     public ImageViewHolder(View itemView) {
         super(itemView);
         this.image = (ImageView) itemView.findViewById(R.id.image);
+        this.playButton = (ImageView) itemView.findViewById(R.id.play_button);
     }
 
 }

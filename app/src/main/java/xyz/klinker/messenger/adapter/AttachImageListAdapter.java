@@ -73,6 +73,10 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
                     }
                 }
             });
+
+            if (holder.playButton.getVisibility() != View.GONE) {
+                holder.playButton.setVisibility(View.GONE);
+            }
         } else {
             images.moveToPosition(position - 1);
             File file = new File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)));
@@ -94,6 +98,12 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
                     .load(uri)
                     .centerCrop()
                     .into(holder.image);
+
+            if (holder.mimeType.contains("video") && holder.playButton.getVisibility() == View.GONE) {
+                holder.playButton.setVisibility(View.VISIBLE);
+            } else if (holder.playButton.getVisibility() != View.GONE) {
+                holder.playButton.setVisibility(View.GONE);
+            }
         }
     }
 

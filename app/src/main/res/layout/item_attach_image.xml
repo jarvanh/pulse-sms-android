@@ -28,4 +28,13 @@
         android:contentDescription="@null"
         android:clickable="true" />
 
+    <ImageView
+        app:layout_widthPercent="40%"
+        app:layout_aspectRatio="40%"
+        android:layout_gravity="center"
+        android:id="@+id/play_button"
+        android:src="@drawable/ic_play"
+        android:padding="2dp"
+        android:visibility="gone" />
+
 </android.support.percent.PercentFrameLayout>
