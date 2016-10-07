@@ -33,6 +33,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.SectionType;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -153,7 +154,13 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         holder.image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (conversation.imageUri == null) {
-            holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
+                holder.image.setImageDrawable(new ColorDrawable(
+                        Settings.get(holder.itemView.getContext()).globalColorSet.colorLight));
+            } else {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            }
+
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
             } else {
