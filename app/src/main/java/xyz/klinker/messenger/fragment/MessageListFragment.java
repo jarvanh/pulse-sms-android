@@ -1382,61 +1382,69 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
-        final File file;
-        try {
-            File outputDir = new File(getActivity().getExternalFilesDir(null), "outputs");
-            outputDir.mkdir();
-            file = File.createTempFile("transcode_video", ".mp4", outputDir);
-        } catch (IOException e) {
-            Toast.makeText(getActivity(), "Failed to create temporary file.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        ContentResolver resolver = getActivity().getContentResolver();
-        final ParcelFileDescriptor parcelFileDescriptor;
-        try {
-            parcelFileDescriptor = resolver.openFileDescriptor(uri, "r");
-        } catch (FileNotFoundException e) {
-            Toast.makeText(getActivity(), "File not found.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setCancelable(false);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getActivity().getString(R.string.preparing_video));
-
-        final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
-            @Override public void onTranscodeCanceled() { }
-            @Override public void onTranscodeFailed(Exception exception) {
-                Toast.makeText(getActivity(),
-                        "Failed to attach video: " + exception.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-
-                try {
-                    progressDialog.dismiss();
-                } catch (Exception e) {
-
-                }
+        File original = new File(uri.getPath());
+        if (original.length() < 1024 * 1024) {
+            attachImage(uri);
+            attachedMimeType = MimeType.VIDEO_MP4;
+            editImage.setVisibility(View.GONE);
+        } else {
+            final File file;
+            try {
+                File outputDir = new File(getActivity().getExternalFilesDir(null), "outputs");
+                outputDir.mkdir();
+                file = File.createTempFile("transcode_video", ".mp4", outputDir);
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), "Failed to create temporary file.", Toast.LENGTH_LONG).show();
+                return;
             }
-            @Override public void onTranscodeProgress(double progress) { }
-            @Override public void onTranscodeCompleted() {
-                attachImage(ImageUtils.createContentUri(getActivity(), file));
-                attachedMimeType = MimeType.VIDEO_MP4;
-                editImage.setVisibility(View.GONE);
 
-                try {
-                    progressDialog.cancel();
-                } catch (Exception e) {
-
-                }
+            ContentResolver resolver = getActivity().getContentResolver();
+            final ParcelFileDescriptor parcelFileDescriptor;
+            try {
+                parcelFileDescriptor = resolver.openFileDescriptor(uri, "r");
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getActivity(), "File not found.", Toast.LENGTH_LONG).show();
+                return;
             }
-        };
 
-        progressDialog.show();
-        MediaTranscoder.getInstance().transcodeVideo(fileDescriptor, file.getAbsolutePath(),
-                MediaFormatStrategyPresets.createStandardFormatStrategy(encoding), listener);
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(getActivity().getString(R.string.preparing_video));
+
+            final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
+                @Override public void onTranscodeCanceled() { }
+                @Override public void onTranscodeFailed(Exception exception) {
+                    exception.printStackTrace();
+                    Toast.makeText(getActivity(),
+                            "Failed to attach video: " + exception.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+
+                    try {
+                        progressDialog.dismiss();
+                    } catch (Exception e) {
+
+                    }
+                }
+                @Override public void onTranscodeProgress(double progress) { }
+                @Override public void onTranscodeCompleted() {
+                    attachImage(ImageUtils.createContentUri(getActivity(), file));
+                    attachedMimeType = MimeType.VIDEO_MP4;
+                    editImage.setVisibility(View.GONE);
+
+                    try {
+                        progressDialog.cancel();
+                    } catch (Exception e) {
+
+                    }
+                }
+            };
+
+            progressDialog.show();
+            MediaTranscoder.getInstance().transcodeVideo(fileDescriptor, file.getAbsolutePath(),
+                    MediaFormatStrategyPresets.createStandardFormatStrategy(encoding), listener);
+        }
     }
 
 }
