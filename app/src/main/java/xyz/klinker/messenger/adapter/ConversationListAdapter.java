@@ -137,7 +137,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         if (holder.headerDone != null) {
             holder.headerDone.setOnClickListener(
-                    getHeaderDoneClickListener(text, sectionCounts.get(section).type));
+                    getHeaderDoneClickListener(text, sectionCounts.get(section).type)
+            );
+            holder.headerDone.setOnLongClickListener(
+                    getHeaderDoneLongClickListener(text)
+            );
         }
     }
 
@@ -320,6 +324,16 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             @Override
             public void onClick(View v) {
                 swipeToDeleteListener.onMarkSectionAsRead(text, sectionType);
+            }
+        };
+    }
+
+    private View.OnLongClickListener getHeaderDoneLongClickListener(final String text) {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                swipeToDeleteListener.onShowMarkAsRead(text);
+                return false;
             }
         };
     }

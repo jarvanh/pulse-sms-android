@@ -401,8 +401,13 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
+    public void onShowMarkAsRead(String text) {
+        Snackbar.make(recyclerView, getString(R.string.mark_section_as_read, text.toLowerCase()), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onMarkSectionAsRead(String text, final int sectionType) {
-        Snackbar.make(recyclerView, getString(R.string.marked_section_as_read, text.toLowerCase()), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, text.toLowerCase()), Snackbar.LENGTH_LONG).show();
 
         final List<Conversation> allConversations = adapter.getConversations();
         final List<Conversation> markAsRead = new ArrayList<>();

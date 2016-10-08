@@ -27,5 +27,6 @@ public interface SwipeToDeleteListener {
     void onSwipeToDelete(Conversation conversation);
     void onSwipeToArchive(Conversation conversation);
     void onMarkSectionAsRead(String sectionText, int sectionType);
+    void onShowMarkAsRead(String sectionText);
 
 }
