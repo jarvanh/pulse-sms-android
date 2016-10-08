@@ -1410,7 +1410,9 @@ public class MessageListFragment extends Fragment implements
         MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
             @Override public void onTranscodeCanceled() { }
             @Override public void onTranscodeFailed(Exception exception) {
-                Toast.makeText(getActivity(), "Failed to attach video.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        "Failed to attach video: " + exception.getMessage(),
+                        Toast.LENGTH_SHORT).show();
 
                 try {
                     progressDialog.dismiss();
