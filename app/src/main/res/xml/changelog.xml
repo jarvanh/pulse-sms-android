@@ -19,6 +19,7 @@
         name="1.7.1"
         description="October 8th, 2016">
         <text>Attach videos captured outside the app</text>
+        <text>Mark all messages as read within a section on the conversation list</text>
         <text>Improve UI for snooze</text>
     </version>
 

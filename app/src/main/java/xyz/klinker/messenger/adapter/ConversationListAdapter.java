@@ -117,19 +117,25 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
+        String text = null;
+
         if (sectionCounts.get(section).type == SectionType.PINNED) {
-            holder.header.setText(holder.header.getContext().getString(R.string.pinned));
+            text = holder.header.getContext().getString(R.string.pinned);
         } else if (sectionCounts.get(section).type == SectionType.TODAY) {
-            holder.header.setText(holder.header.getContext().getString(R.string.today));
+            text = holder.header.getContext().getString(R.string.today);
         } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
-            holder.header.setText(holder.header.getContext().getString(R.string.yesterday));
+            text = holder.header.getContext().getString(R.string.yesterday);
         } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
-            holder.header.setText(holder.header.getContext().getString(R.string.last_week));
+            text = holder.header.getContext().getString(R.string.last_week);
         } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
-            holder.header.setText(holder.header.getContext().getString(R.string.last_month));
+            text = holder.header.getContext().getString(R.string.last_month);
         } else {
-            holder.header.setText(holder.header.getContext().getString(R.string.older));
+            text = holder.header.getContext().getString(R.string.older);
         }
+
+        holder.header.setText(text);
+        holder.headerDone.setOnClickListener(
+                getHeaderDoneClickListener(text, sectionCounts.get(section).type));
     }
 
     @Override
@@ -304,6 +310,15 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     public List<SectionType> getSectionCounts() {
         return sectionCounts;
+    }
+
+    private View.OnClickListener getHeaderDoneClickListener(final String text, final int sectionType) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                swipeToDeleteListener.onMarkSectionAsRead(text, sectionType);
+            }
+        };
     }
 
 }

@@ -38,6 +38,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
+import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -47,6 +48,7 @@ import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -396,6 +398,45 @@ public class ConversationListFragment extends Fragment
                 checkEmptyViewDisplay();
             }
         }, 500);
+    }
+
+    @Override
+    public void onMarkSectionAsRead(String text, int sectionType) {
+        Snackbar.make(recyclerView, getString(R.string.marked_section_as_read, text.toLowerCase()), Snackbar.LENGTH_LONG).show();
+
+        List<Conversation> allConversations = adapter.getConversations();
+        List<Conversation> markAsRead = new ArrayList<>();
+
+        for (Conversation conversation : allConversations) {
+            boolean shouldRead = false;
+            switch (sectionType) {
+                case SectionType.PINNED: shouldRead = conversation.pinned;
+                    break;
+                case SectionType.TODAY: shouldRead = TimeUtils.isToday(conversation.timestamp);
+                    break;
+                case SectionType.YESTERDAY: shouldRead = TimeUtils.isYesterday(conversation.timestamp);
+                    break;
+                case SectionType.LAST_WEEK: shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
+                    break;
+                case SectionType.LAST_MONTH: shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
+                    break;
+                default: shouldRead = true;
+                    break;
+            }
+
+            if (shouldRead) {
+                markAsRead.add(conversation);
+            }
+        }
+
+        DataSource source = DataSource.getInstance(getActivity());
+        source.open();
+        for (Conversation conversation : markAsRead) {
+            source.readConversation(getActivity(), conversation.id);
+        }
+        source.close();
+
+        loadConversations();
     }
 
     @Override

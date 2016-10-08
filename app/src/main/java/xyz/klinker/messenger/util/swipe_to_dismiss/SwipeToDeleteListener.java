@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.util.swipe_to_dismiss;
 
+import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.model.Conversation;
 
 /**
@@ -25,5 +26,6 @@ public interface SwipeToDeleteListener {
 
     void onSwipeToDelete(Conversation conversation);
     void onSwipeToArchive(Conversation conversation);
+    void onMarkSectionAsRead(String sectionText, int sectionType);
 
 }

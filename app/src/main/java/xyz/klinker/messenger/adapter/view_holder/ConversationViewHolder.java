@@ -22,6 +22,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,6 +41,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     public View headerBackground;
     public TextView header;
+    public ImageButton headerDone;
     public CircleImageView image;
     public TextView name;
     public TextView summary;
@@ -62,6 +64,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
         headerBackground = itemView.findViewById(R.id.header_background);
         header = (TextView) itemView.findViewById(R.id.header);
+        headerDone = (ImageButton) itemView.findViewById(R.id.section_done);
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);

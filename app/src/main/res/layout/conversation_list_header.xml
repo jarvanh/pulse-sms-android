@@ -30,7 +30,19 @@
         android:textSize="12sp"
         android:textColor="@color/secondaryText"
         android:id="@+id/header"
+        android:layout_gravity="center_vertical"
         android:paddingStart="@dimen/conversation_list_padding"
         android:paddingEnd="@dimen/conversation_list_padding" />
+
+    <ImageButton
+        android:id="@+id/section_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_done_all"
+        android:tint="@color/secondaryText"
+        android:layout_gravity="end|center_vertical"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_marginStart="@dimen/conversation_list_header_padding"
+        android:layout_marginEnd="@dimen/conversation_list_header_padding"/>
 
 </FrameLayout>
