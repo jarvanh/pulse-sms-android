@@ -1418,10 +1418,11 @@ public class MessageListFragment extends Fragment implements
             final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
                 @Override public void onTranscodeCanceled() { }
+                @Override public void onTranscodeProgress(double progress) { }
                 @Override public void onTranscodeFailed(Exception exception) {
                     exception.printStackTrace();
                     Toast.makeText(getActivity(),
-                            "Failed to scale down video for sending: " + exception.getMessage(),
+                            "Failed to process video for sending: " + exception.getMessage(),
                             Toast.LENGTH_SHORT).show();
 
                     try {
@@ -1430,7 +1431,6 @@ public class MessageListFragment extends Fragment implements
 
                     }
                 }
-                @Override public void onTranscodeProgress(double progress) { }
                 @Override public void onTranscodeCompleted() {
                     attachImage(ImageUtils.createContentUri(getActivity(), file));
                     attachedMimeType = MimeType.VIDEO_MP4;
