@@ -70,8 +70,8 @@
     <string name="last_week">This week</string>
     <string name="last_month">This month</string>
     <string name="older">Older</string>
-    <string name="mark_section_as_read">Mark %1$s as read</string>
-    <string name="marking_section_as_read">Marking %1$s as read</string>
+    <string name="mark_section_as_read">Mark all %1$s as read</string>
+    <string name="marking_section_as_read">Marking all %1$s as read</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation deleted</item>
         <item quantity="other">%1$d conversations deleted</item>

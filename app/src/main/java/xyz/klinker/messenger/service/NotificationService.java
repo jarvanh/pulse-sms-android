@@ -452,7 +452,7 @@ public class NotificationService extends IntentService {
             PendingIntent callPending = PendingIntent.getService(this, (int) conversation.id,
                     call, PendingIntent.FLAG_ONE_SHOT);
 
-            //builder.addAction(new NotificationCompat.Action(R.drawable.ic_call_dark, getString(R.string.call), callPending));
+            builder.addAction(new NotificationCompat.Action(R.drawable.ic_call_dark, getString(R.string.call), callPending));
         }
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
