@@ -401,42 +401,53 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
-    public void onMarkSectionAsRead(String text, int sectionType) {
+    public void onMarkSectionAsRead(String text, final int sectionType) {
         Snackbar.make(recyclerView, getString(R.string.marked_section_as_read, text.toLowerCase()), Snackbar.LENGTH_LONG).show();
 
-        List<Conversation> allConversations = adapter.getConversations();
-        List<Conversation> markAsRead = new ArrayList<>();
+        final List<Conversation> allConversations = adapter.getConversations();
+        final List<Conversation> markAsRead = new ArrayList<>();
 
-        for (Conversation conversation : allConversations) {
-            boolean shouldRead = false;
-            switch (sectionType) {
-                case SectionType.PINNED: shouldRead = conversation.pinned;
-                    break;
-                case SectionType.TODAY: shouldRead = TimeUtils.isToday(conversation.timestamp);
-                    break;
-                case SectionType.YESTERDAY: shouldRead = TimeUtils.isYesterday(conversation.timestamp);
-                    break;
-                case SectionType.LAST_WEEK: shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
-                    break;
-                case SectionType.LAST_MONTH: shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
-                    break;
-                default: shouldRead = true;
-                    break;
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Conversation conversation : allConversations) {
+                    boolean shouldRead = false;
+                    switch (sectionType) {
+                        case SectionType.PINNED: shouldRead = conversation.pinned;
+                            break;
+                        case SectionType.TODAY: shouldRead = TimeUtils.isToday(conversation.timestamp);
+                            break;
+                        case SectionType.YESTERDAY: shouldRead = TimeUtils.isYesterday(conversation.timestamp);
+                            break;
+                        case SectionType.LAST_WEEK: shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
+                            break;
+                        case SectionType.LAST_MONTH: shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
+                            break;
+                        default: shouldRead = true;
+                            break;
+                    }
+
+                    if (shouldRead) {
+                        markAsRead.add(conversation);
+                    }
+                }
+
+                DataSource source = DataSource.getInstance(getActivity());
+                source.open();
+                for (Conversation conversation : markAsRead) {
+                    source.readConversation(getActivity(), conversation.id);
+                }
+                source.close();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadConversations();
+                    }
+                });
             }
-
-            if (shouldRead) {
-                markAsRead.add(conversation);
-            }
-        }
-
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        for (Conversation conversation : markAsRead) {
-            source.readConversation(getActivity(), conversation.id);
-        }
-        source.close();
-
-        loadConversations();
+        }).start();
     }
 
     @Override
