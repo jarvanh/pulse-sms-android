@@ -1224,8 +1224,11 @@ public class MessageListFragment extends Fragment implements
         if (MimeType.isStaticImage(mimeType)) {
             attachImage(uri);
         } else if (MimeType.isVideo(mimeType)) {
-            Log.v("video result", "saved to " + uri.toString());
             startVideoEncoding(uri);
+        } else if (mimeType.equals(MimeType.IMAGE_GIF)) {
+            attachImage(uri);
+            attachedMimeType = MimeType.IMAGE_GIF;
+            editImage.setVisibility(View.GONE);
         }
     }
 
