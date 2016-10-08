@@ -311,8 +311,8 @@ public class TimeUtilsTest extends MessengerSuite {
     public void isNotNight() {
         assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 6, 0)));
         assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 13, 30)));
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 19, 50)));
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 21, 59)));
+        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 15, 50)));
+        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 19, 59)));
     }
 
 }
