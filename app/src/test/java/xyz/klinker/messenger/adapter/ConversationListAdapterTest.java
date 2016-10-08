@@ -22,6 +22,7 @@ import android.database.MatrixCursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -60,6 +61,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private ConversationExpandedListener conversationExpandedListener;
     @Mock
     private TextView header;
+    @Mock
+    private ImageButton headerDoneButton;
     @Mock
     private CircleImageView image;
     @Mock

@@ -134,8 +134,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         }
 
         holder.header.setText(text);
-        holder.headerDone.setOnClickListener(
-                getHeaderDoneClickListener(text, sectionCounts.get(section).type));
+
+        if (holder.headerDone != null) {
+            holder.headerDone.setOnClickListener(
+                    getHeaderDoneClickListener(text, sectionCounts.get(section).type));
+        }
     }
 
     @Override
