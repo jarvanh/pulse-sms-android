@@ -88,6 +88,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         } else {
             h.header.setText(R.string.messages);
         }
+
+        if (h.headerDone != null) {
+            h.headerDone.setVisibility(View.GONE);
+        }
     }
 
     @Override
