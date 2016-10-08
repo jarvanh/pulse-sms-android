@@ -1378,7 +1378,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void startVideoEncoding(final Uri uri) {
-        startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_HIGH);
+        startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_LOW);
     }
 
     public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
@@ -1409,16 +1409,20 @@ public class MessageListFragment extends Fragment implements
         final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
             @Override public void onTranscodeCanceled() { }
-            @Override public void onTranscodeFailed(Exception exception) { }
+            @Override public void onTranscodeFailed(Exception exception) {
+                Toast.makeText(getActivity(), "Failed to attach video.", Toast.LENGTH_SHORT).show();
+
+                try {
+                    progressDialog.dismiss();
+                } catch (Exception e) {
+
+                }
+            }
             @Override public void onTranscodeProgress(double progress) { }
             @Override public void onTranscodeCompleted() {
-                if (file.length() >= 1024 * 1024) {
-                    startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_LOW);
-                } else {
-                    attachImage(ImageUtils.createContentUri(getActivity(), file));
-                    attachedMimeType = MimeType.VIDEO_MP4;
-                    editImage.setVisibility(View.GONE);
-                }
+                attachImage(ImageUtils.createContentUri(getActivity(), file));
+                attachedMimeType = MimeType.VIDEO_MP4;
+                editImage.setVisibility(View.GONE);
 
                 try {
                     progressDialog.cancel();
