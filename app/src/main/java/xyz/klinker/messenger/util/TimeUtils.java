@@ -187,7 +187,7 @@ public class TimeUtils {
     @VisibleForTesting
     static boolean isNight(Calendar cal) {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        return hour <= 5 || hour >= 22;
+        return hour <= 6 || hour >= 20;
     }
 
     public static void setupNightTheme(AppCompatActivity activity) {
