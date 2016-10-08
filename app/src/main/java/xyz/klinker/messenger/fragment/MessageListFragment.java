@@ -1435,7 +1435,6 @@ public class MessageListFragment extends Fragment implements
         progressDialog.show();
         MediaTranscoder.getInstance().transcodeVideo(fileDescriptor, file.getAbsolutePath(),
                 MediaFormatStrategyPresets.createStandardFormatStrategy(encoding), listener);
-
     }
 
 }

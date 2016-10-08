@@ -201,11 +201,15 @@ public class NotificationService extends IntentService {
                 .setOnlyAlertOnce(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
-                .setSound(getRingtone(conversation))
                 .setLights(conversation.ledColor, 1000, 500)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
+
+        Uri sound = getRingtone(conversation);
+        if (sound != null) {
+            builder.setSound(sound);
+        }
 
         if (vibratePattern.pattern != null) {
             builder.setVibrate(vibratePattern.pattern);
@@ -659,10 +663,12 @@ public class NotificationService extends IntentService {
         try {
             String globalUri = Settings.get(this).ringtone;
 
-            if (conversation.ringtoneUri == null || conversation.ringtoneUri.isEmpty()) {
+            if (conversation.ringtoneUri == null) {
                 // there is no conversation specific ringtone defined
 
-                if (globalUri == null || globalUri.isEmpty() || !ringtoneExists(globalUri)) {
+                if (globalUri != null && globalUri.isEmpty()) {
+                    return null;
+                } if (globalUri == null || !ringtoneExists(globalUri)) {
                     // there is no global ringtone defined, or it doesn't exist on the system
                     return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 } else {
@@ -670,7 +676,9 @@ public class NotificationService extends IntentService {
                     return Uri.parse(globalUri);
                 }
             } else {
-                if (ringtoneExists(conversation.ringtoneUri)) {
+                if (conversation.ringtoneUri.isEmpty()) {
+                    return null;
+                } else if (ringtoneExists(conversation.ringtoneUri)) {
                     // conversation ringtone exists and can be played
                     return Uri.parse(conversation.ringtoneUri);
                 } else {

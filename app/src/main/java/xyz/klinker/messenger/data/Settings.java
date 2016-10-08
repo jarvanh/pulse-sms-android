@@ -32,7 +32,8 @@ import xyz.klinker.messenger.R;
 public class Settings {
 
     public enum BaseTheme {
-        DAY_NIGHT(false), ALWAYS_LIGHT(false), ALWAYS_DARK(true), BLACK(true);
+        DAY_NIGHT(false), ALWAYS_LIGHT(false),
+        ALWAYS_DARK(true), BLACK(true);
 
         public boolean isDark;
         BaseTheme(boolean isDark) {
@@ -41,7 +42,9 @@ public class Settings {
     }
 
     public enum VibratePattern {
-        OFF(null), DEFAULT(null), THREE_SHORT(new long[] {0, 300, 200, 300, 200, 300}), TWO_LONG(new long[] {0, 1000, 500, 1000});
+        OFF(null), DEFAULT(null),
+        THREE_SHORT(new long[] {0, 300, 200, 300, 200, 300}),
+        TWO_LONG(new long[] {0, 1000, 500, 1000});
 
         public long[] pattern;
         VibratePattern(long[] pattern) {

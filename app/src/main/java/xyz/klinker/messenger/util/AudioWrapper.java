@@ -37,19 +37,25 @@ public class AudioWrapper {
             source.close();
 
             Uri tone = null;
-            if (conversation.ringtoneUri != null && !conversation.ringtoneUri.isEmpty()) {
+            if (conversation.ringtoneUri != null && conversation.ringtoneUri.isEmpty()) {
+                tone = null;
+            } else if (conversation.ringtoneUri != null && !conversation.ringtoneUri.isEmpty()) {
                 tone = Uri.parse(conversation.ringtoneUri);
             } else if (settings.ringtone != null && !settings.ringtone.isEmpty()) {
                 tone = Uri.parse(settings.ringtone);
+            } else if (settings.ringtone.isEmpty()) {
+                tone = null;
             } else {
                 tone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             }
 
-            mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
-                    .setLegacyStreamType(AudioManager.STREAM_RING)
-                    .build(), 1);
+            if (tone != null) {
+                mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                        .setLegacyStreamType(AudioManager.STREAM_RING)
+                        .build(), 1);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
