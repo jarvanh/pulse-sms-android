@@ -43,6 +43,8 @@
         android:layout_gravity="end|center_vertical"
         android:background="?selectableItemBackgroundBorderless"
         android:layout_marginStart="@dimen/conversation_list_header_padding"
-        android:layout_marginEnd="@dimen/conversation_list_header_padding"/>
+        android:layout_marginEnd="@dimen/conversation_list_header_padding"
+        android:paddingStart="@dimen/conversation_list_padding"
+        android:paddingEnd="@dimen/conversation_list_padding"/>
 
 </FrameLayout>
