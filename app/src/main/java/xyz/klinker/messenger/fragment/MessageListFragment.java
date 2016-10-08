@@ -1418,7 +1418,7 @@ public class MessageListFragment extends Fragment implements
                 @Override public void onTranscodeFailed(Exception exception) {
                     exception.printStackTrace();
                     Toast.makeText(getActivity(),
-                            "Failed to attach video: " + exception.getMessage(),
+                            "Failed to scale down video for sending: " + exception.getMessage(),
                             Toast.LENGTH_SHORT).show();
 
                     try {
