@@ -49,6 +49,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -178,6 +179,12 @@ public class MessengerActivity extends AppCompatActivity
             }
         }, 1000);
 
+        navigationView.post(new Runnable() {
+            @Override
+            public void run() {
+                snoozeIcon();
+            }
+        });
     }
 
     @Override
@@ -314,6 +321,9 @@ public class MessengerActivity extends AppCompatActivity
                                 getString(R.string.pref_snooze), snoozeTil);
                         new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
                                 snoozeTil);
+
+                        snoozeIcon();
+
                         return true;
                     }
                 });
@@ -971,6 +981,17 @@ public class MessengerActivity extends AppCompatActivity
 
         if (fromNotification && convoId != -1) {
             new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
+        }
+    }
+
+    private void snoozeIcon() {
+        boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
+                System.currentTimeMillis();
+        ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
+        if (currentlySnoozed) {
+            snooze.setImageResource(R.drawable.ic_snoozed);
+        } else {
+            snooze.setImageResource(R.drawable.ic_snooze);
         }
     }
 
