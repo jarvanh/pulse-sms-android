@@ -414,17 +414,23 @@ public class ConversationListFragment extends Fragment
                 for (Conversation conversation : allConversations) {
                     boolean shouldRead = false;
                     switch (sectionType) {
-                        case SectionType.PINNED: shouldRead = conversation.pinned;
+                        case SectionType.PINNED:
+                            shouldRead = conversation.pinned;
                             break;
-                        case SectionType.TODAY: shouldRead = TimeUtils.isToday(conversation.timestamp);
+                        case SectionType.TODAY:
+                            shouldRead = TimeUtils.isToday(conversation.timestamp);
                             break;
-                        case SectionType.YESTERDAY: shouldRead = TimeUtils.isYesterday(conversation.timestamp);
+                        case SectionType.YESTERDAY:
+                            shouldRead = TimeUtils.isYesterday(conversation.timestamp);
                             break;
-                        case SectionType.LAST_WEEK: shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
+                        case SectionType.LAST_WEEK:
+                            shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
                             break;
-                        case SectionType.LAST_MONTH: shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
+                        case SectionType.LAST_MONTH:
+                            shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
                             break;
-                        default: shouldRead = true;
+                        default:
+                            shouldRead = true;
                             break;
                     }
 
