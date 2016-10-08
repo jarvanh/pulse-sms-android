@@ -988,10 +988,13 @@ public class MessengerActivity extends AppCompatActivity
         boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
                 System.currentTimeMillis();
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
-        if (currentlySnoozed) {
-            snooze.setImageResource(R.drawable.ic_snoozed);
-        } else {
-            snooze.setImageResource(R.drawable.ic_snooze);
+
+        if (snooze != null) {
+            if (currentlySnoozed) {
+                snooze.setImageResource(R.drawable.ic_snoozed);
+            } else {
+                snooze.setImageResource(R.drawable.ic_snooze);
+            }
         }
     }
 
