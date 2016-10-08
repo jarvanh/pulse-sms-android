@@ -70,8 +70,9 @@ public class AttachImageView extends RecyclerView {
 
                 ContentResolver cr = getContext().getContentResolver();
                 images = Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
-                        select, MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
-                                MediaStore.Files.FileColumns.MEDIA_TYPE + "=?",
+                        select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
+                                MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
+                                MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
                         where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC");
 
                 handler.post(new Runnable() {
