@@ -8,6 +8,8 @@ import android.content.Intent;
 
 import java.util.Date;
 
+import xyz.klinker.messenger.api.implementation.Account;
+
 public class ContentObserverRunCheckService extends IntentService {
 
     private static final int REQUEST_CODE = 12;
@@ -27,6 +29,10 @@ public class ContentObserverRunCheckService extends IntentService {
     }
 
     public static void scheduleNextRun(Context context) {
+        if (!Account.get(context).primary) {
+            return;
+        }
+
         Intent intent = new Intent(context, ContentObserverRunCheckService.class);
         PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
