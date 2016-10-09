@@ -1319,7 +1319,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void showTooltip() {
-        if (!getResources().getBoolean(R.bool.pin_drawer) &&
+        /*if (!getResources().getBoolean(R.bool.pin_drawer) &&
                 !Settings.get(getActivity()).seenConvoNavToolTip &&
                 TvUtils.hasTouchscreen(getActivity())) {
             MaterialTooltip.Options options = new MaterialTooltip.Options(
@@ -1343,7 +1343,7 @@ public class MessageListFragment extends Fragment implements
                     }
                 }
             });
-        }
+        }*/
     }
 
     @Override

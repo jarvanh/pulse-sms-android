@@ -18,8 +18,8 @@
 
     <color name="api_login_background">#009688</color>
     <color name="api_login_background_dark">#00695C</color>
-    <color name="api_fab_background">#FF4081</color>
-    <color name="api_text_accent">#F48FB1</color>
+    <color name="api_fab_background">#FFAB40</color>
+    <color name="api_text_accent">#FFCC80</color>
     <color name="api_divider_color">#22FFFFFF</color>
     <color name="api_window_background">#55000000</color>
 
