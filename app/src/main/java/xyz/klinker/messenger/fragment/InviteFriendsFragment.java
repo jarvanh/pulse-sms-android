@@ -108,7 +108,10 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                                 conversation.imageUri = null;
                             }
 
-                            contacts.add(conversation);
+                            if (contacts.size() == 0 || !conversation.title.equals(contacts.get(contacts.size() - 1).title)) {
+
+                                contacts.add(conversation);
+                            }
                         } catch (NullPointerException e) {
                             return;
                         }
