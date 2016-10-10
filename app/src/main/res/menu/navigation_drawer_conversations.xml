@@ -33,7 +33,7 @@
 
             <item
                 android:id="@+id/drawer_conversation"
-                android:icon="@drawable/ic_conversations"
+                android:icon="@drawable/ic_inbox_small"
                 android:title="@string/menu_conversations"
                 android:checked="true" />
 
