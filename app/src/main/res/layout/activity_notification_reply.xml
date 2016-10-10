@@ -103,8 +103,8 @@
                     android:paddingBottom="16dp"
                     android:maxLines="1"
                     android:hint="@null"
-                    android:inputType="textCapSentences|textAutoCorrect|textShortMessage"
-                    android:imeOptions="actionSend"
+                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                    android:imeOptions="actionSend|flagNoExtractUi"
                     android:scrollHorizontally="true"
                     android:background="@null"/>
 
