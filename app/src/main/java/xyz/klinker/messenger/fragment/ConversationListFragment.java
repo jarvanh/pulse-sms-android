@@ -142,6 +142,19 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        if (archiveSnackbar != null && archiveSnackbar.isShown()) {
+            archiveSnackbar.dismiss();
+        }
+
+        if (deleteSnackbar != null && deleteSnackbar.isShown()) {
+            deleteSnackbar.dismiss();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
