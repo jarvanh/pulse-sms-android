@@ -19,10 +19,31 @@ public class Account {
 
     private static volatile Account account;
 
+    public enum SubscriptionType {
+        TRIAL(1), SUBSCRIBER(2), LIFETIME(3);
+
+        static SubscriptionType findByTypeCode(int code) {
+            for (SubscriptionType type : values()) {
+                if (type.typeCode == code) {
+                    return type;
+                }
+            }
+
+            return null;
+        }
+
+        public int typeCode;
+        SubscriptionType(int typeCode) {
+            this.typeCode = typeCode;
+        }
+    }
+
     private Context context;
     private EncryptionUtils encryptionUtils;
 
     public boolean primary;
+    public SubscriptionType subscriptionType;
+    public long subscriptionExpiration;
     public String myName;
     public String myPhoneNumber;
     public String deviceId;
@@ -56,6 +77,8 @@ public class Account {
 
         // account info
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.api_pref_primary), false);
+        this.subscriptionType = SubscriptionType.findByTypeCode(sharedPrefs.getInt(context.getString(R.string.api_pref_subscription_type), 1));
+        this.subscriptionExpiration = sharedPrefs.getLong(context.getString(R.string.api_pref_subscription_expiration), -1);
         this.myName = sharedPrefs.getString(context.getString(R.string.api_pref_my_name), null);
         this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.api_pref_my_phone_number), null);
         this.deviceId = sharedPrefs.getString(context.getString(R.string.api_pref_device_id), null);

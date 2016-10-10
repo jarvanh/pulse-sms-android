@@ -883,6 +883,27 @@ public class ApiUtils {
     }
 
     /**
+     * Update the subscription status on the server.
+     */
+    public void updateSubscription(final String accountId, final Integer subscriptionType, final Long expirationDate) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.account().updateSubscription(accountId, subscriptionType, expirationDate);
+                if (response == null) {
+                    Log.e(TAG, "error updating subscription");
+                } else {
+                    Log.v(TAG, "successfully updated subscription");
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Update the snooze time setting.
      */
     public void updateSnooze(final String accountId, final long snoozeTil) {

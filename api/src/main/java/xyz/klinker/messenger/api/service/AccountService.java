@@ -54,4 +54,11 @@ public interface AccountService {
     @POST("accounts/dismissed_notification")
     Object dismissedNotification(@Query("account_id") String accountId, @Query("device_id") String deviceId, @Query("id") long conversationId);
 
+    @GET("accounts/view_subscription")
+    AccountListResponse viewSubscription(@Query("account_id") String accountId);
+
+    @POST("accounts/update_subscription")
+    Object updateSubscription(@Query("account_id") String accountId,
+                              @Query("subscription_type") int subscriptionType,
+                              @Query("subscription_expiration") long subscriptionExpiration);
 }

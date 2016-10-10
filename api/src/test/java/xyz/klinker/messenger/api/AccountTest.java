@@ -98,4 +98,13 @@ public class AccountTest extends ApiTest {
         assertNotNull(api.account().dismissedNotification(getAccountId(), "1", 1));
     }
 
+    @Test
+    public void viewSubscription() {
+        assertNotNull(api.account().viewSubscription(getAccountId()));
+    }
+
+    @Test
+    public void updateSubscription() {
+        assertNotNull(api.account().updateSubscription(getAccountId(), 1, 1000));
+    }
 }

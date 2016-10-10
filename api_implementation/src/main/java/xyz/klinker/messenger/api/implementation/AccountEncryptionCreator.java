@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
 
+import java.util.Date;
+
 import javax.crypto.SecretKey;
 
 import xyz.klinker.messenger.api.entity.LoginResponse;
@@ -54,6 +56,8 @@ public class AccountEncryptionCreator {
     private EncryptionUtils createAccount(String name, String phone, String accountId, String salt1,
                                             String passhash, SecretKey key) {
         sharedPrefs.edit()
+                .putInt(context.getString(R.string.api_pref_subscription_type), Account.SubscriptionType.TRIAL.typeCode)
+                .putLong(context.getString(R.string.api_pref_subscription_type), getTrialEnd())
                 .putString(context.getString(R.string.api_pref_my_name), name)
                 .putString(context.getString(R.string.api_pref_my_phone_number), phone)
                 .putString(context.getString(R.string.api_pref_account_id), accountId)
@@ -66,5 +70,11 @@ public class AccountEncryptionCreator {
         Account account = Account.get(context);
         account.forceUpdate(context);
         return account.getEncryptor();
+    }
+
+    private long getTrialEnd() {
+        // 25 hours per day, just to give them a little extra wiggle room
+        long sevenDays = 1000 * 60 * 60 * 25 * 7;
+        return new Date().getTime() + sevenDays;
     }
 }
