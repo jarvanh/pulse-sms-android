@@ -190,6 +190,9 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                 case "dismissed_notification":
                     dismissNotification(json, source, context);
                     break;
+                case "update_subscription":
+                    updateSubscription(json, context);
+                    break;
                 case "feature_flag":
                     writeFeatureFlag(json, context);
                     break;
@@ -629,6 +632,17 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
                     Settings.get(context).setValue(pref, json.getString("value"));
             }
         }
+    }
+
+    private void updateSubscription(JSONObject json, Context context)
+            throws JSONException {
+        int type = json.has("type") ? json.getInt("type") : 0;
+        long expiration = json.has("expiration") ? json.getLong("expiration") : 0L;
+
+        Account account = Account.get(context);
+        account.updateSubscription(
+                Account.SubscriptionType.findByTypeCode(type), expiration, false
+        );
     }
 
     private void writeFeatureFlag(JSONObject json, Context context)

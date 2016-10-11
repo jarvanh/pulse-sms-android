@@ -23,7 +23,7 @@ public class Account {
     public enum SubscriptionType {
         TRIAL(1), SUBSCRIBER(2), LIFETIME(3);
 
-        static SubscriptionType findByTypeCode(int code) {
+        public static SubscriptionType findByTypeCode(int code) {
             for (SubscriptionType type : values()) {
                 if (type.typeCode == code) {
                     return type;
@@ -134,10 +134,10 @@ public class Account {
     }
 
     public void updateSubscription(SubscriptionType type, Date expiration) {
-        updateSubscription(type, expiration == null ? null : expiration.getTime());
+        updateSubscription(type, expiration == null ? null : expiration.getTime(), true);
     }
 
-    public void updateSubscription(SubscriptionType type, Long expiration) {
+    public void updateSubscription(SubscriptionType type, Long expiration, boolean sendToApi) {
         this.subscriptionType = type;
         this.subscriptionExpiration = expiration;
 
@@ -146,7 +146,9 @@ public class Account {
                 .putLong(context.getString(R.string.api_pref_subscription_expiration), expiration == null ? 0 : expiration)
                 .commit();
 
-        new ApiUtils().updateSubscription(accountId, type == null ? null : type.typeCode, expiration);
+        if (sendToApi) {
+            new ApiUtils().updateSubscription(accountId, type == null ? null : type.typeCode, expiration);
+        }
     }
 
     public void setName(String name) {
