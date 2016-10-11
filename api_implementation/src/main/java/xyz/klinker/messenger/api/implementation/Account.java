@@ -8,6 +8,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -125,9 +126,27 @@ public class Account {
                 .remove(context.getString(R.string.api_pref_salt))
                 .remove(context.getString(R.string.api_pref_passhash))
                 .remove(context.getString(R.string.api_pref_key))
+                .remove(context.getString(R.string.api_pref_subscription_type))
+                .remove(context.getString(R.string.api_pref_subscription_expiration))
                 .commit();
 
         init(context);
+    }
+
+    public void updateSubscription(SubscriptionType type, Date expiration) {
+        updateSubscription(type, expiration == null ? null : expiration.getTime());
+    }
+
+    public void updateSubscription(SubscriptionType type, Long expiration) {
+        this.subscriptionType = type;
+        this.subscriptionExpiration = expiration;
+
+        getSharedPrefs().edit()
+                .putInt(context.getString(R.string.api_pref_subscription_type), type == null ? 0 : type.typeCode)
+                .putLong(context.getString(R.string.api_pref_subscription_expiration), expiration == null ? 0 : expiration)
+                .commit();
+
+        new ApiUtils().updateSubscription(accountId, type == null ? null : type.typeCode, expiration);
     }
 
     public void setName(String name) {
