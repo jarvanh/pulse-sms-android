@@ -57,7 +57,7 @@ public class AccountEncryptionCreator {
                                             String passhash, SecretKey key) {
         sharedPrefs.edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), Account.SubscriptionType.TRIAL.typeCode)
-                .putLong(context.getString(R.string.api_pref_subscription_type), getTrialEnd())
+                .putLong(context.getString(R.string.api_pref_subscription_expiration), getTrialEnd())
                 .putString(context.getString(R.string.api_pref_my_name), name)
                 .putString(context.getString(R.string.api_pref_my_phone_number), phone)
                 .putString(context.getString(R.string.api_pref_account_id), accountId)
