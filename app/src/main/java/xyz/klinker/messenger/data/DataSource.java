@@ -1256,6 +1256,10 @@ public class DataSource {
         return conversationId;
     }
 
+    public long insertMessage(Context context, Message message, long conversationId) {
+        return insertMessage(context, message, conversationId, false);
+    }
+
     /**
      * Inserts a new message into the database. This also updates the conversation with the latest
      * data.
@@ -1264,7 +1268,7 @@ public class DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    public long insertMessage(Context context, Message message, long conversationId) {
+    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
         message.conversationId = conversationId;
 
         ContentValues values = new ContentValues(10);
@@ -1295,7 +1299,7 @@ public class DataSource {
                         context.getString(R.string.you) + ": " + message.data : message.data,
                 message.mimeType, false);
 
-        return conversationId;
+        return returnMessageId ? id : conversationId;
     }
 
     /**

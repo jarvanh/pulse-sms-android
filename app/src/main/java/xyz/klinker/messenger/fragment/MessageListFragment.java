@@ -957,7 +957,7 @@ public class MessageListFragment extends Fragment implements
                         m.id = 0;
                     }
 
-                    source.insertMessage(getActivity(), m, m.conversationId);
+                    m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
                     loadMessages();
                 }
 
@@ -974,12 +974,8 @@ public class MessageListFragment extends Fragment implements
                                 getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());
 
-                        if (imageUri != null && uri != null) {
-                            Cursor cursor = source.searchMessages(uri.toString());
-                            if (cursor != null && cursor.moveToFirst()) {
-                                source.updateMessageData(cursor.getLong(0), imageUri.toString());
-                                cursor.close();
-                            }
+                        if (imageUri != null) {
+                            source.updateMessageData(m.id, imageUri.toString());
                         }
                     }
                 }).start();

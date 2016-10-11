@@ -191,63 +191,117 @@ public class ImageUtils {
      * have a 1 MB limit, so we'll scale to under that. This method will create a new file in the
      * application memory.
      */
-    public static Uri scaleToSend(Context context, Uri uri) {
-        File newLocation = new File(context.getFilesDir(),
-                ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
-        File oldLocation = new File(uri.getPath());
-        FileUtils.copy(oldLocation, newLocation);
+    public static Uri scaleToSend(Context context, Uri uri) throws IOException {
+        InputStream input = context.getContentResolver().openInputStream(uri);
 
-        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-        if (bitmap == null) {
-            try {
-                InputStream is = context.getContentResolver().openInputStream(uri);
-                bitmap = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        byte[] byteArr = new byte[0];
+        byte[] buffer = new byte[1024];
+        int arraySize = 0;
+        int len;
+
+        try {
+            // convert the Uri to a byte array that we can manipulate
+            while ((len = input.read(buffer)) > -1) {
+                if (len != 0) {
+                    if (arraySize + len > byteArr.length) {
+                        byte[] newbuf = new byte[(arraySize + len) * 2];
+                        System.arraycopy(byteArr, 0, newbuf, 0, arraySize);
+                        byteArr = newbuf;
+                    }
+
+                    System.arraycopy(buffer, 0, byteArr, arraySize, len);
+                    arraySize += len;
+                }
             }
-        }
 
-        File file = scaleToSend(newLocation, bitmap);
-        return Uri.fromFile(file);
+            try {
+                input.close();
+            } catch(Exception e) { }
+
+            // with inJustDecodeBounds, we are telling the system just to get the resolution
+            // of the image and not to decode anything else. This resolution
+            // is used to calculate the in sample size
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(byteArr, 0, arraySize, options);
+            int srcWidth = options.outWidth;
+            int srcHeight = options.outHeight;
+
+            String fileName = ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg";
+            // start generating bitmaps and checking the size against the max size
+            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
+            File file = createFileFromBitmap(context, fileName, scaled);
+
+            int maxResolution = 1500;
+            while (maxResolution > 0 && file.length() > MAX_FILE_SIZE) {
+                scaled.recycle();
+
+                scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
+                file = createFileFromBitmap(context, fileName, scaled);
+                maxResolution -= 250;
+            }
+
+
+
+            return ImageUtils.createContentUri(context, file);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    private static File scaleToSend(File file, Bitmap bitmap) {
-        while (!file.exists() || file.length() > MAX_FILE_SIZE) {
-            Log.v("Scale to Send", "current file size: " + file.length());
+    private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int srcWidth, int srcHeight, int maxSize) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
 
-            try {
-                bitmap = Bitmap.createScaledBitmap(bitmap,
-                        (int) (bitmap.getWidth() * SCALE_RATIO),
-                        (int) (bitmap.getHeight() * SCALE_RATIO),
-                        false);
-            } catch (Throwable e) {
-                return file;
+        // in sample size reduces the size of the image by this factor of 2
+        options.inSampleSize = calculateInSampleSize(srcHeight, srcWidth, maxSize);
+
+        // these options set up the image coloring
+        options.inPreferredConfig = Bitmap.Config.RGB_565; // could be Bitmap.Config.ARGB_8888 for higher quality
+        options.inDither = true;
+
+        // these options set it up with the actual dimensions that you are looking for
+        options.inDensity = srcWidth;
+        options.inTargetDensity = maxSize * options.inSampleSize;
+
+        // now we actually decode the image to these dimensions
+        return BitmapFactory.decodeByteArray(byteArr, 0, arraySize, options);
+    }
+
+    private static int calculateInSampleSize(int currentHeight, int currentWidth, int maxSize) {
+        int scale = 1;
+
+        if (currentHeight > maxSize || currentWidth > maxSize) {
+            scale = (int) Math.pow(2, (int) Math.ceil(Math.log(maxSize /
+                    (double) Math.max(currentHeight, currentWidth)) / Math.log(0.5)));
+        }
+
+        return scale;
+    }
+
+    private static File createFileFromBitmap(Context context, String name, Bitmap bitmap) {
+        FileOutputStream out = null;
+        File file = new File(context.getFilesDir(), name);
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
             }
 
-            FileOutputStream out = null;
-
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+        } catch (IOException e) {
+            Log.e("Scale to Send", "failed to write output stream", e);
+        } finally {
             try {
-                if (!file.exists()) {
-                    file.createNewFile();
+                if (out != null) {
+                    out.close();
                 }
-
-                out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             } catch (IOException e) {
-                Log.e("Scale to Send", "failed to write output stream", e);
-            } finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                } catch (IOException e) {
-                    Log.e("Scale to Send", "failed to close output stream", e);
-                }
+                Log.e("Scale to Send", "failed to close output stream", e);
             }
         }
 
-        Log.v("Scale to Send", "final file size: " + file.length());
         return file;
     }
 
