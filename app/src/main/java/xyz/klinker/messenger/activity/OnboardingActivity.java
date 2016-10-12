@@ -19,8 +19,6 @@ public class OnboardingActivity extends AppIntro {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Instead of fragments, you can also use our default slide
-        // Just set a title, description, background and image. AppIntro will do the rest.
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.onboarding_title_1), getString(R.string.onboarding_content_1),
                 R.drawable.ic_inbox_onboarding,

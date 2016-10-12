@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -932,8 +933,12 @@ public class MessengerActivity extends AppCompatActivity
         }
 
         if (requestCode == REQUEST_ONBOARDING) {
+            boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+
+            // if it isn't a phone, then we want to force the login.
+            // if it is a phone, they can choose to log in when they want to
             Intent login = new Intent(this, InitialLoadActivity.class);
-            login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
+            login.putExtra(LoginActivity.ARG_SKIP_LOGIN, hasTelephone);
 
             startActivity(login);
             finish();

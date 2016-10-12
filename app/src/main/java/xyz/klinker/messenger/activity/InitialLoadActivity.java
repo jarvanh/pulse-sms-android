@@ -237,4 +237,9 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // don't let them back out of this
+    }
+
 }
