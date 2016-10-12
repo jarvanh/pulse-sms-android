@@ -25,9 +25,13 @@
     <string name="shortcut_compose_long">Start a new conversation!</string>
 
     <!-- Onboarding -->
-    <string name="title_1"></string>
-    <string name="title_2"></string>
-    <string name="title_3"></string>
+    <string name="onboarding_title_1">Messaging Re-imagined</string>
+    <string name="onboarding_title_2">Available Everywhere</string>
+    <string name="onboarding_title_3">Powerful Customization</string>
+    <string name="onboarding_content_1">"Smooth, fluid layouts with a powerful design and seamless integration.
+        Messenger puts your conversations front and center."</string>
+    <string name="onboarding_content_2">Message from your tablet, computer, watch, or any other connected devices.</string>
+    <string name="onboarding_content_3">Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Messenger yours.</string>
 
     <!-- Drawer Items -->
     <string name="menu_conversations">Conversation list</string>

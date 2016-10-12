@@ -22,17 +22,17 @@ public class OnboardingActivity extends AppIntro {
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
         addSlide(AppIntroFragment.newInstance(
-                "Messaging Re-imagined", "Smooth, fluid layouts with a powerful design and seamless integration. Messenger puts your conversations front and center.",
+                getString(R.string.onboarding_title_1), getString(R.string.onboarding_content_1),
                 R.drawable.ic_inbox_onboarding,
                 getResources().getColor(R.color.materialTeal)));
 
         addSlide(AppIntroFragment.newInstance(
-                "Available Everywhere", "Message from your tablet, computer, watch, or any other connected devices.",
+                getString(R.string.onboarding_title_2), getString(R.string.onboarding_content_2),
                 R.drawable.ic_devices_onboarding,
                 getResources().getColor(R.color.materialLightBlue)));
 
         addSlide(AppIntroFragment.newInstance(
-                "Powerful Customization", "Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Messenger yours.",
+                getString(R.string.onboarding_title_3), getString(R.string.onboarding_content_3),
                 R.drawable.ic_person_onboarding,
                 getResources().getColor(R.color.materialLightGreen)));
 
