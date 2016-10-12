@@ -15,6 +15,15 @@
   -->
 
 <changelog>
+
+    <version
+        name="1.7.2"
+        description="October 12th, 2016">
+        <text>Onboaring activity for new users</text>
+        <text>Improvements to scaling images for MMS</text>
+        <text>Bug/crash fixes</text>
+    </version>
+
     <version
         name="1.7.1"
         description="October 8th, 2016">

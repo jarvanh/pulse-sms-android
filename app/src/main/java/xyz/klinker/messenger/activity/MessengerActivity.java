@@ -151,16 +151,10 @@ public class MessengerActivity extends AppCompatActivity
         TimeUtils.setupNightTheme(this);
         UpdateUtils.checkForUpdate(this);
 
-        if (checkInitialStart()) {
-            if (IS_BETA_TEST) {
-                // beta test should skip this and go right to the initial login and data upload
-                startActivity(new Intent(this, InitialLoadActivity.class));
-                finish();
-                return;
-            } else {
-                startActivityForResult(new Intent(this, OnboardingActivity.class), REQUEST_ONBOARDING);
-            }
-        }
+            startActivityForResult(
+                    new Intent(this, OnboardingActivity.class),
+                    REQUEST_ONBOARDING
+            );
 
         if (source == null) {
             source = DataSource.getInstance(this);
