@@ -122,6 +122,7 @@ public class SmsMmsUtils {
 
         List<String> matchers = new ArrayList<>();
         for (String n : numbers) {
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
                 matchers.add(n);
             } else if (n.length() >= 5) {

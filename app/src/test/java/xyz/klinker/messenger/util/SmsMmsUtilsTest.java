@@ -39,4 +39,10 @@ public class SmsMmsUtilsTest {
                 SmsMmsUtils.createIdMatcher("jklinker1@gmail.com"));
     }
 
+    @Test
+    public void createIdMatcherForSpacedWeirdNumbers() {
+        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210"),
+                SmsMmsUtils.createIdMatcher("1 987-654-3210"));
+    }
+
 }
