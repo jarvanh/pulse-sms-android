@@ -32,7 +32,7 @@ public class OnboardingActivity extends AppIntro {
                 getResources().getColor(R.color.materialLightBlue)));
 
         addSlide(AppIntroFragment.newInstance(
-                "Powerful Customization", "Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Pulse yours.",
+                "Powerful Customization", "Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Messenger yours.",
                 R.drawable.ic_person_onboarding,
                 getResources().getColor(R.color.materialLightGreen)));
 
@@ -42,17 +42,12 @@ public class OnboardingActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-
-        //setResult(MessengerActivity.RESULT_START_TRIAL);
-        setResult(MessengerActivity.RESULT_SKIP_TRIAL);
         finish();
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-
-        setResult(MessengerActivity.RESULT_SKIP_TRIAL);
         finish();
     }
 }

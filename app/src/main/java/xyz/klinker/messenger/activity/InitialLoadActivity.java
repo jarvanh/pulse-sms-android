@@ -173,12 +173,12 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 source.insertContacts(contacts, null);
                 source.close();
 
-                handler.post(new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                     close();
                     }
-                });
+                }, 5000);
 
                 Log.v("initial_load", "load took " +
                         (System.currentTimeMillis() - startTime) + " ms");

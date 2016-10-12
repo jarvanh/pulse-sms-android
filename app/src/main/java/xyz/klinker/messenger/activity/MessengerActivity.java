@@ -18,7 +18,10 @@ package xyz.klinker.messenger.activity;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -78,6 +81,7 @@ import xyz.klinker.messenger.fragment.SearchFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
@@ -99,7 +103,7 @@ public class MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
-    public static final boolean IS_BETA_TEST = true;
+    public static boolean START_DOWNLOAD_SERVICE = false;
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
@@ -107,8 +111,6 @@ public class MessengerActivity extends AppCompatActivity
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
 
     public static final int REQUEST_ONBOARDING = 101;
-    public static final int RESULT_START_TRIAL = 102;
-    public static final int RESULT_SKIP_TRIAL = 103;
     public static final int REQUEST_CALL_PERMISSION = 104;
 
     private DataSource source;
@@ -122,6 +124,8 @@ public class MessengerActivity extends AppCompatActivity
     private MaterialSearchView searchView;
     private boolean inSettings = false;
 
+    private BroadcastReceiver downloadReceiver;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +138,33 @@ public class MessengerActivity extends AppCompatActivity
 
         dismissIfFromNotification();
 
+        if (checkInitialStart()) {
+            startActivityForResult(
+                    new Intent(this, OnboardingActivity.class),
+                    REQUEST_ONBOARDING
+            );
+        }
+
+        if (START_DOWNLOAD_SERVICE) {
+            START_DOWNLOAD_SERVICE = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    downloadReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            recreate();
+                        }
+                    };
+
+                    registerReceiver(downloadReceiver,
+                            new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+
+                    startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
+                }
+            }, 1500);
+        }
     }
 
     @Override
@@ -150,11 +181,6 @@ public class MessengerActivity extends AppCompatActivity
 
         TimeUtils.setupNightTheme(this);
         UpdateUtils.checkForUpdate(this);
-
-            startActivityForResult(
-                    new Intent(this, OnboardingActivity.class),
-                    REQUEST_ONBOARDING
-            );
 
         if (source == null) {
             source = DataSource.getInstance(this);
@@ -195,6 +221,10 @@ public class MessengerActivity extends AppCompatActivity
 
         if (source != null) {
             source.close();
+        }
+
+        if (downloadReceiver != null) {
+            unregisterReceiver(downloadReceiver);
         }
     }
 
@@ -903,12 +933,10 @@ public class MessengerActivity extends AppCompatActivity
 
         if (requestCode == REQUEST_ONBOARDING) {
             Intent login = new Intent(this, InitialLoadActivity.class);
-
-            if (resultCode == RESULT_SKIP_TRIAL) {
-                login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
-            }
+            login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
 
             startActivity(login);
+            finish();
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -991,5 +1019,4 @@ public class MessengerActivity extends AppCompatActivity
             }
         }
     }
-
 }
