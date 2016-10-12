@@ -13,7 +13,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 
-public class OnboardingPayWallActivity extends AppIntro {
+public class OnBoardingPayActivity extends AppIntro {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

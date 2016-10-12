@@ -149,7 +149,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".activity.OnboardingActivity"
             android:theme="@style/AppIntro" />
-        <activity android:name=".activity.OnboardingPayWallActivity"
+        <activity android:name=".activity.OnBoardingPayActivity"
             android:theme="@style/AppIntro" />
         <activity android:name=".activity.InitialLoadActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />

@@ -28,7 +28,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
-import xyz.klinker.messenger.activity.OnboardingPayWallActivity;
+import xyz.klinker.messenger.activity.OnBoardingPayActivity;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.Account;
@@ -61,7 +61,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initResyncAccountPreference();
         } else {
             startActivityForResult(
-                    new Intent(getActivity(), OnboardingPayWallActivity.class),
+                    new Intent(getActivity(), OnBoardingPayActivity.class),
                     ONBOARDING_REQUEST);
         }
     }
