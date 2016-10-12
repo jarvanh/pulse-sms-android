@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
@@ -29,20 +28,25 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.activity.OnboardingPayWallActivity;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
+import xyz.klinker.messenger.util.StringUtils;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
  * for the user here, along with subscription status.
  */
 public class MyAccountFragment extends PreferenceFragmentCompat {
+
+    public static final int ONBOARDING_REQUEST = 54320;
+    public static final int RESPONSE_START_TRIAL = 101;
+    public static final int RESPONSE_SKIP_TRIAL_FOR_NOW = 102;
 
     private static final int SETUP_REQUEST = 54321;
 
@@ -55,6 +59,10 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initMessageCountPreference();
             initRemoveAccountPreference();
             initResyncAccountPreference();
+        } else {
+            startActivityForResult(
+                    new Intent(getActivity(), OnboardingPayWallActivity.class),
+                    ONBOARDING_REQUEST);
         }
     }
 
@@ -137,7 +145,12 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                                     }
                                 }).start();
 
-                                recreateActivity();
+                                returnToConversations();
+
+                                NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                                if (nav != null) {
+                                    nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
+                                }
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -190,9 +203,22 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
             if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
                 getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
-                recreateActivity();
+                returnToConversations();
+
+                NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                if (nav != null) {
+                    nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                }
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
                 restoreAccount();
+            }
+        } else if (requestCode == ONBOARDING_REQUEST) {
+            if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
+                returnToConversations();
+            } else if (responseCode == RESPONSE_START_TRIAL) {
+                getPreferenceScreen()
+                        .findPreference(getString(R.string.pref_my_account_setup))
+                        .performClick();
             }
         }
     }
@@ -216,18 +242,31 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        MessengerActivity.START_DOWNLOAD_SERVICE = true;
-                        recreateActivity();
+                        returnToConversations();
+
+                        ((MessengerActivity) getActivity()).startDataDownload();
+
+                        NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                        if (nav != null) {
+                            nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                        }
                     }
                 });
             }
         }).start();
     }
 
-    private void recreateActivity() {
-        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-        navigationView.setCheckedItem(R.id.drawer_conversation);
+    private void returnToConversations() {
+        NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+        if (nav != null) {
+            nav.setCheckedItem(R.id.drawer_conversation);
+        }
 
-        getActivity().recreate();
+        if (getActivity() instanceof MessengerActivity) {
+            ((MessengerActivity) getActivity()).displayConversations();
+            getActivity().setTitle(StringUtils.titleize(getString(R.string.app_name)));
+        } else {
+            getActivity().recreate();
+        }
     }
 }

@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.klinker.android.send_message.Utils;

@@ -145,27 +145,6 @@ public class MessengerActivity extends AppCompatActivity
                     REQUEST_ONBOARDING
             );
         }
-
-        if (START_DOWNLOAD_SERVICE) {
-            START_DOWNLOAD_SERVICE = false;
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    downloadReceiver = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                            recreate();
-                        }
-                    };
-
-                    registerReceiver(downloadReceiver,
-                            new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
-
-                    startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
-                }
-            }, 1500);
-        }
     }
 
     @Override
@@ -194,7 +173,8 @@ public class MessengerActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
-                        !(otherFragment instanceof ArchivedConversationListFragment)) {
+                        !(otherFragment instanceof ArchivedConversationListFragment) &&
+                        !(otherFragment instanceof MyAccountFragment)) {
                     fab.show();
                 }
             }
@@ -1023,5 +1003,24 @@ public class MessengerActivity extends AppCompatActivity
                 snooze.setImageResource(R.drawable.ic_snooze);
             }
         }
+    }
+
+    public void startDataDownload() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                downloadReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        recreate();
+                    }
+                };
+
+                registerReceiver(downloadReceiver,
+                        new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+
+                startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
+            }
+        }, 1500);
     }
 }

@@ -24,15 +24,6 @@
     <string name="shortcut_compose_short">New Message</string>
     <string name="shortcut_compose_long">Start a new conversation!</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_title_1">Messaging Re-imagined</string>
-    <string name="onboarding_title_2">Available Everywhere</string>
-    <string name="onboarding_title_3">Powerful Customization</string>
-    <string name="onboarding_content_1">"Smooth, fluid layouts with a powerful design and seamless integration.
-        Messenger puts your conversations front and center."</string>
-    <string name="onboarding_content_2">Message from your tablet, computer, watch, or any other connected devices.</string>
-    <string name="onboarding_content_3">Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Messenger yours.</string>
-
     <!-- Drawer Items -->
     <string name="menu_conversations">Conversation list</string>
     <string name="menu_archived_conversations">Archived conversations</string>
@@ -172,17 +163,21 @@
         won\'t take long!</string>
     <string name="tooltip_got_it">Got It!</string>
     <string name="navigation_drawer_conversation_hint">More options for this conversation are stored in the navigation drawer.</string>
+    <string name="onboarding_title_1">Messaging Re-imagined</string>
+    <string name="onboarding_title_2">Available Everywhere</string>
+    <string name="onboarding_title_3">Powerful Customization</string>
+    <string name="onboarding_content_1">"Smooth, fluid layouts with a powerful design and seamless integration.
+        Messenger puts your conversations front and center."</string>
+    <string name="onboarding_content_2">Message from your tablet, computer, watch, or any other connected devices.</string>
+    <string name="onboarding_content_3">Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Messenger yours.</string>
+    <string name="message_anywhere_onboarding_title_1">Message Anywhere</string>
+    <string name="message_anywhere_onboarding_title_2">Subscription</string>
+    <string name="message_anywhere_onboarding_title_3">Week Long Trial</string>
+    <string name="message_anywhere_onboarding_content_1">Seamlessly integrates with any device (tablet, watch, TV, web, native Google Chrome, and Firefox apps) to support SMS and MMS from anywhere!</string>
+    <string name="message_anywhere_onboarding_content_2">Insanely low pricing options to pay when you need it: $0.99 per month, $1.99 for 3 months, or $5.99 per year. Less than a cup of coffee.</string>
+    <string name="message_anywhere_onboarding_content_3">Use the Android app, FREE (forever!) on your phone, or start texting from all your devices with a ONE WEEK free trial.</string>
     <string name="start_trial">Start\nTrial</string>
-    <string name="skip_trial">Maybe\nLater</string>
-    <string name="available_everywhere">Available Everywhere</string>
-    <string name="message_anywhere_trial">Message Anywhere</string>
-    <string name="message_anywhere_trial_description" formatted="false">You can use the Android app, on your phone, %bCOMPLETELY FREE%bb!\n\nUsing Messenger across your other devices costs %bless than $1.00%bb / month, and you can cancel at any time.\n\nYou get a %bfree ONE WEEK%bb trial as a %iTHANK YOU%ii for downloading!</string>
-    <string name="subscription_platforms">Subscribing gives you access to your messages from:</string>
-    <string name="platform_tablet">Tablet</string>
-    <string name="platform_web">https://messenger.klinkerapps.com</string>
-    <string name="platform_chrome_app">Stand-alone Google Chrome app</string>
-    <string name="platform_chrome_extension">Google Chrome browser extension</string>
-    <string name="trial_description_end" formatted="false">Try it today and let us know what you think! If you already have an account, go ahead and press %iStart Trial%ii to log in to it.</string>
+    <string name="not_now">Not\nNow</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>
