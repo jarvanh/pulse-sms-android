@@ -1,1 +1,1 @@
-v1.7 adds an option for LED color per conversation, a global custom vibration pattern option, an image grid for the media in a conversation, a quick settings tile to compose a message , send/received sound effects, a call button on notifications, a button to capture images fullscreen, and way more. Check the app's changelog for full details.
+v1.7.2 improves the onboarding, provides various MMS changes, and many tweaks and bug fixes - please see the changelog in the app for a full list of changes!
