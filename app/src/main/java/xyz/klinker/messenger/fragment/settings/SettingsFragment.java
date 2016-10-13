@@ -43,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment {
         initFontSize();
         initVibrate();
         initDeliveryReports();
+        initConvertToMMS();
         initSoundEffects();
     }
 
@@ -136,13 +137,26 @@ public class SettingsFragment extends PreferenceFragment {
                 });
     }
 
+    private void initConvertToMMS() {
+        findPreference(getString(R.string.pref_convert_to_mms))
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        boolean convert = (boolean) o;
+                        new ApiUtils().updateConvertToMMS(Account.get(getActivity()).accountId,
+                                convert);
+                        return true;
+                    }
+                });
+    }
+
     private void initSoundEffects() {
         findPreference(getString(R.string.pref_sound_effects))
                 .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
                         boolean effects = (boolean) o;
-                        new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
+                        new ApiUtils().updateSoundEffects(Account.get(getActivity()).accountId,
                                 effects);
                         return true;
                     }

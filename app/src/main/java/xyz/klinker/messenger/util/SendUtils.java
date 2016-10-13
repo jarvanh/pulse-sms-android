@@ -54,6 +54,9 @@ public class SendUtils {
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);
+        settings.setSendLongAsMms(xyz.klinker.messenger.data.Settings.get(context)
+                .convertLongMessagesToMMS);
+        
         Transaction transaction = new Transaction(context, settings);
         Message message = new Message(text, addresses);
 

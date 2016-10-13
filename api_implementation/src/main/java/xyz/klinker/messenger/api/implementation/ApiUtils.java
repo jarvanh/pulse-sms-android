@@ -937,6 +937,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the delivery reports setting.
+     */
+    public void updateConvertToMMS(final String accountId, final boolean convert) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "convert_to_mms", "boolean", convert);
+        }
+    }
+
+    /**
      * Update the sound effects setting.
      */
     public void updateSoundEffects(final String accountId, final boolean effects) {

@@ -64,6 +64,7 @@ public class Settings {
     public VibratePattern vibrate;
     public boolean useGlobalThemeColor;
     public boolean deliveryReports;
+    public boolean convertLongMessagesToMMS;
     public boolean mobileOnly;
     public boolean soundEffects;
     public long snooze;
@@ -111,6 +112,7 @@ public class Settings {
 
         // settings
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
+        this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
         this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);

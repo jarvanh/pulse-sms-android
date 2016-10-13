@@ -595,12 +595,18 @@ public class MessageListFragment extends Fragment implements
                 return;
             }
 
+            boolean convertToMMS = Settings.get(getActivity()).convertLongMessagesToMMS;
+
             if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
                 //noinspection AndroidLintSetTextI18n
                 counter.setText(count[0] + "/" + count[2]);
             } else {
                 if (count[0] >= 4) {
-                    counter.setText(/*R.string.mms_message*/ null);
+                    if (convertToMMS) {
+                        counter.setText(null);
+                    } else {
+                        counter.setText(count[0] + "/" + count[2]);
+                    }
                 } else {
                     counter.setText(null);
                 }
