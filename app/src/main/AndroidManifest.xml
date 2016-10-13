@@ -97,6 +97,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_MESSAGING" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -320,6 +321,17 @@
         <service
             android:name=".widget.MessengerWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
+        <!-- Samsung Multi-window Support -->
+        <uses-library android:required="false" android:name="com.sec.android.app.multiwindow" />
+        <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/multiwindow_defaultsize_w" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/multiwindow_defaultsize_h" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/multiwindow_minimumsize_w" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/multiwindow_minimumsize_h" />
+
+
 
     </application>
 
