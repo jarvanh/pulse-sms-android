@@ -91,6 +91,7 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
         assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15159911493"));
         assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15254224558"));
         assertFalse(PhoneNumberUtils.checkEquality("Jacob Klinker", "+15154224558"));
+        assertFalse(PhoneNumberUtils.checkEquality("", "GLOBE"));
     }
 
     @Test

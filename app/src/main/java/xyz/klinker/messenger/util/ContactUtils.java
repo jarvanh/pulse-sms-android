@@ -241,8 +241,18 @@ public class ContactUtils {
     }
 
     public static boolean shouldDisplayContactLetter(Conversation conversation) {
-        return conversation.title.length() > 0 && !conversation.title.contains(", ") &&
-                !PhoneNumberUtils.checkEquality(conversation.phoneNumbers, conversation.title);
+        if (conversation.title.length() == 0 || conversation.title.contains(", ")) {
+            return false;
+        } else {
+            String firstLetter = conversation.title.substring(0, 1);
+
+            // if the first letter is a character and not a number or + or something weird, show it.
+            if (Pattern.compile("[a-zA-Z]").matcher(firstLetter).find()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     /**

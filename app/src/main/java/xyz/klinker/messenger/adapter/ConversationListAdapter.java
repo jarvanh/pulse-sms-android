@@ -165,7 +165,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
-        holder.image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
+        holder.image.setImageDrawable(null);
         if (conversation.imageUri == null) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
