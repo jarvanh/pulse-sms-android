@@ -140,10 +140,20 @@ public class MessengerActivity extends AppCompatActivity
         dismissIfFromNotification();
 
         if (checkInitialStart()) {
-            startActivityForResult(
-                    new Intent(this, OnboardingActivity.class),
-                    REQUEST_ONBOARDING
-            );
+            boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+
+            if (!hasTelephone) {
+                // if it isn't a phone, then we want to go straight to the login
+                // and skip the onboarding, since they would have done it on their phone
+                Intent login = new Intent(this, InitialLoadActivity.class);
+                startActivity(login);
+                finish();
+            } else {
+                startActivityForResult(
+                        new Intent(this, OnboardingActivity.class),
+                        REQUEST_ONBOARDING
+                );
+            }
         }
     }
 
