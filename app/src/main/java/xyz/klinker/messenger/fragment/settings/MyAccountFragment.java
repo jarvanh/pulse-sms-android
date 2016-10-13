@@ -33,6 +33,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
@@ -60,9 +61,11 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initRemoveAccountPreference();
             initResyncAccountPreference();
         } else {
-            startActivityForResult(
-                    new Intent(getActivity(), OnBoardingPayActivity.class),
-                    ONBOARDING_REQUEST);
+            if (!FeatureFlags.IS_BETA) {
+                startActivityForResult(
+                        new Intent(getActivity(), OnBoardingPayActivity.class),
+                        ONBOARDING_REQUEST);
+            }
         }
     }
 

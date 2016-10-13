@@ -53,6 +53,8 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean CONTENT_OBSERVER_TIMEOUT;
 
+    public static final boolean IS_BETA = true;
+
     private Context context;
     private FeatureFlags(final Context context) {
         this.context = context;
