@@ -16,14 +16,17 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,6 +44,7 @@ import com.klinker.android.link_builder.TouchableMovementMethod;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
@@ -157,8 +161,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         clickedText = "http://" + clickedText;
                     }
 
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(clickedText));
-                    holder.message.getContext().startActivity(browserIntent);
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(receivedColor);
+                    builder.setShowTitle(true);
+                    builder.setActionButton(
+                            BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
+                            fragment.getString(R.string.share), getShareIntent(clickedText), true);
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
                 }
             });
 
@@ -409,6 +419,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }).start();
             }
         }
+    }
+
+    private PendingIntent getShareIntent(String url) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+        shareIntent.setType(MimeType.TEXT_PLAIN);
+        return PendingIntent.getActivity(
+                fragment.getActivity(), new Random().nextInt(Integer.MAX_VALUE), shareIntent, 0);
     }
 
 }
