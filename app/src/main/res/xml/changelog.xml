@@ -21,6 +21,7 @@
         description="October 12th, 2016">
         <text>Onboaring activity for new users</text>
         <text>Improvements to scaling images for MMS</text>
+        <text>Option to convert long SMS to MMS</text>
         <text>Bug/crash fixes</text>
     </version>
 
