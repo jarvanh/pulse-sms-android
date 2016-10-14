@@ -241,8 +241,6 @@ public class ImageUtils {
                 maxResolution -= 250;
             }
 
-
-
             return ImageUtils.createContentUri(context, file);
         } catch (Exception e) {
             e.printStackTrace();
