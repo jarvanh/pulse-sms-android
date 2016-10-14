@@ -20,6 +20,7 @@
         name="1.7.3"
         description="October ?th, 2016">
         <text>Chrome Custom Tab support</text>
+        <text>Some MMS force closes</text>
     </version>
 
     <version
