@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -189,6 +190,10 @@ public class NotificationService extends IntentService {
             defaults = Notification.DEFAULT_VIBRATE;
         }
 
+        if (conversation.ledColor == Color.WHITE) {
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
@@ -201,10 +206,13 @@ public class NotificationService extends IntentService {
                 .setOnlyAlertOnce(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
-                .setLights(conversation.ledColor, 1000, 500)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
+
+        if (conversation.ledColor != Color.WHITE) {
+            builder.setLights(conversation.ledColor, 1000, 500);
+        }
 
         Uri sound = getRingtone(conversation);
         if (sound != null) {
