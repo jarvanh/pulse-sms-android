@@ -46,11 +46,21 @@ public class SubscriptionExpirationCheckService extends IntentService {
     }
 
     private void writeNewExpirationToAccount(Date expiration) {
-        Account.get(this).updateSubscription(Account.SubscriptionType.SUBSCRIBER, expiration.getTime(), true);
+        Account account = Account.get(this);
+
+        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+            account.updateSubscription(
+                    Account.SubscriptionType.SUBSCRIBER, expiration.getTime(), true);
+        }
     }
 
     public static void scheduleNextRun(Context context) {
-        long expiration = Account.get(context).subscriptionExpiration;
+        Account account = Account.get(context);
+        if (account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+            return;
+        }
+
+        long expiration = account.subscriptionExpiration;
 
         Intent intent = new Intent(context, ContactSyncService.class);
         PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,

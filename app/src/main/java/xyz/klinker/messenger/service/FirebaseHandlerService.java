@@ -643,6 +643,11 @@ public class FirebaseHandlerService extends IntentService {
         account.updateSubscription(
                 Account.SubscriptionType.findByTypeCode(type), expiration, false
         );
+
+        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+            SubscriptionExpirationCheckService.scheduleNextRun(context);
+            SignoutService.writeSignoutTime(context, 0);
+        }
     }
 
     private void writeFeatureFlag(JSONObject json, Context context)

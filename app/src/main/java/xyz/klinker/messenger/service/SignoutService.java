@@ -25,11 +25,18 @@ public class SignoutService extends IntentService {
         Account account = Account.get(this);
 
         // Only need to manage this on the primary device
-        if (account.primary) {
-            new ApiUtils().deleteAccount(account.accountId);
+        if (account.primary && account.subscriptionExpiration < new Date().getTime() && isExpired()) {
+            final String accountId = account.accountId;
+
+            account.clearAccount();
+            new ApiUtils().deleteAccount(accountId);
         }
 
         writeSignoutTime(this, 0);
+    }
+
+    private boolean isExpired() {
+        return false;
     }
 
     public static void scheduleNextRun(Context context) {
@@ -39,6 +46,11 @@ public class SignoutService extends IntentService {
     }
 
     public static void scheduleNextRun(Context context, long signoutTime) {
+        Account account = Account.get(context);
+        if (account.subscriptionType == Account.SubscriptionType.LIFETIME|| !account.primary) {
+            return;
+        }
+
         Intent intent = new Intent(context, ContactSyncService.class);
         PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);

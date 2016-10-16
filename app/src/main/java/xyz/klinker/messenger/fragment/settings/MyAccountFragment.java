@@ -37,6 +37,7 @@ import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
+import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
 
 /**
@@ -148,7 +149,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                                     }
                                 }).start();
 
-                                returnToConversations();
+                                returnToConversationsAfterLogin();
 
                                 NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
                                 if (nav != null) {
@@ -206,7 +207,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
             if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
                 getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
-                returnToConversations();
+                returnToConversationsAfterLogin();
 
                 NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
                 if (nav != null) {
@@ -217,7 +218,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             }
         } else if (requestCode == ONBOARDING_REQUEST) {
             if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
-                returnToConversations();
+                returnToConversationsAfterLogin();
             } else if (responseCode == RESPONSE_START_TRIAL) {
                 getPreferenceScreen()
                         .findPreference(getString(R.string.pref_my_account_setup))
@@ -245,7 +246,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        returnToConversations();
+                        returnToConversationsAfterLogin();
 
                         ((MessengerActivity) getActivity()).startDataDownload();
 
@@ -259,11 +260,19 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         }).start();
     }
 
-    private void returnToConversations() {
+    private void returnToConversationsAfterLogin() {
         NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
         if (nav != null) {
             nav.setCheckedItem(R.id.drawer_conversation);
         }
+
+        Account account = Account.get(getActivity());
+        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+            new ApiUtils().updateSubscription(account.accountId,
+                    account.subscriptionType.typeCode, account.subscriptionExpiration);
+        }
+
+        SubscriptionExpirationCheckService.scheduleNextRun(getActivity());
 
         if (getActivity() instanceof MessengerActivity) {
             ((MessengerActivity) getActivity()).displayConversations();
