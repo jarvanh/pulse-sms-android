@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.receiver;
+package xyz.klinker.messenger.service;
 
+import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,8 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -59,25 +62,19 @@ import xyz.klinker.messenger.util.SendUtils;
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
  */
-public class FirebaseMessageReceiver extends BroadcastReceiver {
+public class FirebaseHandlerService extends IntentService {
 
-    private static final String TAG = "FirebaseMessageReceiver";
+    private static final String TAG = "FirebaseHandlerService";
 
     private EncryptionUtils encryptionUtils;
 
-    @Override
-    public void onReceive(final Context context, final Intent intent) {
-        if (!MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED
-                .equals(intent.getAction())) {
-            return;
-        }
+    public FirebaseHandlerService() {
+        super("FirebaseHandlerService");
+    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                process(context, intent);
-            }
-        }).start();
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        process(this, intent);
     }
 
     private void process(Context context, Intent intent) {
@@ -703,5 +700,4 @@ public class FirebaseMessageReceiver extends BroadcastReceiver {
             return 0L;
         }
     }
-
 }

@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.implementation;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -46,10 +47,12 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
             String data = payload.get("contents");
 
             Log.v(TAG, "operation: " + operation + ", contents: " + data);
-            Intent intent = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
-            intent.putExtra(EXTRA_OPERATION, operation);
-            intent.putExtra(EXTRA_DATA, data);
-            sendBroadcast(intent);
+            final Intent handleMessage = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
+            handleMessage.setComponent(new ComponentName("xyz.klinker.messenger",
+                    "xyz.klinker.messenger" + ".service.FirebaseHandlerService"));
+            handleMessage.putExtra(EXTRA_OPERATION, operation);
+            handleMessage.putExtra(EXTRA_DATA, data);
+            startService(handleMessage);
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

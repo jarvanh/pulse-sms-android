@@ -253,12 +253,7 @@
         </receiver>
 
 
-        <receiver android:name=".receiver.FirebaseMessageReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="xyz.klinker.messenger.api.implementation.MESSAGE_RECEIVED" />
-            </intent-filter>
-        </receiver>
+        <service android:name=".service.FirebaseHandlerService" />
 
         <receiver android:name=".receiver.NotificationDismissedReceiver"
             android:exported="false" />
