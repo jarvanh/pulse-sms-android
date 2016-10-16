@@ -349,4 +349,11 @@
     <string name="conversation_with">Conversation with %1$s</string>
     <string name="send">Send</string>
 
+    <!-- Other -->
+    <string name="did_you_know">Did you know?</string>
+    <string name="use_from_anywhere">Messenger can be used from any device connected to the internet -
+        try it out today!</string>
+    <string name="learn_more">Learn More</string>
+    <string name="dismiss">Dismiss</string>
+
 </resources>

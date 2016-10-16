@@ -41,6 +41,8 @@ public class TimeUtils {
     private static final long DAY = HOUR * 24;
     private static final long YEAR = DAY * 365;
 
+    public static final long TWO_WEEKS = DAY * 14;
+
     /**
      * If the next timestamp is more than 15 minutes away, we will display it on the message.
      *
