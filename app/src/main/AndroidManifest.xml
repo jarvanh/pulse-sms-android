@@ -285,6 +285,8 @@
         <service android:name=".service.ScheduledMessageService" />
         <service android:name=".service.ApiUploadService" />
         <service android:name=".service.ApiDownloadService" />
+        <service android:name=".service.SubscriptionExpirationCheckService" />
+        <service android:name=".service.SignoutService" />
 
         <service
             android:name=".service.ComposeTileService"

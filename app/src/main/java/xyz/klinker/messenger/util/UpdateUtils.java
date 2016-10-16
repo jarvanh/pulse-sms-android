@@ -16,6 +16,8 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.service.ContactSyncService;
+import xyz.klinker.messenger.service.SignoutService;
+import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 
 public class UpdateUtils {
     public static void checkForUpdate(Context context) {
@@ -37,6 +39,8 @@ public class UpdateUtils {
 
     private static void runEveryUpdate(Context context) {
         ContactSyncService.scheduleNextRun(context);
+        SubscriptionExpirationCheckService.scheduleNextRun(context);
+        SignoutService.scheduleNextRun(context);
     }
 
     private static int getAppVersion(Context c) {

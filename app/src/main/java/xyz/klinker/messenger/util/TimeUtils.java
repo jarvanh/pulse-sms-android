@@ -35,11 +35,11 @@ import xyz.klinker.messenger.data.Settings;
  */
 public class TimeUtils {
 
-    private static final long SECOND = 1000;
-    private static final long MINUTE = SECOND * 60;
-    private static final long HOUR = MINUTE * 60;
-    private static final long DAY = HOUR * 24;
-    private static final long YEAR = DAY * 365;
+    public static final long SECOND = 1000;
+    public static final long MINUTE = SECOND * 60;
+    public static final long HOUR = MINUTE * 60;
+    public static final long DAY = HOUR * 24;
+    public static final long YEAR = DAY * 365;
 
     public static final long TWO_WEEKS = DAY * 14;
 

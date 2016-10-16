@@ -24,6 +24,8 @@ import xyz.klinker.messenger.service.ContactSyncService;
 import xyz.klinker.messenger.service.ContentObserverRunCheckService;
 import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.service.ScheduledMessageService;
+import xyz.klinker.messenger.service.SignoutService;
+import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -39,6 +41,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             ContentObserverRunCheckService.scheduleNextRun(context);
             ContactSyncService.scheduleNextRun(context);
+            SubscriptionExpirationCheckService.scheduleNextRun(context);
+            SignoutService.scheduleNextRun(context);
         }
     }
 
