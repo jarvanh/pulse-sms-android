@@ -1,1 +1,1 @@
-v1.7.2 improves the onboarding, provides various MMS changes, and many tweaks and bug fixes - please see the changelog in the app for a full list of changes!
+v1.7.3 improves the onboarding, provides various MMS changes, and many tweaks and bug fixes - please see the changelog in the app for a full list of changes!
