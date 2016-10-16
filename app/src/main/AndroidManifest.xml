@@ -252,9 +252,6 @@
             </intent-filter>
         </receiver>
 
-
-        <service android:name=".service.FirebaseHandlerService" />
-
         <receiver android:name=".receiver.NotificationDismissedReceiver"
             android:exported="false" />
 
@@ -276,6 +273,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.NotificationMarkReadService" />
