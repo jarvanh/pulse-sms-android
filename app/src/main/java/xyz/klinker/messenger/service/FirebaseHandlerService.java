@@ -74,7 +74,10 @@ public class FirebaseHandlerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        process(this, intent);
+        if (intent.getAction()
+                .equals(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED)) {
+            process(this, intent);
+        }
     }
 
     private void process(Context context, Intent intent) {
