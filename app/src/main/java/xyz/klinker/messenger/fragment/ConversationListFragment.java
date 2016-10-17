@@ -78,6 +78,7 @@ public class ConversationListFragment extends Fragment
     private ConversationListAdapter adapter;
     private ConversationListUpdatedReceiver updatedReceiver;
 
+    private String newConversationTitle = null;
     public ConversationListUpdatedReceiver.ConversationUpdateInfo updateInfo = null;
 
     public static ConversationListFragment newInstance() {
@@ -527,6 +528,8 @@ public class ConversationListFragment extends Fragment
         expandedConversation = null;
         AnimationUtils.contractActivityFromConversation(getActivity());
 
+        long contractedId = messageListFragment.getConversationId();
+
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .remove(messageListFragment)
@@ -551,6 +554,12 @@ public class ConversationListFragment extends Fragment
 
         if (updateInfo != null) {
             ConversationListUpdatedReceiver.sendBroadcast(getActivity(), updateInfo);
+            updateInfo = null;
+        }
+
+        if (newConversationTitle != null) {
+            ConversationListUpdatedReceiver.sendBroadcast(getActivity(), contractedId, newConversationTitle);
+            newConversationTitle = null;
         }
     }
 
@@ -601,6 +610,10 @@ public class ConversationListFragment extends Fragment
 
     public void setConversationUpdateInfo(ConversationListUpdatedReceiver.ConversationUpdateInfo info) {
         this.updateInfo = info;
+    }
+
+    public void setNewConversationTitle(String title) {
+        this.newConversationTitle = title;
     }
 
 }

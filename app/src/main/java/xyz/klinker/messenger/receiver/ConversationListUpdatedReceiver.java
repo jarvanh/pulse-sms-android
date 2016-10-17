@@ -42,6 +42,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
     private static final String ACTION_UPDATED = "xyz.klinker.messenger.CONVERSATION_UPDATED";
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
     private static final String EXTRA_SNIPPET = "snippet";
+    private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_READ = "read";
 
     private ConversationListFragment fragment;
@@ -58,6 +59,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
 
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
         String snippet = intent.getStringExtra(EXTRA_SNIPPET);
+        String title = intent.getStringExtra(EXTRA_TITLE);
         boolean read = intent.getBooleanExtra(EXTRA_READ, false);
 
         if (conversationId == -1 || fragment.getExpandedId() == conversationId) {
@@ -96,8 +98,19 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 // if it is already pinned or the top item that isn't pinned, just mark the read
                 // and snippet changes
                 Conversation conversation = conversations.get(position);
-                conversation.snippet = snippet;
-                conversation.read = read;
+
+                if (title != null) {
+                    conversation.title = title;
+                }
+
+                if (snippet != null) {
+                    conversation.snippet = snippet;
+                }
+
+                if (intent.hasExtra(EXTRA_READ)) {
+                    conversation.read = read;
+                }
+
                 adapter.notifyItemChanged(adapterPosition);
                 return;
             } else {
@@ -105,8 +118,18 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 Conversation conversation = conversations.get(position);
                 adapter.removeItem(adapterPosition, ConversationListAdapter.ReorderType.NEITHER);
 
-                conversation.snippet = snippet;
-                conversation.read = read;
+                if (title != null) {
+                    conversation.title = title;
+                }
+
+                if (snippet != null) {
+                    conversation.snippet = snippet;
+                }
+
+                if (intent.hasExtra(EXTRA_READ)) {
+                    conversation.read = read;
+                }
+
                 conversations.add(pinnedCount, conversation);
             }
         }
@@ -148,6 +171,16 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_CONVERSATION_ID, conversationId);
         intent.putExtra(EXTRA_SNIPPET, snippet);
         intent.putExtra(EXTRA_READ, read);
+        context.sendBroadcast(intent);
+    }
+
+    /**
+     * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
+     */
+    public static void sendBroadcast(Context context, long conversationId, String title) {
+        Intent intent = new Intent(ACTION_UPDATED);
+        intent.putExtra(EXTRA_CONVERSATION_ID, conversationId);
+        intent.putExtra(EXTRA_TITLE, title);
         context.sendBroadcast(intent);
     }
 

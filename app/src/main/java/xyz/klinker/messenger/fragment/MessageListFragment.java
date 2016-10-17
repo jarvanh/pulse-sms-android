@@ -819,6 +819,14 @@ public class MessageListFragment extends Fragment implements
                             Log.v(TAG, "contact name and conversation name do not match, updating");
                             source.updateConversationTitle(
                                     getArguments().getLong(ARG_CONVERSATION_ID), name);
+
+                            ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                                    .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+
+                            if (fragment != null) {
+                                fragment.setNewConversationTitle(name);
+                            }
+
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
