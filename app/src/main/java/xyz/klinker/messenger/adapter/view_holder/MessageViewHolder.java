@@ -126,19 +126,21 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             String[] items;
             if (message.getVisibility() == View.VISIBLE) {
                 if (type == Message.TYPE_ERROR) {
-                    items = new String[4];
-                    items[3] = view.getContext().getString(R.string.resend);
+                    items = new String[5];
+                    items[4] = view.getContext().getString(R.string.resend);
                 } else {
-                    items = new String[3];
+                    items = new String[4];
                 }
 
                 items[0] = view.getContext().getString(R.string.view_details);
                 items[1] = view.getContext().getString(R.string.delete);
                 items[2] = view.getContext().getString(R.string.copy_message);
+                items[3] = view.getContext().getString(R.string.share);
             } else {
                 if (image.getVisibility() == View.VISIBLE) {
-                    items = new String[3];
-                    items[2] = view.getContext().getString(R.string.save);
+                    items = new String[4];
+                    items[3] = view.getContext().getString(R.string.save);
+                    items[2] = view.getContext().getString(R.string.share);
                 } else {
                     items = new String[2];
                 }
@@ -157,10 +159,14 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                                 } else if (which == 1) {
                                     deleteMessage();
                                 } else if (which == 2 && image.getVisibility() == View.VISIBLE) {
-                                    new MediaSaver(fragment.getActivity()).saveMedia(messageId);
-                                } else if (which == 2) {
+                                    shareImage(messageId);
+                                }else if (which == 2) {
                                     copyMessageText();
+                                } else if (which == 3 && image.getVisibility() == View.VISIBLE) {
+                                    new MediaSaver(fragment.getActivity()).saveMedia(messageId);
                                 } else if (which == 3) {
+                                    shareText(messageId);
+                                } else if (which == 4) {
                                     resendMessage();
                                 }
                             }
@@ -293,5 +299,39 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     private void resendMessage() {
         fragment.resendMessage(messageId, message.getText().toString());
+    }
+
+    private void shareImage(long messageId) {
+        Message message = getMessage(messageId);
+
+        Uri contentUri =
+                ImageUtils.createContentUri(itemView.getContext(), Uri.parse(message.data));
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        shareIntent.setType(message.mimeType);
+        itemView.getContext().startActivity(Intent.createChooser(shareIntent,
+                itemView.getContext().getResources().getText(R.string.share_content)));
+    }
+
+    private void shareText(long messageId) {
+        Message message = getMessage(messageId);
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
+        shareIntent.setType(message.mimeType);
+        itemView.getContext().startActivity(Intent.createChooser(shareIntent,
+                itemView.getContext().getResources().getText(R.string.share_content)));
+    }
+
+    private Message getMessage(long messageId) {
+        DataSource source = DataSource.getInstance(itemView.getContext());
+        source.open();
+        Message message = source.getMessage(messageId);
+        source.close();
+
+        return message;
     }
 }
