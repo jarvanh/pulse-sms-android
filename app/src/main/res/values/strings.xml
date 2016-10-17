@@ -355,5 +355,10 @@
         try it out today!</string>
     <string name="learn_more">Learn More</string>
     <string name="dismiss">Dismiss</string>
+    <string name="renew">Renew</string>
+    <string name="no_subscription_found">No Subscription Found!</string>
+    <string name="cancelled_subscription_error">Looks like you cancelled your subscription.
+        If you do not make a new subscription within that time, the app will automatically sign you
+        out of your account in 2 days. If this is an error, please contact me via email.</string>
 
 </resources>

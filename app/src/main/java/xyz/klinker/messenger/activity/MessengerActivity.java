@@ -38,6 +38,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -84,6 +85,7 @@ import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.NotificationService;
+import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -106,6 +108,7 @@ public class MessengerActivity extends AppCompatActivity
 
     public static boolean START_DOWNLOAD_SERVICE = false;
 
+    public static final String EXTRA_START_MY_ACCOUNT = "start_my_account";
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
     public static final String EXTRA_MESSAGE_ID = "message_id";
@@ -196,6 +199,11 @@ public class MessengerActivity extends AppCompatActivity
                 snoozeIcon();
             }
         });
+
+        if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
+            NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);
+            menuItemClicked(R.id.drawer_account);
+        }
     }
 
     @Override
