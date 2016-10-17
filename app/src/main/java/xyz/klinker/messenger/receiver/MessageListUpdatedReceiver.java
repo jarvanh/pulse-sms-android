@@ -58,13 +58,11 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
         if (conversationId == fragment.getConversationId()) {
             fragment.loadMessages();
+            fragment.setDismissOnStartup();
 
-            if (messageType == Message.TYPE_RECEIVED) {
-                fragment.setDismissOnStartup();
-
-                if (NotificationService.CONVERSATION_ID_OPEN == conversationId) {
-                    new AudioWrapper(context, conversationId).play();
-                }
+            if (messageType == Message.TYPE_RECEIVED &&
+                    NotificationService.CONVERSATION_ID_OPEN == conversationId) {
+                new AudioWrapper(context, conversationId).play();
             }
 
             if (newMessageText != null) {
