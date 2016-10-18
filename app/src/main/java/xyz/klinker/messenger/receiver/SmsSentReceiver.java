@@ -46,10 +46,13 @@ public class SmsSentReceiver extends SentReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             super.onReceive(context, intent);
+            handleReceiver(context, intent);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
+    }
 
+    private void handleReceiver(Context context, Intent intent) {
         Uri uri = Uri.parse(intent.getStringExtra("message_uri"));
 
         switch (getResultCode()) {

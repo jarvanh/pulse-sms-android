@@ -486,8 +486,15 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initSendbar() {
-        String firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
-        if (!getArguments().getBoolean(ARG_IS_GROUP)) {
+        String firstName;
+        try {
+            firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
+        } catch (Exception e) {
+            // no title
+            firstName = "";
+        }
+
+        if (!getArguments().getBoolean(ARG_IS_GROUP) && !firstName.isEmpty()) {
             String hint = getResources().getString(R.string.type_message_to, firstName);
             messageEntry.setHint(hint);
         } else {

@@ -48,6 +48,14 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        try {
+            handleReceiver(context, intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleReceiver(Context context, Intent intent) throws Exception {
         long conversationId = intent.getLongExtra(ARG_CONVERSATION_ID, -1);
         String newMessageText = intent.getStringExtra(ARG_NEW_MESSAGE_TEXT);
         int messageType = intent.getIntExtra(ARG_MESSAGE_TYPE, -1);

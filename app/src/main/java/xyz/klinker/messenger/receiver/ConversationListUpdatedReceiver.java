@@ -53,6 +53,14 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        try {
+            handleReceiver(context, intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleReceiver(Context context, Intent intent) throws Exception {
         if (!fragment.isAdded()) {
             return;
         }

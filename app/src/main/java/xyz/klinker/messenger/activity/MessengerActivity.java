@@ -751,11 +751,17 @@ public class MessengerActivity extends AppCompatActivity
                         intent.setData(uri);
                     } catch (NoSuchElementException e) {
                         e.printStackTrace();
-                        intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
-                        intent.setData(Uri.parse("tel:" + phoneNumber));
+                        try {
+                            intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                            intent.setData(Uri.parse("tel:" + phoneNumber));
+                        } catch (ActivityNotFoundException ex) {
+                            intent = null;
+                        }
                     }
 
-                    startActivity(intent);
+                    if (intent != null) {
+                        startActivity(intent);
+                    }
                 }
             });
 
@@ -774,11 +780,17 @@ public class MessengerActivity extends AppCompatActivity
                     intent.setData(uri);
                 } catch (NoSuchElementException e) {
                     e.printStackTrace();
-                    intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
-                    intent.setData(Uri.parse("tel:" + conversation.phoneNumbers));
+                    try {
+                        intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                        intent.setData(Uri.parse("tel:" + conversation.phoneNumbers));
+                    } catch (ActivityNotFoundException ex) {
+                        intent = null;
+                    }
                 }
 
-                startActivity(intent);
+                if (intent != null) {
+                    startActivity(intent);
+                }
             } else {
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)

@@ -160,6 +160,10 @@ public class AnimationUtils {
      * @param activity the activity to find the views in.
      */
     public static void contractActivityFromConversation(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+
         View toolbar = activity.findViewById(R.id.app_bar_layout);
         View fragmentContainer = activity.findViewById(R.id.conversation_list_container);
         FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);

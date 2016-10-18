@@ -37,8 +37,15 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
+        try {
+            super.onReceive(context, intent);
+            handleReceiver(context, intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void handleReceiver(Context context, Intent intent) throws Exception {
         Uri uri = Uri.parse(intent.getStringExtra("message_uri"));
 
         switch (getResultCode()) {

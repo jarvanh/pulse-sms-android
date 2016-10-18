@@ -83,7 +83,7 @@ public class Api {
                     try {
                         Response response = call.execute();
                         return response.body();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         return null;
                     }
                 }

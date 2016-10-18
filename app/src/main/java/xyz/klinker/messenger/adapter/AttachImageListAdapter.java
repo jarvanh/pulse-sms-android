@@ -109,7 +109,7 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
 
     @Override
     public int getItemCount() {
-        if (images == null) {
+        if (images == null || images.isClosed()) {
             return 0;
         } else {
             return images.getCount() + 1;

@@ -365,7 +365,7 @@ public class ContactUtils {
 
                 cursor.close();
             }
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             // need permission, but don't have it in the background?
             // why wouldn't they grant permission to an sms app?
         }

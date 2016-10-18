@@ -124,8 +124,11 @@ public class ColorUtils {
                     .findViewById(R.id.drawer_layout);
             drawerLayout.setStatusBarBackgroundColor(color);
         } else {
-            activity.findViewById(R.id.status_bar)
-                    .setBackgroundTintList(ColorStateList.valueOf(color));
+            final View status = activity.findViewById(R.id.status_bar);
+
+            if (status != null) {
+                status.setBackgroundTintList(ColorStateList.valueOf(color));
+            }
         }
     }
 
@@ -419,7 +422,9 @@ public class ColorUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 int color = (int) valueAnimator.getAnimatedValue();
-                activity.getWindow().setStatusBarColor(color);
+                if (activity.getWindow() != null) {
+                    activity.getWindow().setStatusBarColor(color);
+                }
             }
         });
         animator.start();

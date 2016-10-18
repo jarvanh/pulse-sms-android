@@ -756,6 +756,8 @@ public class Camera2BasicFragment extends Fragment
                                 mPreviewRequest = mPreviewRequestBuilder.build();
                                 mCaptureSession.setRepeatingRequest(mPreviewRequest,
                                         mCaptureCallback, mBackgroundHandler);
+                            } catch (IllegalStateException e) {
+                                e.printStackTrace();
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
                             }

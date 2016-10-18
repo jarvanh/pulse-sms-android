@@ -142,9 +142,13 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 }
             };
 
-            h.itemView.setOnClickListener(click);
-            h.name.setOnClickListener(click);
+            if (h.itemView != null) {
+                h.itemView.setOnClickListener(click);
+            }
 
+            if (h.name != null) {
+                h.name.setOnClickListener(click);
+            }
         } else if (holder instanceof MessageViewHolder) {
             messages.moveToPosition(relativePosition);
             final Message message = new Message();
@@ -180,8 +184,13 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 }
             };
 
-            h.messageHolder.setOnClickListener(click);
-            h.message.setOnClickListener(click);
+            if (h.messageHolder != null) {
+                h.messageHolder.setOnClickListener(click);
+            }
+
+            if (h.message != null) {
+                h.message.setOnClickListener(click);
+            }
         }
 
     }

@@ -36,6 +36,14 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        try {
+            handleReceiver(context, intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleReceiver(Context context, Intent intent) throws Exception {
         Bundle extras = intent.getExtras();
 
         String body = "";

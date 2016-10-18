@@ -462,7 +462,7 @@ public class SmsMmsUtils {
 
         try {
             return context.getContentResolver().query(uri, projection, null, null, sortOrder);
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             // they probably aren't using our app as the default?
             return null;
         }
@@ -513,6 +513,8 @@ public class SmsMmsUtils {
             long threadId = Utils.getOrCreateThreadId(context, recipients);
             markConversationRead(context,
                     ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
+        } catch (IllegalStateException e) {
+            // the conversation doesn't exist
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {

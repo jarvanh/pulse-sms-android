@@ -87,6 +87,11 @@ public class ReplyService extends IntentService {
         source.readConversation(this, conversationId);
         Conversation conversation = source.getConversation(conversationId);
 
+        if (conversation == null) {
+            source.close();
+            return;
+        }
+
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
         SendUtils.send(this, reply, conversation.phoneNumbers);

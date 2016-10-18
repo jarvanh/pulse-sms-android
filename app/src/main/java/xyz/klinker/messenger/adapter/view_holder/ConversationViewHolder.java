@@ -80,9 +80,9 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 if (header == null) {
-                    if (position != -1 && adapter != null && position < adapter.getConversations().size()) {
+                    try {
                         adapter.getConversations().get(position).read = true;
-                    }
+                    } catch (Exception e) { }
 
                     setTypeface(false, isItalic());
                 }
