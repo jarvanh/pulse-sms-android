@@ -18,7 +18,7 @@
 
     <version
         name="1.7.3"
-        description="October ?th, 2016">
+        description="October 17th, 2016">
         <text>Chrome Custom Tab support</text>
         <text>Share option in the message long click menu</text>
         <text>Force close fixes</text>
