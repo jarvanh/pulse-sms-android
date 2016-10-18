@@ -267,14 +267,20 @@ public class ImageUtils {
     }
 
     private static int calculateInSampleSize(int currentHeight, int currentWidth, int maxSize) {
-        int scale = 1;
+        int inSampleSize = 1;
 
         if (currentHeight > maxSize || currentWidth > maxSize) {
-            scale = (int) Math.pow(2, (int) Math.ceil(Math.log(maxSize /
-                    (double) Math.max(currentHeight, currentWidth)) / Math.log(0.5)));
-        }
+            // Calculate ratios of height and width to requested height and width
+            final int heightRatio = Math.round((float) currentHeight / (float) maxSize);
+            final int widthRatio = Math.round((float) currentWidth / (float) maxSize);
 
-        return scale;
+            // Choose the smallest ratio as inSampleSize value, this will guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        
+        return inSampleSize;
     }
 
     private static File createFileFromBitmap(Context context, String name, Bitmap bitmap) {
