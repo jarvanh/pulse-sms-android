@@ -194,12 +194,13 @@ public class NotificationService extends IntentService {
             defaults = defaults | Notification.DEFAULT_LIGHTS;
         }
 
+        Settings settings = Settings.get(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
@@ -350,10 +351,9 @@ public class NotificationService extends IntentService {
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
                 .setLargeIcon(contactImage)
-                .setColor(conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(conversation.color)
                 .setLights(conversation.ledColor, 1000, 500)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setGroup(GROUP_KEY_MESSAGES)
@@ -584,7 +584,7 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
@@ -606,7 +606,7 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
                 .setTicker(title)
