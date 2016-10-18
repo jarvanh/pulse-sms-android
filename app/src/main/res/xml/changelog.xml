@@ -20,7 +20,9 @@
         name="1.7.3"
         description="October ?th, 2016">
         <text>Chrome Custom Tab support</text>
-        <text>Some MMS force closes</text>
+        <text>Share option in the message long click menu</text>
+        <text>Force close fixes</text>
+        <text>Bug fixes</text>
     </version>
 
     <version
