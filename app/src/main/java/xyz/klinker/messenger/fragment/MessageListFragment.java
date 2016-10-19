@@ -111,6 +111,7 @@ import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.NotificationUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -730,9 +731,12 @@ public class MessageListFragment extends Fragment implements
             if (dismissNotification && notificationActive()) {
                 NotificationManagerCompat.from(getContext())
                         .cancel((int) getConversationId());
+
                 new ApiUtils().dismissNotification(Account.get(getActivity()).accountId,
                         Account.get(getActivity()).deviceId,
                         getConversationId());
+
+                NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
             }
         } catch (Exception e) {
 
@@ -1006,6 +1010,7 @@ public class MessageListFragment extends Fragment implements
                 if (notificationActive()) {
                     NotificationManagerCompat.from(getContext())
                             .cancel((int) getConversationId());
+                    NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
                 }
             }
         }
