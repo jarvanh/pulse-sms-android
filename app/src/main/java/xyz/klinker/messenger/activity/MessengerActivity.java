@@ -209,6 +209,7 @@ public class MessengerActivity extends AppCompatActivity
         long conversationFromShortcut = getIntent().getLongExtra(EXTRA_CONVERSATION_ID_FROM_SHORTCUT, -1);
         if (conversationFromShortcut != -1) {
             displayShortcutConversation(conversationFromShortcut);
+            getIntent().putExtra(EXTRA_CONVERSATION_ID_FROM_SHORTCUT, -1);
         }
     }
 

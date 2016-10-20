@@ -8,6 +8,7 @@ import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.os.Build;
+import android.os.PersistableBundle;
 
 import java.util.ArrayList;
 import java.util.HashSet;
