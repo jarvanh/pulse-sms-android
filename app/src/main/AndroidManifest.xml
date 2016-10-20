@@ -185,7 +185,7 @@
             tools:replace="android:theme" />
         <activity android:name=".activity.NotificationReplyActivity"
             android:theme="@style/api_Theme.AppCompat.Translucent"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"/>
 
