@@ -269,7 +269,7 @@
     <string name="setup_my_account">Setup Account</string>
     <string name="setup_my_account_summary">Sign up or login to your account to start using
         more features like messaging from your tablet or computer</string>
-    <string name="preparing_new_account">Preparing account...</string>
+    <string name="preparing_new_account">Preparing account&#8230;</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_summary">Removes the account from this device, your other signed in
         devices, and the server. This is not reversible!</string>

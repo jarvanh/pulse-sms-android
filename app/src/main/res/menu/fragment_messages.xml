@@ -22,7 +22,7 @@
         android:id="@+id/menu_call"
         android:icon="@drawable/ic_call"
         android:title="@string/menu_call"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_view_media"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shortcuts
+<shortcuts xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <shortcut
@@ -7,7 +7,8 @@
         android:enabled="true"
         android:shortcutId="manifest-shortcut-compose-sms"
         android:shortcutShortLabel="@string/shortcut_compose_short"
-        android:shortcutLongLabel="@string/shortcut_compose_short">
+        android:shortcutLongLabel="@string/shortcut_compose_short"
+        tools:targetApi="n_mr1">
 
         <intent
             android:targetPackage="xyz.klinker.messenger"

@@ -95,6 +95,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int section,
                                  int relativePosition, int absolutePosition) {
 
@@ -160,9 +161,11 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             String timestamp = TimeUtils.formatTimestamp(h.timestamp.getContext(), message.timestamp);
             if (message.from != null && !message.from.isEmpty()) {
+                //noinspection AndroidLintSetTextI18n
                 h.timestamp.setText(timestamp + " - " + message.from +
                         " (" + messages.getString(messages.getColumnIndex("convo_title")) + ")");
             } else {
+                //noinspection AndroidLintSetTextI18n
                 h.timestamp.setText(timestamp + " - " + messages.getString(messages.getColumnIndex("convo_title")));
             }
 
@@ -196,6 +199,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
 

@@ -34,6 +34,7 @@
         android:layout_gravity="center"
         android:id="@+id/play_button"
         android:src="@drawable/ic_play"
+        android:contentDescription="@string/play_gif"
         android:padding="2dp"
         android:visibility="gone" />
 

@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
@@ -21,6 +22,7 @@ public class DynamicShortcutUtils {
     private Context context;
     private ShortcutManager manager;
 
+    @SuppressWarnings("WrongConstant")
     public DynamicShortcutUtils(Context context) {
         this.context = context;
 
@@ -61,12 +63,16 @@ public class DynamicShortcutUtils {
     }
 
     private Icon getIcon(String uri, int backgroundColor) {
-        Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(context, uri));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(context, uri));
 
-        Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 148), DensityUtil.toDp(context, 148), Bitmap.Config.ARGB_8888);
-        color.eraseColor(backgroundColor);
-        color = ImageUtils.clipToCircle(color);
+            Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 148), DensityUtil.toDp(context, 148), Bitmap.Config.ARGB_8888);
+            color.eraseColor(backgroundColor);
+            color = ImageUtils.clipToCircle(color);
 
-        return image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+            return image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+        } else {
+            return null;
+        }
     }
 }

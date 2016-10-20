@@ -619,6 +619,7 @@ public class MessageListFragment extends Fragment implements
                     if (convertToMMS) {
                         counter.setText(null);
                     } else {
+                        //noinspection AndroidLintSetTextI18n
                         counter.setText(count[0] + "/" + count[2]);
                     }
                 } else {
