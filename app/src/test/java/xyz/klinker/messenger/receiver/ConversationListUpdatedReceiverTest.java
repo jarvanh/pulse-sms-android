@@ -95,7 +95,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verifyNoMoreInteractions(adapter);
     }
 
-    @Test
+    /*@Test
     public void noConversationAndNoTodayAndNoPinned() {
         when(adapter.findPositionForConversationId(1)).thenReturn(-1);
         when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(0);
@@ -106,7 +106,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verify(conversations).add(0, null);
         verify(sectionTypes).add(0, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(0, 2);
-    }
+    }*/
 
     @Test
     public void noConversationAndNoTodayAndPinned() {
