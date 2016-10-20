@@ -86,10 +86,14 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
-            startLogin();
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try {
+            if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
+                startLogin();
+            } else {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

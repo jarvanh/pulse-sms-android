@@ -1155,14 +1155,18 @@ public class MessageListFragment extends Fragment implements
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_STORAGE_REQUEST) {
-            attachImage(true);
-        } else if (requestCode == PERMISSION_AUDIO_REQUEST) {
-            recordAudio(true);
-        } else if (requestCode == PERMISSION_LOCATION_REQUEST) {
-            attachLocation(true);
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try {
+            if (requestCode == PERMISSION_STORAGE_REQUEST) {
+                attachImage(true);
+            } else if (requestCode == PERMISSION_AUDIO_REQUEST) {
+                recordAudio(true);
+            } else if (requestCode == PERMISSION_LOCATION_REQUEST) {
+                attachLocation(true);
+            } else {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

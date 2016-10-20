@@ -514,13 +514,17 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                ErrorDialog.newInstance(getString(R.string.camera_permission_needed))
-                        .show(getChildFragmentManager(), FRAGMENT_DIALOG);
+        try {
+            if (requestCode == REQUEST_CAMERA_PERMISSION) {
+                if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    ErrorDialog.newInstance(getString(R.string.camera_permission_needed))
+                            .show(getChildFragmentManager(), FRAGMENT_DIALOG);
+                }
+            } else {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

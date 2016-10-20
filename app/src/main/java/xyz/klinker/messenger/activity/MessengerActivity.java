@@ -250,11 +250,15 @@ public class MessengerActivity extends AppCompatActivity
                                            int[] grantResults) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
-        PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try {
+            PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == REQUEST_CALL_PERMISSION) {
-            callContact();
+            if (requestCode == REQUEST_CALL_PERMISSION) {
+                callContact();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
