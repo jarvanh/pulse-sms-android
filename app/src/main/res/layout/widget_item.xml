@@ -72,6 +72,7 @@
                     android:layout_height="10dp"
                     android:id="@+id/unread_indicator"
                     android:src="@drawable/unread_indicator"
+                    android:contentDescription="@string/read"
                     android:layout_marginEnd="8dp"
                     android:visibility="gone"/>
 
