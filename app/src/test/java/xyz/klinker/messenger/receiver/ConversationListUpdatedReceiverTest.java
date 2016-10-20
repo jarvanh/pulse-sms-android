@@ -106,7 +106,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verify(conversations).add(0, null);
         verify(sectionTypes).add(0, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(0, 2);
-    }*/
+    }
 
     @Test
     public void noConversationAndNoTodayAndPinned() {
@@ -119,7 +119,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verify(conversations).add(2, null);
         verify(sectionTypes).add(1, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(3, 2);
-    }
+    }*/
 
     @Test
     public void noConversationAndTodayAndNoPinned() {
