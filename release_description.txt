@@ -1,1 +1,1 @@
-v1.7.3 improves the onboarding, provides various MMS changes, and many tweaks and bug fixes - please see the changelog in the app for a full list of changes!
+WOW Android 7.1 changes already?! Yup. The app is now built for Android 7.1, can use it's brand new image keyboard, and implements dynamic launcher shortcuts (need the pixel launcher and Android 7.1).

@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.7.4"
+        description="October 18th, 2016">
+        <text>Built for Android 7.1</text>
+        <text>Add dynamic launcher shortcuts for pinned or latest conversations (Android 7.1)</text>
+        <text>Add support for the image keyboard introduced in Android 7.1</text>
+    </version>
+
+    <version
         name="1.7.3"
         description="October 17th, 2016">
         <text>Chrome Custom Tab support</text>
