@@ -63,10 +63,6 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="android.app.shortcuts"
-            android:resource="@xml/shortcuts"/>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -100,6 +96,10 @@
                 <category android:name="android.intent.category.APP_MESSAGING" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
         </activity>
 
         <activity

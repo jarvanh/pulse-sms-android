@@ -5,14 +5,16 @@
     <shortcut
         android:icon="@drawable/shortcut_compose"
         android:enabled="true"
-        shortcutId="manifest-shortcut-compose-sms"
-        shortcutShortLabel="@string/shortcut_compose_short"
-        shortcutLongLabel="@string/shortcut_compose_short">
+        android:shortcutId="manifest-shortcut-compose-sms"
+        android:shortcutShortLabel="@string/shortcut_compose_short"
+        android:shortcutLongLabel="@string/shortcut_compose_short">
 
         <intent
             android:targetPackage="xyz.klinker.messenger"
             android:action="android.intent.action.VIEW"
             android:targetClass="xyz.klinker.messenger.activity.ComposeActivity" />
+
+        <categories android:name="android.shortcut.conversation" />
 
     </shortcut>
 

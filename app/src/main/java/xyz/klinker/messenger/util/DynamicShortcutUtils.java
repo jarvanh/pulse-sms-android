@@ -40,7 +40,7 @@ public class DynamicShortcutUtils {
             for (Conversation conversation : conversations) {
                 Intent messenger = new Intent(context, MessengerActivity.class);
                 messenger.setAction(Intent.ACTION_VIEW);
-                messenger.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
+                messenger.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID_FROM_SHORTCUT, conversation.id);
 
                 Set<String> category = new HashSet<>();
                 category.add("android.shortcut.conversation");

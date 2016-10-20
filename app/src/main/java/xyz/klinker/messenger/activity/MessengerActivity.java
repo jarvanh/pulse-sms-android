@@ -110,6 +110,7 @@ public class MessengerActivity extends AppCompatActivity
 
     public static final String EXTRA_START_MY_ACCOUNT = "start_my_account";
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
+    public static final String EXTRA_CONVERSATION_ID_FROM_SHORTCUT = "conversation_id_from_shortcut";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
     public static final String EXTRA_MESSAGE_ID = "message_id";
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
@@ -203,6 +204,11 @@ public class MessengerActivity extends AppCompatActivity
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);
             menuItemClicked(R.id.drawer_account);
+        }
+
+        long conversationFromShortcut = getIntent().getLongExtra(EXTRA_CONVERSATION_ID_FROM_SHORTCUT, -1);
+        if (conversationFromShortcut != -1) {
+            displayShortcutConversation(conversationFromShortcut);
         }
     }
 
@@ -627,6 +633,29 @@ public class MessengerActivity extends AppCompatActivity
         transaction.commit();
 
         return true;
+    }
+
+    private void displayShortcutConversation(long convo) {
+        NotificationService.CONVERSATION_ID_OPEN = 0L;
+
+        fab.show();
+        invalidateOptionsMenu();
+        inSettings = false;
+
+        conversationListFragment = ConversationListFragment.newInstance(convo);
+
+        otherFragment = null;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.conversation_list_container, conversationListFragment);
+
+        Fragment messageList = getSupportFragmentManager()
+                .findFragmentById(R.id.message_list_container);
+
+        if (messageList != null) {
+            transaction.remove(messageList);
+        }
+
+        transaction.commit();
     }
 
     private boolean displayArchived() {
