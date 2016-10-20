@@ -33,6 +33,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.inputmethodservice.InputMethodService;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v13.view.inputmethod.InputConnectionCompat;
+import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -123,6 +126,7 @@ import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
+import xyz.klinker.messenger.view.ImageKeyboardEditText;
 import xyz.klinker.messenger.view.MaterialTooltip;
 import xyz.klinker.messenger.view.RecordAudioView;
 
@@ -132,7 +136,7 @@ import static android.app.Activity.RESULT_OK;
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment {
+        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment, InputConnectionCompat.OnCommitContentListener {
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -160,7 +164,7 @@ public class MessageListFragment extends Fragment implements
     private View appBarLayout;
     private Toolbar toolbar;
     private View sendBar;
-    private EditText messageEntry;
+    private ImageKeyboardEditText messageEntry;
     private ImageButton attach;
     private FloatingActionButton send;
     private TextView counter;
@@ -238,7 +242,7 @@ public class MessageListFragment extends Fragment implements
         appBarLayout = view.findViewById(R.id.app_bar_layout);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         sendBar = view.findViewById(R.id.send_bar);
-        messageEntry = (EditText) view.findViewById(R.id.message_entry);
+        messageEntry = (ImageKeyboardEditText) view.findViewById(R.id.message_entry);
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         counter = (TextView) view.findViewById(R.id.text_counter);
@@ -256,6 +260,8 @@ public class MessageListFragment extends Fragment implements
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
         removeImage = view.findViewById(R.id.remove_image);
         editImage = view.findViewById(R.id.edit_image);
+
+        messageEntry.setCommitContentListener(this);
 
         dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
@@ -1472,4 +1478,22 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
+    @Override
+    public boolean onCommitContent(InputContentInfoCompat inputContentInfo, int flags, Bundle opts) {
+        String mime = inputContentInfo.getDescription().getMimeType(0);
+
+        if (mime.equals(MimeType.IMAGE_GIF)) {
+            attachImage(inputContentInfo.getContentUri());
+            attachedMimeType = MimeType.IMAGE_GIF;
+            editImage.setVisibility(View.GONE);
+        } else if (mime.contains("image/")) {
+            attachImage(inputContentInfo.getContentUri());
+        } else if (mime.contains(MimeType.VIDEO_MP4)) {
+            attachImage(inputContentInfo.getContentUri());
+            attachedMimeType = MimeType.VIDEO_MP4;
+            editImage.setVisibility(View.GONE);
+        }
+
+        return true;
+    }
 }
