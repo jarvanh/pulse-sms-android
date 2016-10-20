@@ -312,6 +312,8 @@ public class NotificationService extends IntentService {
                     messageText += "<i>" + getString(R.string.contact_card) + "</i>";
                 } else if (MimeType.isStaticImage(message.mimeType)) {
                     messageText += "<i>" + getString(R.string.picture_message) + "</i>";
+                } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+                    messageText += "<i>" + getString(R.string.gif_message) + "</i>";
                 } else {
                     messageText += message.data;
                 }

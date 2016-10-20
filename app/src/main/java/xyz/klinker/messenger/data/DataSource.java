@@ -592,6 +592,21 @@ public class DataSource {
         }
     }
 
+    private List<Conversation> convertConversationCursorToList(Cursor cursor) {
+        List<Conversation> conversations = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Conversation c = new Conversation();
+                c.fillFromCursor(cursor);
+                conversations.add(c);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return conversations;
+    }
+
     /**
      * Gets all conversations in the database that are not archived
      *
@@ -601,6 +616,15 @@ public class DataSource {
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", new String[] { "0" }, null, null,
                 Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
         );
+    }
+
+
+    /**
+     * Get a list of the unarchived conversations.
+     * @return a list of the conversations in the cursor
+     */
+    public List<Conversation> getUnarchivedConversationsAsList() {
+        return convertConversationCursorToList(getUnarchivedConversations());
     }
 
     /**
@@ -622,6 +646,10 @@ public class DataSource {
     public Cursor getPinnedConversations() {
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_PINNED + "=1", null,
                 null, null, Conversation.COLUMN_TIMESTAMP + " desc");
+    }
+
+    public List<Conversation> getPinnedConversationsAsList() {
+        return convertConversationCursorToList(getPinnedConversations());
     }
 
     /**
