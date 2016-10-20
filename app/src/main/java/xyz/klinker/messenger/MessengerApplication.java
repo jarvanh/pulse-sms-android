@@ -19,6 +19,7 @@ package xyz.klinker.messenger;
 import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v7.app.AppCompatDelegate;
 
 import java.lang.reflect.Field;
@@ -62,26 +63,28 @@ public class MessengerApplication extends Application {
 
         startService(new Intent(this, ContentObserverService.class));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10 * 1000);
-                } catch (InterruptedException e) {
+        if (!"robolectric".equals(Build.FINGERPRINT)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10 * 1000);
+                    } catch (InterruptedException e) {
 
+                    }
+
+                    DataSource source = DataSource.getInstance(MessengerApplication.this);
+                    source.open();
+                    List<Conversation> conversations = source.getPinnedConversationsAsList();
+                    if (conversations.size() == 0) {
+                        conversations = source.getUnarchivedConversationsAsList();
+                    }
+                    source.close();
+
+                    new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
                 }
-
-                DataSource source = DataSource.getInstance(MessengerApplication.this);
-                source.open();
-                List<Conversation> conversations = source.getPinnedConversationsAsList();
-                if (conversations.size() == 0) {
-                    conversations = source.getUnarchivedConversationsAsList();
-                }
-                source.close();
-
-                new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
-            }
-        }).start();
+            }).start();
+        }
     }
 
     /**
