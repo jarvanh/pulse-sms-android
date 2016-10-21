@@ -7,6 +7,7 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PersistableBundle;
 
@@ -43,7 +44,7 @@ public class DynamicShortcutUtils {
             for (Conversation conversation : conversations) {
                 Intent messenger = new Intent(context, MessengerActivity.class);
                 messenger.setAction(Intent.ACTION_VIEW);
-                messenger.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID_FROM_SHORTCUT, conversation.id);
+                messenger.setData(Uri.parse("https://messenger.klinkerapps.com/" + conversation.id));
 
                 Set<String> category = new HashSet<>();
                 category.add("android.shortcut.conversation");

@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.7.5"
+        description="October 21st, 2016">
+        <text>Various improvements to photo syncing across devices (especially GIFs)</text>
+        <text></text>
+    </version>
+    <version
         name="1.7.4"
         description="October 18th, 2016">
         <text>Built for Android 7.1</text>

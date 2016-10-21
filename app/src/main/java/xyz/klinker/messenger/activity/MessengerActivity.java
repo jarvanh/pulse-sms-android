@@ -110,7 +110,6 @@ public class MessengerActivity extends AppCompatActivity
 
     public static final String EXTRA_START_MY_ACCOUNT = "start_my_account";
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
-    public static final String EXTRA_CONVERSATION_ID_FROM_SHORTCUT = "conversation_id_from_shortcut";
     public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
     public static final String EXTRA_MESSAGE_ID = "message_id";
     public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
@@ -206,10 +205,9 @@ public class MessengerActivity extends AppCompatActivity
             menuItemClicked(R.id.drawer_account);
         }
 
-        long conversationFromShortcut = getIntent().getLongExtra(EXTRA_CONVERSATION_ID_FROM_SHORTCUT, -1);
-        if (conversationFromShortcut != -1) {
-            displayShortcutConversation(conversationFromShortcut);
-            getIntent().putExtra(EXTRA_CONVERSATION_ID_FROM_SHORTCUT, -1);
+        if (getIntent().getData() != null) {
+            displayShortcutConversation(Long.parseLong(getIntent().getData().getLastPathSegment()));
+            getIntent().setData(null);
         }
     }
 
