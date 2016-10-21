@@ -31,20 +31,11 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
     @Override
     public void onTokenRefresh() {
         Account account = Account.get(this);
-        String deviceId = Account.get(this).deviceId;
-
-        try {
-            Integer.parseInt(deviceId);
-        } catch (Exception e) {
-            account.setDeviceId(null);
-            deviceId = null;
-        }
-
-        if (deviceId != null) {
+        String accountId = account.accountId;
+        
+        if (accountId != null) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            String accountId = account.accountId;
-
-            new ApiUtils().updateDevice(accountId, Integer.parseInt(deviceId),
+            new ApiUtils().updateDevice(accountId, Integer.parseInt(account.deviceId),
                     null, refreshedToken);
         }
 
