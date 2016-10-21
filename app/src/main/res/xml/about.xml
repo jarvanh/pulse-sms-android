@@ -43,8 +43,8 @@
         android:title="@string/privacy_policy"
         android:summary="@string/privacy_policy_summary" />
 
-    <Preference
+    <!--<Preference
         android:key="@string/pref_about_beta"
-        android:summary="@string/beta_disclaimer" />
+        android:summary="@string/beta_disclaimer" />-->
 
 </PreferenceScreen>

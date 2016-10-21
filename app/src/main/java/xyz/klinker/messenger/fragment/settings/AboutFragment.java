@@ -79,14 +79,14 @@ public class AboutFragment extends PreferenceFragmentCompat {
                     }
                 });
 
-        findPreference(getString(R.string.pref_about_beta))
+        /*findPreference(getString(R.string.pref_about_beta))
                 .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
                         displayIssueTracker();
                         return true;
                     }
-                });
+                });*/
     }
 
     /**
