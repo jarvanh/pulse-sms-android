@@ -157,7 +157,12 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                                 }
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton(android.R.string.no,  new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                
+                            }
+                        })
                         .show();
 
                 return true;
