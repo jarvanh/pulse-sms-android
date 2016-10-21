@@ -34,6 +34,11 @@
         android:summary="@string/copyright_summary" />
 
     <Preference
+        android:key="@string/pref_website"
+        android:title="@string/website"
+        android:summary="@string/access_messages_from_any_device" />
+
+    <Preference
         android:key="@string/pref_supported_platforms"
         android:title="@string/supported_platforms"
         android:summary="@string/supported_platforms_summary"/>

@@ -26,6 +26,8 @@
     <string name="pref_about_app_version" translatable="false">app_version</string>
     <string name="pref_about_device_id" translatable="false">device_id</string>
     <string name="pref_about_device_info" translatable="false">device_info</string>
+    <string name="pref_website" translatable="false">web_link</string>
+    <string name="pref_supported_platforms" translatable="false">supported_platforms</string>
     <string name="pref_about_privacy_policy" translatable="false">privacy_policy</string>
     <string name="pref_about_beta" translatable="false">beta</string>
 
@@ -34,7 +36,6 @@
     <string name="pref_help_google_plus" translatable="false">google+</string>
     <string name="pref_help_email" translatable="false">email</string>
     <string name="pref_help_twitter" translatable="false">twitter</string>
-    <string name="pref_supported_platforms" translatable="false">supported_platforms</string>
 
     <string name="pref_message_count" translatable="false">message_count</string>
 
