@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.api.implementation;
+package xyz.klinker.messenger.api.implementation.firebase;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -22,6 +22,9 @@ import android.preference.PreferenceManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 
 public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdService {
 

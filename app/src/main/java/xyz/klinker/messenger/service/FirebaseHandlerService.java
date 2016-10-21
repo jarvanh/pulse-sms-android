@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -38,7 +37,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
-import xyz.klinker.messenger.api.implementation.MessengerFirebaseMessagingService;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
+import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
@@ -53,7 +53,6 @@ import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -253,30 +252,12 @@ public class FirebaseHandlerService extends IntentService {
                 message.color = json.getInt("color");
             }
 
-            final AtomicBoolean downloading = new AtomicBoolean(false);
             if (message.data.equals("firebase -1") &&
                     !message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                 Log.v(TAG, "downloading binary from firebase");
-                downloading.set(true);
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ApiUtils apiUtils = new ApiUtils();
-                        apiUtils.saveFirebaseFolderRef(Account.get(context).accountId);
-
-                        final File file = new File(context.getFilesDir(),
-                                message.id + MimeType.getExtension(message.mimeType));
-                        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils);
-                        message.data = Uri.fromFile(file).toString();
-                        DataSource source = DataSource.getInstance(context);
-                        source.open();
-                        source.updateMessageData(message.id, message.data);
-                        source.close();
-                        MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
-                        downloading.set(false);
-                    }
-                }).start();
+                addMessageAfterFirebaseDownload(context, message);
+                return;
             }
 
             source.insertMessage(context, message, message.conversationId);
@@ -302,11 +283,6 @@ public class FirebaseHandlerService extends IntentService {
             }
 
             if (Account.get(context).primary && isSending) {
-                while (downloading.get()) {
-                    Log.v(TAG, "waiting for download before sending");
-                    try { Thread.sleep(1000); } catch (Exception e) { }
-                }
-
                 Conversation conversation = source.getConversation(message.conversationId);
 
                 if (conversation != null) {
@@ -337,6 +313,74 @@ public class FirebaseHandlerService extends IntentService {
         } else {
             Log.v(TAG, "message already exists, not doing anything with it");
         }
+    }
+
+    private void addMessageAfterFirebaseDownload(final Context context, final Message message) {
+        ApiUtils apiUtils = new ApiUtils();
+        apiUtils.saveFirebaseFolderRef(Account.get(context).accountId);
+        final File file = new File(context.getFilesDir(),
+                message.id + MimeType.getExtension(message.mimeType));
+
+        DataSource source = DataSource.getInstance(context);
+        source.open();
+        source.insertMessage(context, message, message.conversationId);
+        source.close();
+        Log.v(TAG, "added message");
+
+        final boolean isSending = message.type == Message.TYPE_SENDING;
+
+        if (!Utils.isDefaultSmsApp(context) && isSending) {
+            message.type = Message.TYPE_SENT;
+        }
+
+        FirebaseDownloadCallback callback = new FirebaseDownloadCallback() {
+            @Override
+            public void onDownloadComplete() {
+                message.data = Uri.fromFile(file).toString();
+                DataSource source = DataSource.getInstance(context);
+                source.open();
+                source.updateMessageData(message.id, message.data);
+                MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+
+                if (Account.get(context).primary && isSending) {
+                    Conversation conversation = source.getConversation(message.conversationId);
+
+                    if (conversation != null) {
+                        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                            SendUtils.send(context, message.data, conversation.phoneNumbers);
+                        } else {
+                            SendUtils.send(context, "", conversation.phoneNumbers,
+                                    Uri.parse(message.data), message.mimeType);
+                        }
+                    } else {
+                        Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
+                    }
+
+                    Log.v(TAG, "sent message");
+                }
+
+                if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                    source.updateMessageType(message.id, Message.TYPE_SENT);
+                }
+
+                MessageListUpdatedReceiver.sendBroadcast(context, message);
+                ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
+                        message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
+                        message.type != Message.TYPE_RECEIVED);
+
+                if (message.type == Message.TYPE_RECEIVED) {
+                    context.startService(new Intent(context, NotificationService.class));
+                } else if (isSending) {
+                    source.readConversation(context, message.conversationId);
+                    NotificationManagerCompat.from(context).cancel((int) message.conversationId);
+                }
+
+                source.close();
+            }
+        };
+
+        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, callback);
+
     }
 
     private void updateMessage(JSONObject json, DataSource source, Context context)

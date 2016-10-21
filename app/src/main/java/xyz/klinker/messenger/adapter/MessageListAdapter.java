@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
@@ -83,6 +84,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private MessageListFragment fragment;
     private int timestampHeight;
 
+    private int imageHeight;
+    private int imageWidth;
+
     public MessageListAdapter(Cursor messages, int receivedColor, int accentColor, boolean isGroup,
                               LinearLayoutManager manager, MessageListFragment fragment) {
         this.messages = messages;
@@ -92,6 +96,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         this.manager = manager;
         this.fragment = fragment;
         this.timestampHeight = 0;
+
+        if (fragment.getActivity() == null) {
+            imageHeight = imageWidth = 50;
+        } else {
+            imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 150);
+        }
     }
 
     @Override
@@ -199,21 +209,22 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
         } else {
             holder.image.setImageDrawable(null);
-            holder.image.setMinimumWidth(0);
+            holder.image.setMinimumWidth(imageWidth);
+            holder.image.setMinimumHeight(imageHeight);
             if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .fitCenter()
                         .into(holder.image);
-            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+            } /*else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 holder.image.setMaxWidth(holder.image.getContext()
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
                         .fitCenter()
                         .into(holder.image);
-            } else if (MimeType.isVideo(message.mimeType)) {
+            }*/ else if (MimeType.isVideo(message.mimeType) || message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.TYPE_RECEIVED) {
                     placeholder = holder.image.getContext()

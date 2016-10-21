@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.api.implementation;
+package xyz.klinker.messenger.api.implementation.firebase;
 
 import android.content.ComponentName;
 import android.content.Intent;

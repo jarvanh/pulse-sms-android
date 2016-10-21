@@ -54,6 +54,8 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.api.entity.UpdateContactRequest;
 import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
@@ -497,33 +499,63 @@ public class ApiUtils {
                 if (mimeType.equals("text/plain")) {
                     messageData = data;
                     type = messageType;
+
+                    MessageBody body = new MessageBody(deviceId,
+                            deviceConversationId,
+                            type,
+                            encryptionUtils.encrypt(messageData),
+                            timestamp,
+                            encryptionUtils.encrypt(mimeType),
+                            read,
+                            seen,
+                            encryptionUtils.encrypt(messageFrom),
+                            color);
+                    AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+
+                    Object response = api.message().add(request);
+                    if (response == null) {
+                        Log.e(TAG, "error adding message");
+                    } else {
+                        Log.v(TAG, "successfully added message");
+                    }
                 } else {
                     messageData = "firebase -1";
                     // if type is received, then received else sent. don't save sending status here
                     type = messageType/* == 0 ? 0 : 1*/;
 
+                    final String fData = messageData;
+                    final int fType = type;
+
                     saveFirebaseFolderRef(accountId);
                     byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
-                    uploadBytesToFirebase(bytes, deviceId, encryptionUtils);
-                }
+                    uploadBytesToFirebase(bytes, deviceId, encryptionUtils, new FirebaseUploadCallback() {
+                        @Override
+                        public void onUploadFinished() {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MessageBody body = new MessageBody(deviceId,
+                                            deviceConversationId,
+                                            fType,
+                                            encryptionUtils.encrypt(fData),
+                                            timestamp,
+                                            encryptionUtils.encrypt(mimeType),
+                                            read,
+                                            seen,
+                                            encryptionUtils.encrypt(messageFrom),
+                                            color);
+                                    AddMessagesRequest request = new AddMessagesRequest(accountId, body);
 
-                MessageBody body = new MessageBody(deviceId,
-                        deviceConversationId,
-                        type,
-                        encryptionUtils.encrypt(messageData),
-                        timestamp,
-                        encryptionUtils.encrypt(mimeType),
-                        read,
-                        seen,
-                        encryptionUtils.encrypt(messageFrom),
-                        color);
-                AddMessagesRequest request = new AddMessagesRequest(accountId, body);
-
-                Object response = api.message().add(request);
-                if (response == null) {
-                    Log.e(TAG, "error adding message");
-                } else {
-                    Log.v(TAG, "successfully added message");
+                                    Object response = api.message().add(request);
+                                    if (response == null) {
+                                        Log.e(TAG, "error adding message");
+                                    } else {
+                                        Log.v(TAG, "successfully added message");
+                                    }
+                                }
+                            }).start();
+                        }
+                    });
                 }
             }
         }).start();
@@ -763,7 +795,42 @@ public class ApiUtils {
      * @param encryptionUtils the utils to encrypt the byte array with.
      */
     public void uploadBytesToFirebase(byte[] bytes, final long messageId,
-                                      EncryptionUtils encryptionUtils) {
+                                      EncryptionUtils encryptionUtils, final FirebaseUploadCallback callback) {
+        if (!active || encryptionUtils == null) {
+            return;
+        }
+
+        if (folderRef == null) {
+            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+        }
+
+        StorageReference fileRef = folderRef.child(messageId + "");
+        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
+                addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.v(TAG, "finished uploading and exiting for " + messageId);
+                        callback.onUploadFinished();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "failed to upload file", e);
+                        callback.onUploadFinished();
+                    }
+                });
+    }
+
+    /**
+     * Uploads a byte array of encrypted data to firebase.
+     *
+     * @param bytes the byte array to upload.
+     * @param messageId the message id that the data belongs to.
+     * @param encryptionUtils the utils to encrypt the byte array with.
+     */
+    public void uploadBytesToFirebaseSynchronously(byte[] bytes, final long messageId,
+                                                   EncryptionUtils encryptionUtils) {
         if (!active || encryptionUtils == null) {
             return;
         }
@@ -802,13 +869,57 @@ public class ApiUtils {
     }
 
     /**
-     * Downloads and decrypts a file from firebase.
+     * Downloads and decrypts a file from firebase, using a callback for when the response is done
      *
      * @param file the location on your device to save to.
      * @param messageId the id of the message to grab so we can create a firebase storage ref.
      * @param encryptionUtils the utils to use to decrypt the message.
      */
     public void downloadFileFromFirebase(final File file, final long messageId,
+                                         final EncryptionUtils encryptionUtils,
+                                         final FirebaseDownloadCallback callback) {
+        if (folderRef == null || encryptionUtils == null) {
+            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+        }
+
+        StorageReference fileRef = folderRef.child(messageId + "");
+        fileRef.getBytes(MAX_SIZE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        bytes = encryptionUtils.decryptData(new String(bytes));
+
+                        try {
+                            BufferedOutputStream bos =
+                                    new BufferedOutputStream(new FileOutputStream(file));
+                            bos.write(bytes);
+                            bos.flush();
+                            bos.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.v(TAG, "finished downloading " + messageId);
+                        callback.onDownloadComplete();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.v(TAG, "failed to download file", e);
+                        callback.onDownloadComplete();
+                    }
+                });
+    }
+
+    /**
+     * Downloads and decrypts a file from firebase.
+     *
+     * @param file the location on your device to save to.
+     * @param messageId the id of the message to grab so we can create a firebase storage ref.
+     * @param encryptionUtils the utils to use to decrypt the message.
+     */
+    public void downloadFileFromFirebaseSynchronously(final File file, final long messageId,
                                          final EncryptionUtils encryptionUtils) {
         if (folderRef == null || encryptionUtils == null) {
             throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");

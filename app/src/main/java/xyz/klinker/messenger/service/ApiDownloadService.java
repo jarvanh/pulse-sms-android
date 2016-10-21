@@ -383,7 +383,7 @@ public class ApiDownloadService extends Service {
 
                 Log.v(TAG, "started downloading " + message.id);
 
-                apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils);
+                apiUtils.downloadFileFromFirebaseSynchronously(file, message.id, encryptionUtils);
                 source.updateMessageData(message.id, Uri.fromFile(file).toString());
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
