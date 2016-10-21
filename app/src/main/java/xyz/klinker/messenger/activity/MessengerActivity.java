@@ -205,8 +205,13 @@ public class MessengerActivity extends AppCompatActivity
             menuItemClicked(R.id.drawer_account);
         }
 
-        if (getIntent().getData() != null) {
-            displayShortcutConversation(Long.parseLong(getIntent().getData().getLastPathSegment()));
+        if (getIntent().getData() != null && getIntent().getDataString().contains("https://messenger.klinkerapps.com/")) {
+            try {
+                displayShortcutConversation(Long.parseLong(getIntent().getData().getLastPathSegment()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             getIntent().setData(null);
         }
     }
