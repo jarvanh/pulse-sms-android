@@ -300,7 +300,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (deviceId != null) {
             Account account = Account.get(this);
-            account.setDeviceId(Integer.toString(deviceId));
+            account.setDeviceId(Long.toString(deviceId));
             account.setPrimary(primary);
 
             runOnUiThread(new Runnable() {

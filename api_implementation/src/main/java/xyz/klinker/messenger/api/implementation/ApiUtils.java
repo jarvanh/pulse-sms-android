@@ -149,7 +149,7 @@ public class ApiUtils {
     /**
      * Updates device info on the server.
      */
-    public void updateDevice(String accountId, int deviceId, String name, String fcmToken) {
+    public void updateDevice(String accountId, long deviceId, String name, String fcmToken) {
         api.device().update(deviceId, accountId, name, fcmToken);
     }
 
