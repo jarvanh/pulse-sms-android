@@ -20,6 +20,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.support.v4.os.BuildCompat;
 import android.support.v7.app.AppCompatDelegate;
 
 import java.lang.reflect.Field;
@@ -62,8 +63,10 @@ public class MessengerApplication extends Application {
         }
 
         startService(new Intent(this, ContentObserverService.class));
+    }
 
-        if (!"robolectric".equals(Build.FINGERPRINT)) {
+    public void refreshDynamicShortcuts() {
+        if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import xyz.klinker.messenger.MessengerApplication;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
@@ -192,6 +193,8 @@ public class ConversationListFragment extends Fragment
                         setConversations(conversations);
                         source.close();
                         lastRefreshTime = System.currentTimeMillis();
+
+                        ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
                     }
                 });
             }
