@@ -101,11 +101,9 @@
                     android:layout_marginStart="12dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:maxLines="1"
                     android:hint="@null"
                     android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
                     android:imeOptions="actionSend|flagNoExtractUi"
-                    android:scrollHorizontally="true"
                     android:background="@null"/>
 
                 <FrameLayout
