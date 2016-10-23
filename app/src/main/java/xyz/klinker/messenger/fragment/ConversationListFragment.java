@@ -194,7 +194,9 @@ public class ConversationListFragment extends Fragment
                         source.close();
                         lastRefreshTime = System.currentTimeMillis();
 
-                        ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
+                        try {
+                            ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
+                        } catch (Exception e) { }
                     }
                 });
             }

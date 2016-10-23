@@ -51,10 +51,10 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
         String action = intent.getAction();
         if (action != null && action.equals(OPEN_ACTION)) {
             long itemId = intent.getLongExtra(EXTRA_ITEM_ID, 0);
-            Intent openArticle = new Intent(context, MessengerActivity.class);
-            openArticle.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, itemId);
-            openArticle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            context.startActivity(openArticle);
+            Intent openConversation = new Intent(context, MessengerActivity.class);
+            openConversation.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, itemId);
+            openConversation.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(openConversation);
             return;
         }
 
