@@ -139,6 +139,24 @@ public class ApiUtils {
         api.device().remove(deviceId, accountId);
     }
 
+    public void updatePrimaryDevice(final String accountId, final String newPrimaryDeviceId) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.device().updatePrimary(newPrimaryDeviceId, accountId);
+                if (response == null) {
+                    Log.e(TAG, "error updating primary device");
+                } else {
+                    Log.v(TAG, "successfully updated primary device");
+                }
+            }
+        }).start();
+    }
+
     /**
      * Gets a list of all devices on the server.
      */

@@ -37,6 +37,10 @@ public interface DeviceService {
     @POST("devices/remove/{id}")
     Object remove(@Path("id") int id, @Query("account_id") String accountId);
 
+    @POST("devices/update_primary")
+    Object updatePrimary(@Query("new_primary_device_id") String newPrimaryDeviceId,
+                         @Query("account_id") String accountId);
+
     @GET("devices")
     DeviceBody[] list(@Query("account_id") String accountId);
 

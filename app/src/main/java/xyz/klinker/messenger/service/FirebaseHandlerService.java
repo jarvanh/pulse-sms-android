@@ -192,6 +192,9 @@ public class FirebaseHandlerService extends IntentService {
                 case "update_subscription":
                     updateSubscription(json, context);
                     break;
+                case "update_primary_device":
+                    updatePrimaryDevice(json, context);
+                    break;
                 case "feature_flag":
                     writeFeatureFlag(json, context);
                     break;
@@ -691,6 +694,16 @@ public class FirebaseHandlerService extends IntentService {
         if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
             SubscriptionExpirationCheckService.scheduleNextRun(context);
             SignoutService.writeSignoutTime(context, 0);
+        }
+    }
+
+    private void updatePrimaryDevice(JSONObject json, Context context)
+            throws JSONException {
+        String newPrimaryDeviceId = json.getString("new_primary_device_id");
+
+        Account account = Account.get(context);
+        if (newPrimaryDeviceId != null && !newPrimaryDeviceId.equals(account.deviceId)) {
+            account.setPrimary(false);
         }
     }
 

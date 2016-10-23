@@ -292,7 +292,7 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void addDevice(final ApiUtils utils, final String accountId, final boolean primary,
+    private Integer addDevice(final ApiUtils utils, final String accountId, final boolean primary,
                            final boolean deviceSync) {
         Integer deviceId = utils.registerDevice(accountId,
                 Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
@@ -326,7 +326,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (primaryLocation == -1) {
                     failAddDevice(utils, accountId);
-                    return;
+                    return null;
                 }
 
                 final DeviceBody device = devices[primaryLocation];
@@ -350,7 +350,11 @@ public class LoginActivity extends AppCompatActivity {
                                                 @Override
                                                 public void run() {
                                                     utils.removeDevice(accountId, device.id);
-                                                    addDevice(utils, accountId, true, false);
+                                                    Integer deviceId = addDevice(utils, accountId, true, false);
+
+                                                    if (deviceId != null) {
+                                                        utils.updatePrimaryDevice(accountId, deviceId.toString());
+                                                    }
                                                 }
                                             }).start();
                                         }
@@ -372,6 +376,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }
+
+        return deviceId;
     }
 
     private void failAddDevice(ApiUtils apiUtils, String accountId) {
