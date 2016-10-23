@@ -64,6 +64,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void setUp() {
         source = new DataSource(helper);
         source.context = RuntimeEnvironment.application;
+        when(database.isOpen()).thenReturn(true);
         when(helper.getWritableDatabase()).thenReturn(database);
         source.open();
     }
@@ -96,6 +97,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         verify(database).delete("scheduled_message", null, null);
         verify(database).delete("contact", null, null);
 
+        verify(database).isOpen();
         verifyNoMoreInteractions(database);
     }
 
