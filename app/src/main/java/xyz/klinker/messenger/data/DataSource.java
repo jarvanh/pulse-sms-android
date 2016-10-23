@@ -144,12 +144,29 @@ public class DataSource {
         return database != null && database.isOpen();
     }
 
+    private void ensureActionable() {
+        boolean actionable = true;
+
+        try {
+            actionable = isOpen();
+        } catch (Exception e) {
+            actionable = false;
+        }
+
+        if (!actionable) {
+            close();
+            open();
+        }
+    }
+
     /**
      * Closes the database.
      */
     public synchronized void close() {
         if (openCounter.decrementAndGet() == 0) {
-            dbHelper.close();
+            try {
+                dbHelper.close();
+            } catch (Exception e) { }
         }
     }
 
@@ -180,6 +197,8 @@ public class DataSource {
      * Deletes all data from the tables.
      */
     public void clearTables() {
+        ensureActionable();
+
         database.delete(Message.TABLE, null, null);
         database.delete(Conversation.TABLE, null, null);
         database.delete(Blacklist.TABLE, null, null);
@@ -192,6 +211,7 @@ public class DataSource {
      * Begins a bulk transaction on the database.
      */
     public void beginTransaction() {
+        ensureActionable();
         database.beginTransaction();
     }
 
@@ -202,6 +222,7 @@ public class DataSource {
      * @param sql the sql statement.
      */
     public void execSql(String sql) {
+        ensureActionable();
         database.execSQL(sql);
     }
 
@@ -212,6 +233,7 @@ public class DataSource {
      * @return cursor for the data
      */
     public Cursor rawQuery(String sql) {
+        ensureActionable();
         return database.rawQuery(sql, null);
     }
 
@@ -304,6 +326,8 @@ public class DataSource {
      * @return a cursor of all the contacts stored in the app.
      */
     public Cursor getContacts() {
+        ensureActionable();
+
         return database.query(Contact.TABLE, null, null, null, null, null,
                 Contact.COLUMN_NAME + " ASC");
     }
@@ -315,6 +339,8 @@ public class DataSource {
      * @return Contact from the database
      */
     public Contact getContact(String phoneNumber) {
+        ensureActionable();
+
         Cursor cursor = database.query(Contact.TABLE, null, Contact.COLUMN_PHONE_NUMBER+ "=?",
                 new String[]{phoneNumber}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -335,6 +361,8 @@ public class DataSource {
      *          not in the database.
      */
     public List<Contact> getContacts(String numbers) {
+        ensureActionable();
+
         if (numbers == null || numbers.isEmpty()) {
             return new ArrayList<>();
         }
@@ -378,6 +406,8 @@ public class DataSource {
      *          not in the database.
      */
     public List<Contact> getContactsByNames(String names) {
+        ensureActionable();
+
         if (names == null || names.isEmpty()) {
             return new ArrayList<>();
         }
@@ -414,6 +444,8 @@ public class DataSource {
      * @param phoneNumber the phone number to delete
      */
     public void deleteContact(String phoneNumber) {
+        ensureActionable();
+
         database.delete(Contact.TABLE, Contact.COLUMN_PHONE_NUMBER + "=?",
                 new String[]{phoneNumber});
 
@@ -426,6 +458,8 @@ public class DataSource {
      * @param contact the contact with new values
      */
     public void updateContact(Contact contact) {
+        ensureActionable();
+
         updateContact(contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
                 contact.colors.colorLight, contact.colors.colorAccent);
     }
@@ -442,6 +476,8 @@ public class DataSource {
      */
     public void updateContact(String phoneNumber, String name, Integer color, Integer colorDark,
                                    Integer colorLight, Integer colorAccent) {
+        ensureActionable();
+
         ContentValues values = new ContentValues();
 
         if (name != null) values.put(Contact.COLUMN_NAME, name);
@@ -463,6 +499,8 @@ public class DataSource {
      * Gets the number of contacts in the database.
      */
     public int getContactsCount() {
+        ensureActionable();
+
         Cursor cursor = getContacts();
         int count = cursor.getCount();
         cursor.close();
@@ -613,6 +651,8 @@ public class DataSource {
      * @return a list of conversations.
      */
     public Cursor getUnarchivedConversations() {
+        ensureActionable();
+
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", new String[] { "0" }, null, null,
                 Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
         );
@@ -624,6 +664,7 @@ public class DataSource {
      * @return a list of the conversations in the cursor
      */
     public List<Conversation> getUnarchivedConversationsAsList() {
+        ensureActionable();
         return convertConversationCursorToList(getUnarchivedConversations());
     }
 
@@ -633,6 +674,7 @@ public class DataSource {
      * @return a list of conversations.
      */
     public Cursor getAllConversations() {
+        ensureActionable();
         return database.query(Conversation.TABLE, null, null, null, null, null,
                 Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
         );
@@ -644,11 +686,13 @@ public class DataSource {
      * @return a list of pinned conversations.
      */
     public Cursor getPinnedConversations() {
+        ensureActionable();
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_PINNED + "=1", null,
                 null, null, Conversation.COLUMN_TIMESTAMP + " desc");
     }
 
     public List<Conversation> getPinnedConversationsAsList() {
+        ensureActionable();
         return convertConversationCursorToList(getPinnedConversations());
     }
 
@@ -658,6 +702,7 @@ public class DataSource {
      * @return a list of pinned conversations.
      */
     public Cursor getArchivedConversations() {
+        ensureActionable();
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1", null,
                 null, null, Conversation.COLUMN_TIMESTAMP + " desc");
     }
@@ -669,6 +714,7 @@ public class DataSource {
         if (query == null || query.length() == 0) {
             return null;
         } else {
+            ensureActionable();
             return database.query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
                             query.replace("'", "''") + "%'", null, null, null,
                     Conversation.COLUMN_TIMESTAMP + " desc");
@@ -682,8 +728,11 @@ public class DataSource {
      * @return the conversation.
      */
     public Conversation getConversation(long conversationId) {
+        ensureActionable();
+
         Cursor cursor = database.query(Conversation.TABLE, null, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)}, null, null, null);
+
         if (cursor.moveToFirst()) {
             Conversation conversation = new Conversation();
             conversation.fillFromCursor(cursor);
@@ -713,6 +762,8 @@ public class DataSource {
      * @param conversationId the conversation id to delete.
      */
     public void deleteConversation(long conversationId) {
+        ensureActionable();
+
         database.delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
@@ -747,6 +798,8 @@ public class DataSource {
      * @param archive true if we want to archive, false if we want to have it not archived
      */
     public void archiveConversation(long conversationId, boolean archive) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Conversation.COLUMN_ARCHIVED, archive);
 
@@ -773,6 +826,8 @@ public class DataSource {
      */
     public void updateConversation(long conversationId, boolean read, long timestamp,
                                    String snippet, String snippetMime, boolean archive) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(4);
         values.put(Conversation.COLUMN_READ, read);
 
@@ -799,6 +854,8 @@ public class DataSource {
      * Updates the settings for a conversation, such as ringtone and colors.
      */
     public void updateConversationSettings(Conversation conversation) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(10);
         values.put(Conversation.COLUMN_PINNED, conversation.pinned);
         values.put(Conversation.COLUMN_TITLE, conversation.title);
@@ -828,6 +885,8 @@ public class DataSource {
      * the contact's name.
      */
     public void updateConversationTitle(long conversationId, String title) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Conversation.COLUMN_TITLE, title);
 
@@ -994,6 +1053,7 @@ public class DataSource {
      * @return a cursor with all messages.
      */
     public Cursor getMessages(long conversationId) {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
                 new String[]{Long.toString(conversationId)}, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
@@ -1003,6 +1063,7 @@ public class DataSource {
      * Gets a single message from the database.
      */
     public Message getMessage(long messageId) {
+        ensureActionable();
         Cursor cursor = database.query(Message.TABLE, null, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -1018,6 +1079,7 @@ public class DataSource {
      * Gets all messages in the database where mime type is not text/plain.
      */
     public Cursor getAllMediaMessages(int limit) {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain'",
                 null, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit);
     }
@@ -1032,6 +1094,7 @@ public class DataSource {
      * "firebase -1" to indicate that the image will be available for download.
      */
     public Cursor getFirebaseMediaMessages() {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
                 Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, null);
     }
@@ -1040,6 +1103,7 @@ public class DataSource {
      * Gets all messages for a conversation where the mime type is not text/plain.
      */
     public List<Message> getMediaMessages(long conversationId) {
+        ensureActionable();
         Cursor c = database.query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
                         Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
                         Message.COLUMN_MIME_TYPE + "!='text/x-vcard' AND " +
@@ -1066,6 +1130,7 @@ public class DataSource {
      * Gets all messages in the database.
      */
     public Cursor getMessages() {
+        ensureActionable();
         return database.query(Message.TABLE, null, null, null, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
     }
@@ -1101,6 +1166,7 @@ public class DataSource {
             return null;
         } else {
             try {
+                ensureActionable();
                 return database.query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
                         new String[]{"m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title"},
                         Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
@@ -1120,6 +1186,7 @@ public class DataSource {
      * @return the cursor of messages.
      */
     public Cursor searchMessages(long timestamp) {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + " BETWEEN " +
                         (timestamp - 10000) + " AND " + (timestamp + 10000), null, null, null,
                 Message.COLUMN_TIMESTAMP + " desc");
@@ -1132,6 +1199,8 @@ public class DataSource {
      * @param type      the type to change it to.
      */
     public void updateMessageType(long messageId, int type) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_TYPE, type);
 
@@ -1148,6 +1217,8 @@ public class DataSource {
      * @param data      the new data string.
      */
     public void updateMessageData(long messageId, String data) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_DATA, data);
 
@@ -1199,6 +1270,8 @@ public class DataSource {
      * conversation id will be returned. If not, null will be returned.
      */
     public Long findConversationId(String phoneNumbers) {
+        ensureActionable();
+
         String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
                 new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
@@ -1218,6 +1291,8 @@ public class DataSource {
      * conversation id will be returned. If not, null will be returned.
      */
     public Long findConversationIdByTitle(String title) {
+        ensureActionable();
+
         Cursor cursor = database.query(Conversation.TABLE,
                 new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_TITLE},
                 Conversation.COLUMN_TITLE + "=?", new String[]{title}, null, null, null);
@@ -1240,6 +1315,8 @@ public class DataSource {
      * @return the conversation id to use.
      */
     private long updateOrCreateConversation(String phoneNumbers, Message message, Context context) {
+        ensureActionable();
+
         String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor = database.query(Conversation.TABLE,
                 new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
@@ -1303,6 +1380,8 @@ public class DataSource {
      * @return the conversation id that the message was inserted into.
      */
     public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
+        ensureActionable();
+
         message.conversationId = conversationId;
 
         ContentValues values = new ContentValues(10);
@@ -1385,6 +1464,8 @@ public class DataSource {
      * Deletes a message with the given id.
      */
     public int deleteMessage(long messageId) {
+        ensureActionable();
+
         int deleted = database.delete(Message.TABLE, Message.COLUMN_ID + "=?",
                 new String[]{Long.toString(messageId)});
 
@@ -1398,6 +1479,8 @@ public class DataSource {
      * @param conversationId the conversation id to mark.
      */
     public void readConversation(Context context, long conversationId) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(2);
         values.put(Message.COLUMN_READ, 1);
         values.put(Message.COLUMN_SEEN, 1);
@@ -1426,6 +1509,8 @@ public class DataSource {
      * Marks all messages in a conversation as seen.
      */
     public void seenConversation(long conversationId) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_SEEN, 1);
 
@@ -1439,6 +1524,8 @@ public class DataSource {
      * Mark all messages as seen.
      */
     public void seenConversations() {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_SEEN, 1);
 
@@ -1451,6 +1538,8 @@ public class DataSource {
      * Mark all messages as seen.
      */
     public void seenAllMessages() {
+        ensureActionable();
+
         ContentValues values = new ContentValues(1);
         values.put(Message.COLUMN_SEEN, 1);
 
@@ -1464,6 +1553,7 @@ public class DataSource {
      * @return a cursor of all unread messages.
      */
     public Cursor getUnreadMessages() {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_READ + "=0", null, null, null,
                 Message.COLUMN_TIMESTAMP + " desc");
     }
@@ -1474,6 +1564,7 @@ public class DataSource {
      * @return a cursor of all unseen messages.
      */
     public Cursor getUnseenMessages() {
+        ensureActionable();
         return database.query(Message.TABLE, null, Message.COLUMN_SEEN + "=0", null, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
     }
@@ -1482,6 +1573,8 @@ public class DataSource {
      * Inserts a draft into the database with the given parameters.
      */
     public long insertDraft(long conversationId, String data, String mimeType) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(4);
         long id = generateId();
         values.put(Draft.COLUMN_ID, id);
@@ -1497,6 +1590,8 @@ public class DataSource {
      * Inserts a draft into the database.
      */
     public long insertDraft(Draft draft) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(4);
 
         if (draft.id > 0) {
@@ -1524,6 +1619,7 @@ public class DataSource {
      * Gets all drafts in the database.
      */
     public Cursor getDrafts() {
+        ensureActionable();
         return database.query(Draft.TABLE, null, null, null, null, null, null);
     }
 
@@ -1534,6 +1630,8 @@ public class DataSource {
      * when the conversation is loaded.
      */
     public List<Draft> getDrafts(long conversationId) {
+        ensureActionable();
+
         Cursor cursor = database.query(Draft.TABLE, null, Draft.COLUMN_CONVERSATION_ID + "=?",
                 new String[]{Long.toString(conversationId)}, null, null, null);
         List<Draft> drafts = new ArrayList<>();
@@ -1555,6 +1653,8 @@ public class DataSource {
      * sent to the conversation.
      */
     public void deleteDrafts(long conversationId) {
+        ensureActionable();
+
         database.delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                 new String[]{Long.toString(conversationId)});
 
@@ -1565,6 +1665,7 @@ public class DataSource {
      * Gets all blacklists in the database.
      */
     public Cursor getBlacklists() {
+        ensureActionable();
         return database.query(Blacklist.TABLE, null, null, null, null, null, null);
     }
 
@@ -1572,6 +1673,8 @@ public class DataSource {
      * Inserts a blacklist into the database.
      */
     public void insertBlacklist(Blacklist blacklist) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(2);
 
         if (blacklist.id <= 0) {
@@ -1588,6 +1691,8 @@ public class DataSource {
      * Deletes a blacklist from the database.
      */
     public void deleteBlacklist(long id) {
+        ensureActionable();
+
         database.delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
                 new String[]{Long.toString(id)});
 
@@ -1598,6 +1703,7 @@ public class DataSource {
      * Gets all scheduled messages in the database.
      */
     public Cursor getScheduledMessages() {
+        ensureActionable();
         return database.query(ScheduledMessage.TABLE, null, null, null, null, null,
                 ScheduledMessage.COLUMN_TIMESTAMP + " asc");
     }
@@ -1606,6 +1712,8 @@ public class DataSource {
      * Inserts a scheduled message into the database.
      */
     public long insertScheduledMessage(ScheduledMessage message) {
+        ensureActionable();
+
         ContentValues values = new ContentValues(6);
 
         if (message.id <= 0) {
@@ -1629,6 +1737,8 @@ public class DataSource {
      * Deletes a scheduled message from the database.
      */
     public void deleteScheduledMessage(long id) {
+        ensureActionable();
+
         database.delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
                 new String[]{Long.toString(id)});
         apiUtils.deleteScheduledMessage(accountId, id);
