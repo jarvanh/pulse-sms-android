@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <exclude domain="sharedpref" path="account_id" />
+    <exclude domain="sharedpref" path="salt" />
+    <exclude domain="sharedpref" path="passhash" />
+    <exclude domain="sharedpref" path="primary" />
+    <exclude domain="sharedpref" path="subscription_type" />
+    <exclude domain="sharedpref" path="subscription_expiration" />
+    <exclude domain="sharedpref" path="device_id" />
+    <exclude domain="sharedpref" path="key" />
+</full-backup-content>
