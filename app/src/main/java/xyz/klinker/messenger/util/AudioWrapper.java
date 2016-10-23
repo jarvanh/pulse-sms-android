@@ -1,7 +1,9 @@
 package xyz.klinker.messenger.util;
 
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Configuration;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -16,6 +18,8 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 
+import static android.content.Context.UI_MODE_SERVICE;
+
 public class AudioWrapper {
 
     private static final String TAG = "AudioWrapper";
@@ -25,7 +29,7 @@ public class AudioWrapper {
 
     public AudioWrapper(Context context, long conversationId) {
         soundEffects = Settings.get(context).soundEffects;
-        if (!soundEffects) {
+        if (!soundEffects || !shouldPlaySound(context)) {
             return;
         }
 
@@ -64,7 +68,7 @@ public class AudioWrapper {
 
     public AudioWrapper(Context context, int resourceId) {
         soundEffects = Settings.get(context).soundEffects;
-        if (!soundEffects) {
+        if (!soundEffects || !shouldPlaySound(context)) {
             return;
         }
 
@@ -92,6 +96,18 @@ public class AudioWrapper {
         });
 
         mediaPlayer.start();
+    }
+
+    private boolean shouldPlaySound(Context context) {
+        // we don't really want to play sounds on the TV or on a watch
+
+        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION ||
+                uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_WATCH) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
