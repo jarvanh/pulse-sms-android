@@ -117,4 +117,6 @@
     <color name="emptyTextSecondary">#B2FFFFFF</color>
     <color name="deleteIcon">@android:color/white</color>
 
+    <color name="darkText">#E2000000</color>
+
 </resources>

@@ -60,6 +60,7 @@ import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.FileUtils;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -215,6 +216,10 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
+
+            if (!ColorUtils.isColorDark(color)) {
+                message.setTextColor(itemView.getContext().getResources().getColor(R.color.darkText));
+            }
         }
 
         if (image != null) {
