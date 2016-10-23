@@ -219,6 +219,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
             if (!ColorUtils.isColorDark(color)) {
                 message.setTextColor(itemView.getContext().getResources().getColor(R.color.darkText));
+            } else {
+                message.setTextColor(itemView.getContext().getResources().getColor(R.color.lightText));
             }
         }
 

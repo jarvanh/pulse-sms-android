@@ -118,5 +118,6 @@
     <color name="deleteIcon">@android:color/white</color>
 
     <color name="darkText">#E2000000</color>
+    <color name="lightText">#FFFFFFFF</color>
 
 </resources>

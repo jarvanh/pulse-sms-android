@@ -397,13 +397,27 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             if (fromColorMapper.containsKey(message.from)) {
                 // group convo, color them differently
                 // this is the usual result
+                int color = fromColorMapper.get(message.from).colors.color;
                 holder.messageHolder.setBackgroundTintList(
-                        ColorStateList.valueOf(fromColorMapper.get(message.from).colors.color));
+                        ColorStateList.valueOf(color));
+
+                if (!ColorUtils.isColorDark(color)) {
+                    holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
+                } else {
+                    holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
+                }
             } else if (fromColorMapperByName != null && fromColorMapperByName.containsKey(message.from)) {
                 // group convo, color them differently
                 // this is the usual result
+                int color = fromColorMapperByName.get(message.from).colors.color;
                 holder.messageHolder.setBackgroundTintList(
-                        ColorStateList.valueOf(fromColorMapperByName.get(message.from).colors.color));
+                        ColorStateList.valueOf(color));
+
+                if (!ColorUtils.isColorDark(color)) {
+                    holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
+                } else {
+                    holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
+                }
             } else {
                 // group convo without the contact here.. uh oh. Could happen if the conversation
                 // title doesn't match the message.from database column.
