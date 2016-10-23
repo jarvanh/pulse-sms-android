@@ -627,9 +627,7 @@ public class MessengerActivity extends AppCompatActivity
         } else {
             conversationListFragment = ConversationListFragment.newInstance();
         }
-
-        new ApiUtils().updatePrimaryDevice(Account.get(this).accountId, Account.get(this).deviceId);
-
+        
         otherFragment = null;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.conversation_list_container, conversationListFragment);
