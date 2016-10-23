@@ -18,42 +18,44 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:foreground="?selectableItemBackground"
-    android:clickable="true">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:gravity="end"
+    android:focusable="true"
+    android:background="@drawable/focusable_background">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:id="@+id/title"
-            android:maxLines="1" />
+        android:orientation="vertical"
+        android:background="@drawable/message_sent_background"
+        android:backgroundTint="@color/drawerBackground"
+        android:maxWidth="@dimen/max_message_width"
+        android:padding="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="20dp"
+        android:clickable="true"
+        android:id="@+id/message_holder">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:textColor="@color/secondaryText"
-            android:textSize="14sp" />
+            android:maxWidth="@dimen/max_message_width"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            android:id="@+id/message" />
 
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/timestamp_height"
+        android:textSize="12sp"
         android:textColor="@color/secondaryText"
-        android:textSize="14sp" />
+        android:id="@+id/title_date"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="4dp" />
 
 </LinearLayout>

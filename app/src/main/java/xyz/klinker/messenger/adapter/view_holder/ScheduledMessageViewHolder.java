@@ -27,16 +27,16 @@ import xyz.klinker.messenger.R;
  */
 public class ScheduledMessageViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView title;
+    public TextView titleDate;
     public TextView message;
-    public TextView date;
+    public View messageHolder;
 
     public ScheduledMessageViewHolder(View itemView) {
         super(itemView);
 
-        title = (TextView) itemView.findViewById(R.id.title);
+        titleDate = (TextView) itemView.findViewById(R.id.title_date);
         message = (TextView) itemView.findViewById(R.id.message);
-        date = (TextView) itemView.findViewById(R.id.date);
+        messageHolder = itemView.findViewById(R.id.message_holder);
     }
 
 }

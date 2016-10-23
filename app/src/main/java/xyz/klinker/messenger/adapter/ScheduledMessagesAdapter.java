@@ -50,7 +50,7 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
     @Override
     public ScheduledMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.scheduled_message_item, parent, false);
+                .inflate(R.layout.item_scheduled_message, parent, false);
         return new ScheduledMessageViewHolder(view);
     }
 
@@ -61,9 +61,17 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
         final ScheduledMessage message = new ScheduledMessage();
         message.fillFromCursor(cursor);
 
-        holder.title.setText(message.title);
+        holder.titleDate.setText(message.title + " - " + formatter.format(new Date(message.timestamp)));
         holder.message.setText(message.data);
-        holder.date.setText(formatter.format(new Date(message.timestamp)));
+
+        holder.messageHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onClick(message);
+                }
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
