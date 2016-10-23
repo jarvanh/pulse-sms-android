@@ -99,6 +99,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
             }
         }
+
+        try {
+            lastMessage.close();
+        } catch (Exception e) { }
     }
 
     @VisibleForTesting

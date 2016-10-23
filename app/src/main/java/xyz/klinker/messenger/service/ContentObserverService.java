@@ -165,9 +165,7 @@ public class ContentObserverService extends Service {
                 
                 try {
                     search.close();
-                } catch (Exception e) {
-                    
-                }
+                } catch (Exception e) { }
 
                 source.close();
             }

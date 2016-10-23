@@ -611,14 +611,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getName() {
-        Cursor cursor = getContentResolver()
-                .query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        try {
+            Cursor cursor = getContentResolver()
+                    .query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            String name = cursor.getString(cursor.getColumnIndex("display_name"));
-            cursor.close();
-            return name;
+            if (cursor != null && cursor.moveToFirst()) {
+                cursor.moveToFirst();
+                String name = cursor.getString(cursor.getColumnIndex("display_name"));
+                cursor.close();
+                return name;
+            } else {
+                try {
+                    cursor.close();
+                } catch (Exception e) { }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;

@@ -60,6 +60,10 @@ public class TvBrowseFragment extends BrowseSupportFragment {
             setAdapter(adapter);
         }
 
+        try {
+            conversations.close();
+        } catch (Exception e) { }
+
         source.close();
     }
 

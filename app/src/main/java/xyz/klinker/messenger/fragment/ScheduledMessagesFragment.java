@@ -80,6 +80,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private View emptyView;
 
     private DataSource source;
+    private Cursor messages;
 
     public static ScheduledMessagesFragment newInstance() {
         return new ScheduledMessagesFragment();
@@ -149,6 +150,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void onDestroyView() {
         super.onDestroyView();
         source.close();
+
+        if (messages != null && !messages.isClosed()) {
+            messages.close();
+        }
     }
 
     private void loadMessages() {
@@ -156,7 +161,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Cursor messages = source.getScheduledMessages();
+                messages = source.getScheduledMessages();
 
                 handler.post(new Runnable() {
                     @Override

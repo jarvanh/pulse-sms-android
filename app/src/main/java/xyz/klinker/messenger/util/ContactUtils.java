@@ -71,7 +71,9 @@ public class ContactUtils {
                             numbers.add(ids[i]);
                         }
 
-                        number.close();
+                        try {
+                            number.close();
+                        } catch (Exception e) { }
                     }
                 } catch (Exception e) {
                     numbers.add("0");
@@ -265,9 +267,11 @@ public class ContactUtils {
                 conversation.fillFromCursor(convoCursor);
                 conversations.add(conversation);
             } while (convoCursor.moveToNext());
-
-            convoCursor.close();
         }
+
+        try {
+            convoCursor.close();
+        } catch (Exception e) { }
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String[] projection = new String[]{
@@ -301,6 +305,10 @@ public class ContactUtils {
             } while (cursor.moveToNext());
 
             cursor.close();
+        } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
         }
 
         conversations.clear();
@@ -321,9 +329,11 @@ public class ContactUtils {
                 conversation.fillFromCursor(convoCursor);
                 conversations.add(conversation);
             } while (convoCursor.moveToNext());
-
-            convoCursor.close();
         }
+
+        try {
+            convoCursor.close();
+        } catch (Exception e) { }
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String[] projection = new String[]{

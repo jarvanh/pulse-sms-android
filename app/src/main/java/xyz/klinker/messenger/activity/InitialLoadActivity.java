@@ -217,6 +217,10 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 String name = cursor.getString(cursor.getColumnIndex("display_name"));
                 cursor.close();
                 return name;
+            } else {
+                try {
+                    cursor.close();
+                } catch (Exception e) { }
             }
         } catch (Exception e) {
             e.printStackTrace();

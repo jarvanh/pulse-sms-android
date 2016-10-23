@@ -100,9 +100,11 @@ public class SmsMmsUtils {
 
                 conversations.add(conversation);
             } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);
-
-            cursor.close();
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         return conversations;
     }
@@ -259,9 +261,11 @@ public class SmsMmsUtils {
                         }
                     }
                 } while (query.moveToNext());
-
-                query.close();
             }
+
+            try {
+                query.close();
+            } catch (Exception e) { }
         }
 
         return values;
@@ -349,22 +353,22 @@ public class SmsMmsUtils {
                 Telephony.Mms.Addr.TYPE + "=" + PduHeaders.FROM, null, null);
 
         if (cursor != null) {
-            try {
-                if (cursor.moveToFirst()) {
-                    String from = cursor.getString(0);
+            if (cursor.moveToFirst()) {
+                String from = cursor.getString(0);
 
-                    if (!TextUtils.isEmpty(from)) {
-                        byte[] bytes = PduPersister.getBytes(from);
-                        int charset = cursor.getInt(1);
-                        cursor.close();
-                        return new EncodedStringValue(charset, bytes)
-                                .getString();
-                    }
+                if (!TextUtils.isEmpty(from)) {
+                    byte[] bytes = PduPersister.getBytes(from);
+                    int charset = cursor.getInt(1);
+                    cursor.close();
+                    return new EncodedStringValue(charset, bytes)
+                            .getString();
                 }
-            } finally {
-                cursor.close();
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         return "";
     }

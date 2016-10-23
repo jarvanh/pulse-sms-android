@@ -46,6 +46,8 @@ public class SearchFragment extends Fragment implements SearchListener {
     private SearchAdapter adapter;
     private String query;
     private DataSource source;
+    private Cursor conversations;
+    private Cursor messages;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -79,6 +81,18 @@ public class SearchFragment extends Fragment implements SearchListener {
         if (source.isOpen()) {
             source.close();
         }
+
+        closeOldCursors();
+    }
+
+    private void closeOldCursors() {
+        if (conversations != null && !conversations.isClosed()) {
+            conversations.close();
+        }
+
+        if (messages != null && !messages.isClosed()) {
+            messages.close();
+        }
     }
 
     public void search(String query) {
@@ -104,8 +118,10 @@ public class SearchFragment extends Fragment implements SearchListener {
                     source.open();
                 }
 
-                final Cursor conversations = source.searchConversations(query);
-                final Cursor messages = source.searchMessages(query);
+                closeOldCursors();
+
+                conversations = source.searchConversations(query);
+                messages = source.searchMessages(query);
 
                 handler.post(new Runnable() {
                     @Override

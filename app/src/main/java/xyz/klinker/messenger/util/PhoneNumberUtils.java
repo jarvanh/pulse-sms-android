@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.TextUtils;

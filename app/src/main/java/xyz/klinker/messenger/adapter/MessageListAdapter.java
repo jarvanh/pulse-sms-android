@@ -341,6 +341,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     public void addMessage(Cursor newMessages) {
         int initialCount = getItemCount();
 
+        try {
+            messages.close();
+        } catch (Exception e) { }
+
         messages = newMessages;
 
         if (newMessages != null) {

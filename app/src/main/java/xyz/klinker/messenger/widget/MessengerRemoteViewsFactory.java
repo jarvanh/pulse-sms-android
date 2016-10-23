@@ -64,9 +64,11 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
                 conversation.fillFromCursor(items);
                 conversations.add(conversation);
             } while (items.moveToNext());
-
-            items.close();
         }
+
+        try {
+            items.close();
+        } catch (Exception e) { }
     }
 
     @Override

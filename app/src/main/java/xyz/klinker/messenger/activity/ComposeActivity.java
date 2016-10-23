@@ -156,7 +156,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                         conversation.fillFromCursor(cursor);
                         conversations.add(conversation);
                     } while (cursor.moveToNext());
-                    cursor.close();
 
                     handler.post(new Runnable() {
                         @Override
@@ -172,6 +171,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                         }
                     });
                 }
+
+                try {
+                    cursor.close();
+                } catch (Exception e) { }
             }
         }).start();
     }
@@ -391,10 +394,14 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         Uri uri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(data);
+
         if (cursor != null && cursor.moveToFirst()) {
             source.updateMessageData(cursor.getLong(0), uri.toString());
-            cursor.close();
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         source.close();
         finish();

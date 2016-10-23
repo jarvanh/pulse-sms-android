@@ -162,9 +162,11 @@ public class NotificationService extends IntentService {
                     conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
                 }
             } while (unseenMessages.moveToNext());
-
-            unseenMessages.close();
         }
+
+        try {
+            unseenMessages.close();
+        } catch (Exception e) { }
 
         source.close();
 

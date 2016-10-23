@@ -76,6 +76,11 @@ public class MessengerChooserTargetService extends ChooserTargetService {
 
             cursor.close();
         } else if (cursor.getCount() == 0) {
+
+            try {
+                cursor.close();
+            } catch (Exception e) { }
+
             // no pinned conversations
             cursor = source.getAllConversations();
             do {

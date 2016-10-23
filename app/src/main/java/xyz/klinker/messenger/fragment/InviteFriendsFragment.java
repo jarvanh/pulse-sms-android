@@ -116,9 +116,11 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                             return;
                         }
                     } while (cursor.moveToNext());
-
-                    cursor.close();
                 }
+
+                try {
+                    cursor.close();
+                } catch (Exception e) { }
 
                 handler.post(new Runnable() {
                     @Override

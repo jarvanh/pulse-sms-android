@@ -65,12 +65,19 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
                             MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
                         }
                     } while (messages.moveToNext());
-                    messages.close();
                 }
+
+                try {
+                    messages.close();
+                } catch (Exception e) { }
             }
 
             source.close();
         }
+
+        try {
+            message.close();
+        } catch (Exception e) { }
     }
 
 }

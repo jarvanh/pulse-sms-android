@@ -348,6 +348,10 @@ public class DataSource {
             contact.fillFromCursor(cursor);
             cursor.close();
             return contact;
+        } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
         }
 
         return null;
@@ -393,6 +397,11 @@ public class DataSource {
                 contact.fillFromCursor(cursor);
                 contacts.add(contact);
             } while (cursor.moveToNext());
+            cursor.close();
+        } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
         }
 
         return contacts;
@@ -434,6 +443,10 @@ public class DataSource {
                 contacts.add(contact);
             } while (cursor.moveToNext());
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         return contacts;
     }
@@ -555,6 +568,11 @@ public class DataSource {
 
                 if (messages.getCount() == 0) {
                     deleteConversation(conversationId);
+
+                    try {
+                        messages.close();
+                    } catch (Exception e) { }
+
                     continue;
                 }
 
@@ -568,9 +586,11 @@ public class DataSource {
                             }
                         }
                     } while (messages.moveToNext() && messages.getPosition() < SmsMmsUtils.INITIAL_MESSAGE_LIMIT);
-
-                    messages.close();
                 }
+
+                try {
+                    messages.close();
+                } catch (Exception e) { }
             }
 
             if (listener != null) {
@@ -738,6 +758,10 @@ public class DataSource {
             conversation.fillFromCursor(cursor);
             cursor.close();
             return conversation;
+        } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
         }
 
         return null;
@@ -960,8 +984,11 @@ public class DataSource {
             builder.append("<b>Message Count: </b>");
             builder.append(cursor.getCount());
             builder.append("<br/>");
-            cursor.close();
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         // remove the last <br/>
         String description = builder.toString();
@@ -1069,8 +1096,12 @@ public class DataSource {
         if (cursor.moveToFirst()) {
             Message message = new Message();
             message.fillFromCursor(cursor);
+            cursor.close();
             return message;
         } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
             return null;
         }
     }
@@ -1119,9 +1150,11 @@ public class DataSource {
                 message.fillFromCursor(c);
                 messages.add(message);
             } while (c.moveToNext());
-
-            c.close();
         }
+
+        try {
+            c.close();
+        } catch (Exception e) { }
 
         return messages;
     }
@@ -1148,9 +1181,11 @@ public class DataSource {
                 message.fillFromCursor(c);
                 messages.add(message);
             } while (c.moveToPrevious() && messages.size() < count);
-
-            c.close();
         }
+
+        try {
+            c.close();
+        } catch (Exception e) { }
 
         return messages;
     }
@@ -1282,6 +1317,9 @@ public class DataSource {
             cursor.close();
             return conversationId;
         } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
             return null;
         }
     }
@@ -1302,6 +1340,9 @@ public class DataSource {
             cursor.close();
             return conversationId;
         } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
             return null;
         }
     }
@@ -1332,6 +1373,11 @@ public class DataSource {
                     message.mimeType, false);
             cursor.close();
         } else {
+
+            try {
+                cursor.close();
+            } catch (Exception e) { }
+
             Conversation conversation = new Conversation();
             conversation.pinned = false;
             conversation.read = message.read;
@@ -1642,8 +1688,11 @@ public class DataSource {
                 draft.fillFromCursor(cursor);
                 drafts.add(draft);
             } while (cursor.moveToNext());
-            cursor.close();
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         return drafts;
     }

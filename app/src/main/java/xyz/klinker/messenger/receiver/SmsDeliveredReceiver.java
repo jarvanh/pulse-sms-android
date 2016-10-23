@@ -84,9 +84,11 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
                 long conversationId = messages
                         .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
-
-                messages.close();
             }
+
+            try {
+                messages.close();
+            } catch (Exception e) { }
 
             source.close();
         }

@@ -115,9 +115,11 @@ public class SmsSentReceiver extends SentReceiver {
                     NotificationManagerCompat.from(context)
                             .notify(6666 + (int) id, notification);
                 }
-
-                messages.close();
             }
+
+            try {
+                messages.close();
+            } catch (Exception e) { }
 
             source.close();
         }

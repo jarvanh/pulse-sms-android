@@ -41,9 +41,11 @@ public class BlacklistUtils {
                     return true;
                 }
             } while (cursor.moveToNext());
-
-            cursor.close();
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
 
         return false;
     }

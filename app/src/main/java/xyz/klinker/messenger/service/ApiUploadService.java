@@ -168,6 +168,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     private void uploadConversations() {
@@ -202,6 +206,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     private void uploadContacts() {
@@ -238,6 +246,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     private void uploadBlacklists() {
@@ -268,6 +280,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     private void uploadScheduledMessages() {
@@ -299,6 +315,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     private void uploadDrafts() {
@@ -328,6 +348,10 @@ public class ApiUploadService extends Service {
                         (System.currentTimeMillis() - startTime) + " ms");
             }
         }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
     }
 
     /**

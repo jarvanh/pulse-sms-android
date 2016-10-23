@@ -94,9 +94,11 @@ public class ScheduledMessageService extends Service {
                     Log.v("scheduled message", "message was sent and notification given");
                 }
             } while (messages.moveToNext());
-
-            messages.close();
         }
+
+        try {
+            messages.close();
+        } catch (Exception e) { }
 
         // get scheduled messages again so that we have an accurate time for the next message
         messages = source.getScheduledMessages();
