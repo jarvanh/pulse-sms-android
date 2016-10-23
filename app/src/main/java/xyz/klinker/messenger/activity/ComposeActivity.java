@@ -45,6 +45,8 @@ import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -326,11 +328,18 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     String tempData = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
                     try {
                         File dst = new File(getFilesDir(),
-                                ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg");
-                        Bitmap bmp = ImageUtils.getBitmap(this, tempData);
-                        FileOutputStream stream = new FileOutputStream(dst);
-                        bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
-                        stream.close();
+                                ((int) (Math.random() * Integer.MAX_VALUE)) + "");
+                        InputStream in = getContentResolver().openInputStream(Uri.parse(tempData));
+
+                        OutputStream out = new FileOutputStream(dst);
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while((len=in.read(buf))>0){
+                            out.write(buf,0,len);
+                        }
+                        out.close();
+                        in.close();
+
                         data = Uri.fromFile(dst).toString();
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -926,9 +926,11 @@ public class MessageListFragment extends Fragment implements
                 attachImage(Uri.parse(draft.data));
             } else if (draft.mimeType.equals(MimeType.IMAGE_GIF)) {
                 attachImage(Uri.parse(draft.data));
+                attachedMimeType = draft.mimeType;
                 editImage.setVisibility(View.GONE);
             } else if (draft.mimeType.contains("audio/")) {
                 attachAudio(Uri.parse(draft.data));
+                attachedMimeType = draft.mimeType;
                 editImage.setVisibility(View.GONE);
             } else if (draft.mimeType.contains("video/")) {
                 attachImage(Uri.parse(draft.data));
