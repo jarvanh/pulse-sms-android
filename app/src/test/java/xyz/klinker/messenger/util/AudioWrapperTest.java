@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 
 public class AudioWrapperTest extends MessengerSuite {
-    
+
     @Mock
     private UiModeManager manager;
 
