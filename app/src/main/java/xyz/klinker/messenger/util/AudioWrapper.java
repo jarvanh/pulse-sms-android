@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import java.io.IOException;
@@ -98,7 +99,8 @@ public class AudioWrapper {
         mediaPlayer.start();
     }
 
-    private boolean shouldPlaySound(Context context) {
+    @VisibleForTesting
+    protected static boolean shouldPlaySound(Context context) {
         // we don't really want to play sounds on the TV or on a watch
 
         UiModeManager uiModeManager = (UiModeManager) context.getSystemService(UI_MODE_SERVICE);
