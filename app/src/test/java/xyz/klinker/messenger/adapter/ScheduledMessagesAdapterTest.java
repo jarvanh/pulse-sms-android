@@ -51,12 +51,6 @@ public class ScheduledMessagesAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void getCount() {
-        when(cursor.getCount()).thenReturn(20);
-        assertEquals(20, adapter.getItemCount());
-    }
-
-    @Test
     public void getCountNull() {
         adapter = new ScheduledMessagesAdapter(null, null);
         assertEquals(0, adapter.getItemCount());

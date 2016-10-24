@@ -130,7 +130,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         adapter = new BlacklistAdapter(blacklists, this);
         list.setAdapter(adapter);
 
-        if (!blacklists.isClosed() && blacklists.getCount() == 0) {
+        if (adapter.getItemCount() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);

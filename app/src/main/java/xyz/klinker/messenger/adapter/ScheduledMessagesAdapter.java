@@ -24,10 +24,13 @@ import android.view.ViewGroup;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ScheduledMessageViewHolder;
+import xyz.klinker.messenger.data.model.Blacklist;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
 
@@ -36,15 +39,16 @@ import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
  */
 public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMessageViewHolder> {
 
-    private Cursor cursor;
+    private List<ScheduledMessage> scheduledMessages;
     private DateFormat formatter;
     private ScheduledMessageClickListener listener;
 
     public ScheduledMessagesAdapter(Cursor cursor, ScheduledMessageClickListener listener) {
-        this.cursor = cursor;
         this.formatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
                 SimpleDateFormat.SHORT);
         this.listener = listener;
+
+        setScheduledMessages(cursor);
     }
 
     @Override
@@ -56,10 +60,7 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
 
     @Override
     public void onBindViewHolder(ScheduledMessageViewHolder holder, int position) {
-        cursor.moveToPosition(position);
-
-        final ScheduledMessage message = new ScheduledMessage();
-        message.fillFromCursor(cursor);
+        final ScheduledMessage message = getItem(position);
 
         holder.titleDate.setText(message.title + " - " + formatter.format(new Date(message.timestamp)));
         holder.message.setText(message.data);
@@ -85,11 +86,29 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
 
     @Override
     public int getItemCount() {
-        if (cursor == null) {
-            return 0;
-        } else {
-            return cursor.getCount();
-        }
+        return scheduledMessages.size();
     }
 
+    public ScheduledMessage getItem(int position) {
+        return scheduledMessages.get(position);
+    }
+
+    private void setScheduledMessages(Cursor cursor) {
+        scheduledMessages = new ArrayList<>();
+
+        if (cursor == null) {
+            return;
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
+                ScheduledMessage message = new ScheduledMessage();
+                message.fillFromCursor(cursor);
+
+                scheduledMessages.add(message);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+    }
 }

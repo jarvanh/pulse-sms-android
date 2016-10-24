@@ -155,7 +155,7 @@ public class DataSource {
 
         if (!actionable) {
             close();
-            open();
+            database = dbHelper.getWritableDatabase();
         }
     }
 

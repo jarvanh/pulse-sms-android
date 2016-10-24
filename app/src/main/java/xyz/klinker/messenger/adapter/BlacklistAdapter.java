@@ -80,6 +80,10 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
     private void setBlacklists(Cursor cursor) {
         blacklists = new ArrayList<>();
 
+        if (cursor == null) {
+            return;
+        }
+
         if (cursor.moveToFirst()) {
             do {
                 Blacklist blacklist = new Blacklist();

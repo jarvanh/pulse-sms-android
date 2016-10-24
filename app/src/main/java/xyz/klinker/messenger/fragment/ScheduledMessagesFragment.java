@@ -79,9 +79,6 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private FloatingActionButton fab;
     private View emptyView;
 
-    private DataSource source;
-    private Cursor messages;
-
     public static ScheduledMessagesFragment newInstance() {
         return new ScheduledMessagesFragment();
     }
@@ -126,9 +123,6 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        source = DataSource.getInstance(getActivity());
-        source.open();
-
         loadMessages();
 
         if (getArguments() != null && getArguments().getString(ARG_TITLE) != null &&
@@ -149,11 +143,6 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        source.close();
-
-        if (messages != null && !messages.isClosed()) {
-            messages.close();
-        }
     }
 
     private void loadMessages() {
@@ -161,12 +150,15 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         new Thread(new Runnable() {
             @Override
             public void run() {
-                messages = source.getScheduledMessages();
+                final DataSource source = DataSource.getInstance(getActivity());
+                source.open();
+                final Cursor messages = source.getScheduledMessages();
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         setMessages(messages);
+                        source.close();
                     }
                 });
             }
@@ -177,7 +169,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         progress.setVisibility(View.GONE);
         list.setAdapter(new ScheduledMessagesAdapter(messages, this));
 
-        if (messages.getCount() == 0) {
+        if (list.getAdapter().getItemCount() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);
@@ -191,7 +183,11 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        DataSource source = DataSource.getInstance(getActivity());
+                        source.open();
                         source.deleteScheduledMessage(message.id);
+                        source.close();
+
                         loadMessages();
                     }
                 })
@@ -324,7 +320,11 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void saveMessage(final ScheduledMessage message) {
+        DataSource source = DataSource.getInstance(getActivity());
+        source.open();
         source.insertScheduledMessage(message);
+        source.close();
+
         loadMessages();
     }
 

@@ -45,12 +45,6 @@ public class BlacklistAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void cursorCount() {
-        when(cursor.getCount()).thenReturn(10);
-        assertEquals(10, adapter.getItemCount());
-    }
-
-    @Test
     public void cursorCountZero() {
         when(cursor.getCount()).thenReturn(0);
         assertEquals(0, adapter.getItemCount());
