@@ -245,7 +245,7 @@ public class ContactUtils {
             String firstLetter = conversation.title.substring(0, 1);
 
             // if the first letter is a character and not a number or + or something weird, show it.
-            if (Pattern.compile("[a-zA-Z]").matcher(firstLetter).find()) {
+            if (Pattern.compile("[\\p{Alpha}]", Pattern.UNICODE_CHARACTER_CLASS).matcher(firstLetter).find()) {
                 return true;
             } else {
                 return false;
