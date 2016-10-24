@@ -49,7 +49,10 @@ public class DynamicShortcutUtils {
                 Set<String> category = new HashSet<>();
                 category.add("android.shortcut.conversation");
 
-                ShortcutInfo info = new ShortcutInfo.Builder(context, conversation.title)
+                String id = conversation.title == null || conversation.title.isEmpty() ?
+                        conversation.id + "" : conversation.title;
+
+                ShortcutInfo info = new ShortcutInfo.Builder(context, id)
                         .setIntent(messenger)
                         .setRank(infos.size())
                         .setShortLabel(conversation.title)
