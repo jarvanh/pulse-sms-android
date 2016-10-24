@@ -50,9 +50,8 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     private static final String ARG_PHONE_NUMBER = "phone_number";
 
-    private DataSource source;
-    private Cursor blacklists;
     private RecyclerView list;
+    private BlacklistAdapter adapter;
     private FloatingActionButton fab;
     private View emptyView;
 
@@ -100,26 +99,10 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        source = DataSource.getInstance(getActivity());
-        source.open();
-
         loadBlacklists();
 
         if (getArguments().containsKey(ARG_PHONE_NUMBER)) {
             addBlacklist(getArguments().getString(ARG_PHONE_NUMBER));
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if (blacklists != null && !blacklists.isClosed()) {
-            blacklists.close();
-        }
-
-        if (source != null && source.isOpen()) {
-            source.close();
         }
     }
 
@@ -128,12 +111,15 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                blacklists = source.getBlacklists();
+                final DataSource source = DataSource.getInstance(getActivity());
+                source.open();
+                final Cursor blacklists = source.getBlacklists();
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         setBlacklists(blacklists);
+                        source.close();
                     }
                 });
             }
@@ -141,7 +127,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     }
 
     private void setBlacklists(Cursor blacklists) {
-        BlacklistAdapter adapter = new BlacklistAdapter(blacklists, this);
+        adapter = new BlacklistAdapter(blacklists, this);
         list.setAdapter(adapter);
 
         if (!blacklists.isClosed() && blacklists.getCount() == 0) {
@@ -195,7 +181,12 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Blacklist blacklist = new Blacklist();
                             blacklist.phoneNumber = cleared;
+
+                            DataSource source = DataSource.getInstance(getActivity());
+                            source.open();
                             source.insertBlacklist(blacklist);
+                            source.close();
+
                             loadBlacklists();
                         }
                     })
@@ -212,7 +203,11 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        DataSource source = DataSource.getInstance(getActivity());
+                        source.open();
                         source.deleteBlacklist(id);
+                        source.close();
+
                         loadBlacklists();
                     }
                 })
@@ -222,12 +217,8 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     @Override
     public void onClick(int position) {
-        blacklists.moveToPosition(position);
-        long id = blacklists.getLong(blacklists.getColumnIndex(Blacklist.COLUMN_ID));
-        String number = blacklists
-                .getString(blacklists.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER));
-
-        removeBlacklist(id, number);
+        Blacklist blacklist = adapter.getItem(position);
+        removeBlacklist(blacklist.id, blacklist.phoneNumber);
     }
 
 }

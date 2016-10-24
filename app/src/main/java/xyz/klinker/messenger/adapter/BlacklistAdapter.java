@@ -22,6 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.BlacklistViewHolder;
 import xyz.klinker.messenger.data.model.Blacklist;
@@ -33,12 +36,12 @@ import xyz.klinker.messenger.util.listener.BlacklistClickedListener;
  */
 public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> {
 
-    private Cursor cursor;
+    private List<Blacklist> blacklists;
     private BlacklistClickedListener listener;
 
     public BlacklistAdapter(Cursor cursor, BlacklistClickedListener listener) {
-        this.cursor = cursor;
         this.listener = listener;
+        setBlacklists(cursor);
     }
 
     @Override
@@ -61,19 +64,32 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
 
     @Override
     public void onBindViewHolder(BlacklistViewHolder holder, int position) {
-        cursor.moveToPosition(position);
-        String number = cursor.getString(cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER));
-
+        String number = getItem(position).phoneNumber;
         holder.text.setText(PhoneNumberUtils.format(number));
     }
 
     @Override
     public int getItemCount() {
-        if (cursor == null) {
-            return 0;
-        } else {
-            return cursor.getCount();
+        return blacklists.size();
+    }
+
+    public Blacklist getItem(int postion) {
+        return blacklists.get(postion);
+    }
+
+    private void setBlacklists(Cursor cursor) {
+        blacklists = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Blacklist blacklist = new Blacklist();
+                blacklist.fillFromCursor(cursor);
+
+                blacklists.add(blacklist);
+            } while (cursor.moveToNext());
         }
+
+        cursor.close();
     }
 
 }
