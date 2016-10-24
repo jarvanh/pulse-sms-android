@@ -227,7 +227,7 @@ public class ContactUtils {
                 }
 
                 if (contactId != -1L) {
-                    Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
+                    Uri photoUri = ContentUris.withAppendedId(ContactsContract.RawContacts.CONTENT_URI, contactId);
                     return photoUri.toString();
                 }
             } catch (Exception e) {
