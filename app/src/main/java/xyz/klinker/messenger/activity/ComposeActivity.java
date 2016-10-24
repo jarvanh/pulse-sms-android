@@ -175,6 +175,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 try {
                     cursor.close();
                 } catch (Exception e) { }
+
+                source.close();
             }
         }).start();
     }

@@ -47,6 +47,8 @@ public class BlacklistUtils {
             cursor.close();
         } catch (Exception e) { }
 
+        source.close();
+
         return false;
     }
 

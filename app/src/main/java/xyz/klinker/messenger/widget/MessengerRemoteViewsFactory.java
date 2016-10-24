@@ -69,6 +69,8 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         try {
             items.close();
         } catch (Exception e) { }
+
+        source.close();
     }
 
     @Override

@@ -118,7 +118,6 @@ public class MessengerActivity extends AppCompatActivity
     public static final int REQUEST_ONBOARDING = 101;
     public static final int REQUEST_CALL_PERMISSION = 104;
 
-    private DataSource source;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -130,6 +129,8 @@ public class MessengerActivity extends AppCompatActivity
     private boolean inSettings = false;
 
     private BroadcastReceiver downloadReceiver;
+
+    private boolean loaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -176,10 +177,8 @@ public class MessengerActivity extends AppCompatActivity
         TimeUtils.setupNightTheme(this);
         UpdateUtils.checkForUpdate(this);
 
-        if (source == null) {
-            source = DataSource.getInstance(this);
-            source.open();
-
+        if (!loaded) {
+            loaded = true;
             displayConversations();
         }
 
@@ -228,10 +227,6 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (source != null) {
-            source.close();
-        }
 
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);
