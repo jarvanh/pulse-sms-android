@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import java.util.List;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
@@ -21,8 +23,8 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
 
     // only grab the archived messages
     @Override
-    protected Cursor getCursor(DataSource source) {
-        return source.getArchivedConversations();
+    protected List<Conversation> getCursor(DataSource source) {
+        return source.getArchivedConversationsAsList();
     }
 
     // create swipe helper that has the unarchive icon instead of the archive one

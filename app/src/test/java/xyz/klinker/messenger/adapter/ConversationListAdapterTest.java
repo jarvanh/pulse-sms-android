@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -310,7 +311,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         return holder;
     }
 
-    private Cursor getFakeConversations(Context context) {
+    private List<Conversation> getFakeConversations(Context context) {
         MatrixCursor cursor = new MatrixCursor(new String[]{
                 Conversation.COLUMN_ID,
                 Conversation.COLUMN_COLOR,
@@ -473,7 +474,18 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 1
         });
 
-        return cursor;
+        List<Conversation> conversations = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(cursor);
+
+                conversations.add(conversation);
+            } while (cursor.moveToNext());
+        }
+
+        return conversations;
     }
 
 }

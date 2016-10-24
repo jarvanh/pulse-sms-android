@@ -145,7 +145,7 @@ public class DataSource {
     }
 
     private void ensureActionable() {
-        boolean actionable = true;
+        boolean actionable;
 
         try {
             actionable = isOpen();
@@ -154,8 +154,18 @@ public class DataSource {
         }
 
         if (!actionable) {
-            close();
-            database = dbHelper.getWritableDatabase();
+            // ensure we are closing everything and getting a brand new database connection
+            openCounter.set(0);
+
+            try {
+                dbHelper.close();
+            } catch (Exception e) { }
+
+            try {
+                database.close();
+            } catch (Exception e) { }
+
+            open();
         }
     }
 
@@ -166,6 +176,10 @@ public class DataSource {
         if (openCounter.decrementAndGet() == 0) {
             try {
                 dbHelper.close();
+            } catch (Exception e) { }
+
+            try {
+                database.close();
             } catch (Exception e) { }
         }
     }
@@ -725,6 +739,11 @@ public class DataSource {
         ensureActionable();
         return database.query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1", null,
                 null, null, Conversation.COLUMN_TIMESTAMP + " desc");
+    }
+
+    public List<Conversation> getArchivedConversationsAsList() {
+        ensureActionable();
+        return convertConversationCursorToList(getArchivedConversations());
     }
 
     /**

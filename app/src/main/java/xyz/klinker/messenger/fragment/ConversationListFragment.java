@@ -167,8 +167,8 @@ public class ConversationListFragment extends Fragment
         }
     }
 
-    protected Cursor getCursor(DataSource source) {
-        return source.getUnarchivedConversations();
+    protected List<Conversation> getCursor(DataSource source) {
+        return source.getUnarchivedConversationsAsList();
     }
 
     private void loadConversations() {
@@ -183,7 +183,9 @@ public class ConversationListFragment extends Fragment
                 long startTime = System.currentTimeMillis();
                 final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
-                final Cursor conversations = getCursor(source);
+                final List<Conversation> conversations = getCursor(source);
+                source.close();
+
                 Log.v("conversation_load", "load took " + (
                         System.currentTimeMillis() - startTime) + " ms");
 
@@ -191,7 +193,6 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void run() {
                         setConversations(conversations);
-                        source.close();
                         lastRefreshTime = System.currentTimeMillis();
 
                         try {
@@ -207,7 +208,7 @@ public class ConversationListFragment extends Fragment
         return new SwipeTouchHelper(adapter);
     }
 
-    private void setConversations(Cursor conversations) {
+    private void setConversations(List<Conversation> conversations) {
         this.pendingDelete = new ArrayList<>();
         this.pendingArchive = new ArrayList<>();
 

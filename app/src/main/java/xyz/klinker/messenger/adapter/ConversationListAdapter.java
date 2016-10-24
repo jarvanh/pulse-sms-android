@@ -55,7 +55,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     private ConversationExpandedListener conversationExpandedListener;
     private List<SectionType> sectionCounts;
 
-    public ConversationListAdapter(Cursor conversations,
+    public ConversationListAdapter(List<Conversation> conversations,
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.swipeToDeleteListener = swipeToDeleteListener;
@@ -63,40 +63,35 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         setConversations(conversations);
     }
 
-    public void setConversations(Cursor cursor) {
+    public void setConversations(List<Conversation> convos) {
         this.conversations = new ArrayList<>();
         this.sectionCounts = new ArrayList<>();
 
         int currentSection = 0;
         int currentCount = 0;
 
-        if (cursor.moveToFirst()) {
-            do {
-                Conversation conversation = new Conversation();
-                conversation.fillFromCursor(cursor);
-                conversations.add(conversation);
+        for (int i = 0; i < convos.size(); i++) {
+            Conversation conversation = convos.get(i);
+            this.conversations.add(conversation);
 
-                if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                        (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
-                        (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
-                        (currentSection == SectionType.LAST_WEEK && TimeUtils.isLastWeek(conversation.timestamp)) ||
-                        (currentSection == SectionType.LAST_MONTH && TimeUtils.isLastMonth(conversation.timestamp)) ||
-                        (currentSection == SectionType.OLDER)) {
-                    currentCount++;
-                } else {
-                    if (currentCount != 0) {
-                        sectionCounts.add(new SectionType(currentSection, currentCount));
-                    }
-
-                    currentSection++;
-                    currentCount = 0;
-                    cursor.moveToPrevious();
-                    conversations.remove(conversation);
+            if ((currentSection == SectionType.PINNED && conversation.pinned) ||
+                    (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
+                    (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
+                    (currentSection == SectionType.LAST_WEEK && TimeUtils.isLastWeek(conversation.timestamp)) ||
+                    (currentSection == SectionType.LAST_MONTH && TimeUtils.isLastMonth(conversation.timestamp)) ||
+                    (currentSection == SectionType.OLDER)) {
+                currentCount++;
+            } else {
+                if (currentCount != 0) {
+                    sectionCounts.add(new SectionType(currentSection, currentCount));
                 }
-            } while (cursor.moveToNext());
-        }
 
-        cursor.close();
+                currentSection++;
+                currentCount = 0;
+                i--;
+                this.conversations.remove(conversation);
+            }
+        }
 
         sectionCounts.add(new SectionType(currentSection, currentCount));
     }
