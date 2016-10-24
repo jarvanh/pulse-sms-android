@@ -299,7 +299,7 @@ public class ColorUtils {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 

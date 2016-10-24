@@ -38,7 +38,7 @@ public class ContactUtilsTest extends MessengerSuite {
         conversation.title = "原田雅彦";
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
     }
-    
+
     @Test
     public void shouldNotShowImageLetter() {
         Conversation conversation = new Conversation();
