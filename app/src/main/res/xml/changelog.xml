@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.7.6"
+        description="October 23rd, 2016">
+        <text>Change text color of messages on light backgrounds</text>
+        <text>Tons of cleanup</text>
+        <text>Bug and stability improvements</text>
+    </version>
+
+    <version
         name="1.7.5"
         description="October 21st, 2016">
         <text>Various improvements to photo syncing across devices (especially GIFs)</text>
