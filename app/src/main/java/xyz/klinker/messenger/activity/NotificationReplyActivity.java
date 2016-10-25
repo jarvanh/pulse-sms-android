@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -429,7 +428,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new SendUtils(conversation.subscriptionIdForSim)
+                new SendUtils(conversation.simSubscriptionId)
                         .send(NotificationReplyActivity.this, message,
                             conversation.phoneNumbers);
             }

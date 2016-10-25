@@ -28,7 +28,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.mms.transaction.MmsMessageSender;
-import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduHeaders;
@@ -97,6 +96,7 @@ public class SmsMmsUtils {
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
                 ImageUtils.fillConversationColors(conversation, context);
+                conversation.simSubscriptionId = -1;
 
                 conversations.add(conversation);
             } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);

@@ -36,7 +36,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "messenger.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private DatabaseTable[] tables = {
             new Contact(),
@@ -95,6 +95,12 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         if (oldVersion < 5) {
             try {
                 db.execSQL("ALTER TABLE conversation ADD COLUMN led_color integer not null DEFAULT " + Color.WHITE); // white default
+            } catch(Exception e) { }
+        }
+
+        if (oldVersion < 6) {
+            try {
+                db.execSQL("ALTER TABLE conversation ADD COLUMN sim_subscription_id integer DEFAULT -1");
             } catch(Exception e) { }
         }
     }

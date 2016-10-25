@@ -32,7 +32,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -290,10 +289,10 @@ public class FirebaseHandlerService extends IntentService {
 
                 if (conversation != null) {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                        new SendUtils(conversation.subscriptionIdForSim)
+                        new SendUtils(conversation.simSubscriptionId)
                                 .send(context, message.data, conversation.phoneNumbers);
                     } else {
-                        new SendUtils(conversation.subscriptionIdForSim)
+                        new SendUtils(conversation.simSubscriptionId)
                                 .send(context, "", conversation.phoneNumbers,
                                 Uri.parse(message.data), message.mimeType);
                     }
@@ -352,10 +351,10 @@ public class FirebaseHandlerService extends IntentService {
 
                     if (conversation != null) {
                         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                            new SendUtils(conversation.subscriptionIdForSim)
+                            new SendUtils(conversation.simSubscriptionId)
                                     .send(context, message.data, conversation.phoneNumbers);
                         } else {
-                            new SendUtils(conversation.subscriptionIdForSim)
+                            new SendUtils(conversation.simSubscriptionId)
                                     .send(context, "", conversation.phoneNumbers,
                                         Uri.parse(message.data), message.mimeType);
                         }
@@ -441,6 +440,7 @@ public class FirebaseHandlerService extends IntentService {
         conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"));
         conversation.mute = json.getBoolean("mute");
         conversation.archive = json.getBoolean("archive");
+        conversation.simSubscriptionId = -1;
 
         if (conversation.imageUri != null &&
                 ImageUtils.getContactImage(conversation.imageUri, context) == null) {
@@ -759,7 +759,7 @@ public class FirebaseHandlerService extends IntentService {
         Conversation conversation = source.getConversation(conversationId);
         source.setUpload(false);
 
-        new SendUtils(conversation.subscriptionIdForSim)
+        new SendUtils(conversation.simSubscriptionId)
                 .send(context, message.data, to);
     }
     

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,7 +61,6 @@ import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -395,7 +393,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
         Conversation conversation = source.getConversation(conversationId);
 
-        Uri uri = new SendUtils(conversation.subscriptionIdForSim)
+        Uri uri = new SendUtils(conversation.simSubscriptionId)
                 .send(this, "", phoneNumbers, Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(data);
 

@@ -66,7 +66,7 @@ public class SendUtils {
                 .deliveryReports);
         settings.setSendLongAsMms(xyz.klinker.messenger.data.Settings.get(context)
                 .convertLongMessagesToMMS);
-        //settings.setSubscriptionId(subscriptionId);
+        settings.setSubscriptionId(subscriptionId);
 
         Transaction transaction = new Transaction(context, settings);
         Message message = new Message(text, addresses);

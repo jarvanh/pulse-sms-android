@@ -103,6 +103,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                                     .clearFormatting(cursor.getString(2));
                             conversation.imageUri = ContactUtils
                                     .findImageUri(conversation.phoneNumbers, getActivity());
+                            conversation.simSubscriptionId = -1;
 
                             if (ImageUtils.getContactImage(conversation.imageUri, getActivity()) == null) {
                                 conversation.imageUri = null;

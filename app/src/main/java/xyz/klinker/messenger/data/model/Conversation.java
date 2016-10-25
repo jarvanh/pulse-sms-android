@@ -48,6 +48,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_ARCHIVED = "archive"; // created in database v2
     public static final String COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications"; // created in database v4
     public static final String COLUMN_LED_COLOR = "led_color"; // created in database v5
+    public static final String COLUMN_SIM_SUBSCRIPTION_ID = "sim_subscription_id"; // created in database v6
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -68,7 +69,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_MUTE + " integer not null, " +
             COLUMN_ARCHIVED + " integer not null default 0, " +
             COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0, " +
-            COLUMN_LED_COLOR + " integer not null default " + Color.WHITE +
+            COLUMN_LED_COLOR + " integer not null default " + Color.WHITE + ", " +
+            COLUMN_SIM_SUBSCRIPTION_ID + " integer default -1" +
             ");";
 
     public long id;
@@ -86,7 +88,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean mute;
     public boolean archive;
     public boolean privateNotifications;
-    public Integer subscriptionIdForSim;
+    public Integer simSubscriptionId;
 
     public Conversation() {
 
@@ -169,6 +171,8 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 this.archive = cursor.getInt(i) == 1;
             } else if (column.equals(COLUMN_PRIVATE_NOTIFICATIONS)) {
                 this.privateNotifications = cursor.getInt(i) == 1;
+            } else if (column.equals(COLUMN_SIM_SUBSCRIPTION_ID)) {
+                this.simSubscriptionId = cursor.getInt(i) == -1 ? null : cursor.getInt(i);
             }
         }
     }

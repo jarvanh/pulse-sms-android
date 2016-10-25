@@ -14,7 +14,6 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.ReplyService;
@@ -63,7 +62,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
-        new SendUtils(conversation.subscriptionIdForSim)
+        new SendUtils(conversation.simSubscriptionId)
                 .send(context, reply, conversation.phoneNumbers);
 
         // cancel the notification we just replied to or

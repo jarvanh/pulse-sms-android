@@ -74,7 +74,7 @@ public class ScheduledMessageService extends Service {
                     long conversationId = source.insertSentMessage(message.to, message.data, message.mimeType, this);
                     Conversation conversation = source.getConversation(conversationId);
 
-                    new SendUtils(conversation.subscriptionIdForSim)
+                    new SendUtils(conversation.simSubscriptionId)
                             .send(this, message.data, message.to);
 
                     // display a notification

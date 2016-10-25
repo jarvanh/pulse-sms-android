@@ -23,7 +23,6 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,15 +32,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.inputmethodservice.InputMethodService;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -50,7 +46,6 @@ import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -68,7 +63,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -100,7 +94,6 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -1005,7 +998,7 @@ public class MessageListFragment extends Fragment implements
                     @Override
                     public void run() {
                         Conversation conversation = source.getConversation(getConversationId());
-                        Uri imageUri = new SendUtils(conversation.subscriptionIdForSim)
+                        Uri imageUri = new SendUtils(conversation.simSubscriptionId)
                                 .send(getContext(), message,
                                     getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());

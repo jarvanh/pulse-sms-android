@@ -1417,6 +1417,7 @@ public class DataSource {
             conversation.mute = false;
             conversation.archive = false;
             conversation.ledColor = Color.WHITE;
+            conversation.simSubscriptionId = -1;
 
             ImageUtils.fillConversationColors(conversation, context);
 

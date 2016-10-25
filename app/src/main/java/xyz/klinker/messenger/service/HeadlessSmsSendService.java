@@ -63,7 +63,7 @@ public class HeadlessSmsSendService extends Service {
         Conversation conversation = source.getConversation(conversationId);
         source.close();
 
-        new SendUtils(conversation.subscriptionIdForSim)
+        new SendUtils(conversation.simSubscriptionId)
                 .send(this, text, addresses);
 
         return super.onStartCommand(intent, flags, startId);
