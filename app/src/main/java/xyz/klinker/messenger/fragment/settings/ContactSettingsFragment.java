@@ -152,7 +152,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 }
             });
 
-            if (subscriptions != null ) {
+            if (subscriptions != null && subscriptions.size() > 1) {
                 showSetting = true;
 
                 if (conversation.simSubscriptionId != null) {
