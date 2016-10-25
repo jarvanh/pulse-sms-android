@@ -1,1 +1,1 @@
-WOW Android 7.1 changes already?! Yup. The app is now built for Android 7.1, can use it's brand new image keyboard, and implements dynamic launcher shortcuts (need the pixel launcher and Android 7.1).
+v1.8.0 contains dual SIM support: select which SIM to use for a conversation from that conversation's settings! It also has a ton more bug, crash fixes, and tweaks.

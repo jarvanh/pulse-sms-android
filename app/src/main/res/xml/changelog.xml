@@ -19,6 +19,7 @@
     <version
         name="1.8.0"
         description="October 25th, 2016">
+        <text>Dual SIM Support: select which SIM to use for a conversation from that conversation's settings</text>
         <text>Improve theme for quick reply in Android 6.0 and below</text>
     </version>
 
