@@ -58,8 +58,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/message_list_padding"
-        android:layout_marginEnd="@dimen/message_list_padding"
         android:scrollbars="vertical"
         android:id="@+id/list" />
 
@@ -72,6 +70,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
+        app:rippleColor="@android:color/white"
         app:fabSize="normal"
         app:borderWidth="0dp" />
 

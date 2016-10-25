@@ -140,6 +140,7 @@
             android:contentDescription="@string/api_continue"
             app:fabSize="normal"
             app:borderWidth="0dp"
+            app:rippleColor="@android:color/white"
             app:backgroundTint="@color/api_fab_background" />
 
     </RelativeLayout>
