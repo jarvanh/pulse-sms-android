@@ -210,7 +210,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        tv.setTextColor(Color.BLACK);
+        tv.setTextColor(getResources().getColor(R.color.primaryText));
 
         String string;
         if (message.type == Message.TYPE_RECEIVED) {

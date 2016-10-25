@@ -31,7 +31,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@color/background"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingTop="12dp"
@@ -47,7 +47,7 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="8dp"
-                android:background="@android:color/white"
+                android:background="@color/background"
                 android:elevation="8dp">
 
                 <TextView
@@ -62,6 +62,7 @@
                     android:drawableEnd="@drawable/ic_up"
                     android:gravity="center_vertical"
                     android:textSize="12sp"
+                    android:textColor="@color/primaryText"
                     android:background="?selectableItemBackground"/>
 
                 <LinearLayout
