@@ -152,13 +152,15 @@ public class ContactSettingsFragment extends PreferenceFragment {
                 }
             });
 
-            if (subscriptions != null && subscriptions.size() > 1) {
+            if (subscriptions != null ) {
                 showSetting = true;
 
-                // display the selected SIM if not the default
-                for (SubscriptionInfo info : subscriptions) {
-                    if (info.getSubscriptionId() == conversation.simSubscriptionId) {
-                        dualSim.setSummary(formatSimString(info));
+                if (conversation.simSubscriptionId != null) {
+                    // display the selected SIM if not the default
+                    for (SubscriptionInfo info : subscriptions) {
+                        if (info.getSubscriptionId() == conversation.simSubscriptionId) {
+                            dualSim.setSummary(formatSimString(info));
+                        }
                     }
                 }
             }
@@ -348,7 +350,8 @@ public class ContactSettingsFragment extends PreferenceFragment {
             SubscriptionInfo info = subscriptions.get(i);
 
             active[i + 1] = formatSimString(info);
-            if (info.getSubscriptionId() == conversation.simSubscriptionId) {
+            if (conversation.simSubscriptionId != null &&
+                    info.getSubscriptionId() == conversation.simSubscriptionId) {
                 selected = i + 1;
             }
         }
@@ -374,7 +377,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private String formatSimString(SubscriptionInfo info) {
-        return info.getNumber() + "(SIM " + (info.getSimSlotIndex() + 1) + ")";
+        return info.getNumber() + " (SIM " + (info.getSimSlotIndex() + 1) + ")";
     }
 
 }

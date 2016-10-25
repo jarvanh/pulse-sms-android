@@ -912,7 +912,10 @@ public class DataSource {
         values.put(Conversation.COLUMN_READ, conversation.read);
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications);
-        values.put(Conversation.COLUMN_SIM_SUBSCRIPTION_ID, conversation.simSubscriptionId);
+
+        if (conversation.simSubscriptionId != null) {
+            values.put(Conversation.COLUMN_SIM_SUBSCRIPTION_ID, conversation.simSubscriptionId);
+        }
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversation.id)});
