@@ -128,6 +128,8 @@ public class MessengerActivity extends AppCompatActivity
     private MaterialSearchView searchView;
     private boolean inSettings = false;
 
+    private DataSource dataSource;
+
     private BroadcastReceiver downloadReceiver;
 
     private boolean loaded = false;
@@ -135,6 +137,9 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dataSource = DataSource.getInstance(this);
+        dataSource.open();
 
         setContentView(R.layout.activity_messenger);
         initToolbar();
@@ -227,6 +232,10 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        try {
+            dataSource.close();
+        } catch (Exception e) { }
 
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);

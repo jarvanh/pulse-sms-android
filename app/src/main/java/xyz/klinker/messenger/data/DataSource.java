@@ -156,6 +156,7 @@ public class DataSource {
         if (!actionable) {
             // ensure we are closing everything and getting a brand new database connection
             openCounter.set(0);
+            dbHelper = new DatabaseSQLiteHelper(context);
 
             try {
                 dbHelper.close();
