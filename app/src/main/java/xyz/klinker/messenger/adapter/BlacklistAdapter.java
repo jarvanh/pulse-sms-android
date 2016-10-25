@@ -70,7 +70,11 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
 
     @Override
     public int getItemCount() {
-        return blacklists.size();
+        if (blacklists == null) {
+            return 0;
+        } else {
+            return blacklists.size();
+        }
     }
 
     public Blacklist getItem(int postion) {

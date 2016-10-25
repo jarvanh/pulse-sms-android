@@ -170,6 +170,7 @@
                 android:contentDescription="@string/send_message"
                 app:elevation="0dp"
                 app:fabSize="mini"
+                app:rippleColor="@android:color/white"
                 android:layout_gravity="center_vertical" />
 
         </LinearLayout>

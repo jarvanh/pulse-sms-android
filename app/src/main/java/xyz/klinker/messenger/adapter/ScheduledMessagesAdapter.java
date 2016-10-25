@@ -85,7 +85,11 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
 
     @Override
     public int getItemCount() {
-        return scheduledMessages.size();
+        if (scheduledMessages == null) {
+            return 0;
+        } else {
+            return scheduledMessages.size();
+        }
     }
 
     public ScheduledMessage getItem(int position) {

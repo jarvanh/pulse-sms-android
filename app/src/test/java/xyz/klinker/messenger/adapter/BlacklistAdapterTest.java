@@ -22,7 +22,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.data.model.Blacklist;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -31,12 +35,9 @@ public class BlacklistAdapterTest extends MessengerRobolectricSuite {
 
     private BlacklistAdapter adapter;
 
-    @Mock
-    private Cursor cursor;
-
     @Before
     public void setUp() {
-        adapter = new BlacklistAdapter(cursor, null);
+        adapter = new BlacklistAdapter(new ArrayList<Blacklist>(), null);
     }
 
     @Test
@@ -46,7 +47,6 @@ public class BlacklistAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void cursorCountZero() {
-        when(cursor.getCount()).thenReturn(0);
         assertEquals(0, adapter.getItemCount());
     }
 

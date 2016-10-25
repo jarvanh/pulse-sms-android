@@ -84,6 +84,7 @@
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:fabSize="normal"
+            app:rippleColor="@android:color/white"
             app:borderWidth="0dp" />
 
         <FrameLayout

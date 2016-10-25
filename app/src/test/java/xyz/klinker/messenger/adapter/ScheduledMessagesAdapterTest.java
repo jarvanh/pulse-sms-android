@@ -26,7 +26,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.data.model.ScheduledMessage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,17 +40,13 @@ public class ScheduledMessagesAdapterTest extends MessengerRobolectricSuite {
 
     private ScheduledMessagesAdapter adapter;
 
-    @Mock
-    private Cursor cursor;
-
     @Before
     public void setUp() {
-        adapter = new ScheduledMessagesAdapter(cursor, null);
+        adapter = new ScheduledMessagesAdapter(new ArrayList<ScheduledMessage>(), null);
     }
 
     @Test
     public void getCountZero() {
-        when(cursor.getCount()).thenReturn(0);
         assertEquals(0, adapter.getItemCount());
     }
 
