@@ -899,7 +899,7 @@ public class DataSource {
     public void updateConversationSettings(Conversation conversation) {
         ensureActionable();
 
-        ContentValues values = new ContentValues(10);
+        ContentValues values = new ContentValues(13);
         values.put(Conversation.COLUMN_PINNED, conversation.pinned);
         values.put(Conversation.COLUMN_TITLE, conversation.title);
         values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri);
@@ -912,6 +912,7 @@ public class DataSource {
         values.put(Conversation.COLUMN_READ, conversation.read);
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive);
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications);
+        values.put(Conversation.COLUMN_SIM_SUBSCRIPTION_ID, conversation.simSubscriptionId);
 
         database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversation.id)});

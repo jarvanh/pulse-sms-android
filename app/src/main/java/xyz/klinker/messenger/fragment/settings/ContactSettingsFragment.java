@@ -16,7 +16,11 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -27,6 +31,8 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.InputType;
 
 import java.util.List;
@@ -70,6 +76,7 @@ public class ContactSettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.contact_settings);
 
         setUpToolbar();
+        setupDualSim();
         setUpPin();
         setUpMute();
         setUpPrivate();
@@ -126,6 +133,39 @@ public class ContactSettingsFragment extends PreferenceFragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar()
                     .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));
             getActivity().getWindow().setStatusBarColor(conversation.colors.colorDark);
+        }
+    }
+
+    private void setupDualSim() {
+        final Preference dualSim = findPreference(getString(R.string.pref_contact_dual_sim));
+        boolean showSetting = false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            SubscriptionManager manager = SubscriptionManager.from(getActivity());
+            final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
+
+            dualSim.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    showSimSelection(subscriptions, dualSim);
+                    return false;
+                }
+            });
+
+            if (subscriptions != null && subscriptions.size() > 1) {
+                showSetting = true;
+
+                // display the selected SIM if not the default
+                for (SubscriptionInfo info : subscriptions) {
+                    if (info.getSubscriptionId() == conversation.simSubscriptionId) {
+                        dualSim.setSummary(formatSimString(info));
+                    }
+                }
+            }
+        }
+
+        if (!showSetting && dualSim != null) {
+            getPreferenceScreen().removePreference(dualSim);
         }
     }
 
@@ -296,6 +336,45 @@ public class ContactSettingsFragment extends PreferenceFragment {
         }
 
         source.close();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private void showSimSelection(final List<SubscriptionInfo> subscriptions, final Preference preference) {
+        final CharSequence[] active = new CharSequence[1 + subscriptions.size()];
+        int selected = 0;
+        active[0] = getString(R.string.default_text);
+
+        for (int i = 0; i < subscriptions.size(); i++) {
+            SubscriptionInfo info = subscriptions.get(i);
+
+            active[i + 1] = formatSimString(info);
+            if (info.getSubscriptionId() == conversation.simSubscriptionId) {
+                selected = i + 1;
+            }
+        }
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.dual_sim))
+                .setSingleChoiceItems(active, selected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i == 0) {
+                            preference.setSummary(R.string.dual_sim_summary);
+                            conversation.simSubscriptionId = -1;
+                        } else {
+                            preference.setSummary(active[i]);
+                            conversation.simSubscriptionId =
+                                    subscriptions.get(i - 1).getSubscriptionId();
+                        }
+
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private String formatSimString(SubscriptionInfo info) {
+        return info.getNumber() + "(SIM " + (info.getSimSlotIndex() + 1) + ")";
     }
 
 }

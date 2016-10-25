@@ -39,6 +39,7 @@
 
     <string name="pref_message_count" translatable="false">message_count</string>
 
+    <string name="pref_contact_dual_sim" translatable="false">dual_sim</string>
     <string name="pref_contact_pin_conversation" translatable="false">contact_pin_conversation</string>
     <string name="pref_contact_mute_conversation" translatable="false">contact_mute_conversation</string>
     <string name="pref_contact_private_conversation" translatable="false">contact_private_conversation</string>
