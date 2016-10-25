@@ -150,6 +150,7 @@ public class NotificationService extends IntentService {
                             conversation.ringtoneUri = null;
                             conversation.color = Settings.get(this).globalColorSet.color;
                             conversation.privateNotification = true;
+                            conversation.ledColor = Color.WHITE;
                         } else {
                             conversation.privateNotification = false;
                         }
