@@ -210,15 +210,14 @@ public class MessengerActivity extends AppCompatActivity
             menuItemClicked(R.id.drawer_account);
         }
 
-        if (getIntent().getData() != null && getIntent().getDataString().contains("https://messenger.klinkerapps.com/")) {
-            try {
-                displayShortcutConversation(Long.parseLong(getIntent().getData().getLastPathSegment()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        handleShortcutIntent(getIntent());
+        getIntent().setData(null);
+    }
 
-            getIntent().setData(null);
-        }
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleShortcutIntent(intent);
     }
 
     @Override
@@ -1093,5 +1092,15 @@ public class MessengerActivity extends AppCompatActivity
         }, 1000);
 
         Snackbar.make(findViewById(android.R.id.content), R.string.downloading_and_decrypting, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void handleShortcutIntent(Intent intent) {
+        if (intent.getData() != null && intent.getDataString().contains("https://messenger.klinkerapps.com/")) {
+            try {
+                displayShortcutConversation(Long.parseLong(intent.getData().getLastPathSegment()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
