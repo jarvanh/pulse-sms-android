@@ -54,6 +54,7 @@ import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.IllegalFormatConversionException;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
@@ -152,20 +153,20 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
             public void run() {
                 final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
-                final Cursor messages = source.getScheduledMessages();
+                final List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
+                source.close();
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         setMessages(messages);
-                        source.close();
                     }
                 });
             }
         }).start();
     }
 
-    private void setMessages(Cursor messages) {
+    private void setMessages(List<ScheduledMessage> messages) {
         progress.setVisibility(View.GONE);
         list.setAdapter(new ScheduledMessagesAdapter(messages, this));
 

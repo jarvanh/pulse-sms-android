@@ -39,9 +39,9 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
     private List<Blacklist> blacklists;
     private BlacklistClickedListener listener;
 
-    public BlacklistAdapter(Cursor cursor, BlacklistClickedListener listener) {
+    public BlacklistAdapter(List<Blacklist> blacklists, BlacklistClickedListener listener) {
         this.listener = listener;
-        setBlacklists(cursor);
+        this.blacklists = blacklists;
     }
 
     @Override
@@ -75,25 +75,6 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
 
     public Blacklist getItem(int postion) {
         return blacklists.get(postion);
-    }
-
-    private void setBlacklists(Cursor cursor) {
-        blacklists = new ArrayList<>();
-
-        if (cursor == null) {
-            return;
-        }
-
-        if (cursor.moveToFirst()) {
-            do {
-                Blacklist blacklist = new Blacklist();
-                blacklist.fillFromCursor(cursor);
-
-                blacklists.add(blacklist);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
     }
 
 }

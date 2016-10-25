@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.List;
 import java.util.Set;
 
 import xyz.klinker.messenger.R;
@@ -113,20 +114,20 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
             public void run() {
                 final DataSource source = DataSource.getInstance(getActivity());
                 source.open();
-                final Cursor blacklists = source.getBlacklists();
+                final List<Blacklist> blacklists = source.getBlacklistAsList();
+                source.close();
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         setBlacklists(blacklists);
-                        source.close();
                     }
                 });
             }
         }).start();
     }
 
-    private void setBlacklists(Cursor blacklists) {
+    private void setBlacklists(List<Blacklist> blacklists) {
         adapter = new BlacklistAdapter(blacklists, this);
         list.setAdapter(adapter);
 

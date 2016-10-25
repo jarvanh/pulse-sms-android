@@ -43,12 +43,11 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
     private DateFormat formatter;
     private ScheduledMessageClickListener listener;
 
-    public ScheduledMessagesAdapter(Cursor cursor, ScheduledMessageClickListener listener) {
+    public ScheduledMessagesAdapter(List<ScheduledMessage> messages, ScheduledMessageClickListener listener) {
         this.formatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
                 SimpleDateFormat.SHORT);
         this.listener = listener;
-
-        setScheduledMessages(cursor);
+        this.scheduledMessages = messages;
     }
 
     @Override
@@ -91,24 +90,5 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
 
     public ScheduledMessage getItem(int position) {
         return scheduledMessages.get(position);
-    }
-
-    private void setScheduledMessages(Cursor cursor) {
-        scheduledMessages = new ArrayList<>();
-
-        if (cursor == null) {
-            return;
-        }
-
-        if (cursor.moveToFirst()) {
-            do {
-                ScheduledMessage message = new ScheduledMessage();
-                message.fillFromCursor(cursor);
-
-                scheduledMessages.add(message);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
     }
 }

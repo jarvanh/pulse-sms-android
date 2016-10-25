@@ -1742,6 +1742,23 @@ public class DataSource {
         return database.query(Blacklist.TABLE, null, null, null, null, null, null);
     }
 
+    public List<Blacklist> getBlacklistAsList() {
+        Cursor cursor = getBlacklists();
+        List<Blacklist> blacklists = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Blacklist blacklist = new Blacklist();
+                blacklist.fillFromCursor(cursor);
+
+                blacklists.add(blacklist);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return blacklists;
+    }
+
     /**
      * Inserts a blacklist into the database.
      */
@@ -1779,6 +1796,23 @@ public class DataSource {
         ensureActionable();
         return database.query(ScheduledMessage.TABLE, null, null, null, null, null,
                 ScheduledMessage.COLUMN_TIMESTAMP + " asc");
+    }
+
+    public List<ScheduledMessage> getScheduledMessagesAsList() {
+        Cursor cursor = getScheduledMessages();
+        List<ScheduledMessage> scheduledMessages = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                ScheduledMessage message = new ScheduledMessage();
+                message.fillFromCursor(cursor);
+
+                scheduledMessages.add(message);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return scheduledMessages;
     }
 
     /**
