@@ -15,19 +15,36 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?selectableItemBackground"
-    android:clickable="true">
+    android:background="@color/quickReplyBackground"
+    android:clickable="true" >
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:id="@+id/text"
-        android:textSize="14sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:paddingEnd="16dp"
+        android:paddingStart="72dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="?selectableItemBackground"
+        android:textColor="@drawable/drawer_text_selector"
         android:gravity="center_vertical" />
+
+    <ImageView
+        android:layout_marginStart="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:tint="@drawable/drawer_icon_selector"
+        android:src="@drawable/ic_block"
+        android:layout_gravity="center_vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_gravity="bottom"/>
 
 </FrameLayout>
