@@ -290,9 +290,11 @@ public class FirebaseHandlerService extends IntentService {
 
                 if (conversation != null) {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                        SendUtils.send(context, message.data, conversation.phoneNumbers);
+                        new SendUtils(conversation.subscriptionIdForSim)
+                                .send(context, message.data, conversation.phoneNumbers);
                     } else {
-                        SendUtils.send(context, "", conversation.phoneNumbers,
+                        new SendUtils(conversation.subscriptionIdForSim)
+                                .send(context, "", conversation.phoneNumbers,
                                 Uri.parse(message.data), message.mimeType);
                     }
                 } else {
@@ -350,10 +352,12 @@ public class FirebaseHandlerService extends IntentService {
 
                     if (conversation != null) {
                         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                            SendUtils.send(context, message.data, conversation.phoneNumbers);
+                            new SendUtils(conversation.subscriptionIdForSim)
+                                    .send(context, message.data, conversation.phoneNumbers);
                         } else {
-                            SendUtils.send(context, "", conversation.phoneNumbers,
-                                    Uri.parse(message.data), message.mimeType);
+                            new SendUtils(conversation.subscriptionIdForSim)
+                                    .send(context, "", conversation.phoneNumbers,
+                                        Uri.parse(message.data), message.mimeType);
                         }
                     } else {
                         Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
@@ -751,10 +755,12 @@ public class FirebaseHandlerService extends IntentService {
         message.seen = true;
 
         source.setUpload(true);
-        source.insertMessage(message, to, context);
+        long conversationId = source.insertMessage(message, to, context);
+        Conversation conversation = source.getConversation(conversationId);
         source.setUpload(false);
 
-        SendUtils.send(context, message.data, to);
+        new SendUtils(conversation.subscriptionIdForSim)
+                .send(context, message.data, to);
     }
     
     private long getLong(JSONObject json, String identifier) {

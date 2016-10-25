@@ -94,7 +94,8 @@ public class ReplyService extends IntentService {
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
-        SendUtils.send(this, reply, conversation.phoneNumbers);
+        new SendUtils(conversation.subscriptionIdForSim)
+                .send(this, reply, conversation.phoneNumbers);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

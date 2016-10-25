@@ -36,27 +36,38 @@ import xyz.klinker.messenger.data.MimeType;
  */
 public class SendUtils {
 
-    public static void send(Context context, String text, String address) {
-        send(context, text, address.split(", "));
+    private Integer subscriptionId;
+
+    public SendUtils() {
+        this(null);
     }
 
-    public static void send(Context context, String text, String[] addresses) {
-        send(context, text, addresses, null, null);
+    public SendUtils(Integer subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
-    public static Uri send(Context context, String text, String addresses, Uri data,
+    public void send(Context context, String text, String address) {
+        send(context, text, address.split(", "), null, null, subscriptionId);
+    }
+
+    public void send(Context context, String text, String[] addresses) {
+        send(context, text, addresses, null, null, subscriptionId);
+    }
+
+    public Uri send(Context context, String text, String addresses, Uri data,
                            String mimeType) {
-        return send(context, text, addresses.split(", "), data, mimeType);
+        return send(context, text, addresses.split(", "), data, mimeType, subscriptionId);
     }
 
-    public static Uri send(Context context, String text, String[] addresses, Uri data,
-                           String mimeType) {
+    public Uri send(Context context, String text, String[] addresses, Uri data,
+                           String mimeType, Integer subscriptionId) {
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);
         settings.setSendLongAsMms(xyz.klinker.messenger.data.Settings.get(context)
                 .convertLongMessagesToMMS);
-        
+        //settings.setSubscriptionId(subscriptionId);
+
         Transaction transaction = new Transaction(context, settings);
         Message message = new Message(text, addresses);
 

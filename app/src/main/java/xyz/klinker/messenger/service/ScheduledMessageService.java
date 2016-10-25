@@ -33,6 +33,7 @@ import android.util.Log;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
 import xyz.klinker.messenger.util.SendUtils;
 
@@ -70,8 +71,11 @@ public class ScheduledMessageService extends Service {
 
                     // delete, insert and send
                     source.deleteScheduledMessage(message.id);
-                    source.insertSentMessage(message.to, message.data, message.mimeType, this);
-                    SendUtils.send(this, message.data, message.to);
+                    long conversationId = source.insertSentMessage(message.to, message.data, message.mimeType, this);
+                    Conversation conversation = source.getConversation(conversationId);
+
+                    new SendUtils(conversation.subscriptionIdForSim)
+                            .send(this, message.data, message.to);
 
                     // display a notification
                     String body = "<b>" + message.title + ": </b>" + message.data;

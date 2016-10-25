@@ -161,7 +161,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
         }
 
         for (String number : phoneNumbers) {
-            SendUtils.send(getActivity(), getString(R.string.invite_friends_sms), number);
+            new SendUtils().send(getActivity(), getString(R.string.invite_friends_sms), number);
         }
 
         getActivity().onBackPressed();

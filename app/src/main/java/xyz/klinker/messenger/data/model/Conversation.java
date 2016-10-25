@@ -86,6 +86,7 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean mute;
     public boolean archive;
     public boolean privateNotifications;
+    public Integer subscriptionIdForSim;
 
     public Conversation() {
 

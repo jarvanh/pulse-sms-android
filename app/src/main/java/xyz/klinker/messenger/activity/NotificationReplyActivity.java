@@ -429,8 +429,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SendUtils.send(NotificationReplyActivity.this, message,
-                        conversation.phoneNumbers);
+                new SendUtils(conversation.subscriptionIdForSim)
+                        .send(NotificationReplyActivity.this, message,
+                            conversation.phoneNumbers);
             }
         }).start();
     }

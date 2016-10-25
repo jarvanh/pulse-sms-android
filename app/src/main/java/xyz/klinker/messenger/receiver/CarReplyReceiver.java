@@ -63,7 +63,8 @@ public class CarReplyReceiver extends BroadcastReceiver {
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
-        SendUtils.send(context, reply, conversation.phoneNumbers);
+        new SendUtils(conversation.subscriptionIdForSim)
+                .send(context, reply, conversation.phoneNumbers);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
@@ -48,8 +49,6 @@ public class HeadlessSmsSendService extends Service {
         String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
         String text = getText(intent);
 
-        SendUtils.send(this, text, addresses);
-
         StringBuilder phoneNumbers = new StringBuilder();
         for (int i = 0; i < addresses.length; i++) {
             phoneNumbers.append(addresses[i]);
@@ -60,8 +59,12 @@ public class HeadlessSmsSendService extends Service {
 
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
+        long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
+        Conversation conversation = source.getConversation(conversationId);
         source.close();
+
+        new SendUtils(conversation.subscriptionIdForSim)
+                .send(this, text, addresses);
 
         return super.onStartCommand(intent, flags, startId);
     }

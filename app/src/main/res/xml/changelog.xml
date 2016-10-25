@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.8.0"
+        description="October 25th, 2016">
+        <text>Improve theme for quick reply in Android 6.0 and below</text>
+    </version>
+
+    <version
         name="1.7.6"
         description="October 23rd, 2016">
         <text>Change text color of messages on light backgrounds</text>

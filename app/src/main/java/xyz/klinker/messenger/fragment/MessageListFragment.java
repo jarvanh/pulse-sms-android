@@ -1004,8 +1004,10 @@ public class MessageListFragment extends Fragment implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Uri imageUri = SendUtils.send(getContext(), message,
-                                getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
+                        Conversation conversation = source.getConversation(getConversationId());
+                        Uri imageUri = new SendUtils(conversation.subscriptionIdForSim)
+                                .send(getContext(), message,
+                                    getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());
 
                         if (imageUri != null) {

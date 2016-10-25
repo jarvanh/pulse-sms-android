@@ -392,9 +392,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     private void sendvCard(String mimeType, String data, String phoneNumbers) {
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.insertSentMessage(phoneNumbers, data, mimeType, this);
+        long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
+        Conversation conversation = source.getConversation(conversationId);
 
-        Uri uri = SendUtils.send(this, "", phoneNumbers, Uri.parse(data), mimeType);
+        Uri uri = new SendUtils(conversation.subscriptionIdForSim)
+                .send(this, "", phoneNumbers, Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(data);
 
         if (cursor != null && cursor.moveToFirst()) {
