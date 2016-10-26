@@ -416,6 +416,7 @@ public class NotificationService extends IntentService {
             // as well as have a reply quick action button.
             Intent reply = new Intent(this, NotificationReplyActivity.class);
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+            reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pendingReply = PendingIntent.getActivity(this,
                     (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
 
