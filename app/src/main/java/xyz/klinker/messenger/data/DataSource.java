@@ -50,6 +50,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
+import xyz.klinker.messenger.util.UnreadBadger;
 import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
 
 /**
@@ -75,6 +76,7 @@ public class DataSource {
     private AtomicInteger openCounter = new AtomicInteger();
     private String accountId = null;
     private ApiUtils apiUtils;
+    private UnreadBadger unreadBadger;
 
     /**
      * Gets a new instance of the DataSource.
@@ -100,6 +102,7 @@ public class DataSource {
         this.context = context;
         this.dbHelper = new DatabaseSQLiteHelper(context);
         this.apiUtils = new ApiUtils();
+        this.unreadBadger = new UnreadBadger(context);
     }
 
     public EncryptionUtils getEncryptionUtils(final Context context) {
@@ -115,6 +118,7 @@ public class DataSource {
     protected DataSource(DatabaseSQLiteHelper helper) {
         this.dbHelper = helper;
         this.apiUtils = new ApiUtils();
+        this.unreadBadger = new UnreadBadger(null);
     }
 
     /**
@@ -183,6 +187,12 @@ public class DataSource {
                 database.close();
             } catch (Exception e) { }
         }
+    }
+
+    private void writeUnreadCount() {
+        try {
+            unreadBadger.writeCount(getConversationCount());
+        } catch (Exception e) { }
     }
 
     /**
@@ -656,6 +666,10 @@ public class DataSource {
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
                 conversation.mute, conversation.archive, conversation.privateNotifications,
                 getEncryptionUtils(context));
+        
+        if (apiUtils.isActive()) {
+            writeUnreadCount();
+        }
 
         try {
             return database.insert(Conversation.TABLE, null, values);
@@ -748,6 +762,26 @@ public class DataSource {
     }
 
     /**
+     * Gets all unread conversations in the database. Only those that are not archived
+     *
+     * @return a list of unread conversations that aren't archived
+     */
+    public Cursor getUnreadConversations() {
+        ensureActionable();
+        return database.query(Conversation.TABLE, null, Conversation.COLUMN_READ + "=0 and " 
+                    + Conversation.COLUMN_ARCHIVED + "=0", null, null, null, 
+                Conversation.COLUMN_TIMESTAMP + " desc");
+    }
+    
+    public int getUnreadConversationsCount() {
+        Cursor cursor = getUnreadConversations();
+        int count = cursor.getCount();
+        cursor.close();
+        
+        return count;
+    }
+    
+    /**
      * Searches for conversations that have a title that matches the given query.
      */
     public Cursor searchConversations(String query) {
@@ -815,6 +849,8 @@ public class DataSource {
                 new String[]{Long.toString(conversationId)});
 
         apiUtils.deleteConversation(accountId, conversationId);
+
+        writeUnreadCount();
     }
 
     /**
@@ -856,6 +892,8 @@ public class DataSource {
             } else {
                 apiUtils.unarchiveConversation(accountId, conversationId);
             }
+            
+            writeUnreadCount();
         }
     }
 
@@ -891,6 +929,7 @@ public class DataSource {
         if (updated > 0) {
             apiUtils.updateConversationSnippet(accountId, conversationId,
                     read, archive, timestamp, snippet, getEncryptionUtils(context));
+            writeUnreadCount();
         }
     }
 

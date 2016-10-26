@@ -88,6 +88,10 @@ public class ApiUtils {
         this.active = active;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     /**
      * Logs into the server.
      */

@@ -258,6 +258,29 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void getUnreadConversations() {
+        List<String> titles = new ArrayList<>();
+        Cursor cursor = source.getUnreadConversations();
+
+        if (cursor.moveToFirst()) {
+            do {
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        assertEquals(2, titles.size());
+        assertEquals("Luke Klinker", titles.get(0));
+        assertEquals("Aaron Klinker", titles.get(1));
+    }
+
+    @Test
+    public void getUnreadConversationsCount() {
+        assertEquals(2, source.getUnreadConversationsCount());
+    }
+
+    @Test
     public void findConversationByNumber() {
         Long id = source.findConversationId("11111");
         assertEquals(id, Long.valueOf(1));

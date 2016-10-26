@@ -177,6 +177,23 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getUnreadConversations() {
+        when(database.query("conversation", null, "read=0 and archive=0", null, null, null,
+                "timestamp desc")).thenReturn(cursor);
+
+        assertEquals(cursor, source.getUnreadConversations());
+    }
+
+    @Test
+    public void getUnreadConversationsCount() {
+        when(cursor.getCount()).thenReturn(10);
+        when(database.query("conversation", null, "read=0 and archive=0", null, null, null,
+                "timestamp desc")).thenReturn(cursor);
+
+        assertEquals(10, source.getUnreadConversationsCount());
+    }
+
+    @Test
     public void findConversationByNumbers() {
         source.findConversationId("515");
         verify(database).query("conversation", new String[]{"_id", "id_matcher"},
