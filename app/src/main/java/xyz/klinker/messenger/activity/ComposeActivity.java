@@ -393,7 +393,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
         Conversation conversation = source.getConversation(conversationId);
 
-        Uri uri = new SendUtils(conversation.simSubscriptionId)
+        Uri uri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                 .send(this, "", phoneNumbers, Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(data);
 

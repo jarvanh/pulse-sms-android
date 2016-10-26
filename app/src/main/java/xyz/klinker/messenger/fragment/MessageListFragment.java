@@ -998,7 +998,7 @@ public class MessageListFragment extends Fragment implements
                     @Override
                     public void run() {
                         Conversation conversation = source.getConversation(getConversationId());
-                        Uri imageUri = new SendUtils(conversation.simSubscriptionId)
+                        Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                                 .send(getContext(), message,
                                     getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
                         source.deleteDrafts(getConversationId());

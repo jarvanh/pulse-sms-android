@@ -759,7 +759,7 @@ public class FirebaseHandlerService extends IntentService {
         Conversation conversation = source.getConversation(conversationId);
         source.setUpload(false);
 
-        new SendUtils(conversation.simSubscriptionId)
+        new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                 .send(context, message.data, to);
     }
     
