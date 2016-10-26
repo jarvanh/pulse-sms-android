@@ -55,7 +55,7 @@ public class DynamicShortcutUtils {
                 ShortcutInfo info = new ShortcutInfo.Builder(context, id)
                         .setIntent(messenger)
                         .setRank(infos.size())
-                        .setShortLabel(conversation.title)
+                        .setShortLabel(conversation.title.isEmpty() ? "No title" : conversation.title)
                         .setCategories(category)
                         .setIcon(getIcon(conversation.imageUri, conversation.colors.color))
                         .build();
