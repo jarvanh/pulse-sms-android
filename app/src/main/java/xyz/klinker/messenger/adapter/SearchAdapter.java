@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.R;
@@ -45,11 +46,11 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     private static final int VIEW_TYPE_CONVERSATION = -3;
 
     private String search;
-    private Cursor messages;
-    private Cursor conversations;
+    private List<Conversation> conversations;
+    private List<Message> messages;
     private SearchListener listener;
 
-    public SearchAdapter(String search, Cursor conversations, Cursor messages,
+    public SearchAdapter(String search, List<Conversation> conversations, List<Message> messages,
                          SearchListener listener) {
         this.search = search == null ? "" : search;
         this.conversations = conversations;
@@ -68,13 +69,13 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             if (conversations == null) {
                 return 0;
             } else {
-                return conversations.getCount();
+                return conversations.size();
             }
         } else {
             if (messages == null) {
                 return 0;
             } else {
-                return messages.getCount();
+                return messages.size();
             }
         }
     }
@@ -108,9 +109,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 .setBold(true);
 
         if (holder instanceof ConversationViewHolder) {
-            conversations.moveToPosition(relativePosition);
-            final Conversation conversation = new Conversation();
-            conversation.fillFromCursor(conversations);
+            final Conversation conversation = conversations.get(relativePosition);
 
             ConversationViewHolder h = (ConversationViewHolder) holder;
             h.name.setText(conversation.title);
@@ -151,9 +150,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 h.name.setOnClickListener(click);
             }
         } else if (holder instanceof MessageViewHolder) {
-            messages.moveToPosition(relativePosition);
-            final Message message = new Message();
-            message.fillFromCursor(messages);
+            final Message message = messages.get(relativePosition);
 
             MessageViewHolder h = (MessageViewHolder) holder;
             h.messageId = message.id;
@@ -163,10 +160,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             if (message.from != null && !message.from.isEmpty()) {
                 //noinspection AndroidLintSetTextI18n
                 h.timestamp.setText(timestamp + " - " + message.from +
-                        " (" + messages.getString(messages.getColumnIndex("convo_title")) + ")");
+                        " (" + message.nullableConvoTitle + ")");
             } else {
                 //noinspection AndroidLintSetTextI18n
-                h.timestamp.setText(timestamp + " - " + messages.getString(messages.getColumnIndex("convo_title")));
+                h.timestamp.setText(timestamp + " - " + message.nullableConvoTitle);
             }
 
             h.timestamp.setSingleLine(true);
@@ -255,15 +252,23 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             //noinspection ResourceType
             return VIEW_TYPE_CONVERSATION;
         } else {
-            messages.moveToPosition(relativePosition);
-            return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+            return messages.get(relativePosition).type;
         }
     }
 
-    public void updateCursors(String search, Cursor conversations, Cursor messages) {
+    public void updateCursors(String search, List<Conversation> conversations, List<Message> messages) {
+        if (this.conversations != null) {
+            this.conversations.clear();
+        }
+
+        if (this.messages != null) {
+            this.messages.clear();
+        }
+
         this.search = search == null ? "" : search;
         this.conversations = conversations;
         this.messages = messages;
+
         notifyDataSetChanged();
     }
 

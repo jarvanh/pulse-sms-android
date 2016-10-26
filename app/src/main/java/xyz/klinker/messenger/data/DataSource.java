@@ -795,6 +795,26 @@ public class DataSource {
         }
     }
 
+    public List<Conversation> searchConversationsAsList(String query, int count) {
+        Cursor cursor = searchConversations(query);
+        List<Conversation> conversations = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(cursor);
+
+                conversations.add(conversation);
+            } while (cursor.moveToNext() && conversations.size() < count);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return conversations;
+    }
+
     /**
      * Gets a conversation by its id.
      *
@@ -1275,6 +1295,26 @@ public class DataSource {
                 return null;
             }
         }
+    }
+
+    public List<Message> searchMessagesAsList(String query, int amount) {
+        Cursor cursor = searchMessages(query);
+        List<Message> messages = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Message message = new Message();
+                message.fillFromCursor(cursor);
+
+                messages.add(message);
+            } while (cursor.moveToNext() && messages.size() < amount);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return messages;
     }
 
     /**

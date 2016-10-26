@@ -39,6 +39,9 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_FROM = "message_from";
     public static final String COLUMN_COLOR = "color";
 
+    // not in this table, but used in a join statement for searches
+    private static final String JOIN_COLUMN_CONVO_TITLE = "convo_title";
+
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
             COLUMN_ID + " integer primary key, " +
@@ -75,6 +78,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean seen;
     public String from;
     public Integer color;
+    public String nullableConvoTitle;
 
     public Message() {
 
@@ -137,6 +141,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 } catch (NumberFormatException e) {
                     this.color = null;
                 }
+            } else if (column.equals(JOIN_COLUMN_CONVO_TITLE)) {
+                this.nullableConvoTitle = cursor.getString(i);
             }
         }
     }

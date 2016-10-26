@@ -29,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.List;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.SearchAdapter;
@@ -45,9 +47,6 @@ public class SearchFragment extends Fragment implements SearchListener {
     private RecyclerView list;
     private SearchAdapter adapter;
     private String query;
-    private DataSource source;
-    private Cursor conversations;
-    private Cursor messages;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -56,8 +55,6 @@ public class SearchFragment extends Fragment implements SearchListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        source = DataSource.getInstance(getActivity());
-        source.open();
     }
 
     @Override
@@ -72,27 +69,6 @@ public class SearchFragment extends Fragment implements SearchListener {
         list.setAdapter(adapter);
 
         return list;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if (source.isOpen()) {
-            source.close();
-        }
-
-        closeOldCursors();
-    }
-
-    private void closeOldCursors() {
-        if (conversations != null && !conversations.isClosed()) {
-            conversations.close();
-        }
-
-        if (messages != null && !messages.isClosed()) {
-            messages.close();
-        }
     }
 
     public void search(String query) {
@@ -110,18 +86,11 @@ public class SearchFragment extends Fragment implements SearchListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (source == null) {
-                    source = DataSource.getInstance(getActivity());
-                }
+                DataSource source = DataSource.getInstance(getActivity());
+                source.open();
 
-                if (!source.isOpen()) {
-                    source.open();
-                }
-
-                closeOldCursors();
-
-                conversations = source.searchConversations(query);
-                messages = source.searchMessages(query);
+                final List<Conversation> conversations = source.searchConversationsAsList(query, 60);
+                final List<Message> messages = source.searchMessagesAsList(query, 60);
 
                 handler.post(new Runnable() {
                     @Override
@@ -133,7 +102,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         }).start();
     }
 
-    private void setSearchResults(Cursor conversations, Cursor messages) {
+    private void setSearchResults(List<Conversation> conversations, List<Message> messages) {
         if (adapter != null) {
             adapter.updateCursors(query, conversations, messages);
         } else {
@@ -145,7 +114,10 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Message message) {
         dismissKeyboard();
 
+        DataSource source = DataSource.getInstance(getActivity());
+        source.open();
         source.archiveConversation(message.conversationId, false);
+        source.close();
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, message.conversationId);
@@ -159,7 +131,10 @@ public class SearchFragment extends Fragment implements SearchListener {
         dismissKeyboard();
 
         if (conversation.archive) {
+            DataSource source = DataSource.getInstance(getActivity());
+            source.open();
             source.archiveConversation(conversation.id, false);
+            source.close();
         }
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);

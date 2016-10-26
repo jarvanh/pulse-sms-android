@@ -29,10 +29,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 
 import static org.junit.Assert.assertEquals;
@@ -46,9 +49,9 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     private SearchAdapter adapter;
 
     @Mock
-    private Cursor conversations;
+    private List<Conversation> conversations;
     @Mock
-    private Cursor messages;
+    private List<Message> messages;
     @Mock
     private View view;
     @Mock
@@ -66,7 +69,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection0() {
-        when(conversations.getCount()).thenReturn(10);
+        when(conversations.size()).thenReturn(10);
         assertEquals(10, adapter.getItemCount(0));
     }
 
@@ -78,7 +81,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection1() {
-        when(messages.getCount()).thenReturn(20);
+        when(messages.size()).thenReturn(20);
         assertEquals(20, adapter.getItemCount(1));
     }
 
@@ -173,7 +176,10 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemViewTypeMessage() {
-        when(messages.getInt(anyInt())).thenReturn(Message.TYPE_RECEIVED);
+        Message message = new Message();
+        message.type = Message.TYPE_RECEIVED;
+
+        when(messages.get(anyInt())).thenReturn(message);
         assertEquals(Message.TYPE_RECEIVED, adapter.getItemViewType(1, 0, 0));
     }
 
