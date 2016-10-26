@@ -124,7 +124,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_attach"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@color/secondaryText"
                     android:id="@+id/attach"
                     android:clickable="true"
@@ -200,7 +200,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/attach_image"
                     android:contentDescription="@string/attach_image"
@@ -211,7 +211,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/capture_image"
                     android:contentDescription="@string/capture_image"
@@ -222,7 +222,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/attach_gif"
                     android:contentDescription="@string/attach_gif"
@@ -233,7 +233,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/record_video"
                     android:contentDescription="@string/record_video"
@@ -244,7 +244,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/record_audio"
                     android:contentDescription="@string/record_audio"
@@ -255,7 +255,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:tint="@android:color/white"
                     android:id="@+id/attach_location"
                     android:contentDescription="@string/attach_location"
