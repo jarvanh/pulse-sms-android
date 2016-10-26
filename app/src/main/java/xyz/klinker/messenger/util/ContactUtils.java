@@ -335,14 +335,15 @@ public class ContactUtils {
             convoCursor.close();
         } catch (Exception e) { }
 
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String[] projection = new String[]{
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP
-        };
-
         try {
+
+            Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+            String[] projection = new String[]{
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP
+            };
+
             Cursor cursor = context.getContentResolver().query(
                     uri,
                     projection,
@@ -371,7 +372,7 @@ public class ContactUtils {
 
                 cursor.close();
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             // need permission, but don't have it in the background?
             // why wouldn't they grant permission to an sms app?
         }

@@ -42,29 +42,33 @@ public class HeadlessSmsSendService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
-            return START_NOT_STICKY;
-        }
-
-        String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
-        String text = getText(intent);
-
-        StringBuilder phoneNumbers = new StringBuilder();
-        for (int i = 0; i < addresses.length; i++) {
-            phoneNumbers.append(addresses[i]);
-            if (i != addresses.length - 1) {
-                phoneNumbers.append(", ");
+        try {
+            if (intent == null) {
+                return START_NOT_STICKY;
             }
+
+            String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
+            String text = getText(intent);
+
+            StringBuilder phoneNumbers = new StringBuilder();
+            for (int i = 0; i < addresses.length; i++) {
+                phoneNumbers.append(addresses[i]);
+                if (i != addresses.length - 1) {
+                    phoneNumbers.append(", ");
+                }
+            }
+
+            DataSource source = DataSource.getInstance(this);
+            source.open();
+            long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
+            Conversation conversation = source.getConversation(conversationId);
+            source.close();
+
+            new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                    .send(this, text, addresses);
+        } catch (Exception e) {
+
         }
-
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
-        Conversation conversation = source.getConversation(conversationId);
-        source.close();
-
-        new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                .send(this, text, addresses);
 
         return super.onStartCommand(intent, flags, startId);
     }

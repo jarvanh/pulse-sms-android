@@ -1057,13 +1057,13 @@ public class MessengerActivity extends AppCompatActivity
                 System.currentTimeMillis();
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
 
-        if (snooze != null) {
+        try {
             if (currentlySnoozed) {
                 snooze.setImageResource(R.drawable.ic_snoozed);
             } else {
                 snooze.setImageResource(R.drawable.ic_snooze);
             }
-        }
+        } catch (Exception e) { }
     }
 
     public void startDataDownload() {
