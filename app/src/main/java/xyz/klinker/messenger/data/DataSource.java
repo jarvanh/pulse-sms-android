@@ -191,7 +191,7 @@ public class DataSource {
 
     private void writeUnreadCount() {
         try {
-            unreadBadger.writeCount(getUnreadConversationCount());
+            unreadBadger.writeCount(getUnreadConversationsCount());
         } catch (Exception e) { }
     }
 
