@@ -17,12 +17,20 @@ public class UnreadBadger {
     }
 
     public void writeCountFromDatabase() {
-        DataSource source = DataSource.getInstance(context);
-        source.open();
-        int count = source.getUnreadConversationsCount();
-        source.close();
+        if (context == null) {
+            return;
+        }
 
-        writeCount(count);
+        try {
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+            int count = source.getUnreadConversationsCount();
+            source.close();
+
+            writeCount(count);
+        } catch (Exception e) {
+
+        }
     }
 
     public void writeCount(final int newCount) {

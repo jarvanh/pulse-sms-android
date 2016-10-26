@@ -52,6 +52,7 @@ import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.util.UnreadBadger;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
@@ -143,6 +144,8 @@ public class ConversationListFragment extends Fragment
                 expandedConversation == null) {
             loadConversations();
         }
+
+        checkUnreadCount();
     }
 
     @Override
@@ -568,6 +571,8 @@ public class ConversationListFragment extends Fragment
             ConversationListUpdatedReceiver.sendBroadcast(getActivity(), contractedId, newConversationTitle);
             newConversationTitle = null;
         }
+
+        checkUnreadCount();
     }
 
     @Override
@@ -623,4 +628,12 @@ public class ConversationListFragment extends Fragment
         this.newConversationTitle = title;
     }
 
+    private void checkUnreadCount() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new UnreadBadger(getActivity()).writeCountFromDatabase();
+            }
+        }, 2000);
+    }
 }
