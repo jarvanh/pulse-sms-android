@@ -94,6 +94,7 @@ import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.util.UnreadHelper;
 import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
@@ -165,6 +166,8 @@ public class MessengerActivity extends AppCompatActivity
                 );
             }
         }
+
+        new UnreadHelper(this).writeCounts(10);
     }
 
     @Override
