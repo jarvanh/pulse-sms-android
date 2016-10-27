@@ -55,11 +55,8 @@ public class AudioWrapper {
             }
 
             if (tone != null) {
-                mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
-                        .setLegacyStreamType(AudioManager.STREAM_RING)
-                        .build(), 1);
+                mediaPlayer = MediaPlayer.create(context, tone);
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             }
 
         } catch (Exception e) {
@@ -73,14 +70,8 @@ public class AudioWrapper {
             return;
         }
 
-        mediaPlayer = MediaPlayer.create(context, resourceId,
-                new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
-                        .setLegacyStreamType(AudioManager.STREAM_RING)
-                        .build(),
-                1
-        );
+        mediaPlayer = MediaPlayer.create(context, resourceId);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
     }
 
     public void play() {
