@@ -235,8 +235,6 @@
         <item quantity="one">in %1$d conversation</item>
         <item quantity="other">in %1$d conversations</item>
     </plurals>
-    <string name="dual_sim">Select SIM Card</string>
-    <string name="dual_sim_summary">Select which SIM card should be used for this conversation</string>
     <string name="pin_conversation">Pin Conversation</string>
     <string name="pin_conversation_summary">Keeps this conversation at the top of the list</string>
     <string name="mute_conversation">Mute Conversation</string>

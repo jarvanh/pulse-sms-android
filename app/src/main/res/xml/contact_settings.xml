@@ -17,11 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        android:key="@string/pref_contact_dual_sim"
-        android:title="@string/dual_sim"
-        android:summary="@string/dual_sim_summary" />
-
     <SwitchPreference
         android:key="@string/pref_contact_pin_conversation"
         android:title="@string/pin_conversation"

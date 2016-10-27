@@ -67,7 +67,7 @@ public class DualSimApplication {
         }
 
         new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.dual_sim))
+                .setTitle(context.getString(R.string.select_sim))
                 .setSingleChoiceItems(active, selected, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
