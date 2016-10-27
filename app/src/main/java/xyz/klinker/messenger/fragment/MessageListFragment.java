@@ -301,7 +301,11 @@ public class MessageListFragment extends Fragment implements
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
 
-        new DualSimApplication(selectSim).apply(getConversationId());
+        try {
+            new DualSimApplication(selectSim).apply(getConversationId());
+        } catch (Exception e) {
+            // just in case
+        }
 
         return view;
     }
