@@ -48,7 +48,9 @@ public class UnreadBadger {
 
     private void shortcutBadger(final int count) {
         if (context != null) {
-            ShortcutBadger.applyCount(context, count);
+            try {
+                ShortcutBadger.applyCountOrThrow(context, count);
+            } catch (Exception e) { }
         }
     }
 

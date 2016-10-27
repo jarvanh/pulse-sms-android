@@ -115,13 +115,24 @@
             android:alpha="0"
             android:translationY="-32dp">
 
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_sim"
+                android:background="?selectableItemBackgroundBorderless"
+                android:tint="@color/secondaryText"
+                android:id="@+id/select_sim"
+                android:clickable="true"
+                android:visibility="gone"
+                android:contentDescription="@string/select_sim" />
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp">
 
                 <ImageButton
-                    android:layout_width="48dp"
+                    android:layout_width="32dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_attach"
                     android:background="?selectableItemBackgroundBorderless"

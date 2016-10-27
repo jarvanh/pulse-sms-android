@@ -106,6 +106,7 @@ import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DualSimApplication;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.NotificationUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
@@ -158,6 +159,7 @@ public class MessageListFragment extends Fragment implements
     private Toolbar toolbar;
     private View sendBar;
     private ImageKeyboardEditText messageEntry;
+    private View selectSim;
     private ImageButton attach;
     private FloatingActionButton send;
     private TextView counter;
@@ -236,6 +238,7 @@ public class MessageListFragment extends Fragment implements
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         sendBar = view.findViewById(R.id.send_bar);
         messageEntry = (ImageKeyboardEditText) view.findViewById(R.id.message_entry);
+        selectSim = view.findViewById(R.id.select_sim);
         attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         counter = (TextView) view.findViewById(R.id.text_counter);
@@ -297,6 +300,8 @@ public class MessageListFragment extends Fragment implements
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
+
+        new DualSimApplication(selectSim).apply(getConversationId());
 
         return view;
     }
