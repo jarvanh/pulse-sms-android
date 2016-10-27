@@ -17,6 +17,16 @@
 <changelog>
 
     <version
+        name="1.8.1"
+        description="October 26th, 2016">
+        <text>Put dual SIM on the message list instead of conversation settings</text>
+        <text>Improve icon-badging support</text>
+        <text>Searching improvements</text>
+        <text>Bug fixes</text>
+        <text>Crash fixes</text>
+    </version>
+
+    <version
         name="1.8.0"
         description="October 25th, 2016">
         <text>Dual SIM Support: select which SIM to use for a conversation from that conversation's settings</text>

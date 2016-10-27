@@ -1,1 +1,1 @@
-v1.8.0 contains dual SIM support: select which SIM to use for a conversation from that conversation's settings! It also has a ton more bug, crash fixes, tweaks, and support for homescreen icon-badges for various launchers.
+v1.8.1 contains dual SIM support: select which SIM to use for a conversation! It also has a ton more bug/crash fixes, UI tweaks, various usability improvements, and support for homescreen icon badges for various launchers.
