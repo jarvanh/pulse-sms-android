@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.8.2"
+        description="October 28th, 2016">
+        <text>Improve dual-SIM support</text>
+        <text>Improve sharing location</text>
+        <text>More bug fixes</text>
+    </version>
+
+    <version
         name="1.8.1"
         description="October 26th, 2016">
         <text>Put dual SIM on the message list instead of conversation settings</text>
