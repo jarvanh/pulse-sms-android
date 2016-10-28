@@ -168,7 +168,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter.onBindViewHolder(holder, 0, 0, 0);
 
         assertNotNull(holder.conversation);
-        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Luke Klinker");
         verify(summary).setText("So maybe not going to be able to get platinum huh?");
         verify(name, times(0)).setTypeface(any(Typeface.class), anyInt());
@@ -182,7 +182,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter.onBindViewHolder(holder, 0, 0, 1);
 
         assertNotNull(holder.conversation);
-        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Matt Swiontek");
         verify(summary).setText("Whoops ya idk what happened but anysho drive safe");
         verify(name).setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
@@ -196,7 +196,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter.onBindViewHolder(holder, 1, 0, 2);
 
         assertNotNull(holder.conversation);
-        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Kris Klinker");
         verify(summary).setText("Will probably be there from 6:30-9, just stop by when you can!");
         verify(name).setTypeface(Typeface.DEFAULT_BOLD, Typeface.NORMAL);
@@ -210,7 +210,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter.onBindViewHolder(holder, 1, 0, 8);
 
         assertNotNull(holder.conversation);
-        verify(image, times(2)).setImageDrawable(any(Drawable.class));
+        verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("test 2");
         verify(summary).setText("Maybe they'll run into each other on the way back... idk");
         verify(name).setTypeface(Typeface.DEFAULT_BOLD, Typeface.ITALIC);
