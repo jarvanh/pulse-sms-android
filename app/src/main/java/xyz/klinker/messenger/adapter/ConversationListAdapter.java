@@ -141,6 +141,15 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     @Override
+    public void onViewRecycled(ConversationViewHolder holder){
+        super.onViewRecycled(holder);
+
+        if (holder.image != null) {
+            Glide.clear(holder.image);
+        }
+    }
+
+    @Override
     public void onBindViewHolder(ConversationViewHolder holder, int section, int relativePosition,
                                  int absolutePosition) {
         Conversation conversation = conversations.get(absolutePosition);
@@ -160,7 +169,6 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
-        holder.image.setImageDrawable(null);
         if (conversation.imageUri == null) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
