@@ -14,6 +14,7 @@ import android.view.View;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.view.ViewBadger;
@@ -29,7 +30,7 @@ public class DualSimApplication {
     }
 
     public void apply(final long conversationId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && Account.get(context).primary) {
             SubscriptionManager manager = SubscriptionManager.from(context);
             final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
 
