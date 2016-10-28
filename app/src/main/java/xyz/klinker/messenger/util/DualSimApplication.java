@@ -16,6 +16,7 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.view.ViewBadger;
 
 public class DualSimApplication {
 
@@ -32,18 +33,34 @@ public class DualSimApplication {
             SubscriptionManager manager = SubscriptionManager.from(context);
             final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
 
-            if (subscriptions != null && subscriptions.size() > 1) {
+            if (subscriptions != null) {
                 switchSim.setVisibility(View.VISIBLE);
+                final ViewBadger badger = new ViewBadger(context, switchSim);
+
+                DataSource source = DataSource.getInstance(context);
+                source.open();
+                final Conversation conversation = source.getConversation(conversationId);
+                source.close();
+
+                boolean set = false;
+                if (conversation != null && conversation.simSubscriptionId != null) {
+                    for (int i = 0; i < subscriptions.size(); i++) {
+                        if (subscriptions.get(i).getSubscriptionId() == conversation.simSubscriptionId) {
+                            set = true;
+                            badger.setText(subscriptions.get(i).getSimSlotIndex() + 1);
+                        }
+                    }
+                }
+
+                if (!set) {
+                    // show one for default
+                    badger.setText("1");
+                }
 
                 switchSim.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        DataSource source = DataSource.getInstance(context);
-                        source.open();
-                        Conversation conversation = source.getConversation(conversationId);
-                        source.close();
-
-                        showSimSelection(subscriptions, conversation);
+                        showSimSelection(subscriptions, conversation, badger);
                     }
                 });
             }
@@ -51,7 +68,7 @@ public class DualSimApplication {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
-    private void showSimSelection(final List<SubscriptionInfo> subscriptions, final Conversation conversation) {
+    private void showSimSelection(final List<SubscriptionInfo> subscriptions, final Conversation conversation, final ViewBadger badger) {
         final CharSequence[] active = new CharSequence[1 + subscriptions.size()];
         int selected = 0;
         active[0] = context.getString(R.string.default_text);
@@ -73,9 +90,11 @@ public class DualSimApplication {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i == 0) {
                             conversation.simSubscriptionId = -1;
+                            badger.setText("1");
                         } else {
                             conversation.simSubscriptionId =
                                     subscriptions.get(i - 1).getSubscriptionId();
+                            badger.setText("" + i);
                         }
 
                         DataSource source = DataSource.getInstance(context);
