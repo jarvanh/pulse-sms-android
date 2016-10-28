@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -16,37 +17,53 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.service.ContactSyncService;
+import xyz.klinker.messenger.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.service.SignoutService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 
 public class UpdateUtils {
-    public static void checkForUpdate(Context context) {
+
+    private static final String TAG = "UpdateUtil";
+
+    private Context context;
+
+    public UpdateUtils(Context context) {
+        this.context = context;
+    }
+
+    public boolean checkForUpdate() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        alertToTextFromAnywhere(context, sharedPreferences);
+        alertToTextFromAnywhere(sharedPreferences);
 
         // i just want to hold this value, in case we need it later when we roll out public.
         sharedPreferences.edit().putBoolean("is_on_pre_release", true).apply();
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);
-        int currentAppVersion = getAppVersion(context);
+        int currentAppVersion = getAppVersion();
 
         if (storedAppVersion != currentAppVersion) {
+            Log.v(TAG, "new app version");
             sharedPreferences.edit().putInt("app_version", currentAppVersion).apply();
-            runEveryUpdate(context);
+            runEveryUpdate();
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private static void runEveryUpdate(Context context) {
+    private void runEveryUpdate() {
         ContactSyncService.scheduleNextRun(context);
         SubscriptionExpirationCheckService.scheduleNextRun(context);
         SignoutService.scheduleNextRun(context);
+
+        context.startService(new Intent(context, ForceTokenRefreshService.class));
     }
 
-    private static int getAppVersion(Context c) {
+    private int getAppVersion() {
         try {
-            PackageInfo packageInfo = c.getPackageManager()
-                    .getPackageInfo(c.getPackageName(), 0);
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             // should never happen
@@ -54,7 +71,7 @@ public class UpdateUtils {
         }
     }
 
-    private static void alertToTextFromAnywhere(final Context context, SharedPreferences sharedPrefs) {
+    private void alertToTextFromAnywhere(SharedPreferences sharedPrefs) {
         Account account = Account.get(context);
 
         if (!FeatureFlags.IS_BETA && account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false)) {

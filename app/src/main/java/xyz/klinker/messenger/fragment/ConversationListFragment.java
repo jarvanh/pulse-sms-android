@@ -53,6 +53,7 @@ import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.UnreadBadger;
+import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;

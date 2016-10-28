@@ -158,6 +158,8 @@ public class MessengerActivity extends AppCompatActivity
                 );
             }
         }
+
+        new UpdateUtils(this).checkForUpdate();
     }
 
     @Override
@@ -173,7 +175,6 @@ public class MessengerActivity extends AppCompatActivity
         ColorUtils.updateRecentsEntry(this);
 
         TimeUtils.setupNightTheme(this);
-        UpdateUtils.checkForUpdate(this);
 
         if (!loaded) {
             loaded = true;

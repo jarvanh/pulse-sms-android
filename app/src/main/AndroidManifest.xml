@@ -277,6 +277,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.ForceTokenRefreshService" />
         <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />

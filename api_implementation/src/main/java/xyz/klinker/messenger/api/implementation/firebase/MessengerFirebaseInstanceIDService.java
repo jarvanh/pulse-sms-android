@@ -30,16 +30,6 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
 
     @Override
     public void onTokenRefresh() {
-        Account account = Account.get(this);
-        String accountId = account.accountId;
-        
-        if (accountId != null && account.deviceId != null) {
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            new ApiUtils().updateDevice(accountId, Long.parseLong(account.deviceId),
-                    null, refreshedToken);
-        }
-
-        FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
+        TokenUtil.refreshToken(this);
     }
-
 }

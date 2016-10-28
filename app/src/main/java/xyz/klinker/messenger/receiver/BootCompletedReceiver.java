@@ -20,9 +20,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 import xyz.klinker.messenger.service.ContactSyncService;
 import xyz.klinker.messenger.service.ContentObserverRunCheckService;
 import xyz.klinker.messenger.service.ContentObserverService;
+import xyz.klinker.messenger.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.service.ScheduledMessageService;
 import xyz.klinker.messenger.service.SignoutService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
@@ -38,6 +40,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             context.startService(new Intent(context, ContentObserverService.class));
             context.startService(new Intent(context, ScheduledMessageService.class));
+            context.startService(new Intent(context, ForceTokenRefreshService.class));
 
             ContentObserverRunCheckService.scheduleNextRun(context);
             ContactSyncService.scheduleNextRun(context);
