@@ -33,7 +33,7 @@ public class DualSimApplication {
             SubscriptionManager manager = SubscriptionManager.from(context);
             final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
 
-            if (subscriptions != null) {
+            if (subscriptions != null && subscriptions.size() > 1) {
                 switchSim.setVisibility(View.VISIBLE);
                 final ViewBadger badger = new ViewBadger(context, switchSim);
 
