@@ -247,7 +247,15 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                         });
                     }
                 } else {
-                    Log.e(TAG, "could not find any addresses");
+                    Log.e(TAG, "could not find any addresses, using map lat long");
+                    getHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            textListener.onTextSelected(
+                                    "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+                            );
+                        }
+                    });
                 }
             }
         }).start();
