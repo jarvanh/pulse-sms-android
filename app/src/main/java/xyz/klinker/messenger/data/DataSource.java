@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
@@ -1004,6 +1005,22 @@ public class DataSource {
         if (updated > 0) {
             apiUtils.updateConversationTitle(accountId, conversationId, title, getEncryptionUtils(context));
         }
+    }
+
+    /**
+     * Updates the conversation image for a given conversation
+     */
+    public void updateConversationImage(long conversationId, String imageUri) {
+        ensureActionable();
+
+        ContentValues values = new ContentValues(1);
+        values.put(Conversation.COLUMN_IMAGE_URI, imageUri);
+
+        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=? AND " +
+                        Conversation.COLUMN_IMAGE_URI + " <> ?",
+                new String[] {Long.toString(conversationId), imageUri});
+
+        // no need to update the API, since image uris are local
     }
 
     /**

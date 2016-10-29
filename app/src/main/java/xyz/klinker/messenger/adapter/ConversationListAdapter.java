@@ -26,8 +26,10 @@ import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
@@ -50,6 +52,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         DELETE, ARCHIVE, NEITHER
     }
 
+    private long time;
+
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
     private ConversationExpandedListener conversationExpandedListener;
@@ -61,6 +65,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         this.swipeToDeleteListener = swipeToDeleteListener;
         this.conversationExpandedListener = conversationExpandedListener;
         setConversations(conversations);
+
+        time = new Date().getTime();
     }
 
     public void setConversations(List<Conversation> convos) {
@@ -169,7 +175,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
-        if (conversation.imageUri == null) {
+        if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
                         Settings.get(holder.itemView.getContext()).globalColorSet.colorLight));
@@ -186,6 +192,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             holder.imageLetter.setText(null);
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
+                    .signature(new StringSignature(String.valueOf(time)))
                     .into(holder.image);
         }
 

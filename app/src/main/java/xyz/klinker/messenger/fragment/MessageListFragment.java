@@ -72,6 +72,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.sgottard.sofa.ContentFragment;
 import com.yalantis.ucrop.UCrop;
 
@@ -472,6 +473,7 @@ public class MessageListFragment extends Fragment implements
             if (imageUri != null) {
                 Glide.with(getActivity())
                         .load(Uri.parse(imageUri))
+                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .into(image);
             }
 
@@ -834,6 +836,11 @@ public class MessageListFragment extends Fragment implements
                     if (!getArguments().getBoolean(ARG_IS_GROUP)) {
                         String number = getArguments().getString(ARG_PHONE_NUMBERS);
                         final String name = ContactUtils.findContactNames(number, getActivity());
+                        String photoUri = ContactUtils.findImageUri(number, getActivity());
+                        if (photoUri != null) {
+                            photoUri += "/photo";
+                        }
+
                         if (!name.equals(getArguments().getString(ARG_TITLE)) &&
                                 !PhoneNumberUtils.checkEquality(name, number)) {
                             Log.v(TAG, "contact name and conversation name do not match, updating");
@@ -853,6 +860,13 @@ public class MessageListFragment extends Fragment implements
                                     toolbar.setTitle(name);
                                 }
                             });
+                        }
+
+                        String originalImage = getArguments().getString(ARG_IMAGE_URI);
+                        if (photoUri != null && !photoUri.equals(originalImage) || originalImage == null || originalImage.isEmpty()) {
+                            source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
+                        } else if (photoUri == null) {
+                            source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), "");
                         }
                     }
 
