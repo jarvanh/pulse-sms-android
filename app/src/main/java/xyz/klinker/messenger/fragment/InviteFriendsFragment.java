@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -105,8 +106,11 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                                     .findImageUri(conversation.phoneNumbers, getActivity());
                             conversation.simSubscriptionId = -1;
 
-                            if (ImageUtils.getContactImage(conversation.imageUri, getActivity()) == null) {
+                            Bitmap image = ImageUtils.getContactImage(conversation.imageUri, getActivity());
+                            if (image == null) {
                                 conversation.imageUri = null;
+                            } else {
+                                image.recycle();
                             }
 
                             if (contacts.size() == 0 ||

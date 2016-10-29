@@ -102,7 +102,9 @@ public class ImageUtils {
         try {
             InputStream stream = ContactsContract.Contacts.openContactPhotoInputStream(
                     context.getContentResolver(), Uri.parse(imageUri), true);
-            return BitmapFactory.decodeStream(stream);
+            Bitmap bitmap = BitmapFactory.decodeStream(stream);
+            stream.close();
+            return bitmap;
         } catch (Exception e) {
             return null;
         }
@@ -120,6 +122,7 @@ public class ImageUtils {
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(conversation.imageUri, context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
+            bitmap.recycle();
 
             if (colors != null) {
                 conversation.colors = colors;
@@ -146,6 +149,7 @@ public class ImageUtils {
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(imageUri, context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
+            bitmap.recycle();
 
             if (colors != null) {
                 contact.colors = colors;

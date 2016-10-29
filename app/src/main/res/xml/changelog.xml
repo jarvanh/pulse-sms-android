@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.8.3"
+        description="October 30th, 2016">
+        <text>Update contact images</text>
+        <text>Improve sharing location</text>
+        <text>More bug fixes</text>
+    </version>
+
+    <version
         name="1.8.2"
         description="October 28th, 2016">
         <text>Improve dual-SIM support</text>

@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -442,11 +443,16 @@ public class FirebaseHandlerService extends IntentService {
         conversation.archive = json.getBoolean("archive");
         conversation.simSubscriptionId = -1;
 
+        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, this);
         if (conversation.imageUri != null &&
-                ImageUtils.getContactImage(conversation.imageUri, context) == null) {
+                image == null) {
             conversation.imageUri = null;
         } else if (conversation.imageUri != null) {
             conversation.imageUri += "/photo";
+        }
+
+        if (image != null) {
+            image.recycle();
         }
 
         try {

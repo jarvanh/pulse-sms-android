@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -763,8 +764,13 @@ public class MessengerActivity extends AppCompatActivity
                 c.phoneNumbers = numbers[i];
                 c.imageUri = ContactUtils.findImageUri(numbers[i], this);
 
-                if (c.imageUri != null && ImageUtils.getContactImage(c.imageUri, this) == null) {
+                Bitmap image = ImageUtils.getContactImage(c.imageUri, this);
+                if (c.imageUri != null && image == null) {
                     c.imageUri = null;
+                }
+
+                if (image != null) {
+                    image.recycle();
                 }
 
                 conversations.add(c);

@@ -20,6 +20,7 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -208,11 +209,16 @@ public class ApiDownloadService extends Service {
 
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
 
+                Bitmap image = ImageUtils.getContactImage(conversation.imageUri, this);
                 if (conversation.imageUri != null &&
-                        ImageUtils.getContactImage(conversation.imageUri, this) == null) {
+                         image == null) {
                     conversation.imageUri = null;
                 } else if (conversation.imageUri != null) {
                     conversation.imageUri += "/photo";
+                }
+
+                if (image != null) {
+                    image.recycle();
                 }
 
                 source.insertConversation(conversation);
