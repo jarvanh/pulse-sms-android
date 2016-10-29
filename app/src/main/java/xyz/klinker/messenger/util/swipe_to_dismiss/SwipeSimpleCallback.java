@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.Settings;
 
 /**
@@ -94,8 +95,17 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         if (viewHolder.itemView instanceof FrameLayout) {
             return 0;
         } else {
-            // swipe TOWARDS the play or TOWARDS the end
-            return ItemTouchHelper.START | ItemTouchHelper.END;
+            // swipe TOWARDS the start or TOWARDS the end
+            if (viewHolder instanceof ConversationViewHolder) {
+                ConversationViewHolder holder = (ConversationViewHolder) viewHolder;
+                if (holder.conversation.pinned && !holder.conversation.archive) {
+                    return ItemTouchHelper.END;
+                } else {
+                    return ItemTouchHelper.START | ItemTouchHelper.END;
+                }
+            } else {
+                return ItemTouchHelper.START | ItemTouchHelper.END;
+            }
         }
     }
 
