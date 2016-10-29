@@ -752,8 +752,18 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean viewContact() {
-        if (conversationListFragment.isExpanded()) {
-            Conversation conversation = conversationListFragment.getExpandedItem().conversation;
+        Conversation conversation = null;
+
+        if (conversationListFragment != null && conversationListFragment.isExpanded()) {
+            conversation = conversationListFragment.getExpandedItem().conversation;
+        } else if (otherFragment instanceof ArchivedConversationListFragment) {
+            ArchivedConversationListFragment frag = (ArchivedConversationListFragment) otherFragment;
+            if (frag.isExpanded()) {
+                conversation = frag.getExpandedItem().conversation;
+            }
+        }
+
+        if (conversation != null) {
             String[] names = ContactUtils.findContactNames(conversation.phoneNumbers, this).split(", ");
             String[] numbers = conversation.phoneNumbers.split(", ");
             List<Conversation> conversations = new ArrayList<>();
