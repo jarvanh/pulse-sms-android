@@ -128,7 +128,7 @@ public class ContactUtils {
                                     phoneUri,
                                     new String[]{
                                             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
-                                            ContactsContract.RawContacts._ID
+                                            ContactsContract.Contacts._ID
                                     },
                                     null,
                                     null,
@@ -185,12 +185,8 @@ public class ContactUtils {
                     Uri.encode(number));
 
             Cursor phonesCursor = context.getContentResolver()
-                    .query(
-                            phoneUri,
-                            new String[]{ContactsContract.Contacts._ID},
-                            null,
-                            null,
-                            null);
+                    .query(phoneUri, new String[]{ContactsContract.PhoneLookup._ID},
+                            null, null, null);
 
             if (phonesCursor != null && phonesCursor.moveToFirst()) {
                 int id = phonesCursor.getInt(0);
@@ -214,27 +210,34 @@ public class ContactUtils {
      * @return the image uri or null if one could not be found.
      */
     public static String findImageUri(String number, Context context) {
+        String uri = null;
+
         if (number.split(", ").length > 1) {
             return null;
         } else {
             try {
-                long contactId;
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                        Uri.encode(number));
 
-                try {
-                    contactId = findContactId(number, context);
-                } catch (Exception e) {
-                    contactId = -1L;
+                Cursor phonesCursor = context.getContentResolver()
+                        .query(phoneUri, new String[]{ContactsContract.Contacts.PHOTO_THUMBNAIL_URI},
+                                null, null, null);
+
+                if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                    uri = phonesCursor.getString(0);
+                    if (uri != null) {
+                        uri = uri.replace("/photo", "");
+                    }
                 }
 
-                if (contactId != -1L) {
-                    Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
-                    return photoUri.toString();
+                if (phonesCursor != null) {
+                    phonesCursor.close();
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
 
-            return null;
+            return uri;
         }
     }
 
