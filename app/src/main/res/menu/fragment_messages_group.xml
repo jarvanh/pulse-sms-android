@@ -25,9 +25,21 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_conversation_information"
+        android:icon="@drawable/ic_about"
+        android:title="@string/menu_conversation_information"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_view_media"
         android:icon="@drawable/ic_media"
         android:title="@string/menu_view_media"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_conversation_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/menu_conversation_schedule"
         app:showAsAction="never" />
 
     <item
@@ -40,18 +52,6 @@
         android:id="@+id/menu_archive_conversation"
         android:icon="@drawable/ic_archive"
         android:title="@string/menu_archive_conversation"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_conversation_schedule"
-        android:icon="@drawable/ic_schedule"
-        android:title="@string/menu_conversation_schedule"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_conversation_information"
-        android:icon="@drawable/ic_about"
-        android:title="@string/menu_conversation_information"
         app:showAsAction="never" />
 
     <item
