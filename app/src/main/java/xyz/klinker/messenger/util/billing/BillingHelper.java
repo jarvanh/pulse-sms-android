@@ -120,13 +120,13 @@ public class BillingHelper {
         }
     }
 
-    public void purchaseItem(Activity activity, String sku, PurchasedItemCallback callback) {
+    public void purchaseItem(Activity activity, ProductAvailable productAvailable, PurchasedItemCallback callback) {
         this.purchaseCallback = callback;
         waitOnServiceInitialization();
 
         try {
             Bundle buyIntentBundle = billingService.getBuyIntent(3, context.getPackageName(),
-                    sku, "inapp", DEVELOPER_PAYLOAD);
+                    productAvailable.getProductId(), productAvailable.getType().getIdentifier(), DEVELOPER_PAYLOAD);
             PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
             activity.startIntentSenderForResult(pendingIntent.getIntentSender(),
                     REQUEST_PURCHASE, new Intent(), Integer.valueOf(0), Integer.valueOf(0),

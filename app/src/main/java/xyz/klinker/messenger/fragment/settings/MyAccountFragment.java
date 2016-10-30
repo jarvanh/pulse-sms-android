@@ -350,7 +350,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 }).show();
     }
 
-    private void purchaseProduct(final ProductAvailable product) {
+    private void purchaseProduct(final ProductAvailableDetailed product) {
         billing.purchaseItem(getActivity(), product.getProductId(), new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
