@@ -30,11 +30,14 @@ public class DualSimApplication {
     }
 
     public void apply(final long conversationId) {
+        boolean visible = false;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && Account.get(context).primary) {
             SubscriptionManager manager = SubscriptionManager.from(context);
             final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
 
             if (subscriptions != null && subscriptions.size() > 1) {
+                visible = true;
                 switchSim.setVisibility(View.VISIBLE);
                 final ViewBadger badger = new ViewBadger(context, switchSim);
 
@@ -48,7 +51,7 @@ public class DualSimApplication {
                     for (int i = 0; i < subscriptions.size(); i++) {
                         if (subscriptions.get(i).getSubscriptionId() == conversation.simSubscriptionId) {
                             set = true;
-                            badger.setText(subscriptions.get(i).getSimSlotIndex() + 1);
+                            badger.setText(String.valueOf(subscriptions.get(i).getSimSlotIndex() + 1));
                         }
                     }
                 }
@@ -65,6 +68,10 @@ public class DualSimApplication {
                     }
                 });
             }
+        }
+
+        if (!visible && switchSim.getVisibility() != View.GONE) {
+            switchSim.setVisibility(View.GONE);
         }
     }
 
