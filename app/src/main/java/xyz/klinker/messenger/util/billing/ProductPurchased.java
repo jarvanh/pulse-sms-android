@@ -5,7 +5,10 @@ import android.os.Bundle;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import xyz.klinker.messenger.util.TimeUtils;
 
 public class ProductPurchased {
 
@@ -40,6 +43,44 @@ public class ProductPurchased {
 
     public String getProductId() {
         return productId;
+    }
+
+    public boolean isBetterThan(ProductPurchased other) {
+        if (productId.equals("lifetime")) {
+            return true;
+        } else if (other.getProductId().equals("lifetime")) {
+            return false;
+        } else if (productId.contains("one_year")) {
+            if (other.getProductId().equals("lifetime")) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (productId.contains("three_months")) {
+            if (other.getProductId().equals("lifetime") || other.getProductId().contains("one_year")) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (other.getProductId().equals("lifetime") || other.getProductId().contains("one_year") || other.getProductId().contains("three_months")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    public long getExperation() {
+        if (productId.contains("one_year")) {
+            return TimeUtils.DAY * 365;
+        } else if (productId.contains("three_months")) {
+            return TimeUtils.DAY * 93;
+        } else if (productId.contains("one_month")) {
+            return TimeUtils.DAY * 31;
+        }
+
+        return 1L;
     }
 
 }

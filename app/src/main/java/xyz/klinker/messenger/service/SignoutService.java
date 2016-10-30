@@ -8,14 +8,19 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 
 import java.util.Date;
+import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.FeatureFlags;
+import xyz.klinker.messenger.util.billing.BillingHelper;
+import xyz.klinker.messenger.util.billing.ProductPurchased;
 
 public class SignoutService extends IntentService {
 
     private static final int REQUEST_CODE = 15;
+
+    private BillingHelper billing;
 
     public SignoutService() {
         super("SignoutService");
@@ -24,6 +29,7 @@ public class SignoutService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Account account = Account.get(this);
+        billing = new BillingHelper(this);
 
         // Only need to manage this on the primary device
         if (account.primary && account.subscriptionExpiration < new Date().getTime() && isExpired()) {
@@ -31,13 +37,59 @@ public class SignoutService extends IntentService {
 
             account.clearAccount();
             new ApiUtils().deleteAccount(accountId);
+        } else {
+            SubscriptionExpirationCheckService.scheduleNextRun(this);
         }
 
         writeSignoutTime(this, 0);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        billing.destroy();
+    }
+
     private boolean isExpired() {
-        return false;
+        List<ProductPurchased> purchasedList = billing.queryAllPurchasedProducts();
+
+        if (purchasedList.size() > 0) {
+            ProductPurchased best = getBestProduct(purchasedList);
+
+            if (best.getProductId().equals("lifetime")) {
+                writeLifetimeSubscriber();
+            } else {
+                writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void writeLifetimeSubscriber() {
+        Account account = Account.get(this);
+        account.updateSubscription(
+                Account.SubscriptionType.LIFETIME, 1L, true);
+    }
+
+    private void writeNewExpirationToAccount(long time) {
+        Account account = Account.get(this);
+        account.updateSubscription(
+                Account.SubscriptionType.SUBSCRIBER, time, true);
+    }
+
+    private ProductPurchased getBestProduct(List<ProductPurchased> products) {
+        ProductPurchased best = products.get(0);
+
+        for (ProductPurchased productPurchased : products) {
+            if (productPurchased.isBetterThan(best)) {
+                best = productPurchased;
+            }
+        }
+
+        return best;
     }
 
     public static void scheduleNextRun(Context context) {

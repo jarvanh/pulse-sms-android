@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import java.util.Date;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
@@ -17,6 +18,8 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.util.RedirectToMyAccount;
 import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.util.billing.BillingHelper;
+import xyz.klinker.messenger.util.billing.ProductPurchased;
 
 public class SubscriptionExpirationCheckService extends IntentService {
 
@@ -24,6 +27,8 @@ public class SubscriptionExpirationCheckService extends IntentService {
     public static final int NOTIFICATION_ID = 1004;
     private static final int REQUEST_CODE_EMAIL = 1005;
     private static final int REQUEST_CODE_RENEW = 1006;
+
+    private BillingHelper billing;
 
     public SubscriptionExpirationCheckService() {
         super("SubscriptionCheckService");
@@ -33,20 +38,25 @@ public class SubscriptionExpirationCheckService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Account account = Account.get(this);
 
+        billing = new BillingHelper(this);
+
         if (account.accountId != null && account.primary) {
             if (isExpired()) {
                 makeSignoutNotification();
-                //SignoutService.writeSignoutTime(this, new Date().getTime() + TimeUtils.DAY * 2);
+                SignoutService.writeSignoutTime(this, new Date().getTime() + TimeUtils.DAY * 2);
             } else {
                 scheduleNextRun(this);
             }
         }
     }
 
-    private void makeSignoutNotification() {
-        // todo alert the user that they will be signed out in two days since their subscription ended.
-        // make an email button since the play store cannot always be trusted to get the right value... ugh
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        billing.destroy();
+    }
 
+    private void makeSignoutNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.no_subscription_found))
                 .setContentText(getString(R.string.cancelled_subscription_error))
@@ -83,19 +93,45 @@ public class SubscriptionExpirationCheckService extends IntentService {
     }
 
     private boolean isExpired() {
-        // todo check with the play store to see the status of their subscription
-        // if it is active, lets update the subscription expiration date
-        // make sure that the
-        return true;
+        List<ProductPurchased> purchasedList = billing.queryAllPurchasedProducts();
+
+        if (purchasedList.size() > 0) {
+            ProductPurchased best = getBestProduct(purchasedList);
+
+            if (best.getProductId().equals("lifetime")) {
+                writeLifetimeSubscriber();
+            } else {
+                writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
+            }
+
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    private void writeNewExpirationToAccount(Date expiration) {
+    private void writeLifetimeSubscriber() {
         Account account = Account.get(this);
+        account.updateSubscription(
+                Account.SubscriptionType.LIFETIME, 1L, true);
+    }
 
-        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
-            account.updateSubscription(
-                    Account.SubscriptionType.SUBSCRIBER, expiration.getTime(), true);
+    private void writeNewExpirationToAccount(long time) {
+        Account account = Account.get(this);
+        account.updateSubscription(
+                Account.SubscriptionType.SUBSCRIBER, time, true);
+    }
+
+    private ProductPurchased getBestProduct(List<ProductPurchased> products) {
+        ProductPurchased best = products.get(0);
+
+        for (ProductPurchased productPurchased : products) {
+            if (productPurchased.isBetterThan(best)) {
+                best = productPurchased;
+            }
         }
+
+        return best;
     }
 
     public static void scheduleNextRun(Context context) {
