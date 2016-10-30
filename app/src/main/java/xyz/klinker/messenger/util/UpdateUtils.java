@@ -39,6 +39,10 @@ public class UpdateUtils {
         // i just want to hold this value, in case we need it later when we roll out public.
         sharedPreferences.edit().putBoolean("is_on_pre_release", true).apply();
 
+        /*if (sharedPreferences.getBoolean("migrate_to_trial", true)) {
+            sharedPreferences.edit().putBoolean("migrate_to_trial", false);
+        }*/
+
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);
         int currentAppVersion = getAppVersion();
 

@@ -46,6 +46,7 @@ import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.billing.ProductAvailable;
 import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
+import xyz.klinker.messenger.util.billing.ProductPurchased;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
 
 /**
