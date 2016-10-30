@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
+
 import java.util.Date;
 
 import xyz.klinker.messenger.api.implementation.Account;

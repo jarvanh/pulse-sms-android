@@ -83,6 +83,7 @@ public class FirebaseHandlerService extends IntentService {
         Account account = Account.get(context);
 
         // received a message without having initialized an account yet
+        // could happen if their subscription ends
         if (account.key == null) {
             return;
         }
