@@ -344,6 +344,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 .setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
+                        Toast.makeText(getActivity(), available.get(which).getProductId(), Toast.LENGTH_SHORT).show();
                         purchaseProduct(available.get(which));
                         dialogInterface.dismiss();
                     }
@@ -351,7 +352,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     }
 
     private void purchaseProduct(final ProductAvailableDetailed product) {
-        billing.purchaseItem(getActivity(), product.getProductId(), new PurchasedItemCallback() {
+        billing.purchaseItem(getActivity(), product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
                 startLoginActivity();
