@@ -25,6 +25,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.text.Html;
+import android.widget.Toast;
+
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
@@ -39,6 +43,10 @@ import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
+import xyz.klinker.messenger.util.billing.BillingHelper;
+import xyz.klinker.messenger.util.billing.ProductAvailable;
+import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
+import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
@@ -52,9 +60,13 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
     private static final int SETUP_REQUEST = 54321;
 
+    private BillingHelper billing;
+
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.my_account);
+
+        billing = new BillingHelper(getActivity());
 
         if (initSetupPreference()) {
             findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
@@ -62,11 +74,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initRemoveAccountPreference();
             initResyncAccountPreference();
         } else {
-            if (!FeatureFlags.IS_BETA) {
-                startActivityForResult(
-                        new Intent(getActivity(), OnBoardingPayActivity.class),
-                        ONBOARDING_REQUEST);
-            }
+            startActivityForResult(
+                    new Intent(getActivity(), OnBoardingPayActivity.class),
+                    ONBOARDING_REQUEST);
         }
     }
 
@@ -78,8 +88,33 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    startActivityForResult(intent, SETUP_REQUEST);
+                    final ProgressDialog dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
+                    dialog.setCancelable(false);
+                    dialog.setIndeterminate(true);
+                    dialog.show();
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final boolean hasSubs = billing.hasPurchasedProduct();
+                            dialog.dismiss();
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (hasSubs) {
+                                        Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+                                        startLoginActivity();
+                                    } else {
+                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+                                        pickSubscription();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
+
                     return true;
                 }
             });
@@ -209,25 +244,27 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         Settings.get(getActivity()).forceUpdate();
-        if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
-            if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
-                returnToConversationsAfterLogin();
+        if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
+            if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
+                if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
+                    getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
+                    returnToConversationsAfterLogin();
 
-                NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-                if (nav != null) {
-                    nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                    NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                    if (nav != null) {
+                        nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                    }
+                } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
+                    restoreAccount();
                 }
-            } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                restoreAccount();
-            }
-        } else if (requestCode == ONBOARDING_REQUEST) {
-            if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
-                returnToConversationsAfterLogin();
-            } else if (responseCode == RESPONSE_START_TRIAL) {
-                getPreferenceScreen()
-                        .findPreference(getString(R.string.pref_my_account_setup))
-                        .performClick();
+            } else if (requestCode == ONBOARDING_REQUEST) {
+                if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
+                    returnToConversationsAfterLogin();
+                } else if (responseCode == RESPONSE_START_TRIAL) {
+                    getPreferenceScreen()
+                            .findPreference(getString(R.string.pref_my_account_setup))
+                            .performClick();
+                }
             }
         }
     }
@@ -285,5 +322,50 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         } else {
             getActivity().recreate();
         }
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivityForResult(intent, SETUP_REQUEST);
+    }
+
+    private void pickSubscription() {
+        final List<ProductAvailableDetailed> available = ProductAvailableDetailed.getAllAvailableProducts(getActivity());
+        CharSequence[] titles = new CharSequence[available.size()];
+
+        for (int i = 0; i < titles.length; i++) {
+            ProductAvailableDetailed prod = available.get(i);
+            titles[i] = Html.fromHtml("<b>(" + prod.getPrice() + ")</b> " + prod.getTitle() +
+                    (prod.getDescription() != null ? ": " + prod.getDescription() : ""));
+        }
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.pick_a_plan)
+                .setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        purchaseProduct(available.get(which));
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+    }
+
+    private void purchaseProduct(final ProductAvailable product) {
+        billing.purchaseItem(getActivity(), product.getProductId(), new PurchasedItemCallback() {
+            @Override
+            public void onItemPurchased(String productId) {
+                startLoginActivity();
+            }
+
+            @Override
+            public void onPurchaseError(final String message) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }

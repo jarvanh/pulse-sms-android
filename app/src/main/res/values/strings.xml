@@ -365,5 +365,16 @@
     <string name="cancelled_subscription_error">Looks like you cancelled your subscription.
         If you do not make a new subscription within that time, the app will automatically sign you
         out of your account in 2 days. If this is an error, please contact me via email.</string>
+    <string name="subscription_found">Subscription found - welcome back!</string>
+    <string name="subscription_not_found">No subscription found, let\'s start your trial!</string>
+    <string name="checking_for_active_subscriptions">Checking for subscriptions&#8230;</string>
+    <string name="pick_a_plan">Pick a Plan</string>
+    <string name="pick_a_plan_message">Google Play will bill you automatically at the end of your seven day trial,
+        if you have not cancelled the subscription. Lifetime purchases will be billed immediately.</string>
+    <string name="lifetime_access">Lifetime Access</string>
+    <string name="lifetime_access_summary">One-time payment to access the service as long as you use the app.</string>
+    <string name="one_year_subscription">One Year Subscription</string>
+    <string name="three_month_subscription">Three Month Subscription</string>
+    <string name="one_month_subscription">One Month Subscription</string>
 
 </resources>

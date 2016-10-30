@@ -42,12 +42,16 @@ public class BillingHelper {
 
     public BillingHelper(Context context) {
         this.context = context;
-
-        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.android.vending");
-        context.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+        prepare();
     }
 
+    private void prepare() {
+        if (billingService == null) {
+            Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
+            serviceIntent.setPackage("com.android.vending");
+            context.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
 
     public void destroy() {
         if (billingService != null) {
@@ -55,9 +59,17 @@ public class BillingHelper {
         }
     }
 
+    public boolean isPrepared() {
+        return billingService != null;
+    }
+
+    public boolean hasPurchasedProduct() {
+        return queryAllPurchasedProducts().size() > 0;
+    }
+
     private void waitOnServiceInitialization() {
         int i = 0;
-        while (billingService == null && i < 10) {
+        while (!isPrepared() && i < 10) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) { }
@@ -139,11 +151,14 @@ public class BillingHelper {
                     if (developerPayload.equals(DEVELOPER_PAYLOAD) && purchaseCallback != null) {
                         purchaseCallback.onItemPurchased(purchasedProductId);
                     } else {
-                        purchaseCallback.onPurchaseError("Invalide purchase.");
+                        purchaseCallback.onPurchaseError("Hmm... That purchase didn't match one on our record.");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    purchaseCallback.onPurchaseError("Uh oh, Google Play might be having issues, they gave us a bad result.");
                 }
+            } else {
+                purchaseCallback.onPurchaseError("It appears you have cancelled the purchase :(");
             }
 
             return true;
