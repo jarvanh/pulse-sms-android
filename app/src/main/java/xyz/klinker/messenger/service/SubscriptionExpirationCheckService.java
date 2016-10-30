@@ -100,7 +100,7 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
     public static void scheduleNextRun(Context context) {
         Account account = Account.get(context);
-        if (account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary || FeatureFlags.IS_BETA) {
+        if (account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
             return;
         }
 

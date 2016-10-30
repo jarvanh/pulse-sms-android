@@ -74,7 +74,7 @@ public class UpdateUtils {
     private void alertToTextFromAnywhere(SharedPreferences sharedPrefs) {
         Account account = Account.get(context);
 
-        if (!FeatureFlags.IS_BETA && account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false)) {
+        if (account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false)) {
             long installTime = sharedPrefs.getLong("install_time", 0);
             if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS) {
                 new AlertDialog.Builder(context)

@@ -30,6 +30,7 @@ public class MessengerFirebaseInstanceIDService extends FirebaseInstanceIdServic
 
     @Override
     public void onTokenRefresh() {
+        super.onTokenRefresh();
         TokenUtil.refreshToken(this);
     }
 }
