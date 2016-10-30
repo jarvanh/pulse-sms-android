@@ -80,6 +80,12 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        billing.destroy();
+    }
+
     private boolean initSetupPreference() {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Account account = Account.get(getActivity());
@@ -344,7 +350,6 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 .setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                        Toast.makeText(getActivity(), available.get(which).getProductId(), Toast.LENGTH_SHORT).show();
                         purchaseProduct(available.get(which));
                         dialogInterface.dismiss();
                     }

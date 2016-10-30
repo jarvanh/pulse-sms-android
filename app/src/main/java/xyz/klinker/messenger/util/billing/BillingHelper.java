@@ -21,8 +21,8 @@ import java.util.List;
 
 public class BillingHelper {
 
-    private static final int REQUEST_PURCHASE = 12211;
-    private static final String DEVELOPER_PAYLOAD = "bGoa+V7g/yqDXvKRqq+LMUn4uQZbCIKJo4pf9RzD";
+    private static final int REQUEST_PURCHASE = 1001;
+    private static final String DEVELOPER_PAYLOAD = "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ";
 
     private Context context;
     private IInAppBillingService billingService;
@@ -90,8 +90,9 @@ public class BillingHelper {
 
     private List<ProductAvailable> queryAvailableProducts(ProductType type) {
         Bundle querySkus = new Bundle();
-        querySkus.putStringArrayList("ITEM_ID_LIST",
-                (ArrayList) Arrays.asList(type.getAvailableProductIds()));
+        ArrayList<String> productIds = new ArrayList<>();
+        productIds.addAll(Arrays.asList(type.getAvailableProductIds()));
+        querySkus.putStringArrayList("ITEM_ID_LIST", productIds);
 
         try {
             return ProductAvailable.createFromBundle(type,
