@@ -27,6 +27,8 @@ import xyz.klinker.messenger.data.model.Message;
 
 public class MediaSaver {
 
+    private static final int REQUEST_STORAGE_PERMISSION = 119;
+
     private Activity activity;
 
     public MediaSaver(Activity activity) {
@@ -48,7 +50,7 @@ public class MediaSaver {
             saveMessage(message);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, -1);
+                activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
             } else {
                 saveMessage(message);
             }
