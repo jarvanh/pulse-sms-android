@@ -109,6 +109,8 @@ public class SendUtils {
             byteBuffer.write(buffer, 0, len);
         }
 
+        stream.close();
+
         return byteBuffer.toByteArray();
     }
 

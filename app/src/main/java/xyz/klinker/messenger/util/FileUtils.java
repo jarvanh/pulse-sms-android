@@ -75,6 +75,8 @@ public class FileUtils {
             e.printStackTrace();
         } finally {
             try {
+                bmp.recycle();
+
                 if (out != null) {
                     out.close();
                 }

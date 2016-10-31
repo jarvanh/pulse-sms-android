@@ -81,6 +81,8 @@ public class MediaSaver {
                 bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                 stream.close();
 
+                bmp.recycle();
+
                 ContentValues values = new ContentValues(3);
 
                 values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());

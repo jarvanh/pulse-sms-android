@@ -84,6 +84,9 @@ public class ImageUtils {
         final Canvas canvas = new Canvas(outputBitmap);
         canvas.clipPath(path);
         canvas.drawBitmap(bitmap, 0, 0, null);
+
+        bitmap.recycle();
+
         return outputBitmap;
     }
 

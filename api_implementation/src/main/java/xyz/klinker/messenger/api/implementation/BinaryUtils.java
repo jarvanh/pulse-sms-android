@@ -39,6 +39,8 @@ public class BinaryUtils {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
                 bytes = baos.toByteArray();
+
+                bitmap.recycle();
             } catch (Exception e) {
                 e.printStackTrace();
                 bytes = new byte[0];

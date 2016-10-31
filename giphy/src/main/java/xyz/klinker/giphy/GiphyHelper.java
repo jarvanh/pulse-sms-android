@@ -115,6 +115,14 @@ class GiphyHelper {
                 JSONObject root = new JSONObject(getResponseText(in));
                 JSONArray data = root.getJSONArray("data");
 
+                try {
+                    in.close();
+                } catch (Exception e) { }
+
+                try {
+                    urlConnection.disconnect();
+                } catch (Exception e) { }
+
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject gif = data.getJSONObject(i);
                     JSONObject images = gif.getJSONObject("images");

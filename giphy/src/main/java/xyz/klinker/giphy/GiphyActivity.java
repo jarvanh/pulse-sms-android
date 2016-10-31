@@ -254,6 +254,7 @@ public class GiphyActivity extends Activity {
             outStream.flush();
             outStream.close();
             inStream.close();
+            is.close();
 
             return Uri.fromFile(file);
         }
