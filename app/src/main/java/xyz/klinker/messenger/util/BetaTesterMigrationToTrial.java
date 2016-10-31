@@ -9,12 +9,14 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
@@ -88,9 +90,18 @@ public class BetaTesterMigrationToTrial {
         billing.purchaseItem(context, product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
-                Toast.makeText(context, "I am beyond happy for your support!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "I am beyond excited for your support!", Toast.LENGTH_SHORT).show();
                 ((MessengerActivity) context).billing = null;
                 billing.destroy();
+
+                if (productId.equals("lifetime")) {
+                    Account.get(context).updateSubscription(Account.SubscriptionType.LIFETIME, 1L, true);
+                } else {
+                    Account.get(context).updateSubscription(Account.SubscriptionType.TRIAL,
+                            new Date().getTime() + (TimeUtils.DAY * 7), true);
+                }
+
+                SubscriptionExpirationCheckService.scheduleNextRun(context);
             }
 
             @Override

@@ -136,7 +136,7 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
     public static void scheduleNextRun(Context context) {
         Account account = Account.get(context);
-        if (account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
             return;
         }
 
