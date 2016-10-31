@@ -89,6 +89,7 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.UpdateUtils;
+import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
@@ -125,6 +126,7 @@ public class MessengerActivity extends AppCompatActivity
     private DataSource dataSource;
 
     private BroadcastReceiver downloadReceiver;
+    public BillingHelper billing;
 
     private boolean loaded = false;
 
@@ -980,6 +982,10 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (billing != null && billing.handleOnActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);

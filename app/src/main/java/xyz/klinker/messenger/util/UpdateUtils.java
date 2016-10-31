@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,9 +26,9 @@ public class UpdateUtils {
 
     private static final String TAG = "UpdateUtil";
 
-    private Context context;
+    private Activity context;
 
-    public UpdateUtils(Context context) {
+    public UpdateUtils(Activity context) {
         this.context = context;
     }
 
@@ -36,12 +37,10 @@ public class UpdateUtils {
 
         alertToTextFromAnywhere(sharedPreferences);
 
-        // i just want to hold this value, in case we need it later when we roll out public.
-        sharedPreferences.edit().putBoolean("is_on_pre_release", true).apply();
-
-        /*if (sharedPreferences.getBoolean("migrate_to_trial", true)) {
-            sharedPreferences.edit().putBoolean("migrate_to_trial", false);
-        }*/
+        if (sharedPreferences.getBoolean("migrate_to_trial", true)) {
+            sharedPreferences.edit().putBoolean("migrate_to_trial", false).commit();
+            new BetaTesterMigrationToTrial(context).alertToMigration();
+        }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);
         int currentAppVersion = getAppVersion();

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import xyz.klinker.messenger.R;
+
 public class BillingHelper {
 
     private static final int REQUEST_PURCHASE = 1001;
@@ -152,14 +154,14 @@ public class BillingHelper {
                     if (developerPayload.equals(DEVELOPER_PAYLOAD) && purchaseCallback != null) {
                         purchaseCallback.onItemPurchased(purchasedProductId);
                     } else {
-                        purchaseCallback.onPurchaseError("Hmm... That purchase didn't match one on our record.");
+                        purchaseCallback.onPurchaseError(context.getString(R.string.purchase_error_bad_sku));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    purchaseCallback.onPurchaseError("Uh oh, Google Play might be having issues, they gave us a bad result.");
+                    purchaseCallback.onPurchaseError(context.getString(R.string.purchase_error_bad_google_play));
                 }
             } else {
-                purchaseCallback.onPurchaseError("It appears you have cancelled the purchase :(");
+                purchaseCallback.onPurchaseError(context.getString(R.string.purchase_error_cancelled));
             }
 
             return true;

@@ -376,5 +376,8 @@
     <string name="one_year_subscription">One Year Subscription</string>
     <string name="three_month_subscription">Three Month Subscription</string>
     <string name="one_month_subscription">One Month Subscription</string>
+    <string name="purchase_error_cancelled">You cancelled the purchase :(</string>
+    <string name="purchase_error_bad_google_play">Uh oh, Google Play might be having issues, they gave us a bad result.</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; That purchase didn\'t match one on our record.</string>
 
 </resources>
