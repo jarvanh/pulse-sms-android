@@ -39,7 +39,7 @@ public class UpdateUtils {
 
         if (sharedPreferences.getBoolean("migrate_to_trial", true)) {
             sharedPreferences.edit().putBoolean("migrate_to_trial", false).commit();
-            new BetaTesterMigrationToTrial(context).alertToMigration();
+            //new BetaTesterMigrationToTrial(context).alertToMigration();
         }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);
