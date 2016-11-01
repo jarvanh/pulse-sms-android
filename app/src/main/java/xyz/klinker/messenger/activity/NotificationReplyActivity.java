@@ -135,10 +135,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         setupSendBar();
         setupBackgroundComponents();
         showContactImage();
-
-        NotificationManagerCompat.from(this).cancel((int) conversationId);
-        new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, conversationId);
-
+        
         alphaIn(dimBackground, 300, 0);
 
         content.post(new Runnable() {
@@ -168,6 +165,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 messageInput.requestFocus();
                 ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
                         .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
+                
+                NotificationManagerCompat.from(this).cancel((int) conversation.id);
+                new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, conversationId);
             }
         }, 300);
     }
