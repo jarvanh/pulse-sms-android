@@ -109,18 +109,19 @@ public class SignoutService extends IntentService {
     public static void scheduleNextRun(Context context, long signoutTime) {
         Account account = Account.get(context);
 
-        Intent intent = new Intent(context, ContactSyncService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, SignoutService.class);
+        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pIntent);
 
-        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary || signoutTime == 0) {
             return;
         }
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, signoutTime, pIntent);
+        Log.v(TAG, "CURRENT TIME: " + new Date().toString());
+        Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + new Date(signoutTime).toString());
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, signoutTime, pIntent);
     }
 
     public static void writeSignoutTime(Context context, long signoutTime) {

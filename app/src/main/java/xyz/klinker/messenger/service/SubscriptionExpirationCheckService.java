@@ -50,7 +50,7 @@ public class SubscriptionExpirationCheckService extends IntentService {
             if (isExpired()) {
                 Log.v(TAG, "service is expired");
                 makeSignoutNotification();
-                SignoutService.writeSignoutTime(this, new Date().getTime() + TimeUtils.DAY * 2);
+                SignoutService.writeSignoutTime(this, new Date().getTime() + (TimeUtils.DAY * 2));
             } else {
                 Log.v(TAG, "not expired, scheduling the next refresh");
                 scheduleNextRun(this);
@@ -145,9 +145,8 @@ public class SubscriptionExpirationCheckService extends IntentService {
     public static void scheduleNextRun(Context context) {
         Account account = Account.get(context);
 
-        Intent intent = new Intent(context, ContactSyncService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, SubscriptionExpirationCheckService.class);
+        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pIntent);
@@ -156,6 +155,10 @@ public class SubscriptionExpirationCheckService extends IntentService {
             return;
         }
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, account.subscriptionExpiration + TimeUtils.DAY, pIntent);
+        long expiration = account.subscriptionExpiration + TimeUtils.DAY;
+
+        Log.v(TAG, "CURRENT TIME: " + new Date().toString());
+        Log.v(TAG, "SCHEDULING NEW SUBSCRIPTION CHECK FOR: " + new Date(expiration).toString());
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, expiration, pIntent);
     }
 }
