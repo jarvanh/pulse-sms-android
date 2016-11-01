@@ -36,7 +36,6 @@ import android.text.Spanned;
 import android.util.LongSparseArray;
 import android.view.WindowManager;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +43,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.NotificationReplyActivity;
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -55,6 +52,7 @@ import xyz.klinker.messenger.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.NotificationWindowManager;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.TvUtils;
 import xyz.klinker.messenger.view.NotificationView;
 import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
@@ -207,7 +205,7 @@ public class NotificationService extends IntentService {
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
-                .setOnlyAlertOnce(true)
+                .setOnlyAlertOnce(shouldAlertOnce(conversation.messages))
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
@@ -540,6 +538,32 @@ public class NotificationService extends IntentService {
     }
 
     /**
+     * If the user is getting spammed by the same person over and over again, we don't want to immediately
+     * give a vibrate or ringtone again.
+     *
+     * The 'onlyAlertOnce" flag on the notification builder means that it will not give a vibrate or sound
+     * if the notification is already active.
+     *
+     * @param messages the messages in this conversation
+     * @return true if the latest two messages are less than 1 min apart, or there is only one message. False
+     *          if the latest messages are more than 1 min apart, so that it will ring again.
+     */
+    @VisibleForTesting
+    protected boolean shouldAlertOnce(List<NotificationMessage> messages) {
+        if (messages.size() > 1) {
+            NotificationMessage one = messages.get(messages.size() - 2);
+            NotificationMessage two = messages.get(messages.size() - 1);
+
+            if (Math.abs(one.timestamp - two.timestamp) > TimeUtils.MINUTE) {
+                return false;
+            }
+        }
+
+        // default to true
+        return true;
+    }
+
+    /**
      * Displays a summary notification for all conversations using the rows returned by each
      * individual notification.
      */
@@ -714,7 +738,7 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    class NotificationConversation {
+    static class NotificationConversation {
         public long id;
         public String title;
         public String imageUri;
@@ -734,13 +758,13 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    class NotificationMessage {
+    static class NotificationMessage {
         public String data;
         public String mimeType;
         public long timestamp;
         public String from;
 
-        private NotificationMessage(String data, String mimeType, long timestamp, String from) {
+        protected NotificationMessage(String data, String mimeType, long timestamp, String from) {
             this.data = data;
             this.mimeType = mimeType;
             this.timestamp = timestamp;

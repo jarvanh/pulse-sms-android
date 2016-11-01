@@ -20,20 +20,26 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.util.LongSparseArray;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService.NotificationConversation;
+import xyz.klinker.messenger.util.TimeUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -81,6 +87,36 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         assertEquals("Can we hang out tonight?", conversations.get(2).messages.get(0).data);
         assertEquals(1, conversations.get(3).messages.size());
         assertEquals("image/jpg", conversations.get(3).messages.get(0).mimeType);
+    }
+
+    @Test
+    public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanAMin() {
+        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.MINUTE + 1, ""));
+
+        assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
+    }
+
+    @Test
+    public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanAMin() {
+        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.MINUTE - 100, ""));
+
+        assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
+    }
+
+    @Test
+    public void smallMessageListsShouldOnlyAlertOnce() {
+        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY - 100, ""));
+
+        assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
 
     private Cursor getUnseenCursor() {
