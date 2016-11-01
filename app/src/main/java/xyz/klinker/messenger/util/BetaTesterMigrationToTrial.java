@@ -32,6 +32,12 @@ public class BetaTesterMigrationToTrial {
     }
 
     public void alertToMigration() {
+        Account account = Account.get(context);
+
+        if (account.accountId == null || !account.primary) {
+            return;
+        }
+        
         new AlertDialog.Builder(context)
                 .setTitle("Thanks for Testing!")
                 .setMessage("The app is close to a public release, thanks to you! During this beta testing period, everything was free, but I tried to make it clear " +
