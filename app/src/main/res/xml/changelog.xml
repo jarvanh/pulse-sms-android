@@ -18,10 +18,16 @@
 
     <version
         name="1.8.3"
-        description="October 30th, 2016">
+        description="November 2nd, 2016">
         <text>Subscriptions activated, thanks for helping with the beta test :)</text>
-        <text>Update contact images</text>
+        <text>Production icon and name!</text>
+        <text>Automatically update contact images for conversations</text>
         <text>Improve sharing location</text>
+        <text>Improve notification dismissal</text>
+        <text>Improve unread badge support</text>
+        <text>Hopefully support Moto Display better</text>
+        <text>More MMS improvements</text>
+        <text>More optimizations</text>
         <text>More bug fixes</text>
     </version>
 
