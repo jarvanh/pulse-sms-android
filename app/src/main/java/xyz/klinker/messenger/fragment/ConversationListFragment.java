@@ -530,7 +530,8 @@ public class ConversationListFragment extends Fragment
             ActivityUtils.setTaskDescription(getActivity(),
                     viewHolder.conversation.title, viewHolder.conversation.colors.color);
         }
-
+        
+        checkUnreadCount();
         return true;
     }
 
@@ -572,8 +573,6 @@ public class ConversationListFragment extends Fragment
             ConversationListUpdatedReceiver.sendBroadcast(getActivity(), contractedId, newConversationTitle);
             newConversationTitle = null;
         }
-
-        checkUnreadCount();
     }
 
     @Override
@@ -635,6 +634,6 @@ public class ConversationListFragment extends Fragment
             public void run() {
                 new UnreadBadger(getActivity()).writeCountFromDatabase();
             }
-        }, 2000);
+        }, 1500);
     }
 }
