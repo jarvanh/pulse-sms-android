@@ -15,11 +15,7 @@
   -->
 
 <resources>
-
-      <string name="app_name">Messenger</string>
-      <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
-      <string name="app_title">Messaging</string>
-
+	
     <string name="environment">release</string>
 
 </resources>
