@@ -166,8 +166,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
                         .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
                 
-                NotificationManagerCompat.from(this).cancel((int) conversation.id);
-                new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, conversationId);
+                NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.id);
+                new ApiUtils().dismissNotification(Account.get(NotificationReplyActivity.this).accountId,
+                        Account.get(NotificationReplyActivity.this).deviceId, conversation.id);
             }
         }, 300);
     }
