@@ -316,7 +316,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         }
 
         Account account = Account.get(getActivity());
-        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+        if (account.accountId != null && account.primary) {
             new ApiUtils().updateSubscription(account.accountId,
                     account.subscriptionType.typeCode, account.subscriptionExpiration);
         }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ import xyz.klinker.messenger.util.billing.ProductPurchased;
 
 public class SubscriptionExpirationCheckService extends IntentService {
 
+    private static final String TAG = "SubscriptionCheck";
+
     private static final int REQUEST_CODE = 14;
     public static final int NOTIFICATION_ID = 1004;
     private static final int REQUEST_CODE_EMAIL = 1005;
@@ -36,15 +39,20 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.v(TAG, "starting subscription check service.");
+
         Account account = Account.get(this);
 
         billing = new BillingHelper(this);
 
-        if (account.accountId != null && account.primary) {
+        if (account.accountId != null && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+            Log.v(TAG, "checking for expiration");
             if (isExpired()) {
+                Log.v(TAG, "service is expired");
                 makeSignoutNotification();
                 SignoutService.writeSignoutTime(this, new Date().getTime() + TimeUtils.DAY * 2);
             } else {
+                Log.v(TAG, "not expired, scheduling the next refresh");
                 scheduleNextRun(this);
             }
         }
@@ -136,11 +144,6 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
     public static void scheduleNextRun(Context context) {
         Account account = Account.get(context);
-        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
-            return;
-        }
-
-        long expiration = account.subscriptionExpiration;
 
         Intent intent = new Intent(context, ContactSyncService.class);
         PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
@@ -149,9 +152,10 @@ public class SubscriptionExpirationCheckService extends IntentService {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pIntent);
 
-        if (expiration < new Date().getTime() || expiration == 0) {
-            // set it up one day after the subscription end time, just to give a bit of padding.
-            alarmManager.set(AlarmManager.RTC_WAKEUP, Account.get(context).subscriptionExpiration + TimeUtils.DAY, pIntent);
+        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+            return;
         }
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, account.subscriptionExpiration + TimeUtils.DAY, pIntent);
     }
 }

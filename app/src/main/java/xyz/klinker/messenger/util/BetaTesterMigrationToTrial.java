@@ -73,7 +73,12 @@ public class BetaTesterMigrationToTrial {
 
         new android.support.v7.app.AlertDialog.Builder(context)
                 .setTitle(R.string.pick_a_plan)
-                .setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        retryNextTimeDialog();
+                    }
+                }).setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         purchaseProduct(available.get(which));
@@ -98,7 +103,7 @@ public class BetaTesterMigrationToTrial {
                     Account.get(context).updateSubscription(Account.SubscriptionType.LIFETIME, 1L, true);
                 } else {
                     Account.get(context).updateSubscription(Account.SubscriptionType.TRIAL,
-                            new Date().getTime() + (TimeUtils.DAY * 7), true);
+                            new Date().getTime() + (1000 * 60 * 60 *25 * 7), true);
                 }
 
                 SubscriptionExpirationCheckService.scheduleNextRun(context);
@@ -109,9 +114,6 @@ public class BetaTesterMigrationToTrial {
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                        sharedPreferences.edit().putBoolean("migrate_to_trial", true).commit();
-
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         ((MessengerActivity) context).billing = null;
                         billing.destroy();
@@ -124,6 +126,10 @@ public class BetaTesterMigrationToTrial {
     }
 
     private void retryNextTimeDialog() {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putBoolean("migrate_to_trial", true).commit();
+
         new AlertDialog.Builder(context)
                 .setTitle("Purchase Error or Cancellation")
                 .setMessage("We will retry next time, sorry about that!")

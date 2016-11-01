@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,8 @@ import xyz.klinker.messenger.util.billing.ProductPurchased;
 
 public class SignoutService extends IntentService {
 
+    private static final String TAG = "SignoutService";
+
     private static final int REQUEST_CODE = 15;
 
     private BillingHelper billing;
@@ -28,16 +31,21 @@ public class SignoutService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.v(TAG, "starting signout service.");
+
         Account account = Account.get(this);
         billing = new BillingHelper(this);
 
         // Only need to manage this on the primary device
-        if (account.primary && account.subscriptionExpiration < new Date().getTime() && isExpired()) {
+        if (account.accountId != null && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME &&
+                account.subscriptionExpiration < new Date().getTime() && isExpired()) {
+            Log.v(TAG, "forcing signout due to expired account!");
             final String accountId = account.accountId;
 
             account.clearAccount();
             new ApiUtils().deleteAccount(accountId);
         } else {
+            Log.v(TAG, "account not expired, scheduling the check again.");
             SubscriptionExpirationCheckService.scheduleNextRun(this);
         }
 
@@ -100,9 +108,6 @@ public class SignoutService extends IntentService {
 
     public static void scheduleNextRun(Context context, long signoutTime) {
         Account account = Account.get(context);
-        if (account.subscriptionType == Account.SubscriptionType.LIFETIME|| !account.primary) {
-            return;
-        }
 
         Intent intent = new Intent(context, ContactSyncService.class);
         PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
@@ -111,9 +116,11 @@ public class SignoutService extends IntentService {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pIntent);
 
-        if (signoutTime > new Date().getTime() && signoutTime != 0) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, signoutTime, pIntent);
+        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+            return;
         }
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, signoutTime, pIntent);
     }
 
     public static void writeSignoutTime(Context context, long signoutTime) {

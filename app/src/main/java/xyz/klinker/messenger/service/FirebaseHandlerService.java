@@ -698,11 +698,12 @@ public class FirebaseHandlerService extends IntentService {
         long expiration = json.has("expiration") ? json.getLong("expiration") : 0L;
 
         Account account = Account.get(context);
-        account.updateSubscription(
-                Account.SubscriptionType.findByTypeCode(type), expiration, false
-        );
 
-        if (account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+        if (account.primary) {
+            account.updateSubscription(
+                    Account.SubscriptionType.findByTypeCode(type), expiration, false
+            );
+
             SubscriptionExpirationCheckService.scheduleNextRun(context);
             SignoutService.writeSignoutTime(context, 0);
         }
