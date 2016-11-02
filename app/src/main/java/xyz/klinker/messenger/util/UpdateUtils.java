@@ -38,6 +38,12 @@ public class UpdateUtils {
         alertToTextFromAnywhere(sharedPreferences);
 
         if (sharedPreferences.getBoolean("migrate_to_trial", true)) {
+            Account account = Account.get(context);
+            if (account.accountId != null && account.primary) {
+                account.updateSubscription(Account.SubscriptionType.TRIAL, new Date().getTime() + TimeUtils.DAY, false);
+                SubscriptionExpirationCheckService.scheduleNextRun(context);
+            }
+
             sharedPreferences.edit().putBoolean("migrate_to_trial", false).commit();
             new BetaTesterMigrationToTrial(context).alertToMigration();
         }
