@@ -37,11 +37,11 @@ public class BetaTesterMigrationToTrial {
         
         new AlertDialog.Builder(context)
                 .setTitle("Thanks for Testing!")
-                .setMessage("The app is close to a public release, thanks to you! During this beta testing period, everything was free, but I tried to make it clear " +
+                .setMessage("The app is very close to a public release, thanks to you! During this beta testing period, everything was free, but I tried to make it clear " +
                         "that the app would be subscription based after release. That starts now! Please select either the 'Start Trial' button, or the 'No Thanks' button." +
-                        "\n\nThe subscription is $0.99 / month, $1.99 / three months, $5.99 / year, or a single $10.99 purchase for a lifetime account." +
-                        "\n\n'No Thanks' will delete your account, and you won't be able to access the app from any devices other than your phone. But, of course, you can continue to use the app completely free on your phone, forever :)" +
-                        "\n\nThe app comes with a 7 day trial. Cancelling the subscription anytime within those seven days will stop Google Play from charging your card." +
+                        "\n\nYou can choose to make a one time payment of $10.99 for a lifetime account, or, the subscription is $0.99 / month, $1.99 / three months, or $5.99 / year." +
+                        "\n\nSelecting 'No Thanks' will delete your account, and you won't be able to access the app from any devices other than your phone. The app is (and will always be) completely free to use on your phone though, you get all the awesome features for as long as you use the app!" +
+                        "\n\nThe subscription portion of this app comes with a 7 day trial, which will start now, if you choose to continue with the cross-device functionality. Cancelling the subscription anytime within those seven days will stop Google Play from charging your card." +
                         "Thanks for your help and continued support! If you have enjoyed the app, help me make it better by starting a subscription.")
                 .setCancelable(false)
                 .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
