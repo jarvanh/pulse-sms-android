@@ -20,17 +20,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.text.Html;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.Date;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
@@ -39,15 +37,14 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.billing.ProductAvailable;
-import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
 import xyz.klinker.messenger.util.billing.ProductPurchased;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
 import xyz.klinker.messenger.view.SelectPurchaseDialog;
@@ -164,8 +161,31 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         icon.setTint(getResources().getColor(R.color.primaryText));
         preference.setIcon(icon);
 
-        if (Account.get(getActivity()).subscriptionType != Account.SubscriptionType.LIFETIME) {
+        if (!Account.get(getActivity()).primary) {
             getPreferenceScreen().removePreference(preference);
+            return;
+        } else if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
+            preference.setTitle(R.string.trial_period);
+            return;
+        }
+
+        if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER) {
+            preference.setTitle(R.string.change_subscription);
+            preference.setSummary(R.string.cancel_on_the_play_store);
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.change_subscription_message)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    pickSubscription();
+                                }
+                            }).show();
+                    return false;
+                }
+            });
         }
     }
 
@@ -368,7 +388,20 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         billing.purchaseItem(getActivity(), product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
-                startLoginActivity();
+                if (Account.get(getActivity()).accountId == null) {
+                    startLoginActivity();
+                } else {
+                    // they switched their subscription, lets write the new timeout to their account.
+                    long newExperation = ProductPurchased.getExperation(productId);
+
+                    if (productId.contains("lifetime")) {
+                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.LIFETIME, new Date(newExperation));
+                    } else {
+                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));
+                    }
+
+                    returnToConversationsAfterLogin();
+                }
             }
 
             @Override

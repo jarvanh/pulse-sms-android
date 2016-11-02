@@ -270,6 +270,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_summary">View our privacy policy on the web</string>
     <string name="lifetime_subscriber">Lifetime Subscriber</string>
+    <string name="trial_period">Trial Period</string>
     <string name="setup_my_account">Setup Account</string>
     <string name="setup_my_account_summary">Sign up or login to your account to start using
         more features like messaging from your tablet or computer</string>
@@ -279,6 +280,8 @@
         devices, and the server. This is not reversible!</string>
     <string name="delete_account_confirmation">Are you sure you want to delete your account and
         everything else with it? You can always sign up again later!</string>
+    <string name="change_subscription">Change Subscription</string>
+    <string name="cancel_on_the_play_store">Cancel and view your subscription on the Play Store</string>
     <string name="resync_account">Resync Account</string>
     <string name="resync_account_summary">Missing messages? Use this to bring this device up to date
         with what is on your primary device.</string>
@@ -384,5 +387,6 @@
     <string name="three_month_purchase_summary">Can\'t go wrong with this one.</string>
     <string name="monthly_purchase">$0.99 every month</string>
     <string name="monthly_purchase_summary">Just want to try? No problem.</string>
+    <string name="change_subscription_message">Want to upgrade? Great! After you have made your selection on the next screen, you should go to the Play Store app, and cancel the old subscription manually.</string>
 
 </resources>

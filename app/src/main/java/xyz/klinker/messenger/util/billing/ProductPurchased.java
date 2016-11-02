@@ -72,6 +72,10 @@ public class ProductPurchased {
     }
 
     public long getExperation() {
+        return getExperation(this.productId);
+    }
+
+    public static long getExperation(String productId) {
         if (productId.contains("one_year")) {
             return TimeUtils.DAY * 365;
         } else if (productId.contains("three_months")) {

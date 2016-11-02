@@ -2,24 +2,19 @@ package xyz.klinker.messenger.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.List;
 
-import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.billing.ProductAvailable;
-import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
 import xyz.klinker.messenger.view.SelectPurchaseDialog;
 
