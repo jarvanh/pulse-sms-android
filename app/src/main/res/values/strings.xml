@@ -362,6 +362,8 @@
     <string name="learn_more">Learn More</string>
     <string name="dismiss">Dismiss</string>
     <string name="renew">Renew</string>
+
+    <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">No Subscription Found!</string>
     <string name="cancelled_subscription_error">Looks like you cancelled your subscription.
         If you do not make a new subscription within that time, the app will automatically sign you
@@ -369,19 +371,9 @@
     <string name="subscription_found">Subscription found - welcome back!</string>
     <string name="subscription_not_found">No subscription found, let\'s start your trial!</string>
     <string name="checking_for_active_subscriptions">Checking for subscriptions&#8230;</string>
-    <string name="pick_a_plan">Pick a Plan</string>
-    <string name="pick_a_plan_message">Google Play will bill you automatically at the end of your seven day trial,
-        if you have not cancelled the subscription. Lifetime purchases will be billed immediately.</string>
-    <string name="lifetime_access">Lifetime Access</string>
-    <string name="lifetime_access_summary">One-time payment to access the service as long as you use the app.</string>
-    <string name="one_year_subscription">One Year Subscription</string>
-    <string name="three_month_subscription">Three Month Subscription</string>
-    <string name="one_month_subscription">One Month Subscription</string>
     <string name="purchase_error_cancelled">You cancelled the purchase :(</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play might be having issues, they gave us a bad result.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; That purchase didn\'t match one on our record.</string>
-
-    <!-- Purchases -->
     <string name="subscriptions">Subscription are billed after the seven day trial and can be changed/cancelled at any time:</string>
     <string name="billed_immediately">This is billed immediately.</string>
     <string name="lifetime_purchase">$10.99 - Lifetime Membership</string>

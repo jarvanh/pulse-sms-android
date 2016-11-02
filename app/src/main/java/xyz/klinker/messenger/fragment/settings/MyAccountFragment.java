@@ -160,9 +160,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     private void initLifetimeSubscriberPreference() {
         Preference preference = findPreference(getString(R.string.pref_subscriber_status));
 
-        String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
         Drawable icon = getResources().getDrawable(R.drawable.ic_reward);
-        icon.setTint(Color.parseColor("#77" + baseColor));
+        icon.setTint(getResources().getColor(R.color.primaryText));
         preference.setIcon(icon);
 
         if (Account.get(getActivity()).subscriptionType != Account.SubscriptionType.LIFETIME) {
