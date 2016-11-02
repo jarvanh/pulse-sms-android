@@ -477,6 +477,10 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     public boolean menuItemClicked(int id) {
+        if (conversationListFragment != null) {
+            conversationListFragment.dismissSnackbars(this);
+        }
+
         switch (id) {
             case R.id.drawer_conversation:
                 if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null

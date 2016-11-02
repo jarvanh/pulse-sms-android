@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -152,14 +153,7 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onPause() {
         super.onPause();
-
-        if (archiveSnackbar != null && archiveSnackbar.isShown()) {
-            archiveSnackbar.dismiss();
-        }
-
-        if (deleteSnackbar != null && deleteSnackbar.isShown()) {
-            deleteSnackbar.dismiss();
-        }
+        dismissSnackbars(getActivity());
     }
 
     @Override
@@ -168,6 +162,22 @@ public class ConversationListFragment extends Fragment
 
         if (updatedReceiver != null) {
             getActivity().unregisterReceiver(updatedReceiver);
+        }
+    }
+
+    public void dismissSnackbars(Activity activity) {
+        if (archiveSnackbar != null && archiveSnackbar.isShown()) {
+            archiveSnackbar.dismiss();
+
+            // force them to be deleted. Activity will be null from getActivity, so we don't rely on the delete snackbar's callback
+            dismissArchiveSnackbar(activity, -1);
+        }
+
+        if (deleteSnackbar != null && deleteSnackbar.isShown()) {
+            deleteSnackbar.dismiss();
+
+            // force them to be deleted. Activity will be null from getActivity, so we don't rely on the delete snackbar's callback
+            dismissDeleteSnackbar(activity, -1);
         }
     }
 
@@ -314,33 +324,7 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                deleteSnackbar = null;
-
-                                if (pendingDelete.size() == currentSize && getActivity() != null) {
-                                    DataSource dataSource = DataSource.getInstance(getActivity());
-                                    dataSource.open();
-
-                                    // we were getting a concurrent modification exception, so
-                                    // copy this list and continue to delete in the background.
-                                    List<Conversation> copiedList = new ArrayList<>(pendingDelete);
-                                    for (Conversation conversation : copiedList) {
-                                        if (conversation != null) { // there are those blank convos that get populated with a new one
-                                            dataSource.deleteConversation(conversation);
-                                            SmsMmsUtils.deleteConversation(getContext(),
-                                                    conversation.phoneNumbers);
-                                        }
-                                    }
-
-                                    dataSource.close();
-                                    copiedList.clear();
-                                    pendingDelete = new ArrayList<>();
-                                }
-                            }
-                        }).start();
+                        dismissDeleteSnackbar(getActivity(), currentSize);
                     }
                 });
         deleteSnackbar.show();
@@ -353,6 +337,35 @@ public class ConversationListFragment extends Fragment
                 checkEmptyViewDisplay();
             }
         }, 500);
+    }
+
+    private void dismissDeleteSnackbar(final Activity activity, final int currentSize) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                deleteSnackbar = null;
+
+                if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
+                    DataSource dataSource = DataSource.getInstance(activity);
+                    dataSource.open();
+
+                    // we were getting a concurrent modification exception, so
+                    // copy this list and continue to delete in the background.
+                    List<Conversation> copiedList = new ArrayList<>(pendingDelete);
+                    for (Conversation conversation : copiedList) {
+                        if (conversation != null) { // there are those blank convos that get populated with a new one
+                            dataSource.deleteConversation(conversation);
+                            SmsMmsUtils.deleteConversation(getContext(),
+                                    conversation.phoneNumbers);
+                        }
+                    }
+
+                    dataSource.close();
+                    copiedList.clear();
+                    pendingDelete = new ArrayList<>();
+                }
+            }
+        }).start();
     }
 
     protected String getArchiveSnackbarText() {
@@ -387,31 +400,7 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                archiveSnackbar = null;
-
-                                if (pendingArchive.size() == currentSize && getActivity() != null) {
-                                    DataSource dataSource = DataSource.getInstance(getActivity());
-                                    dataSource.open();
-
-                                    // we were getting a concurrent modification exception, so
-                                    // copy this list and continue to archive in the background.
-                                    List<Conversation> copiedList = new ArrayList<>(pendingArchive);
-                                    for (Conversation conversation : copiedList) {
-                                        if (conversation != null) {
-                                            performArchiveOperation(dataSource, conversation);
-                                        }
-                                    }
-
-                                    dataSource.close();
-                                    copiedList.clear();
-                                    pendingArchive = new ArrayList<>();
-                                }
-                            }
-                        }).start();
+                        dismissArchiveSnackbar(getActivity(), currentSize);
                     }
                 });
         archiveSnackbar.show();
@@ -424,6 +413,33 @@ public class ConversationListFragment extends Fragment
                 checkEmptyViewDisplay();
             }
         }, 500);
+    }
+
+    private void dismissArchiveSnackbar(final Activity activity, final int currentSize) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                archiveSnackbar = null;
+
+                if (pendingArchive.size() == currentSize && activity != null) {
+                    DataSource dataSource = DataSource.getInstance(activity);
+                    dataSource.open();
+
+                    // we were getting a concurrent modification exception, so
+                    // copy this list and continue to archive in the background.
+                    List<Conversation> copiedList = new ArrayList<>(pendingArchive);
+                    for (Conversation conversation : copiedList) {
+                        if (conversation != null) {
+                            performArchiveOperation(dataSource, conversation);
+                        }
+                    }
+
+                    dataSource.close();
+                    copiedList.clear();
+                    pendingArchive = new ArrayList<>();
+                }
+            }
+        }).start();
     }
 
     @Override
