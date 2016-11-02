@@ -17,11 +17,13 @@
 package xyz.klinker.messenger.service;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
@@ -31,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -57,6 +60,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.util.StringUtils;
 
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
@@ -64,6 +68,7 @@ import xyz.klinker.messenger.util.SendUtils;
 public class FirebaseHandlerService extends IntentService {
 
     private static final String TAG = "FirebaseHandlerService";
+    private static final int INFORMATION_NOTIFICATION_ID = 13;
 
     private EncryptionUtils encryptionUtils;
 
@@ -696,6 +701,7 @@ public class FirebaseHandlerService extends IntentService {
             throws JSONException {
         int type = json.has("type") ? json.getInt("type") : 0;
         long expiration = json.has("expiration") ? json.getLong("expiration") : 0L;
+        boolean fromAdmin = json.has("from_admin") ? json.getBoolean("from_admin") : false;
 
         Account account = Account.get(context);
 
@@ -706,6 +712,16 @@ public class FirebaseHandlerService extends IntentService {
 
             SubscriptionExpirationCheckService.scheduleNextRun(context);
             SignoutService.writeSignoutTime(context, 0);
+
+            if (fromAdmin) {
+                String content = "Enjoy the app!";
+
+                if (!account.subscriptionType.equals(Account.SubscriptionType.LIFETIME)) {
+                    content = "Expiration: " + new Date(expiration).toString();
+                }
+
+                notifyUser("Subscription Updated: " + StringUtils.titleize(account.subscriptionType.name()), content);
+            }
         }
     }
 
@@ -778,5 +794,17 @@ public class FirebaseHandlerService extends IntentService {
         } catch (Exception e) {
             return 0L;
         }
+    }
+
+    private void notifyUser(String title, String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setColor(Settings.get(this).globalColorSet.color);
+
+        NotificationManagerCompat.from(this).notify(INFORMATION_NOTIFICATION_ID, builder.build());
     }
 }

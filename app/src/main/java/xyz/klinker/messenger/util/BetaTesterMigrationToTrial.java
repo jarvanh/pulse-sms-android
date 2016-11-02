@@ -18,8 +18,10 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.billing.BillingHelper;
+import xyz.klinker.messenger.util.billing.ProductAvailable;
 import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
+import xyz.klinker.messenger.view.SelectPurchaseDialog;
 
 public class BetaTesterMigrationToTrial {
 
@@ -68,32 +70,21 @@ public class BetaTesterMigrationToTrial {
     }
 
     private void pickSubscription() {
-        final List<ProductAvailableDetailed> available = ProductAvailableDetailed.getAllAvailableProducts(context);
-        CharSequence[] titles = new CharSequence[available.size()];
-
-        for (int i = 0; i < titles.length; i++) {
-            ProductAvailableDetailed prod = available.get(i);
-            titles[i] = Html.fromHtml("<b>(" + prod.getPrice() + ")</b> " + prod.getTitle() +
-                    (prod.getDescription() != null ? ": " + prod.getDescription() : ""));
-        }
-
-        new android.support.v7.app.AlertDialog.Builder(context)
-                .setTitle(R.string.pick_a_plan)
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+        new SelectPurchaseDialog(context)
+                .setPurchaseSelectedListener(new SelectPurchaseDialog.PurchaseSelectedListener() {
+                    @Override
+                    public void onPurchaseSelected(ProductAvailable product) {
+                        purchaseProduct(product);
+                    }
+                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
                         retryNextTimeDialog();
                     }
-                }).setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        purchaseProduct(available.get(which));
-                        dialogInterface.dismiss();
-                    }
                 }).show();
     }
 
-    private void purchaseProduct(final ProductAvailableDetailed product) {
+    private void purchaseProduct(final ProductAvailable product) {
         if (context instanceof MessengerActivity) {
             ((MessengerActivity) context).billing = billing;
         }

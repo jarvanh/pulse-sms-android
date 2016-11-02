@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
@@ -48,6 +50,7 @@ import xyz.klinker.messenger.util.billing.ProductAvailable;
 import xyz.klinker.messenger.util.billing.ProductAvailableDetailed;
 import xyz.klinker.messenger.util.billing.ProductPurchased;
 import xyz.klinker.messenger.util.billing.PurchasedItemCallback;
+import xyz.klinker.messenger.view.SelectPurchaseDialog;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
@@ -70,6 +73,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         billing = new BillingHelper(getActivity());
 
         if (initSetupPreference()) {
+            initLifetimeSubscriberPreference();
             findPreference(getString(R.string.pref_about_device_id)).setSummary(getDeviceId());
             initMessageCountPreference();
             initRemoveAccountPreference();
@@ -139,6 +143,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     private void removeAccountOptions() {
         try {
             getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_subscriber_status)));
+            getPreferenceScreen()
                     .removePreference(findPreference(getString(R.string.pref_message_count)));
             getPreferenceScreen()
                     .removePreference(findPreference(getString(R.string.pref_about_device_id)));
@@ -148,6 +154,19 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     .removePreference(findPreference(getString(R.string.pref_resync_account)));
         } catch (Exception e) {
 
+        }
+    }
+
+    private void initLifetimeSubscriberPreference() {
+        Preference preference = findPreference(getString(R.string.pref_subscriber_status));
+
+        String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
+        Drawable icon = getResources().getDrawable(R.drawable.ic_reward);
+        icon.setTint(Color.parseColor("#77" + baseColor));
+        preference.setIcon(icon);
+
+        if (Account.get(getActivity()).subscriptionType != Account.SubscriptionType.LIFETIME) {
+            getPreferenceScreen().removePreference(preference);
         }
     }
 
@@ -337,27 +356,16 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     }
 
     private void pickSubscription() {
-        final List<ProductAvailableDetailed> available = ProductAvailableDetailed.getAllAvailableProducts(getActivity());
-        CharSequence[] titles = new CharSequence[available.size()];
-
-        for (int i = 0; i < titles.length; i++) {
-            ProductAvailableDetailed prod = available.get(i);
-            titles[i] = Html.fromHtml("<b>(" + prod.getPrice() + ")</b> " + prod.getTitle() +
-                    (prod.getDescription() != null ? ": " + prod.getDescription() : ""));
-        }
-
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.pick_a_plan)
-                .setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+        new SelectPurchaseDialog(getActivity())
+                .setPurchaseSelectedListener(new SelectPurchaseDialog.PurchaseSelectedListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        purchaseProduct(available.get(which));
-                        dialogInterface.dismiss();
+                    public void onPurchaseSelected(ProductAvailable product) {
+                        purchaseProduct(product);
                     }
                 }).show();
     }
 
-    private void purchaseProduct(final ProductAvailableDetailed product) {
+    private void purchaseProduct(final ProductAvailable product) {
         billing.purchaseItem(getActivity(), product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {

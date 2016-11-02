@@ -52,4 +52,20 @@ public class ProductAvailable {
     public String getPrice() {
         return price;
     }
+
+    public static ProductAvailable createLifetime() {
+        return new ProductAvailable(ProductType.SINGLE_PURCHASE, "lifetime", "$10.99");
+    }
+
+    public static ProductAvailable createYearly() {
+        return new ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_year", "$5.99");
+    }
+
+    public static ProductAvailable createThreeMonth() {
+        return new ProductAvailable(ProductType.SUBSCRIPTION, "subscription_three_months", "$1.99");
+    }
+
+    public static ProductAvailable createMonthly() {
+        return new ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_month", "$0.99");
+    }
 }
