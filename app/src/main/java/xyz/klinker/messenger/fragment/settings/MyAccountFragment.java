@@ -392,9 +392,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     startLoginActivity();
                 } else {
                     // they switched their subscription, lets write the new timeout to their account.
-                    long newExperation = ProductPurchased.getExperation(productId);
+                    long newExperation = ProductPurchased.getExperation(product.getProductId());
 
-                    if (productId.contains("lifetime")) {
+                    if (product.getProductId().contains("lifetime")) {
                         Account.get(getActivity()).updateSubscription(Account.SubscriptionType.LIFETIME, new Date(newExperation));
                     } else {
                         Account.get(getActivity()).updateSubscription(Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));

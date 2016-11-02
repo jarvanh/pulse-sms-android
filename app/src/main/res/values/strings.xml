@@ -172,10 +172,10 @@
     <string name="onboarding_content_2">Message from your tablet, computer, watch, or any other connected devices.</string>
     <string name="onboarding_content_3">Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Pulse yours.</string>
     <string name="message_anywhere_onboarding_title_1">Message Anywhere</string>
-    <string name="message_anywhere_onboarding_title_2">Subscription</string>
+    <string name="message_anywhere_onboarding_title_2">Subscription or Single Payment</string>
     <string name="message_anywhere_onboarding_title_3">Week Long Trial</string>
     <string name="message_anywhere_onboarding_content_1">Seamlessly integrates with any device (tablet, watch, TV, web, native Google Chrome, and Firefox apps) to support SMS and MMS from anywhere!</string>
-    <string name="message_anywhere_onboarding_content_2">Insanely low pricing options to pay when you need it: $0.99 per month, $1.99 for 3 months, or $5.99 per year. Less than a cup of coffee.</string>
+    <string name="message_anywhere_onboarding_content_2">Insanely low pricing options to pay when you need it: $10.99 for life, $5.99 per year, $1.99 for 3 months, or $0.99 per month. Less than a cup of coffee.</string>
     <string name="message_anywhere_onboarding_content_3">Use the Android app, FREE (forever!) on your phone, or start texting from all your devices with a ONE WEEK free trial.</string>
     <string name="start_trial">Start\nTrial</string>
     <string name="not_now">Not\nNow</string>

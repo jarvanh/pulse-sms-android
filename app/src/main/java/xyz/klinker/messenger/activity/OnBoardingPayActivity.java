@@ -28,14 +28,14 @@ public class OnBoardingPayActivity extends AppIntro {
                 getResources().getColor(R.color.materialIndigo)));
 
         addSlide(AppIntroFragment.newInstance(
-                getString(R.string.message_anywhere_onboarding_title_2), getString(R.string.message_anywhere_onboarding_content_2),
-                R.drawable.ic_onboarding_subscription,
-                getResources().getColor(R.color.materialBlueGrey)));
-
-        addSlide(AppIntroFragment.newInstance(
                 getString(R.string.message_anywhere_onboarding_title_3), getString(R.string.message_anywhere_onboarding_content_3),
                 R.drawable.ic_onboarding_redeem,
                 getResources().getColor(R.color.materialTeal)));
+
+        addSlide(AppIntroFragment.newInstance(
+                getString(R.string.message_anywhere_onboarding_title_2), getString(R.string.message_anywhere_onboarding_content_2),
+                R.drawable.ic_onboarding_subscription,
+                getResources().getColor(R.color.materialBlueGrey)));
 
         final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         final Button done = (Button) findViewById(R.id.done);
