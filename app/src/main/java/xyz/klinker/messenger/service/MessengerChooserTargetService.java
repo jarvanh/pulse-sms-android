@@ -52,56 +52,17 @@ public class MessengerChooserTargetService extends ChooserTargetService {
         source.open();
         Cursor cursor = source.getPinnedConversations();
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                final String targetName = cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_TITLE));
-                Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
-
-                Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
-                color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
-                color = ImageUtils.clipToCircle(color);
-
-                final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
-                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
-                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
-                final Bundle targetExtras = new Bundle();
-                targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
-                        cursor.getColumnIndex(Conversation.COLUMN_ID)));
-
-                targets.add(new ChooserTarget(targetName, targetIcon, targetRanking,
-                        componentName, targetExtras));
-            } while (cursor.moveToNext());
-
-            cursor.close();
-        } else if (cursor.getCount() == 0) {
-
+        if (cursor == null || cursor.getCount() == 0) {
             try {
                 cursor.close();
             } catch (Exception e) { }
 
-            // no pinned conversations
-            cursor = source.getAllConversations();
+            cursor = source.getUnarchivedConversations();
+        }
+
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                final String targetName = cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_TITLE));
-                Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
-                        cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
-
-                Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
-                color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
-                color = ImageUtils.clipToCircle(color);
-
-                final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
-                final float targetRanking = cursor.getCount() == 1 ? 1.0f :
-                        ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
-                final Bundle targetExtras = new Bundle();
-                targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
-                        cursor.getColumnIndex(Conversation.COLUMN_ID)));
-
-                targets.add(new ChooserTarget(targetName, targetIcon, targetRanking,
-                        componentName, targetExtras));
+                targets.add(createTarget(cursor, componentName));
             } while (cursor.moveToNext() && targets.size() < 5);
 
             cursor.close();
@@ -109,6 +70,28 @@ public class MessengerChooserTargetService extends ChooserTargetService {
 
         source.close();
         return targets;
+    }
+
+    private ChooserTarget createTarget(Cursor cursor, ComponentName componentName) {
+        final String targetName = cursor.getString(
+                cursor.getColumnIndex(Conversation.COLUMN_TITLE));
+        Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
+                cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
+
+        Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
+        color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
+        color = ImageUtils.clipToCircle(color);
+
+        final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+        final float targetRanking = cursor.getCount() == 1 ? 1.0f :
+                ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
+        final Bundle targetExtras = new Bundle();
+        targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
+                cursor.getColumnIndex(Conversation.COLUMN_ID)));
+
+        return new ChooserTarget(targetName, targetIcon, targetRanking,
+                componentName, targetExtras);
+
     }
 
 }
