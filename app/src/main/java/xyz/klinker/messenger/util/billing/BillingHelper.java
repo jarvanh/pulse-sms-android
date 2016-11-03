@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.Exception;
 
 import com.android.vending.billing.IInAppBillingService;
 
@@ -99,7 +100,7 @@ public class BillingHelper {
         try {
             return ProductAvailable.createFromBundle(type,
                     billingService.getSkuDetails(3, context.getPackageName(), type.getIdentifier(), querySkus));
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
@@ -118,7 +119,7 @@ public class BillingHelper {
         try {
             return ProductPurchased.createFromBundle(type,
                     billingService.getPurchases(3, context.getPackageName(), type.getIdentifier(), null));
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
