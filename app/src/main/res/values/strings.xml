@@ -252,7 +252,10 @@
     <string name="vibrate_off">No vibration</string>
     <string name="vibrate_default">Default vibration</string>
     <string name="vibrate_two_long">Two long vibrations</string>
+    <string name="vibrate_two_short">Two short vibrations</string>
     <string name="vibrate_three_short">Three short vibrations</string>
+    <string name="vibrate_one_short_one_long">One short, one long vibration</string>
+    <string name="vibrate_one_long_one_short">One long, one short vibration</string>
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>

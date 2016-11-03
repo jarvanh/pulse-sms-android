@@ -80,14 +80,20 @@
     <string-array name="vibrate">
         <item>@string/vibrate_off</item>
         <item>@string/vibrate_default</item>
-        <item>@string/vibrate_three_short</item>
+        <item>@string/vibrate_two_short</item>
         <item>@string/vibrate_two_long</item>
+        <item>@string/vibrate_three_short</item>
+        <item>@string/vibrate_one_short_one_long</item>
+        <item>@string/vibrate_one_long_one_short</item>
     </string-array>
 
     <string-array name="vibrate_values">
         <item>vibrate_off</item>
         <item>vibrate_default</item>
-        <item>vibrate_three_short</item>
+        <item>vibrate_two_short</item>
         <item>vibrate_two_long</item>
+        <item>vibrate_three_short</item>
+        <item>vibrate_one_short_one_long</item>
+        <item>vibrate_one_long_one_short</item>
     </string-array>
 </resources>

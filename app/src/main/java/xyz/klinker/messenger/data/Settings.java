@@ -43,8 +43,11 @@ public class Settings {
 
     public enum VibratePattern {
         OFF(null), DEFAULT(null),
+        TWO_LONG(new long[] {0, 1000, 500, 1000}),
+        TWO_SHORT(new long[] {0, 300, 200, 300}),
         THREE_SHORT(new long[] {0, 300, 200, 300, 200, 300}),
-        TWO_LONG(new long[] {0, 1000, 500, 1000});
+        ONE_SHORT_ONE_LONG(new long[] {0, 300, 300, 1000}),
+        ONE_LONG_ONE_SHORT(new long[] {0, 1000, 300, 300});
 
         public long[] pattern;
         VibratePattern(long[] pattern) {
@@ -154,11 +157,20 @@ public class Settings {
             case "vibrate_default":
                 this.vibrate = VibratePattern.DEFAULT;
                 break;
-            case "vibrate_three_short":
-                this.vibrate = VibratePattern.THREE_SHORT;
+            case "vibrate_two_short":
+                this.vibrate = VibratePattern.TWO_SHORT;
                 break;
             case "vibrate_two_long":
                 this.vibrate = VibratePattern.TWO_LONG;
+                break;
+            case "vibrate_three_short":
+                this.vibrate = VibratePattern.THREE_SHORT;
+                break;
+            case "vibrate_one_short_one_long":
+                this.vibrate = VibratePattern.ONE_SHORT_ONE_LONG;
+                break;
+            case "vibrate_one_long_one_short":
+                this.vibrate = VibratePattern.ONE_LONG_ONE_SHORT;
                 break;
             default:
                 this.vibrate = VibratePattern.DEFAULT;
