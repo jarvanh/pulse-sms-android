@@ -91,7 +91,7 @@ public class BetaTesterMigrationToTrial {
                 ((MessengerActivity) context).billing = null;
                 billing.destroy();
 
-                if (productId.equals("lifetime")) {
+                if (product.getProductId().equals("lifetime")) {
                     Account.get(context).updateSubscription(Account.SubscriptionType.LIFETIME, 1L, true);
                 } else {
                     Account.get(context).updateSubscription(Account.SubscriptionType.TRIAL,

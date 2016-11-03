@@ -61,6 +61,8 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="SubscriptionPicker" parent="Theme.AppCompat.Light.Dialog.Alert" />
+
     <style name="Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
     </style>

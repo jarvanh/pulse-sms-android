@@ -121,4 +121,7 @@
     <color name="darkText">#E2000000</color>
     <color name="lightText">#FFFFFFFF</color>
 
+    <color name="subscriptionPrimaryText">#E2000000</color>
+    <color name="subscriptionSecondaryText">#8C000000</color>
+
 </resources>

@@ -20,7 +20,7 @@
             android:layout_height="48dp"
             android:padding="9dp"
             android:src="@drawable/ic_reward"
-            android:tint="@color/primaryText"
+            android:tint="@color/subscriptionPrimaryText"
             android:layout_gravity="center" />
 
         <LinearLayout
@@ -33,7 +33,7 @@
             <TextView
                 android:text="@string/lifetime_purchase"
                 android:textSize="16sp"
-                android:textColor="@color/primaryText"
+                android:textColor="@color/subscriptionPrimaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"/>
@@ -41,6 +41,7 @@
             <TextView
                 android:text="@string/lifetime_purchase_summary"
                 android:textSize="14sp"
+                android:textColor="@color/subscriptionSecondaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1" />
@@ -48,6 +49,7 @@
             <TextView
                 android:text="@string/billed_immediately"
                 android:textSize="14sp"
+                android:textColor="@color/subscriptionSecondaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1" />
@@ -64,7 +66,7 @@
     <TextView
         android:text="@string/subscriptions"
         android:textSize="13sp"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/subscriptionPrimaryText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
@@ -90,7 +92,7 @@
             android:layout_height="48dp"
             android:padding="9dp"
             android:src="@drawable/ic_payment_yearly"
-            android:tint="@color/primaryText"
+            android:tint="@color/subscriptionPrimaryText"
             android:layout_gravity="center" />
 
         <LinearLayout
@@ -103,13 +105,14 @@
             <TextView
                 android:text="@string/yearly_purchase"
                 android:textSize="16sp"
-                android:textColor="@color/primaryText"
+                android:textColor="@color/subscriptionPrimaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:text="@string/yearly_purchase_summary"
                 android:textSize="14sp"
+                android:textColor="@color/subscriptionSecondaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -134,7 +137,7 @@
             android:layout_height="48dp"
             android:padding="9dp"
             android:src="@drawable/ic_payment_three_month"
-            android:tint="@color/primaryText"
+            android:tint="@color/subscriptionPrimaryText"
             android:layout_gravity="center" />
 
         <LinearLayout
@@ -147,13 +150,14 @@
             <TextView
                 android:text="@string/three_month_purchase"
                 android:textSize="16sp"
-                android:textColor="@color/primaryText"
+                android:textColor="@color/subscriptionPrimaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:text="@string/three_month_purchase_summary"
                 android:textSize="14sp"
+                android:textColor="@color/subscriptionSecondaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -178,7 +182,7 @@
             android:layout_height="48dp"
             android:padding="9dp"
             android:src="@drawable/ic_payment_monthly"
-            android:tint="@color/primaryText"
+            android:tint="@color/subscriptionPrimaryText"
             android:layout_gravity="center" />
 
         <LinearLayout
@@ -191,13 +195,14 @@
             <TextView
                 android:text="@string/monthly_purchase"
                 android:textSize="16sp"
-                android:textColor="@color/primaryText"
+                android:textColor="@color/subscriptionPrimaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:text="@string/monthly_purchase_summary"
                 android:textSize="14sp"
+                android:textColor="@color/subscriptionSecondaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

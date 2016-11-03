@@ -20,7 +20,7 @@ public class SelectPurchaseDialog extends AlertDialog.Builder {
     private AlertDialog dialog;
 
     public SelectPurchaseDialog(Context context) {
-        super(context);
+        super(context, R.style.SubscriptionPicker);
         this.context = context;
 
         addView();
