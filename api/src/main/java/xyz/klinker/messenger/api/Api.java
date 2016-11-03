@@ -80,14 +80,15 @@ public class Api {
 
                 @Override
                 public <R> Object adapt(Call<R> call) {
+                    Call retry = call.clone();
+
                     try {
                         Response response = call.execute();
                         return response.body();
                     } catch (Exception e) {
-
                         // try one more time if it failed
                         try {
-                            Response response = call.execute();
+                            Response response = retry.execute();
                             return response.body();
                         } catch (Exception x) {
                             x.printStackTrace();
