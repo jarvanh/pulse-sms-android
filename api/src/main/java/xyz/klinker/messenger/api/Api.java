@@ -84,6 +84,15 @@ public class Api {
                         Response response = call.execute();
                         return response.body();
                     } catch (Exception e) {
+
+                        // try one more time if it failed
+                        try {
+                            Response response = call.execute();
+                            return response.body();
+                        } catch (Exception x) {
+                            x.printStackTrace();
+                        }
+
                         return null;
                     }
                 }
