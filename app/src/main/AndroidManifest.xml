@@ -53,6 +53,7 @@
     <uses-feature android:name="android.software.app_widget" android:required="false"/>
 
     <application
+        tools:replace="android:allowBackup"
         android:name=".MessengerApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
