@@ -127,7 +127,7 @@ public class ContactUtils {
                             .query(
                                     phoneUri,
                                     new String[]{
-                                            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+                                            ContactsContract.Contacts.DISPLAY_NAME,
                                             ContactsContract.Contacts._ID
                                     },
                                     null,
