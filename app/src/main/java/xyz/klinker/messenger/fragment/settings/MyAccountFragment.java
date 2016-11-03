@@ -164,12 +164,10 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (!Account.get(getActivity()).primary) {
             getPreferenceScreen().removePreference(preference);
             return;
-        } else if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
-            preference.setTitle(R.string.trial_period);
-            return;
         }
 
-        if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER) {
+        if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER ||
+                Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
             preference.setTitle(R.string.change_subscription);
             preference.setSummary(R.string.cancel_on_the_play_store);
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
