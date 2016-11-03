@@ -387,6 +387,11 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             @Override
             public void onItemPurchased(String productId) {
                 if (Account.get(getActivity()).accountId == null) {
+                    // write lifetime here, just so they don't think it is a trial..
+                    if (product.getProductId().contains("lifetime")) {
+                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.LIFETIME, new Date(1));
+                    }
+
                     startLoginActivity();
                 } else {
                     // they switched their subscription, lets write the new timeout to their account.
