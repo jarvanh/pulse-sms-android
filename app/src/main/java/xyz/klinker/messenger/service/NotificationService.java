@@ -93,7 +93,7 @@ public class NotificationService extends IntentService {
         if (conversations.size() > 0) {
             for (int i = 0; i < conversations.size(); i++) {
                 NotificationConversation conversation = conversations.get(conversations.keyAt(i));
-                rows.add(giveConversationNotification(conversation));
+                rows.add(giveConversationNotification(conversation, conversations.size()));
             }
 
             if (conversations.size() > 1) {
@@ -175,7 +175,7 @@ public class NotificationService extends IntentService {
     /**
      * Displays a notification for a single conversation.
      */
-    private String giveConversationNotification(NotificationConversation conversation) {
+    private String giveConversationNotification(NotificationConversation conversation, int numConversations) {
         Bitmap contactImage = ImageUtils.clipToCircle(
                 ImageUtils.getBitmap(this, conversation.imageUri));
 
@@ -211,6 +211,10 @@ public class NotificationService extends IntentService {
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
+
+        if (numConversations == 1) {
+            builder.setGroupSummary(true);
+        }
 
         if (conversation.ledColor != Color.WHITE) {
             builder.setLights(conversation.ledColor, 1000, 500);
@@ -361,6 +365,10 @@ public class NotificationService extends IntentService {
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
+
+        if (numConversations == 1) {
+            publicVersion.setGroupSummary(true);
+        }
 
         try {
             if (!conversation.groupConversation) {
