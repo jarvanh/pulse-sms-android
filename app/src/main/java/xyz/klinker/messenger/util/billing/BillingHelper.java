@@ -117,7 +117,7 @@ public class BillingHelper {
     private List<ProductPurchased> queryPurchasedProducts(ProductType type) {
         try {
             return ProductPurchased.createFromBundle(type,
-                    billingService.getSkuDetails(3, context.getPackageName(), type.getIdentifier(), null));
+                    billingService.getPurchases(3, context.getPackageName(), type.getIdentifier(), null));
         } catch (RemoteException e) {
             return new ArrayList<>();
         }
