@@ -131,4 +131,9 @@ public class SignoutService extends IntentService {
 
         scheduleNextRun(context, signoutTime);
     }
+
+    public static long isScheduled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong("account_signout_time", 0L);
+    }
 }

@@ -40,6 +40,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
+import xyz.klinker.messenger.service.SignoutService;
 import xyz.klinker.messenger.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
@@ -169,8 +170,16 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
         if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER ||
                 Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
-            preference.setTitle(R.string.change_subscription);
-            preference.setSummary(R.string.cancel_on_the_play_store);
+
+            long signoutTime = SignoutService.isScheduled(getActivity());
+            if (signoutTime != 0L) {
+                preference.setTitle(getString(R.string.account_expiring));
+                preference.setSummary(getString(R.string.signout_time, new Date(signoutTime).toString()));
+            } else {
+                preference.setTitle(R.string.change_subscription);
+                preference.setSummary(R.string.cancel_on_the_play_store);
+            }
+
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

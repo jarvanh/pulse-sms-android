@@ -26,6 +26,10 @@ public class SimpleSubscriptionCheckService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         billing = new BillingHelper(this);
 
+        if (Account.get(this).accountId == null || !Account.get(this).primary) {
+            return;
+        }
+
         List<ProductPurchased> purchasedList = billing.queryAllPurchasedProducts();
 
         if (purchasedList.size() > 0) {
