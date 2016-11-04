@@ -40,6 +40,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
+import xyz.klinker.messenger.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -343,6 +344,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 });
             }
         }).start();
+
+        // after a login, lets query the subscription status and write it to their account for them
+        getActivity().startService(new Intent(getActivity(), SimpleSubscriptionCheckService.class));
     }
 
     private void returnToConversationsAfterLogin() {
