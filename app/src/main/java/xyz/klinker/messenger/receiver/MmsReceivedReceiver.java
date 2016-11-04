@@ -25,6 +25,7 @@ import android.support.annotation.VisibleForTesting;
 
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
@@ -62,7 +63,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
             final String to = SmsMmsUtils.getMmsTo(uri, context);
             final String phoneNumbers = getPhoneNumbers(from, to,
-                    PhoneNumberUtils.getMyPhoneNumber(context));
+                    PhoneNumberUtils.getMyPhoneNumber(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
             DataSource source = DataSource.getInstance(context);
@@ -106,15 +107,17 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     }
 
     @VisibleForTesting
-    String getPhoneNumbers(String from, String to, String myNumber) {
+    protected String getPhoneNumbers(String from, String to, String myNumber, Context context) {
         String[] toNumbers = to.split(", ");
         StringBuilder builder = new StringBuilder();
+        String myName = getMyName(context);
         
         for (String number : toNumbers) {
             String cleanNumber = PhoneNumberUtils.clearFormatting(number);
             String myCleanNumber = PhoneNumberUtils.clearFormatting(myNumber);
+            String contactName = ContactUtils.findContactNames(number, context);
             
-            if (!cleanNumber.contains(myCleanNumber) && !myCleanNumber.contains(cleanNumber)) {
+            if (!cleanNumber.contains(myCleanNumber) && !myCleanNumber.contains(cleanNumber) && !contactName.equals(myName)) {
                 builder.append(number);
                 builder.append(", ");
             }
@@ -122,6 +125,16 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
         builder.append(from);
         return builder.toString();
+    }
+
+    @VisibleForTesting
+    protected String getMyName(Context context) {
+        return Account.get(context).myName;
+    }
+
+    @VisibleForTesting
+    protected String getContactName(Context context, String number) {
+        return ContactUtils.findContactNames(number, context);
     }
 
 }

@@ -276,22 +276,34 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void deleteMessage() {
-        DataSource source = DataSource.getInstance(message.getContext());
-        source.open();
-        Message m = source.getMessage(messageId);
+        new AlertDialog.Builder(itemView.getContext())
+                .setTitle(R.string.delete_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DataSource source = DataSource.getInstance(message.getContext());
+                        source.open();
+                        Message m = source.getMessage(messageId);
 
-        if (m != null) {
-            long conversationId = m.conversationId;
-            source.deleteMessage(messageId);
-            MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
-        }
+                        if (m != null) {
+                            long conversationId = m.conversationId;
+                            source.deleteMessage(messageId);
+                            MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
+                        }
 
-        if (messageDeletedListener != null && m != null) {
-            messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
-                    getAdapterPosition());
-        }
+                        if (messageDeletedListener != null && m != null) {
+                            messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
+                                    getAdapterPosition());
+                        }
 
-        source.close();
+                        source.close();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 
     private void copyMessageText() {

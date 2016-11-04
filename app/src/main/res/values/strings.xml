@@ -149,6 +149,7 @@
     <string name="error_decrypting">Error running decryption! Please view this message on your phone.</string>
     <string name="message_sending_failed">Failed to send message!</string>
     <string name="preparing_video">Preparing video&#8230;</string>
+    <string name="delete_message">Delete this message?</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>
@@ -370,6 +371,8 @@
     <string name="learn_more">Learn More</string>
     <string name="dismiss">Dismiss</string>
     <string name="renew">Renew</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">No Subscription Found!</string>
