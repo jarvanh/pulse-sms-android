@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.8.4"
+        description="November 3rd, 2016">
+        <text>Just a TON of random reported bug fixes and subscription support</text>
+    </version>
+
+    <version
         name="1.8.3"
         description="November 2nd, 2016">
         <text>Subscriptions activated, thanks for helping with the beta test :)</text>
