@@ -17,15 +17,19 @@
 package xyz.klinker.messenger.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.FileProvider;
@@ -237,6 +241,7 @@ public class ImageUtils {
             String fileName = ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg";
             // start generating bitmaps and checking the size against the max size
             Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
+            scaled = rotateBasedOnExifData(context, uri, scaled);
             File file = createFileFromBitmap(context, fileName, scaled);
 
             int maxResolution = 1500;
@@ -244,6 +249,7 @@ public class ImageUtils {
                 scaled.recycle();
 
                 scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
+                scaled = rotateBasedOnExifData(context, uri, scaled);
                 file = createFileFromBitmap(context, fileName, scaled);
                 maxResolution -= 250;
             }
@@ -314,6 +320,90 @@ public class ImageUtils {
         }
 
         return file;
+    }
+
+    public static Bitmap rotateBasedOnExifData(Context context, Uri uri, Bitmap bitmap) {
+
+        try{
+            String path;
+
+            try {
+                path = getExifPathFromUri(context, Uri.parse(uri.getPath()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                path = uri.getPath();
+            }
+
+            ExifInterface exif = new ExifInterface(path);
+            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            Matrix matrix = new Matrix();
+            switch (rotation) {
+                case ExifInterface.ORIENTATION_UNDEFINED:
+                case ExifInterface.ORIENTATION_NORMAL:
+                    return bitmap;
+                case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                    matrix.setScale(-1, 1);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    matrix.setRotate(180);
+                    break;
+                case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                    matrix.setRotate(180);
+                    matrix.postScale(-1, 1);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSPOSE:
+                    matrix.setRotate(90);
+                    matrix.postScale(-1, 1);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    matrix.setRotate(90);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSVERSE:
+                    matrix.setRotate(270);
+                    matrix.postScale(-1, 1);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    matrix.setRotate(270);
+                    break;
+                default:
+                    return bitmap;
+            }
+            try {
+                Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                bitmap.recycle();
+                return bmRotated;
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    private static String getExifPathFromUri(Context context, Uri contentUri) {
+        String wholeID = DocumentsContract.getDocumentId(contentUri);
+
+        // Split at colon, use second item in the array
+        String id = wholeID.split(":")[1];
+        String[] column = { MediaStore.Images.Media.DATA };
+
+        // where id is equal to
+        String sel = MediaStore.Images.Media._ID + "=?";
+        Cursor cursor = context.getContentResolver().
+                query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        column, sel, new String[]{ id }, null);
+
+        String filePath = "";
+        int columnIndex = cursor.getColumnIndex(column[0]);
+        if (cursor.moveToFirst()) {
+            filePath = cursor.getString(columnIndex);
+        }
+
+        cursor.close();
+        return filePath;
     }
 
     /**
