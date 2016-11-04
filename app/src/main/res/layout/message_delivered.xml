@@ -62,7 +62,7 @@
         android:layout_height="16dp"
         android:layout_marginTop="-16dp"
         android:src="@drawable/ic_done"
-        android:tint="@color/materialGreen"
+        android:tint="@color/primaryText"
         android:layout_marginEnd="12dp"
         android:contentDescription="@string/delivered" />
 
