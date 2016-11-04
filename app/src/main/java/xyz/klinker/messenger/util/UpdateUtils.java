@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 
 import java.util.Date;
 
@@ -77,31 +80,28 @@ public class UpdateUtils {
         }
     }
 
-    private void alertToTextFromAnywhere(SharedPreferences sharedPrefs) {
-        Account account = Account.get(context);
+    private void alertToTextFromAnywhere(final SharedPreferences sharedPrefs) {
+        final Account account = Account.get(context);
 
-        if (account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false)) {
-            long installTime = sharedPrefs.getLong("install_time", 0);
-            if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS) {
-                new AlertDialog.Builder(context)
-                        .setTitle(R.string.did_you_know)
-                        .setMessage(R.string.use_from_anywhere)
-                        .setPositiveButton(R.string.learn_more, new DialogInterface.OnClickListener() {
+        if (account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false) && context instanceof MessengerActivity) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    long installTime = sharedPrefs.getLong("install_time", 0);
+                    if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS) {
+                        ((MessengerActivity)context).showSnackbar(context.getString(R.string.use_from_anywhere_short), Snackbar.LENGTH_INDEFINITE, context.getString(R.string.learn_more), new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (context instanceof MessengerActivity) {
-                                    ((MessengerActivity) context).menuItemClicked(R.id.drawer_account);
-                                }
+                            public void onClick(View view) {
+                                ((MessengerActivity) context).menuItemClicked(R.id.drawer_account);
                             }
-                        })
-                        .setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
-                            @Override public void onClick(DialogInterface dialog, int which) { }
-                        }).show();
+                        });
 
-                sharedPrefs.edit().putBoolean("seen_use_anywhere", true).commit();
-            } else if (installTime == 0) {
-                sharedPrefs.edit().putLong("install_time", new Date().getTime()).commit();
-            }
+                        sharedPrefs.edit().putBoolean("seen_use_anywhere", true).commit();
+                    } else if (installTime == 0) {
+                        sharedPrefs.edit().putLong("install_time", new Date().getTime()).commit();
+                    }
+                }
+            }, 2000);
         }
     }
 }

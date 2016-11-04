@@ -165,6 +165,16 @@ public class ConversationListFragment extends Fragment
         }
     }
 
+    public void makeSnackbar(String text, int duration, String actionLabel, View.OnClickListener listener) {
+        Snackbar s = Snackbar.make(recyclerView, text, duration);
+
+        if (actionLabel != null && listener != null) {
+            s.setAction(actionLabel, listener);
+        }
+
+        s.show();
+    }
+
     public void dismissSnackbars(Activity activity) {
         if (archiveSnackbar != null && archiveSnackbar.isShown()) {
             archiveSnackbar.dismiss();

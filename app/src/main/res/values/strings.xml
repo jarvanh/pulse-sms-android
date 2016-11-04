@@ -368,6 +368,7 @@
     <string name="did_you_know">Did you know?</string>
     <string name="use_from_anywhere">Pulse can be used from any device connected to the internet -
         try it out today!</string>
+    <string name="use_from_anywhere_short">Pulse can be used on any of your devices!</string>
     <string name="learn_more">Learn More</string>
     <string name="dismiss">Dismiss</string>
     <string name="renew">Renew</string>

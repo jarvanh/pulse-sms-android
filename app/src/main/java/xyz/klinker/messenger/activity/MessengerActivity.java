@@ -263,6 +263,20 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
+    public void showSnackbar(String text, int duration, String actionLabel, View.OnClickListener listener) {
+        if (conversationListFragment != null) {
+            conversationListFragment.makeSnackbar(text, duration, actionLabel, listener);
+        } else {
+            Snackbar s = Snackbar.make(findViewById(android.R.id.content), text, duration);
+
+            if (actionLabel != null && listener != null) {
+                s.setAction(actionLabel, listener);
+            }
+
+            s.show();
+        }
+    }
+
     private boolean checkInitialStart() {
         return Settings.get(this).firstStart;
     }
@@ -1108,10 +1122,10 @@ public class MessengerActivity extends AppCompatActivity
                         new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
 
                 startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
+
+                showSnackbar(getString(R.string.downloading_and_decrypting), Snackbar.LENGTH_LONG, null, null);
             }
         }, 1000);
-
-        Snackbar.make(findViewById(android.R.id.content), R.string.downloading_and_decrypting, Snackbar.LENGTH_LONG).show();
     }
 
     private void handleShortcutIntent(Intent intent) {
