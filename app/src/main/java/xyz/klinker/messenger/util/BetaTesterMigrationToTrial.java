@@ -50,10 +50,15 @@ public class BetaTesterMigrationToTrial {
                         Toast.makeText(context, "Sorry :( you can always sign up again later!", Toast.LENGTH_SHORT).show();
 
                         Account account = Account.get(context);
-                        String id = account.accountId;
+                        final String id = account.accountId;
                         account.clearAccount();
 
-                        new ApiUtils().deleteAccount(id);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new ApiUtils().deleteAccount(id);
+                            }
+                        }).start();
                     }
                 })
                 .setPositiveButton("Start Trial!", new DialogInterface.OnClickListener() {
