@@ -357,7 +357,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             if (getIntent().getExtras() != null && getIntent().getExtras()
                     .containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
-                shareWithDirectShare(data, mimeType);
+                shareWithDirectShare(data, mimeType, isVcard);
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
@@ -409,6 +409,27 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         finish();
     }
 
+    private void sendvCard(String mimeType, String data, long conversationId) {
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+        Conversation conversation = source.getConversation(conversationId);
+
+        Uri uri = new SendUtils(conversation.simSubscriptionId)
+                .send(this, "", conversation.phoneNumbers, Uri.parse(data), mimeType);
+        Cursor cursor = source.searchMessages(data);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            source.updateMessageData(cursor.getLong(0), uri.toString());
+        }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
+
+        source.close();
+        finish();
+    }
+
     private void applyShare(String mimeType, String data) {
         String phoneNumbers = getPhoneNumberFromContactEntry();
         applyShare(mimeType, data, phoneNumbers);
@@ -437,15 +458,19 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         showConversation();
     }
 
-    private void shareWithDirectShare(String data, String mimeType) {
+    private void shareWithDirectShare(String data, String mimeType, boolean isVcard) {
         DataSource source = DataSource.getInstance(this);
         source.open();
         Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.EXTRA_CONVO_ID);
 
-        source.insertDraft(conversationId, data, mimeType);
-        source.close();
+        if (isVcard) {
+            sendvCard(mimeType, data, conversationId);
+        } else {
+            source.insertDraft(conversationId, data, mimeType);
+            showConversation(conversationId);
+        }
 
-        showConversation(conversationId);
+        source.close();
     }
 
     @Override
