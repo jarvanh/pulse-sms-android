@@ -1224,7 +1224,7 @@ public class MessageListFragment extends Fragment implements
             attachImage(data.getData());
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             onBackPressed();
-            attachImage(ImageUtils.getUriForPhotoCaptureIntent(getActivity()));
+            attachImage(ImageUtils.getUriForLatestPhoto(getActivity()));
         }
     }
 

@@ -37,9 +37,11 @@ import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
@@ -460,7 +462,7 @@ public class ImageUtils {
 
     public static Uri getUriForPhotoCaptureIntent(Context context) {
         try {
-            File image = new File(context.getCacheDir(), "pulse_sms.jpg");
+            File image = new File(context.getCacheDir(), new Date().getTime() + ".jpg");
             if (!image.exists()) {
                 image.getParentFile().mkdirs();
                 image.createNewFile();
@@ -471,6 +473,32 @@ public class ImageUtils {
             return null;
         }
 
+    }
+
+    public static Uri getUriForLatestPhoto(Context context) {
+        try {
+            File image = lastFileModifiedPhoto(context.getCacheDir());
+            return createContentUri(context, image);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static File lastFileModifiedPhoto(File fl) {
+        File[] files = fl.listFiles(new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile() && file.getName().contains(".jpg");
+            }
+        });
+        long lastMod = Long.MIN_VALUE;
+        File choice = null;
+        for (File file : files) {
+            if (file.lastModified() > lastMod) {
+                choice = file;
+                lastMod = file.lastModified();
+            }
+        }
+        return choice;
     }
 
 }
