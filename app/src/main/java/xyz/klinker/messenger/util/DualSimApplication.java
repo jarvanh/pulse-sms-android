@@ -33,8 +33,7 @@ public class DualSimApplication {
         boolean visible = false;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && Account.get(context).primary) {
-            SubscriptionManager manager = SubscriptionManager.from(context);
-            final List<SubscriptionInfo> subscriptions = manager.getActiveSubscriptionInfoList();
+            final List<SubscriptionInfo> subscriptions = DualSimUtils.get(context).getAvailableSims();
 
             if (subscriptions != null && subscriptions.size() > 1) {
                 visible = true;

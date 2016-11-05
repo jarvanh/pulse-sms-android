@@ -38,6 +38,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_SEEN = "seen";
     public static final String COLUMN_FROM = "message_from";
     public static final String COLUMN_COLOR = "color";
+    public static final String COLUMN_SIM_NUMBER = "sim_phone_number"; // added with v7 of database
 
     // not in this table, but used in a join statement for searches
     private static final String JOIN_COLUMN_CONVO_TITLE = "convo_title";
@@ -53,7 +54,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_READ + " integer not null, " +
             COLUMN_SEEN + " integer not null, " +
             COLUMN_FROM + " text, " +
-            COLUMN_COLOR + " integer" +
+            COLUMN_COLOR + " integer, " +
+            COLUMN_SIM_NUMBER + " text" +
             ");";
 
     private static final String[] INDEXES = {
@@ -78,6 +80,7 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public boolean seen;
     public String from;
     public Integer color;
+    public String simPhoneNumber;
     public String nullableConvoTitle;
 
     public Message() {
