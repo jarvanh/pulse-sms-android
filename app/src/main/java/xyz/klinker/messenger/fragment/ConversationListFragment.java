@@ -655,11 +655,15 @@ public class ConversationListFragment extends Fragment
     }
 
     private void checkUnreadCount() {
-        new Handler().postDelayed(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) { }
+
                 new UnreadBadger(getActivity()).writeCountFromDatabase();
             }
-        }, 1500);
+        }).start();
     }
 }

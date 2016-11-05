@@ -142,6 +142,7 @@ public class MessengerActivity extends AppCompatActivity
         initDrawer();
         initFab();
         configureGlobalColors();
+        displayConversations();
 
         dismissIfFromNotification();
 
@@ -179,11 +180,6 @@ public class MessengerActivity extends AppCompatActivity
 
         TimeUtils.setupNightTheme(this);
 
-        if (!loaded) {
-            loaded = true;
-            displayConversations();
-        }
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -192,15 +188,11 @@ public class MessengerActivity extends AppCompatActivity
                         !(otherFragment instanceof MyAccountFragment)) {
                     fab.show();
                 }
+
+                snoozeIcon();
             }
         }, 1000);
 
-        navigationView.post(new Runnable() {
-            @Override
-            public void run() {
-                snoozeIcon();
-            }
-        });
 
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);

@@ -354,14 +354,20 @@ public class ColorUtils {
     /**
      * Changes the color of the app bar on the "recents screen", if it is not the default theme
      */
-    public static void updateRecentsEntry(Activity activity) {
-        Settings settings = Settings.get(activity);
+    public static void updateRecentsEntry(final Activity activity) {
+        final Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
-            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
-            ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                        Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
+                        ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
 
-            activity.setTaskDescription(td);
+                        activity.setTaskDescription(td);
+                }
+            }).start();
         }
+
     }
 
     /**
@@ -369,6 +375,13 @@ public class ColorUtils {
      */
     public static void checkBlackBackground(Activity activity) {
         if (Settings.get(activity).baseTheme == Settings.BaseTheme.BLACK) {
+            Drawable background = activity.getWindow().getDecorView().getBackground();
+            if (background instanceof ColorDrawable) {
+                if (((ColorDrawable)background).getColor() == Color.BLACK) {
+                    return;
+                }
+            }
+
             activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         }
     }
