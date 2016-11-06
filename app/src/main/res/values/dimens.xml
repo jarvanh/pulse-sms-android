@@ -29,7 +29,7 @@
     <dimen name="top_extra_padding">0dp</dimen>
     <dimen name="conversation_list_header_padding">16dp</dimen>
     <dimen name="message_list_padding">0dp</dimen>
-    <dimen name="min_mms_picture_width">200dp</dimen>
+    <dimen name="min_mms_picture_width">0dp</dimen>
     <dimen name="max_message_width">310dp</dimen>
     <dimen name="max_gif_width">250dp</dimen>
     <dimen name="attached_image_size">96dp</dimen>
