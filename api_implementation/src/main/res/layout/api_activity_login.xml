@@ -123,6 +123,16 @@
                 android:hint="@string/api_password"
                 android:layout_marginBottom="8dp" />
 
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:background="?selectableItemBackground"
+                android:textColor="@color/api_text_accent"
+                android:text="@string/api_forgot_password"/>
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
