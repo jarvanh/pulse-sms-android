@@ -88,8 +88,8 @@ public class ReplyService extends IntentService {
         m.seen = true;
         m.from = null;
         m.color = null;
-        m.simPhoneNumber = DualSimUtils.get(this)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
         source.insertMessage(this, m, conversationId);
         source.readConversation(this, conversationId);

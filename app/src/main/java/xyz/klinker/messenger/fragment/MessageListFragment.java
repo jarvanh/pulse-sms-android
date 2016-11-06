@@ -987,8 +987,8 @@ public class MessageListFragment extends Fragment implements
                 m.seen = true;
                 m.from = null;
                 m.color = null;
-                m.simPhoneNumber = DualSimUtils.get(getActivity())
-                        .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+                m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(getActivity())
+                        .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
                 if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
                     source.deleteMessage(adapter.getItemId(0));

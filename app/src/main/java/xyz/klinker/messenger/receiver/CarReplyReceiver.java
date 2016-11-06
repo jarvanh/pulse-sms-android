@@ -57,8 +57,8 @@ public class CarReplyReceiver extends BroadcastReceiver {
         m.seen = true;
         m.from = null;
         m.color = null;
-        m.simPhoneNumber = conversation == null ? null : DualSimUtils.get(context)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(context)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
         source.insertMessage(context, m, conversationId);
         source.readConversation(context, conversationId);

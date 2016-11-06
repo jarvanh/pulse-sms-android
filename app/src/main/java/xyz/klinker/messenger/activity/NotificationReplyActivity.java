@@ -426,8 +426,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
         m.seen = true;
         m.from = null;
         m.color = null;
-        m.simPhoneNumber = DualSimUtils.get(this)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
         // we don't have to check zero length, since the button is disabled if zero length
         DataSource source = DataSource.getInstance(this);

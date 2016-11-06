@@ -248,8 +248,8 @@ public class FirebaseHandlerService extends IntentService {
             message.timestamp = getLong(json, "timestamp");
             message.read = json.getBoolean("read");
             message.seen = json.getBoolean("seen");
-            message.simPhoneNumber = conversation == null ? null : DualSimUtils.get(this)
-                    .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+            message.simPhoneNumber = conversation == null || conversation.simSubscriptionId == null ? null :
+                    DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
             try {
                 message.data = encryptionUtils.decrypt(json.getString("data"));
