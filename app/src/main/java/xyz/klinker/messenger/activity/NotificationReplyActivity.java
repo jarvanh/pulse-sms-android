@@ -48,6 +48,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.ReplyService;
 import xyz.klinker.messenger.util.DensityUtil;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
 public class NotificationReplyActivity extends AppCompatActivity {
@@ -425,6 +426,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
         m.seen = true;
         m.from = null;
         m.color = null;
+        m.simPhoneNumber = DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
         // we don't have to check zero length, since the button is disabled if zero length
         DataSource source = DataSource.getInstance(this);

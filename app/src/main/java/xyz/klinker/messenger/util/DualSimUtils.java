@@ -48,7 +48,7 @@ public class DualSimUtils {
             this.availableSims = manager.getActiveSubscriptionInfoList();
             if (availableSims.size() <= 1) {
                 // not a dual sim phone, ignore this.
-                //this.availableSims = new ArrayList<>();
+                this.availableSims = new ArrayList<>();
             }
         } else {
             this.availableSims = new ArrayList<>();
@@ -69,18 +69,26 @@ public class DualSimUtils {
         return null;
     }
 
-    public int getSimSlotForPhoneNumber(String phoneNumber) {
+    public String getPhoneNumberFromSimSubscription(int simSubscription) {
+
+        if (simSubscription == 0 || simSubscription == -1) {
+            return null;
+        }
 
         for (SubscriptionInfo sim : availableSims) {
-            if (sim.getNumber().equals(phoneNumber)) {
-                return sim.getSimSlotIndex();
+            if (sim.getSubscriptionId() == simSubscription) {
+                return sim.getNumber();
             }
         }
 
-        return -1;
+        return null;
     }
 
-    public void updateMessageWithSimSlot() {
-
+    public String getDefaultPhoneNumber() {
+        if (availableSims.size() > 0) {
+            return availableSims.get(0).getNumber();
+        } else {
+            return null;
+        }
     }
 }

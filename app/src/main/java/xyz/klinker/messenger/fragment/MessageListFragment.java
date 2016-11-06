@@ -108,6 +108,7 @@ import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.DualSimApplication;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.NotificationUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
@@ -974,6 +975,8 @@ public class MessageListFragment extends Fragment implements
             final String mimeType = attachedMimeType;
 
             if (message.length() > 0 || attachedUri != null) {
+                Conversation conversation = source.getConversation(getConversationId());
+
                 final Message m = new Message();
                 m.conversationId = getConversationId();
                 m.type = Message.TYPE_SENDING;
@@ -984,6 +987,8 @@ public class MessageListFragment extends Fragment implements
                 m.seen = true;
                 m.from = null;
                 m.color = null;
+                m.simPhoneNumber = DualSimUtils.get(getActivity())
+                        .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
                 if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
                     source.deleteMessage(adapter.getItemId(0));

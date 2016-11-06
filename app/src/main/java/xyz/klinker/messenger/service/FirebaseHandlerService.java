@@ -57,6 +57,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SendUtils;
@@ -238,13 +239,17 @@ public class FirebaseHandlerService extends IntentService {
             throws JSONException {
         final long id = getLong(json, "id");
         if (source.getMessage(id) == null) {
+            Conversation conversation = source.getConversation(getLong(json, "conversation_id"));
+
             final Message message = new Message();
             message.id = id;
-            message.conversationId = getLong(json, "conversation_id");
+            message.conversationId = conversation == null ? getLong(json, "conversation_id") : conversation.id;
             message.type = json.getInt("type");
             message.timestamp = getLong(json, "timestamp");
             message.read = json.getBoolean("read");
             message.seen = json.getBoolean("seen");
+            message.simPhoneNumber = conversation == null ? null : DualSimUtils.get(this)
+                    .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
             try {
                 message.data = encryptionUtils.decrypt(json.getString("data"));
@@ -292,7 +297,7 @@ public class FirebaseHandlerService extends IntentService {
             }
 
             if (Account.get(context).primary && isSending) {
-                Conversation conversation = source.getConversation(message.conversationId);
+                conversation = source.getConversation(message.conversationId);
 
                 if (conversation != null) {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
@@ -777,6 +782,7 @@ public class FirebaseHandlerService extends IntentService {
         message.mimeType = MimeType.TEXT_PLAIN;
         message.read = true;
         message.seen = true;
+        message.simPhoneNumber = DualSimUtils.get(this).getDefaultPhoneNumber();
 
         source.setUpload(true);
         long conversationId = source.insertMessage(message, to, context);

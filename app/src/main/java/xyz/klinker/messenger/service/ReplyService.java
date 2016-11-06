@@ -33,6 +33,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
 /**
@@ -71,6 +72,12 @@ public class ReplyService extends IntentService {
         DataSource source = DataSource.getInstance(this);
         source.open();
 
+        Conversation conversation = source.getConversation(conversationId);
+        if (conversation == null) {
+            source.close();
+            return;
+        }
+
         Message m = new Message();
         m.conversationId = conversationId;
         m.type = Message.TYPE_SENDING;
@@ -81,15 +88,11 @@ public class ReplyService extends IntentService {
         m.seen = true;
         m.from = null;
         m.color = null;
+        m.simPhoneNumber = DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
         source.insertMessage(this, m, conversationId);
         source.readConversation(this, conversationId);
-        Conversation conversation = source.getConversation(conversationId);
-
-        if (conversation == null) {
-            source.close();
-            return;
-        }
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
