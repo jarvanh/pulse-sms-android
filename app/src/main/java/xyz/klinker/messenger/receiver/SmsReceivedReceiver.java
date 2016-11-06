@@ -30,6 +30,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
@@ -46,6 +47,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     private void handleReceiver(Context context, Intent intent) throws Exception {
         Bundle extras = intent.getExtras();
 
+        int simSlot = extras.getInt("slot", -1);
         String body = "";
         String address = "";
         long date = System.currentTimeMillis();
@@ -74,7 +76,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
 
         insertInternalSms(context, address, body, date);
-        insertSms(context, address, body);
+        insertSms(context, address, body, simSlot);
 
         context.startService(new Intent(context, NotificationService.class));
     }
@@ -94,7 +96,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
     }
 
-    private void insertSms(Context context, String address, String body) {
+    private void insertSms(Context context, String address, String body, int simSlot) {
         Message message = new Message();
         message.type = Message.TYPE_RECEIVED;
         message.data = body.trim();
@@ -102,6 +104,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.mimeType = MimeType.TEXT_PLAIN;
         message.read = false;
         message.seen = false;
+        message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
 
         DataSource source = DataSource.getInstance(context);
         source.open();

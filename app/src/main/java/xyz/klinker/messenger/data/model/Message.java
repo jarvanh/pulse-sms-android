@@ -144,6 +144,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
                 } catch (NumberFormatException e) {
                     this.color = null;
                 }
+            } else if (column.equals(COLUMN_SIM_NUMBER)) {
+                this.simPhoneNumber = cursor.getString(i);
             } else if (column.equals(JOIN_COLUMN_CONVO_TITLE)) {
                 this.nullableConvoTitle = cursor.getString(i);
             }

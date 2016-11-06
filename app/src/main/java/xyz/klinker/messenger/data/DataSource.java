@@ -1551,7 +1551,7 @@ public class DataSource {
 
         message.conversationId = conversationId;
 
-        ContentValues values = new ContentValues(10);
+        ContentValues values = new ContentValues(11);
 
         if (message.id <= 0) {
             message.id = generateId();
@@ -1567,6 +1567,7 @@ public class DataSource {
         values.put(Message.COLUMN_SEEN, message.seen);
         values.put(Message.COLUMN_FROM, message.from);
         values.put(Message.COLUMN_COLOR, message.color);
+        values.put(Message.COLUMN_SIM_NUMBER, message.simPhoneNumber);
 
         long id = database.insert(Message.TABLE, null, values);
 
@@ -1594,7 +1595,7 @@ public class DataSource {
         for (int i = 0; i < messages.size(); i++) {
             Message message = messages.get(i);
 
-            ContentValues values = new ContentValues(10);
+            ContentValues values = new ContentValues(11);
 
             if (message.id <= 0) {
                 message.id = generateId();
@@ -1610,6 +1611,7 @@ public class DataSource {
             values.put(Message.COLUMN_SEEN, message.seen);
             values.put(Message.COLUMN_FROM, message.from);
             values.put(Message.COLUMN_COLOR, message.color);
+            values.put(Message.COLUMN_SIM_NUMBER, message.simPhoneNumber);
 
             long id = database.insert(Message.TABLE, null, values);
 

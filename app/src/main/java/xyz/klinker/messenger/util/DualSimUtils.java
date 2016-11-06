@@ -46,6 +46,10 @@ public class DualSimUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             SubscriptionManager manager = SubscriptionManager.from(context);
             this.availableSims = manager.getActiveSubscriptionInfoList();
+            if (availableSims.size() <= 1) {
+                // not a dual sim phone, ignore this.
+                //this.availableSims = new ArrayList<>();
+            }
         } else {
             this.availableSims = new ArrayList<>();
         }
