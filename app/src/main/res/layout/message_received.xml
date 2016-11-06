@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxHeight="@dimen/max_message_width"
+            android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
             android:contentDescription="@string/mms_image" />
