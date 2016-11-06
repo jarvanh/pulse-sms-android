@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Identifiant</string>
+    <string name="api_signup">Se connecter</string>
+    <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez vous inscrire auprès de l\'appareil principal qui a un numéro de téléphone d\'abord !</string>
+    <string name="api_skip_signup">Ou, si vous voulez juste utiliser l\'application sur cet appareil et non sur le réseau avec des fonctionnalités telles que les SMS/MMS à partir de votre tablette ou d\'un ordinateur, vous pouvez ignorer cette étape.</string>
+    <string name="api_skip">Ignorer</string>
+    <string name="api_email">Adresse email</string>
+    <string name="api_password">Mot de passe</string>
+    <string name="api_password_confirmation">Confirmez votre mot de passe</string>
+    <string name="api_name">Nom</string>
+    <string name="api_phone_number">Numéro de téléphone</string>
+    <string name="api_connecting">Connexion en cours...</string>
+    <string name="api_error">Une erreur est survenue durant l\'opération</string>
+    <string name="api_device_error">Une erreur est survenue en ajoutant votre appareil, veuillez réessayer !</string>
+    <string name="api_yes">Oui</string>
+    <string name="api_no">Non</string>
+    <string name="api_no_email">L\'adresse n\'a pas été entrée</string>
+    <string name="api_email_invalid">Adresse mail invalide</string>
+    <string name="api_no_password">Pas de mot de passe entré</string>
+    <string name="api_no_password_confirmation">Le mot de passe de confirmation n\'a pas été entré</string>
+    <string name="api_password_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="api_no_name">Pas de nom entré</string>
+    <string name="api_no_phone_number">Pas de numéro de téléphone entré</string>
+    <string name="api_login_error">Une erreur s\'est produite lors de la connexion. Peut-être une mauvaise adresse e-mail ou mot de passe?</string>
+    <string name="api_activate_summary">Connectez-vous pour recevoir tous vos messages sur cet appareil !</string>
+    <string name="api_activate_1_3">Sur un appareil mobile ou sur un ordinateur.</string>
+    <string name="api_activate_2_1">Sur le siteweb</string>
+    <string name="api_activate_2_2">Entrer le code à droite</string>
+    <string name="api_activate_2_3">pour connecter votre compte</string>
+    <string name="api_confirm_password">S\'il vous plaît, veuillez confirmer votre mot de passe :</string>
+    <string name="api_wrong_password">Confirmation échouée. Votre mot de passe est correct?</string>
+    <string name="api_email_taken">Erreur de connexion, avez-vous un compte associé à cet adresse mail ?</string>
+    <string name="api_confirm">Confirmer</string>
+    <string name="api_continue">Continuer</string>
+</resources>

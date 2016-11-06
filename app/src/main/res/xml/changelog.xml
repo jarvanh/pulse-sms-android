@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.8.5"
+        description="November 6rd, 2016">
+        <text>See which SIM card messages were sent and received from, for dual-SIM devices</text>
+        <text>More fixes for bugs reported over the past few days</text>
+        <text>Initial translations</text>
+    </version>
+
+    <version
         name="1.8.4"
         description="November 3rd, 2016">
         <text>Just a TON of random reported bug fixes and subscription support</text>

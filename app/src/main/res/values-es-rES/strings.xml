@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Mensajería en tablet)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Nuevo Mensaje</string>
+    <string name="shortcut_compose_long">Comenzar una nueva consersación</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Lista de conversaciones</string>
+    <string name="menu_archived_conversations">Conversaciones archivadas</string>
+    <string name="menu_schedule">Mensajes programados</string>
+    <string name="menu_mute_contacts">Lista Negra</string>
+    <string name="menu_invite">Invitar amigos</string>
+    <string name="menu_settings">Ajustes Generales</string>
+    <string name="menu_account">Mi cuenta</string>
+    <string name="menu_device_texting">Texto desde cualquier dispositivo</string>
+    <string name="menu_help">Ayuda &amp; feedback</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_search">Busqueda</string>
+    <string name="menu_mobile_only">Exclusivo del movil</string>
+    <string name="menu_snooze">Silenciar notificaciones</string>
+    <string name="menu_call">Llamar contacto</string>
+    <string name="menu_view_contact">Ver contacto</string>
+    <string name="menu_view_contacts">Ver contactos</string>
+    <string name="menu_view_media">Ver medio</string>
+    <string name="menu_archive_conversation">Archivar Conversaciòn</string>
+    <string name="menu_move_to_inbox">Mover a la bandeja de entrada</string>
+    <string name="menu_conversation_information">Información de la conversación</string>
+    <string name="menu_conversation_blacklist">Añadir contacto a la lista negra</string>
+    <string name="menu_conversation_schedule">Programar un mensaje</string>
+    <string name="menu_contact_settings">Configuración del contacto</string>
+    <string name="menu_group_settings">Configuración del grupo</string>
+    <string name="menu_snooze_off">Apagado</string>
+    <string name="menu_snooze_1">1 hora</string>
+    <string name="menu_snooze_2">2 horas</string>
+    <string name="menu_snooze_4">4 horas</string>
+    <string name="menu_snooze_8">8 horas</string>
+    <string name="menu_snooze_24">24 horas</string>
+    <string name="menu_snooze_72">72 horas</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">No hay mensajes</string>
+    <string name="no_messages_summary">Comienza una nueva conversación, o simplemente disfruta de tu día</string>
+    <string name="close">Cerrar</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Fijado</string>
+    <string name="today">Hoy</string>
+    <string name="yesterday">Ayer</string>
+    <string name="last_week">Esta semana</string>
+    <string name="last_month">Este mes</string>
+    <string name="older">Mas viejos</string>
+    <string name="mark_section_as_read">Marcar todos %1$s como leídos</string>
+    <string name="marking_section_as_read">Marcando todos %1$s como leídos</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d conversación eliminada</item>
+        <item quantity="other">%1$d conversaciones elimindadas</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d conversación archivada</item>
+        <item quantity="other">%1$d conversaciones archivadas</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d conversación movida a la bandeja de entrada</item>
+        <item quantity="other">%1$d conversaciones movidas a la bandeja de entrada</item>
+    </plurals>
+    <string name="undo">Deshacer</string>
+    <string name="enter_search">Buscar por...</string>
+    <!-- Search Screen -->
+    <string name="conversations">Conversaciones</string>
+    <string name="messages">Mensajes</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">¿Te encanta Pulse?</string>
+    <string name="invite_friends_summary">¡A Nosotros también! Estamos intentando conseguirlo pasarlo a 
+Tantas manos como podamos para seguir haciéndo el mejor producto que podamos e
+Invitando a tus amigos a probarlo , nos estás ayudando! \ N \ nSelecciona a los amigos debajo de
+A la que desea enviar la aplicación y le enviará un SMS con una breve descripción y
+Un enlace para descargar!</string>
+    <string name="invite_friends_sms">¡He empezado a usar una nueva app de mensajería, y he pensado 
+que te gustaría!. Pulse es gratuita, y puedes descargarla de aquí: http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Escribir mensaje</string>
+    <string name="type_message_to">Escribir mensaje a %1$s</string>
+    <string name="attach">Adjuntar</string>
+    <string name="select_sim">Selecionar SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">Imagen MMS</string>
+    <string name="now">Ahora</string>
+    <string name="sending">Enviando...</string>
+    <string name="failed">Fallado</string>
+    <string name="delivered">Mensaje enviado</string>
+    <string name="attach_image">Adjuntar imagen</string>
+    <string name="capture_image">Capturar imagen</string>
+    <string name="attach_gif">Adjuntar GIF</string>
+    <string name="record_video">Grabar Video</string>
+    <string name="record_audio">Grabar Audio</string>
+    <string name="attach_location">Adjuntar Localizción</string>
+    <string name="no_location_found">No se puede encontrar tu localización</string>
+    <string name="camera_permission_needed">¡Se debe permitir el acceso a la cámara para tomar 
+fotos!</string>
+    <string name="take_picture">Tomar foto</string>
+    <string name="flip_picture">Cambiar de camara</string>
+    <string name="fullscreen">Pantalla completa</string>
+    <string name="attached_image">Imagen adjunta</string>
+    <string name="remove_image">Eliminar imagen adjunta</string>
+    <string name="edit_image">Editar imagen adjunta</string>
+    <string name="permission_needed_for_action">Se necesitas permisos para realizar esta acción</string>
+    <string name="request_permission">Solicitud de autorización</string>
+    <string name="no_messages_with_contact">Todavía no tienes mensajes en esta conversación, ¡Es hora de comenzar!</string>
+    <string name="save">Guardar</string>
+    <string name="share">Compartir</string>
+    <string name="share_content">Compartir contenido</string>
+    <string name="saved">Guardado en la carpeta de Descargas!</string>
+    <string name="failed_to_save">Error al guardar</string>
+    <string name="start_recording_audio">¡Presiona el botón para comenzar a grabar audio!</string>
+    <string name="audio_recording_error">Error con la grabación :(</string>
+    <string name="message_copied_to_clipboard">Mensaje copiado al portapapeles</string>
+    <string name="view_details">Ver Detalles</string>
+    <string name="delete">Eliminar</string>
+    <string name="copy_message">Copiar texto</string>
+    <string name="resend">Reenviar</string>
+    <string name="no_media">¡No hay medios en esta conversación!</string>
+    <string name="error_decrypting">¡Error al realizar la desencriptación!, Por favor, examina este mensaje en tu teléfono.</string>
+    <string name="message_sending_failed">¡No se pudo enviar el mensaje!</string>
+    <string name="preparing_video">Preparando video&#8230;</string>
+    <string name="delete_message">¿Eliminar este mensaje?</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Redactar nuevo mensaje</string>
+    <string name="send_message">Enviar mensaje</string>
+    <string name="error_processing_vcard">Error procesando vcard</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">¡La aplicación no puede funcionar sin esos permisos! Necesitas
+aceptarlos antes de que podamos continuar.</string>
+    <string name="loading_messages">Optimizando...</string>
+    <string name="loading_messages_summary">Trabajando para conseguir que tus mensajes entren en la aplicación.
+No nos llevará mucho</string>
+    <!-- Notifications -->
+    <!-- About, Help and Feedback and Settings -->
+    <string name="primary_color">Color principal</string>
+    <string name="primary_dark_color">Color Principal Oscuro</string>
+    <string name="accent_color">Color de énfasis</string>
+    <string name="led_color">Color del LED</string>
+    <string name="ringtone">Tono de llamada</string>
+    <string name="group_name">Nombre del grupo</string>
+    <string name="notification_settings">Notificaciones</string>
+    <string name="vibrate">Patrón de vibración</string>
+    <string name="vibrate_off">Sin vibración</string>
+    <string name="vibrate_default">Vibración por defecto</string>
+    <string name="vibrate_two_long">Dos vibraciones largas</string>
+    <string name="vibrate_three_short">Tres vibraciones breves</string>
+    <string name="sound_effects">Efectos de audio</string>
+    <string name="delivery_reports">Informes de Envio</string>
+    <string name="theme_settings">Personalización</string>
+    <string name="base_theme">Tema Base</string>
+    <string name="global_theme_color">Color del Tema</string>
+    <!-- Theming Options -->
+    <string name="day_night">Por defecto (Día/Noche)</string>
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Encriptando y subiendo...</string>
+    <string name="encrypting_and_uploading_media">Encriptando y comprimiendo mensajes de medios</string>
+    <string name="encrypting_and_uploading_count">Encriptando y comprimiendo mensajes de medios (%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">Descargando y desencriptando</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Mensaje de audio</string>
+    <string name="video_message">Mensaje de video</string>
+    <string name="picture_message">Mensaje de Imagen</string>
+    <string name="gif_message">Mensaje GIF</string>
+    <string name="contact_card">Tarjeta de contacto</string>
+    <string name="conversation_with">Conversación con %1$s</string>
+    <string name="send">Enviar</string>
+    <!-- Other -->
+    <string name="default_text">Por defecto</string>
+    <string name="did_you_know">Lo sabías?</string>
+    <string name="use_from_anywhere">Pulse se puede utilizar desde cualquier dispositivo conectado a internet- ¡ Pruébalo hoy!</string>
+    <string name="use_from_anywhere_short">¡Pulse puede utilizarse en cualquiera de tus dispositivos!</string>
+    <string name="learn_more">Saber Más</string>
+    <string name="dismiss">Descartar</string>
+    <string name="renew">Renovar</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancelar</string>
+    <!-- Purchase/Subscriptions -->
+</resources>

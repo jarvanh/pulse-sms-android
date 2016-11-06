@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Iniciar sesión</string>
+    <string name="api_signup">Registrarse</string>
+    <string name="api_signup_failed">¡No se puede registrar en este dispositivo, debe registrarse con un
+Dispositivo principal que tenga un número de teléfono asociado!</string>
+    <string name="api_skip_signup">O bien, si sólo desea utilizar la aplicación en este dispositivo y no en la red,
+funciones como mensajes de texto desde una tablet u ordenador, puede omitir este paso:</string>
+    <string name="api_skip">Omitir</string>
+    <string name="api_email">Dirección de correo electrónico</string>
+    <string name="api_password">Contraseña</string>
+    <string name="api_password_confirmation">Confirmar contraseña</string>
+    <string name="api_name">Nombre</string>
+    <string name="api_phone_number">Número de teléfono</string>
+    <string name="api_connecting">Conectando con el servidor</string>
+    <string name="api_error">Ha sucedido un error durante la operación</string>
+    <string name="api_device_error">Ha sucedido un error mientras añandiamos este dispositivo, ¡ Vamos a intentarlo otra vez!</string>
+    <string name="api_add_second_primary_device">Parece que ya tienes registrado un dispositivo principal (%1$s)  para tu cuenta, pero solo uno esta permitido. ¿Quieres eliminar el actual dispositivo principal, y asignar este como el nuevo principal?</string>
+    <string name="api_yes">Sí</string>
+    <string name="api_no">No</string>
+    <string name="api_no_email">No se ha introducido dirección de correo electrónico</string>
+    <string name="api_email_invalid">Dirección de correo electrónico invalida</string>
+    <string name="api_no_password">No se ha introducido contraseña</string>
+    <string name="api_no_password_confirmation">No se introducido la confirmación de la contraseña</string>
+    <string name="api_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="api_no_name">No se ha introducido nombre</string>
+    <string name="api_no_phone_number">No se ha introducido número de teléfono</string>
+    <string name="api_login_error">Ha sucedido un error al iniciar sesión.¿ Dirección de correo o contraseña inválidos?</string>
+    <string name="api_activate_summary">¡Inicia sesión para obtener todos tus mensajes en este dispositivo!</string>
+    <string name="api_activate_1_1">Dirigirse a</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">en un dispositivo móvil u ordenador</string>
+    <string name="api_activate_2_1">En el sitio web</string>
+    <string name="api_activate_2_2">Introduce el código en la derecha</string>
+    <string name="api_activate_2_3">para conectar tu cuenta!</string>
+    <string name="api_confirm_password">Por favor, confirma tu contraseña:</string>
+    <string name="api_wrong_password">La confirmación ha fallado. ¿Es tu contraseña correcta?</string>
+    <string name="api_email_taken">Ha sucedido un error durante el acceso, ¿Tienes una cuenta anterior con esta dirección de correo?</string>
+    <string name="api_confirm">Confirmar</string>
+    <string name="api_continue">Continuar</string>
+</resources>
