@@ -17,6 +17,7 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.ReplyService;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.SendUtils;
 
 public class CarReplyReceiver extends BroadcastReceiver {
@@ -45,6 +46,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
         DataSource source = DataSource.getInstance(context);
         source.open();
 
+        Conversation conversation = source.getConversation(conversationId);
         Message m = new Message();
         m.conversationId = conversationId;
         m.type = Message.TYPE_SENDING;
@@ -55,10 +57,11 @@ public class CarReplyReceiver extends BroadcastReceiver {
         m.seen = true;
         m.from = null;
         m.color = null;
+        m.simPhoneNumber = conversation == null ? null : DualSimUtils.get(context)
+                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
         source.insertMessage(context, m, conversationId);
         source.readConversation(context, conversationId);
-        Conversation conversation = source.getConversation(conversationId);
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
