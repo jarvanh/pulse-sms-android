@@ -290,8 +290,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             nextTimestamp = System.currentTimeMillis();
         }
 
-        holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
-                message.timestamp));
+        if (message.simPhoneNumber != null) {
+            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+                    message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
+        } else {
+            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+                    message.timestamp));
+        }
 
         if (TimeUtils.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
             holder.timestamp.getLayoutParams().height = timestampHeight;
