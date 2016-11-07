@@ -107,6 +107,7 @@
     <color name="quickReplyBackground">#FFFFFF</color>
     <color name="swipeBackground">#D5D5D5</color>
     <color name="drawerBackground">@android:color/white</color>
+    <color name="selectedBackground">#EEEEEE</color>
     <color name="primaryText">#E2000000</color>
     <color name="secondaryText">#8C000000</color>
     <color name="divider">#e5e5e5</color>
@@ -123,5 +124,7 @@
 
     <color name="subscriptionPrimaryText">#E2000000</color>
     <color name="subscriptionSecondaryText">#8C000000</color>
+
+    <color name="actionModeBackground">#303030</color>
 
 </resources>

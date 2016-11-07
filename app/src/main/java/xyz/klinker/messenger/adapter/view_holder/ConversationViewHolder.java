@@ -25,19 +25,24 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bignerdranch.android.multiselector.SwappingHolder;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
 
 /**
  * View holder for recycling inflated conversations.
  */
-public class ConversationViewHolder extends RecyclerView.ViewHolder {
+public class ConversationViewHolder extends SwappingHolder {
 
     public View headerBackground;
     public TextView header;
@@ -56,8 +61,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     private ConversationExpandedListener expandedListener;
     private ContactClickedListener contactClickedListener;
 
-    public ConversationViewHolder(View itemView, final ConversationExpandedListener listener, final ConversationListAdapter adapter) {
-        super(itemView);
+    public ConversationViewHolder(final View itemView, final ConversationExpandedListener listener, final ConversationListAdapter adapter) {
+        super(itemView, adapter == null || adapter.getMultiSelector() == null ? new MultiSelector() : adapter.getMultiSelector());
 
         this.position = -1;
         this.expandedListener = listener;
@@ -72,33 +77,60 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         unreadIndicator = itemView.findViewById(R.id.unread_indicator);
         checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
+        if (header == null) {
+            setSelectionModeBackgroundDrawable(itemView.getResources().getDrawable(R.drawable.conversation_list_item_selectable_background));
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (conversation == null) {
-                    return;
+                if (header == null && adapter != null && adapter.getMultiSelector() != null &&
+                        !adapter.getMultiSelector().tapSelection(ConversationViewHolder.this)) {
+                    if (conversation == null) {
+                        return;
+                    }
+
+                    if (header == null) {
+                        try {
+                            adapter.getConversations().get(position).read = true;
+                        } catch (Exception e) {
+                        }
+
+                        setTypeface(false, isItalic());
+                    }
+
+                    if (listener != null) {
+                        changeExpandedState();
+                    }
+
+                    if (contactClickedListener != null) {
+                        contactClickedListener.onClicked(
+                                conversation.title, conversation.phoneNumbers, conversation.imageUri);
+                    }
+
+                    if (checkBox != null) {
+                        checkBox.setChecked(!checkBox.isChecked());
+                    }
+                }
+            }
+        });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (header != null) {
+                    return true;
                 }
 
-                if (header == null) {
-                    try {
-                        adapter.getConversations().get(position).read = true;
-                    } catch (Exception e) { }
-
-                    setTypeface(false, isItalic());
+                ConversationsMultiSelectDelegate multiSelect = adapter != null ? adapter.getMultiSelector() : null;
+                if (multiSelect != null && !multiSelect.isSelectable()) {
+                    multiSelect.startActionMode();
+                    multiSelect.setSelectable(true);
+                    multiSelect.setSelected(ConversationViewHolder.this, true);
+                    return true;
                 }
 
-                if (listener != null) {
-                    changeExpandedState();
-                }
-
-                if (contactClickedListener != null) {
-                    contactClickedListener.onClicked(
-                            conversation.title, conversation.phoneNumbers, conversation.imageUri);
-                }
-
-                if (checkBox != null) {
-                    checkBox.setChecked(!checkBox.isChecked());
-                }
+                return false;
             }
         });
 

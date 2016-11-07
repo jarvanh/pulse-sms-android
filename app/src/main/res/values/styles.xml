@@ -23,6 +23,9 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/actionModeBackground</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="AppTheme.MessengerActivity" parent="@style/AppTheme.NoActionBar">

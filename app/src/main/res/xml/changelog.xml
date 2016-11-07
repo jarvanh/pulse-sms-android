@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.8.6"
+        description="November 10th, 2016">
+        <text>Multi-select on conversation list to delete, archive, mute, and pin conversations</text>
+        <text>Changes to swipe to delete on the conversation list</text>
+    </version>
+
+    <version
         name="1.8.5"
         description="November 6rd, 2016">
         <text>See which SIM card messages were sent and received from, for dual-SIM devices</text>

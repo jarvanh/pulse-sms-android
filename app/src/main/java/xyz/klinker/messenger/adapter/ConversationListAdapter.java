@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.bignerdranch.android.multiselector.MultiSelector;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 
@@ -37,9 +38,11 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
@@ -58,8 +61,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     private SwipeToDeleteListener swipeToDeleteListener;
     private ConversationExpandedListener conversationExpandedListener;
     private List<SectionType> sectionCounts;
+    private ConversationsMultiSelectDelegate multiSelector;
 
-    public ConversationListAdapter(List<Conversation> conversations,
+    public ConversationListAdapter(List<Conversation> conversations, ConversationsMultiSelectDelegate multiSelector,
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.swipeToDeleteListener = swipeToDeleteListener;
@@ -67,6 +71,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         setConversations(conversations);
 
         time = new Date().getTime();
+
+        this.multiSelector = multiSelector;
+        this.multiSelector.setAdapter(this);
     }
 
     public void setConversations(List<Conversation> convos) {
@@ -311,6 +318,23 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         return conversationPosition + headersAbove;
     }
 
+    public Conversation findConversationForPosition(int position) {
+        int headersAbove = sectionCounts.get(0).count != 0 ? 1 : 0; // on archives there may not be a pinned section
+        int totalSectionsCount = 0;
+
+        for (int i = 0; i < sectionCounts.size(); i++) {
+            totalSectionsCount += sectionCounts.get(i).count;
+
+            if (position <= (totalSectionsCount + headersAbove)) {
+                break;
+            } else {
+                headersAbove++;
+            }
+        }
+
+        return conversations.get(position - headersAbove);
+    }
+
     public int getCountForSection(int sectionType) {
         for (int i = 0; i < sectionCounts.size(); i++) {
             if (sectionCounts.get(i).type == sectionType) {
@@ -346,6 +370,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 return false;
             }
         };
+    }
+
+    public ConversationsMultiSelectDelegate getMultiSelector() {
+        return multiSelector;
     }
 
 }

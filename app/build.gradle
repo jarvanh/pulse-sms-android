@@ -137,6 +137,7 @@ dependencies {
     compile 'com.larswerkman:lobsterpicker:1.0.1'
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'me.leolin:ShortcutBadger:1.1.10@aar'
+    compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
 
     compile project(":api_implementation")
     compile project(":encryption")

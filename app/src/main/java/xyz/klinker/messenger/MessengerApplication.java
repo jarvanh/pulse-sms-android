@@ -71,19 +71,16 @@ public class MessengerApplication extends Application {
                 public void run() {
                     try {
                         Thread.sleep(10 * 1000);
-                    } catch (InterruptedException e) {
+                        DataSource source = DataSource.getInstance(MessengerApplication.this);
+                        source.open();
+                        List<Conversation> conversations = source.getPinnedConversationsAsList();
+                        if (conversations.size() == 0) {
+                            conversations = source.getUnarchivedConversationsAsList();
+                        }
+                        source.close();
 
-                    }
-
-                    DataSource source = DataSource.getInstance(MessengerApplication.this);
-                    source.open();
-                    List<Conversation> conversations = source.getPinnedConversationsAsList();
-                    if (conversations.size() == 0) {
-                        conversations = source.getUnarchivedConversationsAsList();
-                    }
-                    source.close();
-
-                    new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
+                        new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
+                    } catch (Exception e) { }
                 }
             }).start();
         }

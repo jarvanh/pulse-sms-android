@@ -78,7 +78,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         adapter = new ConversationListAdapter(getFakeConversations(RuntimeEnvironment.application),
-                swipeToDeleteListener, conversationExpandedListener);
+                null, swipeToDeleteListener, conversationExpandedListener);
 
         when(header.getContext()).thenReturn(RuntimeEnvironment.application);
     }

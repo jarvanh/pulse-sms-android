@@ -20,6 +20,7 @@
     <color name="quickReplyBackground">@color/background</color>
     <color name="swipeBackground">#2c353a</color>
     <color name="drawerBackground">#202B30</color>
+    <color name="selectedBackground">#33444d</color>
     <color name="primaryText">#FFFFFFFF</color>
     <color name="secondaryText">#B2FFFFFF</color>
     <color name="divider">#29353a</color>

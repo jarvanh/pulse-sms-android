@@ -40,9 +40,9 @@ import xyz.klinker.messenger.data.Settings;
 public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     private ConversationListAdapter adapter;
-    private Drawable endSwipeBackground;
+    protected Drawable endSwipeBackground;
     private Drawable startSwipeBackground;
-    private Drawable endMark; // delete icon
+    protected Drawable endMark; // delete icon on archive list, archive on the conversation list
     private Drawable startMark; // archive icon
     private int markMargin;
     private boolean initiated;
@@ -51,15 +51,16 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         return context.getDrawable(R.drawable.ic_archive);
     }
 
-    private void init(Context context) {
-        Settings settings = Settings.get(context);
-        if (settings.useGlobalThemeColor) {
-            endSwipeBackground = new ColorDrawable(settings.globalColorSet.colorAccent);
-        } else {
-            endSwipeBackground = new ColorDrawable(context.getResources().getColor(R.color.colorAccent));
-        }
-        endMark = context.getDrawable(R.drawable.ic_delete_sweep);
+    protected void setupEndSwipe(Context context) {
+        endSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        endMark = context.getDrawable(R.drawable.ic_archive);
         endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+    }
+
+    private void init(Context context) {
+        // end swipe will be delete when on the archive list, but both will be archive on the normal
+        // conversation list.
+        setupEndSwipe(context);
 
         startSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
         startMark = getArchiveItem(context);
@@ -82,7 +83,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        if (direction == ItemTouchHelper.START) {
+        if (direction == ItemTouchHelper.START && this instanceof UnarchiveSwipeSimpleCallback) {
             adapter.deleteItem(viewHolder.getAdapterPosition());
         } else {
             adapter.archiveItem(viewHolder.getAdapterPosition());
@@ -96,16 +97,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
             return 0;
         } else {
             // swipe TOWARDS the start or TOWARDS the end
-            if (viewHolder instanceof ConversationViewHolder) {
-                ConversationViewHolder holder = (ConversationViewHolder) viewHolder;
-                if (holder.conversation.pinned && !holder.conversation.archive) {
-                    return ItemTouchHelper.END;
-                } else {
-                    return ItemTouchHelper.START | ItemTouchHelper.END;
-                }
-            } else {
-                return ItemTouchHelper.START | ItemTouchHelper.END;
-            }
+            return ItemTouchHelper.START | ItemTouchHelper.END;
         }
     }
 

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -57,6 +58,7 @@ import xyz.klinker.messenger.util.UnreadBadger;
 import xyz.klinker.messenger.util.UpdateUtils;
 import xyz.klinker.messenger.util.listener.BackPressedListener;
 import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
 import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
@@ -82,6 +84,7 @@ public class ConversationListFragment extends Fragment
     public  Snackbar archiveSnackbar;
     private ConversationListAdapter adapter;
     private ConversationListUpdatedReceiver updatedReceiver;
+    private ConversationsMultiSelectDelegate multiSelector;
 
     private String newConversationTitle = null;
     public ConversationListUpdatedReceiver.ConversationUpdateInfo updateInfo = null;
@@ -124,6 +127,8 @@ public class ConversationListFragment extends Fragment
             empty.setBackgroundColor(settings.globalColorSet.colorLight);
             ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.globalColorSet.color);
         }
+
+        multiSelector = new ConversationsMultiSelectDelegate(this);
 
         return view;
     }
@@ -195,7 +200,7 @@ public class ConversationListFragment extends Fragment
         return source.getUnarchivedConversationsAsList();
     }
 
-    private void loadConversations() {
+    public void loadConversations() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
@@ -245,7 +250,7 @@ public class ConversationListFragment extends Fragment
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
         } else {
-            adapter = new ConversationListAdapter(conversations, this, this);
+            adapter = new ConversationListAdapter(conversations, multiSelector, this, this);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(adapter);
@@ -353,8 +358,6 @@ public class ConversationListFragment extends Fragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-                deleteSnackbar = null;
-
                 if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
                     DataSource dataSource = DataSource.getInstance(activity);
                     dataSource.open();
@@ -429,9 +432,7 @@ public class ConversationListFragment extends Fragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-                archiveSnackbar = null;
-
-                if (pendingArchive.size() == currentSize && activity != null) {
+                if ((currentSize == -1 || pendingArchive.size() == currentSize) && activity != null) {
                     DataSource dataSource = DataSource.getInstance(activity);
                     dataSource.open();
 
