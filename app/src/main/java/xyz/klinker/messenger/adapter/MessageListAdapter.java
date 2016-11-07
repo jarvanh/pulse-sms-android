@@ -48,10 +48,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -171,14 +173,24 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         clickedText = "http://" + clickedText;
                     }
 
-                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                    builder.setToolbarColor(receivedColor);
-                    builder.setShowTitle(true);
-                    builder.setActionButton(
-                            BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
-                            fragment.getString(R.string.share), getShareIntent(clickedText), true);
-                    CustomTabsIntent customTabsIntent = builder.build();
-                    customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
+                    if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
+                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext())
+                                .setToolbarColor(receivedColor)
+                                .setAccentColor(accentColor)
+                                .setTheme(ArticleIntent.THEME_DARK)
+                                .build();
+
+                        intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
+                    } else {
+                        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                        builder.setToolbarColor(receivedColor);
+                        builder.setShowTitle(true);
+                        builder.setActionButton(
+                                BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
+                                fragment.getString(R.string.share), getShareIntent(clickedText), true);
+                        CustomTabsIntent customTabsIntent = builder.build();
+                        customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
+                    }
                 }
             });
 
