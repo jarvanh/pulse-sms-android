@@ -26,6 +26,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
     private ConversationListFragment fragment;
     private ConversationListAdapter adapter;
 
+    private ActionMode mode;
     private ActionMode.Callback actionMode = new ModalMultiSelectorCallback(this) {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -143,6 +144,12 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
     }
 
     public void startActionMode() {
-        activity.startSupportActionMode(actionMode);
+        mode = activity.startSupportActionMode(actionMode);
+    }
+
+    public void clearActionMode() {
+        if (mode != null) {
+            mode.finish();
+        }
     }
 }

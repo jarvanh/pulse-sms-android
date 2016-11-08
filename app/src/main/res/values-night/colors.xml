@@ -32,4 +32,6 @@
     <color name="emptyTextSecondary">#8C000000</color>
     <color name="deleteIcon">@color/background</color>
 
+    <color name="actionModeBackground">#404040</color>
+
 </resources>

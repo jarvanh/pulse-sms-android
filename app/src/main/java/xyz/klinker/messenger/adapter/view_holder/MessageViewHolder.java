@@ -45,6 +45,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bignerdranch.android.multiselector.SwappingHolder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -67,13 +70,14 @@ import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.MediaSaver;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * View holder for working with a message.
  */
-public class MessageViewHolder extends RecyclerView.ViewHolder {
+public class MessageViewHolder extends SwappingHolder {
 
     private MessageListFragment fragment;
     private MessageDeletedListener messageDeletedListener;
@@ -85,13 +89,16 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public View messageHolder;
     public long messageId;
     public String mimeType;
+    public int color = -1;
+    public int textColor = -1;
     private int type;
     private int timestampHeight;
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (type == Message.TYPE_INFO) {
+            if (type == Message.TYPE_INFO || fragment.getMultiSelect() == null ||
+                    fragment.getMultiSelect().tapSelection(MessageViewHolder.this)) {
                 return;
             }
 
@@ -124,7 +131,14 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 return true;
             }
 
-            String[] items;
+            if (fragment.getMultiSelect() != null && type != Message.TYPE_INFO) {
+                fragment.getMultiSelect().startActionMode();
+                fragment.getMultiSelect().setSelectable(true);
+                fragment.getMultiSelect().setSelected(MessageViewHolder.this, true);
+                return true;
+            }
+
+            /*String[] items;
             if (message.getVisibility() == View.VISIBLE) {
                 if (type == Message.TYPE_ERROR) {
                     items = new String[5];
@@ -183,16 +197,16 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             // disabled on the long clicked views
             view.setHapticFeedbackEnabled(true);
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            view.setHapticFeedbackEnabled(false);
+            view.setHapticFeedbackEnabled(false);*/
 
-            return true;
+            return false;
         }
     };
 
     public MessageViewHolder(final MessageListFragment fragment, final View itemView,
                              int color, final long conversationId, int type, int timestampHeight,
                              MessageDeletedListener messageDeletedListener) {
-        super(itemView);
+        super(itemView, fragment == null || fragment.getMultiSelect() == null ? new MultiSelector() : fragment.getMultiSelect());
 
         this.fragment = fragment;
         this.type = type;
@@ -216,12 +230,15 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
+            this.color = color;
 
             if (!ColorUtils.isColorDark(color)) {
-                message.setTextColor(itemView.getContext().getResources().getColor(R.color.darkText));
+                textColor = itemView.getContext().getResources().getColor(R.color.darkText);
             } else {
-                message.setTextColor(itemView.getContext().getResources().getColor(R.color.lightText));
+                textColor = itemView.getContext().getResources().getColor(R.color.lightText);
             }
+
+            message.setTextColor(textColor);
         }
 
         if (image != null) {

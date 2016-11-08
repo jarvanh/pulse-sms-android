@@ -168,6 +168,8 @@ public class ConversationListFragment extends Fragment
         if (updatedReceiver != null) {
             getActivity().unregisterReceiver(updatedReceiver);
         }
+
+        multiSelector.clearActionMode();
     }
 
     public void makeSnackbar(String text, int duration, String actionLabel, View.OnClickListener listener) {

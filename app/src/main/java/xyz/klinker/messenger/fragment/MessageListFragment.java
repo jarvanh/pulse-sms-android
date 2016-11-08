@@ -118,6 +118,7 @@ import xyz.klinker.messenger.util.TvUtils;
 import xyz.klinker.messenger.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.util.listener.TextSelectedListener;
+import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
@@ -188,6 +189,8 @@ public class MessageListFragment extends Fragment implements
     private boolean textChanged = false;
     private List<Draft> drafts;
 
+    private MessageMultiSelectDelegate multiSelect;
+
     private Uri attachedUri;
     private String attachedMimeType;
 
@@ -233,6 +236,8 @@ public class MessageListFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
         source = DataSource.getInstance(getContext());
         source.open();
+
+        multiSelect = new MessageMultiSelectDelegate(this);
 
         View view = inflater.inflate(getLayout(), parent, false);
 
@@ -309,6 +314,7 @@ public class MessageListFragment extends Fragment implements
             // just in case
         }
 
+
         return view;
     }
 
@@ -374,6 +380,8 @@ public class MessageListFragment extends Fragment implements
         if (attachedUri != null) {
             source.insertDraft(getConversationId(), attachedUri.toString(), attachedMimeType);
         }
+
+        multiSelect.clearActionMode();
     }
 
     @Override
@@ -1525,5 +1533,9 @@ public class MessageListFragment extends Fragment implements
         }
 
         return true;
+    }
+
+    public MessageMultiSelectDelegate getMultiSelect() {
+        return multiSelect;
     }
 }

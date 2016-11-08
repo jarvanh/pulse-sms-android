@@ -67,6 +67,7 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 /**
  * Adapter for displaying messages in a conversation.
@@ -86,6 +87,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private MessageListFragment fragment;
     private int timestampHeight;
 
+    private MessageMultiSelectDelegate multiSelect;
+
     private int imageHeight;
     private int imageWidth;
 
@@ -104,6 +107,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 350);
         }
+
+        fragment.getMultiSelect().setAdapter(this);
     }
 
     @Override
@@ -421,6 +426,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 int color = fromColorMapper.get(message.from).colors.color;
                 holder.messageHolder.setBackgroundTintList(
                         ColorStateList.valueOf(color));
+                holder.color = color;
 
                 if (!ColorUtils.isColorDark(color)) {
                     holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
@@ -433,6 +439,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 int color = fromColorMapperByName.get(message.from).colors.color;
                 holder.messageHolder.setBackgroundTintList(
                         ColorStateList.valueOf(color));
+                holder.color = color;
 
                 if (!ColorUtils.isColorDark(color)) {
                     holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
