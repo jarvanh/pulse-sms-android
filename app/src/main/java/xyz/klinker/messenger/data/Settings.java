@@ -24,6 +24,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Holds all settings for the application and allows for easily changing the values stored for each
@@ -312,6 +313,16 @@ public class Settings {
     public void removeValue(String key) {
         getSharedPrefs().edit().remove(key).apply();
         forceUpdate();
+    }
+
+    public boolean isCurrentlyDarkTheme() {
+        if (baseTheme == BaseTheme.ALWAYS_LIGHT) {
+            return false;
+        } else if (baseTheme == BaseTheme.DAY_NIGHT) {
+            return TimeUtils.isNight();
+        } else {
+            return true;
+        }
     }
 
 }
