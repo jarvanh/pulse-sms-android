@@ -3,6 +3,8 @@ package xyz.klinker.messenger.util.multi_select;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
@@ -19,7 +21,9 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment;
 
 public class MessageMultiSelectDelegate extends MultiSelector {
 
@@ -42,7 +46,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             MenuItem delete = menu.findItem(R.id.menu_delete_messages);
             MenuItem share = menu.findItem(R.id.menu_share_message);
-            MenuItem info = menu.findItem(R.id.menu_message_info);
+            MenuItem info = menu.findItem(R.id.menu_message_details);
 
             int checked = 0;
             for(int i = 0; i < mSelections.size(); i++) {
@@ -54,11 +58,11 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             }
 
             if (checked > 1) {
-                share.setVisible(true);
-                info.setVisible(true);
-            } else {
                 share.setVisible(false);
                 info.setVisible(false);
+            } else {
+                share.setVisible(true);
+                info.setVisible(true);
             }
 
             return false;
@@ -70,16 +74,14 @@ public class MessageMultiSelectDelegate extends MultiSelector {
 
             // https://github.com/bignerdranch/recyclerview-multiselect/issues/9#issuecomment-140180348
             try {
-                Field field = MessageMultiSelectDelegate.this.getClass().getDeclaredField("mIsSelectable");
+                Field field = MessageMultiSelectDelegate.this.getClass().getField("mIsSelectable");
                 if (field != null) {
                     if (!field.isAccessible())
                         field.setAccessible(true);
                     field.set(this, false);
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+
             }
 
             new Handler().postDelayed(new Runnable() {
@@ -93,6 +95,40 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             boolean handled = false;
+
+            List<Long> selectedIds = new ArrayList<>();
+            for(int i = 0; i < mSelections.size(); i++) {
+                int key = mSelections.keyAt(i);
+                if (mSelections.get(key))
+                    selectedIds.add(adapter.getItemId(key));
+            }
+
+            if (selectedIds.size() == 0) {
+                return false;
+            }
+
+            if (item.getItemId() == R.id.menu_delete_messages) {
+                handled = true;
+
+                for (Long id : selectedIds) {
+                    fragment.getDataSource().deleteMessage(id);
+                }
+
+                fragment.loadMessages();
+            } else if (item.getItemId() == R.id.menu_share_message) {
+                handled = true;
+                Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
+
+                MessageShareFragment fragment = new MessageShareFragment();
+                fragment.setMessage(message);
+                fragment.show(activity.getSupportFragmentManager(), "");
+            } else {
+                handled = true;
+                new AlertDialog.Builder(activity)
+                        .setMessage(fragment.getDataSource().getMessageDetails(activity, selectedIds.get(0)))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
 
             mode.finish();
             return handled;

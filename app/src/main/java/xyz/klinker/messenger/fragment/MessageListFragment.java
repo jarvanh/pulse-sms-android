@@ -1538,4 +1538,8 @@ public class MessageListFragment extends Fragment implements
     public MessageMultiSelectDelegate getMultiSelect() {
         return multiSelect;
     }
+
+    public DataSource getDataSource() {
+        return source;
+    }
 }

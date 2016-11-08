@@ -15,7 +15,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_message_info"
+        android:id="@+id/menu_message_details"
         android:title="@string/view_details"
         android:icon="@drawable/ic_info"
         app:showAsAction="always" />

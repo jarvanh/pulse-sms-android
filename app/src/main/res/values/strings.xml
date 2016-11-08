@@ -150,6 +150,9 @@
     <string name="message_sending_failed">Failed to send message!</string>
     <string name="preparing_video">Preparing video&#8230;</string>
     <string name="delete_message">Delete this message?</string>
+    <string name="forward_message">Forward Message</string>
+    <string name="share_message">Share Message</string>
+    <string name="copy_message_text">Copy Message Text</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>
