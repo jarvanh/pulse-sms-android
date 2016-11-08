@@ -992,33 +992,37 @@ public class MessengerActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (billing != null && billing.handleOnActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+        try {
+            if (billing != null && billing.handleOnActivityResult(requestCode, resultCode, data)) {
+                return;
+            }
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
-        if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        } else {
-            fragment = getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
             if (fragment != null) {
                 fragment.onActivityResult(requestCode, resultCode, data);
+            } else {
+                fragment = getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+                if (fragment != null) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
             }
+
+            if (requestCode == REQUEST_ONBOARDING) {
+                boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+
+                // if it isn't a phone, then we want to force the login.
+                // if it is a phone, they can choose to log in when they want to
+                Intent login = new Intent(this, InitialLoadActivity.class);
+                login.putExtra(LoginActivity.ARG_SKIP_LOGIN, hasTelephone);
+
+                startActivity(login);
+                finish();
+            }
+
+            super.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+
         }
-
-        if (requestCode == REQUEST_ONBOARDING) {
-            boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
-
-            // if it isn't a phone, then we want to force the login.
-            // if it is a phone, they can choose to log in when they want to
-            Intent login = new Intent(this, InitialLoadActivity.class);
-            login.putExtra(LoginActivity.ARG_SKIP_LOGIN, hasTelephone);
-
-            startActivity(login);
-            finish();
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

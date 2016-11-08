@@ -101,7 +101,7 @@ public class SmsSentReceiver extends SentReceiver {
                     open.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
                     open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     PendingIntent pendingOpen = PendingIntent.getActivity(context,
-                            (int) conversationId, open, PendingIntent.FLAG_ONE_SHOT);
+                            (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     Notification notification = new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_stat_notify)

@@ -88,8 +88,8 @@ public class SubscriptionExpirationCheckService extends IntentService {
         email.putExtra(Intent.EXTRA_SUBJECT, subject);
         email.putExtra(Intent.EXTRA_TEXT, "The Play Store sometimes sucks at determining what you have purchased in the past. Please include the order number of your purchase in this email (which can be found from the Play Store app). I will help you get it worked out!");
 
-        PendingIntent emailPending = PendingIntent.getActivity(this, REQUEST_CODE_EMAIL, email, PendingIntent.FLAG_ONE_SHOT);
-        PendingIntent renewPending = PendingIntent.getActivity(this, REQUEST_CODE_RENEW, renew, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent emailPending = PendingIntent.getActivity(this, REQUEST_CODE_EMAIL, email, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent renewPending = PendingIntent.getActivity(this, REQUEST_CODE_RENEW, renew, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Action renewAction = new NotificationCompat.Action(R.drawable.ic_account, getString(R.string.renew), renewPending);
         NotificationCompat.Action emailAction = new NotificationCompat.Action(R.drawable.ic_about, getString(R.string.email), emailPending);

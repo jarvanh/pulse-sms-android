@@ -61,12 +61,6 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                 info.setVisible(false);
             }
 
-            if (checked == 0) {
-                delete.setVisible(false);
-            } else {
-                delete.setVisible(true);
-            }
-
             return false;
         }
 

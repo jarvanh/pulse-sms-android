@@ -158,7 +158,10 @@ public class ImageUtils {
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(imageUri, context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
-            bitmap.recycle();
+
+            if (bitmap != null) {
+                bitmap.recycle();
+            }
 
             if (colors != null) {
                 contact.colors = colors;

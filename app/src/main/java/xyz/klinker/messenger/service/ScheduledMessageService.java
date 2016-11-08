@@ -82,7 +82,7 @@ public class ScheduledMessageService extends Service {
                     Intent open = new Intent(this, MessengerActivity.class);
                     open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     PendingIntent pendingOpen = PendingIntent.getActivity(this, 0, open,
-                            PendingIntent.FLAG_ONE_SHOT);
+                            PendingIntent.FLAG_UPDATE_CURRENT);
 
                     Notification notification = new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.ic_stat_notify)

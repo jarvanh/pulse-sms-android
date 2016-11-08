@@ -406,7 +406,7 @@ public class NotificationService extends IntentService {
             Intent reply = new Intent(this, ReplyService.class);
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
             pendingReply = PendingIntent.getService(this,
-                    (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
+                    (int) conversation.id, reply, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     getString(R.string.reply), pendingReply)
@@ -424,7 +424,7 @@ public class NotificationService extends IntentService {
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
             reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pendingReply = PendingIntent.getActivity(this,
-                    (int) conversation.id, reply, PendingIntent.FLAG_ONE_SHOT);
+                    (int) conversation.id, reply, PendingIntent.FLAG_UPDATE_CURRENT);
 
             if (DEBUG_QUICK_REPLY) {
                 // if we are debugging, the assumption is that we are on android N, we have to be stop showing
@@ -449,7 +449,7 @@ public class NotificationService extends IntentService {
                 extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
                 wearReply.putExtras(extras);
                 PendingIntent wearPendingReply = PendingIntent.getService(this,
-                        (int) conversation.id + 1, wearReply, PendingIntent.FLAG_ONE_SHOT);
+                        (int) conversation.id + 1, wearReply, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 NotificationCompat.Action wearAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         getString(R.string.reply), wearPendingReply)
@@ -463,14 +463,14 @@ public class NotificationService extends IntentService {
         Intent read = new Intent(this, NotificationMarkReadService.class);
         read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
-                read, PendingIntent.FLAG_ONE_SHOT);
+                read, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (!conversation.groupConversation && Account.get(this).primary) {
             Intent call = new Intent(this, NotificationCallService.class);
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
             call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);
             PendingIntent callPending = PendingIntent.getService(this, (int) conversation.id,
-                    call, PendingIntent.FLAG_ONE_SHOT);
+                    call, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_call_dark, getString(R.string.call), callPending));
         }
@@ -478,14 +478,14 @@ public class NotificationService extends IntentService {
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
         PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.id,
-                delete, PendingIntent.FLAG_ONE_SHOT);
+                delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent open = new Intent(this, MessengerActivity.class);
         open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
         open.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
-                open, PendingIntent.FLAG_ONE_SHOT);
+                open, PendingIntent.FLAG_UPDATE_CURRENT);
 
         wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
         builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
@@ -496,7 +496,7 @@ public class NotificationService extends IntentService {
         Intent carReply = new Intent(this, CarReplyReceiver.class);
         carReply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
         PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.id,
-                carReply, PendingIntent.FLAG_ONE_SHOT);
+                carReply, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Android Auto extender
         NotificationCompat.CarExtender.UnreadConversation.Builder car = new
@@ -629,12 +629,12 @@ public class NotificationService extends IntentService {
 
         Intent delete = new Intent(this, NotificationDismissedService.class);
         PendingIntent pendingDelete = PendingIntent.getService(this, 0,
-                delete, PendingIntent.FLAG_ONE_SHOT);
+                delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent open = new Intent(this, MessengerActivity.class);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this, 0,
-                open, PendingIntent.FLAG_ONE_SHOT);
+                open, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)

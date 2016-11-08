@@ -131,14 +131,16 @@ public class MessageViewHolder extends SwappingHolder {
                 return true;
             }
 
-            if (fragment.getMultiSelect() != null && type != Message.TYPE_INFO) {
+            if (message.getVisibility() == View.VISIBLE && type != Message.TYPE_ERROR &&
+                    fragment.getMultiSelect() != null && type != Message.TYPE_INFO) {
+                // start the multi-select
                 fragment.getMultiSelect().startActionMode();
                 fragment.getMultiSelect().setSelectable(true);
                 fragment.getMultiSelect().setSelected(MessageViewHolder.this, true);
                 return true;
             }
 
-            /*String[] items;
+            String[] items;
             if (message.getVisibility() == View.VISIBLE) {
                 if (type == Message.TYPE_ERROR) {
                     items = new String[5];
@@ -197,7 +199,7 @@ public class MessageViewHolder extends SwappingHolder {
             // disabled on the long clicked views
             view.setHapticFeedbackEnabled(true);
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            view.setHapticFeedbackEnabled(false);*/
+            view.setHapticFeedbackEnabled(false);
 
             return false;
         }
@@ -245,6 +247,11 @@ public class MessageViewHolder extends SwappingHolder {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (fragment.getMultiSelect() != null && fragment.getMultiSelect().isSelectable()) {
+                        messageHolder.performClick();
+                        return;
+                    }
+
                     if (mimeType != null && MimeType.isVcard(mimeType)) {
                         Uri uri = Uri.parse(message.getText().toString());
                         Intent intent = new Intent(Intent.ACTION_VIEW);
