@@ -20,7 +20,9 @@
         name="1.8.6"
         description="November 10th, 2016">
         <text>Multi-select on conversation list to delete, archive, mute, and pin conversations</text>
+        <text>Multi-select on message list to delete, share, and get message info</text>
         <text>Changes to swipe to delete on the conversation list</text>
+        <text>Improvements to sharing on the message list</text>
     </version>
 
     <version
