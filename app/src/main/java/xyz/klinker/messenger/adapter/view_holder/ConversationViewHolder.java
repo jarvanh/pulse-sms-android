@@ -84,8 +84,8 @@ public class ConversationViewHolder extends SwappingHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (header == null && adapter != null && adapter.getMultiSelector() != null &&
-                        !adapter.getMultiSelector().tapSelection(ConversationViewHolder.this)) {
+                if (header == null && ((adapter != null && adapter.getMultiSelector() != null &&
+                        !adapter.getMultiSelector().tapSelection(ConversationViewHolder.this)) || adapter == null)) {
                     if (conversation == null) {
                         return;
                     }
