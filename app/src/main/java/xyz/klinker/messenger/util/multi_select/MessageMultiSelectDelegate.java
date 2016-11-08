@@ -103,7 +103,9 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         super();
 
         this.fragment = fragment;
-        this.activity = (AppCompatActivity) fragment.getActivity();
+
+        if (fragment.getActivity() instanceof AppCompatActivity)
+            this.activity = (AppCompatActivity) fragment.getActivity();
     }
 
     public void setAdapter(MessageListAdapter adapter) {

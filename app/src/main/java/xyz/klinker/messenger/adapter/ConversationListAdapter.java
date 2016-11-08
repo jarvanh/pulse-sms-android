@@ -73,7 +73,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         time = new Date().getTime();
 
         this.multiSelector = multiSelector;
-        this.multiSelector.setAdapter(this);
+        if (this.multiSelector != null)
+            this.multiSelector.setAdapter(this);
     }
 
     public void setConversations(List<Conversation> convos) {

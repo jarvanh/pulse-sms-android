@@ -108,7 +108,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 350);
         }
 
-        fragment.getMultiSelect().setAdapter(this);
+        if (fragment.getMultiSelect() != null)
+            fragment.getMultiSelect().setAdapter(this);
     }
 
     @Override

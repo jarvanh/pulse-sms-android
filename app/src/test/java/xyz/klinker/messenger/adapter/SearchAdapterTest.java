@@ -24,10 +24,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bignerdranch.android.multiselector.MultiSelector;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.List;
 
@@ -41,6 +44,7 @@ import xyz.klinker.messenger.data.model.Message;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,6 +64,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         adapter = new SearchAdapter("test", conversations, messages, null);
+        when(view.getContext()).thenReturn(RuntimeEnvironment.application);
     }
 
     @Test

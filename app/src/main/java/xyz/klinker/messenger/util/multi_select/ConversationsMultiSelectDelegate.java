@@ -136,7 +136,9 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
         super();
 
         this.fragment = fragment;
-        this.activity = (AppCompatActivity) fragment.getActivity();
+
+        if (fragment.getActivity() instanceof AppCompatActivity)
+            this.activity = (AppCompatActivity) fragment.getActivity();
     }
 
     public void setAdapter(ConversationListAdapter adapter) {
