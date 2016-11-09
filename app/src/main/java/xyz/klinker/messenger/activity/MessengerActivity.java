@@ -528,7 +528,7 @@ public class MessengerActivity extends AppCompatActivity
                 }
             case R.id.menu_view_contact:
             case R.id.drawer_view_contact:
-                return ();
+                return viewContact();
             case R.id.menu_view_media:
             case R.id.drawer_view_media:
                 return viewMedia();
@@ -763,7 +763,7 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
-    private boolean viewContact(viewContact) {
+    private boolean viewContact() {
         Conversation conversation = null;
 
         if (conversationListFragment != null && conversationListFragment.isExpanded()) {
