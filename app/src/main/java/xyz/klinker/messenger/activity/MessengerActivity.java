@@ -528,7 +528,7 @@ public class MessengerActivity extends AppCompatActivity
                 }
             case R.id.menu_view_contact:
             case R.id.drawer_view_contact:
-                return viewContact();
+                return ();
             case R.id.menu_view_media:
             case R.id.drawer_view_media:
                 return viewMedia();
@@ -763,7 +763,7 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
-    private boolean viewContact() {
+    private boolean viewContact(viewContact) {
         Conversation conversation = null;
 
         if (conversationListFragment != null && conversationListFragment.isExpanded()) {
@@ -848,9 +848,9 @@ public class MessengerActivity extends AppCompatActivity
                     }
                 }
 
-                if (intent != null) {
+                try {
                     startActivity(intent);
-                }
+                } catch (Exception e) { }
             } else {
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)

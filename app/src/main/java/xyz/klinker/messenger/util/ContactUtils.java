@@ -233,7 +233,7 @@ public class ContactUtils {
                 if (phonesCursor != null) {
                     phonesCursor.close();
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

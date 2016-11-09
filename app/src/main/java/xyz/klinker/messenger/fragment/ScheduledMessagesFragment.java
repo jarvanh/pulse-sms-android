@@ -330,6 +330,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void dismissKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+
         InputMethodManager imm = (InputMethodManager)
                 getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
