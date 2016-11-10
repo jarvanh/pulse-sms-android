@@ -175,6 +175,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             urls.setOnClickListener(new Link.OnClickListener() {
                 @Override
                 public void onClick(String clickedText) {
+                    if (fragment.getMultiSelect().isSelectable()) {
+                        holder.messageHolder.performClick();
+                        return;
+                    }
+                    
                     if (!clickedText.startsWith("http")) {
                         clickedText = "http://" + clickedText;
                     }

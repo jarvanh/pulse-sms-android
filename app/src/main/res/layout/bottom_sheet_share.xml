@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/drawerBackground"
     android:padding="12dp">
 
     <LinearLayout
@@ -16,6 +16,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:tint="@color/primaryText"
             android:src="@drawable/ic_share"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>
@@ -41,6 +42,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="2dp"
+            android:tint="@color/primaryText"
             android:src="@drawable/ic_message_forward"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>
@@ -66,6 +68,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="3dp"
+            android:tint="@color/primaryText"
             android:src="@drawable/ic_copy"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>
