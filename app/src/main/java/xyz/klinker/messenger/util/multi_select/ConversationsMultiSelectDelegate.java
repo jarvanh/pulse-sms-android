@@ -107,7 +107,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                     handled = true;
 
                     for (Conversation conversation : selectedConversations) {
-                        conversation.mute = true;
+                        conversation.mute = !conversation.mute;
                         source.updateConversationSettings(conversation);
                     }
 
@@ -117,7 +117,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                     handled = true;
 
                     for (Conversation conversation : selectedConversations) {
-                        conversation.pinned = true;
+                        conversation.pinned = !conversation.pinned;
                         source.updateConversationSettings(conversation);
                     }
 
