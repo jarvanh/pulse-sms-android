@@ -423,11 +423,7 @@ public class ApiUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UpdateConversationRequest request = new UpdateConversationRequest(null, null, null,
-                        null, null, null, null, null, encryptionUtils.encrypt(title), null,
-                        null, null, null, null);
-
-                Object response = api.conversation().updateSnippet(deviceId, accountId, request);
+                Object response = api.conversation().updateTitle(deviceId, accountId, encryptionUtils.encrypt(title));
                 if (response == null) {
                     Log.e(TAG, "error updating conversation title");
                 } else {
