@@ -1016,9 +1016,9 @@ public class DataSource {
         ContentValues values = new ContentValues(1);
         values.put(Conversation.COLUMN_IMAGE_URI, imageUri);
 
-        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=? AND " +
-                        Conversation.COLUMN_IMAGE_URI + " <> ?",
-                new String[] {Long.toString(conversationId), imageUri});
+        int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                new String[] {Long.toString(conversationId)});
+
 
         // no need to update the API, since image uris are local
     }
