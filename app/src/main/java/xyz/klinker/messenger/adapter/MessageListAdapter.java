@@ -60,6 +60,7 @@ import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.fragment.bottom_sheet.LinkLongClickFragment;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
@@ -172,6 +173,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             Link urls = new Link(Regex.WEB_URL);
             urls.setTextColor(accentColor);
             urls.setHighlightAlpha(.4f);
+            if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
+                urls.setOnLongClickListener(new Link.OnLongClickListener() {
+                    @Override
+                    public void onLongClick(String clickedText) {
+                        if (!clickedText.startsWith("http")) {
+                            clickedText = "http://" + clickedText;
+                        }
+
+                        LinkLongClickFragment bottomSheet = new LinkLongClickFragment();
+                        bottomSheet.setColors(receivedColor, accentColor);
+                        bottomSheet.setLink(clickedText);
+                        bottomSheet.show(fragment.getActivity().getSupportFragmentManager(), "");
+                    }
+                });
+            }
             urls.setOnClickListener(new Link.OnClickListener() {
                 @Override
                 public void onClick(String clickedText) {
@@ -179,7 +195,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         holder.messageHolder.performClick();
                         return;
                     }
-                    
+
                     if (!clickedText.startsWith("http")) {
                         clickedText = "http://" + clickedText;
                     }

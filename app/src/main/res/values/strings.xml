@@ -140,7 +140,7 @@
     <string name="failed_to_save">Failed to save</string>
     <string name="start_recording_audio">Press the button to start recording audio!</string>
     <string name="audio_recording_error">Error with recording :(</string>
-    <string name="message_copied_to_clipboard">Message copied to clipboard</string>
+    <string name="message_copied_to_clipboard">Copied to clipboard</string>
     <string name="view_details">View Details</string>
     <string name="delete">Delete</string>
     <string name="copy_message">Copy Text</string>
@@ -153,6 +153,9 @@
     <string name="forward_message">Forward Message</string>
     <string name="share_message">Share Message</string>
     <string name="copy_message_text">Copy Message Text</string>
+    <string name="open_link_to_browser">Open Link to Browser</string>
+    <string name="open_link_internal">Open Link Internally</string>
+    <string name="copy_link">Copy Link</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>

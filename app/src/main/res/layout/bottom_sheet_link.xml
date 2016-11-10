@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/drawerBackground"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:id="@+id/open_external"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?selectableItemBackground"
+        android:gravity="center|center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/primaryText"
+            android:src="@drawable/ic_browser"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/open_link_to_browser"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/open_internal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?selectableItemBackground"
+        android:gravity="center|center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="2dp"
+            android:tint="@color/primaryText"
+            android:src="@drawable/ic_link"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/open_link_internal"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/copy_text"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?selectableItemBackground"
+        android:gravity="center|center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="3dp"
+            android:tint="@color/primaryText"
+            android:src="@drawable/ic_copy"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/copy_link"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText" />
+
+    </LinearLayout>
+
+</LinearLayout>
