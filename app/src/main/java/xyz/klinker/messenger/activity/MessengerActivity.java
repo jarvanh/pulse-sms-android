@@ -463,7 +463,7 @@ public class MessengerActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         closeDrawer();
         
-        if (item == null || item.isChecked()) {
+        if (item == null || item.isChecked() || ApiDownloadService.IS_RUNNING) {
             return true;
         }
 

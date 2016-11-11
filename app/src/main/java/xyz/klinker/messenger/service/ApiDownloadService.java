@@ -71,6 +71,8 @@ public class ApiDownloadService extends Service {
 
     public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 500;
 
+    public static boolean IS_RUNNING = false;
+
     private Account account;
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
@@ -102,6 +104,8 @@ public class ApiDownloadService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                IS_RUNNING = true;
+
                 account = Account.get(getApplicationContext());
 
                 apiUtils = new ApiUtils();
@@ -127,6 +131,8 @@ public class ApiDownloadService extends Service {
                 source.setUpload(true);
                 source.endTransaction();
                 downloadMedia();
+
+                IS_RUNNING = false;
             }
         }).start();
     }
