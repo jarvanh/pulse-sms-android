@@ -509,6 +509,12 @@ public class MessengerActivity extends AppCompatActivity
             case R.id.drawer_settings:
                 return displaySettings();
             case R.id.drawer_account:
+                if (!Account.get(this).exists()) {
+                    startActivityForResult(
+                            new Intent(this, OnBoardingPayActivity.class),
+                            MyAccountFragment.ONBOARDING_REQUEST);
+                }
+
                 return displayMyAccount();
             case R.id.drawer_help:
                 return displayHelpAndFeedback();
