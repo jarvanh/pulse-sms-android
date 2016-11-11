@@ -20,6 +20,7 @@
         name="1.8.6"
         description="November 10th, 2016">
         <text>Fixes for updating conversation titles and contact images</text>
+        <text>Improvements for sound effects</text>
     </version>
 
     <version

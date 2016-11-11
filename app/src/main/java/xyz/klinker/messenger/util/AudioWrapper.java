@@ -56,8 +56,8 @@ public class AudioWrapper {
 
             if (tone != null) {
                 mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setLegacyStreamType(AudioManager.STREAM_RING)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                        .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                         .build(), 1);
             }
 
@@ -73,8 +73,8 @@ public class AudioWrapper {
         }
 
         mediaPlayer = MediaPlayer.create(context, resourceId, new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setLegacyStreamType(AudioManager.STREAM_RING)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                        .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                         .build(), 1);
     }
 
