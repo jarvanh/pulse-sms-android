@@ -301,7 +301,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             return;
         }
 
-        if (getIntent().getAction().equals(Intent.ACTION_SENDTO)) {
+        Intent intent = getIntent();
+        if (intent.getAction().equals(Intent.ACTION_SENDTO)) {
             String[] phoneNumbers = PhoneNumberUtils
                     .parseAddress(Uri.decode(getIntent().getDataString()));
 
@@ -361,8 +362,15 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Bundle extras = getIntent().getExtras();
+            String data = getIntent().getDataString();
             if (extras != null && extras.containsKey("sms_body")) {
                 setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN, false);
+            } else if (data != null) {
+                if (data.contains("smsto:")) {
+                    showConversation(data.replace("smsto:", ""));
+                } else if (data.contains("sms:")) {
+                    showConversation(data.replace("sms:", ""));
+                }
             }
         }
     }
