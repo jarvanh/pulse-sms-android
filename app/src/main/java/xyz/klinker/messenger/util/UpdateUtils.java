@@ -41,7 +41,7 @@ public class UpdateUtils {
         alertToTextFromAnywhere(sharedPreferences);
 
         Account account = Account.get(context);
-        if (account.accountId != null && account.subscriptionExpiration == -1L && account.primary) {
+        if (account.exists() && account.subscriptionExpiration == -1L && account.primary) {
             account.updateSubscription(Account.SubscriptionType.TRIAL, new Date().getTime() + TimeUtils.DAY, false);
             SubscriptionExpirationCheckService.scheduleNextRun(context);
 

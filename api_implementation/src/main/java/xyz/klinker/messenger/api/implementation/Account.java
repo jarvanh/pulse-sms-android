@@ -193,4 +193,9 @@ public class Account {
                 .putString(context.getString(R.string.api_pref_key), encodedKey)
                 .commit();
     }
+
+    public boolean exists() {
+        return accountId != null && deviceId != null && salt != null && passhash != null
+                && key != null;
+    }
 }

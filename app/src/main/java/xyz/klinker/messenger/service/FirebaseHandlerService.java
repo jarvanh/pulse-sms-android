@@ -96,7 +96,7 @@ public class FirebaseHandlerService extends IntentService {
 
         encryptionUtils = account.getEncryptor();
 
-        if (encryptionUtils == null && account.accountId != null) {
+        if (encryptionUtils == null && account.exists()) {
             context.startActivity(new Intent(context, LoginActivity.class));
             return;
         }

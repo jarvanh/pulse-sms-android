@@ -37,7 +37,7 @@ public class SignoutService extends IntentService {
         billing = new BillingHelper(this);
 
         // Only need to manage this on the primary device
-        if (account.accountId != null && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME &&
+        if (account.exists() && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME &&
                 account.subscriptionExpiration < new Date().getTime() && isExpired()) {
             Log.v(TAG, "forcing signout due to expired account!");
             final String accountId = account.accountId;

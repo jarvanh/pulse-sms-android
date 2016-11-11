@@ -94,7 +94,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Account account = Account.get(getActivity());
 
-        if ((account.accountId == null || account.deviceId == null) && preference != null) {
+        if ((!account.exists()) && preference != null) {
             preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -365,7 +365,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         }
 
         Account account = Account.get(getActivity());
-        if (account.accountId != null && account.primary) {
+        if (account.exists() && account.primary) {
             new ApiUtils().updateSubscription(account.accountId,
                     account.subscriptionType.typeCode, account.subscriptionExpiration);
         }

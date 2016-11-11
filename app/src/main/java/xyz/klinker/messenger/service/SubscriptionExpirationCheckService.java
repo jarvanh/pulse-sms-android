@@ -45,7 +45,7 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
         billing = new BillingHelper(this);
 
-        if (account.accountId != null && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+        if (account.exists()&& account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME) {
             Log.v(TAG, "checking for expiration");
             if (isExpired()) {
                 Log.v(TAG, "service is expired");
