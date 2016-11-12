@@ -324,9 +324,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
             return;
         }
 
-        InputMethodManager imm = (InputMethodManager)
-                getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        try {
+            InputMethodManager imm = (InputMethodManager)
+                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
     }
 
     // samsung messed up the date picker in some languages on Lollipop 5.0 and 5.1. Ugh.

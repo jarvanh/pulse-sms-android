@@ -122,7 +122,10 @@ public class ColorUtils {
         if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
             final DrawerLayout drawerLayout = (DrawerLayout) activity
                     .findViewById(R.id.drawer_layout);
-            drawerLayout.setStatusBarBackgroundColor(color);
+
+            if (drawerLayout != null) {
+                drawerLayout.setStatusBarBackgroundColor(color);
+            }
         } else {
             final View status = activity.findViewById(R.id.status_bar);
 

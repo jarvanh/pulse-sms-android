@@ -67,6 +67,11 @@ public class MessageShareFragment extends TabletOptimizedBottomSheetDialogFragme
     }
 
     public void setMessage(Message message) {
-        this.message = message;
+        if (message == null) {
+            this.message = new Message();
+            this.message.data = "";
+        } else {
+            this.message = message;
+        }
     }
 }

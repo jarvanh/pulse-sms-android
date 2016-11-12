@@ -732,12 +732,16 @@ public class MessengerActivity extends AppCompatActivity
         inSettings = true;
 
         otherFragment = fragment;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
+            try {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conversation_list_container, fragment)
                         .commit();
+            } catch (Exception e) {
+                finish();
+                overridePendingTransition(0,0);
+                startActivity(new Intent(MessengerActivity.this, MessengerActivity.class));
+                overridePendingTransition(0,0);
             }
         }, 200);
 

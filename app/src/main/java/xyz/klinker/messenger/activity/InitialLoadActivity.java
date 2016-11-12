@@ -230,7 +230,11 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private String getPhoneNumber() {
-        return PhoneNumberUtils.clearFormatting(Utils.getMyPhoneNumber(this));
+        try {
+            return PhoneNumberUtils.clearFormatting(Utils.getMyPhoneNumber(this));
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     @Override
