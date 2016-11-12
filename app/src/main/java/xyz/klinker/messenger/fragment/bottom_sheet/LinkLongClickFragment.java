@@ -12,6 +12,7 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,83 +27,59 @@ import xyz.klinker.messenger.data.model.Message;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
-public class LinkLongClickFragment extends BottomSheetDialogFragment {
+public class LinkLongClickFragment extends TabletOptimizedBottomSheetDialogFragment {
 
     private String link;
     private int mainColor;
     private int accentColor;
 
-    private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
-        @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) { }
-        @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss();
-            }
-        }
-    };
-
     @Override
-    public void setupDialog(final Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
+    protected View createLayout(LayoutInflater inflater) {
         final View contentView = View.inflate(getContext(), R.layout.bottom_sheet_link, null);
-        dialog.setContentView(contentView);
-
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
-
-        if (behavior != null && behavior instanceof BottomSheetBehavior ) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-        }
 
         View openExternal = contentView.findViewById(R.id.open_external);
         View openInternal = contentView.findViewById(R.id.open_internal);
         View copyText = contentView.findViewById(R.id.copy_text);
 
-        openExternal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                builder.setToolbarColor(mainColor);
-                builder.setShowTitle(true);
-                builder.setActionButton(
-                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_share),
-                        getString(R.string.share), getShareIntent(link), true);
-                CustomTabsIntent customTabsIntent = builder.build();
+        openExternal.setOnClickListener(view -> {
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setToolbarColor(mainColor);
+            builder.setShowTitle(true);
+            builder.setActionButton(
+                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_share),
+                    getString(R.string.share), getShareIntent(link), true);
+            CustomTabsIntent customTabsIntent = builder.build();
 
-                customTabsIntent.launchUrl(getActivity(), Uri.parse(link));
-                dialog.dismiss();
-            }
+            customTabsIntent.launchUrl(getActivity(), Uri.parse(link));
+            dismiss();
         });
 
-        openInternal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext())
-                        .setToolbarColor(mainColor)
-                        .setAccentColor(accentColor)
-                        .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?
-                                ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                        .build();
+        openInternal.setOnClickListener(view -> {
+            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext())
+                    .setToolbarColor(mainColor)
+                    .setAccentColor(accentColor)
+                    .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?
+                            ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                    .build();
 
-                intent.launchUrl(contentView.getContext(), Uri.parse(link));
-                dialog.dismiss();
-            }
+            intent.launchUrl(contentView.getContext(), Uri.parse(link));
+            dismiss();
         });
 
-        copyText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager)
-                        getActivity().getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("messenger",link);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getActivity(), R.string.message_copied_to_clipboard,
-                        Toast.LENGTH_SHORT).show();
+        copyText.setOnClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager)
+                    getActivity().getSystemService(CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("messenger",link);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(getActivity(), R.string.message_copied_to_clipboard,
+                    Toast.LENGTH_SHORT).show();
 
-                dialog.dismiss();
-            }
+            dismiss();
         });
+
+        return contentView;
     }
+
 
     public void setLink(String link) {
         this.link = link;

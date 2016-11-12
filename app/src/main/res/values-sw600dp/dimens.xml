@@ -17,6 +17,7 @@
 <resources>
 
     <dimen name="conversation_list_padding">104dp</dimen>
+    <dimen name="bottom_sheet_padding">204dp</dimen>
     <dimen name="top_extra_padding">2dp</dimen>
     <dimen name="conversation_list_header_padding">32dp</dimen>
     <dimen name="message_list_padding">24dp</dimen>

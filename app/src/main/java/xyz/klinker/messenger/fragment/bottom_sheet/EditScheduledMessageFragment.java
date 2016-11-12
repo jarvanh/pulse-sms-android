@@ -1,65 +1,30 @@
 package xyz.klinker.messenger.fragment.bottom_sheet;
 
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Random;
 
-import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
-import xyz.klinker.messenger.util.TimeUtils;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
 
-public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
+public class EditScheduledMessageFragment extends TabletOptimizedBottomSheetDialogFragment {
 
     private ScheduledMessage scheduledMessage;
 
     private TextView sendDate;
     private EditText messageText;
 
-    private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
-        @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) { }
-        @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss();
-            }
-        }
-    };
-
     @Override
-    public void setupDialog(final Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
-        final View contentView = View.inflate(getContext(), R.layout.bottom_sheet_edit_scheduled_message, null);
-        dialog.setContentView(contentView);
-
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
-
-        if (behavior != null && behavior instanceof BottomSheetBehavior ) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-        }
+    protected View createLayout(LayoutInflater inflater) {
+        final View contentView = inflater.inflate(R.layout.bottom_sheet_edit_scheduled_message, null, false);
 
         DateFormat format = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
                 SimpleDateFormat.SHORT);
@@ -76,6 +41,8 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
         save.setOnClickListener(view -> save());
         delete.setOnClickListener(view -> delete());
         sendDate.setOnClickListener(view -> editDate());
+
+        return contentView;
     }
 
     public void setMessage(ScheduledMessage message) {
@@ -104,6 +71,6 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
     }
 
     private void editDate() {
-        
+
     }
 }
