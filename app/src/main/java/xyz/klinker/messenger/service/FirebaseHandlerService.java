@@ -187,6 +187,9 @@ public class FirebaseHandlerService extends IntentService {
                 case "added_scheduled_message":
                     addScheduledMessage(json, source);
                     break;
+                case "updated_scheduled_message":
+                    updatedScheduledMessage(json, source);
+                    break;
                 case "removed_scheduled_message":
                     removeScheduledMessage(json, source);
                     break;
@@ -657,12 +660,28 @@ public class FirebaseHandlerService extends IntentService {
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.insertScheduledMessage(message);
+        startService(new Intent(this, ScheduledMessageService.class));
         Log.v(TAG, "added scheduled message");
+    }
+
+    private void updatedScheduledMessage(JSONObject json, DataSource source) throws JSONException {
+        ScheduledMessage message = new ScheduledMessage();
+        message.id = getLong(json, "id");
+        message.to = encryptionUtils.decrypt(json.getString("to"));
+        message.data = encryptionUtils.decrypt(json.getString("data"));
+        message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+        message.timestamp = getLong(json, "timestamp");
+        message.title = encryptionUtils.decrypt(json.getString("title"));
+
+        source.updateScheduledMessage(message);
+        startService(new Intent(this, ScheduledMessageService.class));
+        Log.v(TAG, "updated scheduled message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
         source.deleteScheduledMessage(id);
+        startService(new Intent(this, ScheduledMessageService.class));
         Log.v(TAG, "removed scheduled message");
     }
 

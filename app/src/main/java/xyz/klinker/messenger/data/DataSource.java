@@ -1940,6 +1940,28 @@ public class DataSource {
     }
 
     /**
+     * Updates the values on the scheduled message
+     *
+     * @param message the message to upate
+     */
+    public void updateScheduledMessage(ScheduledMessage message) {
+        ensureActionable();
+        ContentValues values = new ContentValues(6);
+
+        values.put(ScheduledMessage.COLUMN_ID, message.id);
+        values.put(ScheduledMessage.COLUMN_TITLE, message.title);
+        values.put(ScheduledMessage.COLUMN_TO, message.to);
+        values.put(ScheduledMessage.COLUMN_DATA, message.data);
+        values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType);
+        values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp);
+        database.update(ScheduledMessage.TABLE, values, ScheduledMessage.COLUMN_ID + "=?",
+                new String[]{Long.toString(message.id)});
+
+        apiUtils.updateScheduledMessage(accountId, message.id, message.title, message.to, message.data,
+                message.mimeType, message.timestamp, getEncryptionUtils(context));
+    }
+
+    /**
      * Deletes a scheduled message from the database.
      */
     public void deleteScheduledMessage(long id) {

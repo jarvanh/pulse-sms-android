@@ -30,6 +30,7 @@ public class UpdateScheduledMessageRequest {
         this.data = data;
         this.mimeType = mimeType;
         this.timestamp = timestamp;
+        this.title = title;
     }
 
 }

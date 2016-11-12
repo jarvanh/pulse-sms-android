@@ -32,6 +32,7 @@ import android.util.Log;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
@@ -119,6 +120,12 @@ public class ScheduledMessageService extends Service {
     }
 
     private void scheduleNext(Cursor messages) {
+        Account account = Account.get(this);
+        if (account.exists() && !account.primary) {
+            // if they have an online account, we only want scheduled messages to go through the phone
+            return;
+        }
+
         Intent intent = new Intent(this, ScheduledMessageService.class);
         PendingIntent pIntent = PendingIntent.getService(this, SCHEDULED_ALARM_REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);

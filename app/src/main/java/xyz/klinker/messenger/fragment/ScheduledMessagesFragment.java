@@ -147,7 +147,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         super.onDestroyView();
     }
 
-    private void loadMessages() {
+    public void loadMessages() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
@@ -182,6 +182,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void onClick(final ScheduledMessage message) {
         EditScheduledMessageFragment fragment = new EditScheduledMessageFragment();
         fragment.setMessage(message);
+        fragment.setFragment(this);
         fragment.show(getActivity().getSupportFragmentManager(), "");
         /*new AlertDialog.Builder(getActivity())
                 .setMessage(getString(R.string.delete_scheduled_message, message.title))

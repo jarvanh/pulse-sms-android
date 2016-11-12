@@ -54,6 +54,7 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.api.entity.UpdateContactRequest;
 import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
+import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
@@ -778,7 +779,33 @@ public class ApiUtils {
                 if (response == null) {
                     Log.e(TAG, "error adding scheduled message");
                 } else {
-                    Log.v(TAG, "successfully scheduled message");
+                    Log.v(TAG, "successfully added scheduled message");
+                }
+            }
+        }).start();
+    }
+
+    public void updateScheduledMessage(final String accountId, final long deviceId, final String title,
+                                       final String to, final String data, final String mimeType,
+                                       final long timestamp, final EncryptionUtils encryptionUtils) {
+        if (!active || accountId == null || encryptionUtils == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpdateScheduledMessageRequest request = new UpdateScheduledMessageRequest(
+                        encryptionUtils.encrypt(to), encryptionUtils.encrypt(data),
+                        encryptionUtils.encrypt(mimeType), timestamp,
+                        encryptionUtils.encrypt(title));
+
+                Object response = api.scheduled().update(deviceId, accountId, request);
+
+                if (response == null) {
+                    Log.e(TAG, "error updating scheduled message");
+                } else {
+                    Log.v(TAG, "successfully updated scheduled message");
                 }
             }
         }).start();
