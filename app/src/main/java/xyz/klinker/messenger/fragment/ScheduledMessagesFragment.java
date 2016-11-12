@@ -62,6 +62,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment;
 import xyz.klinker.messenger.service.ScheduledMessageService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -179,21 +180,21 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     @Override
     public void onClick(final ScheduledMessage message) {
-        new AlertDialog.Builder(getActivity())
+        EditScheduledMessageFragment fragment = new EditScheduledMessageFragment();
+        fragment.setMessage(message);
+        fragment.show(getActivity().getSupportFragmentManager(), "");
+        /*new AlertDialog.Builder(getActivity())
                 .setMessage(getString(R.string.delete_scheduled_message, message.title))
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DataSource source = DataSource.getInstance(getActivity());
-                        source.open();
-                        source.deleteScheduledMessage(message.id);
-                        source.close();
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    DataSource source = DataSource.getInstance(getActivity());
+                    source.open();
+                    source.deleteScheduledMessage(message.id);
+                    source.close();
 
-                        loadMessages();
-                    }
+                    loadMessages();
                 })
                 .setNegativeButton(android.R.string.cancel, null)
-                .show();
+                .show();*/
     }
 
     private void startSchedulingMessage() {
@@ -216,37 +217,34 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(layout)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (editText.getRecipients().length > 0) {
-                            StringBuilder to = new StringBuilder();
-                            StringBuilder title = new StringBuilder();
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    if (editText.getRecipients().length > 0) {
+                        StringBuilder to = new StringBuilder();
+                        StringBuilder title = new StringBuilder();
 
-                            for (DrawableRecipientChip chip : editText.getRecipients()) {
-                                to.append(PhoneNumberUtils.clearFormatting(chip.getEntry().getDestination()));
-                                title.append(chip.getEntry().getDisplayName());
-                                to.append(", ");
-                                title.append(", ");
-                            }
-
-                            message.to = to.toString();
-                            message.title = title.toString();
-
-                            message.to = message.to.substring(0, message.to.length() - 2);
-                            message.title = message.title.substring(0, message.title.length() - 2);
-                        } else if (editText.getText().length() > 0) {
-                            message.to = PhoneNumberUtils.clearFormatting(editText
-                                    .getText().toString());
-                            message.title = message.to;
-                        } else {
-                            displayNameDialog(message);
-                            return;
+                        for (DrawableRecipientChip chip : editText.getRecipients()) {
+                            to.append(PhoneNumberUtils.clearFormatting(chip.getEntry().getDestination()));
+                            title.append(chip.getEntry().getDisplayName());
+                            to.append(", ");
+                            title.append(", ");
                         }
 
-                        dismissKeyboard(editText);
-                        displayDateDialog(message);
+                        message.to = to.toString();
+                        message.title = title.toString();
+
+                        message.to = message.to.substring(0, message.to.length() - 2);
+                        message.title = message.title.substring(0, message.title.length() - 2);
+                    } else if (editText.getText().length() > 0) {
+                        message.to = PhoneNumberUtils.clearFormatting(editText
+                                .getText().toString());
+                        message.title = message.to;
+                    } else {
+                        displayNameDialog(message);
+                        return;
                     }
+
+                    dismissKeyboard(editText);
+                    displayDateDialog(message);
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
@@ -258,13 +256,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         Context context = getContextToFixDatePickerCrash();
 
         Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                message.timestamp = new GregorianCalendar(year, month, day)
-                        .getTimeInMillis();
-                displayTimeDialog(message);
-            }
+        new DatePickerDialog(context, (datePicker, year, month, day) -> {
+            message.timestamp = new GregorianCalendar(year, month, day)
+                    .getTimeInMillis();
+            displayTimeDialog(message);
         },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -274,19 +269,16 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     private void displayTimeDialog(final ScheduledMessage message) {
         Calendar calendar = Calendar.getInstance();
-        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                message.timestamp += (1000 * 60 * 60 * hourOfDay);
-                message.timestamp += (1000 * 60 * minute);
+        new TimePickerDialog(getActivity(), (timePicker, hourOfDay, minute) -> {
+            message.timestamp += (1000 * 60 * 60 * hourOfDay);
+            message.timestamp += (1000 * 60 * minute);
 
-                if (message.timestamp > System.currentTimeMillis()) {
-                    displayMessageDialog(message);
-                } else {
-                    Toast.makeText(getActivity(), R.string.scheduled_message_in_future,
-                            Toast.LENGTH_SHORT).show();
-                    displayDateDialog(message);
-                }
+            if (message.timestamp > System.currentTimeMillis()) {
+                displayMessageDialog(message);
+            } else {
+                Toast.makeText(getActivity(), R.string.scheduled_message_in_future,
+                        Toast.LENGTH_SHORT).show();
+                displayDateDialog(message);
             }
         },
                 calendar.get(Calendar.HOUR_OF_DAY),
@@ -304,16 +296,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         new AlertDialog.Builder(getActivity())
                 .setView(layout)
-                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (editText.getText().length() > 0) {
-                            message.data = editText.getText().toString();
-                            message.mimeType = MimeType.TEXT_PLAIN;
-                            saveMessage(message);
-                        } else {
-                            displayMessageDialog(message);
-                        }
+                .setPositiveButton(R.string.add, (dialogInterface, i) -> {
+                    if (editText.getText().length() > 0) {
+                        message.data = editText.getText().toString();
+                        message.mimeType = MimeType.TEXT_PLAIN;
+                        saveMessage(message);
+                    } else {
+                        displayMessageDialog(message);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)

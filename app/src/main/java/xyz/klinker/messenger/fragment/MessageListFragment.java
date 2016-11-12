@@ -273,12 +273,9 @@ public class MessageListFragment extends Fragment implements
                 boolean focused = messageEntry.hasFocus();
 
                 dismissKeyboard();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (getActivity() != null) {
-                            getActivity().onBackPressed();
-                        }
+                new Handler().postDelayed(() -> {
+                    if (getActivity() != null) {
+                        getActivity().onBackPressed();
                     }
                 }, focused ? 300 : 100);
             }
@@ -419,21 +416,15 @@ public class MessageListFragment extends Fragment implements
             }
 
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean focused = messageEntry.hasFocus();
+            toolbar.setNavigationOnClickListener(view -> {
+                boolean focused = messageEntry.hasFocus();
 
-                    dismissKeyboard();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (getActivity() != null) {
-                                getActivity().onBackPressed();
-                            }
-                        }
-                    }, focused ? 300 : 100);
-                }
+                dismissKeyboard();
+                new Handler().postDelayed(() -> {
+                    if (getActivity() != null) {
+                        getActivity().onBackPressed();
+                    }
+                }, focused ? 300 : 100);
             });
         }
 
@@ -567,43 +558,30 @@ public class MessageListFragment extends Fragment implements
 
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
         send.setBackgroundTintList(ColorStateList.valueOf(accent));
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage();
-            }
-        });
+        send.setOnClickListener(view -> sendMessage());
         messageEntry.setHighlightColor(accent);
 
         editImage.setBackgroundColor(accent);
-        editImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    UCrop.Options options = new UCrop.Options();
-                    options.setToolbarColor(getArguments().getInt(ARG_COLOR));
-                    options.setStatusBarColor(getArguments().getInt(ARG_COLOR_DARKER));
-                    options.setActiveWidgetColor(getArguments().getInt(ARG_COLOR_ACCENT));
-                    options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-                    options.setCompressionQuality(100);
+        editImage.setOnClickListener(view -> {
+            try {
+                UCrop.Options options = new UCrop.Options();
+                options.setToolbarColor(getArguments().getInt(ARG_COLOR));
+                options.setStatusBarColor(getArguments().getInt(ARG_COLOR_DARKER));
+                options.setActiveWidgetColor(getArguments().getInt(ARG_COLOR_ACCENT));
+                options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+                options.setCompressionQuality(100);
 
-                    File destination = File.createTempFile("ucrop", "jpg", getActivity().getCacheDir());
-                    UCrop.of(attachedUri, Uri.fromFile(destination))
-                            .withOptions(options)
-                            .start(getActivity());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                File destination = File.createTempFile("ucrop", "jpg", getActivity().getCacheDir());
+                UCrop.of(attachedUri, Uri.fromFile(destination))
+                        .withOptions(options)
+                        .start(getActivity());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
         removeImage.setBackgroundColor(accent);
-        removeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearAttachedData();
-            }
-        });
+        removeImage.setOnClickListener(view -> clearAttachedData());
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
             sendBar.setFocusable(false);
@@ -692,47 +670,12 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        attachImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attachImage();
-            }
-        });
-
-        captureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                captureImage();
-            }
-        });
-
-        attachGif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attachGif();
-            }
-        });
-
-        recordVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recordVideo();
-            }
-        });
-
-        recordAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recordAudio();
-            }
-        });
-
-        attachLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attachLocation();
-            }
-        });
+        attachImage.setOnClickListener(view -> attachImage());
+        captureImage.setOnClickListener(view -> captureImage());
+        attachGif.setOnClickListener(view -> attachGif());
+        recordVideo.setOnClickListener(view -> recordVideo());
+        recordAudio.setOnClickListener(view -> recordAudio());
+        attachLocation.setOnClickListener(v -> attachLocation());
     }
 
     private void initRecycler() {
@@ -1030,18 +973,15 @@ public class MessageListFragment extends Fragment implements
                     ((ConversationListFragment) fragment).notifyOfSentMessage(m);
                 }
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Conversation conversation = source.getConversation(getConversationId());
-                        Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                                .send(getContext(), message,
-                                    getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
-                        source.deleteDrafts(getConversationId());
+                new Thread(() -> {
+                    Conversation conversation1 = source.getConversation(getConversationId());
+                    Uri imageUri = new SendUtils(conversation1 != null ? conversation1.simSubscriptionId : null)
+                            .send(getContext(), message,
+                                getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
+                    source.deleteDrafts(getConversationId());
 
-                        if (imageUri != null) {
-                            source.updateMessageData(m.id, imageUri.toString());
-                        }
+                    if (imageUri != null) {
+                        source.updateMessageData(m.id, imageUri.toString());
                     }
                 }).start();
 

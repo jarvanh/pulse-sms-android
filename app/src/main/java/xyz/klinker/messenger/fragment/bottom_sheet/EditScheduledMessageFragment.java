@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
@@ -49,7 +51,7 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        final View contentView = View.inflate(getContext(), R.layout.bottom_sheet_link, null);
+        final View contentView = View.inflate(getContext(), R.layout.bottom_sheet_edit_scheduled_message, null);
         dialog.setContentView(contentView);
 
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
@@ -59,6 +61,9 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
 
+        DateFormat format = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
+                SimpleDateFormat.SHORT);
+
         sendDate = (TextView) contentView.findViewById(R.id.send_time);
         messageText = (EditText) contentView.findViewById(R.id.message);
         TextView name = (TextView) contentView.findViewById(R.id.contact_name);
@@ -66,10 +71,11 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
         Button save = (Button) contentView.findViewById(R.id.save);
 
         messageText.setText(scheduledMessage.data);
-        sendDate.setText(TimeUtils.formatTimestamp(getActivity(), scheduledMessage.timestamp));
+        sendDate.setText(format.format(scheduledMessage.timestamp));
         name.setText(scheduledMessage.title);
         save.setOnClickListener(view -> save());
         delete.setOnClickListener(view -> delete());
+        sendDate.setOnClickListener(view -> editDate());
     }
 
     public void setMessage(ScheduledMessage message) {
@@ -95,5 +101,9 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
         source.close();
 
         dismiss();
+    }
+
+    private void editDate() {
+        
     }
 }

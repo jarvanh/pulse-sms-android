@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/drawerBackground">
+    android:background="@color/drawerBackground"
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/contact_name"
@@ -29,7 +30,7 @@
 
     <LinearLayout
         android:gravity="end"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -39,7 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
-            android:text="@string/delete"/>
+            android:text="@string/delete"
+            android:layout_marginEnd="12dp"/>
 
         <Button
             android:id="@+id/save"
