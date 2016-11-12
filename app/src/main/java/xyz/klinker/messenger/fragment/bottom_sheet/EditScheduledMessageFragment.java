@@ -22,15 +22,20 @@ import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.util.TimeUtils;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
 
-    private ScheduledMessage message;
+    private ScheduledMessage scheduledMessage;
+
+    private TextView sendDate;
+    private EditText messageText;
 
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) { }
@@ -47,16 +52,48 @@ public class EditScheduledMessageFragment extends BottomSheetDialogFragment {
         final View contentView = View.inflate(getContext(), R.layout.bottom_sheet_link, null);
         dialog.setContentView(contentView);
 
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
+        CoordinatorLayout.Behavior behavior = params.getBehavior();
+
+        if (behavior != null && behavior instanceof BottomSheetBehavior ) {
+            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
+        }
+
+        sendDate = (TextView) contentView.findViewById(R.id.send_time);
+        messageText = (EditText) contentView.findViewById(R.id.message);
         TextView name = (TextView) contentView.findViewById(R.id.contact_name);
-        TextView sendDate = (TextView) contentView.findViewById(R.id.send_time);
-        EditText message = (EditText) contentView.findViewById(R.id.message);
         Button delete = (Button) contentView.findViewById(R.id.delete);
         Button save = (Button) contentView.findViewById(R.id.save);
 
-        
+        messageText.setText(scheduledMessage.data);
+        sendDate.setText(TimeUtils.formatTimestamp(getActivity(), scheduledMessage.timestamp));
+        name.setText(scheduledMessage.title);
+        save.setOnClickListener(view -> save());
+        delete.setOnClickListener(view -> delete());
     }
 
     public void setMessage(ScheduledMessage message) {
-        this.message = message;
+        this.scheduledMessage = message;
+    }
+
+    private void save() {
+        scheduledMessage.data = messageText.getText().toString();
+        scheduledMessage.timestamp = scheduledMessage.timestamp; // todo
+
+        DataSource source = DataSource.getInstance(getActivity());
+        source.open();
+        // source.updateScheduledMessage(scheduledMessage);
+        source.close();
+
+        dismiss();
+    }
+
+    private void delete() {
+        DataSource source = DataSource.getInstance(getActivity());
+        source.open();
+        source.deleteScheduledMessage(scheduledMessage.id);
+        source.close();
+
+        dismiss();
     }
 }

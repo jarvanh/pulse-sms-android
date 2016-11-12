@@ -55,3 +55,6 @@
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
+
+# retrolambda
+-dontwarn java.lang.invoke.*

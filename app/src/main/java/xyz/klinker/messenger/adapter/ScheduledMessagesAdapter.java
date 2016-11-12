@@ -64,23 +64,8 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
         holder.titleDate.setText(message.title + " - " + formatter.format(new Date(message.timestamp)));
         holder.message.setText(message.data);
 
-        holder.messageHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onClick(message);
-                }
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onClick(message);
-                }
-            }
-        });
+        holder.messageHolder.setOnClickListener(view -> { if (listener != null) listener.onClick(message); });
+        holder.itemView.setOnClickListener(view -> { if (listener != null) listener.onClick(message); });
     }
 
     @Override
