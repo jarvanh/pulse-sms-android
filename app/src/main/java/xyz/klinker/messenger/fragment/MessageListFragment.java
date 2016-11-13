@@ -72,6 +72,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 import com.sgottard.sofa.ContentFragment;
 import com.yalantis.ucrop.UCrop;
@@ -1269,7 +1270,7 @@ public class MessageListFragment extends Fragment implements
         try {
             if (getActivity() != null) {
                 Glide.with(getActivity())
-                        .load(uri)
+                        .load(uri).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .placeholder(R.drawable.ic_image_sending)
                         .into(attachedImage);
                 changeCounterText();

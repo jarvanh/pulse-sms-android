@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -259,14 +260,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .fitCenter()
                         .into(holder.image);
-            } /*else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 holder.image.setMaxWidth(holder.image.getContext()
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
-                        .fitCenter()
+                        .load(Uri.parse(message.data)).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .into(holder.image);
-            }*/ else if (MimeType.isVideo(message.mimeType) || message.mimeType.equals(MimeType.IMAGE_GIF)) {
+            } else if (MimeType.isVideo(message.mimeType)) {
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.TYPE_RECEIVED) {
                     placeholder = holder.image.getContext()

@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.8.8"
+        description="November 14th, 2016">
+        <text>Auto-play GIFs in the message list</text>
+        <text>Improvements to GIF search and open-source (https://github.com/klinker24/Android-GiphySearch)</text>
+    </version>
+
+    <version
         name="1.8.7"
         description="November 13th, 2016">
         <text>Edit scheduled messages</text>

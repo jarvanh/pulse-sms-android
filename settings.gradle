@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-include ':app', ':giphy', ':api', ':encryption', ':api_implementation'
+include ':app', ':api', ':encryption', ':api_implementation'

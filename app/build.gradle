@@ -134,6 +134,7 @@ dependencies {
     compile 'com.klinkerapps:android-chips:1.1.0@aar'
     compile 'com.klinkerapps:android-transcoder:1.0.1'
     compile 'com.klinkerapps:article_viewer:0.7.0-SNAPSHOT'
+    compile 'com.klinkerapps:giphy:1.0.0'
 
     compile 'com.github.paolorotolo:appintro:4.0.0'
     compile 'com.yalantis:ucrop:2.2.0'
@@ -149,7 +150,6 @@ dependencies {
 
     compile project(":api_implementation")
     compile project(":encryption")
-    compile project(":giphy")
 
     compile(name: 'sofa', ext: 'aar')
 
