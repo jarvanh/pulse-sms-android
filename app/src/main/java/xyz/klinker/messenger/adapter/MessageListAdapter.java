@@ -201,7 +201,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     }
 
                     if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext())
+                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), "")
                                 .setToolbarColor(receivedColor)
                                 .setAccentColor(accentColor)
                                 .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?

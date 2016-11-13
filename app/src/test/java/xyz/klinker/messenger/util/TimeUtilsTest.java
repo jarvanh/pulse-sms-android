@@ -21,21 +21,24 @@ import android.content.Context;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.robolectric.RuntimeEnvironment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.R;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-public class TimeUtilsTest extends MessengerSuite {
+public class TimeUtilsTest extends MessengerRobolectricSuite {
 
     private static final long SECOND = 1000;
     private static final long MINUTE = SECOND * 60;
@@ -44,11 +47,11 @@ public class TimeUtilsTest extends MessengerSuite {
 
     private long current = System.currentTimeMillis();
 
-    @Mock
     private Context context;
 
     @Before
     public void setUp() {
+        context = spy(RuntimeEnvironment.application);
         when(context.getString(R.string.now)).thenReturn("Now");
     }
 

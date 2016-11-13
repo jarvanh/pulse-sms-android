@@ -55,7 +55,7 @@ public class LinkLongClickFragment extends TabletOptimizedBottomSheetDialogFragm
         });
 
         openInternal.setOnClickListener(view -> {
-            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext())
+            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext(), "")
                     .setToolbarColor(mainColor)
                     .setAccentColor(accentColor)
                     .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?

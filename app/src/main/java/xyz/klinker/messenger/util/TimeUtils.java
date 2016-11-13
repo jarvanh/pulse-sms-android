@@ -163,19 +163,27 @@ public class TimeUtils {
         if (timestamp > currentTime - (2 * MINUTE)) {
             formatted = context.getString(R.string.now);
         } else if (timestamp > currentTime - DAY) {
-            formatted = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+            formatted = formatTime(context, date);
         } else if (timestamp > currentTime - (7 * DAY)) {
             formatted = new SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
-                    DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                    formatTime(context, date);
         } else if (timestamp > currentTime - YEAR) {
             formatted = new SimpleDateFormat("MMM d", Locale.getDefault()).format(date) + ", " +
-                    DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                    formatTime(context, date);
         } else {
             formatted = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date) + ", " +
-                    DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                    formatTime(context, date);
         }
 
         return formatted;
+    }
+
+    static String formatTime(Context context, Date date) {
+        if (android.text.format.DateFormat.is24HourFormat(context)) {
+            return android.text.format.DateFormat.format("HH:mm", date).toString();
+        }else{
+            return android.text.format.DateFormat.format("h:mm a", date).toString();
+        }
     }
 
     /**
