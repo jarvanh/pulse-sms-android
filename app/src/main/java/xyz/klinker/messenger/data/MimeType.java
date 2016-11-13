@@ -41,6 +41,7 @@ public class MimeType {
     public static final String AUDIO_MP4 = "audio/mp4";
     public static final String AUDIO_OGG = "audio/ogg";
     public static final String AUDIO_WAV = "audio/vnd.wav";
+    public static final String AUDIO_3GP = "audio/3gp";
 
     private static final Map<String, String> extensions;
 
@@ -63,6 +64,7 @@ public class MimeType {
         extensions.put(AUDIO_MP4, "mp4");
         extensions.put(AUDIO_OGG, "ogg");
         extensions.put(AUDIO_WAV, "wav");
+        extensions.put(AUDIO_3GP, "3gp");
     }
 
     /**
@@ -87,7 +89,8 @@ public class MimeType {
                 mimeType.equals(AUDIO_MP3_2) ||
                 mimeType.equals(AUDIO_MP4) ||
                 mimeType.equals(AUDIO_OGG) ||
-                mimeType.equals(AUDIO_WAV);
+                mimeType.equals(AUDIO_WAV) ||
+                mimeType.contains(AUDIO_3GP);
     }
 
     /**
