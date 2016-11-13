@@ -1,1 +1,1 @@
-We are nearing the end of beta, thank you so much for helping me test! For the release app, you can use it completely free on your phones, all the features! To continue using the app on your other devices, you will be able to choose between a lifetime (one-time) payment, or a subscription (every month, every 3 months, or every year). Thanks for the support!
+v1.8.7 allows you to edit scheduled messages, improves updates of contact names and images, supports a 24-hour clock, and fixes numerous other reported bugs.

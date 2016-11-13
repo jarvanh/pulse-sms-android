@@ -18,7 +18,7 @@
 
     <version
         name="1.8.7"
-        description="November 12th, 2016">
+        description="November 13th, 2016">
         <text>Edit scheduled messages</text>
         <text>Fixes for updating conversation titles and contact images</text>
         <text>Improvements for sound effects</text>
