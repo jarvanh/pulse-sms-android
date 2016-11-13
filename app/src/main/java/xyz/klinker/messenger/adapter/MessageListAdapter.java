@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +50,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import xyz.klinker.android.article.ArticleIntent;
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
@@ -201,7 +203,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     }
 
                     if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), "")
+                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
                                 .setToolbarColor(receivedColor)
                                 .setAccentColor(accentColor)
                                 .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?

@@ -57,6 +57,7 @@ android {
         }
 
         buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
+        buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
     }
 
     signingConfigs {

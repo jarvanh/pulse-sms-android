@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.data.MimeType;
@@ -55,7 +56,7 @@ public class LinkLongClickFragment extends TabletOptimizedBottomSheetDialogFragm
         });
 
         openInternal.setOnClickListener(view -> {
-            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext(), "")
+            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext(), BuildConfig.ARTICLE_API_KEY)
                     .setToolbarColor(mainColor)
                     .setAccentColor(accentColor)
                     .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?
