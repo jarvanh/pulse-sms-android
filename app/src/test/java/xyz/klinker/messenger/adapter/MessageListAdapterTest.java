@@ -71,6 +71,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     public void setUp() {
         context = spy(RuntimeEnvironment.application);
         when(timestamp.getLayoutParams()).thenReturn(params);
+        when(timestamp.getContext()).thenReturn(context);
         adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager, fragment);
     }
 
