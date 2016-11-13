@@ -23,7 +23,7 @@
     <string name="shortcut_compose_long">Rozpocznij nową konwersację!</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Lista konwersacji</string>
-    <string name="menu_archived_conversations">Zarchiwizowane konwersacje</string>
+    <string name="menu_archived_conversations">Archiwum konwersacji</string>
     <string name="menu_schedule">Wiadomości zaplanowane</string>
     <string name="menu_mute_contacts">Czarna lista</string>
     <string name="menu_invite">Zaproś znajomych</string>
@@ -37,12 +37,12 @@
     <string name="menu_snooze">Uśpij powiadomienia</string>
     <string name="menu_call">Zadzwoń</string>
     <string name="menu_view_contact">Wyświetl kontakt</string>
-    <string name="menu_view_contacts">Wyświetl kontakt</string>
+    <string name="menu_view_contacts">Wyświetl kontakty</string>
     <string name="menu_view_media">Wyświetl załączniki</string>
     <string name="menu_delete_conversation">Usuń konwersację</string>
     <string name="menu_archive_conversation">Archiwizuj konwersację</string>
     <string name="menu_move_to_inbox">Przenieś do skrzynki odbiorczej</string>
-    <string name="menu_conversation_information">Informacje o konwersacji</string>
+    <string name="menu_conversation_information">Szczegóły konwersacji</string>
     <string name="menu_conversation_blacklist">Dodaj do czarnej listy</string>
     <string name="menu_conversation_schedule">Zaplanuj wiadomość</string>
     <string name="menu_contact_settings">Ustawienia kontaktu</string>
@@ -59,31 +59,31 @@
     <string name="no_messages_summary">Zacznij nową konwersację lub po prostu ciesz się dniem!</string>
     <string name="close">Zamknij</string>
     <!-- Conversation List Screen -->
-    <string name="pinned">Przyczepiono</string>
-    <string name="today">Dzisiaj</string>
-    <string name="yesterday">Wczoraj</string>
+    <string name="pinned">Przypięte</string>
+    <string name="today">Dzisiejsze</string>
+    <string name="yesterday">Wczorajsze</string>
     <string name="last_week">Ten tydzień</string>
     <string name="last_month">Ten miesiąc</string>
     <string name="older">Starsze</string>
-    <string name="mark_section_as_read">Oznacz wszystkie %1$s jako przeczytane</string>
-    <string name="marking_section_as_read">Oznacz %1$s jako przeczytane</string>
+    <string name="mark_section_as_read">Oznaczono %1$s jako przeczytane</string>
+    <string name="marking_section_as_read">Oznaczam %1$s jako przeczytane</string>
     <plurals name="conversations_deleted">
-        <item quantity="one">%1$d wiadomość usunięta</item>
-        <item quantity="other">%1$d wiadomości usunięte</item>
-        <item quantity="few">%1$d wiadomości usunięte</item>
-        <item quantity="many">%1$d wiadomości usunięte</item>
+        <item quantity="one">Usunięto %1$d konwersację</item>
+        <item quantity="other">Usunięto %1$d konwersację</item>
+        <item quantity="few">Usunięto %1$d konwersację</item>
+        <item quantity="many">Usunięto %1$d konwersację</item>
     </plurals>
     <plurals name="conversations_archived">
-        <item quantity="one">%1$d konwersacja zarchiwizowana</item>
-        <item quantity="other">%1$d konwersacji zarchiwizowanych</item>
-        <item quantity="few">%1$d konwersacje zarchiwizowane</item>
-        <item quantity="many">%1$d konwersacji zarchiwizowanych</item>
+        <item quantity="one">Zarchiwizowano %1$d konwersację</item>
+        <item quantity="other">Zarchiwizowano %1$d konwersację</item>
+        <item quantity="few">Zarchiwizowano %1$d konwersację</item>
+        <item quantity="many">Zarchiwizowano %1$d konwersację</item>
     </plurals>
     <plurals name="conversations_unarchived">
-        <item quantity="one">%1$d konwersacja przeniesiona do skrzynki odbiorczej</item>
-        <item quantity="other">%1$d konwersacje przeniesione do skrzynki odbiorczej</item>
-        <item quantity="few">%1$d konwersacje przeniesione do skrzynki odbiorczej</item>
-        <item quantity="many">%1$d konwersacji przeniesionych do skrzynki odbiorczej</item>
+        <item quantity="one">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
+        <item quantity="other">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
+        <item quantity="few">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
+        <item quantity="many">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
     </plurals>
     <string name="undo">Cofnij</string>
     <string name="enter_search">Wyszukaj...</string>
@@ -92,10 +92,10 @@
     <string name="messages">Wiadomości</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Lubisz aplikację Pulse?</string>
-    <string name="invite_friends_summary">To tak jak my i jak będą inni! Staramy się dotrzeć do kogo możemy aby dalej tworzyć najlepszy produkt. Zapraszając swoich znajomych pomożesz nam tego dokonać!\n\nWybierz z list znajomych, którym chcesz wysłać aplikację. Otrzymają wiadomość SMS z krótkim opisem i linkiem do pobrania aplikacji!</string>
+    <string name="invite_friends_summary">My już polubiliśmy i czekamy na resztę! Staramy się dotrzeć z Pulse do kogo możemy aby kontynuować rozwijanie jej możliwości i najlepszych cech. Zapraszając swoich znajomych pomożesz nam tego dokonać!\n\nWybierz z listy znajomych, których chcesz poinformować o aplikacji. Otrzymają wiadomość SMS z krótkim opisem i linkiem do pobrania aplikacji!</string>
     <string name="invite_friends_sms">Znalazłem nową aplikację do SMS, MMS i wydaje mi się, że Tobie też się spodoba! Jest bezpłatna, sprawdź, pobierz ją tutaj: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
-    <string name="type_message">Typ wiadomości</string>
+    <string name="type_message">Napisz wiadomość</string>
     <string name="type_message_to">Napisz wiadomość do %1$s</string>
     <string name="attach">Załącz</string>
     <string name="select_sim">Wybierz kartę SIM</string>
@@ -106,28 +106,28 @@
     <string name="sending">Wysyłanie...</string>
     <string name="failed">Nie wysłano</string>
     <string name="delivered">Wiadomość dostarczona</string>
-    <string name="attach_image">Załącz zdjęcie</string>
+    <string name="attach_image">Załącz obraz</string>
     <string name="capture_image">Zrzut ekranu</string>
     <string name="attach_gif">Załącz GIF</string>
     <string name="record_video">Nagraj film</string>
     <string name="record_audio">Nagraj dźwięk</string>
     <string name="attach_location">Załącz lokalizację</string>
-    <string name="no_location_found">Nie znaleziono Twojej lokalizacji.</string>
-    <string name="camera_permission_needed">Musisz zezwolić aplikacji na użycie aparatu aby móc robić zdjęcia!</string>
+    <string name="no_location_found">Nie znaleźliśmy Twojej lokalizacji.</string>
+    <string name="camera_permission_needed">Musisz zezwolić aplikacji na dostęp do aparatu aby móc robić zdjęcia!</string>
     <string name="take_picture">Pstryknij zdjęcie</string>
     <string name="flip_picture">Odwróć kamerę</string>
     <string name="fullscreen">Pełny ekran</string>
     <string name="attached_image">Załączony obraz</string>
-    <string name="remove_image">Usuń załączone zdjęcie</string>
+    <string name="remove_image">Usuń załączony obraz</string>
     <string name="edit_image">Edytuj załączony obraz</string>
     <string name="permission_needed_for_action">Wymagane są dodatkowe uprawnienia aby wykonać tę czynność.</string>
-    <string name="request_permission">Żądanie uprawnień</string>
+    <string name="request_permission">Wymagane uprawnienie</string>
     <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej konwersacji,
 czas ją rozpocząć!</string>
     <string name="save">Zapisz</string>
     <string name="share">Udostępnij</string>
     <string name="share_content">Udostępnij zawartość...</string>
-    <string name="saved">Zapisz w folderze pobierania!</string>
+    <string name="saved">Zapisano w folderze pobierania!</string>
     <string name="failed_to_save">Nie udało się zapisać</string>
     <string name="start_recording_audio">Naciśnij przycisk aby rozpocząć nagrywanie dźwięku!</string>
     <string name="audio_recording_error">Wystąpił błąd podczas nagrywania :(</string>
@@ -136,7 +136,7 @@ czas ją rozpocząć!</string>
     <string name="delete">Usuń</string>
     <string name="copy_message">Kopiuj tekst</string>
     <string name="resend">Wyślij ponownie</string>
-    <string name="no_media">Brak załączników dla tej konwersacji!</string>
+    <string name="no_media">Brak załączników w tej konwersacji!</string>
     <string name="error_decrypting">Błąd podczas odszyfrowywania wiadomości! Sprawdź tę wiadomość na swoim telefonie.</string>
     <string name="message_sending_failed">Błąd wysyłania wiadomości!</string>
     <string name="preparing_video">Przygotowywanie wideo&#8230;</string>
@@ -155,8 +155,8 @@ czas ją rozpocząć!</string>
     <string name="onboarding_title_1">Wiadomości wymyślone od nowa</string>
     <string name="onboarding_title_2">Dostępne w każdym miejscu</string>
     <string name="onboarding_title_3">Potężne możliwości personalizacji</string>
-    <string name="onboarding_content_1">"Śliczne, płynne układy, profesjonalnie zaprojektowane, zapewniające bezproblemową integrację.
-W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
+    <string name="onboarding_content_1">"Bezproblemowy, płynny layout, mocny design i nieskazitelna integracja.
+Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="onboarding_content_2">Wysyłaj wiadomości z tabletu, komputera, smart zegarka lub każdego innego urządzenia podłączonego do Twojego konta.</string>
     <string name="onboarding_content_3">Przypinaj, wyciszaj, dostosuj wygląd i powiadomienia każdej konwersacji. Zrób Pulse takim, jaki Ci się podoba.</string>
     <string name="message_anywhere_onboarding_title_1">Wysyłaj wiadomości gdziekolwiek jesteś</string>
@@ -170,16 +170,16 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nowa wiadomość od %1$s</string>
     <plurals name="new_conversations">
-        <item quantity="one">%1$d nowa konwersacja</item>
-        <item quantity="other">%1$d nowe konwersacje</item>
-        <item quantity="few">%1$d nowe konwersacje</item>
-        <item quantity="many">%1$d nowych konwersacji</item>
+        <item quantity="one">otrzymano %1$d konwersację</item>
+        <item quantity="other">otrzymano %1$d konwersację</item>
+        <item quantity="few">otrzymano %1$d konwersację</item>
+        <item quantity="many">otrzymano %1$d konwersację</item>
     </plurals>
     <plurals name="new_messages">
-        <item quantity="one">%1$d nowa wiadomość</item>
-        <item quantity="other">%1$d nowe wiadomości</item>
-        <item quantity="few">%1$d nowe wiadomości</item>
-        <item quantity="many">%1$d nowych wiadomości</item>
+        <item quantity="one">otrzymano %1$d wiadomość</item>
+        <item quantity="other">otrzymano %1$d wiadomości</item>
+        <item quantity="few">otrzymano %1$d wiadomości</item>
+        <item quantity="many">otrzymano %1$d wiadomości</item>
     </plurals>
     <string name="read">Przeczytane</string>
     <string name="reply">Odpowiedz</string>
@@ -205,9 +205,9 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="device_info">Informacje o urządzeniu</string>
     <string name="website">Strona internetowa</string>
     <string name="access_messages_from_any_device">Korzystaj i wysyłaj wiadomości z każdego urządzenia!</string>
-    <string name="beta_disclaimer">Ten projekt jest w trakcie beta testów. Jeśli znajdziesz jakikolwiek błąd proszę o informację!</string>
+    <string name="beta_disclaimer">Ten projekt jest nadal w fazie testowej. Jeśli znajdziesz jakikolwiek błąd proszę o informację!</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
-    <string name="features">Możliwości</string>
+    <string name="features">Możliwości aplikacji</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Społeczność Pulse Beta</string>
     <string name="email">Email</string>
@@ -232,7 +232,7 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="mute_conversation">Wycisz konwersację</string>
     <string name="mute_conversation_summary">Ukryj powiadomienia konwersacji</string>
     <string name="private_conversation">Konwersacja prywatna</string>
-    <string name="private_conversation_summary">Ukryj zawartość wiadomości na powiadomieniu</string>
+    <string name="private_conversation_summary">Ukryj zawartość konwersacji na powiadomieniach</string>
     <string name="primary_color">Kolor podstawowy</string>
     <string name="primary_dark_color">Kolor podstawowy ciemny</string>
     <string name="accent_color">Kolor akcentu</string>
@@ -248,7 +248,7 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="vibrate_three_short">Trzy krótkie wibracje</string>
     <string name="vibrate_one_short_one_long">Krótka i długa wibracja</string>
     <string name="vibrate_one_long_one_short">Długa i krótka wibracja</string>
-    <string name="sound_effects">Efekty dźwiękowe</string>
+    <string name="sound_effects">Dźwięki aplikacji</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
     <string name="theme_settings">Personalizacja</string>
     <string name="base_theme">Motyw podstawowy</string>
@@ -259,7 +259,7 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
     <string name="blacklist_need_number">Podaj numer telefonu aby zapisać go na czarnej liście.</string>
     <string name="no_blacklists">Brak numerów na czarnej liście</string>
-    <string name="no_blacklists_summary">Dotknij przycisku z plusem, aby dodać nową konwersację!</string>
+    <string name="no_blacklists_summary">Dotknij poniższego przycisku z plusem, aby dodać nową konwersację.</string>
     <string name="add">Dodaj</string>
     <string name="privacy_policy">Polityka prywatności</string>
     <string name="privacy_policy_summary">Zobacz naszą politykę prywatności w sieci</string>
@@ -274,15 +274,15 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="delete_account_summary">Usuwa konto z tego urządzenia, innych podłączonych urządzeń, oraz z serwera. Tej operacji nie można cofnąć!</string>
     <string name="delete_account_confirmation">Jesteś pewien, że chcesz usunąć swoje konto i wszystko co jest z nim powiązane? Zawsze możesz się zapisać ponownie później!</string>
     <string name="change_subscription">Zmień subskrypcję</string>
-    <string name="cancel_on_the_play_store">Anuluj lub sprawdź swoją subskrypcję w Sklepie Google Play</string>
+    <string name="cancel_on_the_play_store">Anuluj i sprawdź swoją subskrypcję w Sklepie Google Play</string>
     <string name="resync_account">Ponów synchronizację konta</string>
     <string name="resync_account_summary">Brakujące wiadomości? Użyj tego aby zaktualizować Pulse do stanu ze swojego podstawowego urządzenia.</string>
     <string name="resync_account_confirmation">W ten sposób usuniesz wszystkie wiadomości z tego urządzenia i przywrócisz aktualną zawartość ze swojego podstawowego urządzenia. Jesteś pewien, że chcesz to zrobić?</string>
-    <string name="normalize_color_scheme">Możesz też wybrać pojedynczy kolor, który będzie bazowym dla tej konwersacji:</string>
+    <string name="normalize_color_scheme">Lub wybierz kolor bazowy:</string>
     <string name="no_apps_found">Nie znaleziono aplikacji mogących wykonać tę czynność</string>
     <string name="you_denied_permission">Odrzucono to uprawnienie</string>
     <string name="supported_platforms">Wspierane platformy</string>
-    <string name="supported_platforms_summary">Wszystkie oficjalnie wspierane miejsca w których możesz korzystać z aplikacji</string>
+    <string name="supported_platforms_summary">Wszystkie oficjalnie wspierane miejsca z których możesz korzystać z aplikacji</string>
     <string name="font_size_small">Mała</string>
     <string name="font_size_normal">Normalna</string>
     <string name="font_size_large">Duża</string>
@@ -295,7 +295,7 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="always_light">Jasny</string>
     <string name="always_dark">Ciemny</string>
     <string name="always_black">Czarny</string>
-    <string name="set_color_per_conversation">Ustaw kolor dla każdej konwersacji</string>
+    <string name="set_color_per_conversation">Osobny kolor dla każdej konwersacji</string>
     <string name="material_color_red">Czerwony</string>
     <string name="material_color_pink">Różowy</string>
     <string name="material_color_purple">Fioletowy</string>
@@ -317,20 +317,20 @@ W Pulse Twoje konwersacje są zawsze w centrum uwagi."</string>
     <string name="material_color_blue_gray">Błękitny</string>
     <string name="material_color_black">Czarny</string>
     <!-- Scheduled Messages Screen -->
-    <string name="delete_scheduled_message">Czy jesteś pewna/y, że chcesz usunąć zaplanowaną wiadomość do %1$s?</string>
-    <string name="scheduled_message_hint">Wiadomości do wysłania...</string>
-    <string name="scheduled_to_hint">Kontakt do wysłania do...</string>
-    <string name="scheduled_message_sent">Wysłano zaplanowane wiadomości</string>
+    <string name="delete_scheduled_message">Czy jesteś pewien, że chcesz usunąć zaplanowaną wiadomość do %1$s?</string>
+    <string name="scheduled_message_hint">Wiadomość do wysłania...</string>
+    <string name="scheduled_to_hint">Wpisz kontakt/y do wysłania wiadomości...</string>
+    <string name="scheduled_message_sent">Wysłano zaplanowaną wiadomość</string>
     <string name="no_scheduled_messages">Brak zaplanowanych wiadomości</string>
-    <string name="no_scheduled_messages_summary">Możesz stworzyć nową używając przycisku plus poniżej!</string>
-    <string name="scheduled_message_in_future">Musisz wprowadzić przyszły czas!</string>
+    <string name="no_scheduled_messages_summary">Możesz utworzyć nową używając poniższego przycisku z plusem!</string>
+    <string name="scheduled_message_in_future">Musisz wprowadzić czas z przyszłości!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Szyfrowanie i wysyłanie...</string>
     <string name="encrypting_and_uploading_media">Szyfrowanie i kompresowanie wiadomości multimedialnych...</string>
     <string name="encrypting_and_uploading_count">Szyfrowanie i kompresowanie wiadomości multimedialnych…
 (%1$d/%2$d)</string>
-    <string name="downloading_and_decrypting">Pobieranie i odszyfrowanie...</string>
-    <string name="decrypting_and_downloading_media">Pobieranie i deszyfrowanie...</string>
+    <string name="downloading_and_decrypting">Pobieranie i odszyfrowywanie...</string>
+    <string name="decrypting_and_downloading_media">Pobieranie i odszyfrowywanie multimediów...</string>
     <!-- Quick Reply -->
     <string name="audio_message">Wiadomość głosowa</string>
     <string name="video_message">Wiadomość wideo</string>

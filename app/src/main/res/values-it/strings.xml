@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_long">Inizia una nuova conversazione!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Lista conversazioni</string>
+    <string name="menu_archived_conversations">Conversazioni archiviate</string>
+    <string name="menu_schedule">Messaggi programmati</string>
+    <string name="menu_mute_contacts">Blacklist</string>
+    <string name="menu_invite">Invita gli amici</string>
+    <string name="menu_settings">Impostazioni generali</string>
+    <string name="menu_account">Il mio account</string>
+    <string name="menu_device_texting">Testo da ogni dispositivo</string>
+    <string name="menu_help">Help &amp; feedback</string>
+    <string name="menu_about">Info</string>
+    <string name="menu_search">Ricerca</string>
+    <string name="menu_mobile_only">Solo mobile</string>
+    <string name="menu_snooze">Rimanda notifiche</string>
+    <string name="menu_call">Chiama contatto</string>
+    <string name="menu_view_contact">Visualizza contatto</string>
+    <string name="menu_view_contacts">Visualizza contatti</string>
+    <string name="menu_view_media">Visualizza media</string>
+    <string name="menu_delete_conversation">Elimina la conversazione</string>
+    <string name="menu_archive_conversation">Archivia la conversazione</string>
+    <string name="menu_move_to_inbox">Sposta in messaggi in arrivo</string>
+    <string name="menu_conversation_information">Info conversazione</string>
+    <string name="menu_conversation_blacklist">Contatto in blacklist</string>
+    <string name="menu_conversation_schedule">Programma un messaggio</string>
+    <string name="menu_contact_settings">Impostazioni contatto</string>
+    <string name="menu_group_settings">Impostazioni di gruppo</string>
+    <string name="menu_snooze_off">Off</string>
+    <string name="menu_snooze_1">1 ora</string>
+    <string name="menu_snooze_2">2 ore</string>
+    <string name="menu_snooze_4">4 ore</string>
+    <string name="menu_snooze_8">8 ore</string>
+    <string name="menu_snooze_24">24 ore</string>
+    <string name="menu_snooze_72">72 ore</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Nessun messaggio</string>
+    <string name="no_messages_summary">Inizia una nuova conversazione o semplicemente goditi la giornata!</string>
+    <string name="close">Chiudi</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Fissate</string>
+    <string name="today">Oggi</string>
+    <string name="yesterday">Ieri</string>
+    <string name="last_week">Questa settimana</string>
+    <string name="last_month">Questo mese</string>
+    <string name="older">Passate</string>
+    <string name="mark_section_as_read">Contrassegna tutta  %1$s come letta</string>
+    <string name="marking_section_as_read">Tutte in  %1$s contrassegnate come lette</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">Conversazione  %1$d cancellata</item>
+        <item quantity="other">Conversazioni %1$d cancellata</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">Conversazione %1$d archiviata</item>
+        <item quantity="other">Conversazioni %1$d archiviate</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">Conversazione %1$d spostata in arrivo</item>
+        <item quantity="other">Conversazioni %1$d spostate in arrivo</item>
+    </plurals>
+    <string name="undo">Annulla</string>
+    <string name="enter_search">Cerca...</string>
+    <!-- Search Screen -->
+    <string name="conversations">Conversazioni</string>
+    <string name="messages">Messaggi</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Ti piace Pulse?</string>
+    <string name="invite_friends_summary">So do we and so will others! We\'re trying to get it in
+as many hands as we can to continue making it the best product that it can be and by
+inviting your friends to try, you\'re helping with this! \n\n seleziona gli amici ai quali ti piacerebbe inviare l\'app ed a loro sarà inviato un sms con una breve descrizione ed il link per il download!</string>
+    <string name="invite_friends_sms">Sto usando una nuova app di messaggistica che penso potrebbe piacerti! Plus è gratuita e puoi scaricarla da qui:
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Scrivi un messaggio</string>
+    <string name="type_message_to">Scrivi messaggio a  %1$s</string>
+    <string name="attach">Allega</string>
+    <string name="select_sim">Seleziona SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">Immagine MMS</string>
+    <string name="now">Ora</string>
+    <string name="sending">Invio in corso...</string>
+    <string name="failed">Fallito</string>
+    <string name="delivered">Messaggio consegnato</string>
+    <string name="attach_image">Allega immagine</string>
+    <string name="capture_image">Cattura immagine</string>
+    <string name="attach_gif">Allega GIF</string>
+    <string name="record_video">Registra un video</string>
+    <string name="record_audio">Registra un audio</string>
+    <string name="attach_location">Allega Posizione</string>
+    <string name="no_location_found">Impossibile trovare la tua posizione</string>
+    <string name="camera_permission_needed">Per scattare una foto devi consentire il permesso di accedere alla camera!</string>
+    <string name="take_picture">Scatta una foto</string>
+    <string name="flip_picture">Cambia camera</string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="attached_image">Immagine allegata</string>
+    <string name="remove_image">Immagine allegata rimossa</string>
+    <string name="edit_image">Modifica immagine allegata</string>
+    <string name="permission_needed_for_action">Permessi necessari per questa azione.</string>
+    <string name="request_permission">Richiesta Permesso</string>
+    <string name="no_messages_with_contact">Non hai ancora messaggi in questa conversazione, è tempo di iniziare!</string>
+    <string name="save">Salva</string>
+    <string name="share">Condividi</string>
+    <string name="share_content">Condividi contenuto...</string>
+    <string name="saved">Salvato nella cartella /Download</string>
+    <string name="failed_to_save">Salvataggio fallito</string>
+    <string name="start_recording_audio">Premi il tasto per iniziare la registrazione audio!</string>
+    <string name="audio_recording_error">Errore di registrazione :(</string>
+    <string name="message_copied_to_clipboard">Messaggio copiato negli appunti</string>
+    <string name="view_details">Guarda dettagli</string>
+    <string name="delete">Elimina</string>
+    <string name="copy_message">Copia Testo</string>
+    <string name="resend">Invia nuovamente</string>
+    <string name="no_media">Nessun media in questa conversazione!</string>
+    <string name="error_decrypting">Errore durante la decriptazione! Per favore visualizza questo messaggio sul tuo telefono.</string>
+    <string name="message_sending_failed">Invio messaggio fallito!</string>
+    <string name="preparing_video">Preparazione video&#8230;</string>
+    <string name="delete_message">Cancellare questo messaggio?</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Componi un nuovo messaggio</string>
+    <string name="send_message">Invia messaggio</string>
+    <string name="enter_contact_name">Inserisci il nome del contatto</string>
+    <string name="error_processing_vcard">Errore durante l\'elaborazione vcard</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">L\'app non può funzionare senza quei permessi! Prima di continuare devi accettarli.</string>
+    <string name="loading_messages">Ottimizzazione...</string>
+    <string name="loading_messages_summary">Sto lavorando per portare i tuoi messaggi nell\'app, non richiederà molto tempo!</string>
+    <string name="tooltip_got_it">Fatto!</string>
+    <string name="navigation_drawer_conversation_hint">Altre opzioni per questa conversazione vengono salvate nel navigation drawer.</string>
+    <string name="onboarding_title_1">Messaggistica reinventata</string>
+    <string name="onboarding_title_2">Disponibile ovunque</string>
+    <string name="onboarding_title_3">Potente capacità di personalizzazione</string>
+    <string name="onboarding_content_1">"Interfaccia veloce e fluida con design perfetto e perfetta integrazione.
+Pulse mette al centro di tutto le tue conversazioni."</string>
+    <string name="onboarding_content_2">Messaggia dal tuo tablet, computer, orologio, o qualsiasi altro dispositivo connesso.</string>
+    <string name="onboarding_content_3">Fissa, silenzia, applica temi e personalizza  le notifiche
+per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
+    <string name="message_anywhere_onboarding_title_1">Invia messaggi da qualsiasi luogo</string>
+    <string name="message_anywhere_onboarding_title_2">Sottoscrizione o Pagamento Unico</string>
+    <string name="message_anywhere_onboarding_title_3">Periodo di prova di una settimana</string>
+    <string name="message_anywhere_onboarding_content_1">Perfetta integrazione con i dispositivi (tablet, orologio, TV, web, app nativa di Google Chrome e Firefox) per l\'invio di SMS e MMS da qualsiasi luogo!</string>
+    <string name="message_anywhere_onboarding_content_2">Opzioni di pagamento sono se ne hai necessità: $10.99 a vita, $5.99 per un anno, $1.99 per 3 mesi, o $0.99 per un mese. Meno di un caffè.</string>
+    <string name="message_anywhere_onboarding_content_3">Usa l\'app Android, GRATIS (per sempre!) sul tuo telefono, o inizia a messaggiare da tutti i tuoi dispositivi con un periodo di prova di una settimana.</string>
+    <string name="start_trial">Inizia\nTrial</string>
+    <string name="not_now">Non\nOra</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">Nuovo messaggio da  %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d nuova conversazione</item>
+        <item quantity="other">%1$d nuove conversazioni</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d nuovo messaggio</item>
+        <item quantity="other">%1$d nuovi messaggi</item>
+    </plurals>
+    <string name="read">Leggi</string>
+    <string name="reply">Rispondi</string>
+    <string name="reply_to">Rispondi a  %1$s</string>
+    <string name="call">Chiama</string>
+    <string-array name="reply_choices">
+        <item>Si</item>
+        <item>No</item>
+        <item>Forse</item>
+        <item>Ok</item>
+        <item>Grazie</item>
+    </string-array>
+    <string name="new_mms_message">Nuovo messaggio MMS</string>
+    <string name="you">Tu</string>
+    <string name="new_message">Nuovo Messaggio</string>
+    <string name="received_new_message">Hai ricevuto un nuovo messaggio!</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Changelog</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Guarda info sulla licenza open source</string>
+    <string name="app_version">Versione App</string>
+    <string name="device_id">ID dispositivo</string>
+    <string name="device_info">Info Dispositivo</string>
+    <string name="website">Sito web</string>
+    <string name="beta_disclaimer">L\'app è ancora in beta, se trovi bug riportali per favore!</string>
+    <string name="faqs">Domande Frequenti</string>
+    <string name="features">Novità</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse Beta Community</string>
+    <string name="email">Email</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Supporto</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d messaggio</item>
+        <item quantity="other">%1$d messaggi</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">in %1$d conversazione</item>
+        <item quantity="other">in %1$d conversazioni</item>
+    </plurals>
+    <string name="pin_conversation">Fissa Conversazione</string>
+    <string name="pin_conversation_summary">Mantieni questa conversazioni in alto alla lista</string>
+    <string name="mute_conversation">Silenzia Conversazione</string>
+    <string name="mute_conversation_summary">Nascondi notifiche per questa conversazione</string>
+    <string name="private_conversation">Conversazione Privata</string>
+    <string name="private_conversation_summary">Nascondi il contenuto della conversazione delle notifiche</string>
+    <string name="primary_color">Colore Primario</string>
+    <string name="primary_dark_color">Colore Primario Scuro</string>
+    <string name="accent_color">Colore Accento</string>
+    <string name="led_color">Colore del LED</string>
+    <string name="ringtone">Suoneria</string>
+    <string name="group_name">Nome Gruppo</string>
+    <string name="notification_settings">Notifiche</string>
+    <string name="vibrate">Tipo di Vibrazione</string>
+    <string name="vibrate_off">Nessuna vibrazione</string>
+    <string name="vibrate_default">Vibrazione di default</string>
+    <string name="vibrate_two_long">Due vibrazioni lunghe</string>
+    <string name="vibrate_two_short">Due vibrazioni corte</string>
+    <string name="vibrate_three_short">Tre vibrazioni corte</string>
+    <string name="vibrate_one_short_one_long">Una vibrazione corta ed una lunga</string>
+    <string name="vibrate_one_long_one_short">Una vibrazione lunga ed una corta</string>
+    <string name="sound_effects">Effetti sonori</string>
+    <string name="delivery_reports">Rapporti di consegna</string>
+    <string name="theme_settings">Personalizzazione</string>
+    <string name="global_theme_color">Colore del tema</string>
+    <string name="font_size">Dimensione del font</string>
+    <string name="resync_account">Resincronizza l\' Account</string>
+    <string name="resync_account_summary">Mancano alcuni messaggi? Usa questo per aggiornare questo dispositivo
+con ciò che è sul dispositivo principale.</string>
+    <string name="resync_account_confirmation">L\' operazione cancellerà tutti i messaggi dal dispositivo iniziando con una copia pulita di ciò che attualmente c\'è sul dispositivo principale. Sei sicuro di volere questo?</string>
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <string name="downloading_and_decrypting">Sto scaricando e decriptando...</string>
+    <string name="decrypting_and_downloading_media">Sto scaricando e decriptando i media...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Messaggio Vocale</string>
+    <string name="video_message">Video Messaggio</string>
+    <string name="picture_message">Foto Messaggio</string>
+    <string name="gif_message">Messaggio GIF</string>
+    <string name="contact_card">Scheda Contatto</string>
+    <string name="conversation_with">Conversazione con %1$s</string>
+    <!-- Other -->
+    <string name="default_text">Default</string>
+    <string name="did_you_know">Lo sai?</string>
+    <string name="use_from_anywhere">Pulse può essere usato da ogni dispositivo connesso a internet -
+provalo oggi!</string>
+    <string name="use_from_anywhere_short">Pulse può essere usato su ciascuno dei tuoi dispositivi!</string>
+    <string name="learn_more">Per saperne di più</string>
+    <string name="dismiss">Scarta</string>
+    <string name="renew">Rinnova</string>
+    <string name="no">No</string>
+    <string name="cancel">Annulla</string>
+    <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Nessuna sottoscrizione trovata!</string>
+    <string name="cancelled_subscription_error">Sembra che tu abbia cancellato la tua sottoscrizione. 
+Se non fai una nuova sottoscrizione entro il termine di 2 giorni  l\'app automaticamente eliminerà il tuo account. Se questo è un errore sei pregato di contattarmi per email.</string>
+    <string name="subscription_found">Sottoscrizione trovata - ben tornato!</string>
+    <string name="subscription_not_found">Nessuna sottoscrizione trovata, inizia il tuo periodo di prova!</string>
+    <string name="checking_for_active_subscriptions">Sto controllando la sottoscrizione&#8230;</string>
+    <string name="purchase_error_cancelled">Hai cancellato il pagamento :(</string>
+    <string name="purchase_error_bad_google_play">Uh oh, Google Play potrebbe avere problemi che ci hanno dato un cattivo risultato</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; Questo acquisto non risulta nel nostro registro.</string>
+    <string name="subscriptions">L\'abbonamento viene fatturato dopo la prova di sette giorni e può essere modificato / cancellato in qualsiasi momento:</string>
+    <string name="lifetime_purchase">$10.99 - Sottoscrizione a Vita</string>
+    <string name="lifetime_purchase_summary">Paga una volta e mai più!</string>
+    <string name="yearly_purchase">$5.99 ogni anno</string>
+    <string name="yearly_purchase_summary">Il miglior affare.</string>
+    <string name="three_month_purchase_summary">Non si può sbagliare in questo modo.</string>
+    <string name="monthly_purchase">$0.99 ogni mese</string>
+    <string name="monthly_purchase_summary">Vuoi solo provarla? Nessun problema.</string>
+    <string name="change_subscription_message">Desideri eseguire l\'upgrade? Ottimo! Dopo aver fatto la selezione nella schermata successiva, deve andare nel Play Store e cancellare manualmente la vecchia sottoscrizione.</string>
+</resources>

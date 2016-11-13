@@ -24,6 +24,7 @@ funciones como mensajes de texto desde una tablet u ordenador, puede omitir este
     <string name="api_skip">Omitir</string>
     <string name="api_email">Dirección de correo electrónico</string>
     <string name="api_password">Contraseña</string>
+    <string name="api_forgot_password">¿Has olvidado la contraseña?</string>
     <string name="api_password_confirmation">Confirmar contraseña</string>
     <string name="api_name">Nombre</string>
     <string name="api_phone_number">Número de teléfono</string>

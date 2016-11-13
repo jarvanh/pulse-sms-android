@@ -22,6 +22,7 @@
     <string name="api_skip">Pomiń</string>
     <string name="api_email">Adres email</string>
     <string name="api_password">Hasło</string>
+    <string name="api_forgot_password">Nie pamiętasz hasła?</string>
     <string name="api_password_confirmation">Powtórz hasło</string>
     <string name="api_name">Nazwa</string>
     <string name="api_phone_number">Numer telefonu</string>
@@ -32,13 +33,13 @@
 Czy chcesz usunąć obecne urządzenie podstawowe i ustawić bieżące jako nowe urządzenie podstawowe?</string>
     <string name="api_yes">Tak</string>
     <string name="api_no">Nie</string>
-    <string name="api_no_email">Nie wprowadzono adresu email</string>
+    <string name="api_no_email">Nie wpisano adresu email</string>
     <string name="api_email_invalid">Nieprawidłowy adres email</string>
     <string name="api_no_password">Nie wpisano hasła</string>
-    <string name="api_no_password_confirmation">Nie wprowadzono potwierdzenia hasła</string>
+    <string name="api_no_password_confirmation">Nie wpisano potwierdzenia hasła</string>
     <string name="api_password_mismatch">Wpisane hasła nie zgadzają się</string>
-    <string name="api_no_name">Nie wprowadzono nazwy</string>
-    <string name="api_no_phone_number">Nie wprowadzono numeru telefonu</string>
+    <string name="api_no_name">Nie wpisano nazwy</string>
+    <string name="api_no_phone_number">Nie wpisano numeru telefonu</string>
     <string name="api_login_error">Wystąpił problem podczas logowania, podano zły login lub hasło.</string>
     <string name="api_activate_summary">Zaloguj się aby mieć wszystkie swoje wiadomości na tym urządzeniu!</string>
     <string name="api_activate_1_1">Przejdź do</string>

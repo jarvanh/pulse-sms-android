@@ -46,8 +46,8 @@
     <string name="menu_conversation_blacklist">Contacts en liste noire</string>
     <string name="menu_conversation_schedule">Programmer un message</string>
     <string name="menu_contact_settings">Paramètres du contact</string>
-    <string name="menu_group_settings">Paramètre de groupe</string>
-    <string name="menu_snooze_off">Off</string>
+    <string name="menu_group_settings">Paramètres du groupe</string>
+    <string name="menu_snooze_off">Désactivé</string>
     <string name="menu_snooze_1">1 heure</string>
     <string name="menu_snooze_2">2 heures</string>
     <string name="menu_snooze_4">4 heures</string>
@@ -68,14 +68,39 @@
     <string name="mark_section_as_read">Marquer les %1$s en lus</string>
     <string name="marking_section_as_read">Marquer tous les %1$s comme lus</string>
     <string name="undo">Annuler</string>
-    <string name="enter_search">Rechercher</string>
+    <string name="enter_search">Recherche...</string>
     <!-- Search Screen -->
     <string name="conversations">Conversations</string>
     <string name="messages">Messages</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Vous aimez Pulse?</string>
     <!-- Message List Screen -->
-    <string name="edit_image">Éditer l\'image</string>
+    <string name="type_message">Composez votre message</string>
+    <string name="type_message_to">Composez votre message à %1$s</string>
+    <string name="attach">Attacher une pièce jointe</string>
+    <string name="select_sim">Carte SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s .</string>
+    <string name="mms_image">Message Image</string>
+    <string name="now">Maintenant</string>
+    <string name="sending">Envoi en cours...</string>
+    <string name="failed">Envoi échoué</string>
+    <string name="delivered">Message envoyé</string>
+    <string name="attach_image">Attacher une image</string>
+    <string name="capture_image">Prendre une photo</string>
+    <string name="attach_gif">Attacher une image animée</string>
+    <string name="record_video">Enregistrer une vidéo</string>
+    <string name="record_audio">Enregistrer un son</string>
+    <string name="attach_location">Partager votre localisation</string>
+    <string name="no_location_found">Impossible de vous localiser.</string>
+    <string name="camera_permission_needed">L\'autorisation de caméra doit être accordée pour prendre
+des photos !</string>
+    <string name="take_picture">Prendre une photo</string>
+    <string name="flip_picture">Changer de caméra</string>
+    <string name="fullscreen">Plein écran</string>
+    <string name="attached_image">Image en pièce jointe</string>
+    <string name="remove_image">Supprimer l\'image en pièce jointe</string>
+    <string name="edit_image">Éditer l\'image en pièce jointe</string>
     <string name="permission_needed_for_action">Cette action requiert des permissions.</string>
     <string name="request_permission">Autoriser</string>
     <string name="no_messages_with_contact">"Vous n\'avez pas encore de messages dans cette conversation,
@@ -84,8 +109,8 @@ Commencez !
     <string name="save">Sauvegarder</string>
     <string name="share">Partager</string>
     <string name="share_content">Partager le contenu...</string>
-    <string name="saved">Sauvegarder dans le dossier /Download</string>
-    <string name="failed_to_save">La sauvegarde a échouée</string>
+    <string name="saved">Sauvegardé dans le dossier de téléchargements</string>
+    <string name="failed_to_save">La sauvegarde a échoué</string>
     <string name="start_recording_audio">Appuyer pour commencer à enregistrer</string>
     <string name="audio_recording_error">Erreur d\'enregistrement :(</string>
     <string name="message_copied_to_clipboard">Message copié dans le presse-papier</string>
@@ -107,8 +132,8 @@ Commencez !
     <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions! Vous devez les accepter avant de pouvoir continuer</string>
     <string name="loading_messages">Optimisation en cours...</string>
     <string name="loading_messages_summary">Nous téléchargeons vos messages dans l\'application, ça sera rapide!</string>
-    <string name="tooltip_got_it">Je l\'ai!</string>
-    <string name="navigation_drawer_conversation_hint">Plus d\'options pour cette conversation se trouve dans le bouton de navigation</string>
+    <string name="tooltip_got_it">Je l\'ai !</string>
+    <string name="navigation_drawer_conversation_hint">Plus d\'options pour cette conversation sont stockées dans le tiroir de navigation.</string>
     <string name="onboarding_title_1">Messagerie réinventée</string>
     <string name="onboarding_title_2">Disponible Partout</string>
     <string name="onboarding_title_3">Forte Personalisation</string>
@@ -117,7 +142,47 @@ Commencez !
     <string name="message_anywhere_onboarding_title_1">Envoyez des messages de partout</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement ou Paiement Unique</string>
     <!-- Notifications -->
+    <string name="read">Lire</string>
+    <string name="reply">Répondre</string>
+    <string name="reply_to">Répondre à %1$s</string>
+    <string name="call">Appeler</string>
+    <string-array name="reply_choices">
+        <item>Oui</item>
+        <item>Non</item>
+        <item>Peut-être</item>
+        <item>Ok</item>
+        <item>Merci</item>
+    </string-array>
+    <string name="new_mms_message">Nouveau message multimédia</string>
+    <string name="you">Vous</string>
+    <string name="new_message">Nouveau message</string>
+    <string name="received_new_message">Vous avez reçu un nouveau message !</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Historiques des versions de l\'application</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Voir les informations de la licence open source</string>
+    <string name="app_version">Version de l\'application</string>
+    <string name="device_id">Identifiant du terminal</string>
+    <string name="device_info">Informations du terminal</string>
+    <string name="website">Site Internet</string>
+    <string name="access_messages_from_any_device">Accédez et envoyez des messages depuis n\'importe quel appareil !</string>
+    <string name="beta_disclaimer">Ce projet est toujours en version bêta, veuillez signaler les problèmes que vous
+pourrez rencontrer !</string>
+    <string name="faqs">Les questions fréquemment posées</string>
+    <string name="features">Caractéristiques</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Communauté de BétaTesteurs de Pulse</string>
+    <string name="email">E-Mail</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Support</string>
+    <string name="pin_conversation">Conversations épinglées</string>
+    <string name="pin_conversation_summary">Laisser cette conversation en haut de la liste</string>
+    <string name="mute_conversation">Mettre en sourdine cette conversation</string>
+    <string name="mute_conversation_summary">Cacher les notifications de cette conversation</string>
+    <string name="private_conversation">Conversation privée</string>
+    <string name="private_conversation_summary">Cacher le contenu de cette conversation sur les notifications</string>
     <string name="primary_color">Couleur primaire</string>
     <string name="primary_dark_color">Couleur primaire sombre</string>
     <string name="accent_color">Style de couleur</string>
@@ -129,9 +194,12 @@ Commencez !
     <string name="vibrate_off">Pas de vibration</string>
     <string name="vibrate_default">Vibration par défaut</string>
     <string name="vibrate_two_long">Deux vibrations longues</string>
-    <string name="vibrate_three_short">Trois vibrations courtes</string>
+    <string name="vibrate_two_short">Deux courtes vibrations</string>
+    <string name="vibrate_three_short">Trois courtes vibrations</string>
+    <string name="vibrate_one_short_one_long">Une courte, et une longue vibration</string>
+    <string name="vibrate_one_long_one_short">Une longue, et une courte vibration</string>
     <string name="sound_effects">Effets sonores</string>
-    <string name="delivery_reports">Accusé de réception</string>
+    <string name="delivery_reports">Accusés de réception</string>
     <string name="theme_settings">Personnalisation</string>
     <string name="base_theme">Thème de base</string>
     <string name="global_theme_color">Thème couleur</string>
@@ -147,14 +215,18 @@ Commencez !
     <string name="add">Ajouter</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="privacy_policy_summary">Voir notre politique de confidentialité sur Internet</string>
+    <string name="account_expiring">Compte bientôt expiré</string>
+    <string name="signout_time">Se déconnecter de : %1$s</string>
     <string name="lifetime_subscriber">Abonnement à vie</string>
     <string name="trial_period">Période d\'essai</string>
     <string name="setup_my_account">Paramètres du compte</string>
     <string name="setup_my_account_summary">Créez un compte ou connectez-vous pour accéder à plus de fonctions comme envoyer des messages depuis votre tablette ou PC</string>
-    <string name="preparing_new_account">Préparation du compte&#8230;</string>
+    <string name="preparing_new_account">Préparation du compte &#8230; ...</string>
+    <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_summary">Supprime le compte de vos appareils et du serveur. Cette opération est irréversible.</string>
     <string name="delete_account_confirmation">Êtes vous sur de vouloir supprimer ce compte et tout ce qui va avec ? Vous pourrez toujours vous réinscrire plus tard !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
+    <string name="cancel_on_the_play_store">Annuler et afficher votre abonnement sur Play Store</string>
     <string name="resync_account">Resynchroniser le compte</string>
     <!-- Theming Options -->
     <!-- Scheduled Messages Screen -->
