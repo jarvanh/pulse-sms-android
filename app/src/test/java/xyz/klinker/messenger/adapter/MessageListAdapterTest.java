@@ -50,6 +50,7 @@ import static org.mockito.Mockito.when;
 public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     private MessageListAdapter adapter;
+    private Context context;
 
     @Mock
     private MessageListFragment fragment;
@@ -65,11 +66,10 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private Cursor cursor;
     @Mock
     private ViewGroup.LayoutParams params;
-    @Mock
-    private Context context;
 
     @Before
     public void setUp() {
+        context = spy(RuntimeEnvironment.application);
         when(timestamp.getLayoutParams()).thenReturn(params);
         adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, manager, fragment);
     }
