@@ -22,6 +22,8 @@
         <text>Edit scheduled messages</text>
         <text>Fixes for updating conversation titles and contact images</text>
         <text>Improvements for sound effects</text>
+        <text>Support 24 hour clocks</text>
+        <text>Improved support for incoming audio MMS</text>
     </version>
 
     <version
