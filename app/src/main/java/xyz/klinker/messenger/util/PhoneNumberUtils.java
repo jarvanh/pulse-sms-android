@@ -45,7 +45,7 @@ public class PhoneNumberUtils {
      */
     public static String clearFormatting(String number) {
         if (number == null) {
-            return "Unknown Number";
+            return "";
         }
 
         if (number.matches(".*[a-zA-Z].*")) {
