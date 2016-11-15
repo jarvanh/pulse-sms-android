@@ -224,7 +224,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         if (message.type == Message.TYPE_RECEIVED) {
             string = "<b>" + (message.from != null ? message.from : conversation.title) + ":</b> ";
         } else {
-            string = "You: ";
+            string = getString(R.string.you) + ": ";
         }
 
         if (MimeType.isAudio(message.mimeType)) {

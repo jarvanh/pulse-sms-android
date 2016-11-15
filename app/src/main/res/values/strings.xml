@@ -186,6 +186,7 @@
     <string name="message_anywhere_onboarding_content_3">Use the Android app, FREE (forever!) on your phone, or start texting from all your devices with a ONE WEEK free trial.</string>
     <string name="start_trial">Start\nTrial</string>
     <string name="not_now">Not\nNow</string>
+    <string name="onboarding_done">Done</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>
