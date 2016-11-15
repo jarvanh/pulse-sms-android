@@ -17,6 +17,18 @@
 <changelog>
 
     <version
+        name="1.9.0"
+        description="November 16th, 2016">
+        <text>Initial public release! Thanks for the beta testing help!</text>
+    </version>
+
+    <version
+        name="1.8.9"
+        description="Unreleased">
+        <text>Tons more bug fixes and tweaks to prepare for production</text>
+    </version>
+
+    <version
         name="1.8.8"
         description="November 14th, 2016">
         <text>Auto-play GIFs in the message list</text>
