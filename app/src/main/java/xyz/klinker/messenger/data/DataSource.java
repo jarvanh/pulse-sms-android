@@ -1665,6 +1665,7 @@ public class DataSource {
 
         if (updated > 0) {
             apiUtils.readConversation(accountId, conversationId);
+            writeUnreadCount();
         }
 
         try {
