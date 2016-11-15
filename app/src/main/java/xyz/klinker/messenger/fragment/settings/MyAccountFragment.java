@@ -78,6 +78,10 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initMessageCountPreference();
             initRemoveAccountPreference();
             initResyncAccountPreference();
+        } else {
+            startActivityForResult(
+                    new Intent(getActivity(), OnBoardingPayActivity.class),
+                    ONBOARDING_REQUEST);
         }
     }
 
