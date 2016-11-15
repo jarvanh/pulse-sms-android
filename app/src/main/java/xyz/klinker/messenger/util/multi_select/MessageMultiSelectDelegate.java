@@ -168,15 +168,26 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         message.setSelectable(mIsSelectable);
 
         boolean isActivated = mSelections.get(message.getAdapterPosition());
+        ColorStateList states;
+        int textColor;
+        
         if (isActivated) {
-            message.messageHolder.setBackgroundTintList(ColorStateList.valueOf(activity.getResources().getColor(R.color.actionModeBackground)));
-            message.message.setTextColor(Color.WHITE);
+            states = ColorStateList.valueOf(activity.getResources().getColor(R.color.actionModeBackground));
+            textColor = Color.WHITE;
         } else if (message.color != -1) {
-            message.messageHolder.setBackgroundTintList(ColorStateList.valueOf(message.color));
-            message.message.setTextColor(message.textColor);
+            states = ColorStateList.valueOf(message.color);
+            textColor = message.textColor;
         } else {
-            message.messageHolder.setBackgroundTintList(ColorStateList.valueOf(activity.getResources().getColor(R.color.drawerBackground)));
-            message.message.setTextColor(activity.getResources().getColor(R.color.primaryText));
+            states = ColorStateList.valueOf(activity.getResources().getColor(R.color.drawerBackground));
+            textColor = activity.getResources().getColor(R.color.primaryText);
+        }
+        
+        if (message.messageHolder != null) {
+            message.messageHolder.setBackgroundTintList(states);
+        }
+        
+        if (message.message != null) {
+            message.message.setTextColor(textColor);
         }
     }
 
