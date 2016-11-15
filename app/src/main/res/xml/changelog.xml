@@ -21,6 +21,7 @@
         description="November 14th, 2016">
         <text>Auto-play GIFs in the message list</text>
         <text>Improvements to GIF search and open-source (https://github.com/klinker24/Android-GiphySearch)</text>
+        <text>Few more bug fixes related to updating conversation images</text>
     </version>
 
     <version
