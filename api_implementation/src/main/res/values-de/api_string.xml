@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Einloggen</string>
+    <string name="api_signup">Registrieren</string>
+    <string name="api_signup_failed">Einloggen auf diesem Gerät nicht möglich! Sie müssen sich zuerst mit einem Gerät einloggen, das eine Telefonnummer hat.</string>
+    <string name="api_skip_signup">Oder, falls Sie die App nur auf diesem Gerät nutzen und keine Cloud-Features nutzen möchten, können Sie diesen Schritt überspringen:</string>
+    <string name="api_skip">Überspringen</string>
+    <string name="api_email">E-Mail-Adresse</string>
+    <string name="api_password">Passwort</string>
+    <string name="api_forgot_password">Passwort vergessen?</string>
+    <string name="api_password_confirmation">Passwort bestätigen</string>
+    <string name="api_name">Name</string>
+    <string name="api_phone_number">Telefonnummer</string>
+    <string name="api_connecting">Verbinde mit dem Server...</string>
+    <string name="api_error">Ein Fehler ist aufgetreten</string>
+    <string name="api_device_error">Während dem Hinzufügen dieses Gerätes ist ein Fehler aufgetreten. Wird erneut versucht...</string>
+    <string name="api_add_second_primary_device">Offenbar ist schon folgendes primäre Gerät für Ihren Account registriert: %1$s. Nur ein primäres Gerät ist erlaubt! Möchten Sie das derzeitige primäre Gerät entfernen und dieses Gerät als neues primäres Gerät definieren?</string>
+    <string name="api_yes">Ja</string>
+    <string name="api_no">Nein</string>
+    <string name="api_no_email">Bitte E-Mail-Adresse angeben</string>
+    <string name="api_email_invalid">Ungültige E-Mail-Adresse</string>
+    <string name="api_no_password">Kein Passwort eingegeben</string>
+    <string name="api_no_password_confirmation">Bitte Passwort bestätigen</string>
+    <string name="api_password_mismatch">Passwörter stimmen nicht überein</string>
+    <string name="api_no_name">Bitte Name eingeben</string>
+    <string name="api_no_phone_number">Bitte Telefonnummer eingeben</string>
+    <string name="api_login_error">Fehler beim Einloggen. E-Mail oder Passwort falsch?</string>
+    <string name="api_activate_summary">Einloggen, um alle Ihre Nachrichten auf diesem Gerät zu erhalten!</string>
+    <string name="api_activate_1_1">Öffnen Sie</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">auf einem Mobilgerät oder Computer.</string>
+    <string name="api_activate_2_1">Auf der Webseite</string>
+    <string name="api_activate_2_2">Den Code rechts eingeben</string>
+    <string name="api_activate_2_3">um Ihren Account zu verknüpfen</string>
+    <string name="api_confirm_password">Passwort bitte bestätigen:</string>
+    <string name="api_wrong_password">Bestätigung fehlgeschlagen. Ist das Passwort korrekt?</string>
+    <string name="api_email_taken">Fehler beim Einloggen. Haben Sie schon einen Account mit dieser E-Mail-Adresse erstellt?</string>
+    <string name="api_confirm">Bestätigen</string>
+    <string name="api_continue">Fortfahren</string>
+</resources>

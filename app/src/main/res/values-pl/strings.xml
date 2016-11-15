@@ -68,22 +68,22 @@
     <string name="mark_section_as_read">Oznaczono %1$s jako przeczytane</string>
     <string name="marking_section_as_read">Oznaczam %1$s jako przeczytane</string>
     <plurals name="conversations_deleted">
-        <item quantity="one">Usunięto %1$d konwersację</item>
-        <item quantity="other">Usunięto %1$d konwersację</item>
-        <item quantity="few">Usunięto %1$d konwersację</item>
-        <item quantity="many">Usunięto %1$d konwersację</item>
+        <item quantity="one">Usunięte konwersacje: %1$d</item>
+        <item quantity="other">Usunięte konwersacje: %1$d</item>
+        <item quantity="few">Usunięte konwersacje: %1$d</item>
+        <item quantity="many">Usunięte konwersacje: %1$d</item>
     </plurals>
     <plurals name="conversations_archived">
-        <item quantity="one">Zarchiwizowano %1$d konwersację</item>
-        <item quantity="other">Zarchiwizowano %1$d konwersację</item>
-        <item quantity="few">Zarchiwizowano %1$d konwersację</item>
-        <item quantity="many">Zarchiwizowano %1$d konwersację</item>
+        <item quantity="one">Konwersacje przeniesione do archiwum: %1$d</item>
+        <item quantity="other">Konwersacje przeniesione do archiwum: %1$d</item>
+        <item quantity="few">Konwersacje przeniesione do archiwum: %1$d</item>
+        <item quantity="many">Konwersacje przeniesione do archiwum: %1$d</item>
     </plurals>
     <plurals name="conversations_unarchived">
-        <item quantity="one">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
-        <item quantity="other">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
-        <item quantity="few">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
-        <item quantity="many">Przeniesiono %1$d konwersację do skrzynki odbiorczej</item>
+        <item quantity="one">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="other">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="few">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="many">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
     </plurals>
     <string name="undo">Cofnij</string>
     <string name="enter_search">Wyszukaj...</string>
@@ -131,7 +131,7 @@ czas ją rozpocząć!</string>
     <string name="failed_to_save">Nie udało się zapisać</string>
     <string name="start_recording_audio">Naciśnij przycisk aby rozpocząć nagrywanie dźwięku!</string>
     <string name="audio_recording_error">Wystąpił błąd podczas nagrywania :(</string>
-    <string name="message_copied_to_clipboard">Wiadomość skopiowana do schowka</string>
+    <string name="message_copied_to_clipboard">Skopiowano do schowka</string>
     <string name="view_details">Zobacz szczegóły</string>
     <string name="delete">Usuń</string>
     <string name="copy_message">Kopiuj tekst</string>
@@ -141,6 +141,12 @@ czas ją rozpocząć!</string>
     <string name="message_sending_failed">Błąd wysyłania wiadomości!</string>
     <string name="preparing_video">Przygotowywanie wideo&#8230;</string>
     <string name="delete_message">Usunąć tę wiadomość?</string>
+    <string name="forward_message">Przekaż wiadomość</string>
+    <string name="share_message">Udostępnij wiadomość</string>
+    <string name="copy_message_text">Skopiuj treść wiadomości</string>
+    <string name="open_link_to_browser">Otwórz link w przeglądarce</string>
+    <string name="open_link_internal">Otwórz link</string>
+    <string name="copy_link">Skopiuj link</string>
     <!-- Compose Screen -->
     <string name="compose_message">Stwórz nową wiadomość</string>
     <string name="send_message">Wyślij wiadomość</string>
@@ -167,19 +173,20 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="message_anywhere_onboarding_content_3">Używaj aplikacji BEZPŁATNIE (na zawsze!) na swoim telefonie z systemem Android lub pisz z każdego swojego urządzenia rozpoczynając TYGODNIOWY okres próbny.</string>
     <string name="start_trial">Rozpocznij\nokres próbny</string>
     <string name="not_now">Nie\nteraz</string>
+    <string name="onboarding_done">Gotowe</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nowa wiadomość od %1$s</string>
     <plurals name="new_conversations">
-        <item quantity="one">otrzymano %1$d konwersację</item>
-        <item quantity="other">otrzymano %1$d konwersację</item>
-        <item quantity="few">otrzymano %1$d konwersację</item>
-        <item quantity="many">otrzymano %1$d konwersację</item>
+        <item quantity="one">Otrzymane konwersacje: %1$d</item>
+        <item quantity="other">Otrzymane konwersacje: %1$d</item>
+        <item quantity="few">Otrzymane konwersacje: %1$d</item>
+        <item quantity="many">Otrzymane konwersacje: %1$d</item>
     </plurals>
     <plurals name="new_messages">
-        <item quantity="one">otrzymano %1$d wiadomość</item>
-        <item quantity="other">otrzymano %1$d wiadomości</item>
-        <item quantity="few">otrzymano %1$d wiadomości</item>
-        <item quantity="many">otrzymano %1$d wiadomości</item>
+        <item quantity="one">Otrzymane wiadomości: %1$d</item>
+        <item quantity="other">Otrzymane wiadomości: %1$d</item>
+        <item quantity="few">Otrzymane wiadomości: %1$d</item>
+        <item quantity="many">Otrzymane wiadomości: %1$d</item>
     </plurals>
     <string name="read">Przeczytane</string>
     <string name="reply">Odpowiedz</string>
@@ -259,7 +266,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
     <string name="blacklist_need_number">Podaj numer telefonu aby zapisać go na czarnej liście.</string>
     <string name="no_blacklists">Brak numerów na czarnej liście</string>
-    <string name="no_blacklists_summary">Dotknij poniższego przycisku z plusem, aby dodać nową konwersację.</string>
+    <string name="no_blacklists_summary">Dotknij poniższego przycisku z plusem, aby zacząć nową konwersację.</string>
     <string name="add">Dodaj</string>
     <string name="privacy_policy">Polityka prywatności</string>
     <string name="privacy_policy_summary">Zobacz naszą politykę prywatności w sieci</string>

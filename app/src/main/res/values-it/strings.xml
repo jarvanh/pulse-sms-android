@@ -28,7 +28,7 @@
     <string name="menu_invite">Invita gli amici</string>
     <string name="menu_settings">Impostazioni generali</string>
     <string name="menu_account">Il mio account</string>
-    <string name="menu_device_texting">Testo da ogni dispositivo</string>
+    <string name="menu_device_texting">Invia messaggi da ogni dispositivo</string>
     <string name="menu_help">Help &amp; feedback</string>
     <string name="menu_about">Info</string>
     <string name="menu_search">Ricerca</string>
@@ -42,7 +42,7 @@
     <string name="menu_archive_conversation">Archivia la conversazione</string>
     <string name="menu_move_to_inbox">Sposta in messaggi in arrivo</string>
     <string name="menu_conversation_information">Info conversazione</string>
-    <string name="menu_conversation_blacklist">Contatto in blacklist</string>
+    <string name="menu_conversation_blacklist">Aggiungi contatto in blacklist</string>
     <string name="menu_conversation_schedule">Programma un messaggio</string>
     <string name="menu_contact_settings">Impostazioni contatto</string>
     <string name="menu_group_settings">Impostazioni di gruppo</string>
@@ -65,18 +65,18 @@
     <string name="last_month">Questo mese</string>
     <string name="older">Passate</string>
     <string name="mark_section_as_read">Contrassegna tutta  %1$s come letta</string>
-    <string name="marking_section_as_read">Tutte in  %1$s contrassegnate come lette</string>
+    <string name="marking_section_as_read">Tutte le conversazioni in  %1$s contrassegnate come lette</string>
     <plurals name="conversations_deleted">
-        <item quantity="one">Conversazione  %1$d cancellata</item>
-        <item quantity="other">Conversazioni %1$d cancellata</item>
+        <item quantity="one">%1$d conversazione  cancellata</item>
+        <item quantity="other">%1$d conversazioni  cancellata</item>
     </plurals>
     <plurals name="conversations_archived">
-        <item quantity="one">Conversazione %1$d archiviata</item>
-        <item quantity="other">Conversazioni %1$d archiviate</item>
+        <item quantity="one">%1$d conversazione archiviata</item>
+        <item quantity="other">%1$d conversazioni archiviate</item>
     </plurals>
     <plurals name="conversations_unarchived">
-        <item quantity="one">Conversazione %1$d spostata in arrivo</item>
-        <item quantity="other">Conversazioni %1$d spostate in arrivo</item>
+        <item quantity="one">%1$d conversazione spostata in arrivo</item>
+        <item quantity="other">%1$d conversazioni spostate in arrivo</item>
     </plurals>
     <string name="undo">Annulla</string>
     <string name="enter_search">Cerca...</string>
@@ -87,7 +87,7 @@
     <string name="invite_friends_title">Ti piace Pulse?</string>
     <string name="invite_friends_summary">So do we and so will others! We\'re trying to get it in
 as many hands as we can to continue making it the best product that it can be and by
-inviting your friends to try, you\'re helping with this! \n\n seleziona gli amici ai quali ti piacerebbe inviare l\'app ed a loro sarà inviato un sms con una breve descrizione ed il link per il download!</string>
+inviting your friends to try, you\'re helping with this! \n\nseleziona gli amici ai quali ti piacerebbe inviare l\'app ed a loro sarà inviato un sms con una breve descrizione ed il link per il download!</string>
     <string name="invite_friends_sms">Sto usando una nuova app di messaggistica che penso potrebbe piacerti! Plus è gratuita e puoi scaricarla da qui:
 http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
@@ -159,7 +159,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="message_anywhere_onboarding_title_2">Sottoscrizione o Pagamento Unico</string>
     <string name="message_anywhere_onboarding_title_3">Periodo di prova di una settimana</string>
     <string name="message_anywhere_onboarding_content_1">Perfetta integrazione con i dispositivi (tablet, orologio, TV, web, app nativa di Google Chrome e Firefox) per l\'invio di SMS e MMS da qualsiasi luogo!</string>
-    <string name="message_anywhere_onboarding_content_2">Opzioni di pagamento sono se ne hai necessità: $10.99 a vita, $5.99 per un anno, $1.99 per 3 mesi, o $0.99 per un mese. Meno di un caffè.</string>
+    <string name="message_anywhere_onboarding_content_2">Opzioni di pagamento solo se ne hai necessità: $10.99 a vita, $5.99 per un anno, $1.99 per 3 mesi, o $0.99 per un mese. Meno di un caffè.</string>
     <string name="message_anywhere_onboarding_content_3">Usa l\'app Android, GRATIS (per sempre!) sul tuo telefono, o inizia a messaggiare da tutti i tuoi dispositivi con un periodo di prova di una settimana.</string>
     <string name="start_trial">Inizia\nTrial</string>
     <string name="not_now">Non\nOra</string>
@@ -215,11 +215,11 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
         <item quantity="other">in %1$d conversazioni</item>
     </plurals>
     <string name="pin_conversation">Fissa Conversazione</string>
-    <string name="pin_conversation_summary">Mantieni questa conversazioni in alto alla lista</string>
+    <string name="pin_conversation_summary">Mantieni questa conversazioni in cima alla lista</string>
     <string name="mute_conversation">Silenzia Conversazione</string>
     <string name="mute_conversation_summary">Nascondi notifiche per questa conversazione</string>
     <string name="private_conversation">Conversazione Privata</string>
-    <string name="private_conversation_summary">Nascondi il contenuto della conversazione delle notifiche</string>
+    <string name="private_conversation_summary">Nascondi il contenuto della conversazione nelle notifiche</string>
     <string name="primary_color">Colore Primario</string>
     <string name="primary_dark_color">Colore Primario Scuro</string>
     <string name="accent_color">Colore Accento</string>
@@ -238,15 +238,86 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="sound_effects">Effetti sonori</string>
     <string name="delivery_reports">Rapporti di consegna</string>
     <string name="theme_settings">Personalizzazione</string>
+    <string name="base_theme">Tema Base</string>
     <string name="global_theme_color">Colore del tema</string>
     <string name="font_size">Dimensione del font</string>
+    <string name="blacklist_hint">Inserisci numero nella blacklist...</string>
+    <string name="add_blacklist">%1$s\n\nSei sicuro di voler aggiungere questo numero nella blacklist? I messaggi in arrivo non saranno più salvati e notificati!</string>
+    <string name="remove_blacklist">%1$s\n\nVuoi eliminarlo dalla blacklist?</string>
+    <string name="blacklist_need_number">Devi inserire un numero nella blacklist!</string>
+    <string name="no_blacklists">Nessuna blacklist</string>
+    <string name="no_blacklists_summary">Se vuoi puoi aggiungere un numero dal tasto + sotto!</string>
+    <string name="add">Aggiungi</string>
+    <string name="privacy_policy">Politica sulla Privacy</string>
+    <string name="privacy_policy_summary">Guarda la nostra politica sulla privacy nel web</string>
+    <string name="account_expiring">L\' account è in scadenza!</string>
+    <string name="signout_time">Mi sto disconnettendo da: %1$s</string>
+    <string name="lifetime_subscriber">Abbonamento a Vita</string>
+    <string name="trial_period">Periodo di Prova</string>
+    <string name="setup_my_account">Configura l\'account</string>
+    <string name="setup_my_account_summary">Connettiti o effettua il login del tuo account per iniziare ad usare più funzioni come messaggiare dal tablet o dal computer</string>
+    <string name="preparing_new_account">Sto preparando l\'account&#8230;</string>
+    <string name="delete_account">Cancella l\'account</string>
+    <string name="delete_account_summary">Elimina l\'account da questo dispositivo, gli altri dispositivi connessi, e il server. Questa scelta è irreversibile!</string>
+    <string name="delete_account_confirmation">Sei sicuro di voler eliminare il tuo account ed ogni altra cosa connessa ad esso? Puoi sempre decidere di registrarti nuovamente!</string>
+    <string name="change_subscription">Cambia Abbonamento</string>
+    <string name="cancel_on_the_play_store">Elimina e visualizza il tuo abbonamento sul Play Store</string>
     <string name="resync_account">Resincronizza l\' Account</string>
     <string name="resync_account_summary">Mancano alcuni messaggi? Usa questo per aggiornare questo dispositivo
 con ciò che è sul dispositivo principale.</string>
     <string name="resync_account_confirmation">L\' operazione cancellerà tutti i messaggi dal dispositivo iniziando con una copia pulita di ciò che attualmente c\'è sul dispositivo principale. Sei sicuro di volere questo?</string>
+    <string name="normalize_color_scheme">In alternativa di può scegliere un solo colore per il contatto:</string>
+    <string name="no_apps_found">Nessun app trovata per gestire questa azione</string>
+    <string name="you_denied_permission">Hai negato questo permesso</string>
+    <string name="supported_platforms">Piattaforme Supportate</string>
+    <string name="supported_platforms_summary">Tutti i siti ufficiali dai quali accedere all\'app</string>
+    <string name="font_size_small">Piccolo</string>
+    <string name="font_size_normal">Normale</string>
+    <string name="font_size_large">Grande</string>
+    <string name="font_size_extra_large">Molto Grande</string>
+    <string name="advanced">Avanzato</string>
+    <string name="send_as_mms">Converti in MMS</string>
+    <string name="send_as_mms_summary">I messaggi lunghi saranno inviati come MMS invece che singoli SMS</string>
     <!-- Theming Options -->
+    <string name="day_night">Default (Giorno/Notte)</string>
+    <string name="always_light">Sempre Chiaro</string>
+    <string name="always_dark">Sempre Scuro</string>
+    <string name="always_black">Sempre Nero</string>
+    <string name="set_color_per_conversation">Imposta colore per conversazione</string>
+    <string name="material_color_red">Rosso</string>
+    <string name="material_color_pink">Rosa</string>
+    <string name="material_color_purple">Viola</string>
+    <string name="material_color_deep_purple">Viola scuro</string>
+    <string name="material_color_indigo">Indaco</string>
+    <string name="material_color_blue">Blu</string>
+    <string name="material_color_light_blue">Celeste</string>
+    <string name="material_color_cyan">Ciano</string>
+    <string name="material_color_teal">Verde acqua</string>
+    <string name="material_color_green">Verde prato</string>
+    <string name="material_color_light_green">Verde chiaro</string>
+    <string name="material_color_lime">Lime</string>
+    <string name="material_color_yellow">Giallo</string>
+    <string name="material_color_amber">Ambra</string>
+    <string name="material_color_orange">Arancione</string>
+    <string name="material_color_deep_orange">Arancio scuro</string>
+    <string name="material_color_brown">Marrone</string>
+    <string name="material_color_gray">Grigio</string>
+    <string name="material_color_blue_gray">Blu grigio</string>
+    <string name="material_color_black">Nero</string>
     <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Sei sicuro di voler cancellare questo messaggio programmato
+a %1$s?</string>
+    <string name="scheduled_message_hint">Messaggio da inviare...</string>
+    <string name="scheduled_to_hint">Contatto a cui inviare...</string>
+    <string name="scheduled_message_sent">Messaggio programmato inviato con successo</string>
+    <string name="no_scheduled_messages">Nessun messaggio programmato</string>
+    <string name="no_scheduled_messages_summary">Ne puoi creare uno nuovo con il pulsante + posto sotto!</string>
+    <string name="scheduled_message_in_future">La data deve essere futura!</string>
     <!-- Encryption -->
+    <string name="encrypting_and_uploading">Sto criptando ed effettuando l\'upload...</string>
+    <string name="encrypting_and_uploading_media">Sto criptando e comprimendo i media dei messaggi...</string>
+    <string name="encrypting_and_uploading_count">Sto criptando e comprimendo i media dei messaggi...
+(%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">Sto scaricando e decriptando...</string>
     <string name="decrypting_and_downloading_media">Sto scaricando e decriptando i media...</string>
     <!-- Quick Reply -->

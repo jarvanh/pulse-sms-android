@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <!-- Launcher Shortcuts -->
+    <!-- Drawer Items -->
+    <string name="menu_account">Můj účet</string>
+    <string name="menu_device_texting">Zprávy z libovolného zařízení</string>
+    <string name="menu_help">Nápověda &amp; zpětná vazba</string>
+    <string name="menu_about">O</string>
+    <string name="menu_search">Vyhledávání</string>
+    <string name="menu_mobile_only">Pouze na telefonu</string>
+    <string name="menu_snooze">Odložit oznámení</string>
+    <string name="menu_view_contact">Zobrazit kontakt</string>
+    <string name="menu_view_contacts">Zobrazit kontakty</string>
+    <string name="menu_view_media">Zobrazit média</string>
+    <string name="menu_delete_conversation">Smazat konverzaci</string>
+    <string name="menu_archive_conversation">Archivovat konverzaci</string>
+    <string name="menu_move_to_inbox">Přesunout do doručených zpráv</string>
+    <string name="menu_conversation_information">Informace o konverzaci</string>
+    <string name="menu_conversation_blacklist">Seznam blokovaných kontaktů</string>
+    <string name="menu_conversation_schedule">Naplánovat zprávu</string>
+    <string name="menu_contact_settings">Nastavené kontaktu</string>
+    <string name="menu_group_settings">Nastavení skupiny</string>
+    <string name="menu_snooze_off">Vypnuto</string>
+    <string name="menu_snooze_1">1 hodina</string>
+    <string name="menu_snooze_2">2 hodiny</string>
+    <string name="menu_snooze_4">4 hodiny</string>
+    <string name="menu_snooze_8">8 hodin</string>
+    <string name="menu_snooze_24">24 hodin</string>
+    <string name="menu_snooze_72">72 hodin</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Žádné zprávy</string>
+    <string name="close">Zavřít</string>
+    <!-- Conversation List Screen -->
+    <string name="last_week">Tento týden</string>
+    <string name="last_month">Tento měsíc</string>
+    <string name="older">Starší</string>
+    <string name="mark_section_as_read">Označit vše %1$s jako přečtené</string>
+    <string name="marking_section_as_read">Označování všech %1$s jako přečtené</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d konverzace vymazána</item>
+        <item quantity="other">%1$d konverzací vymazáno</item>
+        <item quantity="few">konverzací vymazány</item>
+        <item quantity="many">konverzací vymazáno</item>
+    </plurals>
+    <!-- Search Screen -->
+    <!-- Invite Friends Screen -->
+    <!-- Message List Screen -->
+    <string name="delete_message">Smazat zprávu?</string>
+    <!-- Compose Screen -->
+    <!-- Onboarding Screen -->
+    <!-- Notifications -->
+    <!-- About, Help and Feedback and Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Other -->
+    <string name="use_from_anywhere_short">Pulse můžete používat na kterémkoliv ze svých zařízení.</string>
+    <string name="no">Ne</string>
+    <string name="cancel">Zrušit</string>
+    <!-- Purchase/Subscriptions -->
+</resources>

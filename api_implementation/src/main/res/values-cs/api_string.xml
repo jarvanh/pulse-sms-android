@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Přihlásit</string>
+    <string name="api_signup">Registrace</string>
+    <string name="api_skip">Přeskočit</string>
+    <string name="api_email">Emailová adresa</string>
+    <string name="api_password">Heslo</string>
+    <string name="api_forgot_password">Zapomenuté heslo?</string>
+    <string name="api_password_confirmation">Potvrzení hesla</string>
+    <string name="api_name">Jméno</string>
+    <string name="api_phone_number">Telefonní číslo</string>
+    <string name="api_connecting">Připojení k serveru...</string>
+    <string name="api_yes">Ano</string>
+    <string name="api_no">Ne</string>
+    <string name="api_no_email">Emailová adresa nebyla zadána</string>
+    <string name="api_email_invalid">Neplatná emailová adresa</string>
+    <string name="api_no_password">Heslo nebylo zadáno</string>
+    <string name="api_no_password_confirmation">Potvrzení hesla nebylo zadáno</string>
+    <string name="api_password_mismatch">Hesla se neshodují</string>
+    <string name="api_no_phone_number">Telefonní číslo nebylo zadáno</string>
+    <string name="api_login_error">Došlo k chybě při přihlášení, špatný email nebo heslo?</string>
+    <string name="api_confirm">Potvrdit</string>
+    <string name="api_continue">Pokračovat</string>
+</resources>
