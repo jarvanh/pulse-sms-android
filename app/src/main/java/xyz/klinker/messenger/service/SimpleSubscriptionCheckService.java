@@ -35,11 +35,15 @@ public class SimpleSubscriptionCheckService extends IntentService {
         if (purchasedList.size() > 0) {
             ProductPurchased best = getBestProduct(purchasedList);
 
-            if (best.getProductId().equals("lifetime")) {
-                writeLifetimeSubscriber();
-            } else {
-                writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
-            }
+            handleBestProduct(best);
+        }
+    }
+
+    protected void handleBestProduct(ProductPurchased best) {
+        if (best.getProductId().equals("lifetime")) {
+            writeLifetimeSubscriber();
+        } else {
+            writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
         }
     }
 
@@ -49,7 +53,7 @@ public class SimpleSubscriptionCheckService extends IntentService {
         billing.destroy();
     }
 
-    private void writeLifetimeSubscriber() {
+    protected void writeLifetimeSubscriber() {
         Account account = Account.get(this);
         account.updateSubscription(
                 Account.SubscriptionType.LIFETIME, 1L, true);

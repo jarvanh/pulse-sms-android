@@ -41,6 +41,7 @@ import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
 import xyz.klinker.messenger.service.ApiUploadService;
 import xyz.klinker.messenger.service.SignoutService;
+import xyz.klinker.messenger.service.SimpleLifetimeSubscriptionCheckService;
 import xyz.klinker.messenger.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
@@ -303,6 +304,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     if (nav != null) {
                         nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
                     }
+
+                    getActivity().startService(new Intent(getActivity(), SimpleLifetimeSubscriptionCheckService.class));
                 } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
                     restoreAccount();
                 }
