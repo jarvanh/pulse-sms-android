@@ -818,8 +818,6 @@ public class MessageListFragment extends Fragment implements
                         String originalImage = getArguments().getString(ARG_IMAGE_URI);
                         if ((photoUri != null && (!photoUri.equals(originalImage)) || originalImage == null || originalImage.isEmpty())) {
                             source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
-                        } else if (photoUri == null) {
-                            source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), "");
                         }
                     }
 
