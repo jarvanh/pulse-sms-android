@@ -44,39 +44,33 @@ public class AboutFragment extends PreferenceFragmentCompat {
         findPreference(getString(R.string.pref_about_device_info)).setSummary(getDeviceInfo());
 
         findPreference(getString(R.string.pref_about_changelog))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayChangelog();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    displayChangelog();
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_about_copyright))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayOpenSource();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    displayOpenSource();
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_about_privacy_policy))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayPrivacyPolicy();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWebsite("https://messenger.klinkerapps.com/privacy.html");
+                    return true;
+                });
+
+        findPreference(getString(R.string.pref_website))
+                .setOnPreferenceClickListener(preference -> {
+                    openWebsite("https://messenger.klinkerapps.com");
+                    return false;
                 });
 
         findPreference(getString(R.string.pref_supported_platforms))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displaySupportedPlatforms();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWebsite("https://messenger.klinkerapps.com/supported_platforms.html");
+                    return true;
                 });
 
         /*findPreference(getString(R.string.pref_about_beta))
@@ -138,30 +132,11 @@ public class AboutFragment extends PreferenceFragmentCompat {
     }
 
     /**
-     * Displays the privacy policy in the web browser.
+     * Displays a website from a url
+     *
+     * @param url
      */
-    public void displayPrivacyPolicy() {
-        String url = "https://messenger.klinkerapps.com/privacy.html";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    /**
-     * Displays the supported platforms in the web browser.
-     */
-    public void displaySupportedPlatforms() {
-        String url = "https://messenger.klinkerapps.com/supported_platforms.html";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    /**
-     * Displays the privacy policy in the web browser.
-     */
-    public void displayIssueTracker() {
-        String url = "https://github.com/klinker-apps/messenger-issues/issues";
+    private void openWebsite(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);

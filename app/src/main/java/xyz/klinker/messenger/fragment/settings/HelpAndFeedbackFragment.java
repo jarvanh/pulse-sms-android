@@ -35,79 +35,40 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.help_and_feedback);
 
         findPreference(getString(R.string.pref_help_faqs))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayFaqs();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWeb("https://messenger.klinkerapps.com/faq.html");
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_help_features))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayFeatures();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWeb("https://messenger.klinkerapps.com/features.html");
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_help_google_plus))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayGooglePlus();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWeb("https://plus.google.com/u/0/communities/110320018522684513593");
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_help_email))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayEmail();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    displayEmail();
+                    return true;
                 });
 
         findPreference(getString(R.string.pref_help_twitter))
-                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        displayTwitter();
-                        return true;
-                    }
+                .setOnPreferenceClickListener(preference -> {
+                    openWeb("https://twitter.com/KlinkerApps");
+                    return true;
                 });
-    }
 
-    /**
-     * Displays the FAQs.
-     */
-    public void displayFaqs() {
-        String url = "https://messenger.klinkerapps.com/faq.html";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    /**
-     * Displays the FAQs.
-     */
-    public void displayFeatures() {
-        String url = "https://messenger.klinkerapps.com/features.html";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    /**
-     * Displays Google+ community.
-     */
-    public void displayGooglePlus() {
-        String url = "https://plus.google.com/u/0/communities/110320018522684513593";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
+        findPreference(getString(R.string.pref_help_issues))
+                .setOnPreferenceClickListener(preference -> {
+                    openWeb("https://github.com/klinker-apps/messenger-issues");
+                    return true;
+                });
     }
 
     /**
@@ -129,11 +90,7 @@ public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
         startActivity(Intent.createChooser(emailIntent, subject));
     }
 
-    /**
-     * Display's @KlinkerApps Twitter page.
-     */
-    public void displayTwitter() {
-        String url = "https://twitter.com/KlinkerApps";
+    private void openWeb(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);

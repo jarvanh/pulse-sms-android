@@ -228,6 +228,8 @@
         might find!</string>
     <string name="faqs">Frequently Asked Questions</string>
     <string name="features">Features</string>
+    <string name="issues">Issue Tracker</string>
+    <string name="issues_summary">Also serves as a feature roadmap</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse Beta Community</string>
     <string name="email">Email</string>
