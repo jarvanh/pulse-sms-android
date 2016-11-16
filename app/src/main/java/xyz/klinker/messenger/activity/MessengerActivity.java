@@ -184,8 +184,7 @@ public class MessengerActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
-                        !(otherFragment instanceof ArchivedConversationListFragment) &&
-                        !(otherFragment instanceof MyAccountFragment)) {
+                        otherFragment == null) {
                     fab.show();
                 }
 
