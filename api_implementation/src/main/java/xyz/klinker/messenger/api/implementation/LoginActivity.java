@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://messenger.klinkerapps.com/faq.html#forgot_password"));
+                        Uri.parse("https://messenger.klinkerapps.com/forgot_password.html"));
                 startActivity(browserIntent);
             }
         });
