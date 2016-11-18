@@ -430,6 +430,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             context.getString(R.string.you) + ": " + message.data : message.data,
                     message.mimeType, conversation.archive);
 
+            fragment.setConversationUpdateInfo(message.type == Message.TYPE_SENDING ?
+                    context.getString(R.string.you) + ": " + message.data : message.data);
+
             source.close();
         } else if (position == 0 && (getItemCount() == 1 || getItemCount() == 0)) {
             ((MessengerActivity) fragment.getActivity()).menuItemClicked(R.id.menu_delete_conversation);

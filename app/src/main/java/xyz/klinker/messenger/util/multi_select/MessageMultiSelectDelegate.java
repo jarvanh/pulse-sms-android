@@ -97,8 +97,12 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             boolean handled = false;
 
             List<Long> selectedIds = new ArrayList<>();
+            int highestKey = -1;
             for(int i = 0; i < mSelections.size(); i++) {
                 int key = mSelections.keyAt(i);
+                if (highestKey == -1 || key > highestKey)
+                    highestKey = key;
+
                 if (mSelections.get(key))
                     selectedIds.add(adapter.getItemId(key));
             }
@@ -114,6 +118,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                     fragment.getDataSource().deleteMessage(id);
                 }
 
+                adapter.onMessageDeleted(activity, fragment.getConversationId(), highestKey);
                 fragment.loadMessages();
             } else if (item.getItemId() == R.id.menu_share_message) {
                 handled = true;

@@ -109,7 +109,7 @@
             android:layout_marginStart="@dimen/message_list_padding"
             android:layout_marginEnd="@dimen/message_list_padding"
             android:padding="8dp"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|start"
             android:clipToPadding="false"
             android:id="@+id/send_bar"
             android:alpha="0"
@@ -126,7 +126,7 @@
                 android:visibility="gone"
                 android:contentDescription="@string/select_sim" />
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp">
@@ -140,19 +140,19 @@
                     android:id="@+id/attach"
                     android:clickable="true"
                     android:contentDescription="@string/attach"
-                    android:layout_centerInParent="true" />
+                    android:layout_gravity="center_vertical|start" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:gravity="center_horizontal"
                     android:layout_marginBottom="2dp"
-                    android:layout_centerHorizontal="true"
                     android:textSize="12sp"
                     android:id="@+id/text_counter"
                     android:textColor="@color/secondaryText" />
 
-            </RelativeLayout>
+            </FrameLayout>
 
             <xyz.klinker.messenger.view.ImageKeyboardEditText
                 android:layout_width="0dp"
@@ -182,7 +182,7 @@
                 app:elevation="0dp"
                 app:fabSize="mini"
                 app:rippleColor="@android:color/white"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical|start" />
 
         </LinearLayout>
 

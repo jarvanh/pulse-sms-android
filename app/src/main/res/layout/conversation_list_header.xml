@@ -30,7 +30,7 @@
         android:textSize="12sp"
         android:textColor="@color/secondaryText"
         android:id="@+id/header"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="start|center_vertical"
         android:paddingStart="@dimen/conversation_list_padding"
         android:paddingEnd="@dimen/conversation_list_padding" />
 
