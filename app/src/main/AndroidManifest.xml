@@ -278,6 +278,17 @@
             </intent-filter>
         </service>
 
+        <!-- <service android:name=".service.DashclockExtension"
+            android:icon="@drawable/ic_stat_notify_group"
+            android:label="@string/app_name"
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+            <intent-filter>
+                <action android:name="com.google.android.apps.dashclock.Extension" />
+            </intent-filter>
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="true" />
+        </service> -->
+
         <service android:name=".service.ForceTokenRefreshService" />
         <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.NotificationService" />

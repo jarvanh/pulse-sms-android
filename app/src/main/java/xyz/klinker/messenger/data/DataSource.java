@@ -781,7 +781,27 @@ public class DataSource {
         
         return count;
     }
-    
+
+    public List<Conversation> getUnreadConversationsAsList() {
+        Cursor cursor = getUnreadConversations();
+        List<Conversation> conversations = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(cursor);
+
+                conversations.add(conversation);
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return conversations;
+    }
+
     /**
      * Searches for conversations that have a title that matches the given query.
      */

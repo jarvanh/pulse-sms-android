@@ -373,6 +373,7 @@
     <string name="send">Send</string>
 
     <!-- Other -->
+    <string name="dashclock_description">Unread SMS/MMS information</string>
     <string name="default_text">Default</string>
     <string name="did_you_know">Did you know?</string>
     <string name="use_from_anywhere">Pulse can be used from any device connected to the internet -

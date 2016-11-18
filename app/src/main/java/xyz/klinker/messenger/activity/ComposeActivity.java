@@ -93,20 +93,14 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         contactEntry.setAdapter(adapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismissKeyboard();
+        fab.setOnClickListener(view -> {
+            dismissKeyboard();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (contactEntry.getText().length() > 0) {
-                            showConversation();
-                        }
-                    }
-                }, 100);
-            }
+            new Handler().postDelayed(() -> {
+                if (contactEntry.getText().length() > 0) {
+                    showConversation();
+                }
+            }, 100);
         });
 
         contactEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -245,7 +239,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         }
 
         startActivity(open);
-
         finish();
     }
 
