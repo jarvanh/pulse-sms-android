@@ -19,6 +19,7 @@
     <version
         name="1.9.1"
         description="November 19th, 2016">
+        <text>Improvements to deleting single messages from message list</text>
         <text>Tons of RTL fixes</text>
         <text>Prevent keyboard from causing weird UI on conversation list</text>
         <text>Improvements to displayed phone number</text>
