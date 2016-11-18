@@ -1104,6 +1104,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the signature setting.
+     */
+    public void updateSignature(final String accountId, final String signature) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "signature", "string", signature);
+        }
+    }
+
+    /**
      * Update the sound effects setting.
      */
     public void updateSoundEffects(final String accountId, final boolean effects) {

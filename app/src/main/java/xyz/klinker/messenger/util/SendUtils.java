@@ -61,6 +61,11 @@ public class SendUtils {
 
     public Uri send(Context context, String text, String[] addresses, Uri data,
                            String mimeType, Integer subscriptionId) {
+        xyz.klinker.messenger.data.Settings appSettings = xyz.klinker.messenger.data.Settings.get(context);
+        if (!appSettings.signature.isEmpty()) {
+            text += "\n" + appSettings.signature;
+        }
+
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);

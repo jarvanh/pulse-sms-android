@@ -65,5 +65,6 @@
     <string name="pref_seen_convo_nav_tooltip">seen_convo_nav_tooltip</string>
     <string name="pref_snooze">snooze</string>
     <string name="pref_convert_to_mms">convert_to_mms</string>
+    <string name="pref_signature">signature</string>
 
 </resources>

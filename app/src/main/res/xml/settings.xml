@@ -75,6 +75,11 @@
             android:summary="@string/send_as_mms_summary"
             android:defaultValue="true" />
 
+        <Preference
+            android:key="@string/pref_signature"
+            android:title="@string/signature"
+            android:summary="@string/signature_summary" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

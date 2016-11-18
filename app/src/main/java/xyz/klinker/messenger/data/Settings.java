@@ -75,6 +75,7 @@ public class Settings {
     public String ringtone;
     public String fontSize;
     public String themeColorString;
+    public String signature;
 
     // configuration
     public int smallFont;
@@ -124,6 +125,7 @@ public class Settings {
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
         this.useGlobalThemeColor = !themeColorString.equals("default");
+        this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "");
 
         // configuration
         if (this.ringtone == null) {
