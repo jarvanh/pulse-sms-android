@@ -35,6 +35,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberUtils;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -50,6 +52,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.List;
 
 import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
@@ -645,9 +649,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getPhoneNumber() {
-        TelephonyManager telephonyManager = (TelephonyManager)
-                getSystemService(Context.TELEPHONY_SERVICE);
-        return PhoneNumberUtils.stripSeparators(telephonyManager.getLine1Number());
+        String number = "";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            SubscriptionManager manager = SubscriptionManager.from(this);
+            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
+
+            if (availableSims.size() > 0) {
+                number = availableSims.get(0).getNumber();
+            }
+        }
+
+        if (number == null || number.isEmpty()) {
+            TelephonyManager telephonyManager = (TelephonyManager)
+                    getSystemService(Context.TELEPHONY_SERVICE);
+            number = telephonyManager.getLine1Number();
+        }
+
+        return PhoneNumberUtils.stripSeparators(number);
     }
 
     private String getFirebaseId() {

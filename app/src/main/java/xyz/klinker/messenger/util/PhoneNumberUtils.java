@@ -18,7 +18,10 @@ package xyz.klinker.messenger.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.ContactsContract;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 
 import com.klinker.android.send_message.Utils;
@@ -116,7 +119,22 @@ public class PhoneNumberUtils {
      * Returns the device's phone number.
      */
     public static String getMyPhoneNumber(Context context) {
-        return clearFormatting(Utils.getMyPhoneNumber(context));
+        String number = "";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            SubscriptionManager manager = SubscriptionManager.from(context);
+            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
+
+            if (availableSims.size() > 0) {
+                number = availableSims.get(0).getNumber();
+            }
+        }
+
+        if (number == null || number.isEmpty()) {
+            number = Utils.getMyPhoneNumber(context);
+        }
+
+        return clearFormatting(number);
     }
 
     /**
