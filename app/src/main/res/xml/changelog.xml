@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.9.1"
+        description="November 19th, 2016">
+        <text>Prevent keyboard from causing weird UI on conversation list</text>
+        <text>Improvements to displayed phone number</text>
+    </version>
+
+    <version
         name="1.9.0"
         description="November 16th, 2016">
         <text>Initial public release! Thanks for the beta testing help!</text>

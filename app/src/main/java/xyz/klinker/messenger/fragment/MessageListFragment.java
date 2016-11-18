@@ -31,6 +31,7 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -60,6 +61,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -201,6 +203,8 @@ public class MessageListFragment extends Fragment implements
     private int extraMarginTop = 0;
     private int extraMarginLeft = 0;
 
+    private boolean keyboardOpen = false;
+
     public static MessageListFragment newInstance(Conversation conversation) {
         return newInstance(conversation, -1);
     }
@@ -271,20 +275,35 @@ public class MessageListFragment extends Fragment implements
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
-                boolean focused = messageEntry.hasFocus();
-
                 dismissKeyboard();
                 new Handler().postDelayed(() -> {
                     if (getActivity() != null) {
                         getActivity().onBackPressed();
                     }
-                }, focused ? 300 : 100);
+                }, keyboardOpen ? 300 : 100);
             }
 
             @Override
             public void onDrag(float elasticOffset, float elasticOffsetPixels,
                                float rawOffset, float rawOffsetPixels) {
 
+            }
+        });
+
+        dragDismissFrameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                Rect r = new Rect();
+                dragDismissFrameLayout.getWindowVisibleDisplayFrame(r);
+                int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    keyboardOpen = true;
+                } else {
+                    keyboardOpen = false;
+                }
             }
         });
 
@@ -418,14 +437,12 @@ public class MessageListFragment extends Fragment implements
 
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(view -> {
-                boolean focused = messageEntry.hasFocus();
-
                 dismissKeyboard();
                 new Handler().postDelayed(() -> {
                     if (getActivity() != null) {
                         getActivity().onBackPressed();
                     }
-                }, focused ? 300 : 100);
+                }, keyboardOpen ? 300 : 100);
             });
         }
 
