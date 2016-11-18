@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse（短信、平板 短信应用）</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">新消息</string>
+    <string name="shortcut_compose_long">开始一个新对话</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">对话列表</string>
+    <string name="menu_archived_conversations">归档的对话</string>
+    <string name="menu_schedule">待发的信息</string>
+    <string name="menu_mute_contacts">黑名单</string>
+    <string name="menu_invite">邀请好友</string>
+    <string name="menu_settings">全局设置</string>
+    <string name="menu_account">我的账户</string>
+    <string name="menu_device_texting">所有设备的消息</string>
+    <string name="menu_help">帮助&amp;反馈</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_mobile_only">仅移动端</string>
+    <string name="menu_snooze">暂停通知</string>
+    <string name="menu_call">电话联系</string>
+    <string name="menu_view_contact">查看该联系人</string>
+    <string name="menu_view_contacts">查看联系人</string>
+    <string name="menu_view_media">查看附件</string>
+    <string name="menu_delete_conversation">删除对话</string>
+    <string name="menu_archive_conversation">归档对话</string>
+    <string name="menu_move_to_inbox">移到收件箱</string>
+    <string name="menu_conversation_information">对话详情</string>
+    <string name="menu_conversation_blacklist">黑名单列表</string>
+    <string name="menu_conversation_schedule">定时发送</string>
+    <string name="menu_contact_settings">联系人设置</string>
+    <string name="menu_group_settings">群组设置</string>
+    <string name="menu_snooze_off">关闭</string>
+    <string name="menu_snooze_1">1小时</string>
+    <string name="menu_snooze_2">2小时</string>
+    <string name="menu_snooze_4">4小时</string>
+    <string name="menu_snooze_8">8小时</string>
+    <string name="menu_snooze_24">24小时</string>
+    <string name="menu_snooze_72">72小时</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">没有消息</string>
+    <string name="no_messages_summary">开始一个新对话或只是享受你独自的一天</string>
+    <string name="close">关闭</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">固定</string>
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="last_week">本周</string>
+    <string name="last_month">本月</string>
+    <string name="older">往后</string>
+    <string name="mark_section_as_read">将全部 %1$s 标为已读</string>
+    <string name="marking_section_as_read">将全部 %1$s 标为已读</string>
+    <plurals name="conversations_deleted">
+        <item quantity="other">%1$d 会话已删除</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="other">%1$d 会话已归档</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="other">%1$d 会话已移至收件箱</item>
+    </plurals>
+    <string name="undo">撤销</string>
+    <string name="enter_search">搜索</string>
+    <!-- Search Screen -->
+    <string name="conversations">会话</string>
+    <string name="messages">消息</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">喜欢Pulse吗？</string>
+    <string name="invite_friends_summary">希望大家喜欢。我们正在汇聚力量来努力使这个应用变得更好，将应用分享给你的朋友，你也可以提供一些帮助。
+选择下方你想要分享的朋友，将会发送一条简短介绍和下载链接的短信。</string>
+    <string name="invite_friends_sms">我在使用一款全新的短信应用，相信你也会喜欢它！另外，这是完全免费的，下载链接在此：http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">输入消息</string>
+    <string name="type_message_to">在%1$s 中输入消息</string>
+    <string name="attach">附上</string>
+    <string name="select_sim">选择SIM卡</string>
+    <string name="mms_image">图像</string>
+    <string name="now">现在</string>
+    <string name="sending">发送中</string>
+    <string name="failed">失败</string>
+    <string name="delivered">信息已发送</string>
+    <string name="attach_image">插入图片</string>
+    <string name="capture_image">保存图片</string>
+    <string name="attach_gif">插入GIF</string>
+    <string name="record_video">录制视频</string>
+    <string name="record_audio">录制音频</string>
+    <string name="attach_location">插入位置</string>
+    <string name="no_location_found">找不到你的位置</string>
+    <string name="camera_permission_needed">相机权限需要更新来拍摄照片</string>
+    <string name="take_picture">快照</string>
+    <string name="flip_picture">翻转相机</string>
+    <string name="fullscreen">全屏</string>
+    <string name="attached_image">插入图像</string>
+    <string name="remove_image">移除已插入的图像</string>
+    <string name="edit_image">编辑插入的图像</string>
+    <string name="permission_needed_for_action">此操作需要权限</string>
+    <string name="request_permission">请求权限</string>
+    <string name="no_messages_with_contact">你在这个对话里还没有消息，去发句消息吧</string>
+    <string name="save">保存</string>
+    <string name="share">分享</string>
+    <string name="share_content">分享通过...</string>
+    <string name="saved">保存到下载文件夹</string>
+    <string name="failed_to_save">保存失败</string>
+    <string name="start_recording_audio">点此按钮开始录制音频</string>
+    <string name="audio_recording_error">录制失败</string>
+    <string name="message_copied_to_clipboard">复制到剪贴板</string>
+    <string name="view_details">查看详情</string>
+    <string name="delete">删除</string>
+    <string name="copy_message">复制文本</string>
+    <string name="resend">重新发送</string>
+    <string name="no_media">此会话中没有附件</string>
+    <string name="error_decrypting">解码失败。请在手机上查看消息</string>
+    <string name="message_sending_failed">信息发送失败</string>
+    <string name="preparing_video">正在准备视频&#8230;</string>
+    <string name="delete_message">删除这个消息吗？</string>
+    <string name="forward_message">转发消息</string>
+    <string name="share_message">分享消息</string>
+    <string name="copy_message_text">复制消息文本</string>
+    <string name="open_link_to_browser">在浏览器中打开链接</string>
+    <string name="open_link_internal">使用内置打开链接</string>
+    <string name="copy_link">复制链接</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">组建新消息</string>
+    <string name="send_message">发送消息</string>
+    <string name="enter_contact_name">输入联系人名字</string>
+    <string name="error_processing_vcard">处理vCard出错</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">本应用需要这些权限才能运行，请允许它们。</string>
+    <string name="loading_messages">正在优化...</string>
+    <string name="loading_messages_summary">正在处理消息，这不会花费太长时间。</string>
+    <string name="tooltip_got_it">了解！</string>
+    <string name="navigation_drawer_conversation_hint">应用抽屉里面有更多关于会话的设置。</string>
+    <string name="onboarding_title_2">随时随地获取</string>
+    <string name="onboarding_title_3">强大的定制服务</string>
+    <string name="onboarding_content_1">"流畅、强大的UI设计、平台无缝连接。Pulse将你的消息置于首位。"</string>
+    <!-- Notifications -->
+    <!-- About, Help and Feedback and Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Other -->
+    <!-- Purchase/Subscriptions -->
+</resources>

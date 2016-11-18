@@ -1,1 +1,1 @@
-Initial public release! If you are interested in what went on during the extensive beta testing phase, feel free to check out the change log in the "About" section of the app!
+After a great initial release, this update fixes some bugs that had been reported and adds an option to use signatures on your messages!

@@ -266,7 +266,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="delete_account_summary">Entfernt den Account von diesem Gerät; den anderen Geräten, auf denen Sie eingeloggt sind; und dem Server. Dies kann nicht rückgängig gemacht werden!</string>
     <string name="delete_account_confirmation">Sind Sie sicher, dass Sie Ihren Account alles andere mit ihm löschen möchten? Sie können sich später jederzeit erneut registrieren!</string>
     <string name="change_subscription">Abo ändern</string>
-    <string name="cancel_on_the_play_store">Beenden und prüfen Sie ihr Abo im Play Store</string>
+    <string name="cancel_on_the_play_store">Verwalten oder beenden Sie ihr Abo im Play Store</string>
     <string name="resync_account">Account erneut synchronisieren</string>
     <string name="resync_account_summary">Nachrichten fehlen? Bringen Sie hiermit ihr Gerät wieder auf den Stand des primären Gerätes.</string>
     <string name="resync_account_confirmation">Dies löscht alle Nachrichten von diesem Gerät und lädt eine frische Kopie von ihrem primären Gerät herüber. Fortfahren?</string>
@@ -287,7 +287,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="always_light">Immer Hell</string>
     <string name="always_dark">Immer Dunkel</string>
     <string name="always_black">Immer Schwarz</string>
-    <string name="set_color_per_conversation">Farbe für jede Unterhaltung einzeln wählen</string>
+    <string name="set_color_per_conversation">In jeder Unterhaltung anders</string>
     <string name="material_color_red">Rot</string>
     <string name="material_color_pink">Pink</string>
     <string name="material_color_purple">Violett</string>
@@ -314,7 +314,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="scheduled_to_hint">Empfänger...</string>
     <string name="scheduled_message_sent">Geplante Nachricht erfolgreich gesendet</string>
     <string name="no_scheduled_messages">Keine geplanten Nachrichten</string>
-    <string name="no_scheduled_messages_summary">Um eine neue zu erstellen den Plus-Knopf unten drücken!</string>
+    <string name="no_scheduled_messages_summary">Hinzufügen über den Plus-Knopf unten!</string>
     <string name="scheduled_message_in_future">Zeitpunkt muss in der Zukunft liegen!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Verschlüssele und lade hoch...</string>

@@ -28,7 +28,7 @@
     <string name="menu_invite">Invita gli amici</string>
     <string name="menu_settings">Impostazioni generali</string>
     <string name="menu_account">Il mio account</string>
-    <string name="menu_device_texting">Invia messaggi da ogni dispositivo</string>
+    <string name="menu_device_texting">Il mio Account</string>
     <string name="menu_help">Help &amp; feedback</string>
     <string name="menu_about">Info</string>
     <string name="menu_search">Ricerca</string>
@@ -196,6 +196,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="device_id">ID dispositivo</string>
     <string name="device_info">Info Dispositivo</string>
     <string name="website">Sito web</string>
+    <string name="access_messages_from_any_device">Accedi per iniziare ad inviare messaggi da tutti i tuoi dispositivi!</string>
     <string name="beta_disclaimer">L\'app è ancora in beta, se trovi bug riportali per favore!</string>
     <string name="faqs">Domande Frequenti</string>
     <string name="features">Novità</string>
@@ -270,7 +271,7 @@ con ciò che è sul dispositivo principale.</string>
     <string name="no_apps_found">Nessun app trovata per gestire questa azione</string>
     <string name="you_denied_permission">Hai negato questo permesso</string>
     <string name="supported_platforms">Piattaforme Supportate</string>
-    <string name="supported_platforms_summary">Tutti i siti ufficiali dai quali accedere all\'app</string>
+    <string name="supported_platforms_summary">Clicca per conoscere tutti i dispositivi supportati</string>
     <string name="font_size_small">Piccolo</string>
     <string name="font_size_normal">Normale</string>
     <string name="font_size_large">Grande</string>
