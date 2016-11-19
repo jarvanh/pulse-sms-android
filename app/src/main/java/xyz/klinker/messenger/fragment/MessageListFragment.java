@@ -275,12 +275,13 @@ public class MessageListFragment extends Fragment implements
         dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
-                dismissKeyboard();
                 new Handler().postDelayed(() -> {
                     if (getActivity() != null) {
                         getActivity().onBackPressed();
                     }
                 }, keyboardOpen ? 300 : 100);
+                
+                dismissKeyboard();
             }
 
             @Override
@@ -437,22 +438,27 @@ public class MessageListFragment extends Fragment implements
 
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(view -> {
-                dismissKeyboard();
                 new Handler().postDelayed(() -> {
                     if (getActivity() != null) {
                         getActivity().onBackPressed();
                     }
                 }, keyboardOpen ? 300 : 100);
+
+                dismissKeyboard();
             });
         }
 
         toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
                 R.menu.fragment_messages_group : R.menu.fragment_messages);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
-            }
+        toolbar.setOnMenuItemClickListener(item -> {
+            new Handler().postDelayed(() -> {
+                if (getActivity() != null) {
+                    ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
+                }
+            }, keyboardOpen ? 300 : 100);
+
+            dismissKeyboard();
+            return false;
         });
 
         setNameAndDrawerColor(getActivity());
