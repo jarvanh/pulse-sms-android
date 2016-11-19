@@ -960,10 +960,19 @@ public class MessageListFragment extends Fragment implements
             PermissionsUtils.setDefaultSmsApp(getActivity());
         } else {
             final String message = messageEntry.getText().toString().trim();
-            final Uri uri = attachedUri;
-            final String mimeType = attachedMimeType;
+            final List<Uri> uris = new ArrayList<>();
+            final String mimeType = attachedMimeType != null ?
+                    attachedMimeType : MimeType.TEXT_PLAIN;
 
-            if (message.length() > 0 || attachedUri != null) {
+            if (selectedImageUris.size() > 0) {
+                for (String uri : selectedImageUris) {
+                    uris.add(Uri.parse(uri));
+                }
+            } else if (attachedUri != null) {
+                uris.add(attachedUri);
+            }
+
+            if (message.length() > 0 || uris.size() > 0) {
                 Conversation conversation = source.getConversation(getConversationId());
 
                 final Message m = new Message();
@@ -976,16 +985,11 @@ public class MessageListFragment extends Fragment implements
                 m.seen = true;
                 m.from = null;
                 m.color = null;
-                m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(getActivity())
-                        .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
+                m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
+                        DualSimUtils.get(getActivity()).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
                 if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
                     source.deleteMessage(adapter.getItemId(0));
-                }
-
-                if (message.length() != 0) {
-                    source.insertMessage(getActivity(), m, m.conversationId);
-                    loadMessages();
                 }
 
                 messageEntry.setText(null);
@@ -993,8 +997,17 @@ public class MessageListFragment extends Fragment implements
                 Fragment fragment = getActivity()
                         .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
 
-                if (uri != null) {
-                    m.data = uri.toString();
+                if (fragment != null && fragment instanceof ConversationListFragment) {
+                    ((ConversationListFragment) fragment).notifyOfSentMessage(m);
+                }
+
+                if (message.length() != 0) {
+                    source.insertMessage(getActivity(), m, m.conversationId);
+                    loadMessages();
+                }
+
+                if (uris.size() > 0) {
+                    m.data = uris.get(0).toString();
                     m.mimeType = mimeType;
 
                     if (m.id != 0) {
@@ -1005,23 +1018,38 @@ public class MessageListFragment extends Fragment implements
                     loadMessages();
                 }
 
-                clearAttachedData();
-
-                if (fragment != null && fragment instanceof ConversationListFragment) {
-                    ((ConversationListFragment) fragment).notifyOfSentMessage(m);
-                }
-
                 new Thread(() -> {
-                    Conversation conversation1 = source.getConversation(getConversationId());
-                    Uri imageUri = new SendUtils(conversation1 != null ? conversation1.simSubscriptionId : null)
-                            .send(getContext(), message,
-                                getArguments().getString(ARG_PHONE_NUMBERS), uri, mimeType);
-                    source.deleteDrafts(getConversationId());
+                    Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                            .send(getContext(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                                    uris.size() > 0 ? uris.get(0) : null, mimeType);
 
                     if (imageUri != null) {
                         source.updateMessageData(m.id, imageUri.toString());
                     }
                 }).start();
+
+                if (uris.size() > 1) {
+                    for (int i = 1; i < uris.size(); i++) {
+                        final Uri sendUri = uris.get(i);
+                        m.data = sendUri.toString();
+                        m.mimeType = mimeType;
+                        m.id = 0;
+
+                        m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
+
+                        new Thread(() -> {
+                            Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                                    .send(getContext(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                                            sendUri, mimeType);
+
+                            if (imageUri != null) {
+                                source.updateMessageData(m.id, imageUri.toString());
+                            }
+                        }).start();
+                    }
+
+                    loadMessages();
+                }
 
                 new AudioWrapper(getActivity(), R.raw.message_ping).play();
 
@@ -1030,6 +1058,12 @@ public class MessageListFragment extends Fragment implements
                             .cancel((int) getConversationId());
                     NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
                 }
+
+                clearAttachedData();
+                selectedImageUris.clear();
+                selectedImageCount.setVisibility(View.GONE);
+
+                source.deleteDrafts(getConversationId());
             }
         }
     }
