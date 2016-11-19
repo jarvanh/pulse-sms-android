@@ -1,1 +1,1 @@
-After a great initial release, this update fixes some bugs that had been reported, adds an option to use signatures on your messages, allows for custom snooze timeouts, and adds an option for repeat notifications!
+After a great initial release, this update fixes some bugs that had been reported, adds an option to use signatures on your messages, allows for custom snooze timeouts, adds a Dashclock extension, and adds an option for repeat notifications!

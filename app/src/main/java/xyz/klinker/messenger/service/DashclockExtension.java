@@ -1,6 +1,9 @@
 package xyz.klinker.messenger.service;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -14,23 +17,35 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 // similar to:
 // https://github.com/romannurik/dashclock/blob/master/main/src/main/java/com/google/android/apps/dashclock/phone/SmsExtension.java
 public class DashclockExtension extends DashClockExtension {
 
+    public BroadcastReceiver update = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onUpdateData(0);
+        }
+    };
+
     @Override
     public void onInitialize(boolean isReconnect) {
         super.onInitialize(isReconnect);
-        if (!isReconnect) {
-            addWatchContentUris(new String[]{
-                    "content://mms-sms/",
-            });
+
+        try {
+            unregisterReceiver(update);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MessengerAppWidgetProvider.REFRESH_ACTION);
+        registerReceiver(update, filter);
     }
 
     protected void onUpdateData(int reason) {
-
         DataSource source = DataSource.getInstance(this);
         source.open();
         List<Conversation> conversations = source.getUnreadConversationsAsList();
