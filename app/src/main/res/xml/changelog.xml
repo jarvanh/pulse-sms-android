@@ -17,7 +17,7 @@
 <changelog>
 
     <version
-        name="1.9.1"
+        name="1.10.0"
         description="November 19th, 2016">
         <text>Select multiple images to send at once</text>
         <text>Option to repeat notifications on a timed interval</text>
