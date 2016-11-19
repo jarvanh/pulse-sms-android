@@ -22,9 +22,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.settings.SettingsFragment;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -69,6 +71,12 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fragment.onActivityResult(requestCode, resultCode, data);
     }
 
 }

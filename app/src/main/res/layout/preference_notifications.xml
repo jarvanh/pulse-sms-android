@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ringtone"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:minWidth="150dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ringtone"
+                android:tint="@color/subscriptionPrimaryText"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textColor="@color/subscriptionPrimaryText"
+                android:text="@string/ringtone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/vibrate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:minWidth="150dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_vibrate"
+                android:tint="@color/subscriptionPrimaryText"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textColor="@color/subscriptionPrimaryText"
+                android:text="@string/vibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

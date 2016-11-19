@@ -39,31 +39,24 @@
             android:entryValues="@array/font_size_values"
             android:defaultValue="normal" />
 
-        <SwitchPreference
-            android:key="@string/pref_sound_effects"
-            android:title="@string/sound_effects"
-            android:defaultValue="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/notification_settings">
 
-        <xyz.klinker.messenger.view.AutoSummaryListPreference
-            android:key="@string/pref_vibrate"
-            android:title="@string/vibrate"
-            android:entries="@array/vibrate"
-            android:entryValues="@array/vibrate_values"
-            android:defaultValue="vibrate_default" />
-
-        <RingtonePreference
-            android:key="@string/pref_ringtone"
-            android:title="@string/ringtone"
-            android:ringtoneType="notification" />
+        <xyz.klinker.messenger.view.NotificationAlertsPreference
+            android:key="@string/pref_alert_types"
+            android:title="@string/alert_types"
+            android:summary="@string/alert_types_summary" />
 
         <SwitchPreference
             android:key="@string/pref_delivery_reports"
             android:title="@string/delivery_reports"
             android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="@string/pref_sound_effects"
+            android:title="@string/sound_effects"
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 

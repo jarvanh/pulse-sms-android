@@ -203,7 +203,7 @@ public class Settings {
     }
 
     @VisibleForTesting
-    protected SharedPreferences getSharedPrefs() {
+    public SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 

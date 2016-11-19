@@ -66,5 +66,6 @@
     <string name="pref_snooze">snooze</string>
     <string name="pref_convert_to_mms">convert_to_mms</string>
     <string name="pref_signature">signature</string>
+    <string name="pref_alert_types">alert_types</string>
 
 </resources>

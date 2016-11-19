@@ -317,6 +317,8 @@
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
     <string name="signature">Signature</string>
     <string name="signature_summary">NOTE: sent signatures will NOT be displayed in Pulse\'s message list. Signatures will only be shown to the receiver of the message.</string>
+    <string name="alert_types">Alert Types</string>
+    <string name="alert_types_summary">Various customizations for notifications</string>
 
 
     <!-- Theming Options -->

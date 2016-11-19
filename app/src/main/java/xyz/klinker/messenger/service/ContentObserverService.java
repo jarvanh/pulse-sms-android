@@ -118,6 +118,11 @@ public class ContentObserverService extends Service {
                 String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
                 cursor.close();
 
+                Settings settings = Settings.get(ContentObserverService.this);
+                if (settings.signature != null && !settings.signature.isEmpty()) {
+                    body = body.replace("\n" + settings.signature, "");
+                }
+
                 if (address == null || address.isEmpty()) {
                     return;
                 }

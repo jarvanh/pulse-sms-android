@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -32,6 +33,7 @@ import xyz.klinker.messenger.data.ColorSet;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**
  * Fragment for modifying app settings.
@@ -46,7 +48,6 @@ public class SettingsFragment extends PreferenceFragment {
         initBaseTheme();
         initGlobalTheme();
         initFontSize();
-        initVibrate();
         initDeliveryReports();
         initConvertToMMS();
         initSignature();
@@ -174,6 +175,13 @@ public class SettingsFragment extends PreferenceFragment {
                             effects);
                     return true;
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ((NotificationAlertsPreference) findPreference(getString(R.string.pref_alert_types)))
+                .handleRingtoneResult(requestCode, resultCode, data);
     }
 
 }
