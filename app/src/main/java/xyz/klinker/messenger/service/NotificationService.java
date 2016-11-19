@@ -16,9 +16,11 @@
 
 package xyz.klinker.messenger.service;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,6 +39,7 @@ import android.util.LongSparseArray;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
@@ -98,6 +101,11 @@ public class NotificationService extends IntentService {
 
             if (conversations.size() > 1) {
                 giveSummaryNotification(conversations, rows);
+            }
+
+            Settings settings = Settings.get(this);
+            if (settings.repeatNotifications != -1) {
+                NotificationService.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
             }
         }
 
@@ -205,7 +213,8 @@ public class NotificationService extends IntentService {
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
-                .setOnlyAlertOnce(shouldAlertOnce(conversation.messages))
+                .setOnlyAlertOnce(this instanceof RepeatNotificationService ?
+                        false : shouldAlertOnce(conversation.messages))
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
@@ -780,4 +789,23 @@ public class NotificationService extends IntentService {
         }
     }
 
+    public static void cancelRepeats(Context context) {
+        scheduleNextRun(context, 0);
+    }
+
+    public static void scheduleNextRun(Context context, long nextRun) {
+        if (!Account.get(context).exists() || (Account.get(context).exists() && Account.get(context).primary)) {
+            Intent intent = new Intent(context, RepeatNotificationService.class);
+            PendingIntent pIntent = PendingIntent.getService(context, RepeatNotificationService.REQUEST_CODE,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.cancel(pIntent);
+
+            long currentTime = new Date().getTime();
+            if (currentTime < nextRun) {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, nextRun, pIntent);
+            }
+        }
+    }
 }

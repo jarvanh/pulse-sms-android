@@ -38,6 +38,8 @@ public class NotificationDismissedService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        NotificationService.cancelRepeats(this);
+
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, 0);
 
         DataSource source = DataSource.getInstance(this);
