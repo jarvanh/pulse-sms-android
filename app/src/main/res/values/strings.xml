@@ -398,6 +398,7 @@
     <string name="cancel">Cancel</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
+    <string name="test">Test</string>
 
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">No Subscription Found!</string>

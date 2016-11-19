@@ -2,6 +2,7 @@ package xyz.klinker.messenger.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.net.Uri;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.service.RepeatNotificationService;
 
 public class NotificationAlertsPreference extends Preference implements
         Preference.OnPreferenceClickListener {
@@ -63,6 +67,9 @@ public class NotificationAlertsPreference extends Preference implements
                 .setView(layout)
                 .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
+                })
+                .setNegativeButton(R.string.test, (dialogInterface, i) -> {
+                    makeTestNotification();
                 }).show();
 
         return false;
@@ -155,5 +162,51 @@ public class NotificationAlertsPreference extends Preference implements
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getTitle());
 
         ((Activity)getContext()).startActivityForResult(intent, RINGTONE_REQUEST);
+    }
+
+    private void makeTestNotification() {
+        Settings settings = Settings.get(getContext());
+        Settings.VibratePattern vibratePattern = settings.vibrate;
+        int defaults = 0;
+        if (vibratePattern == Settings.VibratePattern.DEFAULT) {
+            defaults = Notification.DEFAULT_VIBRATE;
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
+                .setContentTitle("Test Notification")
+                .setContentText("Here is a test notification!")
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setColor(settings.globalColorSet.color)
+                .setDefaults(defaults)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setShowWhen(true)
+                .setWhen(System.currentTimeMillis());
+
+        Uri sound = getRingtone();
+        if (sound != null) {
+            builder.setSound(sound);
+        }
+
+        if (vibratePattern.pattern != null) {
+            builder.setVibrate(vibratePattern.pattern);
+        } else if (vibratePattern == Settings.VibratePattern.OFF) {
+            builder.setVibrate(new long[0]);
+        }
+
+        NotificationManagerCompat.from(getContext()).notify(1, builder.build());
+    }
+
+    private Uri getRingtone() {
+        String globalUri = Settings.get(getContext()).ringtone;
+        if (globalUri != null && globalUri.isEmpty()) {
+            return null;
+        } if (globalUri == null) {
+            // there is no global ringtone defined, or it doesn't exist on the system
+            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        } else {
+            // the global ringtone is available to use
+            return Uri.parse(globalUri);
+        }
     }
 }

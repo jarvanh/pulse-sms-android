@@ -24,6 +24,7 @@
         <text>Custom snooze timeouts</text>
         <text>Improvements to deleting single messages from message list</text>
         <text>Tons of RTL fixes</text>
+        <text>Test notification button when customizing notifications</text>
         <text>Prevent keyboard from causing weird UI on conversation list</text>
         <text>Improvements to displayed phone number</text>
     </version>
