@@ -90,6 +90,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
                     android:background="@color/colorPrimary"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:src="@drawable/ic_edit"
@@ -97,6 +98,16 @@
                     android:id="@+id/edit_image"
                     android:padding="3dp"
                     android:contentDescription="@string/edit_image" />
+
+                <TextView
+                    android:id="@+id/selected_images"
+                    android:visibility="gone"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/white"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"/>
 
             </LinearLayout>
 

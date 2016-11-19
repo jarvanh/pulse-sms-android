@@ -65,29 +65,33 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
             holder.image.setImageResource(R.drawable.ic_photo_gallery);
             holder.image.setBackgroundColor(colorForMediaTile);
 
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (callback != null) {
-                        callback.onGalleryPicker();
-                    }
+            holder.image.setOnClickListener(view -> {
+                if (callback != null) {
+                    callback.onGalleryPicker();
                 }
             });
 
             if (holder.playButton.getVisibility() != View.GONE) {
                 holder.playButton.setVisibility(View.GONE);
             }
+
+            if (holder.selectedCheckmarkLayout.getVisibility() != View.GONE) {
+                holder.selectedCheckmarkLayout.setVisibility(View.GONE);
+            }
         } else {
             images.moveToPosition(position - 1);
             File file = new File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)));
             Uri uri = Uri.fromFile(file);
 
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (callback != null) {
-                        callback.onImageSelected(holder.uri, holder.mimeType);
-                    }
+            holder.image.setOnClickListener(view -> {
+                if (callback != null) {
+                    callback.onImageSelected(holder.uri, holder.mimeType);
+                }
+
+                if (holder.selectedCheckmarkLayout.getVisibility() != View.VISIBLE) {
+                    holder.selectedCheckmarkLayout.setVisibility(View.VISIBLE);
+                } else {
+                    holder.selectedCheckmarkLayout.setVisibility(View.GONE);
                 }
             });
 
@@ -103,6 +107,13 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
                 holder.playButton.setVisibility(View.VISIBLE);
             } else if (holder.playButton.getVisibility() != View.GONE) {
                 holder.playButton.setVisibility(View.GONE);
+            }
+
+            if (holder.selectedCheckmarkLayout.getVisibility() != View.VISIBLE &&
+                    callback.isCurrentlySelected(holder.uri, holder.mimeType)) {
+                holder.selectedCheckmarkLayout.setVisibility(View.VISIBLE);
+            } else if (holder.selectedCheckmarkLayout.getVisibility() != View.GONE) {
+                holder.selectedCheckmarkLayout.setVisibility(View.GONE);
             }
         }
     }

@@ -24,4 +24,5 @@ import android.net.Uri;
 public interface ImageSelectedListener {
     void onImageSelected(Uri uri, String mimeType);
     void onGalleryPicker();
+    boolean isCurrentlySelected(Uri uri, String mimeType);
 }

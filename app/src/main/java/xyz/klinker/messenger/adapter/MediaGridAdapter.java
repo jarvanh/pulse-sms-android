@@ -45,12 +45,9 @@ public class MediaGridAdapter extends RecyclerView.Adapter<ImageViewHolder> {
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
         Uri image = Uri.parse(mediaMessages.get(position).data);
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (callback != null) {
-                    callback.onSelected(mediaMessages, holder.getAdapterPosition());
-                }
+        holder.image.setOnClickListener(view -> {
+            if (callback != null) {
+                callback.onSelected(mediaMessages, holder.getAdapterPosition());
             }
         });
 

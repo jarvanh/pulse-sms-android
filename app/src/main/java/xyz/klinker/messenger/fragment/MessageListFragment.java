@@ -87,6 +87,7 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -129,6 +130,7 @@ import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismi
 import xyz.klinker.messenger.view.ImageKeyboardEditText;
 import xyz.klinker.messenger.view.MaterialTooltip;
 import xyz.klinker.messenger.view.RecordAudioView;
+import xyz.klinker.messenger.view.ViewBadger;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -184,6 +186,7 @@ public class MessageListFragment extends Fragment implements
     private ImageButton attachLocation;
     private View attachedImageHolder;
     private ImageView attachedImage;
+    private TextView selectedImageCount;
     private View editImage;
     private View removeImage;
     private MessageListUpdatedReceiver updatedReceiver;
@@ -196,6 +199,8 @@ public class MessageListFragment extends Fragment implements
 
     private Uri attachedUri;
     private String attachedMimeType;
+
+    private List<String> selectedImageUris = new ArrayList<>();
 
     private AlertDialog detailsChoiceDialog;
     private MaterialTooltip navToolTip;
@@ -266,6 +271,7 @@ public class MessageListFragment extends Fragment implements
         attachLocation = (ImageButton) view.findViewById(R.id.attach_location);
         attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
+        selectedImageCount = (TextView) view.findViewById(R.id.selected_images);
         removeImage = view.findViewById(R.id.remove_image);
         editImage = view.findViewById(R.id.edit_image);
 
@@ -605,7 +611,17 @@ public class MessageListFragment extends Fragment implements
         });
 
         removeImage.setBackgroundColor(accent);
-        removeImage.setOnClickListener(view -> clearAttachedData());
+        removeImage.setOnClickListener(view -> {
+            clearAttachedData();
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
+
+            if (attachLayout.getVisibility() == View.VISIBLE) {
+                onBackPressed();
+            }
+        });
+
+        selectedImageCount.setBackgroundColor(accent);
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
             sendBar.setFocusable(false);
@@ -1246,17 +1262,52 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
+    public boolean isCurrentlySelected(Uri uri, String mimeType) {
+        return selectedImageUris.contains(uri.toString()) ||
+                (attachedUri != null && uri.toString().equals(attachedUri.toString()));
+    }
+
+    @Override
     public void onImageSelected(Uri uri, String mimeType) {
-        onBackPressed();
+        if (selectedImageUris.size() == 0) {
+            // auto close the attach view after selecting the first image
+            onBackPressed();
+        }
 
         if (MimeType.isStaticImage(mimeType)) {
-            attachImage(uri);
+            if (!selectedImageUris.contains(uri.toString())) {
+                attachImage(uri);
+                selectedImageUris.add(uri.toString());
+            } else {
+                selectedImageUris.remove(uri.toString());
+                if (selectedImageUris.size() > 0) {
+                    attachImage(Uri.parse(selectedImageUris.get(0)));
+                }
+            }
+
+            if (selectedImageUris.size() == 0) {
+                clearAttachedData();
+                selectedImageUris.clear();
+                selectedImageCount.setVisibility(View.GONE);
+                editImage.setVisibility(View.VISIBLE);
+            } else if (selectedImageUris.size() > 1) {
+                selectedImageCount.setVisibility(View.VISIBLE);
+                selectedImageCount.setText(selectedImageUris.size() + "");
+                editImage.setVisibility(View.GONE);
+            } else {
+                selectedImageCount.setVisibility(View.GONE);
+                editImage.setVisibility(View.VISIBLE);
+            }
         } else if (MimeType.isVideo(mimeType)) {
             startVideoEncoding(uri);
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
         } else if (mimeType.equals(MimeType.IMAGE_GIF)) {
             attachImage(uri);
             attachedMimeType = MimeType.IMAGE_GIF;
             editImage.setVisibility(View.GONE);
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
         }
     }
 
