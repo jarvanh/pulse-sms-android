@@ -57,6 +57,7 @@ public class NotificationAlertsPreference extends Preference implements
 
         layout.findViewById(R.id.vibrate).setOnClickListener(view -> vibrateClicked());
         layout.findViewById(R.id.ringtone).setOnClickListener(view -> ringtoneClicked());
+        layout.findViewById(R.id.repeat).setOnClickListener(view -> repeatClicked());
 
         new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
                 .setView(layout)
@@ -87,6 +88,31 @@ public class NotificationAlertsPreference extends Preference implements
         }
 
         return false;
+    }
+
+    private void repeatClicked() {
+        final Settings settings = Settings.get(getContext());
+        final SharedPreferences prefs = settings.getSharedPrefs();
+        final String currentPattern = prefs.getString(getContext().getString(R.string.pref_repeat_notifications), "never");
+
+        int actual = 0;
+        for (String s : getContext().getResources().getStringArray(R.array.repeat_values)) {
+            if (s.equals(currentPattern)) {
+                break;
+            } else {
+                actual++;
+            }
+        }
+
+        new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
+                .setSingleChoiceItems(R.array.repeat, actual, (dialogInterface, i) -> {
+                    String newRepeat = getContext().getResources().getStringArray(R.array.repeat_values)[i];
+
+                    settings.setValue(getContext().getString(R.string.pref_repeat_notifications), newRepeat);
+                    new ApiUtils().updateRepeatNotifications(Account.get(getContext()).accountId, newRepeat);
+
+                    dialogInterface.dismiss();
+                }).show();
     }
 
     private void vibrateClicked() {

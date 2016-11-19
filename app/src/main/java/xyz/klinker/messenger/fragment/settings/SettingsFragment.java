@@ -109,16 +109,6 @@ public class SettingsFragment extends PreferenceFragment {
                 });
     }
 
-    private void initVibrate() {
-        findPreference(getString(R.string.pref_vibrate))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String pattern = (String) o;
-                    new ApiUtils().updateVibrate(Account.get(getActivity()).accountId,
-                            pattern);
-                    return true;
-                });
-    }
-
     private void initDeliveryReports() {
         findPreference(getString(R.string.pref_delivery_reports))
                 .setOnPreferenceChangeListener((preference, o) -> {

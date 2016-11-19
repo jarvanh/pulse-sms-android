@@ -72,6 +72,7 @@ public class Settings {
     public boolean mobileOnly;
     public boolean soundEffects;
     public long snooze;
+    public long repeatNotifications;
     public String ringtone;
     public String fontSize;
     public String themeColorString;
@@ -177,6 +178,31 @@ public class Settings {
                 break;
             default:
                 this.vibrate = VibratePattern.DEFAULT;
+                break;
+        }
+
+        String repeatNotifications = sharedPrefs.getString(context.getString(R.string.pref_repeat_notifications), "never");
+        switch (repeatNotifications) {
+            case "never":
+                this.repeatNotifications = -1;
+                break;
+            case "one_min":
+                this.repeatNotifications = TimeUtils.MINUTE;
+                break;
+            case "five_mins":
+                this.repeatNotifications = TimeUtils.MINUTE * 5;
+                break;
+            case "ten_mins":
+                this.repeatNotifications = TimeUtils.MINUTE * 10;
+                break;
+            case "half_hour":
+                this.repeatNotifications = TimeUtils.MINUTE * 30;
+                break;
+            case "hour":
+                this.repeatNotifications = TimeUtils.HOUR;
+                break;
+            default:
+                this.repeatNotifications = -1;
                 break;
         }
 

@@ -1082,6 +1082,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the repeat notifications setting.
+     */
+    public void updateRepeatNotifications(final String accountId, final String repeatString) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "repeat_notifications_interval", "string", repeatString);
+        }
+    }
+
+    /**
      * Update the delivery reports setting.
      */
     public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {

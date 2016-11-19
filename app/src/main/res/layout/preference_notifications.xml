@@ -7,14 +7,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:orientation="vertical"
             android:id="@+id/ringtone"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:minWidth="150dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless" >
 
@@ -38,9 +37,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:id="@+id/vibrate"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:minWidth="150dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless" >
 
@@ -56,6 +53,30 @@
                 android:layout_gravity="center"
                 android:textColor="@color/subscriptionPrimaryText"
                 android:text="@string/vibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/repeat"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_timer"
+                android:tint="@color/subscriptionPrimaryText"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textColor="@color/subscriptionPrimaryText"
+                android:text="@string/repeat_interval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

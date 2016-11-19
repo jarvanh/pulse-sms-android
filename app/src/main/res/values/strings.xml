@@ -258,6 +258,13 @@
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Group Name</string>
     <string name="notification_settings">Notifications</string>
+    <string name="repeat_interval">Repeat Alert</string>
+    <string name="repeat_never">Never</string>
+    <string name="repeat_one_min">Every minute</string>
+    <string name="repeat_five_mins">Every five minutes</string>
+    <string name="repeat_ten_mins">Every ten minutes</string>
+    <string name="repeat_half_hour">Every half hour</string>
+    <string name="repeat_hour">Every hour</string>
     <string name="vibrate">Vibrate Pattern</string>
     <string name="vibrate_off">No vibration</string>
     <string name="vibrate_default">Default vibration</string>
