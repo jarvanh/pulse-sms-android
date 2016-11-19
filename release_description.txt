@@ -1,1 +1,1 @@
-After a great initial release, this update fixes some bugs that had been reported and adds an option to use signatures on your messages!
+After a great initial release, this update fixes some bugs that had been reported, adds an option to use signatures on your messages, allows for custom snooze timeouts, and adds an option for repeat notifications!

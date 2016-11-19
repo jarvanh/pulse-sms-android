@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/drawerBackground"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:layout_marginTop="12dp"
+            android:id="@+id/hours"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"/>
+
+        <TextView
+            android:layout_marginStart="8dp"
+            android:text="@string/hours"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:layout_marginBottom="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:layout_marginTop="12dp"
+            android:id="@+id/minutes"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="30"/>
+
+        <TextView
+            android:layout_marginStart="8dp"
+            android:text="@string/minutes"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:layout_marginBottom="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/snooze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:background="?selectableItemBackground"
+            android:text="@string/menu_snooze"/>
+
+    </LinearLayout>
+
+</LinearLayout>

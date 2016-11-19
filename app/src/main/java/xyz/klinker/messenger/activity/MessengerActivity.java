@@ -75,6 +75,7 @@ import xyz.klinker.messenger.fragment.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.SearchFragment;
+import xyz.klinker.messenger.fragment.bottom_sheet.CustomSnoozeFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
@@ -352,6 +353,10 @@ public class MessengerActivity extends AppCompatActivity
                             case R.id.menu_snooze_72:
                                 snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 72);
                                 break;
+                            case R.id.menu_snooze_custom:
+                                CustomSnoozeFragment fragment = new CustomSnoozeFragment();
+                                fragment.show(getSupportFragmentManager(), "");
+                                // fall through to the default
                             default:
                                 snoozeTil = System.currentTimeMillis();
                                 break;
@@ -1092,7 +1097,7 @@ public class MessengerActivity extends AppCompatActivity
         }
     }
 
-    private void snoozeIcon() {
+    public void snoozeIcon() {
         boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
                 System.currentTimeMillis();
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);

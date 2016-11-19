@@ -57,6 +57,7 @@
     <string name="menu_snooze_8">8 hours</string>
     <string name="menu_snooze_24">24 hours</string>
     <string name="menu_snooze_72">72 hours</string>
+    <string name="menu_snooze_custom">Pick a time</string>
 
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>
@@ -395,6 +396,8 @@
     <string name="renew">Renew</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
 
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">No Subscription Found!</string>

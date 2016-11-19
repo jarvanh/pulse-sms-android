@@ -44,4 +44,8 @@
         android:title="@string/menu_snooze_72"
         android:id="@+id/menu_snooze_72" />
 
+    <item
+        android:title="@string/menu_snooze_custom"
+        android:id="@+id/menu_snooze_custom" />
+
 </menu>

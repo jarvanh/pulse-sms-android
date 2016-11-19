@@ -19,7 +19,9 @@
     <version
         name="1.9.1"
         description="November 19th, 2016">
+        <text>Option to repeat notifications on a timed interval</text>
         <text>Option to add a signature to your messages</text>
+        <text>Custom snooze timeouts</text>
         <text>Improvements to deleting single messages from message list</text>
         <text>Tons of RTL fixes</text>
         <text>Prevent keyboard from causing weird UI on conversation list</text>
