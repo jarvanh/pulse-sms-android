@@ -33,7 +33,9 @@ import com.klinker.android.send_message.SentReceiver;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
@@ -82,6 +84,11 @@ public class SmsSentReceiver extends SentReceiver {
         if (message != null && message.moveToFirst()) {
             String body = message.getString(message.getColumnIndex(Telephony.Sms.BODY));
             message.close();
+
+            Settings settings = Settings.get(context);
+            if (settings.signature != null && !settings.signature.isEmpty()) {
+                body = body.replace("\n" + settings.signature, "");
+            }
 
             DataSource source = DataSource.getInstance(context);
             source.open();
