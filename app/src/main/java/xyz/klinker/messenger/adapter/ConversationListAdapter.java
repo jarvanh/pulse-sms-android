@@ -173,10 +173,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         // why this happens, but the situation is marked by a blank holder in the conversation list.
         if (conversation == null) {
             holder.conversation = null;
-            holder.image.setImageDrawable(null);
             holder.name.setText(null);
             holder.summary.setText(null);
             holder.imageLetter.setText(null);
+            Glide.clear(holder.image);
             return;
         }
 
@@ -193,11 +193,21 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
+                if (holder.groupIcon.getVisibility() != View.GONE) {
+                    holder.groupIcon.setVisibility(View.GONE);
+                }
             } else {
                 holder.imageLetter.setText(null);
+                if (holder.groupIcon.getVisibility() != View.VISIBLE) {
+                    holder.groupIcon.setVisibility(View.VISIBLE);
+                }
             }
         } else {
             holder.imageLetter.setText(null);
+            if (holder.groupIcon.getVisibility() != View.GONE) {
+                holder.groupIcon.setVisibility(View.GONE);
+            }
+
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
                     .signature(new StringSignature(String.valueOf(time)))

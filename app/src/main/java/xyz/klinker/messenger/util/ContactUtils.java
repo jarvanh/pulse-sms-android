@@ -242,7 +242,8 @@ public class ContactUtils {
     }
 
     public static boolean shouldDisplayContactLetter(Conversation conversation) {
-        if (conversation.title.length() == 0 || conversation.title.contains(", ")) {
+        if (conversation.title.length() == 0 || conversation.title.contains(", ") ||
+                conversation.phoneNumbers.contains(", ")) {
             return false;
         } else {
             String firstLetter = conversation.title.substring(0, 1);

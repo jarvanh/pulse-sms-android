@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.multiselector.MultiSelector;
@@ -51,6 +52,7 @@ public class ConversationViewHolder extends SwappingHolder {
     public TextView name;
     public TextView summary;
     public TextView imageLetter;
+    public ImageView groupIcon;
     public View unreadIndicator;
     public CheckBox checkBox;
 
@@ -74,6 +76,7 @@ public class ConversationViewHolder extends SwappingHolder {
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
         imageLetter = (TextView) itemView.findViewById(R.id.image_letter);
+        groupIcon = (ImageView) itemView.findViewById(R.id.group_icon);
         unreadIndicator = itemView.findViewById(R.id.unread_indicator);
         checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
