@@ -23,6 +23,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -72,6 +73,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private TextView summary;
     @Mock
     private TextView imageLetter;
+    @Mock
+    private ImageView groupIcon;
     @Mock
     private CircleImageView unreadIndicator;
 
@@ -307,6 +310,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         holder.summary = summary;
         holder.imageLetter = imageLetter;
         holder.unreadIndicator = unreadIndicator;
+        holder.groupIcon = groupIcon;
 
         return holder;
     }

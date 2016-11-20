@@ -22,6 +22,7 @@ public class ContactUtilsTest extends MessengerSuite {
     @Test
     public void shouldShowImageLetter() {
         Conversation conversation = new Conversation();
+        conversation.phoneNumbers = "555";
 
         conversation.title = "test";
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
@@ -42,6 +43,7 @@ public class ContactUtilsTest extends MessengerSuite {
     @Test
     public void shouldNotShowImageLetter() {
         Conversation conversation = new Conversation();
+        conversation.phoneNumbers = "1, 1";
 
         conversation.title = " test";
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
