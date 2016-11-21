@@ -37,6 +37,8 @@ public abstract class MediaParser {
         message.mimeType = getMimeType();
         message.data = buildBody(matchedText);
 
+        matchedText = null;
+
         return message;
     }
 }
