@@ -1595,10 +1595,12 @@ public class DataSource {
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
                 message.color, getEncryptionUtils(context));
 
-        updateConversation(conversationId, message.read, message.timestamp,
-                message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
-                        context.getString(R.string.you) + ": " + message.data : message.data,
-                message.mimeType, false);
+        if (updateConversation) {
+            updateConversation(conversationId, message.read, message.timestamp,
+                    message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
+                            context.getString(R.string.you) + ": " + message.data : message.data,
+                    message.mimeType, false);
+        }
 
         return returnMessageId ? id : conversationId;
     }

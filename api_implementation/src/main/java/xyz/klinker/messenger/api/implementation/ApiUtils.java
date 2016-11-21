@@ -515,7 +515,7 @@ public class ApiUtils {
                 String messageData;
                 int type;
 
-                if (mimeType.equals("text/plain")) {
+                if (mimeType.equals("text/plain") || mimeType.equals("media/youtube")) {
                     messageData = data;
                     type = messageType;
 
