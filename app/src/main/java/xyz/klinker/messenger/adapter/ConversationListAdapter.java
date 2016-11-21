@@ -201,6 +201,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 if (holder.groupIcon.getVisibility() != View.VISIBLE) {
                     holder.groupIcon.setVisibility(View.VISIBLE);
                 }
+
+                if (conversation.phoneNumbers.contains(",")) {
+                    holder.groupIcon.setImageResource(R.drawable.ic_group);
+                } else {
+                    holder.groupIcon.setImageResource(R.drawable.ic_person);
+                }
             }
         } else {
             holder.imageLetter.setText(null);
