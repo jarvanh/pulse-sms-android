@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="@dimen/max_message_width"
+            android:minHeight="250dp"
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerCrop"
             android:id="@+id/image"

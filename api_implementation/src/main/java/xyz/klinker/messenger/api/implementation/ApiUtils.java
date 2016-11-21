@@ -515,7 +515,8 @@ public class ApiUtils {
                 String messageData;
                 int type;
 
-                if (mimeType.equals("text/plain") || mimeType.equals("media/youtube")) {
+                // media or plain text. media doesn't need to be encrypted as an image
+                if (mimeType.equals("text/plain") || messageType == 6) {
                     messageData = data;
                     type = messageType;
 

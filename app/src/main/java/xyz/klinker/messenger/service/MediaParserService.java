@@ -38,7 +38,7 @@ public class MediaParserService extends IntentService {
 
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.insertMessage(this, message, conversationId, true, false);
+        source.insertMessage(this, message, conversationId, true);
         source.close();
 
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type);

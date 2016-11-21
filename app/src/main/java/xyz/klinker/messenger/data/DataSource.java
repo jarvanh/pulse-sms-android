@@ -1566,7 +1566,7 @@ public class DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId, boolean updateConversation) {
+    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
         ensureActionable();
 
         message.conversationId = conversationId;
@@ -1595,7 +1595,7 @@ public class DataSource {
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
                 message.color, getEncryptionUtils(context));
 
-        if (updateConversation) {
+        if (message.type != Message.TYPE_MEDIA) {
             updateConversation(conversationId, message.read, message.timestamp,
                     message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
                             context.getString(R.string.you) + ": " + message.data : message.data,
@@ -1603,18 +1603,6 @@ public class DataSource {
         }
 
         return returnMessageId ? id : conversationId;
-    }
-
-    /**
-     * Inserts a new message into the database. This also updates the conversation with the latest
-     * data.
-     *
-     * @param message        the message to insert.
-     * @param conversationId the conversation to insert the message into.
-     * @return the conversation id that the message was inserted into.
-     */
-    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
-        return insertMessage(context, message, conversationId, returnMessageId, true);
     }
 
     /**
