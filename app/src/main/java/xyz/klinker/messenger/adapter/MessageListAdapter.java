@@ -71,6 +71,7 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
 import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 /**
@@ -140,6 +141,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 layoutId = R.layout.message_delivered;
             } else if (viewType == Message.TYPE_INFO) {
                 layoutId = R.layout.message_info;
+            } else if (viewType == Message.TYPE_MEDIA) {
+                layoutId = R.layout.message_media;
             } else {
                 layoutId = R.layout.message_sent;
             }
@@ -167,6 +170,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         holder.messageId = message.id;
         holder.mimeType = message.mimeType;
+        holder.data = message.data;
 
         colorMessage(holder, message);
 
@@ -177,71 +181,62 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             urls.setTextColor(accentColor);
             urls.setHighlightAlpha(.4f);
             if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                urls.setOnLongClickListener(new Link.OnLongClickListener() {
-                    @Override
-                    public void onLongClick(String clickedText) {
-                        if (!clickedText.startsWith("http")) {
-                            clickedText = "http://" + clickedText;
-                        }
-
-                        LinkLongClickFragment bottomSheet = new LinkLongClickFragment();
-                        bottomSheet.setColors(receivedColor, accentColor);
-                        bottomSheet.setLink(clickedText);
-                        bottomSheet.show(fragment.getActivity().getSupportFragmentManager(), "");
-                    }
-                });
-            }
-            urls.setOnClickListener(new Link.OnClickListener() {
-                @Override
-                public void onClick(String clickedText) {
-                    if (fragment.getMultiSelect().isSelectable()) {
-                        holder.messageHolder.performClick();
-                        return;
-                    }
-
+                urls.setOnLongClickListener(clickedText -> {
                     if (!clickedText.startsWith("http")) {
                         clickedText = "http://" + clickedText;
                     }
 
-                    if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                        ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
-                                .setToolbarColor(receivedColor)
-                                .setAccentColor(accentColor)
-                                .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
-                                        ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                                .build();
+                    LinkLongClickFragment bottomSheet = new LinkLongClickFragment();
+                    bottomSheet.setColors(receivedColor, accentColor);
+                    bottomSheet.setLink(clickedText);
+                    bottomSheet.show(fragment.getActivity().getSupportFragmentManager(), "");
+                });
+            }
+            urls.setOnClickListener(clickedText -> {
+                if (fragment.getMultiSelect().isSelectable()) {
+                    holder.messageHolder.performClick();
+                    return;
+                }
 
-                        intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
-                    } else {
-                        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                        builder.setToolbarColor(receivedColor);
-                        builder.setShowTitle(true);
-                        builder.setActionButton(
-                                BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
-                                fragment.getString(R.string.share), getShareIntent(clickedText), true);
-                        CustomTabsIntent customTabsIntent = builder.build();
-                        customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
-                    }
+                if (!clickedText.startsWith("http")) {
+                    clickedText = "http://" + clickedText;
+                }
+
+                if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
+                    ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
+                            .setToolbarColor(receivedColor)
+                            .setAccentColor(accentColor)
+                            .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
+                                    ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                            .build();
+
+                    intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
+                } else {
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(receivedColor);
+                    builder.setShowTitle(true);
+                    builder.setActionButton(
+                            BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
+                            fragment.getString(R.string.share), getShareIntent(clickedText), true);
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
                 }
             });
 
             Link phoneNumbers = new Link(Regex.PHONE);
             phoneNumbers.setTextColor(accentColor);
             phoneNumbers.setHighlightAlpha(.4f);
-            phoneNumbers.setOnClickListener(new Link.OnClickListener() {
-                @Override
-                public void onClick(String clickedText) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText)));
-                    holder.message.getContext().startActivity(intent);
-                }
+            phoneNumbers.setOnClickListener(clickedText -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText)));
+                holder.message.getContext().startActivity(intent);
             });
 
             if (holder.message.getMovementMethod() == null) {
                 holder.message.setMovementMethod(new TouchableMovementMethod());
             }
 
-            LinkBuilder.on(holder.message).addLink(urls).addLink(phoneNumbers).build();
+            LinkBuilder.on(holder.message).addLink(phoneNumbers).addLink(urls).build();
 
             if (holder.image != null && holder.image.getVisibility() == View.VISIBLE) {
                 holder.image.setVisibility(View.GONE);
@@ -250,10 +245,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             if (holder.message != null && holder.message.getVisibility() == View.GONE) {
                 holder.message.setVisibility(View.VISIBLE);
             }
-        } else {
+        } else if (!MimeType.isExpandedMedia(message.mimeType)) {
             holder.image.setImageDrawable(null);
             holder.image.setMinimumWidth(imageWidth);
             holder.image.setMinimumHeight(imageHeight);
+
             if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
@@ -318,6 +314,26 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             if (holder.message.getVisibility() == View.VISIBLE) {
                 holder.message.setVisibility(View.GONE);
+            }
+
+            if (holder.image.getVisibility() == View.GONE) {
+                holder.image.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
+                Glide.with(holder.image.getContext())
+                        .load(Uri.parse(message.data))
+                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                        .fitCenter()
+                        .into(holder.image);
+
+                if (holder.message.getVisibility() == View.VISIBLE) {
+                    holder.message.setVisibility(View.GONE);
+                }
+            } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
+
+            } else if (message.mimeType.equals(MimeType.MEDIA_WEBPAGE)) {
+
             }
 
             if (holder.image.getVisibility() == View.GONE) {

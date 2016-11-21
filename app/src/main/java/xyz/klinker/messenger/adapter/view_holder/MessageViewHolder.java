@@ -70,6 +70,7 @@ import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.MediaSaver;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
 import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -88,6 +89,7 @@ public class MessageViewHolder extends SwappingHolder {
     public ImageView image;
     public View messageHolder;
     public long messageId;
+    public String data;
     public String mimeType;
     public int color = -1;
     public int textColor = -1;
@@ -257,6 +259,10 @@ public class MessageViewHolder extends SwappingHolder {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setDataAndType(uri, MimeType.TEXT_VCARD);
                         itemView.getContext().startActivity(intent);
+                    } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
+                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+                                YoutubeParser.getVideoUriFromThumbnail(data)
+                        )));
                     } else {
                         Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
                         intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);

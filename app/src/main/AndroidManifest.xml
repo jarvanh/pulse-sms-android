@@ -307,6 +307,7 @@
         <service android:name=".service.SignoutService" />
         <service android:name=".service.SimpleSubscriptionCheckService" />
         <service android:name=".service.SimpleLifetimeSubscriptionCheckService" />
+        <service android:name=".service.MediaParserService" />
 
         <service
             android:name=".service.ComposeTileService"

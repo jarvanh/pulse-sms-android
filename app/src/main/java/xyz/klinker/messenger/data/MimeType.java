@@ -42,6 +42,9 @@ public class MimeType {
     public static final String AUDIO_OGG = "audio/ogg";
     public static final String AUDIO_WAV = "audio/vnd.wav";
     public static final String AUDIO_3GP = "audio/3gp";
+    public static final String MEDIA_YOUTUBE = "media/youtube";
+    public static final String MEDIA_WEBPAGE = "media/web";
+    public static final String MEDIA_TWITTER = "media/twitter";
 
     private static final Map<String, String> extensions;
 
@@ -119,6 +122,10 @@ public class MimeType {
      */
     public static boolean isAudio(String mimeType) {
         return mimeType.startsWith("audio/");
+    }
+
+    public static boolean isExpandedMedia(String mimeType) {
+        return mimeType.startsWith("media");
     }
 
     /**

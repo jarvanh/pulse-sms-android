@@ -1566,7 +1566,7 @@ public class DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
+    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId, boolean updateConversation) {
         ensureActionable();
 
         message.conversationId = conversationId;
@@ -1601,6 +1601,18 @@ public class DataSource {
                 message.mimeType, false);
 
         return returnMessageId ? id : conversationId;
+    }
+
+    /**
+     * Inserts a new message into the database. This also updates the conversation with the latest
+     * data.
+     *
+     * @param message        the message to insert.
+     * @param conversationId the conversation to insert the message into.
+     * @return the conversation id that the message was inserted into.
+     */
+    public long insertMessage(Context context, Message message, long conversationId, boolean returnMessageId) {
+        return insertMessage(context, message, conversationId, returnMessageId, true);
     }
 
     /**

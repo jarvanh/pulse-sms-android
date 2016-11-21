@@ -22,12 +22,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.MediaParserService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.DualSimUtils;
@@ -76,9 +78,14 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
 
         insertInternalSms(context, address, body, date);
-        insertSms(context, address, body, simSlot);
+        long conversationId = insertSms(context, address, body, simSlot);
+
+        Intent mediaParser = new Intent(context, MediaParserService.class);
+        mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+        mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
 
         context.startService(new Intent(context, NotificationService.class));
+        new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
     }
 
     private void insertInternalSms(Context context, String address, String body, long dateSent) {
@@ -96,7 +103,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
     }
 
-    private void insertSms(Context context, String address, String body, int simSlot) {
+    private long insertSms(Context context, String address, String body, int simSlot) {
         Message message = new Message();
         message.type = Message.TYPE_RECEIVED;
         message.data = body.trim();
@@ -114,6 +121,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
         ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
+
+        return conversationId;
     }
 
 }

@@ -16,10 +16,12 @@
 
 package xyz.klinker.messenger.data;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class MimeTypeTest {
@@ -223,6 +225,13 @@ public class MimeTypeTest {
     @Test
     public void extensionWav() {
         assertEquals(".wav", MimeType.getExtension(MimeType.AUDIO_WAV));
+    }
+
+    @Test
+    public void supportsExpandedMedia() {
+        assertThat(MimeType.isExpandedMedia("media/youtube"), Matchers.is(true));
+        assertThat(MimeType.isExpandedMedia("media/twitter"), Matchers.is(true));
+        assertThat(MimeType.isExpandedMedia("media/web"), Matchers.is(true));
     }
 
 }
