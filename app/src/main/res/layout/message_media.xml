@@ -38,7 +38,7 @@
         android:textSize="12sp"
         android:textColor="@color/secondaryText"
         android:id="@+id/timestamp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="4dp" />
 
 </LinearLayout>

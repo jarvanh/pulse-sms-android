@@ -323,10 +323,18 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
+                        .asBitmap()
                         .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .fitCenter()
-                        .into(holder.image);
-
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource,
+                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                                ImageUtils.overlayBitmap(holder.image.getContext(),
+                                        resource, R.drawable.ic_play);
+                                holder.image.setImageBitmap(resource);
+                            }
+                        });
                 if (holder.message.getVisibility() == View.VISIBLE) {
                     holder.message.setVisibility(View.GONE);
                 }
