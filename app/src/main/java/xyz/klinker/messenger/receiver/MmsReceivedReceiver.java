@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.MediaParserService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.ContactUtils;
@@ -42,23 +44,34 @@ import xyz.klinker.messenger.util.SmsMmsUtils;
  */
 public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsReceivedReceiver {
 
+    private Long conversationId = null;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        insertMms(context);
+        String nullableOrBlankBodyText = insertMms(context);
+
+        if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
+            Intent mediaParser = new Intent(context, MediaParserService.class);
+            mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+            mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
+            new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
+        }
+
         context.startService(new Intent(context, NotificationService.class));
     }
 
-    private void insertMms(Context context) {
+    private String insertMms(Context context) {
         Cursor lastMessage = SmsMmsUtils.getLastMmsMessage(context);
 
+        String snippet = "";
         if (lastMessage != null && lastMessage.moveToFirst()) {
             Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
             final String from = SmsMmsUtils.getMmsFrom(uri, context);
 
             if (BlacklistUtils.isBlacklisted(context, from)) {
-                return;
+                return null;
             }
 
             final String to = SmsMmsUtils.getMmsTo(uri, context);
@@ -69,8 +82,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             DataSource source = DataSource.getInstance(context);
             source.open();
 
-            Long conversationId = null;
-            String snippet = "";
             for (ContentValues value : values) {
                 Message message = new Message();
                 message.type = value.getAsInteger(Message.COLUMN_TYPE);
@@ -104,6 +115,8 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         try {
             lastMessage.close();
         } catch (Exception e) { }
+
+        return snippet;
     }
 
     @VisibleForTesting
