@@ -52,6 +52,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             MenuItem delete = menu.findItem(R.id.menu_delete_messages);
             MenuItem share = menu.findItem(R.id.menu_share_message);
             MenuItem info = menu.findItem(R.id.menu_message_details);
+            MenuItem copy = menu.findItem(R.id.menu_copy_message);
 
             int checked = 0;
             for(int i = 0; i < mSelections.size(); i++) {
@@ -65,9 +66,11 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             if (checked > 1) {
                 share.setVisible(false);
                 info.setVisible(false);
+                copy.setVisible(false);
             } else {
                 share.setVisible(true);
                 info.setVisible(true);
+                copy.setVisible(true);
             }
 
             return false;
@@ -89,12 +92,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
 
             }
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setSelectable(false);
-                }
-            }, 250);
+            new Handler().postDelayed(() -> setSelectable(false), 250);
         }
 
         @Override
