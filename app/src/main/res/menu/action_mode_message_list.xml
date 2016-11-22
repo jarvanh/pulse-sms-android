@@ -15,6 +15,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_copy_message"
+        android:title="@string/copy_message"
+        android:icon="@drawable/ic_copy"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_message_details"
         android:title="@string/view_details"
         android:icon="@drawable/ic_info"

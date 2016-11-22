@@ -1,5 +1,7 @@
 package xyz.klinker.messenger.util.multi_select;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.SelectableHolder;
@@ -24,6 +27,8 @@ import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class MessageMultiSelectDelegate extends MultiSelector {
 
@@ -127,6 +132,17 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                 MessageShareFragment fragment = new MessageShareFragment();
                 fragment.setMessage(message);
                 fragment.show(activity.getSupportFragmentManager(), "");
+            } else if (item.getItemId() == R.id.menu_copy_message) {
+                handled = true;
+                Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
+
+                ClipboardManager clipboard = (ClipboardManager)
+                        fragment.getActivity().getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("messenger",
+                        message.data.toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(fragment.getActivity(), R.string.message_copied_to_clipboard,
+                        Toast.LENGTH_SHORT).show();
             } else {
                 handled = true;
                 new AlertDialog.Builder(activity)

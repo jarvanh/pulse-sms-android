@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.10.1"
+        description="November 23th, 2016">
+        <text>Add copy button directly to message list long press menu instead of inside share</text>
+        <text>Update to the latest Google Play Services and Firebase support libraries</text>
+    </version>
+
+    <version
         name="1.10.0"
         description="November 19th, 2016">
         <text>Select multiple images to send at once</text>
