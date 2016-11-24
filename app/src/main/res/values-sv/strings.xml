@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Nytt meddelande</string>
+    <string name="shortcut_compose_long">Starta en ny konversation!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Konversationslista</string>
+    <string name="menu_archived_conversations">Arkiverade konversationer</string>
+    <string name="menu_schedule">Schemalagda meddelanden</string>
+    <string name="menu_mute_contacts">Blockerade</string>
+    <string name="menu_invite">Bjud in vänner</string>
+    <string name="menu_settings">Globala Inställningar</string>
+    <string name="menu_account">Mitt konto</string>
+    <string name="menu_device_texting">Skriv från valfri enhet</string>
+    <string name="menu_help">Hjälp &amp; feedback</string>
+    <string name="menu_about">Om</string>
+    <string name="menu_search">Sök</string>
+    <string name="menu_mobile_only">Endast mobil</string>
+    <string name="menu_snooze">Snooze notiser</string>
+    <string name="menu_call">Samtalskontakter</string>
+    <string name="menu_view_contact">Visa kontakt</string>
+    <string name="menu_view_contacts">Visa kontakter</string>
+    <string name="menu_view_media">Visa media</string>
+    <string name="menu_delete_conversation">Radera konversation</string>
+    <string name="menu_archive_conversation">Arkivera konversation</string>
+    <string name="menu_move_to_inbox">Flytta till inkorgen</string>
+    <string name="menu_conversation_information">Konversation information</string>
+    <string name="menu_conversation_blacklist">Blockera kontakt</string>
+    <string name="menu_conversation_schedule">Schemalägg ett meddelande</string>
+    <string name="menu_contact_settings">Kontaktinställningar</string>
+    <string name="menu_group_settings">Gruppinställningar</string>
+    <string name="menu_snooze_off">Av</string>
+    <string name="menu_snooze_1">1 timme</string>
+    <string name="menu_snooze_2">2 timmar</string>
+    <string name="menu_snooze_4">4 timmar</string>
+    <string name="menu_snooze_8">8 timmar</string>
+    <string name="menu_snooze_24">24 timmar</string>
+    <string name="menu_snooze_72">72 timmar</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Inga meddelanden</string>
+    <string name="no_messages_summary">Starta en ny konversation eller njut bara av dagen!</string>
+    <string name="close">Stäng</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Sparad</string>
+    <string name="today">Idag</string>
+    <string name="yesterday">Igår</string>
+    <string name="last_week">Denna vecka</string>
+    <string name="last_month">Denna månad</string>
+    <string name="older">Äldre</string>
+    <string name="mark_section_as_read">Markera alla %1$s som lästa</string>
+    <string name="marking_section_as_read">Markerar alla %1$s som lästa</string>
+    <string name="undo">Ångra</string>
+    <string name="enter_search">Sök efter...</string>
+    <!-- Search Screen -->
+    <string name="conversations">Konversationer</string>
+    <string name="messages">Meddelanden</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Älskar du Pulse?</string>
+    <!-- Message List Screen -->
+    <!-- Compose Screen -->
+    <!-- Onboarding Screen -->
+    <!-- Notifications -->
+    <!-- About, Help and Feedback and Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Other -->
+    <!-- Purchase/Subscriptions -->
+</resources>

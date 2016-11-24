@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Logga in</string>
+    <string name="api_signup">Registrera</string>
+    <string name="api_signup_failed">Kan ej logga in på denna enhet, registrera först en primär enhet som har ett telefonnummer!</string>
+    <string name="api_skip_signup">Eller om du endast vill använda appen på denna enhet och inte nätverksfunktionerna som t.ex. att kunna skriva från en surfplatta eller dator, kan du hoppa över detta steg:</string>
+    <string name="api_skip">Hoppa över</string>
+    <string name="api_email">E-postadress</string>
+    <string name="api_password">Lösenord</string>
+    <string name="api_forgot_password">Glömt lösenord?</string>
+    <string name="api_password_confirmation">Bekräfta lösenord</string>
+    <string name="api_name">Namn</string>
+    <string name="api_phone_number">Telefonnummer</string>
+    <string name="api_connecting">Ansluter till server...</string>
+    <string name="api_error">Ett fel uppstod under operationen</string>
+    <string name="api_device_error">"Ett fel uppstod när enheten lades till. Försök igen! "</string>
+    <string name="api_add_second_primary_device">Ser ut som du redan har en primär enhet
+
+(%1$s) för ditt konto och endast en är tillåtet! Vill du ta bort den nuvarande
+primära enheten och ställa in denna som den nya primära?</string>
+    <string name="api_yes">Ja</string>
+    <string name="api_no">Nej</string>
+    <string name="api_no_email">E-postadress ej angivits</string>
+    <string name="api_email_invalid">Ogiltig e-postadress</string>
+    <string name="api_no_password">Inget lösenord angett</string>
+    <string name="api_no_password_confirmation">Lösenordbekräftelse ej angivits</string>
+    <string name="api_password_mismatch">Lösenorden matchar ej</string>
+    <string name="api_no_name">Inget namn har angivits</string>
+    <string name="api_no_phone_number">Inget mobilnummer angivet</string>
+    <string name="api_login_error">Problem uppstod vid inloggning, fel e-post eller lösenord?</string>
+    <string name="api_activate_summary">Logga in för att få dina meddelanden på denna enhet!</string>
+    <string name="api_activate_1_1">Bege dig till</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">på en mobilenhet eller dator.</string>
+    <string name="api_activate_2_1">På webbsidan</string>
+    <string name="api_activate_2_2">Ange koden till höger</string>
+    <string name="api_activate_2_3">för att ansluta ditt konto!</string>
+    <string name="api_confirm_password">Vänligen bekräfta ditt lösenord:</string>
+    <string name="api_wrong_password">"Bekräftelse misslyckades. Ange rätt lösenord! "</string>
+    <string name="api_email_taken">Ett fel uppstod vid inloggning, har du redan ett konto med denna email?</string>
+    <string name="api_confirm">Bekräfta</string>
+    <string name="api_continue">Gå vidare</string>
+</resources>

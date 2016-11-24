@@ -91,6 +91,8 @@
     <string name="type_message_to">在%1$s 中输入消息</string>
     <string name="attach">附上</string>
     <string name="select_sim">选择SIM卡</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">图像</string>
     <string name="now">现在</string>
     <string name="sending">发送中</string>
@@ -147,11 +149,120 @@
     <string name="loading_messages_summary">正在处理消息，这不会花费太长时间。</string>
     <string name="tooltip_got_it">了解！</string>
     <string name="navigation_drawer_conversation_hint">应用抽屉里面有更多关于会话的设置。</string>
+    <string name="onboarding_title_1">全新的消息体验</string>
     <string name="onboarding_title_2">随时随地获取</string>
     <string name="onboarding_title_3">强大的定制服务</string>
     <string name="onboarding_content_1">"流畅、强大的UI设计、平台无缝连接。Pulse将你的消息置于首位。"</string>
+    <string name="onboarding_content_2">从你的平板电脑、PC、手表、甚至任何连接的设备获取信息</string>
+    <string name="onboarding_content_3">对于任何你正在聊的会话，支持固定联系人、静音、主题、自定义通知。你可以打造自己的Pulse！</string>
+    <string name="message_anywhere_onboarding_title_1">随时随地收信</string>
+    <string name="message_anywhere_onboarding_title_2">订阅或者购买</string>
+    <string name="message_anywhere_onboarding_title_3">长久的测试</string>
+    <string name="message_anywhere_onboarding_content_1">与任何设备（平板电脑，手表，电视，网页，Chrome和Firefox应用）无缝连接，随时随地支持短信和彩信！</string>
+    <string name="message_anywhere_onboarding_content_2">疯狂低价选择：$10.99永久，$5.99每年，$1.99三个月或者$0.99每月。不到一杯Java的价格。</string>
+    <string name="message_anywhere_onboarding_content_3">在你一台设备上使用本Android应用永久免费！你也可以获取一个星期的试用，在你所有设备上使用服务。</string>
+    <string name="start_trial">开始试用</string>
+    <string name="not_now">现在不行啦</string>
+    <string name="onboarding_done">好了</string>
     <!-- Notifications -->
+    <string name="notification_ticker">来自%1$s的新消息</string>
+    <plurals name="new_conversations">
+        <item quantity="other">%1$d新会话</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="other">%1$d新消息</item>
+    </plurals>
+    <string name="read">已读</string>
+    <string name="reply">回复</string>
+    <string name="reply_to">回复给%1$s</string>
+    <string name="call">拨打</string>
+    <string-array name="reply_choices">
+        <item>是的</item>
+        <item>不！</item>
+        <item>或许</item>
+        <item>OK</item>
+        <item>谢谢</item>
+    </string-array>
+    <string name="new_mms_message">新彩信</string>
+    <string name="you">你</string>
+    <string name="new_message">新信息</string>
+    <string name="received_new_message">你收到了新内容</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">更新日志</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">查看开源许可</string>
+    <string name="app_version">应用版本</string>
+    <string name="device_id">设备ID</string>
+    <string name="device_info">设备信息</string>
+    <string name="website">网站</string>
+    <string name="access_messages_from_any_device">在任何设备上收发信息！</string>
+    <string name="beta_disclaimer">这个项目还处于测试阶段，请报告你发现的问题！</string>
+    <string name="faqs">常见问题</string>
+    <string name="features">特性</string>
+    <string name="google_plus">G+社区</string>
+    <string name="google_plus_summary">Pulse Beta社区</string>
+    <string name="email">电子邮件</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">推特</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">支持</string>
+    <plurals name="message_count">
+        <item quantity="other">%1$d 信息</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="other">在 %1$d 会话中</item>
+    </plurals>
+    <string name="pin_conversation">固定对话</string>
+    <string name="pin_conversation_summary">置顶此对话</string>
+    <string name="mute_conversation">静音对话</string>
+    <string name="mute_conversation_summary">过滤此对话的通知</string>
+    <string name="private_conversation">私密会话</string>
+    <string name="private_conversation_summary">隐藏通知中的会话内容</string>
+    <string name="primary_color">主色</string>
+    <string name="primary_dark_color">暗主色</string>
+    <string name="accent_color">强调色</string>
+    <string name="led_color">呼吸灯颜色</string>
+    <string name="ringtone">铃声</string>
+    <string name="group_name">群组名</string>
+    <string name="notification_settings">通知</string>
+    <string name="vibrate">振动模式</string>
+    <string name="vibrate_off">无振动</string>
+    <string name="vibrate_default">默认振动</string>
+    <string name="vibrate_two_long">两次长振动</string>
+    <string name="vibrate_two_short">两次短振动</string>
+    <string name="vibrate_three_short">三次短振动</string>
+    <string name="vibrate_one_short_one_long">一短一长振动</string>
+    <string name="vibrate_one_long_one_short">一长一短振动</string>
+    <string name="sound_effects">音效</string>
+    <string name="delivery_reports">发送报告</string>
+    <string name="theme_settings">个性定制</string>
+    <string name="base_theme">基本主题</string>
+    <string name="global_theme_color">主题颜色</string>
+    <string name="font_size">字体大小</string>
+    <string name="blacklist_hint">在黑名单中输入数字</string>
+    <string name="add_blacklist">%1$s\n\n 你确定将其加入黑名单吗？你以后将不会收到短信显示，已有短信也不会存在了呢。</string>
+    <string name="remove_blacklist">%1$s\n你确定要删除这个黑名单吗?</string>
+    <string name="blacklist_need_number">你需要在黑名单里输入一个号码</string>
+    <string name="no_blacklists">没有黑名单</string>
+    <string name="no_blacklists_summary">你可以使用下方的加号来添加一个</string>
+    <string name="add">添加</string>
+    <string name="privacy_policy">隐私策略</string>
+    <string name="privacy_policy_summary">在网页上查看我们的隐私策略</string>
+    <string name="account_expiring">账户到期！</string>
+    <string name="signout_time">注销 %1$s</string>
+    <string name="lifetime_subscriber">终身订阅者</string>
+    <string name="trial_period">试用期</string>
+    <string name="setup_my_account">设置账号</string>
+    <string name="setup_my_account_summary">注册或者登陆你的账号来开始使用更多特性，比如：收取你平板、PC上的消息</string>
+    <string name="preparing_new_account">准备账户中 &#8230;</string>
+    <string name="delete_account">删除账户</string>
+    <string name="delete_account_summary">将此账户从这台设备中移除，你这台设备上的其它登陆和服务将不可逆！</string>
+    <string name="delete_account_confirmation">你确定你想要删除你的账户以及相关的一切？你可以之后随时注册。</string>
+    <string name="change_subscription">更改订阅</string>
+    <string name="cancel_on_the_play_store">取消并在Play商店上查看你的订阅</string>
+    <string name="resync_account">重新同步账户</string>
+    <string name="resync_account_summary">消息丢失？使用这个找回你主设备上的消息。</string>
+    <string name="resync_account_confirmation">这会删除此设备上所有的消息，并且复制你主设备上的消息。你确定要这么做吗？</string>
     <!-- Theming Options -->
     <!-- Scheduled Messages Screen -->
     <!-- Encryption -->
