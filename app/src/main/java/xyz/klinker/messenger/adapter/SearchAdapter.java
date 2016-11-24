@@ -100,7 +100,14 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int section,
                                  int relativePosition, int absolutePosition) {
 
-        Pattern pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);
+        Pattern pattern;
+        try {
+            pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);
+        } catch (Exception e) {
+            //searching for a string with an invalid regex.. Ex: *^
+            pattern = Pattern.compile("");
+        }
+
         Link highlight = new Link(pattern)
                 .setTextColor(holder.itemView.getContext().getResources()
                         .getColor(R.color.colorAccent))

@@ -219,7 +219,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
                             fragment.getString(R.string.share), getShareIntent(clickedText), true);
                     CustomTabsIntent customTabsIntent = builder.build();
-                    customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
+
+                    try {
+                        customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
+                    } catch (Exception e) { }
                 }
             });
 

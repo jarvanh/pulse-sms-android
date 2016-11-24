@@ -655,7 +655,7 @@ public class LoginActivity extends AppCompatActivity {
             SubscriptionManager manager = SubscriptionManager.from(this);
             List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
 
-            if (availableSims.size() > 0) {
+            if (availableSims != null && availableSims.size() > 0) {
                 number = availableSims.get(0).getNumber();
             }
         }

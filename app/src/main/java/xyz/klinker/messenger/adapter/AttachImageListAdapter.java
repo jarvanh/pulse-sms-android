@@ -103,7 +103,7 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
                     .centerCrop()
                     .into(holder.image);
 
-            if (holder.mimeType.contains("video") && holder.playButton.getVisibility() == View.GONE) {
+            if (holder.mimeType != null && holder.mimeType.contains("video") && holder.playButton.getVisibility() == View.GONE) {
                 holder.playButton.setVisibility(View.VISIBLE);
             } else if (holder.playButton.getVisibility() != View.GONE) {
                 holder.playButton.setVisibility(View.GONE);

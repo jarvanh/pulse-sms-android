@@ -82,7 +82,7 @@ public class NotificationAlertsPreference extends Preference implements
             if (data != null) {
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
-                if (callChangeListener(uri != null ? uri.toString() : "")) {
+                if (uri != null && callChangeListener(uri.toString())) {
                     Settings.get(getContext()).ringtone = uri.toString();
                     Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), uri.toString());
                 } else {

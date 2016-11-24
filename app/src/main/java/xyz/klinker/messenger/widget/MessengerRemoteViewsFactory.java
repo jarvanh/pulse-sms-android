@@ -90,6 +90,10 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public RemoteViews getViewAt(int position) {
+        if (position >= conversations.size()) {
+            return null;
+        }
+        
         Conversation item = conversations.get(position);
 
         if (item.title == null) {

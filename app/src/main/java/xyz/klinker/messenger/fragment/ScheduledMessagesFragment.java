@@ -256,6 +256,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private void displayDateDialog(final ScheduledMessage message) {
         Context context = getContextToFixDatePickerCrash();
 
+        if (context == null) {
+            context = getActivity();
+        }
+
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(context, (datePicker, year, month, day) -> {
             message.timestamp = new GregorianCalendar(year, month, day)

@@ -7,7 +7,6 @@ import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 
 public class ForceTokenRefreshService extends IntentService {
 
-
     public ForceTokenRefreshService() {
         super("FCMTokenService");
     }
