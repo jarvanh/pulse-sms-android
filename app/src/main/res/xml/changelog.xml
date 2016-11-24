@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="1.10.2"
+        description="November 25th, 2016">
+        <text>Improvements to deleting/archiving conversations</text>
+        <text>Improve GIF selection from the gallery tile</text>
+        <text>Crash fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="1.10.1"
         description="November 22th, 2016">
         <text>Add copy button directly to message list long press menu instead of inside share</text>
