@@ -93,7 +93,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
         if (position >= conversations.size()) {
             return null;
         }
-        
+
         Conversation item = conversations.get(position);
 
         if (item.title == null) {

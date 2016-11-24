@@ -59,12 +59,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                 e.printStackTrace();
             }
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setSelectable(false);
-                }
-            }, 250);
+            new Handler().postDelayed(() -> setSelectable(false), 250);
         }
 
         @Override
@@ -75,7 +70,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
             List<Conversation> selectedConversations = new ArrayList<>();
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 if (isSelected(i, 0)) {
-                    selectedPositions.add(Integer.valueOf(i));
+                    selectedPositions.add(i);
                     selectedConversations.add(adapter.findConversationForPosition(i));
                 }
             }

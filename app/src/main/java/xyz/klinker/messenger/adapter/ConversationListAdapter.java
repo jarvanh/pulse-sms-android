@@ -336,7 +336,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     public Conversation findConversationForPosition(int position) {
-        int headersAbove = sectionCounts.get(0).count != 0 ? 1 : 0; // on archives there may not be a pinned section
+        int headersAbove = 0;
         int totalSectionsCount = 0;
 
         for (int i = 0; i < sectionCounts.size(); i++) {
@@ -345,11 +345,20 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             if (position <= (totalSectionsCount + headersAbove)) {
                 break;
             } else {
-                headersAbove++;
+                if (sectionCounts.get(i).count != 0) {
+                    // only add the header if it has more than 0 items, otherwise it isn't shown
+                    headersAbove++;
+                }
             }
         }
 
-        return conversations.get(position - headersAbove);
+        int convoPosition = position - headersAbove;
+
+        if (convoPosition == conversations.size()) {
+            return conversations.get(convoPosition - 1);
+        } else {
+            return conversations.get(convoPosition);
+        }
     }
 
     public int getCountForSection(int sectionType) {
@@ -371,21 +380,13 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     private View.OnClickListener getHeaderDoneClickListener(final String text, final int sectionType) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swipeToDeleteListener.onMarkSectionAsRead(text, sectionType);
-            }
-        };
+        return v -> swipeToDeleteListener.onMarkSectionAsRead(text, sectionType);
     }
 
     private View.OnLongClickListener getHeaderDoneLongClickListener(final String text) {
-        return new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                swipeToDeleteListener.onShowMarkAsRead(text);
-                return false;
-            }
+        return v -> {
+            swipeToDeleteListener.onShowMarkAsRead(text);
+            return false;
         };
     }
 
