@@ -1246,7 +1246,18 @@ public class MessageListFragment extends Fragment implements
         } else if (requestCode == RESULT_GALLERY_PICKER_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             onBackPressed();
-            attachImage(data.getData());
+            Uri uri = data.getData();
+            String uriString = data.getDataString();
+            String mimeType = MimeType.IMAGE_JPEG;
+            if (uriString.contains("content://")) {
+                mimeType = getActivity().getContentResolver().getType(uri);
+            }
+
+            attachImage(uri);
+            if (mimeType != null && mimeType.equals(MimeType.IMAGE_GIF)) {
+                attachedMimeType = MimeType.IMAGE_GIF;
+                editImage.setVisibility(View.GONE);
+            }
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             onBackPressed();
             attachImage(ImageUtils.getUriForLatestPhoto(getActivity()));
