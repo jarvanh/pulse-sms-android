@@ -23,13 +23,13 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 
 import static org.junit.Assert.assertTrue;
 
-public class SettingsFragmentTest extends MessengerRobolectricSuite {
+public class GlobalSettingsFragmentTest extends MessengerRobolectricSuite {
 
-    private SettingsFragment fragment;
+    private GlobalSettingsFragment fragment;
 
     @Before
     public void setUp() {
-        fragment = startFragment(new SettingsFragment());
+        fragment = startFragment(new GlobalSettingsFragment());
     }
 
     @Test

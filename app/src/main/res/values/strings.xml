@@ -30,6 +30,7 @@
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
+    <string name="menu_feature_settings">Feature Settings</string>
     <string name="menu_settings">Global Settings</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>

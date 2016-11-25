@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,23 +26,50 @@ import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.fragment.settings.SettingsFragment;
+import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
+import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment;
 import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private SettingsFragment fragment;
+    private static final String ARG_SETTINGS_TYPE = "arg_settings_type";
+    private static final int TYPE_GLOBAL = 1;
+    private static final int TYPE_FEATURE = 2;
+
+    public static void startGlobalSettings(Context context) {
+        startWithExtra(context, TYPE_GLOBAL);
+    }
+
+    public static void startFeatureSettings(Context context) {
+        startWithExtra(context, TYPE_FEATURE);
+    }
+
+    private static void startWithExtra(Context context, int type) {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        intent.putExtra(ARG_SETTINGS_TYPE, type);
+        context.startActivity(intent);
+    }
+
+    private GlobalSettingsFragment globalFragment;
+    private FeatureSettingsFragment featureFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fragment = new SettingsFragment();
-
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
-                .commit();
+        int type = getIntent().getIntExtra(ARG_SETTINGS_TYPE, TYPE_GLOBAL);
+        switch (type) {
+            case TYPE_GLOBAL:
+                globalFragment = new GlobalSettingsFragment();
+                setTitle(R.string.menu_settings);
+                startFragment(globalFragment);
+                break;
+            case TYPE_FEATURE:
+                featureFragment = new FeatureSettingsFragment();
+                setTitle(R.string.menu_feature_settings);
+                startFragment(featureFragment);
+                break;
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -51,6 +80,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         ColorUtils.updateRecentsEntry(this);
         ColorUtils.checkBlackBackground(this);
+    }
+
+    private void startFragment(Fragment fragment) {
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .commit();
     }
 
     @Override
@@ -76,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        fragment.onActivityResult(requestCode, resultCode, data);
+        globalFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 }

@@ -60,7 +60,8 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/advanced">
+    <PreferenceCategory android:key="@string/pref_advanced_category"
+        android:title="@string/advanced">
 
         <SwitchPreference
             android:key="@string/pref_convert_to_mms"

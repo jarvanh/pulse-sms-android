@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
@@ -30,21 +31,21 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.ColorSet;
-import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**
- * Fragment for modifying app settings.
+ * Fragment for modifying app settings_global.
  */
-public class SettingsFragment extends PreferenceFragment {
+public class GlobalSettingsFragment extends PreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.settings);
+        addPreferencesFromResource(R.xml.settings_global);
         initBaseTheme();
         initGlobalTheme();
         initFontSize();
@@ -130,8 +131,8 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void initSignature() {
-        findPreference(getString(R.string.pref_signature))
-                .setOnPreferenceClickListener(preference -> {
+        Preference preference = findPreference(getString(R.string.pref_signature));
+        preference.setOnPreferenceClickListener(p -> {
                     //noinspection AndroidLintInflateParams
                     View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
                             null, false);
@@ -155,6 +156,12 @@ public class SettingsFragment extends PreferenceFragment {
 
                     return false;
                 });
+
+        if (FeatureFlags.get(getActivity()).FEATURE_SETTINGS) {
+            PreferenceGroup group = (PreferenceGroup) getPreferenceScreen()
+                    .findPreference(getString(R.string.pref_advanced_category));
+            group.removePreference(preference);
+        }
     }
 
     private void initSoundEffects() {

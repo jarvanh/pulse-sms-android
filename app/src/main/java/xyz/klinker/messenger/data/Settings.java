@@ -27,7 +27,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.util.TimeUtils;
 
 /**
- * Holds all settings for the application and allows for easily changing the values stored for each
+ * Holds all settings_global for the application and allows for easily changing the values stored for each
  * setting.
  */
 public class Settings {
@@ -64,7 +64,7 @@ public class Settings {
     public boolean firstStart;
     public boolean seenConvoNavToolTip;
 
-    // settings
+    // settings_global
     public VibratePattern vibrate;
     public boolean useGlobalThemeColor;
     public boolean deliveryReports;
@@ -89,7 +89,7 @@ public class Settings {
      * Gets a new instance (singleton) of Settings.
      *
      * @param context the current application context.
-     * @return the settings instance.
+     * @return the settings_global instance.
      */
     public static synchronized Settings get(Context context) {
         if (settings == null) {
@@ -116,7 +116,7 @@ public class Settings {
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
 
-        // settings
+        // settings_global
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
@@ -234,7 +234,7 @@ public class Settings {
     }
 
     /**
-     * Gets the current settings context.
+     * Gets the current settings_global context.
      *
      * @return the context.
      */
@@ -243,7 +243,7 @@ public class Settings {
     }
 
     /**
-     * Forces a reload of all settings data.
+     * Forces a reload of all settings_global data.
      */
     public void forceUpdate() {
         init(context);

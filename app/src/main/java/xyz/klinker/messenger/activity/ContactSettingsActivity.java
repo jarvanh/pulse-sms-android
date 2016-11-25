@@ -26,7 +26,7 @@ import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
 import xyz.klinker.messenger.util.ColorUtils;
 
 /**
- * Activity for changing contact settings.
+ * Activity for changing contact settings_global.
  */
 public class ContactSettingsActivity extends AppCompatActivity {
 

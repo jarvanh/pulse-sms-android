@@ -38,6 +38,7 @@ public class FeatureFlags {
     private static final String FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT = "content_observer_timeout";
     private static final String FLAG_REMOVE_MESSAGE_LIST_DRAWER = "remove_message_drawer";
     private static final String FLAG_ARTICLE_ENHANCER = "article_enhancer";
+    private static final String FLAG_FEATURE_SETTINGS = "feature_settings";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -54,6 +55,7 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean CONTENT_OBSERVER_TIMEOUT;
     public boolean ARTICLE_ENHANCER;
+    public boolean FEATURE_SETTINGS;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -64,6 +66,7 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
         ARTICLE_ENHANCER = getValue(sharedPrefs, FLAG_ARTICLE_ENHANCER);
+        FEATURE_SETTINGS = getValue(sharedPrefs, FLAG_FEATURE_SETTINGS);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -81,6 +84,9 @@ public class FeatureFlags {
                 break;
             case FLAG_ARTICLE_ENHANCER:
                 ARTICLE_ENHANCER= flag;
+                break;
+            case FLAG_FEATURE_SETTINGS:
+                FEATURE_SETTINGS = flag;
                 break;
         }
     }

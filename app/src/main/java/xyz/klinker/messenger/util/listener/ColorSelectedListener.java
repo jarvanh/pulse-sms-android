@@ -19,7 +19,7 @@ package xyz.klinker.messenger.util.listener;
 import xyz.klinker.messenger.data.ColorSet;
 
 /**
- * Listener for when a user chooses a color set in settings.
+ * Listener for when a user chooses a color set in settings_global.
  */
 public interface ColorSelectedListener {
     void onColorSelected(ColorSet colors);

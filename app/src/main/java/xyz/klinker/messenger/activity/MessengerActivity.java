@@ -67,6 +67,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
@@ -316,6 +317,10 @@ public class MessengerActivity extends AppCompatActivity
                 }
             }
         }, 250);
+
+        if (!FeatureFlags.get(this).FEATURE_SETTINGS) {
+            navigationView.getMenu().removeItem(R.id.drawer_feature_settings);
+        }
     }
 
     private void initSnooze() {
@@ -510,6 +515,8 @@ public class MessengerActivity extends AppCompatActivity
                 return displayBlacklist();
             case R.id.drawer_invite:
                 return displayInviteFriends();
+            case R.id.drawer_feature_settings:
+                return displayFeatureSettings();
             case R.id.drawer_settings:
                 return displaySettings();
             case R.id.drawer_account:
@@ -703,8 +710,12 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     private boolean displaySettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        SettingsActivity.startGlobalSettings(this);
+        return true;
+    }
+
+    private boolean displayFeatureSettings() {
+        SettingsActivity.startFeatureSettings(this);
         return true;
     }
 

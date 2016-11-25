@@ -975,7 +975,7 @@ public class DataSource {
     }
 
     /**
-     * Updates the settings for a conversation, such as ringtone and colors.
+     * Updates the settings_global for a conversation, such as ringtone and colors.
      */
     public void updateConversationSettings(Conversation conversation) {
         ensureActionable();

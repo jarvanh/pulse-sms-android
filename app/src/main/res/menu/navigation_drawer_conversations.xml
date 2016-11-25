@@ -64,6 +64,11 @@
             android:checkableBehavior="single">
 
             <item
+                android:id="@+id/drawer_feature_settings"
+                android:icon="@drawable/ic_feature_settings"
+                android:title="@string/menu_feature_settings" />
+
+            <item
                 android:id="@+id/drawer_settings"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/menu_settings" />

@@ -54,6 +54,7 @@
     <string name="pref_contact_global_colors_set" translatable="false">global_colors_set</string>
     <string name="pref_contact_customization_group" translatable="false">customization_group</string>
 
+    <string name="pref_advanced_category">advanced_settings_category</string>
     <string name="pref_ringtone">ringtone</string>
     <string name="pref_base_theme">base_theme</string>
     <string name="pref_global_color_theme">global_color_theme</string>

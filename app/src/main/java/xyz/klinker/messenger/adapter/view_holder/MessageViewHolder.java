@@ -135,10 +135,14 @@ public class MessageViewHolder extends SwappingHolder {
 
             if (message.getVisibility() == View.VISIBLE && type != Message.TYPE_ERROR &&
                     fragment.getMultiSelect() != null && type != Message.TYPE_INFO) {
-                // start the multi-select
-                fragment.getMultiSelect().startActionMode();
-                fragment.getMultiSelect().setSelectable(true);
-                fragment.getMultiSelect().setSelected(MessageViewHolder.this, true);
+
+                if (!fragment.getMultiSelect().isSelectable()) {
+                    // start the multi-select
+                    fragment.getMultiSelect().startActionMode();
+                    fragment.getMultiSelect().setSelectable(true);
+                    fragment.getMultiSelect().setSelected(MessageViewHolder.this, true);
+                }
+
                 return true;
             }
 
