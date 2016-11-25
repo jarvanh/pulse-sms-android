@@ -17,7 +17,7 @@ public class YoutubeParserTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        parser = new YoutubeParser();
+        parser = new YoutubeParser(null);
     }
 
     @Test

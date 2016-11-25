@@ -12,7 +12,7 @@ import xyz.klinker.messenger.data.model.Message;
 public abstract class MediaParser {
 
     protected Context context;
-    private String matchedText;
+    protected String matchedText;
 
     protected abstract Pattern getPatternMatcher();
     protected abstract String getIgnoreMatcher();
