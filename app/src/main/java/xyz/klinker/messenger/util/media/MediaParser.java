@@ -14,7 +14,7 @@ public abstract class MediaParser {
     protected Context context;
     private String matchedText;
 
-    protected abstract String getPatternMatcher();
+    protected abstract Pattern getPatternMatcher();
     protected abstract String getIgnoreMatcher();
     protected abstract String getMimeType();
     protected abstract String buildBody(String matchedText);
@@ -25,13 +25,13 @@ public abstract class MediaParser {
 
     @VisibleForTesting
     public boolean canParse(String text) {
-        Matcher matcher = Pattern.compile(getPatternMatcher()).matcher(text);
+        Matcher matcher = getPatternMatcher().matcher(text);
         if (matcher.find()) {
             matchedText = matcher.group(0);
         }
 
-        return matchedText != null && getIgnoreMatcher() != null &&
-                !Pattern.compile(getIgnoreMatcher()).matcher(text).find();
+        return matchedText != null && (getIgnoreMatcher() == null ||
+                (getIgnoreMatcher() != null && !Pattern.compile(getIgnoreMatcher()).matcher(text).find()));
     }
 
     public Message parse(long conversationId) {

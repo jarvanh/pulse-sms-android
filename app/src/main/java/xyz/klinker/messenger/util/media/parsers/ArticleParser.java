@@ -3,10 +3,15 @@ package xyz.klinker.messenger.util.media.parsers;
 import android.content.Context;
 import android.net.Uri;
 
+import org.json.JSONObject;
+
+import java.util.regex.Pattern;
+
 import xyz.klinker.android.article.ArticleLoadedListener;
 import xyz.klinker.android.article.ArticleUtils;
 import xyz.klinker.android.article.data.Article;
 import xyz.klinker.messenger.BuildConfig;
+import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.media.MediaParser;
@@ -18,8 +23,8 @@ public class ArticleParser extends MediaParser {
     }
 
     @Override
-    protected String getPatternMatcher() {
-        return Regex.WEB_URL.toString();
+    protected Pattern getPatternMatcher() {
+        return Regex.WEB_URL;
     }
 
     @Override
@@ -35,8 +40,9 @@ public class ArticleParser extends MediaParser {
     @Override
     protected String buildBody(String matchedText) {
         ArticleUtils utils = new ArticleUtils(BuildConfig.ARTICLE_API_KEY);
-        utils.preloadArticle(context, matchedText, null);
+        Article article = utils.fetchArticle(context, matchedText);
 
-        return null;
+        ArticlePreview preview = ArticlePreview.build(article);
+        return preview != null ? preview.toString() : null;
     }
 }

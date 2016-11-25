@@ -3,6 +3,8 @@ package xyz.klinker.messenger.util.media.parsers;
 import android.content.Context;
 import android.net.Uri;
 
+import java.util.regex.Pattern;
+
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.media.MediaParser;
@@ -14,8 +16,8 @@ public class YoutubeParser extends MediaParser {
     }
 
     @Override
-    protected String getPatternMatcher() {
-        return "(youtu.be\\/[^?\\s]*)|(youtube.com\\/watch\\?v=[^&\\s]*)";
+    protected Pattern getPatternMatcher() {
+        return Pattern.compile("(youtu.be\\/[^?\\s]*)|(youtube.com\\/watch\\?v=[^&\\s]*)");
     }
 
     @Override
