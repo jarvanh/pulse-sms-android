@@ -39,6 +39,10 @@ public class FeatureFlags {
     private static final String FLAG_REMOVE_MESSAGE_LIST_DRAWER = "remove_message_drawer";
     private static final String FLAG_ARTICLE_ENHANCER = "article_enhancer";
     private static final String FLAG_FEATURE_SETTINGS = "feature_settings";
+    private static final String FLAG_SECURE_PRIVATE = "secure_private";
+    private static final String FLAG_QUICK_COMPOSE = "quick_compose";
+    private static final String FLAG_DELAYED_SENDING = "delayed_sending";
+    private static final String FLAG_CLEANUP_OLD = "cleanup_old";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -56,6 +60,10 @@ public class FeatureFlags {
     public boolean CONTENT_OBSERVER_TIMEOUT;
     public boolean ARTICLE_ENHANCER;
     public boolean FEATURE_SETTINGS;
+    public boolean SECURE_PRIVATE;
+    public boolean QUICK_COMPOSE;
+    public boolean DELAYED_SENDING;
+    public boolean CLEANUP_OLD_MESSAGES;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -67,6 +75,10 @@ public class FeatureFlags {
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
         ARTICLE_ENHANCER = getValue(sharedPrefs, FLAG_ARTICLE_ENHANCER);
         FEATURE_SETTINGS = getValue(sharedPrefs, FLAG_FEATURE_SETTINGS);
+        SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
+        QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        DELAYED_SENDING = getValue(sharedPrefs, FLAG_DELAYED_SENDING);
+        CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -87,6 +99,18 @@ public class FeatureFlags {
                 break;
             case FLAG_FEATURE_SETTINGS:
                 FEATURE_SETTINGS = flag;
+                break;
+            case FLAG_SECURE_PRIVATE:
+                SECURE_PRIVATE = flag;
+                break;
+            case FLAG_DELAYED_SENDING:
+                DELAYED_SENDING = flag;
+                break;
+            case FLAG_QUICK_COMPOSE:
+                QUICK_COMPOSE= flag;
+                break;
+            case FLAG_CLEANUP_OLD:
+                CLEANUP_OLD_MESSAGES = flag;
                 break;
         }
     }

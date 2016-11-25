@@ -1116,6 +1116,28 @@ public class ApiUtils {
     }
 
     /**
+     * Update the secure private conversations setting.
+     */
+    public void updateSecurePrivateConversations(final String accountId, final boolean secure) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "secure_private_conversations", "boolean", secure);
+        }
+    }
+
+    /**
+     * Update the quick compose setting.
+     */
+    public void updateQuickCompose(final String accountId, final boolean quickCompose) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "quick_compose", "boolean", quickCompose);
+        }
+    }
+
+    /**
      * Update the signature setting.
      */
     public void updateSignature(final String accountId, final String signature) {
@@ -1123,6 +1145,30 @@ public class ApiUtils {
             return;
         } else {
             updateSetting(accountId, "signature", "string", signature);
+        }
+    }
+
+
+    /**
+     * Update the delayed sending setting.
+     */
+    public void updateDelayedSending(final String accountId, final String delayedSending) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "delayed_sending", "string", delayedSending);
+        }
+    }
+
+
+    /**
+     * Update the cleanup old messages setting.
+     */
+    public void updateCleanupOldMessages(final String accountId, final String cleanup) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "cleanup_old_messages", "string", cleanup);
         }
     }
 
