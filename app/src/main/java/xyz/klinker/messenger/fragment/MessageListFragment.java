@@ -1221,6 +1221,9 @@ public class MessageListFragment extends Fragment implements
 
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             attachImage(UCrop.getOutput(data));
+
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
         } else if (requestCode == RESULT_VIDEO_REQUEST) {
             onBackPressed();
 
@@ -1229,6 +1232,9 @@ public class MessageListFragment extends Fragment implements
                 attachImage(data.getData());
                 attachedMimeType = MimeType.VIDEO_MP4;
                 editImage.setVisibility(View.GONE);
+
+                selectedImageUris.clear();
+                selectedImageCount.setVisibility(View.GONE);
             } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 e.printStackTrace();
@@ -1242,6 +1248,9 @@ public class MessageListFragment extends Fragment implements
                 attachImage(data.getData());
                 attachedMimeType = MimeType.IMAGE_GIF;
                 editImage.setVisibility(View.GONE);
+
+                selectedImageUris.clear();
+                selectedImageCount.setVisibility(View.GONE);
             }
         } else if (requestCode == RESULT_GALLERY_PICKER_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
@@ -1258,9 +1267,16 @@ public class MessageListFragment extends Fragment implements
                 attachedMimeType = MimeType.IMAGE_GIF;
                 editImage.setVisibility(View.GONE);
             }
+
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            Uri uri = ImageUtils.getUriForLatestPhoto(getActivity());
             onBackPressed();
-            attachImage(ImageUtils.getUriForLatestPhoto(getActivity()));
+            attachImage(uri);
+
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
         }
     }
 
@@ -1347,12 +1363,20 @@ public class MessageListFragment extends Fragment implements
             startVideoEncoding(uri);
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
+
+            if (attachHolder.getVisibility() == View.VISIBLE) {
+                attach.performClick();
+            }
         } else if (mimeType.equals(MimeType.IMAGE_GIF)) {
             attachImage(uri);
             attachedMimeType = MimeType.IMAGE_GIF;
             editImage.setVisibility(View.GONE);
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
+
+            if (attachHolder.getVisibility() == View.VISIBLE) {
+                attach.performClick();
+            }
         }
     }
 
