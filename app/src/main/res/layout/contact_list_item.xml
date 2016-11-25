@@ -45,6 +45,15 @@
             android:layout_marginTop="-1dp"
             android:textColor="@android:color/white"/>
 
+        <ImageView
+            android:id="@+id/group_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_group"
+            android:layout_marginTop="-1dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
     </FrameLayout>
 
     <LinearLayout

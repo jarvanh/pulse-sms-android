@@ -80,8 +80,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
 
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
+                if (holder.groupIcon.getVisibility() != View.GONE) {
+                    holder.groupIcon.setVisibility(View.GONE);
+                }
             } else {
                 holder.imageLetter.setText(null);
+                if (holder.groupIcon.getVisibility() != View.VISIBLE) {
+                    holder.groupIcon.setVisibility(View.VISIBLE);
+                }
+
+                if (conversation.phoneNumbers.contains(",")) {
+                    holder.groupIcon.setImageResource(R.drawable.ic_group);
+                } else {
+                    holder.groupIcon.setImageResource(R.drawable.ic_person);
+                }
             }
         } else {
             if (!conversation.imageUri.endsWith("/photo")) {
