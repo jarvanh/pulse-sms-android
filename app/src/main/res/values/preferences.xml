@@ -54,20 +54,25 @@
     <string name="pref_contact_global_colors_set" translatable="false">global_colors_set</string>
     <string name="pref_contact_customization_group" translatable="false">customization_group</string>
 
-    <string name="pref_advanced_category">advanced_settings_category</string>
-    <string name="pref_ringtone">ringtone</string>
-    <string name="pref_base_theme">base_theme</string>
-    <string name="pref_global_color_theme">global_color_theme</string>
-    <string name="pref_font_size">font_size</string>
-    <string name="pref_vibrate">vibrate_pattern_identifier</string>
-    <string name="pref_repeat_notifications">repeat_notifications_interval</string>
-    <string name="pref_delivery_reports">delivery_reports</string>
-    <string name="pref_mobile_only">mobile_only</string>
-    <string name="pref_sound_effects">sound_effects</string>
-    <string name="pref_seen_convo_nav_tooltip">seen_convo_nav_tooltip</string>
-    <string name="pref_snooze">snooze</string>
-    <string name="pref_convert_to_mms">convert_to_mms</string>
-    <string name="pref_signature">signature</string>
-    <string name="pref_alert_types">alert_types</string>
+    <string name="pref_advanced_category" translatable="false">advanced_settings_category</string>
+    <string name="pref_ringtone" translatable="false">ringtone</string>
+    <string name="pref_base_theme" translatable="false">base_theme</string>
+    <string name="pref_global_color_theme" translatable="false">global_color_theme</string>
+    <string name="pref_font_size" translatable="false">font_size</string>
+    <string name="pref_vibrate" translatable="false">vibrate_pattern_identifier</string>
+    <string name="pref_repeat_notifications" translatable="false">repeat_notifications_interval</string>
+    <string name="pref_delivery_reports" translatable="false">delivery_reports</string>
+    <string name="pref_mobile_only" translatable="false">mobile_only</string>
+    <string name="pref_sound_effects" translatable="false">sound_effects</string>
+    <string name="pref_seen_convo_nav_tooltip" translatable="false">seen_convo_nav_tooltip</string>
+    <string name="pref_snooze" translatable="false">snooze</string>
+    <string name="pref_convert_to_mms" translatable="false">convert_to_mms</string>
+    <string name="pref_alert_types" translatable="false">alert_types</string>
+    
+    <string name="pref_signature" translatable="false">signature</string>
+    <string name="pref_delayed_sending" translatable="false">delayed_sending</string>
+    <string name="pref_cleanup_messages" translatable="false">cleanup_old_messages</string>
+    <string name="pref_quick_compose" translatable="false">quick_compose</string>
+    <string name="pref_secure_private_conversations" translatable="false">secure_private_conversations</string>
 
 </resources>

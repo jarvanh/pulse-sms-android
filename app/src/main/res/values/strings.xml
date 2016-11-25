@@ -30,7 +30,7 @@
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
-    <string name="menu_feature_settings">Feature Settings</string>
+    <string name="menu_feature_settings">Advanced Features</string>
     <string name="menu_settings">Global Settings</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>
@@ -324,10 +324,19 @@
     <string name="advanced">Advanced</string>
     <string name="send_as_mms">Convert to MMS</string>
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
-    <string name="signature">Signature</string>
-    <string name="signature_summary">NOTE: sent signatures will NOT be displayed in Pulse\'s message list. Signatures will only be shown to the receiver of the message.</string>
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
+
+
+    <!-- Advanced Features Settings -->
+    <string name="signature">Signature</string>
+    <string name="signature_summary">NOTE: sent signatures will NOT be displayed in Pulse\'s message list. Signatures will only be shown to the receiver of the message.</string>
+    <string name="cleanup_old_messages">Cleanup Old Messages</string>
+    <string name="delayed_sending">Delayed Sending</string>
+    <string name="quick_compose">Quick Compose</string>
+    <string name="quick_compose_summary">Always-active notification to give you the fastest access to composing a new message.</string>
+    <string name="secure_private_conversations">Secure Private Conversations</string>
+    <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
 
 
     <!-- Theming Options -->
@@ -400,6 +409,20 @@
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
+    <string name="off">Off</string>
+
+    <!-- Times -->
+    <string name="five_seconds">Five seconds</string>
+    <string name="ten_seconds">Ten seconds</string>
+    <string name="fifteen_seconds">Fifteen seconds</string>
+    <string name="thirty_seconds">Thirty seconds</string>
+    <string name="one_minute">One minute</string>
+    <string name="one_week">One week</string>
+    <string name="two_weeks">Two weeks</string>
+    <string name="one_month">One month</string>
+    <string name="three_months">Three months</string>
+    <string name="six_months">Six months</string>
+    <string name="one_year">One year</string>
 
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">No Subscription Found!</string>

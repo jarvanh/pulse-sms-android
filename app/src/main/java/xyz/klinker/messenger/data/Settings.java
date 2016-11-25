@@ -71,8 +71,12 @@ public class Settings {
     public boolean convertLongMessagesToMMS;
     public boolean mobileOnly;
     public boolean soundEffects;
+    public boolean securePrivateConversations;
+    public boolean quickCompose;
     public long snooze;
     public long repeatNotifications;
+    public long delayedSendingTimeout;
+    public long cleanupMessagesTimeout;
     public String ringtone;
     public String fontSize;
     public String themeColorString;
@@ -121,6 +125,8 @@ public class Settings {
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
         this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true);
+        this.securePrivateConversations = sharedPrefs.getBoolean(context.getString(R.string.pref_secure_private_conversations), false);
+        this.quickCompose = sharedPrefs.getBoolean(context.getString(R.string.pref_quick_compose), false);
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0);
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
@@ -203,6 +209,59 @@ public class Settings {
                 break;
             default:
                 this.repeatNotifications = -1;
+                break;
+        }
+
+        String delayedSending = sharedPrefs.getString(context.getString(R.string.pref_delayed_sending), "off");
+        switch (delayedSending) {
+            case "off":
+                this.delayedSendingTimeout = 0;
+                break;
+            case "five_seconds":
+                this.delayedSendingTimeout = TimeUtils.SECOND * 5;
+                break;
+            case "ten_seconds":
+                this.delayedSendingTimeout = TimeUtils.SECOND * 10;
+                break;
+            case "fifteen_seconds":
+                this.delayedSendingTimeout = TimeUtils.SECOND * 15;
+                break;
+            case "thirty_seconds":
+                this.delayedSendingTimeout = TimeUtils.SECOND * 30;
+                break;
+            case "one_minute":
+                this.delayedSendingTimeout = TimeUtils.MINUTE;
+                break;
+            default:
+                this.delayedSendingTimeout = 0;
+                break;
+        }
+
+        String cleanupOldMessages = sharedPrefs.getString(context.getString(R.string.pref_cleanup_messages), "never");
+        switch (cleanupOldMessages) {
+            case "never":
+                this.cleanupMessagesTimeout = -1;
+                break;
+            case "one_week":
+                this.cleanupMessagesTimeout = TimeUtils.DAY * 7;
+                break;
+            case "two_weeks":
+                this.cleanupMessagesTimeout = TimeUtils.DAY * 17;
+                break;
+            case "one_month":
+                this.cleanupMessagesTimeout = TimeUtils.DAY * 30;
+                break;
+            case "three_months":
+                this.cleanupMessagesTimeout = TimeUtils.DAY * 90;
+                break;
+            case "six_months":
+                this.cleanupMessagesTimeout = TimeUtils.YEAR / 2;
+                break;
+            case "one_year":
+                this.cleanupMessagesTimeout = TimeUtils.YEAR;
+                break;
+            default:
+                this.cleanupMessagesTimeout = -1;
                 break;
         }
 

@@ -115,4 +115,42 @@
         <item>hour</item>
     </string-array>
 
+    <string-array name="delayed_sending">
+        <item>@string/off</item>
+        <item>@string/five_seconds</item>
+        <item>@string/ten_seconds</item>
+        <item>@string/fifteen_seconds</item>
+        <item>@string/thirty_seconds</item>
+        <item>@string/one_minute</item>
+    </string-array>
+
+    <string-array name="delayed_sending_values">
+        <item>off</item>
+        <item>five_seconds</item>
+        <item>ten_seconds</item>
+        <item>fifteen_seconds</item>
+        <item>thirty_seconds</item>
+        <item>one_minute</item>
+    </string-array>
+
+    <string-array name="cleanup">
+        <item>@string/repeat_never</item>
+        <item>@string/one_week</item>
+        <item>@string/two_weeks</item>
+        <item>@string/one_month</item>
+        <item>@string/three_months</item>
+        <item>@string/six_months</item>
+        <item>@string/one_year</item>
+    </string-array>
+
+    <string-array name="cleanup_values">
+        <item>never</item>
+        <item>one_week</item>
+        <item>two_weeks</item>
+        <item>one_month</item>
+        <item>three_months</item>
+        <item>six_months</item>
+        <item>one_year</item>
+    </string-array>
+
 </resources>
