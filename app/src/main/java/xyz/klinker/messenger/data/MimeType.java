@@ -42,6 +42,7 @@ public class MimeType {
     public static final String AUDIO_OGG = "audio/ogg";
     public static final String AUDIO_WAV = "audio/vnd.wav";
     public static final String AUDIO_3GP = "audio/3gp";
+    public static final String AUDIO_AMR = "audio/amr";
     public static final String MEDIA_YOUTUBE = "media/youtube";
     public static final String MEDIA_WEBPAGE = "media/web";
     public static final String MEDIA_TWITTER = "media/twitter";
@@ -68,6 +69,7 @@ public class MimeType {
         extensions.put(AUDIO_OGG, "ogg");
         extensions.put(AUDIO_WAV, "wav");
         extensions.put(AUDIO_3GP, "3gp");
+        extensions.put(AUDIO_AMR, "amr");
     }
 
     /**
@@ -93,7 +95,8 @@ public class MimeType {
                 mimeType.equals(AUDIO_MP4) ||
                 mimeType.equals(AUDIO_OGG) ||
                 mimeType.equals(AUDIO_WAV) ||
-                mimeType.contains(AUDIO_3GP);
+                mimeType.contains(AUDIO_3GP) ||
+                mimeType.contains(AUDIO_AMR);
     }
 
     /**

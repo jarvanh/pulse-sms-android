@@ -102,6 +102,16 @@ public class MimeTypeTest {
     }
 
     @Test
+    public void audio3gpSupported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_3GP));
+    }
+
+    @Test
+    public void audioAmrSupported() {
+        assertTrue(MimeType.isSupported(MimeType.AUDIO_AMR));
+    }
+
+    @Test
     public void audioWavSupported() {
         assertTrue(MimeType.isSupported(MimeType.AUDIO_WAV));
     }
@@ -150,6 +160,8 @@ public class MimeTypeTest {
         assertTrue(MimeType.isAudio(MimeType.AUDIO_MP3_2));
         assertTrue(MimeType.isAudio(MimeType.AUDIO_OGG));
         assertTrue(MimeType.isAudio(MimeType.AUDIO_WAV));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_AMR));
+        assertTrue(MimeType.isAudio(MimeType.AUDIO_3GP));
         assertFalse(MimeType.isAudio(MimeType.IMAGE_JPEG));
         assertFalse(MimeType.isAudio(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isAudio(MimeType.TEXT_VCARD));
