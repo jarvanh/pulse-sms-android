@@ -256,18 +256,20 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         return new ConversationViewHolder(view, conversationExpandedListener, this);
     }
 
-    public void deleteItem(int position) {
-        removeItem(position, ReorderType.DELETE);
+    public boolean deleteItem(int position) {
+        return removeItem(position, ReorderType.DELETE);
     }
 
-    public void archiveItem(int position) {
-        removeItem(position, ReorderType.ARCHIVE);
+    public boolean archiveItem(int position) {
+        return removeItem(position, ReorderType.ARCHIVE);
     }
 
-    public void removeItem(int position, ReorderType reorderType) {
+    public boolean removeItem(int position, ReorderType reorderType) {
         // The logic here can get a little tricky because we are removing items from the adapter
         // but need to account for the headers taking up a position as well. On top of that, if all
         // the items in a section are gone, then there shouldn't be a header for that section.
+
+        boolean removedHeader = false;
 
         int originalPosition = position;
         int headersAbove = 1;
@@ -288,6 +290,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 if (section.count == 0) {
                     sectionCounts.remove(headersAbove - 1);
                     notifyItemRangeRemoved(originalPosition - 1, 2);
+                    removedHeader = true;
                 } else {
                     notifyItemRemoved(originalPosition);
                 }
@@ -303,6 +306,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 headersAbove++;
             }
         }
+
+        return removedHeader;
     }
 
     public int findPositionForConversationId(long conversationId) {
@@ -343,6 +348,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             totalSectionsCount += sectionCounts.get(i).count;
 
             if (position <= (totalSectionsCount + headersAbove)) {
+                headersAbove++;
                 break;
             } else {
                 if (sectionCounts.get(i).count != 0) {

@@ -82,9 +82,12 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                     handled = true;
 
                     int removed = 0;
-                    for (Integer i : selectedPositions) {
-                        adapter.archiveItem(i - removed);
-                        removed++;
+                    for (int i = 0; i < adapter.getItemCount(); i++) {
+                        if (isSelected(i + removed, 0)) {
+                            boolean removedHeader = adapter.archiveItem(i);
+                            removed += removedHeader ? 2 : 1;
+                            i--;
+                        }
                     }
 
                     break;
@@ -92,9 +95,12 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                     handled = true;
 
                     removed = 0;
-                    for (Integer i : selectedPositions) {
-                        adapter.deleteItem(i - removed);
-                        removed++;
+                    for (int i = 0; i < adapter.getItemCount(); i++) {
+                        if (isSelected(i, 0)) {
+                            boolean removedHeader = adapter.deleteItem(i);
+                            removed += removedHeader ? 2 : 1;
+                            i--;
+                        }
                     }
 
                     break;
