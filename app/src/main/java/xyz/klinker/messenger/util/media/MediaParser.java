@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.util.media;
 
+import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import java.util.regex.Matcher;
@@ -10,12 +11,17 @@ import xyz.klinker.messenger.data.model.Message;
 
 public abstract class MediaParser {
 
+    protected Context context;
     private String matchedText;
 
     protected abstract String getPatternMatcher();
     protected abstract String getIgnoreMatcher();
     protected abstract String getMimeType();
     protected abstract String buildBody(String matchedText);
+    
+    public MediaParser(Context context){
+        this.context = context;
+    }
 
     @VisibleForTesting
     public boolean canParse(String text) {
@@ -24,7 +30,8 @@ public abstract class MediaParser {
             matchedText = matcher.group(0);
         }
 
-        return matchedText != null && !Pattern.compile(getIgnoreMatcher()).matcher(text).find();
+        return matchedText != null && getIgnoreMatcher() != null &&
+                !Pattern.compile(getIgnoreMatcher()).matcher(text).find();
     }
 
     public Message parse(long conversationId) {
@@ -39,6 +46,6 @@ public abstract class MediaParser {
 
         matchedText = null;
 
-        return message;
+        return message.data == null ? null : message;
     }
 }

@@ -44,7 +44,7 @@ public class MimeType {
     public static final String AUDIO_3GP = "audio/3gp";
     public static final String AUDIO_AMR = "audio/amr";
     public static final String MEDIA_YOUTUBE = "media/youtube";
-    public static final String MEDIA_WEBPAGE = "media/web";
+    public static final String MEDIA_ARTICLE = "media/web";
     public static final String MEDIA_TWITTER = "media/twitter";
 
     private static final Map<String, String> extensions;

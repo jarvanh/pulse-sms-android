@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.media.parsers.ArticleParser;
 import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
 
 /**
@@ -13,11 +14,9 @@ import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
  */
 public class MediaMessageParserFactory {
 
-    private static final MediaParser[] parsers = new MediaParser[] {
-            new YoutubeParser()
-    };
-
     public MediaParser getInstance(Context context, String messageText) {
+        MediaParser[] parsers = buildParsers(context);
+
         if (!FeatureFlags.get(context).ARTICLE_ENHANCER) {
             return null;
         } else {
@@ -29,5 +28,12 @@ public class MediaMessageParserFactory {
         }
 
         return null;
+    }
+
+    private MediaParser[] buildParsers(Context context) {
+        return new MediaParser[] {
+                new YoutubeParser(context),
+                new ArticleParser(context)
+        };
     }
 }

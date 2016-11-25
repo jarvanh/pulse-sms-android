@@ -25,13 +25,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +37,6 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
@@ -48,7 +45,6 @@ import com.klinker.android.link_builder.TouchableMovementMethod;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.BuildConfig;
@@ -71,7 +67,6 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
-import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
 import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 /**
@@ -343,7 +338,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
             } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
 
-            } else if (message.mimeType.equals(MimeType.MEDIA_WEBPAGE)) {
+            } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
 
             }
 
