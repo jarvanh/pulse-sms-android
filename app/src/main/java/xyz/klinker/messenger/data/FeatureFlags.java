@@ -37,12 +37,12 @@ public class FeatureFlags {
     private static final String FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES = "reorder_conversations";
     private static final String FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT = "content_observer_timeout";
     private static final String FLAG_REMOVE_MESSAGE_LIST_DRAWER = "remove_message_drawer";
-    private static final String FLAG_ARTICLE_ENHANCER = "article_enhancer";
-    private static final String FLAG_FEATURE_SETTINGS = "feature_settings";
-    private static final String FLAG_SECURE_PRIVATE = "secure_private";
-    private static final String FLAG_QUICK_COMPOSE = "quick_compose";
-    private static final String FLAG_DELAYED_SENDING = "delayed_sending";
-    private static final String FLAG_CLEANUP_OLD = "cleanup_old";
+    private static final String FLAG_ARTICLE_ENHANCER = "flag_article_enhancer";
+    private static final String FLAG_FEATURE_SETTINGS = "flag_feature_settings";
+    private static final String FLAG_SECURE_PRIVATE = "flag_secure_private";
+    private static final String FLAG_QUICK_COMPOSE = "flag_quick_compose";
+    private static final String FLAG_DELAYED_SENDING = "flag_delayed_sending";
+    private static final String FLAG_CLEANUP_OLD = "flag_cleanup_old";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
