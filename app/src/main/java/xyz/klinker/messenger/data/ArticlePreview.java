@@ -26,7 +26,7 @@ public class ArticlePreview {
         preview.title = article.title;
         preview.description = article.description;
         preview.imageUrl = article.image;
-        preview.domain = article.alias;
+        preview.domain = article.domain;
         preview.webUrl = article.url;
 
         return preview;

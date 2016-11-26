@@ -55,8 +55,11 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import xyz.klinker.android.article.ArticleIntent;
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
+import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
@@ -86,6 +89,7 @@ public class MessageViewHolder extends SwappingHolder {
     public TextView message;
     public TextView timestamp;
     public TextView contact;
+    public TextView title;
     public ImageView image;
     public View messageHolder;
     public long messageId;
@@ -101,6 +105,9 @@ public class MessageViewHolder extends SwappingHolder {
         public void onClick(View v) {
             if (type == Message.TYPE_INFO || fragment.getMultiSelect() == null ||
                     fragment.getMultiSelect().tapSelection(MessageViewHolder.this)) {
+                return;
+            } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                startArticle();
                 return;
             }
 
@@ -224,6 +231,7 @@ public class MessageViewHolder extends SwappingHolder {
         message = (TextView) itemView.findViewById(R.id.message);
         timestamp = (TextView) itemView.findViewById(R.id.timestamp);
         contact = (TextView) itemView.findViewById(R.id.contact);
+        title = (TextView) itemView.findViewById(R.id.title);
         image = (ImageView) itemView.findViewById(R.id.image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
@@ -250,29 +258,28 @@ public class MessageViewHolder extends SwappingHolder {
         }
 
         if (image != null) {
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (fragment.getMultiSelect() != null && fragment.getMultiSelect().isSelectable()) {
-                        messageHolder.performClick();
-                        return;
-                    }
+            image.setOnClickListener(view -> {
+                if (fragment.getMultiSelect() != null && fragment.getMultiSelect().isSelectable()) {
+                    messageHolder.performClick();
+                    return;
+                }
 
-                    if (mimeType != null && MimeType.isVcard(mimeType)) {
-                        Uri uri = Uri.parse(message.getText().toString());
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(uri, MimeType.TEXT_VCARD);
-                        itemView.getContext().startActivity(intent);
-                    } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
-                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
-                                YoutubeParser.getVideoUriFromThumbnail(data)
-                        )));
-                    } else {
-                        Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
-                        intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
-                        intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
-                        itemView.getContext().startActivity(intent);
-                    }
+                if (mimeType != null && MimeType.isVcard(mimeType)) {
+                    Uri uri = Uri.parse(message.getText().toString());
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(uri, MimeType.TEXT_VCARD);
+                    itemView.getContext().startActivity(intent);
+                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
+                    itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+                            YoutubeParser.getVideoUriFromThumbnail(data)
+                    )));
+                } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                    startArticle();
+                } else {
+                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
+                    intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
+                    intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+                    itemView.getContext().startActivity(intent);
                 }
             });
 
@@ -386,5 +393,19 @@ public class MessageViewHolder extends SwappingHolder {
         source.close();
 
         return message;
+    }
+
+    private void startArticle() {
+        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
+                .setToolbarColor(MessageViewHolder.this.color)
+                .setAccentColor(MessageViewHolder.this.color)
+                .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
+                        ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                .build();
+
+        ArticlePreview preview = ArticlePreview.build(data);
+        if (preview != null) {
+            intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+        }
     }
 }

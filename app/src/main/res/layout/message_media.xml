@@ -12,23 +12,64 @@
         android:backgroundTint="@color/drawerBackground"
         android:id="@+id/message_holder">
 
-        <ImageView
+        <xyz.klinker.android.article.view.CutLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="@dimen/max_message_width"
+                android:minHeight="250dp"
+                android:minWidth="@dimen/min_mms_picture_width"
+                android:scaleType="centerCrop"
+                android:id="@+id/image"
+                android:contentDescription="@string/mms_image" />
+
+        </xyz.klinker.android.article.view.CutLayout>
+
+        <LinearLayout
+            android:layout_marginTop="-28dp"
+            android:padding="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="@dimen/max_message_width"
-            android:minHeight="250dp"
-            android:minWidth="@dimen/min_mms_picture_width"
-            android:scaleType="centerCrop"
-            android:id="@+id/image"
-            android:contentDescription="@string/mms_image" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="@dimen/max_message_width"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:id="@+id/message" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/secondaryText"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/primaryText"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/max_message_width"
+                android:textSize="15sp"
+                android:textColor="@color/primaryText"
+                android:id="@+id/message"
+                android:layout_marginTop="4dp"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-light"
+                android:ellipsize="end" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -51,6 +51,7 @@ import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
@@ -236,13 +237,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             LinkBuilder.on(holder.message).addLink(phoneNumbers).addLink(urls).build();
 
-            if (holder.image != null && holder.image.getVisibility() == View.VISIBLE) {
-                holder.image.setVisibility(View.GONE);
-            }
-
-            if (holder.message != null && holder.message.getVisibility() == View.GONE) {
-                holder.message.setVisibility(View.VISIBLE);
-            }
+            setGone(holder.image);
+            setVisible(holder.message);
         } else if (!MimeType.isExpandedMedia(message.mimeType)) {
             holder.image.setImageDrawable(null);
             holder.image.setMinimumWidth(imageWidth);
@@ -310,13 +306,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
             }
 
-            if (holder.message.getVisibility() == View.VISIBLE) {
-                holder.message.setVisibility(View.GONE);
-            }
-
-            if (holder.image.getVisibility() == View.GONE) {
-                holder.image.setVisibility(View.VISIBLE);
-            }
+            setGone(holder.message);
+            setVisible(holder.image);
         } else {
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
                 Glide.with(holder.image.getContext())
@@ -333,18 +324,33 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                                 holder.image.setImageBitmap(resource);
                             }
                         });
-                if (holder.message.getVisibility() == View.VISIBLE) {
-                    holder.message.setVisibility(View.GONE);
-                }
+                setGone(holder.message);
             } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
 
             } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                ArticlePreview preview = ArticlePreview.build(message.data);
+                if (preview != null) {
+                    Glide.with(holder.image.getContext())
+                            .load(Uri.parse(preview.imageUrl))
+                            .asBitmap()
+                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                            .fitCenter()
+                            .into(holder.image);
+                    holder.contact.setText(preview.title);
+                    holder.message.setText(preview.description);
+                    holder.title.setText(preview.domain);
 
+                    setVisible(holder.image);
+                    setVisible(holder.contact);
+                    setVisible(holder.message);
+                } else {
+                    setGone(holder.image);
+                    setGone(holder.message);
+                    setGone(holder.timestamp);
+                }
             }
 
-            if (holder.image.getVisibility() == View.GONE) {
-                holder.image.setVisibility(View.VISIBLE);
-            }
+            setVisible(holder.image);
         }
 
         long nextTimestamp;
@@ -397,6 +403,18 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         messages.moveToPosition(position);
         return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+    }
+
+    private void setVisible(View v) {
+        if (v != null && v.getVisibility() != View.VISIBLE) {
+            v.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setGone(View v) {
+        if (v != null && v.getVisibility() != View.GONE) {
+            v.setVisibility(View.GONE);
+        }
     }
 
     public long getItemId(int position) {
