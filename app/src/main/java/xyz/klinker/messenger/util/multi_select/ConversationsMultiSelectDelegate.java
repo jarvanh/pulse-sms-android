@@ -81,7 +81,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                 case R.id.menu_archive_conversation:
                     handled = true;
 
-                    int removed = 0;
+                     int removed = 0;
                     for (int i = 0; i < adapter.getItemCount(); i++) {
                         if (isSelected(i + removed, 0)) {
                             boolean removedHeader = adapter.archiveItem(i);
@@ -96,7 +96,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
 
                     removed = 0;
                     for (int i = 0; i < adapter.getItemCount(); i++) {
-                        if (isSelected(i, 0)) {
+                        if (isSelected(i + removed, 0)) {
                             boolean removedHeader = adapter.deleteItem(i);
                             removed += removedHeader ? 2 : 1;
                             i--;
