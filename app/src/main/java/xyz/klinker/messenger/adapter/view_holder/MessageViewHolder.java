@@ -100,6 +100,9 @@ public class MessageViewHolder extends SwappingHolder {
     private int type;
     private int timestampHeight;
 
+    private int primaryColor = -1;
+    private int accentColor = -1;
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -395,10 +398,15 @@ public class MessageViewHolder extends SwappingHolder {
         return message;
     }
 
+    public void setColors(int color, int accentColor) {
+        this.primaryColor = color;
+        this.accentColor = accentColor;
+    }
+
     private void startArticle() {
         ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
-                .setToolbarColor(MessageViewHolder.this.color)
-                .setAccentColor(MessageViewHolder.this.color)
+                .setToolbarColor(primaryColor)
+                .setAccentColor(accentColor)
                 .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
                         ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
                 .build();

@@ -148,9 +148,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 .inflate(layoutId, parent, false);
 
         messages.moveToFirst();
-        return new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? -1 : color,
+        MessageViewHolder holder = new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? -1 : color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
                 viewType, timestampHeight, this);
+
+        holder.setColors(receivedColor, accentColor);
+
+        return holder;
     }
 
     @VisibleForTesting
