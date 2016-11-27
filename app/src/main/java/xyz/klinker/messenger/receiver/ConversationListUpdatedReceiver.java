@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         String title = intent.getStringExtra(EXTRA_TITLE);
         boolean read = intent.getBooleanExtra(EXTRA_READ, false);
 
-        if (conversationId == -1 || fragment.getExpandedId() == conversationId) {
+        if (conversationId == -1 || fragment.getExpandedId() == conversationId || shouldIgnoreSnippet(snippet)) {
             return;
         }
 
@@ -215,6 +216,17 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
             this.conversationId = conversationId;
             this.snippet = snippet;
             this.read = read;
+        }
+    }
+
+    @VisibleForTesting
+    protected boolean shouldIgnoreSnippet(String snippet) {
+        if (snippet.contains("img.youtube.com")) {
+            return true;
+        } else if (snippet.contains("{") && snippet.contains("}")) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -19,6 +19,7 @@ package xyz.klinker.messenger.receiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -33,6 +34,7 @@ import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -248,6 +250,12 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         receiver.onReceive(context, intent);
 
         verify(adapter).notifyItemChanged(1);
+    }
+
+    @Test
+    public void ignoresSnippets() {
+        assertThat(receiver.shouldIgnoreSnippet("img.youtube.com"), Matchers.is(true));
+        assertThat(receiver.shouldIgnoreSnippet("{ json }"), Matchers.is(true));
     }
 
     private void setFakeConversations() {

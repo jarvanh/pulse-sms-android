@@ -336,6 +336,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                             .fitCenter()
                             .into(holder.image);
+
                     holder.contact.setText(preview.title);
                     holder.message.setText(preview.description);
                     holder.title.setText(preview.domain);
