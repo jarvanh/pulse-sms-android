@@ -19,7 +19,7 @@
     <string name="api_signup">Registrarse</string>
     <string name="api_signup_failed">¡No se puede registrar en este dispositivo, debe registrarse con un
 Dispositivo principal que tenga un número de teléfono asociado!</string>
-    <string name="api_skip_signup">O bien, si sólo desea utilizar la aplicación en este dispositivo y no en la red,
+    <string name="api_skip_signup">O bien, si sólo desea utilizar la aplicación en este dispositivo y no la red,
 funciones como mensajes de texto desde una tablet u ordenador, puede omitir este paso:</string>
     <string name="api_skip">Omitir</string>
     <string name="api_email">Dirección de correo electrónico</string>

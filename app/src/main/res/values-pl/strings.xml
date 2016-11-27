@@ -27,6 +27,7 @@
     <string name="menu_schedule">Wiadomości zaplanowane</string>
     <string name="menu_mute_contacts">Czarna lista</string>
     <string name="menu_invite">Zaproś znajomych</string>
+    <string name="menu_feature_settings">Ustawienia zaawansowane</string>
     <string name="menu_settings">Ustawienia aplikacji</string>
     <string name="menu_account">Moje konto</string>
     <string name="menu_device_texting">Pisz z dowolnego urządzenia</string>
@@ -54,6 +55,7 @@
     <string name="menu_snooze_8">8 godzin</string>
     <string name="menu_snooze_24">24 godziny</string>
     <string name="menu_snooze_72">72 godziny</string>
+    <string name="menu_snooze_custom">Wskaż godzinę</string>
     <!-- Empty Screen -->
     <string name="no_messages">Brak wiadomości</string>
     <string name="no_messages_summary">Zacznij nową konwersację lub po prostu ciesz się dniem!</string>
@@ -215,6 +217,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="beta_disclaimer">Ten projekt jest nadal w fazie testowej. Jeśli znajdziesz jakikolwiek błąd proszę o informację!</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
     <string name="features">Możliwości aplikacji</string>
+    <string name="issues">System zarządzania incydentami</string>
+    <string name="issues_summary">Służy również jako przewodnik po możliwościach</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Społeczność Pulse Beta</string>
     <string name="email">Email</string>
@@ -247,6 +251,13 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="ringtone">Dzwonek</string>
     <string name="group_name">Nazwa grupy</string>
     <string name="notification_settings">Powiadomienia</string>
+    <string name="repeat_interval">Powtórz alarm</string>
+    <string name="repeat_never">Nigdy</string>
+    <string name="repeat_one_min">Co minutę</string>
+    <string name="repeat_five_mins">Co pięć minut</string>
+    <string name="repeat_ten_mins">Co dziesięć minut</string>
+    <string name="repeat_half_hour">Co pół godziny</string>
+    <string name="repeat_hour">Co godzinę</string>
     <string name="vibrate">Styl wibracji</string>
     <string name="vibrate_off">Brak wibracji</string>
     <string name="vibrate_default">Domyślna wibracja</string>
@@ -297,6 +308,17 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="advanced">Zaawansowane</string>
     <string name="send_as_mms">Konwertuj na MMS</string>
     <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS</string>
+    <string name="alert_types">Typy ostrzeżeń</string>
+    <string name="alert_types_summary">Personalizacja powiadomień</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Podpis</string>
+    <string name="signature_summary">Informacja: wysłane podpisy NIE będą pokazywane na liście wiadomości Pulse. Podpisy będą jedynie widoczne dla odbiorcy wiadomości</string>
+    <string name="cleanup_old_messages">Usuń stare wiadomości</string>
+    <string name="delayed_sending">Wysyłanie opóźnione</string>
+    <string name="quick_compose">Szybkie tworzenie wiadomości</string>
+    <string name="quick_compose_summary">Zawszeb widoczne powiadomienia aby umożliwić szybki dostęp do utworzenia nowej wiadomości</string>
+    <string name="secure_private_conversations">Zabezpiecz prywatne konwersacje</string>
+    <string name="secure_private_conversations_summary">Wymagaj kodu PIN aby odblokować prywatne konwersacje.</string>
     <!-- Theming Options -->
     <string name="day_night">Domyślny (dzień/noc)</string>
     <string name="always_light">Jasny</string>
@@ -347,6 +369,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="conversation_with">Konwersacja z %1$s</string>
     <string name="send">Wyślij</string>
     <!-- Other -->
+    <string name="dashclock_description">Informacja o nieprzeczytanych SMS/MMS</string>
     <string name="default_text">Domyślny</string>
     <string name="did_you_know">Czy wiesz że?</string>
     <string name="use_from_anywhere">Pulse możesz używać na każdym urządzeniu podłączonym do Internetu - Wypróbuj Pulse już dziś!</string>
@@ -356,6 +379,22 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="renew">Odnów</string>
     <string name="no">Nie</string>
     <string name="cancel">Anuluj</string>
+    <string name="hours">Godziny</string>
+    <string name="minutes">Minuty</string>
+    <string name="test">Test</string>
+    <string name="off">Wyłącz</string>
+    <!-- Times -->
+    <string name="five_seconds">Pięć sekund</string>
+    <string name="ten_seconds">Dziesięć sekund</string>
+    <string name="fifteen_seconds">Piętnaście sekund</string>
+    <string name="thirty_seconds">Trzydzieści sekund</string>
+    <string name="one_minute">Minuta</string>
+    <string name="one_week">Tydzień</string>
+    <string name="two_weeks">Dwa tygodnie</string>
+    <string name="one_month">Miesiąc</string>
+    <string name="three_months">Trzy miesiące</string>
+    <string name="six_months">Sześć miesięcy</string>
+    <string name="one_year">Rok</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Nie znaleziono subskrypcji!</string>
     <string name="cancelled_subscription_error">Wygląda na to, że anulowałeś/aś swoją subskrypcję.

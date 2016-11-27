@@ -22,6 +22,7 @@
     <string name="api_skip">Ignorer</string>
     <string name="api_email">Adresse email</string>
     <string name="api_password">Mot de passe</string>
+    <string name="api_forgot_password">Mot de passe oublié?</string>
     <string name="api_password_confirmation">Confirmez votre mot de passe</string>
     <string name="api_name">Nom</string>
     <string name="api_phone_number">Numéro de téléphone</string>
@@ -39,6 +40,7 @@
     <string name="api_no_phone_number">Pas de numéro de téléphone entré</string>
     <string name="api_login_error">Une erreur s\'est produite lors de la connexion. Peut-être une mauvaise adresse e-mail ou mot de passe?</string>
     <string name="api_activate_summary">Connectez-vous pour recevoir tous vos messages sur cet appareil !</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">Sur un appareil mobile ou sur un ordinateur.</string>
     <string name="api_activate_2_1">Sur le siteweb</string>
     <string name="api_activate_2_2">Entrer le code à droite</string>

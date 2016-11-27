@@ -37,7 +37,7 @@ public class FeatureFlags {
     private static final String FLAG_REORDER_CONVERSATIONS_WHEN_NEW_MESSAGE_ARRIVES = "reorder_conversations";
     private static final String FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT = "content_observer_timeout";
     private static final String FLAG_REMOVE_MESSAGE_LIST_DRAWER = "remove_message_drawer";
-    private static final String FLAG_ARTICLE_ENHANCER = "flag_article_enhancer";
+    private static final String FLAG_ARTICLE_ENHANCER = "flag_media_enhancer";
     private static final String FLAG_FEATURE_SETTINGS = "flag_feature_settings";
     private static final String FLAG_SECURE_PRIVATE = "flag_secure_private";
     private static final String FLAG_QUICK_COMPOSE = "flag_quick_compose";

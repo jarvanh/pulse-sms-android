@@ -27,6 +27,7 @@
     <string name="menu_schedule">待发的信息</string>
     <string name="menu_mute_contacts">黑名单</string>
     <string name="menu_invite">邀请好友</string>
+    <string name="menu_feature_settings">高级特性</string>
     <string name="menu_settings">全局设置</string>
     <string name="menu_account">我的账户</string>
     <string name="menu_device_texting">所有设备的消息</string>
@@ -54,6 +55,7 @@
     <string name="menu_snooze_8">8小时</string>
     <string name="menu_snooze_24">24小时</string>
     <string name="menu_snooze_72">72小时</string>
+    <string name="menu_snooze_custom">选择时间</string>
     <!-- Empty Screen -->
     <string name="no_messages">没有消息</string>
     <string name="no_messages_summary">开始一个新对话或只是享受你独自的一天</string>
@@ -114,7 +116,7 @@
     <string name="edit_image">编辑插入的图像</string>
     <string name="permission_needed_for_action">此操作需要权限</string>
     <string name="request_permission">请求权限</string>
-    <string name="no_messages_with_contact">你在这个对话里还没有消息，去发句消息吧</string>
+    <string name="no_messages_with_contact">你在这个对话里还没有消息，去发个消息吧</string>
     <string name="save">保存</string>
     <string name="share">分享</string>
     <string name="share_content">分享通过...</string>
@@ -199,6 +201,8 @@
     <string name="beta_disclaimer">这个项目还处于测试阶段，请报告你发现的问题！</string>
     <string name="faqs">常见问题</string>
     <string name="features">特性</string>
+    <string name="issues">故障跟进</string>
+    <string name="issues_summary">特性向导</string>
     <string name="google_plus">G+社区</string>
     <string name="google_plus_summary">Pulse Beta社区</string>
     <string name="email">电子邮件</string>
@@ -225,6 +229,13 @@
     <string name="ringtone">铃声</string>
     <string name="group_name">群组名</string>
     <string name="notification_settings">通知</string>
+    <string name="repeat_interval">重复提醒</string>
+    <string name="repeat_never">永不</string>
+    <string name="repeat_one_min">每隔一分钟</string>
+    <string name="repeat_five_mins">每隔五分钟</string>
+    <string name="repeat_ten_mins">每隔十分钟</string>
+    <string name="repeat_half_hour">每隔半小时</string>
+    <string name="repeat_hour">每隔一小时</string>
     <string name="vibrate">振动模式</string>
     <string name="vibrate_off">无振动</string>
     <string name="vibrate_default">默认振动</string>
@@ -263,10 +274,124 @@
     <string name="resync_account">重新同步账户</string>
     <string name="resync_account_summary">消息丢失？使用这个找回你主设备上的消息。</string>
     <string name="resync_account_confirmation">这会删除此设备上所有的消息，并且复制你主设备上的消息。你确定要这么做吗？</string>
+    <string name="normalize_color_scheme">或者，你可以为此会话选择一种单色：</string>
+    <string name="no_apps_found">没有找到可执行的应用</string>
+    <string name="you_denied_permission">你拒绝了权限</string>
+    <string name="supported_platforms">支持平台</string>
+    <string name="supported_platforms_summary">获取本应用的官方渠道</string>
+    <string name="font_size_small">小</string>
+    <string name="font_size_normal">普通</string>
+    <string name="font_size_large">大</string>
+    <string name="font_size_extra_large">超大</string>
+    <string name="advanced">高级</string>
+    <string name="send_as_mms">切换到彩信</string>
+    <string name="send_as_mms_summary">长消息将会被当做彩信发送（而不是短信）</string>
+    <string name="alert_types">提醒类型</string>
+    <string name="alert_types_summary">多种提醒方式</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">签名</string>
+    <string name="signature_summary">提示：发送签名将不会在消息列表中显示，签名只会在收件人处显示。</string>
+    <string name="cleanup_old_messages">清除旧消息</string>
+    <string name="delayed_sending">延迟发送</string>
+    <string name="quick_compose">快速写信</string>
+    <string name="quick_compose_summary">常驻通知来帮助你快速写消息</string>
+    <string name="secure_private_conversations">私密对话</string>
+    <string name="secure_private_conversations_summary">打开这个私密对话需要输入PIN码</string>
     <!-- Theming Options -->
+    <string name="day_night">默认（日间/夜间）</string>
+    <string name="always_light">总是日间</string>
+    <string name="always_dark">总是夜间</string>
+    <string name="always_black">黑色</string>
+    <string name="set_color_per_conversation">为每个对话挑选颜色</string>
+    <string name="material_color_red">网易红</string>
+    <string name="material_color_pink">少女粉</string>
+    <string name="material_color_purple">基佬紫</string>
+    <string name="material_color_deep_purple">深紫</string>
+    <string name="material_color_indigo">深蓝</string>
+    <string name="material_color_blue">蓝色</string>
+    <string name="material_color_light_blue">天空蓝</string>
+    <string name="material_color_cyan">清新青</string>
+    <string name="material_color_teal">蓝绿色</string>
+    <string name="material_color_green">绿色</string>
+    <string name="material_color_light_green">亮绿色</string>
+    <string name="material_color_lime">柠檬黄</string>
+    <string name="material_color_yellow">黄色</string>
+    <string name="material_color_amber">琥珀黄</string>
+    <string name="material_color_orange">橙色</string>
+    <string name="material_color_deep_orange">深橙色</string>
+    <string name="material_color_brown">棕色</string>
+    <string name="material_color_gray">高级灰</string>
+    <string name="material_color_blue_gray">蓝灰色</string>
+    <string name="material_color_black">优雅黑</string>
     <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">你确定要删除这个待发的消息到吗 %1$s ？</string>
+    <string name="scheduled_message_hint">待发的消息</string>
+    <string name="scheduled_to_hint">发送联系人</string>
+    <string name="scheduled_message_sent">待发消息发送成功</string>
+    <string name="no_scheduled_messages">没有待发的消息</string>
+    <string name="no_scheduled_messages_summary">你可以通过下方的按钮新建一个</string>
+    <string name="scheduled_message_in_future">必须使用未来的时间！</string>
     <!-- Encryption -->
+    <string name="encrypting_and_uploading">正在加密并上传。。。</string>
+    <string name="encrypting_and_uploading_media">正在加密并压缩信息。。。</string>
+    <string name="encrypting_and_uploading_count">正在加密并压缩信息。。。
+(%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">正在下载和解加密。。。</string>
+    <string name="decrypting_and_downloading_media">正在下载和解加密附件。。。</string>
     <!-- Quick Reply -->
+    <string name="audio_message">语音消息</string>
+    <string name="video_message">视频消息</string>
+    <string name="picture_message">图片消息</string>
+    <string name="gif_message">动图消息</string>
+    <string name="contact_card">名片</string>
+    <string name="conversation_with">与 %1$s 的对话</string>
+    <string name="send">发送</string>
     <!-- Other -->
+    <string name="dashclock_description">未读消息</string>
+    <string name="default_text">默认</string>
+    <string name="did_you_know">你已知晓吗？</string>
+    <string name="use_from_anywhere">Pulse可以用来在任何连接上互联网的设备上使用！</string>
+    <string name="use_from_anywhere_short">Pulse可以在你的任何设备上使用！</string>
+    <string name="learn_more">了解更多</string>
+    <string name="dismiss">撤销</string>
+    <string name="renew">更新</string>
+    <string name="no">不</string>
+    <string name="cancel">取消</string>
+    <string name="hours">小时</string>
+    <string name="minutes">分钟</string>
+    <string name="test">测试</string>
+    <string name="off">关闭</string>
+    <!-- Times -->
+    <string name="five_seconds">5秒</string>
+    <string name="ten_seconds">10秒</string>
+    <string name="fifteen_seconds">15秒</string>
+    <string name="thirty_seconds">30秒</string>
+    <string name="one_minute">一分钟</string>
+    <string name="one_week">一周</string>
+    <string name="two_weeks">两周</string>
+    <string name="one_month">一个月</string>
+    <string name="three_months">三个月</string>
+    <string name="six_months">六个月</string>
+    <string name="one_year">一年</string>
     <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">没有找到订阅</string>
+    <string name="cancelled_subscription_error">似乎你取消了订阅。
+如果你目前不想继续订阅，本应用将在2天内注销你的账户。如果这只是个美丽的错误，请通过电子邮件与我联系。</string>
+    <string name="subscription_found">发现订阅——欢迎回来！</string>
+    <string name="subscription_not_found">没有发现订阅。开始你的试用吧！</string>
+    <string name="checking_for_active_subscriptions">查看订阅 &#8230;</string>
+    <string name="purchase_error_cancelled">你取消了购买:(</string>
+    <string name="purchase_error_bad_google_play">:(  Google Play商店看起来出了点问题。</string>
+    <string name="purchase_error_bad_sku">&#8230; 购买与我们的记录不符</string>
+    <string name="subscriptions">订阅将从7天试用后开始计算，你可以时刻修改订阅，或者取消订阅。</string>
+    <string name="billed_immediately">即刻开始计费。</string>
+    <string name="lifetime_purchase">$10.99 终生使用</string>
+    <string name="lifetime_purchase_summary">一次付费，终生使用</string>
+    <string name="yearly_purchase">$5.99 每年</string>
+    <string name="yearly_purchase_summary">超值方案</string>
+    <string name="three_month_purchase">$1.99 三个月</string>
+    <string name="three_month_purchase_summary">这也挺不错的呐</string>
+    <string name="monthly_purchase">$0.99 每月</string>
+    <string name="monthly_purchase_summary">只是想试试？没问题，这个方案可以满足你。</string>
+    <string name="change_subscription_message">想要升级订阅吗？好极了！在下个页面选择之后，请手动前往Play商店取消旧的订阅。</string>
 </resources>

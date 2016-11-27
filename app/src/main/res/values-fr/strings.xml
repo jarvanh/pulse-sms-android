@@ -190,6 +190,12 @@ pourrez rencontrer !</string>
     <string name="ringtone">Sonnerie</string>
     <string name="group_name">Nom du groupe</string>
     <string name="notification_settings">Notifications</string>
+    <string name="repeat_never">Jamais</string>
+    <string name="repeat_one_min">Toutes les minutes</string>
+    <string name="repeat_five_mins">Toutes les 5 minutes</string>
+    <string name="repeat_ten_mins">Toutes les 10 minutes</string>
+    <string name="repeat_half_hour">Toutes les 30 minutes</string>
+    <string name="repeat_hour">Toutes les heures</string>
     <string name="vibrate">Personnaliser la vibration</string>
     <string name="vibrate_off">Pas de vibration</string>
     <string name="vibrate_default">Vibration par défaut</string>
@@ -228,6 +234,14 @@ pourrez rencontrer !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
     <string name="cancel_on_the_play_store">Annuler et afficher votre abonnement sur Play Store</string>
     <string name="resync_account">Resynchroniser le compte</string>
+    <string name="alert_types">Types d\'alertes</string>
+    <string name="alert_types_summary">Préférences de notifications variées</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Signature</string>
+    <string name="cleanup_old_messages">Supprimer les anciens messages</string>
+    <string name="delayed_sending">Envoi différé</string>
+    <string name="quick_compose">Réponse rapide</string>
+    <string name="secure_private_conversations">Conversations privées sécurisées</string>
     <!-- Theming Options -->
     <!-- Scheduled Messages Screen -->
     <!-- Encryption -->
@@ -254,6 +268,21 @@ Essayez aujourd\'hui !</string>
     <string name="renew">Renouveler</string>
     <string name="no">Non</string>
     <string name="cancel">Annuler</string>
+    <string name="hours">Heures</string>
+    <string name="test">Test</string>
+    <string name="off">Inactif</string>
+    <!-- Times -->
+    <string name="five_seconds">5 secondes</string>
+    <string name="ten_seconds">10 secondes</string>
+    <string name="fifteen_seconds">15 secondes</string>
+    <string name="thirty_seconds">30 secondes</string>
+    <string name="one_minute">1 minute</string>
+    <string name="one_week">1 semaine</string>
+    <string name="two_weeks">2 semaines</string>
+    <string name="one_month">1 mois</string>
+    <string name="three_months">3 mois</string>
+    <string name="six_months">6 mois</string>
+    <string name="one_year">1 an</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Aucun abonnement trouvé!</string>
     <string name="cancelled_subscription_error">On dirait que vous avez annulé votre abonnement.
