@@ -91,6 +91,7 @@ public class MessageViewHolder extends SwappingHolder {
     public TextView contact;
     public TextView title;
     public ImageView image;
+    public ImageView clippedImage;
     public View messageHolder;
     public long messageId;
     public String data;
@@ -236,6 +237,7 @@ public class MessageViewHolder extends SwappingHolder {
         contact = (TextView) itemView.findViewById(R.id.contact);
         title = (TextView) itemView.findViewById(R.id.title);
         image = (ImageView) itemView.findViewById(R.id.image);
+        clippedImage = (ImageView) itemView.findViewById(R.id.clipped_image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
         Settings settings = Settings.get(itemView.getContext());

@@ -12,7 +12,7 @@
         android:backgroundTint="@color/drawerBackground"
         android:id="@+id/message_holder">
 
-        <xyz.klinker.android.article.view.CutLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -26,11 +26,26 @@
                 android:id="@+id/image"
                 android:contentDescription="@string/mms_image" />
 
-        </xyz.klinker.android.article.view.CutLayout>
+            <xyz.klinker.android.article.view.CutLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="@dimen/max_message_width"
+                    android:minHeight="250dp"
+                    android:minWidth="@dimen/min_mms_picture_width"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/clipped_image"
+                    android:contentDescription="@string/mms_image" />
+
+            </xyz.klinker.android.article.view.CutLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_marginTop="-28dp"
-            android:padding="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -39,6 +54,9 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp"
                 android:textSize="13sp"
                 android:fontFamily="sans-serif-light"
                 android:textColor="@color/secondaryText"
@@ -50,6 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -62,6 +82,9 @@
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/max_message_width"
                 android:textSize="15sp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 android:textColor="@color/primaryText"
                 android:id="@+id/message"
                 android:layout_marginTop="4dp"

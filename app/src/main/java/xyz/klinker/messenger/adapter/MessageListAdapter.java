@@ -329,29 +329,36 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             }
                         });
                 setGone(holder.message);
+                setGone(holder.clippedImage);
+                setGone(holder.title);
+                setGone(holder.contact);
             } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
 
             } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
                 ArticlePreview preview = ArticlePreview.build(message.data);
                 if (preview != null) {
-                    Glide.with(holder.image.getContext())
+                    Glide.with(holder.clippedImage.getContext())
                             .load(Uri.parse(preview.imageUrl))
                             .asBitmap()
                             .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                             .fitCenter()
-                            .into(holder.image);
+                            .into(holder.clippedImage);
 
                     holder.contact.setText(preview.title);
                     holder.message.setText(preview.description);
                     holder.title.setText(preview.domain);
 
-                    setVisible(holder.image);
+                    setGone(holder.image);
+                    setVisible(holder.clippedImage);
                     setVisible(holder.contact);
                     setVisible(holder.message);
+                    setVisible(holder.title);
                 } else {
+                    setGone(holder.clippedImage);
                     setGone(holder.image);
                     setGone(holder.message);
                     setGone(holder.timestamp);
+                    setGone(holder.title);
                 }
             }
 
