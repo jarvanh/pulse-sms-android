@@ -85,6 +85,7 @@ import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -150,18 +151,21 @@ public class MessengerActivity extends AppCompatActivity
 
         if (checkInitialStart()) {
             boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+            boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
+                    DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
-            if (!hasTelephone) {
+            boolean hasPhoneFeature = hasTelephone && hasSim;
+            if (hasPhoneFeature) {
+                startActivityForResult(
+                        new Intent(this, OnboardingActivity.class),
+                        REQUEST_ONBOARDING
+                );
+            } else {
                 // if it isn't a phone, then we want to go straight to the login
                 // and skip the onboarding, since they would have done it on their phone
                 Intent login = new Intent(this, InitialLoadActivity.class);
                 startActivity(login);
                 finish();
-            } else {
-                startActivityForResult(
-                        new Intent(this, OnboardingActivity.class),
-                        REQUEST_ONBOARDING
-                );
             }
         }
 
