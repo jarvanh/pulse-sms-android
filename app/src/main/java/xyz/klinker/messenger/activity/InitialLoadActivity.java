@@ -129,8 +129,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
 
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);
