@@ -128,7 +128,7 @@ public class MimeType {
     }
 
     public static boolean isExpandedMedia(String mimeType) {
-        return mimeType.startsWith("media");
+        return mimeType != null && mimeType.startsWith("media");
     }
 
     /**

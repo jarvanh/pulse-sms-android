@@ -196,7 +196,10 @@ public class NotificationReplyActivity extends AppCompatActivity {
             do {
                 Message message = new Message();
                 message.fillFromCursor(cursor);
-                messages.add(message);
+
+                if (!MimeType.isExpandedMedia(message.mimeType)) {
+                    messages.add(message);
+                }
             } while (cursor.moveToPrevious() && messages.size() < PREV_MESSAGES_TOTAL);
         }
 

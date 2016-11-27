@@ -133,6 +133,10 @@ public class NotificationService extends IntentService {
                 String from = unseenMessages
                         .getString(unseenMessages.getColumnIndex(Message.COLUMN_FROM));
 
+                if (MimeType.isExpandedMedia(mimeType)) {
+                    continue;
+                }
+
                 NotificationConversation conversation = conversations.get(conversationId);
 
                 if (conversation == null) {
