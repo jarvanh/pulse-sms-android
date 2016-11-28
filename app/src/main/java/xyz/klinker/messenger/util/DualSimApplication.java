@@ -32,7 +32,7 @@ public class DualSimApplication {
     public void apply(final long conversationId) {
         boolean visible = false;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && Account.get(context).primary) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 && (!Account.get(context).exists() || Account.get(context).primary)) {
             final List<SubscriptionInfo> subscriptions = DualSimUtils.get(context).getAvailableSims();
 
             if (subscriptions != null && subscriptions.size() > 1) {
@@ -60,12 +60,7 @@ public class DualSimApplication {
                     badger.setText("1");
                 }
 
-                switchSim.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showSimSelection(subscriptions, conversation, badger);
-                    }
-                });
+                switchSim.setOnClickListener(view -> showSimSelection(subscriptions, conversation, badger));
             }
         }
 
