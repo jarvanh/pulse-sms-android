@@ -180,18 +180,18 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             Link urls = new Link(Regex.WEB_URL);
             urls.setTextColor(accentColor);
             urls.setHighlightAlpha(.4f);
-            if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                urls.setOnLongClickListener(clickedText -> {
-                    if (!clickedText.startsWith("http")) {
-                        clickedText = "http://" + clickedText;
-                    }
 
-                    LinkLongClickFragment bottomSheet = new LinkLongClickFragment();
-                    bottomSheet.setColors(receivedColor, accentColor);
-                    bottomSheet.setLink(clickedText);
-                    bottomSheet.show(fragment.getActivity().getSupportFragmentManager(), "");
-                });
-            }
+            urls.setOnLongClickListener(clickedText -> {
+                if (!clickedText.startsWith("http")) {
+                    clickedText = "http://" + clickedText;
+                }
+
+                LinkLongClickFragment bottomSheet = new LinkLongClickFragment();
+                bottomSheet.setColors(receivedColor, accentColor);
+                bottomSheet.setLink(clickedText);
+                bottomSheet.show(fragment.getActivity().getSupportFragmentManager(), "");
+            });
+
             urls.setOnClickListener(clickedText -> {
                 if (fragment.getMultiSelect().isSelectable()) {
                     holder.messageHolder.performClick();
@@ -202,28 +202,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                if (FeatureFlags.get(holder.itemView.getContext()).ARTICLE_ENHANCER) {
-                    ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
-                            .setToolbarColor(receivedColor)
-                            .setAccentColor(accentColor)
-                            .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
-                                    ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                            .build();
+                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
+                        .setToolbarColor(receivedColor)
+                        .setAccentColor(accentColor)
+                        .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
+                                ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                        .build();
 
-                    intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
-                } else {
-                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                    builder.setToolbarColor(receivedColor);
-                    builder.setShowTitle(true);
-                    builder.setActionButton(
-                            BitmapFactory.decodeResource(fragment.getResources(), R.drawable.ic_share),
-                            fragment.getString(R.string.share), getShareIntent(clickedText), true);
-                    CustomTabsIntent customTabsIntent = builder.build();
-
-                    try {
-                        customTabsIntent.launchUrl(fragment.getActivity(), Uri.parse(clickedText));
-                    } catch (Exception e) { }
-                }
+                intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
             });
 
             Link phoneNumbers = new Link(Regex.PHONE);

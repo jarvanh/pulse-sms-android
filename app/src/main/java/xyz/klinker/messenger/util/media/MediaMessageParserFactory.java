@@ -17,13 +17,9 @@ public class MediaMessageParserFactory {
     public MediaParser getInstance(Context context, String messageText) {
         MediaParser[] parsers = buildParsers(context);
 
-        if (!FeatureFlags.get(context).ARTICLE_ENHANCER) {
-            return null;
-        } else {
-            for (MediaParser parser : parsers) {
-                if (parser.canParse(messageText)) {
-                    return parser;
-                }
+        for (MediaParser parser : parsers) {
+            if (parser.canParse(messageText)) {
+                return parser;
             }
         }
 

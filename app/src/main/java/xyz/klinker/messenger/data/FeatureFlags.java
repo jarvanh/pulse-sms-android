@@ -58,7 +58,6 @@ public class FeatureFlags {
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean CONTENT_OBSERVER_TIMEOUT;
-    public boolean ARTICLE_ENHANCER;
     public boolean FEATURE_SETTINGS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
@@ -73,7 +72,6 @@ public class FeatureFlags {
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
-        ARTICLE_ENHANCER = getValue(sharedPrefs, FLAG_ARTICLE_ENHANCER);
         FEATURE_SETTINGS = getValue(sharedPrefs, FLAG_FEATURE_SETTINGS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
@@ -93,9 +91,6 @@ public class FeatureFlags {
                 break;*/
             case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
                 CONTENT_OBSERVER_TIMEOUT = flag;
-                break;
-            case FLAG_ARTICLE_ENHANCER:
-                ARTICLE_ENHANCER= flag;
                 break;
             case FLAG_FEATURE_SETTINGS:
                 FEATURE_SETTINGS = flag;
