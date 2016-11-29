@@ -374,10 +374,23 @@ public class NotificationService extends IntentService {
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setLights(conversation.ledColor, 1000, 500)
-                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
+
+        if (conversation.ledColor != Color.WHITE) {
+            builder.setLights(conversation.ledColor, 1000, 500);
+        }
+
+        if (sound != null) {
+            builder.setSound(sound);
+        }
+
+        if (vibratePattern.pattern != null) {
+            builder.setVibrate(vibratePattern.pattern);
+        } else if (vibratePattern == Settings.VibratePattern.OFF) {
+            builder.setVibrate(new long[0]);
+        }
 
         if (numConversations == 1) {
             publicVersion.setGroupSummary(true);

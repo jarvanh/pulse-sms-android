@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.11.0"
+        description="November 29th, 2016">
+        <text>Web article and YouTube video previews in the message list</text>
+        <text>Fast and beautiful, readability style, web article browser!</text>
+        <text>Fix dual SIM not working when you don't have an account set up</text>
+    </version>
+
+    <version
         name="1.10.2"
         description="November 25th, 2016">
         <text>Improvements to deleting/archiving conversations</text>

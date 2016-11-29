@@ -167,10 +167,6 @@ public class NotificationAlertsPreference extends Preference implements
     private void makeTestNotification() {
         Settings settings = Settings.get(getContext());
         Settings.VibratePattern vibratePattern = settings.vibrate;
-        int defaults = 0;
-        if (vibratePattern == Settings.VibratePattern.DEFAULT) {
-            defaults = Notification.DEFAULT_VIBRATE;
-        }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
@@ -178,7 +174,6 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.globalColorSet.color)
-                .setDefaults(defaults)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());
@@ -187,11 +182,13 @@ public class NotificationAlertsPreference extends Preference implements
         if (sound != null) {
             builder.setSound(sound);
         }
-
-        if (vibratePattern.pattern != null) {
-            builder.setVibrate(vibratePattern.pattern);
+        
+        if (vibratePattern == Settings.VibratePattern.DEFAULT) {
+            builder.setDefaults(Notification.DEFAULT_VIBRATE);
         } else if (vibratePattern == Settings.VibratePattern.OFF) {
             builder.setVibrate(new long[0]);
+        } else if (vibratePattern.pattern != null) {
+            builder.setVibrate(vibratePattern.pattern);
         }
 
         NotificationManagerCompat.from(getContext()).notify(1, builder.build());
