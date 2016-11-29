@@ -204,34 +204,28 @@ public class ConversationListFragment extends Fragment
 
     public void loadConversations() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (getActivity() == null) {
-                    return;
-                }
-                
-                long startTime = System.currentTimeMillis();
-                final DataSource source = DataSource.getInstance(getActivity());
-                source.open();
-                final List<Conversation> conversations = getCursor(source);
-                source.close();
-
-                Log.v("conversation_load", "load took " + (
-                        System.currentTimeMillis() - startTime) + " ms");
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setConversations(conversations);
-                        lastRefreshTime = System.currentTimeMillis();
-
-                        try {
-                            ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
-                        } catch (Exception e) { }
-                    }
-                });
+        new Thread(() -> {
+            if (getActivity() == null) {
+                return;
             }
+
+            long startTime = System.currentTimeMillis();
+            final DataSource source = DataSource.getInstance(getActivity());
+            source.open();
+            final List<Conversation> conversations = getCursor(source);
+            source.close();
+
+            Log.v("conversation_load", "load took " + (
+                    System.currentTimeMillis() - startTime) + " ms");
+
+            handler.post(() -> {
+                setConversations(conversations);
+                lastRefreshTime = System.currentTimeMillis();
+
+                try {
+                    ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
+                } catch (Exception e) { }
+            });
         }).start();
     }
 
@@ -291,16 +285,13 @@ public class ConversationListFragment extends Fragment
             clickHandler.removeCallbacksAndMessages(null);
         }
 
-        clickHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    recyclerView.findViewHolderForAdapterPosition(position)
-                            .itemView.performClick();
-                } catch (Exception e) {
-                    // not yet ready to click
-                    clickConversationAtPosition(position);
-                }
+        clickHandler.postDelayed(() -> {
+            try {
+                recyclerView.findViewHolderForAdapterPosition(position)
+                        .itemView.performClick();
+            } catch (Exception e) {
+                // not yet ready to click
+                clickConversationAtPosition(position);
             }
         }, 100);
     }
@@ -330,12 +321,9 @@ public class ConversationListFragment extends Fragment
         }
 
         deleteSnackbar = Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        pendingDelete = new ArrayList<>();
-                        loadConversations();
-                    }
+                .setAction(R.string.undo, view -> {
+                    pendingDelete = new ArrayList<>();
+                    loadConversations();
                 })
                 .setCallback(new Snackbar.Callback() {
                     @Override
@@ -348,37 +336,29 @@ public class ConversationListFragment extends Fragment
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkEmptyViewDisplay();
-            }
-        }, 500);
+        new Handler().postDelayed(() -> checkEmptyViewDisplay(), 500);
     }
 
     private void dismissDeleteSnackbar(final Activity activity, final int currentSize) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
-                    DataSource dataSource = DataSource.getInstance(activity);
-                    dataSource.open();
+        new Thread(() -> {
+            if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
+                DataSource dataSource = DataSource.getInstance(activity);
+                dataSource.open();
 
-                    // we were getting a concurrent modification exception, so
-                    // copy this list and continue to delete in the background.
-                    List<Conversation> copiedList = new ArrayList<>(pendingDelete);
-                    for (Conversation conversation : copiedList) {
-                        if (conversation != null) { // there are those blank convos that get populated with a new one
-                            dataSource.deleteConversation(conversation);
-                            SmsMmsUtils.deleteConversation(getContext(),
-                                    conversation.phoneNumbers);
-                        }
+                // we were getting a concurrent modification exception, so
+                // copy this list and continue to delete in the background.
+                List<Conversation> copiedList = new ArrayList<>(pendingDelete);
+                for (Conversation conversation : copiedList) {
+                    if (conversation != null) { // there are those blank convos that get populated with a new one
+                        dataSource.deleteConversation(conversation);
+                        SmsMmsUtils.deleteConversation(getContext(),
+                                conversation.phoneNumbers);
                     }
-
-                    dataSource.close();
-                    copiedList.clear();
-                    pendingDelete = new ArrayList<>();
                 }
+
+                dataSource.close();
+                copiedList.clear();
+                pendingDelete = new ArrayList<>();
             }
         }).start();
     }
@@ -404,12 +384,9 @@ public class ConversationListFragment extends Fragment
         String plural = getArchiveSnackbarText();
 
         archiveSnackbar = Snackbar.make(recyclerView, plural, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        pendingArchive = new ArrayList<>();
-                        loadConversations();
-                    }
+                .setAction(R.string.undo, view -> {
+                    pendingArchive = new ArrayList<>();
+                    loadConversations();
                 })
                 .setCallback(new Snackbar.Callback() {
                     @Override
@@ -422,35 +399,27 @@ public class ConversationListFragment extends Fragment
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkEmptyViewDisplay();
-            }
-        }, 500);
+        new Handler().postDelayed(() -> checkEmptyViewDisplay(), 500);
     }
 
     private void dismissArchiveSnackbar(final Activity activity, final int currentSize) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if ((currentSize == -1 || pendingArchive.size() == currentSize) && activity != null) {
-                    DataSource dataSource = DataSource.getInstance(activity);
-                    dataSource.open();
+        new Thread(() -> {
+            if ((currentSize == -1 || pendingArchive.size() == currentSize) && activity != null) {
+                DataSource dataSource = DataSource.getInstance(activity);
+                dataSource.open();
 
-                    // we were getting a concurrent modification exception, so
-                    // copy this list and continue to archive in the background.
-                    List<Conversation> copiedList = new ArrayList<>(pendingArchive);
-                    for (Conversation conversation : copiedList) {
-                        if (conversation != null) {
-                            performArchiveOperation(dataSource, conversation);
-                        }
+                // we were getting a concurrent modification exception, so
+                // copy this list and continue to archive in the background.
+                List<Conversation> copiedList = new ArrayList<>(pendingArchive);
+                for (Conversation conversation : copiedList) {
+                    if (conversation != null) {
+                        performArchiveOperation(dataSource, conversation);
                     }
-
-                    dataSource.close();
-                    copiedList.clear();
-                    pendingArchive = new ArrayList<>();
                 }
+
+                dataSource.close();
+                copiedList.clear();
+                pendingArchive = new ArrayList<>();
             }
         }).start();
     }
@@ -468,51 +437,43 @@ public class ConversationListFragment extends Fragment
         final List<Conversation> markAsRead = new ArrayList<>();
 
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Conversation conversation : allConversations) {
-                    boolean shouldRead = false;
-                    switch (sectionType) {
-                        case SectionType.PINNED:
-                            shouldRead = conversation.pinned;
-                            break;
-                        case SectionType.TODAY:
-                            shouldRead = TimeUtils.isToday(conversation.timestamp);
-                            break;
-                        case SectionType.YESTERDAY:
-                            shouldRead = TimeUtils.isYesterday(conversation.timestamp);
-                            break;
-                        case SectionType.LAST_WEEK:
-                            shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
-                            break;
-                        case SectionType.LAST_MONTH:
-                            shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
-                            break;
-                        default:
-                            shouldRead = true;
-                            break;
-                    }
-
-                    if (shouldRead) {
-                        markAsRead.add(conversation);
-                    }
+        new Thread(() -> {
+            for (Conversation conversation : allConversations) {
+                boolean shouldRead = false;
+                switch (sectionType) {
+                    case SectionType.PINNED:
+                        shouldRead = conversation.pinned;
+                        break;
+                    case SectionType.TODAY:
+                        shouldRead = TimeUtils.isToday(conversation.timestamp);
+                        break;
+                    case SectionType.YESTERDAY:
+                        shouldRead = TimeUtils.isYesterday(conversation.timestamp);
+                        break;
+                    case SectionType.LAST_WEEK:
+                        shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
+                        break;
+                    case SectionType.LAST_MONTH:
+                        shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
+                        break;
+                    default:
+                        shouldRead = true;
+                        break;
                 }
 
-                DataSource source = DataSource.getInstance(getActivity());
-                source.open();
-                for (Conversation conversation : markAsRead) {
-                    source.readConversation(getActivity(), conversation.id);
+                if (shouldRead) {
+                    markAsRead.add(conversation);
                 }
-                source.close();
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadConversations();
-                    }
-                });
             }
+
+            DataSource source = DataSource.getInstance(getActivity());
+            source.open();
+            for (Conversation conversation : markAsRead) {
+                source.readConversation(getActivity(), conversation.id);
+            }
+            source.close();
+
+            handler.post(() -> loadConversations());
         }).start();
     }
 
@@ -658,15 +619,12 @@ public class ConversationListFragment extends Fragment
     }
 
     private void checkUnreadCount() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) { }
+        new Thread(() -> {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) { }
 
-                new UnreadBadger(getActivity()).writeCountFromDatabase();
-            }
+            new UnreadBadger(getActivity()).writeCountFromDatabase();
         }).start();
     }
 }
