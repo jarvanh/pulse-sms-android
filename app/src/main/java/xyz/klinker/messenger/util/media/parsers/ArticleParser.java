@@ -43,6 +43,6 @@ public class ArticleParser extends MediaParser {
         Article article = utils.fetchArticle(context, matchedText);
 
         ArticlePreview preview = ArticlePreview.build(article);
-        return preview != null ? preview.toString() : null;
+        return preview != null && article != null && article.isArticle ? preview.toString() : null;
     }
 }

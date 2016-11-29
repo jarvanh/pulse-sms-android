@@ -19,7 +19,7 @@ public class ArticlePreview {
     public static ArticlePreview build(Article article) {
         ArticlePreview preview = new ArticlePreview();
 
-        if (!article.isArticle) {
+        if (article == null || !article.isArticle) {
             return null;
         }
 
