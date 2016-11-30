@@ -103,16 +103,13 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             }, 100);
         });
 
-        contactEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
-                        (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    fab.performClick();
-                }
-
-                return false;
+        contactEntry.setOnEditorActionListener((v, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                    (actionId == EditorInfo.IME_ACTION_DONE)) {
+                fab.performClick();
             }
+
+            return false;
         });
 
         handleIntent();
@@ -133,43 +130,37 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     private void displayRecents() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataSource source = DataSource.getInstance(getApplicationContext());
-                source.open();
-                Cursor cursor = source.getUnarchivedConversations();
+        new Thread(() -> {
+            DataSource source = DataSource.getInstance(getApplicationContext());
+            source.open();
+            Cursor cursor = source.getUnarchivedConversations();
 
-                if (cursor != null && cursor.moveToFirst()) {
-                    final List<Conversation> conversations = new ArrayList<>();
+            if (cursor != null && cursor.moveToFirst()) {
+                final List<Conversation> conversations = new ArrayList<>();
 
-                    do {
-                        Conversation conversation = new Conversation();
-                        conversation.fillFromCursor(cursor);
-                        conversations.add(conversation);
-                    } while (cursor.moveToNext());
+                do {
+                    Conversation conversation = new Conversation();
+                    conversation.fillFromCursor(cursor);
+                    conversations.add(conversation);
+                } while (cursor.moveToNext());
 
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ContactAdapter adapter = new ContactAdapter(conversations,
-                                    ComposeActivity.this);
-                            RecyclerView recyclerView = (RecyclerView)
-                                    findViewById(R.id.recent_contacts);
+                handler.post(() -> {
+                    ContactAdapter adapter = new ContactAdapter(conversations,
+                            ComposeActivity.this);
+                    RecyclerView recyclerView = (RecyclerView)
+                            findViewById(R.id.recent_contacts);
 
-                            recyclerView.setLayoutManager(
-                                    new LinearLayoutManager(getApplicationContext()));
-                            recyclerView.setAdapter(adapter);
-                        }
-                    });
-                }
-
-                try {
-                    cursor.close();
-                } catch (Exception e) { }
-
-                source.close();
+                    recyclerView.setLayoutManager(
+                            new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setAdapter(adapter);
+                });
             }
+
+            try {
+                cursor.close();
+            } catch (Exception e) { }
+
+            source.close();
         }).start();
     }
 
@@ -369,16 +360,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void setupSend(final String data, final String mimeType, final boolean isvCard) {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (contactEntry.getRecipients().length > 0) {
-                    if (isvCard) {
-                        sendvCard(mimeType, data);
-                    } else {
-                        applyShare(mimeType, data);
-                    }
-                }
+        fab.setOnClickListener(view -> {
+            if (contactEntry.getRecipients().length > 0 && isvCard) {
+                sendvCard(mimeType, data);
+            } else if (contactEntry.getText().length() > 0) {
+                applyShare(mimeType, data);
             }
         });
     }
