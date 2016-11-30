@@ -202,7 +202,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
+                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), "00624e91313bfce6e625bfcc40ee7d52")
                         .setToolbarColor(receivedColor)
                         .setAccentColor(accentColor)
                         .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?

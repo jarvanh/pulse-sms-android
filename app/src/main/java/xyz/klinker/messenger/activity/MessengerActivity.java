@@ -209,6 +209,14 @@ public class MessengerActivity extends AppCompatActivity
 
         handleShortcutIntent(getIntent());
         getIntent().setData(null);
+
+        try {
+            if (!FeatureFlags.get(this).FEATURE_SETTINGS) {
+                navigationView.getMenu().removeItem(R.id.drawer_feature_settings);
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -324,10 +332,6 @@ public class MessengerActivity extends AppCompatActivity
                 }
             }
         }, 250);
-
-        if (!FeatureFlags.get(this).FEATURE_SETTINGS) {
-            navigationView.getMenu().removeItem(R.id.drawer_feature_settings);
-        }
     }
 
     private void initSnooze() {
