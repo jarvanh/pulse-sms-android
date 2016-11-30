@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.11.1"
+        description="November 30th, 2016">
+        <text>Bug/crash fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="1.11.0"
         description="November 29th, 2016">
         <text>Web article and YouTube video previews in the message list</text>

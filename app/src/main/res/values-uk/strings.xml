@@ -1,0 +1,431 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Нове повідомлення</string>
+    <string name="shortcut_compose_long">Почати нову розмову!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Список розмов</string>
+    <string name="menu_archived_conversations">Заархівовані розмови</string>
+    <string name="menu_schedule">Заплановані повідомлення</string>
+    <string name="menu_mute_contacts">Чорний список</string>
+    <string name="menu_invite">Запросити друзів</string>
+    <string name="menu_feature_settings">Додаткові можливості</string>
+    <string name="menu_settings">Загальні налаштування</string>
+    <string name="menu_account">Мій обліковий запис</string>
+    <string name="menu_device_texting">Текст з будь-якого пристрою</string>
+    <string name="menu_help">Допомога та зворотний зв\'язок</string>
+    <string name="menu_about">Про</string>
+    <string name="menu_search">Пошук</string>
+    <string name="menu_mobile_only">Лише мобільний</string>
+    <string name="menu_snooze">Затримки сигналу сповіщень</string>
+    <string name="menu_call">Виклик</string>
+    <string name="menu_view_contact">Переглянути контакт</string>
+    <string name="menu_view_contacts">Перегляд контактів</string>
+    <string name="menu_view_media">Перегляд медіа</string>
+    <string name="menu_delete_conversation">Видалити розмову</string>
+    <string name="menu_archive_conversation">Заархівувати розмову</string>
+    <string name="menu_move_to_inbox">Перемістити в папку Вхідні</string>
+    <string name="menu_conversation_information">інформація про розмову</string>
+    <string name="menu_conversation_blacklist">"Контакти в чорному списку "</string>
+    <string name="menu_conversation_schedule">Запланувати повідомлення</string>
+    <string name="menu_contact_settings">Налаштування контакту</string>
+    <string name="menu_group_settings">Налаштування групи</string>
+    <string name="menu_snooze_off">Вимкнено</string>
+    <string name="menu_snooze_1">1 година</string>
+    <string name="menu_snooze_2">2 години</string>
+    <string name="menu_snooze_4">4 години</string>
+    <string name="menu_snooze_8">8 годин</string>
+    <string name="menu_snooze_24">24 години</string>
+    <string name="menu_snooze_72">72 години</string>
+    <string name="menu_snooze_custom">Встановіть час</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Немає повідомлень</string>
+    <string name="no_messages_summary">Почніть нову розмову або просто насолоджуйтеся днем!</string>
+    <string name="close">Закрити</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Закріплені</string>
+    <string name="today">Сьогодні</string>
+    <string name="yesterday">Вчора</string>
+    <string name="last_week">Цього тижня</string>
+    <string name="last_month">Цього місяця</string>
+    <string name="older">Давніші</string>
+    <string name="mark_section_as_read">Позначити всі %1$s як прочитані</string>
+    <string name="marking_section_as_read">Позначаючи всі %1$s як прочитані</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d розмова видалена</item>
+        <item quantity="other">%1$d розмови видалені</item>
+        <item quantity="few">%1$d розмов видалено</item>
+        <item quantity="many">%1$d розмов видалено</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d розмову заархівовано</item>
+        <item quantity="other">%1$d розмови заархівовано</item>
+        <item quantity="few">%1$d розмов заархівовано</item>
+        <item quantity="many">%1$d розмов заархівовано</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d розмову перенесено у папку вхідні</item>
+        <item quantity="other">%1$d розмови перенесено у папку вхідні</item>
+        <item quantity="few">%1$d розмов перенесено у папку вхідні</item>
+        <item quantity="many">%1$d розмов перенесено у папку вхідні</item>
+    </plurals>
+    <string name="undo">Скасувати</string>
+    <string name="enter_search">Шукати…</string>
+    <!-- Search Screen -->
+    <string name="conversations">Розмови</string>
+    <string name="messages">Повідомлення</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Подобається Pulse?</string>
+    <string name="invite_friends_summary">Ми вже полюбили Pulse і з нетерпінням чекаємо інших!! Ми намагаємося надати його якнайбільшій кількості користувачів і продовжуємо вдосконалювати цей продукт постійно і робити кращим, ніж він є.  
+Запросивши своїх друзів, щоб спробувати, ви допомагаєте цим! \ П \ n Виберіть нижче, друзів, яким Ви хочете відправити цю програму і надішліть їм SMS з коротким описом і 
+посиланням для завантаження!</string>
+    <string name="invite_friends_sms">Я використовую новий додаток для текстових повідомлень, і я думаю, що 
+він вам теж сподобається! Плюс це безкоштовно, так що можете також його завантажити: 
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Тип повідомлення</string>
+    <string name="type_message_to">Тип повідомлення для %1$s</string>
+    <string name="attach">Прикріпити</string>
+    <string name="select_sim">Вибір SIM-карти</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s</string>
+    <string name="mms_image">MMS зображення</string>
+    <string name="now">Зараз</string>
+    <string name="sending">Надсилання ...</string>
+    <string name="failed">Не вдалося</string>
+    <string name="delivered">Повідомлення доставлено</string>
+    <string name="attach_image">Прикріпити зображення</string>
+    <string name="capture_image">Зробити знімок</string>
+    <string name="attach_gif">Прикріпити GIF</string>
+    <string name="record_video">Записати відео</string>
+    <string name="record_audio">Записати аудіо</string>
+    <string name="attach_location">Додати розташування</string>
+    <string name="no_location_found">Не вдалося визначити місце розташування.</string>
+    <string name="camera_permission_needed">Необхідно надати дозвіл камері на знімання 
+фото!</string>
+    <string name="take_picture">Зробити знімок</string>
+    <string name="flip_picture">Повернути камеру</string>
+    <string name="fullscreen">Повноекранний</string>
+    <string name="attached_image">Прикріплене зображення</string>
+    <string name="remove_image">Видалити прикріплене зображення</string>
+    <string name="edit_image">Редагувати прикріплене зображення</string>
+    <string name="permission_needed_for_action">Дозволи, необхідні для цієї дії.</string>
+    <string name="request_permission">Запит дозволу</string>
+    <string name="no_messages_with_contact">У Вас поки що немає ніяких повідомлень в цій розмові, час почати!</string>
+    <string name="save">Зберегти</string>
+    <string name="share">Поділитися</string>
+    <string name="share_content">Поділитися вмістом ...</string>
+    <string name="saved">Збережено в папці / Завантаження!</string>
+    <string name="failed_to_save">Не вдалося зберегти</string>
+    <string name="start_recording_audio">Натисніть на кнопку, щоб почати запис аудіо!</string>
+    <string name="audio_recording_error">Помилка із записом :(</string>
+    <string name="message_copied_to_clipboard">Скопійовано в буфер</string>
+    <string name="view_details">Детальніше</string>
+    <string name="delete">Видалити</string>
+    <string name="copy_message">Копіювати текст</string>
+    <string name="resend">Надіслати повторно</string>
+    <string name="no_media">Немає медіа в цій розмові!</string>
+    <string name="error_decrypting">Помилка при виконанні дешифрування! Будь ласка, перегляньте це повідомлення на своєму телефоні.</string>
+    <string name="message_sending_failed">Не вдалося надіслати повідомлення!</string>
+    <string name="preparing_video">Підготовка відео &#8230;</string>
+    <string name="delete_message">Видалити це повідомлення?</string>
+    <string name="forward_message">Переслати повідомлення</string>
+    <string name="share_message">Поділитися повідомленням</string>
+    <string name="copy_message_text">Копіювати текст повідомлення</string>
+    <string name="open_link_to_browser">Відкрити посилання в браузері</string>
+    <string name="open_link_internal">Відкрити посилання всередині</string>
+    <string name="copy_link">Копіювати посилання</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Написати нове повідомлення</string>
+    <string name="send_message">Відправити повідомлення</string>
+    <string name="enter_contact_name">Введіть ім\'я контакту</string>
+    <string name="error_processing_vcard">Помилка обробки візитної картки</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">Додаток не може працювати без цих дозволів! 
+Ви повинні прийняти їх, перш ніж ми зможемо продовжити.</string>
+    <string name="loading_messages">Оптимізація ...</string>
+    <string name="loading_messages_summary">Отримання Ваших повідомлень з додатку, це не займе багато часу!</string>
+    <string name="tooltip_got_it">Зрозуміло!</string>
+    <string name="navigation_drawer_conversation_hint">Додаткові параметри цієї розмови зберігаються в панелі навігації.</string>
+    <string name="onboarding_title_1">Повторне представлення повідомлень</string>
+    <string name="onboarding_title_2">Доступно скрізь</string>
+    <string name="onboarding_title_3">Потужні персональні налаштування</string>
+    <string name="onboarding_content_1">"Згладжені та зручні макети представлення з потужним дизайном і бездоганною інтеграцією. 
+Pulse ставить ваші розмови на попередній план."</string>
+    <string name="onboarding_content_2">Повідомлення з планшета, комп\'ютера, годинника або будь-яких інших підключених пристроїв.</string>
+    <string name="onboarding_content_3">Прикріплення, вимкнення звуку, теми та інші налаштування сповіщень для будь-яких контактів, з якими Ви спілкуєтеся. Зробіть Pulse Вашим.</string>
+    <string name="message_anywhere_onboarding_title_1">Спілкування будь-де</string>
+    <string name="message_anywhere_onboarding_title_2">Підписка або разовий платіж</string>
+    <string name="message_anywhere_onboarding_title_3">"Тиждень пробної версії "</string>
+    <string name="message_anywhere_onboarding_content_1">Легко інтегрується з будь-яким пристроєм (планшет, годинник, телевізор, веб-браузери, і рідний Google Chrome і Firefox) для підтримки SMS та MMS, звідки завгодно!</string>
+    <string name="message_anywhere_onboarding_content_2">Шалено низькі цінові пропозиції, щоб сплатити тоді, коли Вам це потрібно: $10.99 на все життя, $5.99 за рік, $1.99 за 3 місяці, або $0.99 за місяць. Менш ніж чашка кави.</string>
+    <string name="message_anywhere_onboarding_content_3">Використовуйте додаток для Android БЕЗКОШТОВНО (назавжди!) на вашому телефоні, або почніть користуватися текстовими повідомленнями з усіх своїх пристроїв з безкоштовною пробною версією протягом ОДНОГО ТИЖНЯ.</string>
+    <string name="start_trial">Почати використовувати пробну версію</string>
+    <string name="not_now">Не зараз</string>
+    <string name="onboarding_done">Зроблено</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">Нове повідомлення від %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d нова розмова</item>
+        <item quantity="other">%1$d нові розмови</item>
+        <item quantity="few">%1$d нових розмов</item>
+        <item quantity="many">%1$d нових розмов</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d нове повідомлення</item>
+        <item quantity="other">%1$d нові повідомлення</item>
+        <item quantity="few">%1$d нових повідомлень</item>
+        <item quantity="many">%1$d нових повідомлень</item>
+    </plurals>
+    <string name="read">Читати</string>
+    <string name="reply">Відповісти</string>
+    <string name="reply_to">Відповісти %1$s</string>
+    <string name="call">Виклик</string>
+    <string-array name="reply_choices">
+        <item>Так</item>
+        <item>Ні</item>
+        <item>Можливо</item>
+        <item>Добре</item>
+        <item>Дякую</item>
+    </string-array>
+    <string name="new_mms_message">Нове повідомлення MMS</string>
+    <string name="you">Ви</string>
+    <string name="new_message">Нове повідомлення</string>
+    <string name="received_new_message">Ви отримали нове текстове повідомлення!</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Журнал змін</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Відомості про ліцензію з відкритим вихідним кодом</string>
+    <string name="app_version">Версія додатку</string>
+    <string name="device_id">Ідентифікатор пристрою</string>
+    <string name="device_info">Інформація про пристрій</string>
+    <string name="website">Веб-сайт</string>
+    <string name="access_messages_from_any_device">Доступ і відправлення повідомлень з будь-якого пристрою!</string>
+    <string name="beta_disclaimer">Цей проект все ще знаходиться в бета - версії, будь ласка, повідомте про проблеми, які ви можете знайти!</string>
+    <string name="faqs">Питання, що часто задаються</string>
+    <string name="features">Особливості</string>
+    <string name="issues">управління інцидентами</string>
+    <string name="issues_summary">Він також служить в якості довідника з можливостей</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse бета-спільноти</string>
+    <string name="email">Email</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">підтримка</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d повідомлення</item>
+        <item quantity="other">%1$d повідомлення</item>
+        <item quantity="few">%1$d повідомлень</item>
+        <item quantity="many">%1$d повідомлень</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">в %1$d розмові</item>
+        <item quantity="other">в %1$d розмовах</item>
+        <item quantity="few">в %1$d розмовах</item>
+        <item quantity="many">в %1$d розмовах</item>
+    </plurals>
+    <string name="pin_conversation">Прикріплена розмова</string>
+    <string name="pin_conversation_summary">Зберігає цю розмову у верхній частині списку</string>
+    <string name="mute_conversation">Вимкнути звук сповіщень розмови</string>
+    <string name="mute_conversation_summary">Приховує сповіщення для цієї розмови</string>
+    <string name="private_conversation">Приватна розмова</string>
+    <string name="private_conversation_summary">Приховати вміст розмови в сповіщеннях</string>
+    <string name="primary_color">основний колір</string>
+    <string name="primary_dark_color">Основний колір Темний</string>
+    <string name="accent_color">Колір акценту</string>
+    <string name="led_color">колір світлодіода</string>
+    <string name="ringtone">мелодія</string>
+    <string name="group_name">Назва групи</string>
+    <string name="notification_settings">Сповіщення</string>
+    <string name="repeat_interval">Повторити оповіщення</string>
+    <string name="repeat_never">Ніколи</string>
+    <string name="repeat_one_min">Кожної хвилини</string>
+    <string name="repeat_five_mins">Кожні п\'ять хвилин</string>
+    <string name="repeat_ten_mins">Кожні десять хвилин</string>
+    <string name="repeat_half_hour">Кожні півгодини</string>
+    <string name="repeat_hour">Кожної години</string>
+    <string name="vibrate">Зразок вібрації</string>
+    <string name="vibrate_off">Без вібрації</string>
+    <string name="vibrate_default">Вібрація за замовчуванням</string>
+    <string name="vibrate_two_long">Дві довгі</string>
+    <string name="vibrate_two_short">Дві короткі</string>
+    <string name="vibrate_three_short">Три короткі</string>
+    <string name="vibrate_one_short_one_long">Одна коротка, одна довга</string>
+    <string name="vibrate_one_long_one_short">Одна довга, одна коротка</string>
+    <string name="sound_effects">Звукові ефекти</string>
+    <string name="delivery_reports">Звіти про доставку</string>
+    <string name="theme_settings">Персональні налаштування</string>
+    <string name="base_theme">Базова тема</string>
+    <string name="global_theme_color">Колір теми</string>
+    <string name="font_size">Розмір шрифту</string>
+    <string name="blacklist_hint">Введіть номер в чорний список ...</string>
+    <string name="add_blacklist">%1$s Ви впевнені що хочете додати цей чорний список? Повідомлення не будуть 
+зберігатися коли вони прийдуть від контактів з цього переліку і Ви про них не будете сповіщені!</string>
+    <string name="remove_blacklist">%1$s Ви хочете видалити цей чорний список?</string>
+    <string name="blacklist_need_number">Вам необхідно ввести номер телефону в чорний список!</string>
+    <string name="no_blacklists">Немає чорних списків</string>
+    <string name="no_blacklists_summary">Ви можете додати один за допомогою кнопки плюс нижче!</string>
+    <string name="add">Додати</string>
+    <string name="privacy_policy">Політика конфіденційності</string>
+    <string name="privacy_policy_summary">Перегляньте нашу політику конфіденційності в Інтернеті</string>
+    <string name="account_expiring">Рахунок закінчується!</string>
+    <string name="signout_time">Підписатися на %1$s</string>
+    <string name="lifetime_subscriber">По-життєва підписка</string>
+    <string name="trial_period">Пробний період</string>
+    <string name="setup_my_account">Налаштування облікового запису</string>
+    <string name="setup_my_account_summary">Зареєструйтеся або увійти в свій обліковий запис, щоб почати використовувати більше функцій, таких як обмін повідомленнями з планшета або комп\'ютера</string>
+    <string name="preparing_new_account">Підготовка облікового запису &#8230;</string>
+    <string name="delete_account">Видалити обліковий запис</string>
+    <string name="delete_account_summary">Видаляє обліковий запис з цього пристрою, з Ваших інших авторизованих пристроїв і з серверу. Це незворотній процес!</string>
+    <string name="delete_account_confirmation">Ви впевнені, що хочете видалити свій обліковий запис і всю інформацію пов\'язану з ним? Ви завжди можете зареєструватися ще раз пізніше!</string>
+    <string name="change_subscription">зміна підписки</string>
+    <string name="cancel_on_the_play_store">Скасувати і переглянути підписку на Play Store,</string>
+    <string name="resync_account">Повторно синхронізувати обліковий запис</string>
+    <string name="resync_account_summary">Відсутні повідомлення? Використайте цю 
+функцію, щоб привести цей пристрій в актуальний стан з тим, який є на основному пристрої.</string>
+    <string name="resync_account_confirmation">Це видалить всі повідомлення даного пристрою, і 
+очистить копію того, що в даний час є на основному пристрої. Ви впевнені, що це те, чого ви хочете?</string>
+    <string name="normalize_color_scheme">Або, ви можете вибрати один колір, який ви хочете надати контакту:</string>
+    <string name="no_apps_found">Немає додатків для обробки цієї дії</string>
+    <string name="you_denied_permission">Ви заборонили цей дозвіл</string>
+    <string name="supported_platforms">Підтримувані платформи</string>
+    <string name="supported_platforms_summary">Всі офіційні місця, через які Ви можете отримати доступ до додатка</string>
+    <string name="font_size_small">Малий</string>
+    <string name="font_size_normal">нормальний</string>
+    <string name="font_size_large">великий</string>
+    <string name="font_size_extra_large">Дуже великий</string>
+    <string name="advanced">Розширений</string>
+    <string name="send_as_mms">Перетворення в MMS</string>
+    <string name="send_as_mms_summary">Довгі повідомлення будуть надіслані як MMS замість окремих SMS</string>
+    <string name="alert_types">Типи сповіщень</string>
+    <string name="alert_types_summary">Налаштування сповіщень</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Підпис</string>
+    <string name="signature_summary">Примітка: надіслані підписи не будуть відображатися в списку повідомлень Pulse. Підписи будуть показані тільки одержувачу в повідомленні.</string>
+    <string name="cleanup_old_messages">Очищення давніх повідомлень</string>
+    <string name="delayed_sending">Затримка відправки</string>
+    <string name="quick_compose">Швидкі компонування</string>
+    <string name="quick_compose_summary">Завжди-активні сповіщення, щоб дати Вам швидкий доступ до створення нового повідомлення.</string>
+    <string name="secure_private_conversations">Безпека приватних розмов</string>
+    <string name="secure_private_conversations_summary">Вимагається PIN-код, щоб розблокувати приватні розмови.</string>
+    <!-- Theming Options -->
+    <string name="day_night">За замовчуванням (день / ніч)</string>
+    <string name="always_light">завжди світлий</string>
+    <string name="always_dark">завжди темний</string>
+    <string name="always_black">завжди чорний</string>
+    <string name="set_color_per_conversation">Встановити колір на розмову</string>
+    <string name="material_color_red">червоний</string>
+    <string name="material_color_pink">рожевий</string>
+    <string name="material_color_purple">фіолетовий</string>
+    <string name="material_color_deep_purple">насичений фіолетовий</string>
+    <string name="material_color_indigo">індиго</string>
+    <string name="material_color_blue">синій</string>
+    <string name="material_color_light_blue">блакитний</string>
+    <string name="material_color_cyan">ціан</string>
+    <string name="material_color_teal">зеленувато-блакитний</string>
+    <string name="material_color_green">зелений</string>
+    <string name="material_color_light_green">світло-зелений</string>
+    <string name="material_color_lime">лайм</string>
+    <string name="material_color_yellow">жовтий</string>
+    <string name="material_color_amber">бурштиновий</string>
+    <string name="material_color_orange">помаранчевий</string>
+    <string name="material_color_deep_orange">насичений помаранчевий</string>
+    <string name="material_color_brown">коричневий</string>
+    <string name="material_color_gray">сірий</string>
+    <string name="material_color_blue_gray">сіро-блакитний</string>
+    <string name="material_color_black">чорний</string>
+    <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Ви впевнені, що хочете видалити заплановане надсилання повідомлення 
+для %1$s?</string>
+    <string name="scheduled_message_hint">Повідомлення для надсилання...</string>
+    <string name="scheduled_to_hint">Контакт для надсилання...</string>
+    <string name="scheduled_message_sent">Заплановане повідомлення успішно відправлено</string>
+    <string name="no_scheduled_messages">Немає запланованих повідомлень</string>
+    <string name="no_scheduled_messages_summary">Ви можете створити новий за допомогою кнопки плюс 
+нижче!</string>
+    <string name="scheduled_message_in_future">Час має бути в майбутньому!</string>
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Шифрування і завантаження ...</string>
+    <string name="encrypting_and_uploading_media">Шифрування і стиснення мультимедійних повідомлень ...</string>
+    <string name="encrypting_and_uploading_count">Шифрування і стиснення повідомлень засобів масової інформації ... 
+(%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">Завантаження і дешифрування ...</string>
+    <string name="decrypting_and_downloading_media">Завантаження і дешифрування медіа ...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Аудіо повідомлення</string>
+    <string name="video_message">Відео повідомлення</string>
+    <string name="picture_message">Графічні повідомлення</string>
+    <string name="gif_message">Повідомлення GIF</string>
+    <string name="contact_card">картка контакту</string>
+    <string name="conversation_with">Розмова з %1$s</string>
+    <string name="send">Надіслати</string>
+    <!-- Other -->
+    <string name="dashclock_description">інформація про непрочитані SMS/MMS</string>
+    <string name="default_text">За замовчуванням</string>
+    <string name="did_you_know">Ви знали?</string>
+    <string name="use_from_anywhere">Pulse може бути використаний з будь-якого пристрою, підключеного до Інтернету - 
+спробуй його сьогодні!</string>
+    <string name="use_from_anywhere_short">Pulse може бути використаний на будь-якому з ваших пристроїв!</string>
+    <string name="learn_more">Вивчайте більше</string>
+    <string name="dismiss">Відхилити</string>
+    <string name="renew">Відновити</string>
+    <string name="no">Ні</string>
+    <string name="cancel">скасувати</string>
+    <string name="hours">Годин</string>
+    <string name="minutes">Хвилин</string>
+    <string name="test">Тест</string>
+    <string name="off">Вимкнено</string>
+    <!-- Times -->
+    <string name="five_seconds">П\'ять секунд</string>
+    <string name="ten_seconds">Десять секунд</string>
+    <string name="fifteen_seconds">П\'ятнадцять секунд</string>
+    <string name="thirty_seconds">Тридцять секунд</string>
+    <string name="one_minute">Одна хвилина</string>
+    <string name="one_week">Один тиждень</string>
+    <string name="two_weeks">Два тижні</string>
+    <string name="one_month">Один місяць</string>
+    <string name="three_months">Три місяці</string>
+    <string name="six_months">Шість місяців</string>
+    <string name="one_year">Один рік</string>
+    <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Підписка не знайдена!</string>
+    <string name="cancelled_subscription_error">Схоже, Ви скасували підписку. 
+Якщо Ви не зробите нову підписку в протягом цього часу, додаток автоматично вийде із Вашого 
+облікового запису протягом 2 днів. Якщо це помилка, будь-ласка, зв\'яжіться зі мною за допомогою електронної пошти.</string>
+    <string name="subscription_found">Підписка знайдена - Ласкаво просимо!</string>
+    <string name="subscription_not_found">Жодна підписка не знайдена, давайте почнемо Ваш пробний період!</string>
+    <string name="checking_for_active_subscriptions">Перевірка підписки &#8230;</string>
+    <string name="purchase_error_cancelled">Ви скасували покупку :(</string>
+    <string name="purchase_error_bad_google_play">Ой-ой, Google Play можливо має проблеми, вони дали нам поганий результат.</string>
+    <string name="purchase_error_bad_sku">Хм &amp; # 8230; ця покупка не відповідає ні одному з  наших записів.</string>
+    <string name="subscriptions">Рахунок за підписку виставляється після 7-ми денного пробного періоду і може бути змінена / скасована в будь-який момент:</string>
+    <string name="billed_immediately">Рахунок буде виставлено негайною</string>
+    <string name="lifetime_purchase">$ 10.99 - довічне членство</string>
+    <string name="lifetime_purchase_summary">Заплатити лише один раз!</string>
+    <string name="yearly_purchase">$ 5.99 щороку</string>
+    <string name="yearly_purchase_summary">Найкраща угода</string>
+    <string name="three_month_purchase">$ 1,99 кожні три місяці</string>
+    <string name="three_month_purchase_summary">Це не може піти не так.</string>
+    <string name="monthly_purchase">$ 0.99 щомісяця</string>
+    <string name="monthly_purchase_summary">Просто хочете спробувати? Без проблем.</string>
+    <string name="change_subscription_message">Хочете оновити? Чудово! Після того, як ви зробили свій вибір на наступному екрані, ви повинні перейти в додаток Play Store, і скасувати стару підписку вручну.</string>
+</resources>

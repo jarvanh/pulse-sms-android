@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Увійти</string>
+    <string name="api_signup">Зареєструватися</string>
+    <string name="api_signup_failed">Неможливо зареєструватися на цьому пристрої, необхідно зареєструватися з основного
+пристрою, що отримав номер телефону першим!</string>
+    <string name="api_skip_signup">Або, якщо Ви лише хочете використовувати додаток на цьому пристрої, без можливостей мережі, таких як текстові повідомлення з планшета або комп\'ютера, Ви можете пропустити цей крок:</string>
+    <string name="api_skip">Пропустити</string>
+    <string name="api_email">Адреса електронної пошти</string>
+    <string name="api_password">Пароль</string>
+    <string name="api_forgot_password">Забули пароль?</string>
+    <string name="api_password_confirmation">Підтвердження паролю</string>
+    <string name="api_name">Ім\'я</string>
+    <string name="api_phone_number">Номер телефону</string>
+    <string name="api_connecting">Підключення до сервера ...</string>
+    <string name="api_error">Сталася помилка під час операції</string>
+    <string name="api_device_error">При додаванні цього пристрою сталася помилка. Повторіть!</string>
+    <string name="api_add_second_primary_device">Схоже у Вас вже є основний пристрій 
+(%1$s) для вашого облікового запису, і тільки один дозволяється! 
+Ви хочете видалити поточний основний пристрій і встановити цей в якості нового основного?</string>
+    <string name="api_yes">Так</string>
+    <string name="api_no">Ні</string>
+    <string name="api_no_email">Не введено адресу електронної пошти</string>
+    <string name="api_email_invalid">Невірна адреса електронної пошти</string>
+    <string name="api_no_password">Пароль не введений</string>
+    <string name="api_no_password_confirmation">Не введено підтвердження паролю</string>
+    <string name="api_password_mismatch">Паролі не збігаються</string>
+    <string name="api_no_name">Не введено ім\'я</string>
+    <string name="api_no_phone_number">Не введено номер телефону</string>
+    <string name="api_login_error">Сталася помилка при вході в систему, невірна адреса електронної пошти або пароль?</string>
+    <string name="api_activate_summary">Увійдіть, щоб отримати всі ваші повідомлення на цьому пристрої!</string>
+    <string name="api_activate_1_1">Важливе до</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">на мобільному пристрої або комп\'ютері.</string>
+    <string name="api_activate_2_1">На веб-сайті</string>
+    <string name="api_activate_2_2">Введіть код праворуч</string>
+    <string name="api_activate_2_3">з\'єднатися зі своїм обліковим записом!</string>
+    <string name="api_confirm_password">Будь ласка, підтвердіть свій пароль:</string>
+    <string name="api_wrong_password">Підтвердження не вдалося. Чи правильний Ваш пароль?</string>
+    <string name="api_email_taken">Помилка входу в систему, у Вас вже є обліковий запис із цією електронною поштою?</string>
+    <string name="api_confirm">Підтвердити</string>
+    <string name="api_continue">Продовжити</string>
+</resources>
