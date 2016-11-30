@@ -90,9 +90,13 @@ public class DualSimUtils {
     }
 
     public String getDefaultPhoneNumber() {
-        if (manager.getActiveSubscriptionInfoCount() > 0) {
-            return manager.getActiveSubscriptionInfoList().get(0).getNumber();
-        } else {
+        try {
+            if (manager != null && manager.getActiveSubscriptionInfoCount() > 0) {
+                return manager.getActiveSubscriptionInfoList().get(0).getNumber();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             return null;
         }
     }
