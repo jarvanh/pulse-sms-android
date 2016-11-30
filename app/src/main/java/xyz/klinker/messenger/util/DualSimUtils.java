@@ -39,12 +39,13 @@ public class DualSimUtils {
 
     private Context context;
     private List<SubscriptionInfo> availableSims;
+    private SubscriptionManager manager;
 
     private void init(Context context) {
         this.context = context;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager manager = SubscriptionManager.from(context);
+            manager = SubscriptionManager.from(context);
             try {
                 this.availableSims = manager.getActiveSubscriptionInfoList();
                 if (availableSims.size() <= 1) {
@@ -89,8 +90,8 @@ public class DualSimUtils {
     }
 
     public String getDefaultPhoneNumber() {
-        if (availableSims.size() > 0) {
-            return availableSims.get(0).getNumber();
+        if (manager.getActiveSubscriptionInfoCount() > 0) {
+            return manager.getActiveSubscriptionInfoList().get(0).getNumber();
         } else {
             return null;
         }
