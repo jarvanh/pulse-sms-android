@@ -42,7 +42,7 @@ public class YoutubeParser extends MediaParser {
             }
         }
 
-        return "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+        return "https://img.youtube.com/vi/" + videoId + "/0.jpg";
     }
 
     public static String getVideoUriFromThumbnail(String thumbnail) {
