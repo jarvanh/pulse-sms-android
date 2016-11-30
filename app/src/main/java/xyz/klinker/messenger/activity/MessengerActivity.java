@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
@@ -148,6 +149,8 @@ public class MessengerActivity extends AppCompatActivity
         displayConversations();
 
         dismissIfFromNotification();
+
+        Toast.makeText(this, BuildConfig.ARTICLE_API_KEY, Toast.LENGTH_SHORT).show();
 
         if (checkInitialStart()) {
             boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
