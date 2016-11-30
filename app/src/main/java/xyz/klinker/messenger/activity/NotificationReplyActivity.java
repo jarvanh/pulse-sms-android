@@ -50,6 +50,7 @@ import xyz.klinker.messenger.service.ReplyService;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 public class NotificationReplyActivity extends AppCompatActivity {
 
@@ -86,12 +87,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
         hideKeyboard();
         slideOut();
-        content.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                overridePendingTransition(0, android.R.anim.fade_out);
-            }
+        content.postDelayed(() -> {
+            finish();
+            overridePendingTransition(0, android.R.anim.fade_out);
         }, 300);
     }
 
@@ -146,25 +144,13 @@ public class NotificationReplyActivity extends AppCompatActivity {
         
         alphaIn(dimBackground, 300, 0);
 
-        content.post(new Runnable() {
-            @Override
-            public void run() {
-                displayMessages();
+        content.post(() -> {
+            displayMessages();
 
-                scrollviewFiller.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        resizeDismissibleView();
-
-                        scrollView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                showScrollView();
-                            }
-                        });
-                    }
-                });
-            }
+            scrollviewFiller.post(() -> {
+                resizeDismissibleView();
+                scrollView.post(() -> showScrollView());
+            });
         });
 
         messageInput.postDelayed(new Runnable() {
@@ -287,33 +273,20 @@ public class NotificationReplyActivity extends AppCompatActivity {
         }
 
         conversationIndicator.setText(getString(R.string.conversation_with, conversation.title));
-        conversationIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollView.smoothScrollTo(0, 0);
-            }
-        });
+        conversationIndicator.setOnClickListener(v -> scrollView.smoothScrollTo(0, 0));
 
         sendButton.setEnabled(false);
         sendButton.setAlpha(.5f);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendButton.setEnabled(false);
+        sendButton.setOnClickListener(view -> {
+            sendButton.setEnabled(false);
 
-                hideKeyboard();
-                sendMessage();
+            hideKeyboard();
+            sendMessage();
 
-                alphaOut(sendButton, 200, 0);
-                alphaIn(progressBar, 200, 100);
+            alphaOut(sendButton, 200, 0);
+            alphaIn(progressBar, 200, 100);
 
-                sendButton.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onBackPressed();
-                    }
-                }, 1000);
-            }
+            sendButton.postDelayed(() -> onBackPressed(), 1000);
         });
 
         messageInput.setHint(getString(R.string.type_message));
@@ -331,20 +304,17 @@ public class NotificationReplyActivity extends AppCompatActivity {
             }
         });
 
-        messageInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                boolean handled = false;
+        messageInput.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            boolean handled = false;
 
-                if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
-                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
-                        actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendButton.performClick();
-                    handled = true;
-                }
-
-                return handled;
+            if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                    keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
+                    actionId == EditorInfo.IME_ACTION_SEND) {
+                sendButton.performClick();
+                handled = true;
             }
+
+            return handled;
         });
 
     }
@@ -365,38 +335,20 @@ public class NotificationReplyActivity extends AppCompatActivity {
     }
 
     private void setupBackgroundComponents() {
-        dimBackground.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        scrollviewFiller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
+        dimBackground.setOnClickListener(view -> onBackPressed());
+        scrollviewFiller.setOnClickListener(view -> onBackPressed());
+
+        messagesInitialHolder.setOnClickListener(v -> {
+            onBackPressed();
+
+            Intent intent = new Intent(NotificationReplyActivity.this, MessengerActivity.class);
+            intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+            intent.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
 
-        messagesInitialHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-
-                Intent intent = new Intent(NotificationReplyActivity.this, MessengerActivity.class);
-                intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
-                intent.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        messagesMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messagesInitialHolder.performClick();
-            }
-        });
+        messagesMore.setOnClickListener(v -> messagesInitialHolder.performClick());
 
         if (getResources().getBoolean(R.bool.is_tablet)) {
             scrollView.getLayoutParams().width = DensityUtil.toPx(this, 418);
@@ -404,13 +356,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
         final GestureDetectorCompat detectorCompat = new GestureDetectorCompat(this,
                 new GestureListener());
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                detectorCompat.onTouchEvent(motionEvent);
-                return false;
-            }
+        scrollView.setOnTouchListener((view, motionEvent) -> {
+            detectorCompat.onTouchEvent(motionEvent);
+            return false;
         });
     }
     // endregion
@@ -439,14 +387,13 @@ public class NotificationReplyActivity extends AppCompatActivity {
         source.readConversation(NotificationReplyActivity.this, conversationId);
         source.close();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new SendUtils(conversation.simSubscriptionId)
-                        .send(NotificationReplyActivity.this, message,
-                            conversation.phoneNumbers);
-            }
+        new Thread(() -> {
+            new SendUtils(conversation.simSubscriptionId)
+                    .send(NotificationReplyActivity.this, message,
+                        conversation.phoneNumbers);
         }).start();
+
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
     private boolean handleWearableReply() {

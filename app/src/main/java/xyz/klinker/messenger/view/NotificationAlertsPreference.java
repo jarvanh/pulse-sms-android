@@ -182,16 +182,19 @@ public class NotificationAlertsPreference extends Preference implements
         if (sound != null) {
             builder.setSound(sound);
         }
-        
+
+        Notification notification = builder.build();
         if (vibratePattern == Settings.VibratePattern.DEFAULT) {
-            builder.setDefaults(Notification.DEFAULT_VIBRATE);
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
         } else if (vibratePattern == Settings.VibratePattern.OFF) {
             builder.setVibrate(new long[0]);
+            notification = builder.build();
         } else if (vibratePattern.pattern != null) {
             builder.setVibrate(vibratePattern.pattern);
+            notification = builder.build();
         }
 
-        NotificationManagerCompat.from(getContext()).notify(1, builder.build());
+        NotificationManagerCompat.from(getContext()).notify(1, notification);
     }
 
     private Uri getRingtone() {

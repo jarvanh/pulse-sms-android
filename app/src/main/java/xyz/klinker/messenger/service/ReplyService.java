@@ -35,6 +35,7 @@ import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.SendUtils;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
  * Service for getting back voice replies from Android Wear and sending them out.
@@ -117,6 +118,7 @@ public class ReplyService extends IntentService {
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
 }

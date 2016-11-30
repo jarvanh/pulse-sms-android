@@ -29,6 +29,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.SectionType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 
 /**
  * Receiver that handles changing the conversation list when a new message is received. The logic
