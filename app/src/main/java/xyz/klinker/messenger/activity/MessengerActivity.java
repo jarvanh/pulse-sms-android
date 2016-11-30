@@ -155,7 +155,7 @@ public class MessengerActivity extends AppCompatActivity
             boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
                     DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
-            boolean hasPhoneFeature = hasTelephone && hasSim;
+            boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);//&& hasSim;
             if (hasPhoneFeature) {
                 startActivityForResult(
                         new Intent(this, OnboardingActivity.class),

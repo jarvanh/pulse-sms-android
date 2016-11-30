@@ -97,6 +97,7 @@ public class DualSimUtils {
                 return null;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
