@@ -18,6 +18,8 @@ import xyz.klinker.messenger.util.media.MediaParser;
 
 public class ArticleParser extends MediaParser {
 
+    public static final String ARTICLE_API_KEY = "00624e91313bfce6e625bfcc40ee7d52";
+
     public ArticleParser(Context context) {
         super(context);
     }
@@ -39,7 +41,7 @@ public class ArticleParser extends MediaParser {
 
     @Override
     protected String buildBody(String matchedText) {
-        ArticleUtils utils = new ArticleUtils(BuildConfig.ARTICLE_API_KEY);
+        ArticleUtils utils = new ArticleUtils(ARTICLE_API_KEY);
         Article article = utils.fetchArticle(context, matchedText);
 
         ArticlePreview preview = ArticlePreview.build(article);

@@ -68,6 +68,7 @@ import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.media.parsers.ArticleParser;
 import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 /**
@@ -202,7 +203,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), "00624e91313bfce6e625bfcc40ee7d52")
+                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
                         .setToolbarColor(receivedColor)
                         .setAccentColor(accentColor)
                         .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?

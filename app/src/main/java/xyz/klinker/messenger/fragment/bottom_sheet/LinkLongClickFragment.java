@@ -25,6 +25,7 @@ import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.media.parsers.ArticleParser;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -56,7 +57,7 @@ public class LinkLongClickFragment extends TabletOptimizedBottomSheetDialogFragm
         });
 
         openInternal.setOnClickListener(view -> {
-            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext(), BuildConfig.ARTICLE_API_KEY)
+            ArticleIntent intent = new ArticleIntent.Builder(contentView.getContext(), ArticleParser.ARTICLE_API_KEY)
                     .setToolbarColor(mainColor)
                     .setAccentColor(accentColor)
                     .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?

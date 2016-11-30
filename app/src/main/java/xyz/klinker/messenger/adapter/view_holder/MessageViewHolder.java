@@ -73,6 +73,7 @@ import xyz.klinker.messenger.util.ImageUtils;
 import xyz.klinker.messenger.util.MediaSaver;
 import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
 import xyz.klinker.messenger.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.util.media.parsers.ArticleParser;
 import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
 import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
@@ -406,7 +407,7 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private void startArticle() {
-        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), BuildConfig.ARTICLE_API_KEY)
+        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
                 .setToolbarColor(primaryColor)
                 .setAccentColor(accentColor)
                 .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
