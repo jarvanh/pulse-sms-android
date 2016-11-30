@@ -58,3 +58,9 @@
 
 # retrolambda
 -dontwarn java.lang.invoke.*
+
+# Article library
+-dontwarn xyz.klinker.android.article.**
+-keep class xyz.klinker.android.article.** { *; }
+-keep interface xyz.klinker.android.article.** { *; }
+-keep public class xyz.klinker.android.article.R$* { *; }

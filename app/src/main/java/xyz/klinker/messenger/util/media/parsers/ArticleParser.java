@@ -18,7 +18,7 @@ import xyz.klinker.messenger.util.media.MediaParser;
 
 public class ArticleParser extends MediaParser {
 
-    public static final String ARTICLE_API_KEY = "00624e91313bfce6e625bfcc40ee7d52";
+    public static final String ARTICLE_API_KEY = BuildConfig.ARTICLE_API_KEY;
 
     public ArticleParser(Context context) {
         super(context);
