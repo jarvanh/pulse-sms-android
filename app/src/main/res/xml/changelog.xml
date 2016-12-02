@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="1.11.2"
+        description="December 2nd, 2016">
+        <text>Copy paragraphs from new browser</text>
+        <text>Browser follows font size preference</text>
+        <text>Some bug/crash fixes</text>
+    </version>
+
+    <version
         name="1.11.1"
         description="November 30th, 2016">
         <text>Bug/crash fixes</text>

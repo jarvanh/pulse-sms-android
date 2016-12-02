@@ -62,6 +62,7 @@ public class LinkLongClickFragment extends TabletOptimizedBottomSheetDialogFragm
                     .setAccentColor(accentColor)
                     .setTheme(Settings.get(contentView.getContext()).isCurrentlyDarkTheme() ?
                             ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                    .setTextSize(Settings.get(contentView.getContext()).mediumFont)
                     .build();
 
             intent.launchUrl(contentView.getContext(), Uri.parse(link));
