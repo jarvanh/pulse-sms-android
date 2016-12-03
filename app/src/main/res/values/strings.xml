@@ -267,6 +267,7 @@
     <string name="repeat_ten_mins">Every ten minutes</string>
     <string name="repeat_half_hour">Every half hour</string>
     <string name="repeat_hour">Every hour</string>
+    <string name="wake_screen">Wake Screen</string>
     <string name="vibrate">Vibrate Pattern</string>
     <string name="vibrate_off">No vibration</string>
     <string name="vibrate_default">Default vibration</string>
@@ -410,6 +411,7 @@
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="off">Off</string>
+    <string name="on">On</string>
 
     <!-- Times -->
     <string name="five_seconds">Five seconds</string>

@@ -1094,6 +1094,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the wake screen setting
+     */
+    public void updateWakeScreen(final String accountId, final String wake) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "wake_screen", "string", wake);
+        }
+    }
+
+    /**
      * Update the delivery reports setting.
      */
     public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {

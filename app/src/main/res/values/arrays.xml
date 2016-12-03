@@ -153,4 +153,14 @@
         <item>one_year</item>
     </string-array>
 
+    <string-array name="wake_screen">
+        <item>@string/off</item>
+        <item>@string/on</item>
+    </string-array>
+
+    <string-array name="wake_screen_values">
+        <item>off</item>
+        <item>on</item>
+    </string-array>
+
 </resources>

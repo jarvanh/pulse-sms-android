@@ -73,6 +73,7 @@ public class Settings {
     public boolean soundEffects;
     public boolean securePrivateConversations;
     public boolean quickCompose;
+    public boolean wakeScreen;
     public long snooze;
     public long repeatNotifications;
     public long delayedSendingTimeout;
@@ -133,6 +134,7 @@ public class Settings {
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
         this.useGlobalThemeColor = !themeColorString.equals("default");
         this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "");
+        this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off").equals("on");
 
         // configuration
         if (this.ringtone == null) {

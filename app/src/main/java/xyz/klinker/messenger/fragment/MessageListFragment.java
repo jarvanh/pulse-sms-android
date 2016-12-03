@@ -1498,7 +1498,7 @@ public class MessageListFragment extends Fragment implements
             }
 
             sendMessage(uris, message);
-            return true;
+            return false;
         }
 
         return false;

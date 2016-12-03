@@ -62,6 +62,7 @@ public class NotificationAlertsPreference extends Preference implements
         layout.findViewById(R.id.vibrate).setOnClickListener(view -> vibrateClicked());
         layout.findViewById(R.id.ringtone).setOnClickListener(view -> ringtoneClicked());
         layout.findViewById(R.id.repeat).setOnClickListener(view -> repeatClicked());
+        layout.findViewById(R.id.wake_screen).setOnClickListener(view -> wakeClicked());
 
         new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
                 .setView(layout)
@@ -117,6 +118,31 @@ public class NotificationAlertsPreference extends Preference implements
 
                     settings.setValue(getContext().getString(R.string.pref_repeat_notifications), newRepeat);
                     new ApiUtils().updateRepeatNotifications(Account.get(getContext()).accountId, newRepeat);
+
+                    dialogInterface.dismiss();
+                }).show();
+    }
+
+    private void wakeClicked() {
+        final Settings settings = Settings.get(getContext());
+        final SharedPreferences prefs = settings.getSharedPrefs();
+        final String current = prefs.getString(getContext().getString(R.string.pref_wake_screen), "off");
+
+        int actual = 0;
+        for (String s : getContext().getResources().getStringArray(R.array.wake_screen_values)) {
+            if (s.equals(current)) {
+                break;
+            } else {
+                actual++;
+            }
+        }
+
+        new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
+                .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
+                    String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
+
+                    settings.setValue(getContext().getString(R.string.pref_wake_screen), newVal);
+                    new ApiUtils().updateWakeScreen(Account.get(getContext()).accountId, newVal);
 
                     dialogInterface.dismiss();
                 }).show();

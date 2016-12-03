@@ -29,6 +29,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -684,6 +685,12 @@ public class NotificationService extends IntentService {
 
         if (!skipSummaryNotification) {
             NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
+        }
+
+        if (Settings.get(this).wakeScreen) {
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            final PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
+            wakeLock.acquire(5000);
         }
     }
 
