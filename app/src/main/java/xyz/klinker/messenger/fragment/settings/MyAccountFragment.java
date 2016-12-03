@@ -33,9 +33,9 @@ import java.util.Date;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.OnBoardingPayActivity;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
-import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ApiDownloadService;
@@ -45,7 +45,6 @@ import xyz.klinker.messenger.service.SimpleLifetimeSubscriptionCheckService;
 import xyz.klinker.messenger.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.StringUtils;
-import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.billing.BillingHelper;
 import xyz.klinker.messenger.util.billing.ProductAvailable;
 import xyz.klinker.messenger.util.billing.ProductPurchased;
@@ -114,13 +113,13 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (hasSubs) {
+//                                    if (hasSubs) {
                                         Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
                                         startLoginActivity();
-                                    } else {
-                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-                                        pickSubscription();
-                                    }
+//                                    } else {
+//                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+//                                        pickSubscription();
+//                                    }
                                 }
                             });
                         }
