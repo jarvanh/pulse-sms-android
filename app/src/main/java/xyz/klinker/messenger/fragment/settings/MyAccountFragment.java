@@ -113,13 +113,13 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-//                                    if (hasSubs) {
+                                    if (hasSubs) {
                                         Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
                                         startLoginActivity();
-//                                    } else {
-//                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-//                                        pickSubscription();
-//                                    }
+                                    } else {
+                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+                                        pickSubscription();
+                                    }
                                 }
                             });
                         }
