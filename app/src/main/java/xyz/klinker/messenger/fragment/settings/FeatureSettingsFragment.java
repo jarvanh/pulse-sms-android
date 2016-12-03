@@ -71,10 +71,6 @@ public class FeatureSettingsFragment extends PreferenceFragment {
                             Account.get(getActivity()).accountId, delayedSending);
                     return true;
                 });
-
-        if (!FeatureFlags.get(getActivity()).DELAYED_SENDING) {
-            getPreferenceScreen().removePreference(preference);
-        }
     }
 
     private void initCleanupOldMessages() {

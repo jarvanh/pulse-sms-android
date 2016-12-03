@@ -156,12 +156,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
 
                     return false;
                 });
-
-        if (FeatureFlags.get(getActivity()).FEATURE_SETTINGS) {
-            PreferenceGroup group = (PreferenceGroup) getPreferenceScreen()
-                    .findPreference(getString(R.string.pref_advanced_category));
-            group.removePreference(preference);
-        }
     }
 
     private void initSoundEffects() {

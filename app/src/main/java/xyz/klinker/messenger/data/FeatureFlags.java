@@ -58,10 +58,8 @@ public class FeatureFlags {
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean CONTENT_OBSERVER_TIMEOUT;
-    public boolean FEATURE_SETTINGS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean DELAYED_SENDING;
     public boolean CLEANUP_OLD_MESSAGES;
 
     private Context context;
@@ -72,10 +70,8 @@ public class FeatureFlags {
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
-        FEATURE_SETTINGS = getValue(sharedPrefs, FLAG_FEATURE_SETTINGS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        DELAYED_SENDING = getValue(sharedPrefs, FLAG_DELAYED_SENDING);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
     }
 
@@ -92,14 +88,8 @@ public class FeatureFlags {
             case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
                 CONTENT_OBSERVER_TIMEOUT = flag;
                 break;
-            case FLAG_FEATURE_SETTINGS:
-                FEATURE_SETTINGS = flag;
-                break;
             case FLAG_SECURE_PRIVATE:
                 SECURE_PRIVATE = flag;
-                break;
-            case FLAG_DELAYED_SENDING:
-                DELAYED_SENDING = flag;
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE= flag;
