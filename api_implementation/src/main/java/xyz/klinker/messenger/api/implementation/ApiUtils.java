@@ -1116,6 +1116,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the rounder bubbles setting.
+     */
+    public void updateRounderBubbles(final String accountId, final boolean rounder_bubbles) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "rounder_bubbles", "boolean", rounder_bubbles);
+        }
+    }
+
+    /**
      * Update the delivery reports setting.
      */
     public void updateConvertToMMS(final String accountId, final boolean convert) {

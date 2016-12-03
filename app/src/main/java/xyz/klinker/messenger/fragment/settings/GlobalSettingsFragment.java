@@ -49,9 +49,9 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initBaseTheme();
         initGlobalTheme();
         initFontSize();
+        initRounderBubbles();
         initDeliveryReports();
         initConvertToMMS();
-        initSignature();
         initSoundEffects();
     }
 
@@ -110,6 +110,16 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                 });
     }
 
+    private void initRounderBubbles() {
+        findPreference(getString(R.string.pref_rounder_bubbles))
+                .setOnPreferenceChangeListener((preference, o) -> {
+                    boolean rounder = (boolean) o;
+                    new ApiUtils().updateRounderBubbles(Account.get(getActivity()).accountId,
+                            rounder);
+                    return true;
+                });
+    }
+
     private void initDeliveryReports() {
         findPreference(getString(R.string.pref_delivery_reports))
                 .setOnPreferenceChangeListener((preference, o) -> {
@@ -127,34 +137,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                     new ApiUtils().updateConvertToMMS(Account.get(getActivity()).accountId,
                             convert);
                     return true;
-                });
-    }
-
-    private void initSignature() {
-        Preference preference = findPreference(getString(R.string.pref_signature));
-        preference.setOnPreferenceClickListener(p -> {
-                    //noinspection AndroidLintInflateParams
-                    View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
-                            null, false);
-                    final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
-                    editText.setHint(R.string.signature);
-                    editText.setText(Settings.get(getActivity()).signature);
-                    editText.setSelection(editText.getText().length());
-
-                    new AlertDialog.Builder(getActivity())
-                            .setView(layout)
-                            .setPositiveButton(R.string.save, (dialogInterface, i) -> {
-                                if (editText.getText().length() > 0) {
-                                    new ApiUtils().updateSignature(Account.get(getActivity()).accountId,
-                                            editText.getText().toString());
-                                } else {
-                                    new ApiUtils().updateSignature(Account.get(getActivity()).accountId, "");
-                                }
-                            })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .show();
-
-                    return false;
                 });
     }
 
