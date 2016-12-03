@@ -113,6 +113,14 @@
 
         </FrameLayout>
 
+        <ProgressBar
+            android:id="@+id/send_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:indeterminate="true"
+            android:visibility="invisible"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -183,17 +191,16 @@
                 android:maxLines="5" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/send"
+                android:src="@drawable/ic_send"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_send"
-                android:id="@+id/send"
-                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:contentDescription="@string/send_message"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:rippleColor="@android:color/white"
-                android:layout_gravity="center_vertical|start" />
+                app:rippleColor="@android:color/white" />
 
         </LinearLayout>
 
