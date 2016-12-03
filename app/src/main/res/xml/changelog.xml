@@ -16,6 +16,14 @@
 
 <changelog>
 
+
+    <version
+        name="1.12.0"
+        description="December x, 2016">
+        <text>Delayed sending option (Nav Drawer -> Advanced Features -> Delayed Sending)</text>
+        <text>Alert type option to wake the screen when a message is received</text>
+    </version>
+
     <version
         name="1.11.2"
         description="December 2nd, 2016">
