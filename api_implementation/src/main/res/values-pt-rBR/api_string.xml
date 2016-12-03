@@ -41,6 +41,7 @@
     <string name="api_no_phone_number">Nenhum telefone digitado</string>
     <string name="api_login_error">Um erro ocorreu durante o login, senha ou e-mail estão errados?</string>
     <string name="api_activate_summary">Entre para pegar todas as suas mensagens neste dispositivo!</string>
+    <string name="api_activate_1_1">Siga para</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">em um dispositivo móvel ou computador.</string>
     <string name="api_activate_2_1">No site</string>

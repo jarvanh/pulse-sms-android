@@ -16,6 +16,7 @@
   -->
 <resources>
     <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">Nova mensagem</string>
@@ -26,6 +27,7 @@
     <string name="menu_schedule">Mensagens agendadas</string>
     <string name="menu_mute_contacts">Lista negra</string>
     <string name="menu_invite">Convidar amigos</string>
+    <string name="menu_feature_settings">Recursos avançados</string>
     <string name="menu_settings">Configurações globais</string>
     <string name="menu_account">Minha conta</string>
     <string name="menu_device_texting">Mensagem de qualquer dispositivo</string>
@@ -46,12 +48,14 @@
     <string name="menu_conversation_schedule">Agendar uma mensagem</string>
     <string name="menu_contact_settings">Configuração de contato</string>
     <string name="menu_group_settings">Configurações de grupo</string>
+    <string name="menu_snooze_off">Desligar</string>
     <string name="menu_snooze_1">1 Hora</string>
     <string name="menu_snooze_2">2 horas</string>
     <string name="menu_snooze_4">4 horas</string>
     <string name="menu_snooze_8">8 horas</string>
     <string name="menu_snooze_24">24 horas</string>
     <string name="menu_snooze_72">72 horas</string>
+    <string name="menu_snooze_custom">Escolher uma hora</string>
     <!-- Empty Screen -->
     <string name="no_messages">Sem mensagens</string>
     <string name="no_messages_summary">Comece uma nova mensagem ou apenas disfrute seu dia!</string>
@@ -122,7 +126,7 @@
     <string name="failed_to_save">Falha ao salvar</string>
     <string name="start_recording_audio">Pressione o botão para começar a gravar áudio!</string>
     <string name="audio_recording_error">Erro com a gravação :(</string>
-    <string name="message_copied_to_clipboard">Mensagem copiada para área de transferência</string>
+    <string name="message_copied_to_clipboard">Copiado para área de transferência</string>
     <string name="view_details">Ver detalhes</string>
     <string name="delete">Apagar</string>
     <string name="copy_message">Copiar texto</string>
@@ -132,6 +136,12 @@
     <string name="message_sending_failed">Falha ao enviar mensagem!</string>
     <string name="preparing_video">Preparando vídeo&#8230;</string>
     <string name="delete_message">Apagar esta mensagem?</string>
+    <string name="forward_message">Encaminhar mensagem</string>
+    <string name="share_message">Compartilhar mensagem</string>
+    <string name="copy_message_text">Copiar mensagem de texto</string>
+    <string name="open_link_to_browser">Abrir link no browser</string>
+    <string name="open_link_internal">Abrir link internamente</string>
+    <string name="copy_link">Copiar link internamente</string>
     <!-- Compose Screen -->
     <string name="compose_message">Escrever nova mensagem</string>
     <string name="send_message">Enviar mensagens</string>
@@ -141,6 +151,7 @@
     <string name="permissions_needed">O app não pode funcionar sem estas permissões! você precisa aceita-las para poder continuar.</string>
     <string name="loading_messages">Otimizando...</string>
     <string name="loading_messages_summary">Apenas trabalhando em obter suas mensagens no aplicativo. Não vai demorar muito!</string>
+    <string name="tooltip_got_it">Entendi!</string>
     <string name="navigation_drawer_conversation_hint">Mais opções para esta conversa estão na gaveta de navegação.</string>
     <string name="onboarding_title_1">Mensagens reimaginadas</string>
     <string name="onboarding_title_2">Disponível em qualquer lugar</string>
@@ -156,6 +167,7 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="message_anywhere_onboarding_content_3">Use o aplicativo Android de graça (para sempre!) no seu telefone ou comece a enviar mensagens de todos os seus dispositivos por um teste de uma semana.</string>
     <string name="start_trial">Iniciar teste</string>
     <string name="not_now">Não agora</string>
+    <string name="onboarding_done">Feito</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nova mensagem de %1$s</string>
     <plurals name="new_conversations">
@@ -193,6 +205,8 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="beta_disclaimer">Este projeto ainda está em beta, por favor reporte os erros que você possa encontrar!</string>
     <string name="faqs">Perguntas frequentes</string>
     <string name="features">Funções</string>
+    <string name="issues">Rastreador de problemas</string>
+    <string name="issues_summary">Também serve como roteiro de recursos</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Comunidade Pulse Beta</string>
     <string name="email">E-mail</string>
@@ -221,6 +235,13 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Nome do grupo</string>
     <string name="notification_settings">Notificações</string>
+    <string name="repeat_interval">Repetir alerta</string>
+    <string name="repeat_never">Nunca</string>
+    <string name="repeat_one_min">Cada minuto</string>
+    <string name="repeat_five_mins">Cada cinco minutos</string>
+    <string name="repeat_ten_mins">Cada dez minutos</string>
+    <string name="repeat_half_hour">Cada meia hora</string>
+    <string name="repeat_hour">Cada hora</string>
     <string name="vibrate">Padrão de vibração</string>
     <string name="vibrate_off">Sem vibração</string>
     <string name="vibrate_default">Vibração padrão</string>
@@ -271,6 +292,17 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="advanced">Avançado</string>
     <string name="send_as_mms">Converter para MMS</string>
     <string name="send_as_mms_summary">Mensagens longas serão enviadas como MMS ao invés de SMS\'s individuais</string>
+    <string name="alert_types">Tipos de alerta</string>
+    <string name="alert_types_summary">Várias personalizações para notificações</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Assinatura</string>
+    <string name="signature_summary">Nota: As assinaturas de envio NÃO serão exibidas na lista de mensagens do Pulse. As assinaturas só serão mostradas ao destinatário da mensagem.</string>
+    <string name="cleanup_old_messages">Limpar mensagens velhas</string>
+    <string name="delayed_sending">Envio atrasado</string>
+    <string name="quick_compose">Composição rápida</string>
+    <string name="quick_compose_summary">Notivicação sempre ativa para lhe dar o acesso mais rápido para a composição de uma nova mensagem.</string>
+    <string name="secure_private_conversations">Conversas privadas seguras</string>
+    <string name="secure_private_conversations_summary">Requisitar um PIN para desbloquear conversas privadas.</string>
     <!-- Theming Options -->
     <string name="day_night">Padrão (Dia/Noite)</string>
     <string name="always_light">Sempre claro</string>
@@ -321,6 +353,7 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="conversation_with">Conversa com %1$s</string>
     <string name="send">Enviar</string>
     <!-- Other -->
+    <string name="dashclock_description">Informação de SMS/MMS não lidos</string>
     <string name="default_text">Padrão</string>
     <string name="did_you_know">Você sabia?</string>
     <string name="use_from_anywhere">Pulse pode ser usado em qualquer dispositivo conectado a internet - Tente hoje!</string>
@@ -330,6 +363,22 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="renew">Renovar</string>
     <string name="no">Não</string>
     <string name="cancel">Cancelar</string>
+    <string name="hours">Horas</string>
+    <string name="minutes">Minutos</string>
+    <string name="test">Teste</string>
+    <string name="off">Desligado</string>
+    <!-- Times -->
+    <string name="five_seconds">Cinco segundos</string>
+    <string name="ten_seconds">Dez segundos</string>
+    <string name="fifteen_seconds">Quinze segundos</string>
+    <string name="thirty_seconds">Trinta segundos</string>
+    <string name="one_minute">Um minuto</string>
+    <string name="one_week">Uma semana</string>
+    <string name="two_weeks">Duas semanas</string>
+    <string name="one_month">Um mês</string>
+    <string name="three_months">Três meses</string>
+    <string name="six_months">Seis meses</string>
+    <string name="one_year">Um ano</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Nenhuma assinatura encontrada!</string>
     <string name="cancelled_subscription_error">Parece que você cancelou sua assinatura. Se você não assinar novamente dentro do tempo, o app automaticamente fará um logoff na conta em 2 dias. Se isso for um erro por favor contate-me por e-mail.</string>

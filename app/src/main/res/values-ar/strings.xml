@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">نبض</string>
+    <string name="app_title">نبض</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">رسالة جديده</string>
+    <string name="shortcut_compose_long">بدأ محادثه جديده</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">قائمة المحادثاث</string>
+    <string name="menu_archived_conversations">المحادثات المحفوظة</string>
+    <string name="menu_schedule">الرسائل المجدوله</string>
+    <string name="menu_mute_contacts">القائمة السوداء</string>
+    <string name="menu_invite">دعوة الأصدقاء</string>
+    <string name="menu_feature_settings">خيارات متقدمه</string>
+    <string name="menu_settings">الاعدادات العامة</string>
+    <string name="menu_account">حسابي</string>
+    <string name="menu_device_texting">النص من أي جهاز</string>
+    <string name="menu_help">مساعدة وتعليقات</string>
+    <string name="menu_about">حول.تعريب مرشد اليافعي</string>
+    <string name="menu_search">بحث</string>
+    <string name="menu_mobile_only">الجوال فقط</string>
+    <string name="menu_snooze">الإشعارات</string>
+    <string name="menu_call">اتصال</string>
+    <string name="menu_view_contact">عرض الاتصال</string>
+    <string name="menu_view_contacts">عرض الاتصالات</string>
+    <string name="menu_view_media">عرض وسائل الإعلام</string>
+    <string name="menu_delete_conversation">مسح المحادثة</string>
+    <string name="menu_archive_conversation">أرشيف المحادثة</string>
+    <string name="menu_move_to_inbox">الانتقال إلى البريد الوارد</string>
+    <string name="menu_conversation_information">معلومات المحادثه</string>
+    <string name="menu_conversation_blacklist">قائمة الاتصال السوداء</string>
+    <string name="menu_conversation_schedule">جدولة رساله</string>
+    <string name="menu_contact_settings">إعدادات الإتصال</string>
+    <string name="menu_group_settings">ضبط المجموعه</string>
+    <string name="menu_snooze_off">إيقاف</string>
+    <string name="menu_snooze_1">ساعه</string>
+    <string name="menu_snooze_2">ساعتين</string>
+    <string name="menu_snooze_4">اربع ساعات</string>
+    <string name="menu_snooze_8">ثمان ساعات</string>
+    <string name="menu_snooze_24">24 ساعه</string>
+    <string name="menu_snooze_72">72 ساعه</string>
+    <string name="menu_snooze_custom">اختيار الوقت</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">لا توجد رسائل</string>
+    <string name="no_messages_summary">بدء محادثة جديده.او استمتع بيومك.</string>
+    <string name="close">اغلق</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">دبّس</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">أمس</string>
+    <string name="last_week">هذا الاسبوع</string>
+    <string name="last_month">هذا الشهر</string>
+    <string name="older">الاقدم</string>
+    <string name="mark_section_as_read">حدد مقروء للكل  %1$s</string>
+    <string name="marking_section_as_read">وضع علامة مقروء على الجميع  %1$s</string>
+    <string name="undo">فك</string>
+    <string name="enter_search">بخث عن</string>
+    <!-- Search Screen -->
+    <string name="conversations">المحادثات</string>
+    <string name="messages">رسائل</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">هل تحب Pulse?</string>
+    <string name="invite_friends_sms">لقد بدأت باستخدام التطبيق الرسائل النصية الجديد،
+نعتقد انه سيعجبك,بالاضافه الى انه مجاني لذلك قم بتحميله 
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">كتابة رساله</string>
+    <string name="type_message_to">كتابة رساله إلى %1$s</string>
+    <string name="attach">أرفق</string>
+    <string name="select_sim">تحديد SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">صورة MMS</string>
+    <string name="now">الآن</string>
+    <string name="sending">إرسال…</string>
+    <string name="failed">فشل</string>
+    <string name="delivered">وصلت الرساله</string>
+    <string name="attach_image">إرفاق صورة</string>
+    <string name="capture_image">التقاط صورة</string>
+    <string name="attach_gif">إرفاق GIF</string>
+    <string name="record_video">تسجيل فيديو</string>
+    <string name="record_audio">تسجيل صوتي</string>
+    <string name="attach_location">ارفاق الموقع</string>
+    <string name="no_location_found">لا يمكن العثور على موقعك.</string>
+    <string name="camera_permission_needed">نحتاج منح إذن للكاميرا لاخذ الصور</string>
+    <string name="take_picture">إلتقاط صوره</string>
+    <string name="flip_picture">كاميرا فليب</string>
+    <string name="fullscreen">شاشه كامله</string>
+    <string name="attached_image">صوره مرفقه</string>
+    <string name="remove_image">إزالة الصورة المرفقه</string>
+    <string name="edit_image">تعديل الصورة المرفقة</string>
+    <string name="permission_needed_for_action">نحتاج بعض الاذونات لهذا الإجراء</string>
+    <string name="request_permission">طلب إذن</string>
+    <string name="no_messages_with_contact">لا توجد لديك أية رسائل في هذه المحادثة بعد،
+البدء في الامر الان!</string>
+    <string name="save">حفظ</string>
+    <string name="share">مشاركه</string>
+    <string name="share_content">مشاركة المحتوى ...</string>
+    <string name="saved">حفظ إلى مجلد / تنزيل!</string>
+    <string name="failed_to_save">فشل الحفظ</string>
+    <string name="start_recording_audio">اضغط على الزر لبدء تسجيل الصوت!</string>
+    <string name="audio_recording_error">خطأ في التسجيل :(</string>
+    <string name="message_copied_to_clipboard">نسخ إلى الحافظة</string>
+    <string name="view_details">عرض التفاصيل</string>
+    <string name="delete">حذف</string>
+    <string name="copy_message">نسخ النص</string>
+    <string name="resend">إعادة إرسال</string>
+    <string name="no_media">لا توجد وسائط في هذه المحاثه!</string>
+    <string name="error_decrypting">خطأ تشغيل فك التشفير! يرجى عرض هذه الرسالة على الهاتف الخاص بك.</string>
+    <string name="message_sending_failed">فشل إرسال الرسالة!</string>
+    <string name="preparing_video">إعداد الفيديو &#8230;</string>
+    <string name="delete_message">حذف هذه الرسالة؟</string>
+    <string name="forward_message">تحويل الرسالة</string>
+    <string name="share_message">مشاركة الرساله</string>
+    <string name="copy_message_text">نسخ نص الرساله</string>
+    <string name="open_link_to_browser">فتح الرابط في المتصفح</string>
+    <string name="open_link_internal">فتح الرابط داخلياً</string>
+    <string name="copy_link">نسخ الرابط</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">كتابة رسالة جديده</string>
+    <string name="send_message">إرسال رساله</string>
+    <string name="enter_contact_name">إدخل إسم جهة الإتصال</string>
+    <string name="error_processing_vcard">خطأ في معالجة صيغة البطاقة</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">التطبيق لا يمكن أن يعمل دون هذه الاذونات
+اقبل الاذونات قبل أن تتمكن من مواصلة اللعب</string>
+    <string name="loading_messages">تحسين ...</string>
+    <string name="loading_messages_summary">جاري العمل في الحصول على الرسائل الخاصة بك.
+لن يستغرق هذا وقتاً طويلاً.</string>
+    <string name="navigation_drawer_conversation_hint">يتم تخزين المزيد من الخيارات لهذه المحادثة في لائحة التنقل.</string>
+    <string name="onboarding_title_1">إعادة الصور/الرسائل</string>
+    <string name="onboarding_title_2">متوفر في كل مكان</string>
+    <string name="onboarding_title_3">تخصيص متقدم</string>
+    <string name="onboarding_content_1">"مخططات مرنه مع تصميم قوي وتسلسل سلس
+برنامج نبض يضع محادثاتك في المقدمة والوسط"</string>
+    <string name="onboarding_content_2">مشاهدة الرسالة من جهازك اللوحي أو جهاز الكمبيوتر او اجهزة اتصال أخرى.</string>
+    <string name="onboarding_content_3">تخصيص اخطارات عن اي جهة إتصال تدردش معها</string>
+    <string name="message_anywhere_onboarding_title_1">رسالة في أي مكان</string>
+    <string name="message_anywhere_onboarding_title_2">الاشتراك أو دفعة واحدة</string>
+    <string name="message_anywhere_onboarding_title_3">تجربة طويله اسبوع</string>
+    <string name="message_anywhere_onboarding_content_1">دمج مع اي جهاز, جهازالكمبيوتر والجهاز اللوحي,ومشاهدة التلفزيون والانترنت وتطبيقات جوجل كروم وفايرفوكس
+ ودعم الرسائل القصيره ورسائل الوسائط المتعدده من اي مكان</string>
+    <string name="message_anywhere_onboarding_content_2">خيارات منخفضه عند ما تحتاج اليها  10.99 $ مدى الحياه, او  5،99 $ لمدة سنه,او 1.99 $ لمدة ثلاثه أشهر
+او  0.99 $ في الشهر,وهذا المبلغ اقل من كوب قهوه</string>
+    <string name="message_anywhere_onboarding_content_3">استخدم التطبيق على هاتفك الاندرويد,او ابدا في المراسلة من جميع الاجهزة الخاصة بك مع نسخة تجريبيه لمدة أسبوع واحد</string>
+    <string name="start_trial">ابدأ\nالتجربه</string>
+    <string name="not_now">ليس\nالآن</string>
+    <string name="onboarding_done">فعّل</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">رسالة جديده من %1$s</string>
+    <string name="read">اقرا</string>
+    <string name="reply">رد</string>
+    <string name="reply_to">الرد على %1$s</string>
+    <string name="call">إتصال</string>
+    <string-array name="reply_choices">
+        <item>نعم</item>
+        <item>لا</item>
+        <item>ممكن</item>
+        <item>موافق</item>
+        <item>شكراً</item>
+    </string-array>
+    <string name="new_mms_message">رسالة وسائط جديده</string>
+    <string name="you">انت</string>
+    <string name="new_message">رسالة جديده</string>
+    <string name="received_new_message">لقد استلمت نص جديد</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">تغير</string>
+    <string name="copyright">الحقوق محفزظه © 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">عرض معلومات رخصة مفتوحة المصدر</string>
+    <string name="app_version">صفحة التطبيق</string>
+    <string name="device_id">معرّف الجهاز</string>
+    <string name="device_info">معلومات الجهاز</string>
+    <string name="website">عنوان موقع الويب</string>
+    <string name="access_messages_from_any_device">الوصول وارسال الرسائل من اي جهاز</string>
+    <string name="beta_disclaimer">هذا المشروع لا يزال في مرحلته التجريبيه
+الرجاء الابلاغ عن اية مشاكل قد تواجهك</string>
+    <string name="faqs">اسئلة متكرره</string>
+    <string name="features">الميزات</string>
+    <string name="issues">تعقب العدد</string>
+    <string name="google_plus">جوجل بلص Google+</string>
+    <string name="google_plus_summary">مجتمع نبض التجريبي</string>
+    <string name="email">الايميل</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">تويتر</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">الدعم</string>
+    <string name="pin_conversation">محادثات ملصقه</string>
+    <string name="pin_conversation_summary">حفظ هذه المحادثه على راس القائمه</string>
+    <string name="mute_conversation">محادثه صامته</string>
+    <string name="mute_conversation_summary">إخفاء الاشعارات لهذه المحادثه</string>
+    <string name="private_conversation">محادثه خاصه</string>
+    <string name="private_conversation_summary">اخفاء إخطارات محتوى المحادثه</string>
+    <string name="primary_color">اللون الاصلي</string>
+    <string name="primary_dark_color">اللون الاساسي المظلم</string>
+    <string name="accent_color">نبرة اللون</string>
+    <string name="led_color">لون مؤشر LED</string>
+    <string name="ringtone">نغمه</string>
+    <string name="group_name">إسم المجموعه</string>
+    <string name="notification_settings">الإشعارات</string>
+    <string name="repeat_interval">تكرار التنبيه</string>
+    <string name="repeat_never">ابدا</string>
+    <string name="repeat_one_min">كل دقيقه</string>
+    <string name="repeat_five_mins">كل خمس دقائق</string>
+    <string name="repeat_ten_mins">كل عشر دقائق</string>
+    <string name="repeat_half_hour">كل نصف ساعه</string>
+    <string name="repeat_hour">كل ساعه</string>
+    <string name="vibrate">نمط الاهتزاز</string>
+    <string name="vibrate_off">إيقاف الإهتزاز</string>
+    <string name="vibrate_default">اهتزاز افتراضي</string>
+    <string name="vibrate_two_long">اهتزازين طويله</string>
+    <string name="vibrate_two_short">اهتزازين قصيره</string>
+    <string name="vibrate_three_short">ثلاثه اهتزازات قصيره</string>
+    <string name="vibrate_one_short_one_long">اهتزاز قصير لمرة واحده،واهتزاز طويل لمرة واحده</string>
+    <string name="vibrate_one_long_one_short">اهتزاز طويل لمرة واحده،واهتزاز قصير لمره واحده</string>
+    <string name="sound_effects">مؤثرات صويته</string>
+    <string name="delivery_reports">تقارير التسليم</string>
+    <string name="theme_settings">تخصيص</string>
+    <string name="base_theme">الثيم الاساسي</string>
+    <string name="global_theme_color">لون الثيم</string>
+    <string name="font_size">حجم الخط</string>
+    <string name="blacklist_hint">اضف الرقم إلى القائمة السوداء</string>
+    <string name="add_blacklist">%1$s هل أنت متاكد من اضافة هذا الرقم إلى القائمة السوداء؟
+لن يتم حفظ الرسائل من هذا الرقم ولن يتم اعلامك بهذا.</string>
+    <string name="remove_blacklist">%1$s\nهل تريد حذف هذا من القائمة السوداء؟</string>
+    <string name="blacklist_need_number">تحتاج إلى إدخال رقم هاتف الى القائمة السوداء</string>
+    <string name="no_blacklists">ليس هناك ارقام في القائمة السوداء</string>
+    <string name="no_blacklists_summary">يمكنك الاضافة من الزر الزائد ادناه</string>
+    <string name="add">إضافه</string>
+    <string name="privacy_policy">سياسة الخصوصيه</string>
+    <string name="privacy_policy_summary">عرض سياسة الخصوصية على شبكة الإنترنت</string>
+    <string name="account_expiring">حساب منتهي الصلاحية!</string>
+    <string name="signout_time">تسجيل الخروج على %1$s</string>
+    <string name="lifetime_subscriber">إشتراك مدى الحياه</string>
+    <string name="trial_period">فتره تجريبيه</string>
+    <string name="setup_my_account">إعداد الحساب</string>
+    <string name="setup_my_account_summary">الاشتراك أو الدخول إلى حسابك للبدء في استخدام 
+المزيد من الميزات مثل الرسائل من جهازك اللوحي أو الكمبيوتر</string>
+    <string name="preparing_new_account">إعدادحساب &#8230;</string>
+    <string name="delete_account">حذف الحساب</string>
+    <string name="delete_account_summary">إزالة الحساب من هذا الجهاز والاجهزة الاخرى الخاصة بك
+هذا غير قابل للعكس</string>
+    <string name="delete_account_confirmation">هل أنت متاكد من حذف حسابك وكل شي معه؟
+يمكنك الاإشتراك مرةً أخرى في أي وقت</string>
+    <string name="change_subscription">تغير الاإشتراك</string>
+    <string name="cancel_on_the_play_store">إلغاء وعرض اشتراكك في متجر Play</string>
+    <string name="resync_account">حساب المزامنة</string>
+    <string name="resync_account_confirmation">سيؤدي ذلك إلى حذف كل الرسائل من هذا الجهاز
+والبداية مع نسخة نظيفه من الموجود حالياً على الجهاز الاساسي الخاص بك.هل انت متاكد من هذا؟</string>
+    <string name="no_apps_found">لم نجد تطبيقات للتعامل مع هذا العمل</string>
+    <string name="you_denied_permission">تم رفض منح هذه التصاريح</string>
+    <string name="supported_platforms">المنصات المدعومه</string>
+    <string name="supported_platforms_summary">جميع الأماكن التي تمكّنك من الوصول إلى التطبيق</string>
+    <string name="font_size_small">صغير</string>
+    <string name="font_size_normal">عادي</string>
+    <string name="font_size_large">كبير</string>
+    <string name="font_size_extra_large">كبير جدا</string>
+    <string name="advanced">متقدم</string>
+    <string name="send_as_mms">تحويل إلى MMS</string>
+    <string name="send_as_mms_summary">سيتم إرسال رسالة MMS طويل بدلاً من رسالة SMS قصيره</string>
+    <string name="alert_types">أنواع التنبيه</string>
+    <string name="alert_types_summary">الخيارات المختلفه للاخطارات.</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">التوقيع</string>
+    <string name="signature_summary">ملاحظه.لن يتم عرض التواقيع في قائمة الرسائل.سيتم عرض التوقيعات فقط إلى المتلقي للرسالة.</string>
+    <string name="cleanup_old_messages">تنظيف الرسائل القديمه</string>
+    <string name="delayed_sending">تاخير الإرسال.</string>
+    <string name="quick_compose">تأليف سريع</string>
+    <string name="quick_compose_summary">إخطار. دائما نشط  لتعطيك أسرع الوصول إلى إنشاء رسالة جديدة.</string>
+    <string name="secure_private_conversations">تأمين المحادثات الخاصة</string>
+    <string name="secure_private_conversations_summary">لفتح حوارات خاصه تتطلب pin</string>
+    <!-- Theming Options -->
+    <string name="day_night">الافتراضي (يوم / ليلة)</string>
+    <string name="always_light">ضوء مستمر</string>
+    <string name="always_dark">مظلم دائماً</string>
+    <string name="always_black">دائماً اسود</string>
+    <string name="set_color_per_conversation">تعين لون للمحادثه</string>
+    <string name="material_color_red">أحمر</string>
+    <string name="material_color_pink">وردي</string>
+    <string name="material_color_purple">ارجواني</string>
+    <string name="material_color_deep_purple">ارجواني غامق</string>
+    <string name="material_color_indigo">اللون النيلي</string>
+    <string name="material_color_blue">أزرق</string>
+    <string name="material_color_light_blue">الضوء الأزرق</string>
+    <string name="material_color_cyan">ازرق سماوي</string>
+    <string name="material_color_teal">نهري</string>
+    <string name="material_color_green">أخضر</string>
+    <string name="material_color_light_green">أخضر فاتح</string>
+    <string name="material_color_lime">كلس</string>
+    <string name="material_color_yellow">أصفر</string>
+    <string name="material_color_amber">كهرمان</string>
+    <string name="material_color_orange">برتقالي</string>
+    <string name="material_color_deep_orange">برتقالي عميق</string>
+    <string name="material_color_brown">بني</string>
+    <string name="material_color_gray">رمادي</string>
+    <string name="material_color_blue_gray">أزرق رمادي</string>
+    <string name="material_color_black">أسود</string>
+    <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">هل انت متاكد انك تريد حذف هذه الرسالة إلى %1$s?</string>
+    <string name="scheduled_message_hint">إرسال الرساله ...</string>
+    <string name="scheduled_to_hint">جاري الإرسال الى...</string>
+    <string name="scheduled_message_sent">ارسلت الرساله بنجاح</string>
+    <string name="no_scheduled_messages">لا توجد رسائل مجدوله</string>
+    <string name="no_scheduled_messages_summary">يمكنك انشاء رسالة جديده بالضغط على الز الزائد
+ادناه!</string>
+    <string name="scheduled_message_in_future">لابد من وجود وقت كافي</string>
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">تشفير وتحميل</string>
+    <string name="encrypting_and_uploading_media">تشفير وضغط الرسالة الاعلاميه</string>
+    <string name="encrypting_and_uploading_count">تشفير وضغط الرسائل الإعلاميه...
+(%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">تحميل وفك التشفير...</string>
+    <string name="decrypting_and_downloading_media">تحميل وفك تشفير وسائل الإعلام ...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">رسالة صوتية</string>
+    <string name="video_message">رسالة فيديو</string>
+    <string name="picture_message">رساله مصورة</string>
+    <string name="gif_message">GIF رسالة</string>
+    <string name="contact_card">بطاقة الاتصال</string>
+    <string name="conversation_with">المحادثه مع %1$s</string>
+    <string name="send">إرسال</string>
+    <!-- Other -->
+    <string name="dashclock_description">معلومات SMS/MMS الغير المقروءة</string>
+    <string name="default_text">افتراضي</string>
+    <string name="did_you_know">هل كنت تعلم؟</string>
+    <string name="use_from_anywhere">يمكن استخدام برنامج Pulse من أي جهاز متصل بالإنترنت -
+جربه اليوم.</string>
+    <string name="use_from_anywhere_short">يمكن استخدام برنامج نبض Pulse على اي جهاز من الاجهزة الخاصة بك</string>
+    <string name="learn_more">تعلم أكثر</string>
+    <string name="dismiss">رفض</string>
+    <string name="renew">جدّد</string>
+    <string name="no">لا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="hours">ساعات</string>
+    <string name="minutes">دقيقه</string>
+    <string name="test">اختبار</string>
+    <string name="off">إيقاف</string>
+    <!-- Times -->
+    <string name="five_seconds">خمس ثوان</string>
+    <string name="ten_seconds">عشر ثوان</string>
+    <string name="fifteen_seconds">خمس عشر ثانيه</string>
+    <string name="thirty_seconds">ثلاثين ثانيه</string>
+    <string name="one_minute">دقيقه واحده</string>
+    <string name="one_week">اسبوع واحد</string>
+    <string name="two_weeks">اسبوعين</string>
+    <string name="one_month">شهر واحد</string>
+    <string name="three_months">ثلاثه اشهر</string>
+    <string name="six_months">سته اشهر</string>
+    <string name="one_year">سنة واحدة</string>
+    <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">لم يتم العثور على الإشتراك.</string>
+    <string name="subscription_found">تم تجديد الاشتراك - مرحباً بك مرة أخرى!</string>
+    <string name="subscription_not_found">لا يوجد اشتراك,اشتراك جديد!</string>
+    <string name="checking_for_active_subscriptions">التحقق من الاشتراكات&#8230;</string>
+    <string name="purchase_error_cancelled">قمت بإلغاءالشراء :(</string>
+    <string name="lifetime_purchase">$ 10،99 - عضوية مدى الحياة</string>
+    <string name="yearly_purchase">5.99 $ سنويا</string>
+    <string name="yearly_purchase_summary">أفضل صفقة.</string>
+    <string name="three_month_purchase">1،99 $ كل ثلاثة أشهر</string>
+    <string name="monthly_purchase">0.99 $ شهريا</string>
+    <string name="monthly_purchase_summary">فقط أريد أن أجرب؟ ليس هناك أى مشكلة.</string>
+</resources>

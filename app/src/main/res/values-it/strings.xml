@@ -19,6 +19,7 @@
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Nuovo Messaggio</string>
     <string name="shortcut_compose_long">Inizia una nuova conversazione!</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Lista conversazioni</string>
@@ -26,6 +27,7 @@
     <string name="menu_schedule">Messaggi programmati</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invita gli amici</string>
+    <string name="menu_feature_settings">Avanzate</string>
     <string name="menu_settings">Impostazioni generali</string>
     <string name="menu_account">Il mio account</string>
     <string name="menu_device_texting">Il mio Account</string>
@@ -53,6 +55,7 @@
     <string name="menu_snooze_8">8 ore</string>
     <string name="menu_snooze_24">24 ore</string>
     <string name="menu_snooze_72">72 ore</string>
+    <string name="menu_snooze_custom">Manuale</string>
     <!-- Empty Screen -->
     <string name="no_messages">Nessun messaggio</string>
     <string name="no_messages_summary">Inizia una nuova conversazione o semplicemente goditi la giornata!</string>
@@ -136,6 +139,12 @@ http://messenger.klinkerapps.com</string>
     <string name="message_sending_failed">Invio messaggio fallito!</string>
     <string name="preparing_video">Preparazione video&#8230;</string>
     <string name="delete_message">Cancellare questo messaggio?</string>
+    <string name="forward_message">Inoltra il Messaggio</string>
+    <string name="share_message">Condividi il Messaggio</string>
+    <string name="copy_message_text">Copia il testo del Messaggio</string>
+    <string name="open_link_to_browser">Apri il Link nel Browser</string>
+    <string name="open_link_internal">Apri il Link Internamente</string>
+    <string name="copy_link">Copia il Link</string>
     <!-- Compose Screen -->
     <string name="compose_message">Componi un nuovo messaggio</string>
     <string name="send_message">Invia messaggio</string>
@@ -163,6 +172,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="message_anywhere_onboarding_content_3">Usa l\'app Android, GRATIS (per sempre!) sul tuo telefono, o inizia a messaggiare da tutti i tuoi dispositivi con un periodo di prova di una settimana.</string>
     <string name="start_trial">Inizia\nTrial</string>
     <string name="not_now">Non\nOra</string>
+    <string name="onboarding_done">Fatto</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nuovo messaggio da  %1$s</string>
     <plurals name="new_conversations">
@@ -200,6 +210,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="beta_disclaimer">L\'app è ancora in beta, se trovi bug riportali per favore!</string>
     <string name="faqs">Domande Frequenti</string>
     <string name="features">Novità</string>
+    <string name="issues">Issue Tracker</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse Beta Community</string>
     <string name="email">Email</string>
@@ -228,6 +239,13 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="ringtone">Suoneria</string>
     <string name="group_name">Nome Gruppo</string>
     <string name="notification_settings">Notifiche</string>
+    <string name="repeat_interval">Ripeti Avviso</string>
+    <string name="repeat_never">Mai</string>
+    <string name="repeat_one_min">Ogni minuto</string>
+    <string name="repeat_five_mins">Ogni 5 minuti</string>
+    <string name="repeat_ten_mins">Ogni 10 minuti</string>
+    <string name="repeat_half_hour">Ogni 30 minuti</string>
+    <string name="repeat_hour">Ogni ora</string>
     <string name="vibrate">Tipo di Vibrazione</string>
     <string name="vibrate_off">Nessuna vibrazione</string>
     <string name="vibrate_default">Vibrazione di default</string>
@@ -279,6 +297,17 @@ con ciò che è sul dispositivo principale.</string>
     <string name="advanced">Avanzato</string>
     <string name="send_as_mms">Converti in MMS</string>
     <string name="send_as_mms_summary">I messaggi lunghi saranno inviati come MMS invece che singoli SMS</string>
+    <string name="alert_types">Tipo di Avviso</string>
+    <string name="alert_types_summary">Personalizzazioni per le notifiche</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Firma</string>
+    <string name="signature_summary">NOTA: le firme verranno mostrate solo al destinatario del messaggio e non nella lista conversazioni.</string>
+    <string name="cleanup_old_messages">Elimina i vecchi messaggi</string>
+    <string name="delayed_sending">Invio ritardato</string>
+    <string name="quick_compose">Composizione Veloce</string>
+    <string name="quick_compose_summary">Notifiche sempre attive per un accesso veloce al messaggio</string>
+    <string name="secure_private_conversations">Conversazioni Private</string>
+    <string name="secure_private_conversations_summary">E\' neccessario un PIN per sbloccare le conversazioni private.</string>
     <!-- Theming Options -->
     <string name="day_night">Default (Giorno/Notte)</string>
     <string name="always_light">Sempre Chiaro</string>
@@ -328,7 +357,9 @@ a %1$s?</string>
     <string name="gif_message">Messaggio GIF</string>
     <string name="contact_card">Scheda Contatto</string>
     <string name="conversation_with">Conversazione con %1$s</string>
+    <string name="send">Invia</string>
     <!-- Other -->
+    <string name="dashclock_description">Info sugli SMS/MMS non letti</string>
     <string name="default_text">Default</string>
     <string name="did_you_know">Lo sai?</string>
     <string name="use_from_anywhere">Pulse può essere usato da ogni dispositivo connesso a internet -
@@ -339,6 +370,22 @@ provalo oggi!</string>
     <string name="renew">Rinnova</string>
     <string name="no">No</string>
     <string name="cancel">Annulla</string>
+    <string name="hours">Ore</string>
+    <string name="minutes">Minuti</string>
+    <string name="test">Test</string>
+    <string name="off">Off</string>
+    <!-- Times -->
+    <string name="five_seconds">5 secondi</string>
+    <string name="ten_seconds">10 secondi</string>
+    <string name="fifteen_seconds">15 secondi</string>
+    <string name="thirty_seconds">30 secondi</string>
+    <string name="one_minute">1 minuto</string>
+    <string name="one_week">1 settimana</string>
+    <string name="two_weeks">2 settimane</string>
+    <string name="one_month">1 mese</string>
+    <string name="three_months">3 mesi</string>
+    <string name="six_months">6 mesi</string>
+    <string name="one_year">1 anno</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Nessuna sottoscrizione trovata!</string>
     <string name="cancelled_subscription_error">Sembra che tu abbia cancellato la tua sottoscrizione. 
@@ -350,10 +397,12 @@ Se non fai una nuova sottoscrizione entro il termine di 2 giorni  l\'app automat
     <string name="purchase_error_bad_google_play">Uh oh, Google Play potrebbe avere problemi che ci hanno dato un cattivo risultato</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Questo acquisto non risulta nel nostro registro.</string>
     <string name="subscriptions">L\'abbonamento viene fatturato dopo la prova di sette giorni e può essere modificato / cancellato in qualsiasi momento:</string>
+    <string name="billed_immediately">Questo si fattura immediatamente.</string>
     <string name="lifetime_purchase">$10.99 - Sottoscrizione a Vita</string>
     <string name="lifetime_purchase_summary">Paga una volta e mai più!</string>
     <string name="yearly_purchase">$5.99 ogni anno</string>
     <string name="yearly_purchase_summary">Il miglior affare.</string>
+    <string name="three_month_purchase">$1.99 ogni tre mesi</string>
     <string name="three_month_purchase_summary">Non si può sbagliare in questo modo.</string>
     <string name="monthly_purchase">$0.99 ogni mese</string>
     <string name="monthly_purchase_summary">Vuoi solo provarla? Nessun problema.</string>

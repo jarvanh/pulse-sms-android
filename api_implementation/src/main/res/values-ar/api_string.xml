@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">تسجيل الدخول</string>
+    <string name="api_signup">تسجيل</string>
+    <string name="api_signup_failed">لا يمكن التسجيل على هذا الجهاز,يجب عليك التسجيل على جهاز يحتوي على رقم الهاتف لاول مره.</string>
+    <string name="api_skip_signup">إذا كنت ترغب فقط في استخدام التطبيق على هذا الجهاز وليس على الشبكه او الجهاز اللوحي او جهاز الكمبيوتر فيمكنك تخطي هذه الخطوه.</string>
+    <string name="api_skip">تخطي</string>
+    <string name="api_email">عنوان البريد الإلكتروني</string>
+    <string name="api_password">كلمة المرور</string>
+    <string name="api_forgot_password">هل نست كلمة المرور؟</string>
+    <string name="api_password_confirmation">تأكيد كلمة المرور</string>
+    <string name="api_name">اسم</string>
+    <string name="api_phone_number">رقم الهاتف</string>
+    <string name="api_connecting">الاتصال بالخادم…</string>
+    <string name="api_error">حدث خطأ أثناء العملية</string>
+    <string name="api_device_error">حدث خطأ اثناء اضافة هذا الجهاز.إعادة المحاولة مرةً اخرى.</string>
+    <string name="api_yes">نعم</string>
+    <string name="api_no">لا</string>
+    <string name="api_no_email">لا يوجد ادخال بريد الكتروني</string>
+    <string name="api_email_invalid">عنوان البريد الإلكتروني غير صالح</string>
+    <string name="api_no_password">لا توجد كلمة مرور</string>
+    <string name="api_no_password_confirmation">لا يوجد ادخال لكلمة المرور</string>
+    <string name="api_password_mismatch">كلمات المرور غير متطابقه</string>
+    <string name="api_no_name">لا يوجد ادخال للإسم</string>
+    <string name="api_no_phone_number">رقم الهاتف الذي ادخلته غير موجود</string>
+    <string name="api_login_error">حدث خطأ أثناء تسجيل الدخول، البريد الإلكتروني غير صحيح أو كلمة المرور؟</string>
+    <string name="api_activate_summary">الدخول للحصول على كل رسائلك على هذا الجهاز!</string>
+    <string name="api_activate_1_1">في المقدمه</string>
+    <string name="api_activate_1_3">على جهاز محمول أو جهاز الكمبيوتر.</string>
+    <string name="api_activate_2_1">على الموقع</string>
+    <string name="api_activate_2_2">أدخل رمز التحقق</string>
+    <string name="api_activate_2_3">متابعه إلى حسابك</string>
+    <string name="api_confirm_password">الرجاء تأكيد كلمة المرور:</string>
+    <string name="api_wrong_password">فشل التأكيد. هل كلمة السر الخاصة بك صحيحه؟</string>
+    <string name="api_email_taken">حدث خطأ في تسجيل الدخول!هل فعلاً لديك حساب مع هذا البريد الالكتروني؟</string>
+    <string name="api_confirm">تاكيد</string>
+    <string name="api_continue">استمرار</string>
+</resources>
