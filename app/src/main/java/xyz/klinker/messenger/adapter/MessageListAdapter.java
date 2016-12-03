@@ -22,11 +22,9 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -47,13 +45,11 @@ import java.util.Map;
 import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
-import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -124,24 +120,25 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     Settings.get(parent.getContext()).mediumFont + 2));
         }
 
+        boolean rounder = Settings.get(parent.getContext()).rounderBubbles;
         if (viewType == Message.TYPE_RECEIVED) {
-            layoutId = R.layout.message_received;
+            layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;
         } else {
             color = -1;
 
             if (viewType == Message.TYPE_SENDING) {
-                layoutId = R.layout.message_sending;
+                layoutId = rounder ? R.layout.message_sending_round : R.layout.message_sending;
             } else if (viewType == Message.TYPE_ERROR) {
-                layoutId = R.layout.message_error;
+                layoutId = rounder ? R.layout.message_error_round : R.layout.message_error;
             } else if (viewType == Message.TYPE_DELIVERED) {
-                layoutId = R.layout.message_delivered;
+                layoutId = rounder ? R.layout.message_delivered_round : R.layout.message_delivered;
             } else if (viewType == Message.TYPE_INFO) {
                 layoutId = R.layout.message_info;
             } else if (viewType == Message.TYPE_MEDIA) {
                 layoutId = R.layout.message_media;
             } else {
-                layoutId = R.layout.message_sent;
+                layoutId = rounder ? R.layout.message_sent_round : R.layout.message_sent;
             }
         }
 

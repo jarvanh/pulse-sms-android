@@ -39,6 +39,11 @@
             android:entryValues="@array/font_size_values"
             android:defaultValue="normal" />
 
+        <SwitchPreference
+            android:key="@string/pref_rounder_bubbles"
+            android:title="@string/rounder_bubbles"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/notification_settings">
