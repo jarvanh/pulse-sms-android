@@ -129,7 +129,7 @@ http://messenger.klinkerapps.com</string>
     <string name="failed_to_save">Salvataggio fallito</string>
     <string name="start_recording_audio">Premi il tasto per iniziare la registrazione audio!</string>
     <string name="audio_recording_error">Errore di registrazione :(</string>
-    <string name="message_copied_to_clipboard">Messaggio copiato negli appunti</string>
+    <string name="message_copied_to_clipboard">Copiato negli appunti</string>
     <string name="view_details">Guarda dettagli</string>
     <string name="delete">Elimina</string>
     <string name="copy_message">Copia Testo</string>
@@ -211,6 +211,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="faqs">Domande Frequenti</string>
     <string name="features">Novità</string>
     <string name="issues">Issue Tracker</string>
+    <string name="issues_summary">Serve anche come futura roadmap</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse Beta Community</string>
     <string name="email">Email</string>

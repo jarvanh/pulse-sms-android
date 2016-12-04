@@ -17,8 +17,9 @@
 <resources>
     <string name="api_login">تسجيل الدخول</string>
     <string name="api_signup">تسجيل</string>
-    <string name="api_signup_failed">لا يمكن التسجيل على هذا الجهاز,يجب عليك التسجيل على جهاز يحتوي على رقم الهاتف لاول مره.</string>
-    <string name="api_skip_signup">إذا كنت ترغب فقط في استخدام التطبيق على هذا الجهاز وليس على الشبكه او الجهاز اللوحي او جهاز الكمبيوتر فيمكنك تخطي هذه الخطوه.</string>
+    <string name="api_signup_failed">لا يمكن التسجيل عبر هذا الجهاز،
+ ولكن يجب عليك الاشتراك عن طريق الجهاز الأساسي المسجل عليه رقم الهاتف أولا.</string>
+    <string name="api_skip_signup">أو، في حالة رغبتك في استخدام التطبيق على هذا الجهاز فقط ولا تريد استخدام خصائص الشبكة مثل إرسال الرسائل النصية من الكمبيوتر اللوحي أو جهاز الكمبيوتر، يمكنك تخطي هذه الخطوة:</string>
     <string name="api_skip">تخطي</string>
     <string name="api_email">عنوان البريد الإلكتروني</string>
     <string name="api_password">كلمة المرور</string>
@@ -29,9 +30,13 @@
     <string name="api_connecting">الاتصال بالخادم…</string>
     <string name="api_error">حدث خطأ أثناء العملية</string>
     <string name="api_device_error">حدث خطأ اثناء اضافة هذا الجهاز.إعادة المحاولة مرةً اخرى.</string>
+    <string name="api_add_second_primary_device">"يبدو أن لديك جهاز أساسي لتشغيل هذا الحساب عليه،
+(%1$s) مع العلم إنه لا يسمح سوى بجهاز أساسي واحد لكل حساب..
+لذا هل تريد إلغاء الجهاز الأساسي المسجل مسبقًا وتقوم بتسجيل هذا الجهاز كجهاز أساسي؟
+"</string>
     <string name="api_yes">نعم</string>
     <string name="api_no">لا</string>
-    <string name="api_no_email">لا يوجد ادخال بريد الكتروني</string>
+    <string name="api_no_email">لم يتم إدخال عنوان البريد الإلكتروني</string>
     <string name="api_email_invalid">عنوان البريد الإلكتروني غير صالح</string>
     <string name="api_no_password">لا توجد كلمة مرور</string>
     <string name="api_no_password_confirmation">لا يوجد ادخال لكلمة المرور</string>
@@ -41,13 +46,14 @@
     <string name="api_login_error">حدث خطأ أثناء تسجيل الدخول، البريد الإلكتروني غير صحيح أو كلمة المرور؟</string>
     <string name="api_activate_summary">الدخول للحصول على كل رسائلك على هذا الجهاز!</string>
     <string name="api_activate_1_1">في المقدمه</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">على جهاز محمول أو جهاز الكمبيوتر.</string>
     <string name="api_activate_2_1">على الموقع</string>
     <string name="api_activate_2_2">أدخل رمز التحقق</string>
     <string name="api_activate_2_3">متابعه إلى حسابك</string>
     <string name="api_confirm_password">الرجاء تأكيد كلمة المرور:</string>
     <string name="api_wrong_password">فشل التأكيد. هل كلمة السر الخاصة بك صحيحه؟</string>
-    <string name="api_email_taken">حدث خطأ في تسجيل الدخول!هل فعلاً لديك حساب مع هذا البريد الالكتروني؟</string>
+    <string name="api_email_taken">حدث خطأ أثناء تسجيل الدخول، هل لديك بالفعل حساب بهذا البريد الإلكتروني؟</string>
     <string name="api_confirm">تاكيد</string>
     <string name="api_continue">استمرار</string>
 </resources>

@@ -27,6 +27,7 @@
     <string name="menu_schedule">Schemalagda meddelanden</string>
     <string name="menu_mute_contacts">Blockerade</string>
     <string name="menu_invite">Bjud in vänner</string>
+    <string name="menu_feature_settings">Avancerade funktioner</string>
     <string name="menu_settings">Globala Inställningar</string>
     <string name="menu_account">Mitt konto</string>
     <string name="menu_device_texting">Skriv från valfri enhet</string>
@@ -54,6 +55,7 @@
     <string name="menu_snooze_8">8 timmar</string>
     <string name="menu_snooze_24">24 timmar</string>
     <string name="menu_snooze_72">72 timmar</string>
+    <string name="menu_snooze_custom">Välj en tid</string>
     <!-- Empty Screen -->
     <string name="no_messages">Inga meddelanden</string>
     <string name="no_messages_summary">Starta en ny konversation eller njut bara av dagen!</string>

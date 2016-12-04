@@ -28,11 +28,11 @@
     <string name="menu_mute_contacts">Чорний список</string>
     <string name="menu_invite">Запросити друзів</string>
     <string name="menu_feature_settings">Додаткові можливості</string>
-    <string name="menu_settings">Загальні налаштування</string>
+    <string name="menu_settings">Налаштування</string>
     <string name="menu_account">Мій обліковий запис</string>
-    <string name="menu_device_texting">Текст з будь-якого пристрою</string>
-    <string name="menu_help">Допомога та зворотний зв\'язок</string>
-    <string name="menu_about">Про</string>
+    <string name="menu_device_texting">Пишіть з будь-якого пристрою</string>
+    <string name="menu_help">Допомога та відгуки</string>
+    <string name="menu_about">Про програму</string>
     <string name="menu_search">Пошук</string>
     <string name="menu_mobile_only">Лише мобільний</string>
     <string name="menu_snooze">Затримки сигналу сповіщень</string>
@@ -43,8 +43,8 @@
     <string name="menu_delete_conversation">Видалити розмову</string>
     <string name="menu_archive_conversation">Заархівувати розмову</string>
     <string name="menu_move_to_inbox">Перемістити в папку Вхідні</string>
-    <string name="menu_conversation_information">інформація про розмову</string>
-    <string name="menu_conversation_blacklist">"Контакти в чорному списку "</string>
+    <string name="menu_conversation_information">Інформація про розмову</string>
+    <string name="menu_conversation_blacklist">"Додати в чорний список "</string>
     <string name="menu_conversation_schedule">Запланувати повідомлення</string>
     <string name="menu_contact_settings">Налаштування контакту</string>
     <string name="menu_group_settings">Налаштування групи</string>
@@ -94,19 +94,18 @@
     <string name="messages">Повідомлення</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Подобається Pulse?</string>
-    <string name="invite_friends_summary">Ми вже полюбили Pulse і з нетерпінням чекаємо інших!! Ми намагаємося надати його якнайбільшій кількості користувачів і продовжуємо вдосконалювати цей продукт постійно і робити кращим, ніж він є.  
-Запросивши своїх друзів, щоб спробувати, ви допомагаєте цим! \ П \ n Виберіть нижче, друзів, яким Ви хочете відправити цю програму і надішліть їм SMS з коротким описом і 
-посиланням для завантаження!</string>
-    <string name="invite_friends_sms">Я використовую новий додаток для текстових повідомлень, і я думаю, що 
+    <string name="invite_friends_summary">Ми вже полюбили Pulse і з нетерпінням чекаємо інших! Ми намагаємося надати його якнайбільшій кількості користувачів і продовжуємо постійно вдосконалювати цей продукт. Запросивши своїх друзів спробувати Ви допоможете нам! 
+Виберіть нижче, друзів, яким Ви хочете відправити цю програму, і надішліть їм SMS з коротким описом і посиланням для завантаження!</string>
+    <string name="invite_friends_sms">Я використовую новий додаток для текстових повідомлень і я думаю, що 
 він вам теж сподобається! Плюс це безкоштовно, так що можете також його завантажити: 
 http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
-    <string name="type_message">Тип повідомлення</string>
-    <string name="type_message_to">Тип повідомлення для %1$s</string>
+    <string name="type_message">Введіть повідомлення</string>
+    <string name="type_message_to">Введіть повідомлення для %1$s</string>
     <string name="attach">Прикріпити</string>
     <string name="select_sim">Вибір SIM-карти</string>
     <string name="message_from">%1$s</string>
-    <string name="message_from_bullet">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">MMS зображення</string>
     <string name="now">Зараз</string>
     <string name="sending">Надсилання ...</string>
@@ -195,7 +194,7 @@ Pulse ставить ваші розмови на попередній план.
         <item quantity="few">%1$d нових повідомлень</item>
         <item quantity="many">%1$d нових повідомлень</item>
     </plurals>
-    <string name="read">Читати</string>
+    <string name="read">Прочитано</string>
     <string name="reply">Відповісти</string>
     <string name="reply_to">Відповісти %1$s</string>
     <string name="call">Виклик</string>
@@ -222,7 +221,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="beta_disclaimer">Цей проект все ще знаходиться в бета - версії, будь ласка, повідомте про проблеми, які ви можете знайти!</string>
     <string name="faqs">Питання, що часто задаються</string>
     <string name="features">Особливості</string>
-    <string name="issues">управління інцидентами</string>
+    <string name="issues">Вирішення проблем</string>
     <string name="issues_summary">Він також служить в якості довідника з можливостей</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse бета-спільноти</string>
@@ -249,11 +248,11 @@ Pulse ставить ваші розмови на попередній план.
     <string name="mute_conversation_summary">Приховує сповіщення для цієї розмови</string>
     <string name="private_conversation">Приватна розмова</string>
     <string name="private_conversation_summary">Приховати вміст розмови в сповіщеннях</string>
-    <string name="primary_color">основний колір</string>
+    <string name="primary_color">Основний колір</string>
     <string name="primary_dark_color">Основний колір Темний</string>
     <string name="accent_color">Колір акценту</string>
-    <string name="led_color">колір світлодіода</string>
-    <string name="ringtone">мелодія</string>
+    <string name="led_color">Колір світлодіода</string>
+    <string name="ringtone">Звук сповіщення</string>
     <string name="group_name">Назва групи</string>
     <string name="notification_settings">Сповіщення</string>
     <string name="repeat_interval">Повторити оповіщення</string>
@@ -282,7 +281,7 @@ Pulse ставить ваші розмови на попередній план.
 зберігатися коли вони прийдуть від контактів з цього переліку і Ви про них не будете сповіщені!</string>
     <string name="remove_blacklist">%1$s Ви хочете видалити цей чорний список?</string>
     <string name="blacklist_need_number">Вам необхідно ввести номер телефону в чорний список!</string>
-    <string name="no_blacklists">Немає чорних списків</string>
+    <string name="no_blacklists">Немає списків</string>
     <string name="no_blacklists_summary">Ви можете додати один за допомогою кнопки плюс нижче!</string>
     <string name="add">Додати</string>
     <string name="privacy_policy">Політика конфіденційності</string>
@@ -297,7 +296,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="delete_account">Видалити обліковий запис</string>
     <string name="delete_account_summary">Видаляє обліковий запис з цього пристрою, з Ваших інших авторизованих пристроїв і з серверу. Це незворотній процес!</string>
     <string name="delete_account_confirmation">Ви впевнені, що хочете видалити свій обліковий запис і всю інформацію пов\'язану з ним? Ви завжди можете зареєструватися ще раз пізніше!</string>
-    <string name="change_subscription">зміна підписки</string>
+    <string name="change_subscription">Зміна підписки</string>
     <string name="cancel_on_the_play_store">Скасувати і переглянути підписку на Play Store,</string>
     <string name="resync_account">Повторно синхронізувати обліковий запис</string>
     <string name="resync_account_summary">Відсутні повідомлення? Використайте цю 
@@ -310,10 +309,10 @@ Pulse ставить ваші розмови на попередній план.
     <string name="supported_platforms">Підтримувані платформи</string>
     <string name="supported_platforms_summary">Всі офіційні місця, через які Ви можете отримати доступ до додатка</string>
     <string name="font_size_small">Малий</string>
-    <string name="font_size_normal">нормальний</string>
-    <string name="font_size_large">великий</string>
+    <string name="font_size_normal">Нормальний</string>
+    <string name="font_size_large">Великий</string>
     <string name="font_size_extra_large">Дуже великий</string>
-    <string name="advanced">Розширений</string>
+    <string name="advanced">Розширені налаштування</string>
     <string name="send_as_mms">Перетворення в MMS</string>
     <string name="send_as_mms_summary">Довгі повідомлення будуть надіслані як MMS замість окремих SMS</string>
     <string name="alert_types">Типи сповіщень</string>
@@ -323,36 +322,36 @@ Pulse ставить ваші розмови на попередній план.
     <string name="signature_summary">Примітка: надіслані підписи не будуть відображатися в списку повідомлень Pulse. Підписи будуть показані тільки одержувачу в повідомленні.</string>
     <string name="cleanup_old_messages">Очищення давніх повідомлень</string>
     <string name="delayed_sending">Затримка відправки</string>
-    <string name="quick_compose">Швидкі компонування</string>
+    <string name="quick_compose">Швидко створити</string>
     <string name="quick_compose_summary">Завжди-активні сповіщення, щоб дати Вам швидкий доступ до створення нового повідомлення.</string>
-    <string name="secure_private_conversations">Безпека приватних розмов</string>
-    <string name="secure_private_conversations_summary">Вимагається PIN-код, щоб розблокувати приватні розмови.</string>
+    <string name="secure_private_conversations">Захист приватних розмов</string>
+    <string name="secure_private_conversations_summary">Вимагається введення PIN-код для розблокування приватних розмов.</string>
     <!-- Theming Options -->
     <string name="day_night">За замовчуванням (день / ніч)</string>
-    <string name="always_light">завжди світлий</string>
-    <string name="always_dark">завжди темний</string>
-    <string name="always_black">завжди чорний</string>
-    <string name="set_color_per_conversation">Встановити колір на розмову</string>
-    <string name="material_color_red">червоний</string>
-    <string name="material_color_pink">рожевий</string>
-    <string name="material_color_purple">фіолетовий</string>
-    <string name="material_color_deep_purple">насичений фіолетовий</string>
-    <string name="material_color_indigo">індиго</string>
-    <string name="material_color_blue">синій</string>
-    <string name="material_color_light_blue">блакитний</string>
-    <string name="material_color_cyan">ціан</string>
-    <string name="material_color_teal">зеленувато-блакитний</string>
-    <string name="material_color_green">зелений</string>
-    <string name="material_color_light_green">світло-зелений</string>
-    <string name="material_color_lime">лайм</string>
-    <string name="material_color_yellow">жовтий</string>
-    <string name="material_color_amber">бурштиновий</string>
-    <string name="material_color_orange">помаранчевий</string>
-    <string name="material_color_deep_orange">насичений помаранчевий</string>
-    <string name="material_color_brown">коричневий</string>
-    <string name="material_color_gray">сірий</string>
-    <string name="material_color_blue_gray">сіро-блакитний</string>
-    <string name="material_color_black">чорний</string>
+    <string name="always_light">Завжди світла</string>
+    <string name="always_dark">Завжди темна</string>
+    <string name="always_black">Завжди чорна</string>
+    <string name="set_color_per_conversation">Встановити колір розмови</string>
+    <string name="material_color_red">Червоний</string>
+    <string name="material_color_pink">Рожевий</string>
+    <string name="material_color_purple">Фіолетовий</string>
+    <string name="material_color_deep_purple">Насичений фіолетовий</string>
+    <string name="material_color_indigo">Індиго</string>
+    <string name="material_color_blue">Синій</string>
+    <string name="material_color_light_blue">Блакитний</string>
+    <string name="material_color_cyan">Ціан</string>
+    <string name="material_color_teal">Зеленувато-блакитний</string>
+    <string name="material_color_green">Зелений</string>
+    <string name="material_color_light_green">Світло-зелений</string>
+    <string name="material_color_lime">Лайм</string>
+    <string name="material_color_yellow">Жовтий</string>
+    <string name="material_color_amber">Бурштиновий</string>
+    <string name="material_color_orange">Помаранчевий</string>
+    <string name="material_color_deep_orange">Насичений помаранчевий</string>
+    <string name="material_color_brown">Коричневий</string>
+    <string name="material_color_gray">Сірий</string>
+    <string name="material_color_blue_gray">Сіро-блакитний</string>
+    <string name="material_color_black">Чорний</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Ви впевнені, що хочете видалити заплановане надсилання повідомлення 
 для %1$s?</string>
@@ -360,8 +359,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="scheduled_to_hint">Контакт для надсилання...</string>
     <string name="scheduled_message_sent">Заплановане повідомлення успішно відправлено</string>
     <string name="no_scheduled_messages">Немає запланованих повідомлень</string>
-    <string name="no_scheduled_messages_summary">Ви можете створити новий за допомогою кнопки плюс 
-нижче!</string>
+    <string name="no_scheduled_messages_summary">Ви можете створити новий за допомогою кнопки плюс нижче!</string>
     <string name="scheduled_message_in_future">Час має бути в майбутньому!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Шифрування і завантаження ...</string>
@@ -375,11 +373,11 @@ Pulse ставить ваші розмови на попередній план.
     <string name="video_message">Відео повідомлення</string>
     <string name="picture_message">Графічні повідомлення</string>
     <string name="gif_message">Повідомлення GIF</string>
-    <string name="contact_card">картка контакту</string>
+    <string name="contact_card">Картка контакту</string>
     <string name="conversation_with">Розмова з %1$s</string>
     <string name="send">Надіслати</string>
     <!-- Other -->
-    <string name="dashclock_description">інформація про непрочитані SMS/MMS</string>
+    <string name="dashclock_description">Непрочитані SMS/MMS</string>
     <string name="default_text">За замовчуванням</string>
     <string name="did_you_know">Ви знали?</string>
     <string name="use_from_anywhere">Pulse може бути використаний з будь-якого пристрою, підключеного до Інтернету - 
@@ -389,7 +387,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="dismiss">Відхилити</string>
     <string name="renew">Відновити</string>
     <string name="no">Ні</string>
-    <string name="cancel">скасувати</string>
+    <string name="cancel">Скасувати</string>
     <string name="hours">Годин</string>
     <string name="minutes">Хвилин</string>
     <string name="test">Тест</string>
