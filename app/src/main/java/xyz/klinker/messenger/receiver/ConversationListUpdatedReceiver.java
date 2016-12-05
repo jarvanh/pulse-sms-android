@@ -83,6 +83,8 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         List<Conversation> conversations = adapter.getConversations();
         List<SectionType> sectionTypes = adapter.getSectionCounts();
 
+        boolean removeEmpty = conversations.size() == 0;
+
         if (adapterPosition == -1) {
             DataSource source = DataSource.getInstance(context);
             source.open();
@@ -169,6 +171,10 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 // add 2 here for the pinned header and today header
                 adapter.notifyItemInserted(pinnedCount + 2);
             }
+        }
+
+        if (removeEmpty) {
+            fragment.checkEmptyViewDisplay();
         }
     }
 

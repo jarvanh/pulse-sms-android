@@ -296,7 +296,7 @@ public class ConversationListFragment extends Fragment
         }, 100);
     }
 
-    private void checkEmptyViewDisplay() {
+    public void checkEmptyViewDisplay() {
         if (recyclerView.getAdapter().getItemCount() == 0 && empty.getVisibility() == View.GONE) {
             empty.setAlpha(0);
             empty.setVisibility(View.VISIBLE);

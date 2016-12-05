@@ -23,6 +23,7 @@
         <text>Option to use rounder message bubbles (Nav Drawer -> Global Settings -> Round Message Bubbles)</text>
         <text>Delayed sending option (Nav Drawer -> Advanced Features -> Delayed Sending)</text>
         <text>Alert type option to wake the screen when a message is received</text>
+        <text>Chrome notifications follow the "private" and "mute" options for a conversation</text>
     </version>
 
     <version
