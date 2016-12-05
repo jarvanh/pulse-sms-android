@@ -24,6 +24,8 @@
         <text>Delayed sending option (Nav Drawer -> Advanced Features -> Delayed Sending)</text>
         <text>Alert type option to wake the screen when a message is received</text>
         <text>Chrome notifications follow the "private" and "mute" options for a conversation</text>
+        <text>Improved UI for composing a new message on the web</text>
+        <text>Other various bug fixes</text>
     </version>
 
     <version
