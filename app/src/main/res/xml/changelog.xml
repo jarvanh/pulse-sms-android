@@ -19,7 +19,8 @@
 
     <version
         name="1.12.0"
-        description="December x, 2016">
+        description="December 6th, 2016">
+        <text>New icon thanks to Tom Wellington!</text>
         <text>Option to use rounder message bubbles (Nav Drawer -> Global Settings -> Round Message Bubbles)</text>
         <text>Delayed sending option (Nav Drawer -> Advanced Features -> Delayed Sending)</text>
         <text>Alert type option to wake the screen when a message is received</text>
