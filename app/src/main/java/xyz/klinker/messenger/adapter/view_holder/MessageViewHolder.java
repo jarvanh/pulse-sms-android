@@ -384,12 +384,14 @@ public class MessageViewHolder extends SwappingHolder {
     private void shareText(long messageId) {
         Message message = getMessage(messageId);
 
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
-        shareIntent.setType(message.mimeType);
-        itemView.getContext().startActivity(Intent.createChooser(shareIntent,
-                itemView.getContext().getResources().getText(R.string.share_content)));
+        if (message != null) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
+            shareIntent.setType(message.mimeType);
+            itemView.getContext().startActivity(Intent.createChooser(shareIntent,
+                    itemView.getContext().getResources().getText(R.string.share_content)));
+        }
     }
 
     private Message getMessage(long messageId) {
