@@ -97,7 +97,11 @@ public class SendUtils {
         }
 
         if (Account.get(context).primary) {
-            transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+            try {
+                transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+            } catch (IllegalArgumentException e) {
+                
+            }
         }
 
         return data;
