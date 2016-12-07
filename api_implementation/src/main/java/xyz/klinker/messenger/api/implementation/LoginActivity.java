@@ -198,7 +198,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("https://messenger.klinkerapps.com/forgot_password.html"));
-                startActivity(browserIntent);
+                
+                try {
+                    startActivity(browserIntent);
+                } catch(Exception e) {
+                    // no browser found
+                    Toast.makeText(view.getContext(), "No browser app found.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
