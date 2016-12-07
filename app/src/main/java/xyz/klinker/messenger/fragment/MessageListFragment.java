@@ -1485,7 +1485,7 @@ public class MessageListFragment extends Fragment implements
         if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
             attach.performClick();
             return true;
-        } else if (sendProgress.getVisibility() == View.VISIBLE) {
+        } else if (sendProgress != null && sendProgress.getVisibility() == View.VISIBLE) {
             final String message = messageEntry.getText().toString().trim();
             final List<Uri> uris = new ArrayList<>();
 
