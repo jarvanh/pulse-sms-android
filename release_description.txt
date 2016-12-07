@@ -1,1 +1,1 @@
-NEW ICON! Oh and I added some nice features like delayed sending, an option for rounder message bubbles, an option to wake the screen when a text is received, plus some web improvements and the usual batch of bug fixes.
+NEW ICON! Oh and I added some nice features like delayed sending, an option for rounder message bubbles, an option to wake the screen when a text is received, plus some web improvements and the usual batch of bug fixes!
