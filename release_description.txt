@@ -1,1 +1,1 @@
-This update comes jam packed with media improvements. View web and YouTube previews for received messages directly in the message list and experience the web like never before with our beautiful, fast, and powerful, readability-style web browser! Along with that, there are, of course, the usual bug fixes, specifically around dual SIM devices and alert types.
+NEW ICON! Oh and I added some nice features like delayed sending, an option for rounder message bubbles, an option to wake the screen when a text is received, plus some web improvements and the usual batch of bug fixes.
