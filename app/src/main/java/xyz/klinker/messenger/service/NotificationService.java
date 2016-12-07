@@ -770,6 +770,10 @@ public class NotificationService extends IntentService {
     }
 
     private boolean ringtoneExists(String uri) {
+        if (uri.contains("file://")) {
+            return false;
+        }
+        
         return RingtoneManager.getRingtone(this, Uri.parse(uri)) != null;
     }
 
