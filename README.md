@@ -1,4 +1,4 @@
-![feature graphic](artwork/play\ store/feature\ graphic_dark.png)
+![feature graphic](artwork/play\ store/feature\ graphic\ white.png)
 
 # Messenger
 
