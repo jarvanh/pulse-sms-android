@@ -325,7 +325,10 @@ public class MessageListFragment extends Fragment implements
         initSendbar();
         initAttachHolder();
         initToolbar();
-        initRecycler();
+
+        if (bundle == null) {
+            initRecycler();
+        }
 
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
@@ -391,6 +394,13 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        createDrafts();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -398,6 +408,12 @@ public class MessageListFragment extends Fragment implements
             getActivity().unregisterReceiver(updatedReceiver);
         }
 
+        createDrafts();
+
+        multiSelect.clearActionMode();
+    }
+
+    private void createDrafts() {
         if (messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
             if (drafts.size() > 0) {
                 source.deleteDrafts(getConversationId());
@@ -414,8 +430,6 @@ public class MessageListFragment extends Fragment implements
         if (attachedUri != null) {
             source.insertDraft(getConversationId(), attachedUri.toString(), attachedMimeType);
         }
-
-        multiSelect.clearActionMode();
     }
 
     @Override
@@ -777,107 +791,101 @@ public class MessageListFragment extends Fragment implements
 
     public void loadMessages() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v(TAG, "loading messages");
+        new Thread(() -> {
+            Log.v(TAG, "loading messages");
 
-                try {
-                    Thread.sleep(AnimationUtils.EXPAND_CONVERSATION_DURATION);
-                } catch (Exception e) {
+            try {
+                Thread.sleep(AnimationUtils.EXPAND_CONVERSATION_DURATION);
+            } catch (Exception e) {
 
-                }
+            }
 
-                long conversationId = getConversationId();
+            long conversationId = getConversationId();
 
-                try {
-                    long startTime = System.currentTimeMillis();
-                    final Cursor cursor = source.getMessages(conversationId);
+            try {
+                long startTime = System.currentTimeMillis();
+                final Cursor cursor = source.getMessages(conversationId);
 
-                    final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
-                    final String title = getArguments().getString(ARG_TITLE);
-                    final List<Contact> contacts = source.getContacts(numbers);
-                    final List<Contact> contactsByName = source.getContactsByNames(title);
-                    final Map<String, Contact> contactMap = fillMapByNumber(numbers, contacts);
-                    final Map<String, Contact> contactByNameMap = fillMapByName(title, contactsByName);
+                final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
+                final String title = getArguments().getString(ARG_TITLE);
+                final List<Contact> contacts = source.getContacts(numbers);
+                final List<Contact> contactsByName = source.getContactsByNames(title);
+                final Map<String, Contact> contactMap = fillMapByNumber(numbers, contacts);
+                final Map<String, Contact> contactByNameMap = fillMapByName(title, contactsByName);
 
-                    drafts = source.getDrafts(conversationId);
+                drafts = source.getDrafts(conversationId);
 
-                    final int position = findMessagePositionFromId(cursor);
+                final int position = findMessagePositionFromId(cursor);
 
-                    Log.v("message_load", "load took " + (
-                            System.currentTimeMillis() - startTime) + " ms");
+                Log.v("message_load", "load took " + (
+                        System.currentTimeMillis() - startTime) + " ms");
 
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            setMessages(cursor, contactMap, contactByNameMap);
-                            setDrafts(drafts);
+                handler.post(() -> {
+                    setMessages(cursor, contactMap, contactByNameMap);
+                    setDrafts(drafts);
 
-                            if (position != -1) {
-                                messageList.scrollToPosition(position);
-                            }
-
-                            textChanged = false;
-                            messageEntry.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable editable) {
-                                    textChanged = true;
-                                }
-                            });
-                        }
-                    });
-
-                    if (!getArguments().getBoolean(ARG_IS_GROUP)) {
-                        String number = getArguments().getString(ARG_PHONE_NUMBERS);
-                        final String name = ContactUtils.findContactNames(number, getActivity());
-                        String photoUri = ContactUtils.findImageUri(number, getActivity());
-                        if (photoUri != null) {
-                            photoUri += "/photo";
-                        }
-
-                        if (!name.equals(getArguments().getString(ARG_TITLE)) &&
-                                !PhoneNumberUtils.checkEquality(name, number)) {
-                            Log.v(TAG, "contact name and conversation name do not match, updating");
-                            source.updateConversationTitle(
-                                    getArguments().getLong(ARG_CONVERSATION_ID), name);
-
-                            ConversationListFragment fragment = (ConversationListFragment) getActivity()
-                                    .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
-
-                            if (fragment != null) {
-                                fragment.setNewConversationTitle(name);
-                            }
-
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    toolbar.setTitle(name);
-                                }
-                            });
-                        }
-
-                        String originalImage = getArguments().getString(ARG_IMAGE_URI);
-                        if ((photoUri != null && (!photoUri.equals(originalImage)) || originalImage == null || originalImage.isEmpty())) {
-                            source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
-                        }
+                    if (position != -1) {
+                        messageList.scrollToPosition(position);
                     }
 
-                    Thread.sleep(1000);
+                    textChanged = false;
+                    messageEntry.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        }
 
-                    dismissNotification();
-                    source.readConversation(getContext(), conversationId);
-                } catch (Exception e) {
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        }
 
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            textChanged = true;
+                        }
+                    });
+                });
+
+                if (!getArguments().getBoolean(ARG_IS_GROUP)) {
+                    String number = getArguments().getString(ARG_PHONE_NUMBERS);
+                    final String name = ContactUtils.findContactNames(number, getActivity());
+                    String photoUri = ContactUtils.findImageUri(number, getActivity());
+                    if (photoUri != null) {
+                        photoUri += "/photo";
+                    }
+
+                    if (!name.equals(getArguments().getString(ARG_TITLE)) &&
+                            !PhoneNumberUtils.checkEquality(name, number)) {
+                        Log.v(TAG, "contact name and conversation name do not match, updating");
+                        source.updateConversationTitle(
+                                getArguments().getLong(ARG_CONVERSATION_ID), name);
+
+                        ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                                .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+
+                        if (fragment != null) {
+                            fragment.setNewConversationTitle(name);
+                        }
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                toolbar.setTitle(name);
+                            }
+                        });
+                    }
+
+                    String originalImage = getArguments().getString(ARG_IMAGE_URI);
+                    if ((photoUri != null && (!photoUri.equals(originalImage)) || originalImage == null || originalImage.isEmpty())) {
+                        source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
+                    }
                 }
+
+                Thread.sleep(1000);
+
+                dismissNotification();
+                source.readConversation(getContext(), conversationId);
+            } catch (Exception e) {
+
             }
         }).start();
     }
