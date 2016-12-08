@@ -208,6 +208,7 @@ public class MessageListFragment extends Fragment implements
     private AlertDialog detailsChoiceDialog;
     private MaterialTooltip navToolTip;
 
+    private CountDownTimer delayedTimer;
     private Handler delayedSendingHandler;
 
     private int extraMarginTop = 0;
@@ -991,8 +992,12 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void changeDelayedSendingComponents(boolean start) {
+        delayedSendingHandler.removeCallbacksAndMessages(null);
+        if (delayedTimer != null) {
+            delayedTimer.cancel();
+        }
+
         if (!start) {
-            delayedSendingHandler.removeCallbacksAndMessages(null);
             sendProgress.setProgress(0);
             sendProgress.setVisibility(View.INVISIBLE);
             send.setImageResource(R.drawable.ic_send);
@@ -1005,7 +1010,8 @@ public class MessageListFragment extends Fragment implements
 
             final Settings settings = Settings.get(getActivity());
             sendProgress.setMax((int) settings.delayedSendingTimeout / 10);
-            new CountDownTimer(settings.delayedSendingTimeout, 10) {
+            
+            delayedTimer = new CountDownTimer(settings.delayedSendingTimeout, 10) {
                 @Override public void onFinish() { }
                 @Override public void onTick(long millisUntilFinished) {
                     sendProgress.setProgress((int) (settings.delayedSendingTimeout - millisUntilFinished) / 10);
