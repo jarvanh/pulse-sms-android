@@ -108,6 +108,12 @@ public class NotificationService extends IntentService {
             if (settings.repeatNotifications != -1) {
                 NotificationService.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
             }
+
+            if (Settings.get(this).wakeScreen) {
+                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
+                wl.acquire();
+            }
         }
 
         MessengerAppWidgetProvider.refreshWidget(this);
@@ -685,12 +691,6 @@ public class NotificationService extends IntentService {
 
         if (!skipSummaryNotification) {
             NotificationManagerCompat.from(this).notify(SUMMARY_ID, notification);
-        }
-
-        if (Settings.get(this).wakeScreen) {
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            final PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
-            wakeLock.acquire(5000);
         }
     }
 
