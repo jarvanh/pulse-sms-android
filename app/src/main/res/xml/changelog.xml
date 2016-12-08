@@ -16,14 +16,14 @@
 
 <changelog>
 
-    <verion
+    <version
         name="1.12.1"
         description="December 9th, 2016">
         <text>Bug fixes for delayed sending</text>
         <text>Bug fixes for importing contact vCards</text>
         <text>Bug fixes for highlighting links</text>
         <text>Linkify email addresses</text>
-    </verion>
+    </version>
 
     <version
         name="1.12.0"
