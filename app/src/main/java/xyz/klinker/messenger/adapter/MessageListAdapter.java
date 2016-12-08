@@ -540,12 +540,4 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
     }
 
-    private PendingIntent getShareIntent(String url) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-        shareIntent.setType(MimeType.TEXT_PLAIN);
-        return PendingIntent.getActivity(
-                fragment.getActivity(), new Random().nextInt(Integer.MAX_VALUE), shareIntent, 0);
-    }
-
 }

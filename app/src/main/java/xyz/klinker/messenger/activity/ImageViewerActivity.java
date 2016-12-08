@@ -181,6 +181,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         shareIntent.setType(message.mimeType);
         startActivity(Intent.createChooser(shareIntent,

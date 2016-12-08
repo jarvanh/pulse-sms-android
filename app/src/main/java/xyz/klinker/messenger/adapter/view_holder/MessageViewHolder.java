@@ -272,7 +272,12 @@ public class MessageViewHolder extends SwappingHolder {
 
                 if (mimeType != null && MimeType.isVcard(mimeType)) {
                     Uri uri = Uri.parse(message.getText().toString());
+                    if (message.getText().toString().contains("file://")) {
+                        uri = ImageUtils.createContentUri(itemView.getContext(), uri);
+                    }
+
                     Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setDataAndType(uri, MimeType.TEXT_VCARD);
                     itemView.getContext().startActivity(intent);
                 } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
@@ -376,6 +381,7 @@ public class MessageViewHolder extends SwappingHolder {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         shareIntent.setType(message.mimeType);
         itemView.getContext().startActivity(Intent.createChooser(shareIntent,
                 itemView.getContext().getResources().getText(R.string.share_content)));
