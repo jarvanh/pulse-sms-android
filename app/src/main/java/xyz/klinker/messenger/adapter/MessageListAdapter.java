@@ -28,6 +28,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,11 +221,23 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 holder.message.getContext().startActivity(intent);
             });
 
+            Link emails = new Link(Patterns.EMAIL_ADDRESS);
+            emails.setTextColor(accentColor);
+            emails.setHighlightAlpha(.4f);
+            emails.setOnClickListener(clickedText -> {
+                String[] email = new String[]{clickedText};
+                Uri uri = Uri.parse("mailto:" + clickedText);
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
+                holder.message.getContext().startActivity(emailIntent);
+            });
+
             if (holder.message.getMovementMethod() == null) {
                 holder.message.setMovementMethod(new TouchableMovementMethod());
             }
 
-            LinkBuilder.on(holder.message).addLink(phoneNumbers).addLink(urls).build();
+            LinkBuilder.on(holder.message).addLink(emails).addLink(urls).addLink(phoneNumbers).build();
 
             setGone(holder.image);
             setVisible(holder.message);
