@@ -283,6 +283,10 @@ public class MessageListFragment extends Fragment implements
         removeImage = view.findViewById(R.id.remove_image);
         editImage = view.findViewById(R.id.edit_image);
 
+        if (Settings.get(getActivity()).rounderBubbles) {
+            messageEntry.setBackground(getActivity().getResources().getDrawable(R.drawable.message_circle));
+        }
+        
         messageEntry.setCommitContentListener(this);
 
         dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
