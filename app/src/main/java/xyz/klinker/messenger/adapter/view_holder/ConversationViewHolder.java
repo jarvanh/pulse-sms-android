@@ -84,57 +84,51 @@ public class ConversationViewHolder extends SwappingHolder {
             setSelectionModeBackgroundDrawable(itemView.getResources().getDrawable(R.drawable.conversation_list_item_selectable_background));
         }
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (header == null && ((adapter != null && adapter.getMultiSelector() != null &&
-                        !adapter.getMultiSelector().tapSelection(ConversationViewHolder.this)) || adapter == null)) {
-                    if (conversation == null) {
-                        return;
+        itemView.setOnClickListener(view -> {
+            if (header == null && ((adapter != null && adapter.getMultiSelector() != null &&
+                    !adapter.getMultiSelector().tapSelection(ConversationViewHolder.this)) || adapter == null)) {
+                if (conversation == null) {
+                    return;
+                }
+
+                if (header == null) {
+                    try {
+                        adapter.getConversations().get(position).read = true;
+                    } catch (Exception e) {
                     }
 
-                    if (header == null) {
-                        try {
-                            adapter.getConversations().get(position).read = true;
-                        } catch (Exception e) {
-                        }
+                    setTypeface(false, isItalic());
+                }
 
-                        setTypeface(false, isItalic());
-                    }
+                if (listener != null) {
+                    changeExpandedState();
+                }
 
-                    if (listener != null) {
-                        changeExpandedState();
-                    }
+                if (contactClickedListener != null) {
+                    contactClickedListener.onClicked(
+                            conversation.title, conversation.phoneNumbers, conversation.imageUri);
+                }
 
-                    if (contactClickedListener != null) {
-                        contactClickedListener.onClicked(
-                                conversation.title, conversation.phoneNumbers, conversation.imageUri);
-                    }
-
-                    if (checkBox != null) {
-                        checkBox.setChecked(!checkBox.isChecked());
-                    }
+                if (checkBox != null) {
+                    checkBox.setChecked(!checkBox.isChecked());
                 }
             }
         });
 
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (header != null) {
-                    return true;
-                }
-
-                ConversationsMultiSelectDelegate multiSelect = adapter != null ? adapter.getMultiSelector() : null;
-                if (multiSelect != null && !multiSelect.isSelectable()) {
-                    multiSelect.startActionMode();
-                    multiSelect.setSelectable(true);
-                    multiSelect.setSelected(ConversationViewHolder.this, true);
-                    return true;
-                }
-
-                return false;
+        itemView.setOnLongClickListener(view -> {
+            if (header != null) {
+                return true;
             }
+
+            ConversationsMultiSelectDelegate multiSelect = adapter != null ? adapter.getMultiSelector() : null;
+            if (multiSelect != null && !multiSelect.isSelectable()) {
+                multiSelect.startActionMode();
+                multiSelect.setSelectable(true);
+                multiSelect.setSelected(ConversationViewHolder.this, true);
+                return true;
+            }
+
+            return false;
         });
 
         Settings settings = Settings.get(itemView.getContext());
@@ -150,6 +144,8 @@ public class ConversationViewHolder extends SwappingHolder {
 
         if (settings.baseTheme == Settings.BaseTheme.BLACK && headerBackground != null) {
             headerBackground.setBackgroundColor(Color.BLACK);
+        } else if (settings.baseTheme == Settings.BaseTheme.BLACK) {
+            itemView.setBackgroundColor(Color.BLACK);
         }
     }
 
