@@ -40,6 +40,7 @@ import xyz.klinker.messenger.MessengerApplication;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.FixedScrollLinearLayoutManager;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
@@ -75,6 +76,7 @@ public class ConversationListFragment extends Fragment
 
     private long lastRefreshTime = 0;
     private View empty;
+    private FixedScrollLinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private List<Conversation> pendingDelete;
     protected List<Conversation> pendingArchive;
@@ -248,7 +250,9 @@ public class ConversationListFragment extends Fragment
         } else {
             adapter = new ConversationListAdapter(conversations, multiSelector, this, this);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            layoutManager = new FixedScrollLinearLayoutManager(getContext());
+            layoutManager.setCanScroll(true);
+            recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
             recyclerView.addItemDecoration(new SwipeItemDecoration());
 
@@ -522,6 +526,8 @@ public class ConversationListFragment extends Fragment
         }
         
         checkUnreadCount();
+        layoutManager.setCanScroll(false);
+        
         return true;
     }
 
@@ -563,6 +569,8 @@ public class ConversationListFragment extends Fragment
             ConversationListUpdatedReceiver.sendBroadcast(getActivity(), contractedId, newConversationTitle);
             newConversationTitle = null;
         }
+
+        layoutManager.setCanScroll(true);
     }
 
     @Override
