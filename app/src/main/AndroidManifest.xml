@@ -142,6 +142,7 @@
                 <data android:mimeType="text/vcard" />
                 <data android:mimeType="text/x-vcard" />
                 <data android:mimeType="image/*" />
+                <data android:mimeType="audio/*" />
             </intent-filter>
 
             <meta-data
