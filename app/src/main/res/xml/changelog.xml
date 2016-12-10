@@ -17,8 +17,22 @@
 <changelog>
 
     <version
-        name="1.12.1"
+        name="1.12.3">
+        <text>Improve black theme on conversation list</text>
+        <text>Improve support for round bubbles</text>
+        <text>Fix some scrolling issues with a physical mouse</text>
+        <text>Allow you to share audio files to the app</text>
+    </version>
+
+    <version
+        name="1.12.2"
         description="December 9th, 2016">
+        <text>Improve the wake screen option</text>
+    </version>
+
+    <version
+        name="1.12.1"
+        description="December 8th, 2016">
         <text>Bug fixes for delayed sending</text>
         <text>Bug fixes for importing contact vCards</text>
         <text>Bug fixes for highlighting links</text>

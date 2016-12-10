@@ -286,7 +286,7 @@ public class MessageListFragment extends Fragment implements
         if (Settings.get(getActivity()).rounderBubbles) {
             messageEntry.setBackground(getActivity().getResources().getDrawable(R.drawable.message_circle));
         }
-        
+
         messageEntry.setCommitContentListener(this);
 
         dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
