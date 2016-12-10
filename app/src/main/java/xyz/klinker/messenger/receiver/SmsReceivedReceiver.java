@@ -26,6 +26,8 @@ import android.os.Handler;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 
+import java.util.List;
+
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Message;
@@ -34,6 +36,7 @@ import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
 
@@ -80,12 +83,14 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         insertInternalSms(context, address, body, date);
         long conversationId = insertSms(context, address, body, simSlot);
 
-        Intent mediaParser = new Intent(context, MediaParserService.class);
-        mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
-        mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
+        if (conversationId != -1L) {
+            Intent mediaParser = new Intent(context, MediaParserService.class);
+            mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+            mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
 
-        context.startService(new Intent(context, NotificationService.class));
-        new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
+            context.startService(new Intent(context, NotificationService.class));
+            new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
+        }
     }
 
     private void insertInternalSms(Context context, String address, String body, long dateSent) {
@@ -115,14 +120,34 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
         DataSource source = DataSource.getInstance(context);
         source.open();
-        long conversationId = source
-                .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
-        source.close();
 
-        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
-        MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
+        if (shouldSaveMessages(source, message)) {
+            long conversationId = source
+                    .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
+            source.close();
 
-        return conversationId;
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
+            MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
+
+            return conversationId;
+        } else {
+            return -1;
+        }
+    }
+
+    private boolean shouldSaveMessages(DataSource source, Message message) {
+        try {
+            List<Message> search = source.searchMessagesAsList(message.data, 1);
+            if (!search.isEmpty()) {
+                Message inDatabase = search.get(0);
+                if (inDatabase.data.equals(message.data) && inDatabase.type == Message.TYPE_RECEIVED &&
+                        (message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE * 3)) {
+                    return false;
+                }
+            }
+        } catch (Exception e) { }
+
+        return true;
     }
 
 }

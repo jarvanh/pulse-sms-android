@@ -24,6 +24,7 @@
         <text>Improve support for round bubbles</text>
         <text>Fix some scrolling issues with a physical mouse</text>
         <text>Allow you to share audio files to the app</text>
+        <text>Test fixes for duplicate SMS being received</text>
     </version>
 
     <version
