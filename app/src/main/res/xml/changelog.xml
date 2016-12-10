@@ -17,7 +17,9 @@
 <changelog>
 
     <version
-        name="1.12.3">
+        name="1.12.3"
+        description="December 10th, 2016">
+        <text>Add 3 second delayed sending</text>
         <text>Improve black theme on conversation list</text>
         <text>Improve support for round bubbles</text>
         <text>Fix some scrolling issues with a physical mouse</text>

@@ -221,6 +221,9 @@ public class Settings {
             case "off":
                 this.delayedSendingTimeout = 0;
                 break;
+            case "three_seconds":
+                this.delayedSendingTimeout = TimeUtils.SECOND * 3;
+                break;
             case "five_seconds":
                 this.delayedSendingTimeout = TimeUtils.SECOND * 5;
                 break;

@@ -415,6 +415,7 @@
     <string name="on">On</string>
 
     <!-- Times -->
+    <string name="three_seconds">Three seconds</string>
     <string name="five_seconds">Five seconds</string>
     <string name="ten_seconds">Ten seconds</string>
     <string name="fifteen_seconds">Fifteen seconds</string>
