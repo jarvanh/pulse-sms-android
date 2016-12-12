@@ -362,6 +362,7 @@ public class NotificationService extends IntentService {
 
             if (pictureStyle != null) {
                 builder.setStyle(pictureStyle);
+                builder.setContentText(getString(R.string.picture_message));
             } else if (messagingStyle != null) {
                 builder.setStyle(messagingStyle);
             } else if (inboxStyle != null) {
