@@ -130,6 +130,11 @@ public class NotificationReplyActivity extends AppCompatActivity {
         messageInput = (EditText) findViewById(R.id.message_entry);
         sendButton = (ImageButton) findViewById(R.id.send_button);
         conversationIndicator = (TextView) findViewById(R.id.conversation_indicator);
+        
+        if (Settings.get(this).baseTheme == Settings.BaseTheme.BLACK) {
+            messagesInitialHolder.setBackgroundColor(Color.BLACK);
+            messagesMore.setBackgroundColor(Color.BLACK);
+        }
 
         setupMessageHistory();
 
