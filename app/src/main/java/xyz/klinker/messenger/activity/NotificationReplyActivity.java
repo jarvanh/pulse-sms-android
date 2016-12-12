@@ -13,6 +13,7 @@ import android.support.v4.app.RemoteInput;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.graphics.Color;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
