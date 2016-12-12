@@ -81,7 +81,20 @@
     <!-- Onboarding Screen -->
     <!-- Notifications -->
     <!-- About, Help and Feedback and Settings -->
+    <string name="issues">Problemsökning</string>
+    <string name="issues_summary">Fungerar även som en framtida färdplan</string>
+    <string name="repeat_interval">Upprepa larm</string>
+    <string name="repeat_never">Aldrig</string>
+    <string name="repeat_one_min">Varje minut</string>
+    <string name="repeat_five_mins">Var femte minut</string>
+    <string name="repeat_ten_mins">Var tionde minut</string>
+    <string name="repeat_half_hour">Varje halvtimme</string>
+    <string name="repeat_hour">Varje timme</string>
+    <string name="alert_types">Larmtyper</string>
+    <string name="alert_types_summary">Olika anpassningar för notifikationer</string>
     <!-- Advanced Features Settings -->
+    <string name="cleanup_old_messages">Rensa gamla meddelanden</string>
+    <string name="delayed_sending">Fördröjd sändning</string>
     <!-- Theming Options -->
     <!-- Scheduled Messages Screen -->
     <!-- Encryption -->
