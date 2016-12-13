@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Логин</string>
+    <string name="api_signup">Войти</string>
+    <string name="api_signup_failed">Не получается войти с этого устройства, для начала нужно зарегистрировать основное устройство с номером телефона.</string>
+    <string name="api_skip_signup">Или, если вы хотите использовать приложение на этом устройстве без сетевых функций, таких как набор текста с планшета или компьютера, вы можете пропустить этот шаг:</string>
+    <string name="api_skip">Пропустить</string>
+    <string name="api_email">"Адрес email "</string>
+    <string name="api_password">Пароль</string>
+    <string name="api_forgot_password">Забыли пароль?</string>
+    <string name="api_password_confirmation">Подтверждение пароля</string>
+    <string name="api_name">Имя</string>
+    <string name="api_phone_number">Номер телефона</string>
+    <string name="api_connecting">Подключение к серверу...</string>
+    <string name="api_error">Во время операции возникла ошибка</string>
+    <string name="api_device_error">Произошла ошибка во время добавления нового устройства. Давайте повторим!</string>
+    <string name="api_add_second_primary_device">Похоже, что Вы уже установили основное устройство (%1$s) для этого аккаунта (разрешается только одно!). Хотите удалить текущее основное устройство и выбрать это, как основное?</string>
+    <string name="api_yes">Да</string>
+    <string name="api_no">Нет</string>
+    <string name="api_no_email">Не введён email</string>
+    <string name="api_email_invalid">Неверный email</string>
+    <string name="api_no_password">Не введён пароль</string>
+    <string name="api_no_password_confirmation">Не введено подтверждение пароля</string>
+    <string name="api_password_mismatch">Пароли не совпадают</string>
+    <string name="api_no_name">Не введено имя</string>
+    <string name="api_no_phone_number">Не введён номер телефона</string>
+    <string name="api_login_error">Возникла ошибка при входе, неверный email или пароль.</string>
+    <string name="api_activate_summary">Войдите, чтобы получить все ваши сообщения на это устройство!</string>
+    <string name="api_activate_1_1">Отправить</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">на мобильном устройстве или ПК.</string>
+    <string name="api_activate_2_1">На сайт</string>
+    <string name="api_activate_2_2">введите код справа</string>
+    <string name="api_activate_2_3">для подключения вашего аккаунта!</string>
+    <string name="api_confirm_password">Пожалуйста, подтвердите пароль:</string>
+    <string name="api_wrong_password">Не удалось подтвердить. Пароль верный?</string>
+    <string name="api_email_taken">Во время входа произошла ошибка. У Вас уже есть учетная запись с этим email?</string>
+    <string name="api_confirm">Подтвердить</string>
+    <string name="api_continue">Продолжить</string>
+</resources>
