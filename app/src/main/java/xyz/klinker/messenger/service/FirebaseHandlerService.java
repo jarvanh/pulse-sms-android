@@ -66,7 +66,7 @@ import xyz.klinker.messenger.util.StringUtils;
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
  */
-public class FirebaseHandlerService extends IntentService {
+public class FirebaseHandlerService extends WakefulIntentService {
 
     private static final String TAG = "FirebaseHandlerService";
     private static final int INFORMATION_NOTIFICATION_ID = 13;
@@ -78,7 +78,7 @@ public class FirebaseHandlerService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void doWakefulWork(Intent intent) {
         if (intent != null && intent.getAction() != null && intent.getAction()
                 .equals(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED)) {
             process(this, intent);
