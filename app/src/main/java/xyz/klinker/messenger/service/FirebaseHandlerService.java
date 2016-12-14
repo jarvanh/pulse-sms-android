@@ -693,10 +693,10 @@ public class FirebaseHandlerService extends IntentService {
         if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
             source.readConversation(context, conversationId);
-        }
 
-        NotificationManagerCompat.from(context).cancel((int) conversationId);
-        Log.v(TAG, "dismissed notification for " + conversationId);
+            NotificationManagerCompat.from(context).cancel((int) conversationId);
+            Log.v(TAG, "dismissed notification for " + conversationId);
+        }
     }
 
     private void updateSetting(JSONObject json, Context context)
