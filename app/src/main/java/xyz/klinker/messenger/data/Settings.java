@@ -82,6 +82,7 @@ public class Settings {
     public String ringtone;
     public String fontSize;
     public String themeColorString;
+    public String baseThemeString;
     public String signature;
 
     // configuration
@@ -272,8 +273,8 @@ public class Settings {
                 break;
         }
 
-        String baseTheme = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
-        switch (baseTheme) {
+        baseThemeString = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night");
+        switch (baseThemeString) {
             case "day_night":
                 this.baseTheme = BaseTheme.DAY_NIGHT;
                 break;

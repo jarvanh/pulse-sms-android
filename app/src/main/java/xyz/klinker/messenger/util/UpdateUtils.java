@@ -19,7 +19,9 @@ import java.util.Date;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.FeatureFlags;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ContactSyncService;
 import xyz.klinker.messenger.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.service.SignoutService;
@@ -41,11 +43,16 @@ public class UpdateUtils {
         alertToTextFromAnywhere(sharedPreferences);
 
         Account account = Account.get(context);
-        if (account.exists() && account.subscriptionExpiration == -1L && account.primary) {
-            account.updateSubscription(Account.SubscriptionType.TRIAL, new Date().getTime() + TimeUtils.DAY, false);
-            SubscriptionExpirationCheckService.scheduleNextRun(context);
+        Settings settings = Settings.get(context);
+        if (account.exists() && account.primary && sharedPreferences.getBoolean("1.13.0", true)) {
+            sharedPreferences.edit().putBoolean("1.13.0", false).apply();
 
-            new BetaTesterMigrationToTrial(context).alertToMigration();
+            new Thread(() -> {
+                ApiUtils utils = new ApiUtils();
+                utils.updateRounderBubbles(account.accountId, settings.rounderBubbles);
+                utils.updateBaseTheme(account.accountId, settings.baseThemeString);
+                utils.updateGlobalThemeColor(account.accountId, settings.themeColorString);
+            }).start();
         }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);
