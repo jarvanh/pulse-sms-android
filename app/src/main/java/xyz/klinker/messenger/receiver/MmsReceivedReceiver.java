@@ -34,6 +34,7 @@ import xyz.klinker.messenger.service.MediaParserService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
@@ -91,6 +92,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 message.read = false;
                 message.seen = false;
                 message.from = ContactUtils.findContactNames(from, context);
+                message.simPhoneNumber = DualSimUtils.get(context).getAvailableSims().isEmpty() ? null : to;
 
                 if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                     snippet = message.data;
