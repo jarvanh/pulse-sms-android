@@ -1518,7 +1518,7 @@ public class MessageListFragment extends Fragment implements
     private void sendMessageOnFragmentClosed() {
         sendProgress.setVisibility(View.GONE);
         delayedSendingHandler.removeCallbacksAndMessages(null);
-        
+
         final String message = messageEntry.getText().toString().trim();
         final List<Uri> uris = new ArrayList<>();
 

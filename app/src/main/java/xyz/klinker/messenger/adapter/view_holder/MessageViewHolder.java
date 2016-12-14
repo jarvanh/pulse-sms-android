@@ -420,7 +420,7 @@ public class MessageViewHolder extends SwappingHolder {
                 .setAccentColor(accentColor)
                 .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
                         ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                .setTextSize(Settings.get(itemView.getContext()).mediumFont)
+                .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
                 .build();
 
         ArticlePreview preview = ArticlePreview.build(data);

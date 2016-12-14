@@ -206,7 +206,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         .setAccentColor(accentColor)
                         .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
                                 ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                        .setTextSize(Settings.get(holder.itemView.getContext()).mediumFont)
+                        .setTextSize(Settings.get(holder.itemView.getContext()).mediumFont + 1)
                         .build();
 
                 intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
