@@ -402,6 +402,10 @@ public class MessageListFragment extends Fragment implements
         super.onSaveInstanceState(outState);
 
         createDrafts();
+
+        if (sendProgress != null && sendProgress.getVisibility() == View.VISIBLE) {
+            sendMessageOnFragmentClosed();
+        }
     }
 
     @Override
@@ -1504,22 +1508,29 @@ public class MessageListFragment extends Fragment implements
             attach.performClick();
             return true;
         } else if (sendProgress != null && sendProgress.getVisibility() == View.VISIBLE) {
-            final String message = messageEntry.getText().toString().trim();
-            final List<Uri> uris = new ArrayList<>();
-
-            if (selectedImageUris.size() > 0) {
-                for (String uri : selectedImageUris) {
-                    uris.add(Uri.parse(uri));
-                }
-            } else if (attachedUri != null) {
-                uris.add(attachedUri);
-            }
-
-            sendMessage(uris, message);
+            sendMessageOnFragmentClosed();
             return false;
         }
 
         return false;
+    }
+
+    private void sendMessageOnFragmentClosed() {
+        sendProgress.setVisibility(View.GONE);
+        delayedSendingHandler.removeCallbacksAndMessages(null);
+        
+        final String message = messageEntry.getText().toString().trim();
+        final List<Uri> uris = new ArrayList<>();
+
+        if (selectedImageUris.size() > 0) {
+            for (String uri : selectedImageUris) {
+                uris.add(Uri.parse(uri));
+            }
+        } else if (attachedUri != null) {
+            uris.add(attachedUri);
+        }
+
+        sendMessage(uris, message);
     }
 
     public long getConversationId() {
