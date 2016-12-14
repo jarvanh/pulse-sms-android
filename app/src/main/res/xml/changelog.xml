@@ -17,6 +17,16 @@
 <changelog>
 
     <version
+        name="1.13.0"
+        description="December 16th, 2016">
+        <text>New for web: use the base theme, from the app!</text>
+        <text>New for web: use the global color theme, from the app!</text>
+        <text>New for web: use the "rounder bubbles" option, from the app!</text>
+        <text>New for web: settings section in the navigation drawer</text>
+        <text>New for Android: tons of bug fixes that had been reported</text>
+    </version>
+  
+    <version
         name="1.12.3"
         description="December 10th, 2016">
         <text>Add 3 second delayed sending</text>
