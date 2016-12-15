@@ -30,6 +30,10 @@ def apiKeys = new Properties()
 apiKeys.load(new FileInputStream(propsFile))
 
 android {
+    dexOptions {
+        jumboMode = true
+    }
+
     try {
         compileSdkVersion Integer.parseInt(COMPILE_SDK)
     } catch (Exception e) {

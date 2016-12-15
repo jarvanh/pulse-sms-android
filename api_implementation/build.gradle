@@ -17,6 +17,10 @@
 apply plugin: 'com.android.library'
 
 android {
+    dexOptions {
+        jumboMode = true
+    }
+
     try {
         compileSdkVersion Integer.parseInt(COMPILE_SDK)
     } catch (Exception e) {
