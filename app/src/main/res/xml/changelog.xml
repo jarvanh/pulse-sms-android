@@ -33,6 +33,7 @@
         description="December 16th, 2016">
         <text>Bug fixes that had been reported to me</text>
         <text>Setup for many new changes that will be coming to the web</text>
+        <text>Fix some issues with global vs conversation specific ringtones</text>
     </version>
   
     <version
