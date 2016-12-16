@@ -1179,7 +1179,7 @@ public class MessageListFragment extends Fragment implements
         prepareAttachHolder(2);
         new Giphy.Builder(getActivity(), BuildConfig.GIPHY_API_KEY)
                 .maxFileSize(1024 * 1024)
-                .start(RESULT_GIPHY_REQUEST);
+                .start();
     }
 
     private void recordVideo() {
