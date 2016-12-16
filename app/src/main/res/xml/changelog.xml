@@ -16,7 +16,7 @@
 
 <changelog>
 
-    <version
+    <!--<version
         name="1.13.0"
         description="December 16th, 2016">
         <text>New for web: use the base theme, from the app!</text>
@@ -26,6 +26,13 @@
         <text>New for web: create new scheduled messages</text>
         <text>Improved on web: image support in conversations</text>
         <text>New for Android: tons of bug fixes that had been reported</text>
+    </version>-->
+  
+    <version
+        name="1.12.4"
+        description="December 16th, 2016">
+        <text>Bug fixes that had been reported to me</text>
+        <text>Setup for many new changes that will be coming to the web</text>
     </version>
   
     <version
