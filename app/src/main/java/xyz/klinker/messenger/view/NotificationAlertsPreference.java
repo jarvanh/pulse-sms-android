@@ -77,7 +77,6 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     public boolean handleRingtoneResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == RINGTONE_REQUEST) {
 
             if (data != null) {
@@ -87,8 +86,8 @@ public class NotificationAlertsPreference extends Preference implements
                     Settings.get(getContext()).ringtone = uri.toString();
                     Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), uri.toString());
                 } else {
-                    Settings.get(getContext()).ringtone = null;
-                    Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), null);
+                    Settings.get(getContext()).ringtone = "";
+                    Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), "");
                 }
             }
 

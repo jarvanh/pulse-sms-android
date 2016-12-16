@@ -240,7 +240,7 @@ public class NotificationService extends IntentService {
             builder.setLights(conversation.ledColor, 1000, 500);
         }
 
-        Uri sound = getRingtone(conversation);
+        Uri sound = getRingtone(this, conversation.ringtoneUri);
         if (sound != null) {
             builder.setSound(sound);
         }
@@ -738,16 +738,17 @@ public class NotificationService extends IntentService {
         }
     }
 
-    private Uri getRingtone(NotificationConversation conversation) {
+    public static Uri getRingtone(Context context, String conversationRingtone) {
         try {
-            String globalUri = Settings.get(this).ringtone;
+            String globalUri = Settings.get(context).ringtone;
 
-            if (conversation.ringtoneUri == null) {
+            if (conversationRingtone == null || conversationRingtone.contains("default") ||
+                    conversationRingtone.equals("content://settings/system/notification_sound")) {
                 // there is no conversation specific ringtone defined
 
-                if (globalUri != null && globalUri.isEmpty()) {
+                if (globalUri == null || globalUri.isEmpty()) {
                     return null;
-                } if (globalUri == null || !ringtoneExists(globalUri)) {
+                } if (!ringtoneExists(context, globalUri)) {
                     // there is no global ringtone defined, or it doesn't exist on the system
                     return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 } else {
@@ -755,11 +756,11 @@ public class NotificationService extends IntentService {
                     return Uri.parse(globalUri);
                 }
             } else {
-                if (conversation.ringtoneUri.isEmpty()) {
+                if (conversationRingtone.isEmpty()) {
                     return null;
-                } else if (ringtoneExists(conversation.ringtoneUri)) {
+                } else if (ringtoneExists(context, conversationRingtone)) {
                     // conversation ringtone exists and can be played
-                    return Uri.parse(conversation.ringtoneUri);
+                    return Uri.parse(conversationRingtone);
                 } else {
                     // the global ringtone is available to use
                     return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -770,12 +771,12 @@ public class NotificationService extends IntentService {
         }
     }
 
-    private boolean ringtoneExists(String uri) {
+    private static boolean ringtoneExists(Context context, String uri) {
         if (uri.contains("file://")) {
             return false;
         }
         
-        return RingtoneManager.getRingtone(this, Uri.parse(uri)) != null;
+        return RingtoneManager.getRingtone(context, Uri.parse(uri)) != null;
     }
 
     @VisibleForTesting

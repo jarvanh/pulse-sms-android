@@ -18,6 +18,7 @@ import java.util.Date;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.service.NotificationService;
 
 import static android.content.Context.UI_MODE_SERVICE;
 
@@ -35,24 +36,12 @@ public class AudioWrapper {
         }
 
         try {
-            Settings settings = Settings.get(context);
             DataSource source = DataSource.getInstance(context);
             source.open();
             Conversation conversation = source.getConversation(conversationId);
             source.close();
 
-            Uri tone = null;
-            if (conversation.ringtoneUri != null && conversation.ringtoneUri.isEmpty()) {
-                tone = null;
-            } else if (conversation.ringtoneUri != null && !conversation.ringtoneUri.isEmpty()) {
-                tone = Uri.parse(conversation.ringtoneUri);
-            } else if (settings.ringtone != null && !settings.ringtone.isEmpty()) {
-                tone = Uri.parse(settings.ringtone);
-            } else if (settings.ringtone.isEmpty()) {
-                tone = null;
-            } else {
-                tone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            }
+            Uri tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
 
             if (tone != null) {
                 mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()
@@ -83,12 +72,9 @@ public class AudioWrapper {
             return;
         }
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.v(TAG, "completed sound effect");
-                mp.release();
-            }
+        mediaPlayer.setOnCompletionListener(mp -> {
+            Log.v(TAG, "completed sound effect");
+            mp.release();
         });
 
         mediaPlayer.start();
