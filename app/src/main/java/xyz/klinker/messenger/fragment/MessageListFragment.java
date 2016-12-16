@@ -1309,7 +1309,7 @@ public class MessageListFragment extends Fragment implements
                 e.printStackTrace();
                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == RESULT_GIPHY_REQUEST) {
+        } else if (requestCode == Giphy.REQUEST_GIPHY) {
             onBackPressed();
 
             if (resultCode == RESULT_OK) {
