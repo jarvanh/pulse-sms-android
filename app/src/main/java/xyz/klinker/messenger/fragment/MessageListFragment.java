@@ -414,6 +414,7 @@ public class MessageListFragment extends Fragment implements
 
         if (updatedReceiver != null) {
             getActivity().unregisterReceiver(updatedReceiver);
+            updatedReceiver = null;
         }
 
         createDrafts();
@@ -1509,7 +1510,11 @@ public class MessageListFragment extends Fragment implements
             return true;
         } else if (sendProgress != null && sendProgress.getVisibility() == View.VISIBLE) {
             sendMessageOnFragmentClosed();
-            return false;
+        }
+
+        if (updatedReceiver != null) {
+            getActivity().unregisterReceiver(updatedReceiver);
+            updatedReceiver = null;
         }
 
         return false;
