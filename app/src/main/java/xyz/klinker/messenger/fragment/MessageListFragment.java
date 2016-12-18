@@ -1004,7 +1004,7 @@ public class MessageListFragment extends Fragment implements
                 changeDelayedSendingComponents(true);
             }
 
-            delayedSendingHandler.postDelayed(() -> sendMessage(uris, message), settings.delayedSendingTimeout);
+            delayedSendingHandler.postDelayed(() -> sendMessage(uris), settings.delayedSendingTimeout);
         }
     }
 
@@ -1015,13 +1015,11 @@ public class MessageListFragment extends Fragment implements
         }
 
         if (!start) {
-            messageEntry.setEnabled(true);
             sendProgress.setProgress(0);
             sendProgress.setVisibility(View.INVISIBLE);
             send.setImageResource(R.drawable.ic_send);
             send.setOnClickListener((view) -> requestPermissionThenSend());
         } else {
-            messageEntry.setEnabled(false);
             sendProgress.setIndeterminate(false);
             sendProgress.setVisibility(View.VISIBLE);
             send.setImageResource(R.drawable.ic_close);
@@ -1039,9 +1037,10 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
-    private void sendMessage(List<Uri> uris, String message) {
+    private void sendMessage(List<Uri> uris) {
         changeDelayedSendingComponents(false);
 
+        final String message = messageEntry.getText().toString().trim();
         final String mimeType = attachedMimeType != null ?
                 attachedMimeType : MimeType.TEXT_PLAIN;
 
@@ -1526,7 +1525,6 @@ public class MessageListFragment extends Fragment implements
         sendProgress.setVisibility(View.GONE);
         delayedSendingHandler.removeCallbacksAndMessages(null);
 
-        final String message = messageEntry.getText().toString().trim();
         final List<Uri> uris = new ArrayList<>();
 
         if (selectedImageUris.size() > 0) {
@@ -1537,7 +1535,7 @@ public class MessageListFragment extends Fragment implements
             uris.add(attachedUri);
         }
 
-        sendMessage(uris, message);
+        sendMessage(uris);
     }
 
     public long getConversationId() {
