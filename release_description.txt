@@ -1,1 +1,1 @@
-This version fixes bugs that had been reported over the past week and prepares for many new features coming to the web.
+v1.13.0 of the app supports a ton of new options for the web! The web now allows you to use the light/dark/black base theme, supports the global theme selection, mirrors your "rounder bubbles" option, has a settings section, allows you to create scheduled messages, supports a "device management" page, and improves on MMS support! Try out all the new features today!

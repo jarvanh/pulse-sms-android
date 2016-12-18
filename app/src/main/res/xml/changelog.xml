@@ -16,17 +16,20 @@
 
 <changelog>
 
-    <!--<version
+    <version
         name="1.13.0"
         description="December 16th, 2016">
+        <text>The app prepares background support for the following web features:</text>
         <text>New for web: use the base theme, from the app!</text>
         <text>New for web: use the global color theme, from the app!</text>
         <text>New for web: use the "rounder bubbles" option, from the app!</text>
         <text>New for web: settings section in the navigation drawer</text>
         <text>New for web: create new scheduled messages</text>
+        <text>New for web: device management page to remove old, unused, devices</text>
         <text>Improved on web: image support in conversations</text>
-        <text>New for Android: tons of bug fixes that had been reported</text>
-    </version>-->
+        <text>New for chrome extension: re-register for notifications, from the options page, if they aren't working</text>
+        <text>Android: tons of bug fixes that had been reported</text>
+    </version>
   
     <version
         name="1.12.4"
