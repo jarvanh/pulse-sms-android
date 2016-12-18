@@ -45,11 +45,11 @@
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">на мобильном устройстве или ПК.</string>
     <string name="api_activate_2_1">На сайт</string>
-    <string name="api_activate_2_2">введите код справа</string>
+    <string name="api_activate_2_2">Введите код справа</string>
     <string name="api_activate_2_3">для подключения вашего аккаунта!</string>
     <string name="api_confirm_password">Пожалуйста, подтвердите пароль:</string>
     <string name="api_wrong_password">Не удалось подтвердить. Пароль верный?</string>
-    <string name="api_email_taken">Во время входа произошла ошибка. У Вас уже есть учетная запись с этим email?</string>
+    <string name="api_email_taken">Произошла ошибка входа, у вас уже есть аккаунт с этим email?</string>
     <string name="api_confirm">Подтвердить</string>
     <string name="api_continue">Продолжить</string>
 </resources>

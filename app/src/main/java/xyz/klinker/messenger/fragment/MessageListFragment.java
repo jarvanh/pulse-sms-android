@@ -1015,11 +1015,13 @@ public class MessageListFragment extends Fragment implements
         }
 
         if (!start) {
+            messageEntry.setEnabled(true);
             sendProgress.setProgress(0);
             sendProgress.setVisibility(View.INVISIBLE);
             send.setImageResource(R.drawable.ic_send);
             send.setOnClickListener((view) -> requestPermissionThenSend());
         } else {
+            messageEntry.setEnabled(false);
             sendProgress.setIndeterminate(false);
             sendProgress.setVisibility(View.VISIBLE);
             send.setImageResource(R.drawable.ic_close);

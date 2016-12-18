@@ -23,14 +23,14 @@
     <string name="shortcut_compose_long">Начните новый диалог!</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Список диалогов</string>
-    <string name="menu_archived_conversations">Заархивированные диалоги</string>
+    <string name="menu_archived_conversations">Архив</string>
     <string name="menu_schedule">Отложенные диалоги</string>
     <string name="menu_mute_contacts">Чёрный список</string>
     <string name="menu_invite">Пригласить друзей</string>
     <string name="menu_feature_settings">Дополнительные настройки</string>
     <string name="menu_settings">Основные настройки</string>
     <string name="menu_account">Моя учётная запись</string>
-    <string name="menu_device_texting">Переписываться на любом устройстве</string>
+    <string name="menu_device_texting">Другие платформы</string>
     <string name="menu_help">Помощь и отзывы</string>
     <string name="menu_about">О приложении</string>
     <string name="menu_search">Поиск</string>
@@ -94,7 +94,7 @@
     <string name="messages">Сообщения</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Понравился Pulse?</string>
-    <string name="invite_friends_summary">И нам тоже, и остальным понравится! Распространяя это приложение, вы помогаете его развитию. Приглашайте своих друзей! \n\n Выберите контакты из списка ниже, с которыми вы бы хотели поделиться, и мы отправим им SMS  с коротким описанием и ссылку для загрузки!</string>
+    <string name="invite_friends_summary">И нам тоже, и остальным понравится! Распространяя это приложение, вы помогаете его развитию. Приглашайте своих друзей! \n\nВыберите контакты из списка ниже, с которыми вы бы хотели поделиться, и мы отправим им SMS  с коротким описанием и ссылку для загрузки!</string>
     <string name="invite_friends_sms">Я начал использовать новое приложение для переписки и думаю, что оно тебе бы понравилось! К тому же оно бесплатное. Можешь загрузить его тут: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Введите сообщение</string>
@@ -209,14 +209,14 @@
     <string name="copyright_summary">Просмотр лицензий открытых источников</string>
     <string name="app_version">Версия приложения</string>
     <string name="device_id">ID устройства</string>
-    <string name="device_info">Информация об устройстве</string>
+    <string name="device_info">Об устройстве</string>
     <string name="website">Сайт</string>
-    <string name="access_messages_from_any_device">Перейти и обменивайться сообщениями с любого устройства!</string>
+    <string name="access_messages_from_any_device">Перейти и обмениваться сообщениями с любого устройства!</string>
     <string name="beta_disclaimer">Проект находится в состоянии бета-теста, пожалуйста, сообщайте о любых неисправностях.</string>
     <string name="faqs">Часто задаваемые вопросы</string>
     <string name="features">Особенности</string>
     <string name="issues">Трекер задач</string>
-    <string name="issues_summary">Также может служить в качестве дорожной карты</string>
+    <string name="issues_summary">Также может служить в качестве плана разработки</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Бета-сообщество Pulse</string>
     <string name="email">Email</string>
@@ -256,13 +256,13 @@
     <string name="repeat_ten_mins">Каждые 10 минут</string>
     <string name="repeat_half_hour">Каждые полчаса</string>
     <string name="repeat_hour">Каждый час</string>
-    <string name="vibrate">Тип вибрации</string>
+    <string name="vibrate">Вибрация</string>
     <string name="vibrate_off">Без вибрации</string>
     <string name="vibrate_default">Стандартная вибрация</string>
     <string name="vibrate_two_long">Две долгих вибрации</string>
     <string name="vibrate_two_short">Две коротких вибрации</string>
     <string name="vibrate_three_short">Три коротких вибрации</string>
-    <string name="vibrate_one_short_one_long">Одна короткое и одна длинная вибрации</string>
+    <string name="vibrate_one_short_one_long">Одна короткая и одна длинная вибрация</string>
     <string name="vibrate_one_long_one_short">Одна длинная и одна короткая вибрации</string>
     <string name="sound_effects">Звуковые эффекты</string>
     <string name="delivery_reports">Отчёт о доставке</string>
@@ -274,7 +274,7 @@
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
     <string name="remove_blacklist">%1$s\n\nВы хотите удалить этот номер из ч/с?</string>
     <string name="blacklist_need_number">Нужно ввести телефонный номер, чтобы добавить в ч/с!</string>
-    <string name="no_blacklists">В чёрном списке никого</string>
+    <string name="no_blacklists">Тут никого нет</string>
     <string name="no_blacklists_summary">Добавляйте по-одному, нажав на кнопку Плюс!</string>
     <string name="add">Добавить</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
@@ -348,7 +348,7 @@
     <string name="scheduled_message_hint">Сообщение для отправки...</string>
     <string name="scheduled_to_hint">Контакт для отправки...</string>
     <string name="scheduled_message_sent">Запланированное сообщение успешно отправлено</string>
-    <string name="no_scheduled_messages">нет запланированных сообщений</string>
+    <string name="no_scheduled_messages">Запланированных сообщений нет</string>
     <string name="no_scheduled_messages_summary">Можете создать новое, нажав на кнопку Плюс!</string>
     <string name="scheduled_message_in_future">Укажите нужное время в будущем!</string>
     <!-- Encryption -->
@@ -402,10 +402,10 @@
     <string name="purchase_error_cancelled">Вы отменили покупку :(</string>
     <string name="purchase_error_bad_google_play">Ой-ой, похожу возникли проблемы с Google Play.</string>
     <string name="purchase_error_bad_sku">Хмм&#8230; Данная покупка не соответствует ни одной в наших записях.</string>
-    <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена/отменена в любое время:</string>
+    <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена или отменена в любое время:</string>
     <string name="billed_immediately">Оплата происходит сразу.</string>
     <string name="lifetime_purchase">$10.99 - Пожизненная лицензия</string>
-    <string name="lifetime_purchase_summary">Заплати один раз - пользуйся всегда!</string>
+    <string name="lifetime_purchase_summary">Один платёж - пользуешься всегда!</string>
     <string name="yearly_purchase">$5.99 - ежегодно</string>
     <string name="yearly_purchase_summary">Лучшее предложение.</string>
     <string name="three_month_purchase">$1.99 каждые три месяца</string>
