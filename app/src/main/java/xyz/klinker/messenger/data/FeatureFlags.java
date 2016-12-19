@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.support.compat.BuildConfig;
 
+import javax.microedition.khronos.opengles.GL;
+
 import xyz.klinker.messenger.R;
 
 /**
@@ -43,6 +45,7 @@ public class FeatureFlags {
     private static final String FLAG_QUICK_COMPOSE = "flag_quick_compose";
     private static final String FLAG_DELAYED_SENDING = "flag_delayed_sending";
     private static final String FLAG_CLEANUP_OLD = "flag_cleanup_old";
+    private static final String FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL = "flag_global_group_colors";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -61,6 +64,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean CLEANUP_OLD_MESSAGES;
+    public boolean GLOBAL_GROUP_COLORS;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -73,6 +77,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
+        GLOBAL_GROUP_COLORS = getValue(sharedPrefs, FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -96,6 +101,9 @@ public class FeatureFlags {
                 break;
             case FLAG_CLEANUP_OLD:
                 CLEANUP_OLD_MESSAGES = flag;
+                break;
+            case FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL:
+                GLOBAL_GROUP_COLORS = flag;
                 break;
         }
     }

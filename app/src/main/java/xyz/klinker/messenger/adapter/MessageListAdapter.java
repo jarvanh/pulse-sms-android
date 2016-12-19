@@ -51,6 +51,7 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
@@ -497,6 +498,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     }
 
     private void colorMessage(final MessageViewHolder holder, final Message message) {
+        if (FeatureFlags.get(holder.itemView.getContext()).GLOBAL_GROUP_COLORS &&
+                Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
+            return;
+        }
+
         if (message.type == Message.TYPE_RECEIVED &&
                 fromColorMapper != null && fromColorMapper.size() > 1) { // size > 1 so we know it is a group convo
             if (fromColorMapper.containsKey(message.from)) {
@@ -540,14 +546,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 fromColorMapper.put(message.from, contact);
 
                 // then write it to the database for later
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        DataSource source = DataSource.getInstance(holder.itemView.getContext());
-                        source.open();
-                        source.insertContact(contact);
-                        source.close();
-                    }
+                new Thread(() -> {
+                    DataSource source = DataSource.getInstance(holder.itemView.getContext());
+                    source.open();
+                    source.insertContact(contact);
+                    source.close();
                 }).start();
             }
         }

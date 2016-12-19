@@ -61,6 +61,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
@@ -246,8 +247,10 @@ public class MessageViewHolder extends SwappingHolder {
         timestamp.setTextSize(settings.smallFont);
         timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
-        if (color != -1 && messageHolder != null) {
-            if (Settings.get(itemView.getContext()).useGlobalThemeColor) {
+        if ((color != -1 && messageHolder != null) ||
+                (FeatureFlags.get(itemView.getContext()).GLOBAL_GROUP_COLORS &&
+                        settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED)) {
+            if (settings.useGlobalThemeColor) {
                 color = Settings.get(itemView.getContext()).globalColorSet.color;
             }
 
