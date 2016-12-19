@@ -95,38 +95,29 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Account account = Account.get(getActivity());
 
         if ((!account.exists()) && preference != null) {
-            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    final ProgressDialog dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
-                    dialog.setCancelable(false);
-                    dialog.setIndeterminate(true);
-                    dialog.show();
+            preference.setOnPreferenceClickListener(preference1 -> {
+                final ProgressDialog dialog = new ProgressDialog(getActivity());
+                dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
+                dialog.setCancelable(false);
+                dialog.setIndeterminate(true);
+                dialog.show();
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            final boolean hasSubs = billing.hasPurchasedProduct();
-                            dialog.dismiss();
+                new Thread(() -> {
+                    final boolean hasSubs = billing.hasPurchasedProduct();
+                    dialog.dismiss();
 
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (hasSubs) {
-                                        Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-                                        startLoginActivity();
-                                    } else {
-                                        Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-                                        pickSubscription();
-                                    }
-                                }
-                            });
+                    getActivity().runOnUiThread(() -> {
+                        if (hasSubs) {
+                            Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+                            startLoginActivity();
+                        } else {
+                            Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+                            pickSubscription();
                         }
-                    }).start();
+                    });
+                }).start();
 
-                    return true;
-                }
+                return true;
             });
 
             removeAccountOptions();
@@ -180,19 +171,11 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 preference.setSummary(R.string.cancel_on_the_play_store);
             }
 
-            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.change_subscription_message)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    pickSubscription();
-                                }
-                            }).show();
-                    return false;
-                }
+            preference.setOnPreferenceClickListener(preference1 -> {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.change_subscription_message)
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> pickSubscription()).show();
+                return false;
             });
         }
     }
@@ -218,43 +201,31 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     private void initRemoveAccountPreference() {
         Preference preference = findPreference(getString(R.string.pref_delete_account));
 
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new AlertDialog.Builder(getActivity())
-                        .setMessage(R.string.delete_account_confirmation)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                final Account account = Account.get(getActivity());
-                                final String accountId = account.accountId;
-                                account.clearAccount();
+        preference.setOnPreferenceClickListener(preference1 -> {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.delete_account_confirmation)
+                    .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
+                        final Account account = Account.get(getActivity());
+                        final String accountId = account.accountId;
+                        account.clearAccount();
 
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new ApiUtils().deleteAccount(accountId);
-                                    }
-                                }).start();
+                        new Thread(() -> {
+                            new ApiUtils().deleteAccount(accountId);
+                        }).start();
 
-                                returnToConversationsAfterLogin();
+                        returnToConversationsAfterLogin();
 
-                                NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-                                if (nav != null) {
-                                    nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no,  new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                
-                            }
-                        })
-                        .show();
+                        NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                        if (nav != null) {
+                            nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, (dialogInterface, i) -> {
 
-                return true;
-            }
+                    })
+                    .show();
+
+            return true;
         });
     }
 
@@ -264,23 +235,14 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (Account.get(getActivity()).primary) {
             getPreferenceScreen().removePreference(preference);
         } else {
-            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.resync_account_confirmation)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    getActivity()
-                                            .startService(new Intent(getActivity(), ApiDownloadService.class));
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, null)
-                            .show();
+            preference.setOnPreferenceClickListener(preference1 -> {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.resync_account_confirmation)
+                        .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> restoreAccount())
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
 
-                    return true;
-                }
+                return true;
             });
         }
     }
@@ -331,29 +293,23 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         dialog.setMessage(getString(R.string.preparing_new_account));
         dialog.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataSource source = DataSource.getInstance(getActivity());
-                source.open();
-                source.clearTables();
-                source.close();
+        new Thread(() -> {
+            DataSource source = DataSource.getInstance(getActivity());
+            source.open();
+            source.clearTables();
+            source.close();
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                        returnToConversationsAfterLogin();
+            getActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+                returnToConversationsAfterLogin();
 
-                        ((MessengerActivity) getActivity()).startDataDownload();
+                ((MessengerActivity) getActivity()).startDataDownload();
 
-                        NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
-                        if (nav != null) {
-                            nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
-                        }
-                    }
-                });
-            }
+                NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+                if (nav != null) {
+                    nav.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_account);
+                }
+            });
         }).start();
 
         // after a login, lets query the subscription status and write it to their account for them
@@ -389,12 +345,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
     private void pickSubscription() {
         new SelectPurchaseDialog(getActivity())
-                .setPurchaseSelectedListener(new SelectPurchaseDialog.PurchaseSelectedListener() {
-                    @Override
-                    public void onPurchaseSelected(ProductAvailable product) {
-                        purchaseProduct(product);
-                    }
-                }).show();
+                .setPurchaseSelectedListener(product -> purchaseProduct(product)).show();
     }
 
     private void purchaseProduct(final ProductAvailable product) {
@@ -424,12 +375,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
             @Override
             public void onPurchaseError(final String message) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
             }
         });
     }
