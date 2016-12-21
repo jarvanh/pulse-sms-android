@@ -354,7 +354,7 @@ public class LoginActivity extends AppCompatActivity {
                 final DeviceBody device = devices[primaryLocation];
 
                 if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
-                    //utils.removeDevice(accountId, device.id);
+                    utils.removeDevice(accountId, device.id);
                     addDevice(utils, accountId, true, false);
                 } else {
                     runOnUiThread(new Runnable() {
