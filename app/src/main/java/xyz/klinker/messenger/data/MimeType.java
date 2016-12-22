@@ -29,6 +29,9 @@ public class MimeType {
     public static final String TEXT_VCARD = "text/vcard";
     public static final String TEXT_X_VCARD = "text/x-vcard";
     public static final String TEXT_X_VCALENDAR = "text/x-vcalendar";
+    public static final String TEXT_DIRECTORY = "text/directory";
+    public static final String TEXT_DIRECTORY_VCARD_PROFILE = "text/directory;profile=vCard";
+    public static final String APPLICATION_VCARD = "application/vcard";
     public static final String IMAGE_JPEG = "image/jpeg";
     public static final String IMAGE_BMP = "image/bmp";
     public static final String IMAGE_JPG = "image/jpg";
@@ -57,6 +60,9 @@ public class MimeType {
         extensions.put(TEXT_VCARD, "vcf");
         extensions.put(TEXT_X_VCARD, "vcf");
         extensions.put(TEXT_X_VCALENDAR, "vcf");
+        extensions.put(TEXT_DIRECTORY, "vcf");
+        extensions.put(TEXT_DIRECTORY_VCARD_PROFILE, "vcf");
+        extensions.put(APPLICATION_VCARD, "vcf");
         extensions.put(IMAGE_JPEG, "jpg");
         extensions.put(IMAGE_BMP, "bmp");
         extensions.put(IMAGE_JPG, "jpg");
@@ -85,6 +91,9 @@ public class MimeType {
                 mimeType.equals(TEXT_VCARD) ||
                 mimeType.equals(TEXT_X_VCARD) ||
                 mimeType.equals(TEXT_X_VCALENDAR) ||
+                mimeType.equals(TEXT_DIRECTORY) ||
+                mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) ||
+                mimeType.equals(APPLICATION_VCARD) ||
                 mimeType.equals(IMAGE_JPEG) ||
                 mimeType.equals(IMAGE_BMP) ||
                 mimeType.equals(IMAGE_JPG) ||
@@ -106,7 +115,8 @@ public class MimeType {
      * Gets whether the mime type is a vcard extension.
      */
     public static boolean isVcard(String mimeType) {
-        return mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR);
+        return mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR) ||
+                mimeType.equals(TEXT_DIRECTORY) || mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) || mimeType.equals(APPLICATION_VCARD);
     }
 
     /**

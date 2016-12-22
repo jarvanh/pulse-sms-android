@@ -52,6 +52,21 @@ public class MimeTypeTest {
     }
 
     @Test
+    public void textDirectorySuppported() {
+        assertTrue(MimeType.isSupported(MimeType.TEXT_DIRECTORY));
+    }
+
+    @Test
+    public void textDirectoryVcardProfileSuppported() {
+        assertTrue(MimeType.isSupported(MimeType.TEXT_DIRECTORY_VCARD_PROFILE));
+    }
+
+    @Test
+    public void applicationVcardSuppported() {
+        assertTrue(MimeType.isSupported(MimeType.APPLICATION_VCARD));
+    }
+
+    @Test
     public void imageJpegSupported() {
         assertTrue(MimeType.isSupported(MimeType.IMAGE_JPEG));
     }
@@ -126,6 +141,9 @@ public class MimeTypeTest {
         assertTrue(MimeType.isVcard(MimeType.TEXT_VCARD));
         assertTrue(MimeType.isVcard(MimeType.TEXT_X_VCARD));
         assertTrue(MimeType.isVcard(MimeType.TEXT_X_VCALENDAR));
+        assertTrue(MimeType.isVcard(MimeType.TEXT_DIRECTORY));
+        assertTrue(MimeType.isVcard(MimeType.TEXT_DIRECTORY_VCARD_PROFILE));
+        assertTrue(MimeType.isVcard(MimeType.APPLICATION_VCARD));
         assertFalse(MimeType.isVcard(MimeType.TEXT_PLAIN));
         assertFalse(MimeType.isVcard(MimeType.TEXT_HTML));
         assertFalse(MimeType.isVcard(MimeType.IMAGE_JPEG));
@@ -189,16 +207,11 @@ public class MimeTypeTest {
     @Test
     public void extensionVcard() {
         assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_VCARD));
-    }
-
-    @Test
-    public void extensionXVcard() {
         assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_X_VCARD));
-    }
-
-    @Test
-    public void extensionXVcalender() {
         assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_X_VCALENDAR));
+        assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_DIRECTORY));
+        assertEquals(".vcf", MimeType.getExtension(MimeType.TEXT_DIRECTORY_VCARD_PROFILE));
+        assertEquals(".vcf", MimeType.getExtension(MimeType.APPLICATION_VCARD));
     }
 
     @Test
