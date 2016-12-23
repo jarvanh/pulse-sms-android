@@ -30,6 +30,7 @@ import java.io.InputStream;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.MmsSettings;
 
 /**
  * Utility for helping to send messages.
@@ -69,8 +70,20 @@ public class SendUtils {
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);
-        settings.setSendLongAsMms(xyz.klinker.messenger.data.Settings.get(context)
+        settings.setSendLongAsMms(xyz.klinker.messenger.data.MmsSettings.get(context)
                 .convertLongMessagesToMMS);
+
+        MmsSettings mmsSettings = MmsSettings.get(context);
+        if (mmsSettings.overrideSystemAPN) {
+            settings.setUseSystemSending(false);
+
+            settings.setMmsc(mmsSettings.mmscUrl);
+            settings.setProxy(mmsSettings.mmsProxy);
+            settings.setPort(mmsSettings.mmsPort);
+            settings.setAgent(mmsSettings.userAgent);
+            settings.setUserProfileUrl(mmsSettings.userAgentProfileUrl);
+            settings.setUaProfTagName(mmsSettings.userAgentProfileTagName);
+        }
 
         if (subscriptionId != null && subscriptionId != 0 && subscriptionId != -1) {
             settings.setSubscriptionId(subscriptionId);

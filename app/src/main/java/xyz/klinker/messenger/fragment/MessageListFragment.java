@@ -103,6 +103,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.MmsSettings;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
@@ -674,7 +675,7 @@ public class MessageListFragment extends Fragment implements
                 return;
             }
 
-            boolean convertToMMS = Settings.get(getActivity()).convertLongMessagesToMMS;
+            boolean convertToMMS = MmsSettings.get(getActivity()).convertLongMessagesToMMS;
 
             if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
                 //noinspection AndroidLintSetTextI18n

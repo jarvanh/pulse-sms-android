@@ -46,6 +46,7 @@ import java.util.Date;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.data.MmsSettings;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 
@@ -53,9 +54,6 @@ import xyz.klinker.messenger.data.model.Conversation;
  * Helper for working with images.
  */
 public class ImageUtils {
-
-    private static final int MAX_FILE_SIZE = 900 * 1024;
-    private static final float SCALE_RATIO = 0.75f;
 
     /**
      * Gets a bitmap from the provided uri. Returns null if the bitmap cannot be found.
@@ -253,7 +251,7 @@ public class ImageUtils {
             File file = createFileFromBitmap(context, fileName, scaled);
 
             int maxResolution = 1500;
-            while (maxResolution > 0 && file.length() > MAX_FILE_SIZE) {
+            while (maxResolution > 0 && file.length() > MmsSettings.get(context).maxImageSize) {
                 scaled.recycle();
 
                 scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
