@@ -169,4 +169,20 @@
         <item>on</item>
     </string-array>
 
+    <string-array name="mms_size">
+        <item>100 KB</item>
+        <item>300 KB</item>
+        <item>500 KB</item>
+        <item>700 KB</item>
+        <item>1 MB</item>
+    </string-array>
+
+    <string-array name="mms_size_values">
+        <item>100_kb</item>
+        <item>300_kb</item>
+        <item>500_kb</item>
+        <item>700_kb</item>
+        <item>1_mb</item>
+    </string-array>
+
 </resources>

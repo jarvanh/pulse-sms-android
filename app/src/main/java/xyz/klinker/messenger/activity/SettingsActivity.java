@@ -22,12 +22,15 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment;
+import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment;
 import xyz.klinker.messenger.util.ColorUtils;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -35,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String ARG_SETTINGS_TYPE = "arg_settings_type";
     private static final int TYPE_GLOBAL = 1;
     private static final int TYPE_FEATURE = 2;
+    private static final int TYPE_MMS = 3;
 
     public static void startGlobalSettings(Context context) {
         startWithExtra(context, TYPE_GLOBAL);
@@ -42,6 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static void startFeatureSettings(Context context) {
         startWithExtra(context, TYPE_FEATURE);
+    }
+
+    public static void startMMSSettings(Context context) {
+        startWithExtra(context, TYPE_MMS);
     }
 
     private static void startWithExtra(Context context, int type) {
@@ -52,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private GlobalSettingsFragment globalFragment;
     private FeatureSettingsFragment featureFragment;
+    private MmsConfigurationFragment mmsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,11 @@ public class SettingsActivity extends AppCompatActivity {
                 featureFragment = new FeatureSettingsFragment();
                 setTitle(R.string.menu_feature_settings);
                 startFragment(featureFragment);
+                break;
+            case TYPE_MMS:
+                mmsFragment = new MmsConfigurationFragment();
+                setTitle(R.string.menu_mms_configuration);
+                startFragment(mmsFragment);
                 break;
         }
 
@@ -89,9 +103,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (globalFragment != null) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.global_settings, menu);
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+        } else if (item.getItemId() == R.id.mms_configuration) {
+            SettingsActivity.startMMSSettings(this);
         }
 
         return true;
@@ -99,11 +125,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Settings.get(this).forceUpdate();
+        if (mmsFragment == null) {
+            Settings.get(this).forceUpdate();
 
-        Intent intent = new Intent(this, MessengerActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+            Intent intent = new Intent(this, MessengerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
 
         super.onBackPressed();
     }

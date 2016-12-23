@@ -51,7 +51,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initFontSize();
         initRounderBubbles();
         initDeliveryReports();
-        initConvertToMMS();
         initSoundEffects();
     }
 
@@ -126,16 +125,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                     boolean delivery = (boolean) o;
                     new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
                             delivery);
-                    return true;
-                });
-    }
-
-    private void initConvertToMMS() {
-        findPreference(getString(R.string.pref_convert_to_mms))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean convert = (boolean) o;
-                    new ApiUtils().updateConvertToMMS(Account.get(getActivity()).accountId,
-                            convert);
                     return true;
                 });
     }

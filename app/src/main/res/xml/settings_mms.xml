@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <xyz.klinker.messenger.view.AutoSummaryListPreference
+        android:key="@string/pref_mms_size"
+        android:title="@string/max_mms_size"
+        android:entries="@array/mms_size"
+        android:entryValues="@array/mms_size_values"
+        android:defaultValue="1_mb"/>
+
+    <SwitchPreference
+        android:key="@string/pref_convert_to_mms"
+        android:title="@string/send_as_mms"
+        android:summary="@string/send_as_mms_summary"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:key="@string/pref_override_system_apn"
+        android:title="@string/override_system_apn"
+        android:defaultValue="false" />
+
+    <PreferenceCategory
+        android:title="@string/apn_configuration"
+        android:dependency="@string/pref_override_system_apn">
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_mmsc_url"
+            android:title="@string/mmsc_url"/>
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_mms_proxy"
+            android:title="@string/mms_proxy"/>
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_mms_port"
+            android:title="@string/mms_port"/>
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_user_agent"
+            android:title="@string/user_agent"
+            android:defaultValue="Android-Mms/2.0"/>
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_user_agent_profile_url"
+            android:title="@string/user_agent_profile_url"/>
+
+        <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_user_agent_profile_tag"
+            android:title="@string/user_agent_profile_tag"
+            android:defaultValue="x-wap-profile"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

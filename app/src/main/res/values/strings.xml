@@ -32,6 +32,7 @@
     <string name="menu_invite">Invite friends</string>
     <string name="menu_feature_settings">Advanced Features</string>
     <string name="menu_settings">Global Settings</string>
+    <string name="menu_mms_configuration">MMS Configuration</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>
     <string name="menu_help">Help &amp; feedback</string>
@@ -331,6 +332,17 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
 
+
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Max image size</string>
+    <string name="apn_configuration">APN Configuration</string>
+    <string name="override_system_apn">Override system APNs</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS port</string>
+    <string name="user_agent">User agent</string>
+    <string name="user_agent_profile_url">User agent profile URL</string>
+    <string name="user_agent_profile_tag">User agent profile tag name</string>
 
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
