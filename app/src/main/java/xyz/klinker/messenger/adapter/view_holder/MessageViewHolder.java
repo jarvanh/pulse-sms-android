@@ -248,8 +248,7 @@ public class MessageViewHolder extends SwappingHolder {
         timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
         if ((color != -1 && messageHolder != null) ||
-                (FeatureFlags.get(itemView.getContext()).GLOBAL_GROUP_COLORS &&
-                        settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED)) {
+                settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
             if (settings.useGlobalThemeColor) {
                 color = Settings.get(itemView.getContext()).globalColorSet.color;
             }

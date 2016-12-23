@@ -498,8 +498,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     }
 
     private void colorMessage(final MessageViewHolder holder, final Message message) {
-        if (FeatureFlags.get(holder.itemView.getContext()).GLOBAL_GROUP_COLORS &&
-                Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
+        if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
             return;
         }
 
