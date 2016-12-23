@@ -20,6 +20,7 @@
         name="1.13.1"
         description="December 22nd, 2016">
         <text>"MMS Configuration" options in the "Global Settings" overflow menu</text>
+        <text>Improve reading EXIF data off of captured images for MMS</text>
     </version>
 
     <version

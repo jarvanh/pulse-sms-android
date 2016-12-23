@@ -25,13 +25,13 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
+import android.support.media.ExifInterface;
 import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -329,18 +329,10 @@ public class ImageUtils {
     }
 
     public static Bitmap rotateBasedOnExifData(Context context, Uri uri, Bitmap bitmap) {
+        try {
+            InputStream in = context.getContentResolver().openInputStream(uri);
+            ExifInterface exif = new ExifInterface(in);
 
-        try{
-            String path;
-
-            try {
-                path = getExifPathFromUri(context, Uri.parse(uri.getPath()));
-            } catch (Exception e) {
-                e.printStackTrace();
-                path = uri.getPath();
-            }
-
-            ExifInterface exif = new ExifInterface(path);
             int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
             Matrix matrix = new Matrix();
@@ -375,14 +367,10 @@ public class ImageUtils {
                 default:
                     return bitmap;
             }
-            try {
-                Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                bitmap.recycle();
-                return bmRotated;
-            } catch (OutOfMemoryError e) {
-                e.printStackTrace();
-                return null;
-            }
+
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
         } catch (Exception e) {
             e.printStackTrace();
         }
