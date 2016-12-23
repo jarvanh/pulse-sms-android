@@ -17,8 +17,14 @@
 <changelog>
 
     <version
+        name="1.13.1"
+        description="December 22nd, 2016">
+        <text>"MMS Configuration" options in the "Global Settings" overflow menu</text>
+    </version>
+
+    <version
         name="1.13.0"
-        description="December 16th, 2016">
+        description="December 18th, 2016">
         <text>The app prepares background support for the following web features:</text>
         <text>New for web: use the base theme, from the app!</text>
         <text>New for web: use the global color theme, from the app!</text>
