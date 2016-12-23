@@ -75,6 +75,9 @@ public class MmsSettings {
             case "1_mb":
                 this.maxImageSize = 900 * 1024;
                 break;
+            case "5_mb":
+                // make it 5 mb, don't actually really want it to be unlimited...
+                this.maxImageSize = 5000 * 1024;
             default:
                 this.maxImageSize = 900 * 1024;
                 break;

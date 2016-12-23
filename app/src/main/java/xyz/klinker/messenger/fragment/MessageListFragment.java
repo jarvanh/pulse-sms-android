@@ -1181,7 +1181,7 @@ public class MessageListFragment extends Fragment implements
 
         prepareAttachHolder(2);
         new Giphy.Builder(getActivity(), BuildConfig.GIPHY_API_KEY)
-                .maxFileSize(1024 * 1024)
+                .maxFileSize(MmsSettings.get(getActivity()).maxImageSize)
                 .start();
     }
 
@@ -1195,7 +1195,7 @@ public class MessageListFragment extends Fragment implements
         MaterialCamera camera = new MaterialCamera(getActivity())
                 .saveDir(getActivity().getFilesDir().getPath())
                 .qualityProfile(MaterialCamera.QUALITY_LOW)
-                .maxAllowedFileSize(1024 * 1024)
+                .maxAllowedFileSize(MmsSettings.get(getActivity()).maxImageSize)
                 .allowRetry(false)
                 .autoSubmit(true)
                 .showPortraitWarning(false);
@@ -1630,7 +1630,7 @@ public class MessageListFragment extends Fragment implements
 
     public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
         File original = new File(uri.getPath());
-        if (original.length() < 1024 * 1024) {
+        if (original.length() < MmsSettings.get(getActivity()).maxImageSize) {
             attachImage(uri);
             attachedMimeType = MimeType.VIDEO_MP4;
             editImage.setVisibility(View.GONE);
