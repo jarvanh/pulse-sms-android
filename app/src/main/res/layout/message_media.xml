@@ -48,7 +48,8 @@
             android:layout_marginTop="-28dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="12dp" >
 
             <TextView
                 android:id="@+id/title"
@@ -84,7 +85,6 @@
                 android:textSize="15sp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
                 android:textColor="@color/primaryText"
                 android:id="@+id/message"
                 android:layout_marginTop="4dp"

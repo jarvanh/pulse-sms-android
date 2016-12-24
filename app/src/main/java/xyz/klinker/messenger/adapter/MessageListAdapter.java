@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +55,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.YouTubePreview;
 import xyz.klinker.messenger.data.model.Contact;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -162,6 +164,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         this.timestampHeight = height;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MessageViewHolder holder, int position) {
         messages.moveToPosition(position);
@@ -331,6 +334,39 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 setGone(holder.clippedImage);
                 setGone(holder.title);
                 setGone(holder.contact);
+            } else if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                YouTubePreview preview = YouTubePreview.build(message.data);
+                if (preview != null) {
+                    Glide.with(holder.clippedImage.getContext())
+                            .load(Uri.parse(preview.thumbnail))
+                            .asBitmap()
+                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                            .fitCenter()
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap resource,
+                                                            GlideAnimation<? super Bitmap> glideAnimation) {
+                                    ImageUtils.overlayBitmap(holder.image.getContext(),
+                                            resource, R.drawable.ic_play);
+                                    holder.clippedImage.setImageBitmap(resource);
+                                }
+                            });
+
+                    holder.contact.setText(preview.title);
+                    holder.title.setText("YouTube");
+
+                    setGone(holder.image);
+                    setGone(holder.message);
+                    setVisible(holder.clippedImage);
+                    setVisible(holder.contact);
+                    setVisible(holder.title);
+                } else {
+                    setGone(holder.clippedImage);
+                    setGone(holder.image);
+                    setGone(holder.message);
+                    setGone(holder.timestamp);
+                    setGone(holder.title);
+                }
             } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
 
             } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {

@@ -64,6 +64,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.data.YouTubePreview;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
@@ -286,6 +287,11 @@ public class MessageViewHolder extends SwappingHolder {
                     itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
                             YoutubeParser.getVideoUriFromThumbnail(data)
                     )));
+                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                    YouTubePreview preview = YouTubePreview.build(data);
+                    if (preview != null) {
+                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
+                    }
                 } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
                     startArticle();
                 } else {
