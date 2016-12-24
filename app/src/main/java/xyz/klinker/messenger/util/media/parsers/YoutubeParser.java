@@ -3,13 +3,24 @@ package xyz.klinker.messenger.util.media.parsers;
 import android.content.Context;
 import android.net.Uri;
 
+import org.json.JSONObject;
+
 import java.util.regex.Pattern;
 
+import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.YouTubePreview;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.UrlConnectionReader;
 import xyz.klinker.messenger.util.media.MediaParser;
 
 public class YoutubeParser extends MediaParser {
+
+    private static final String YOUTUBE_API_REQUEST = "https://www.googleapis.com/youtube/v3/videos" +
+            "?id=<video-id>" +
+            "&key=" + BuildConfig.YOUTUBE_API_KEY +
+            "&fields=items(id,snippet(channelId,title,categoryId),statistics)" +
+            "&part=snippet,statistics";
 
     public YoutubeParser(Context context) {
         super(context);
@@ -27,7 +38,7 @@ public class YoutubeParser extends MediaParser {
 
     @Override
     protected String getMimeType() {
-        return MimeType.MEDIA_YOUTUBE;
+        return MimeType.MEDIA_YOUTUBE_V2;
     }
 
     @Override
@@ -42,12 +53,18 @@ public class YoutubeParser extends MediaParser {
             }
         }
 
-        return "https://img.youtube.com/vi/" + videoId + "/0.jpg";
+        JSONObject apiResponse = new UrlConnectionReader(buildUrlForVideo(videoId)).read();
+        YouTubePreview preview = YouTubePreview.build(apiResponse);
+        return preview != null ? preview.toString() : null;
     }
 
     public static String getVideoUriFromThumbnail(String thumbnail) {
         Uri uri = Uri.parse(thumbnail);
         String id = uri.getPathSegments().get(1);
         return "https://youtube.com/watch?v=" + id;
+    }
+
+    private String buildUrlForVideo(String videoId) {
+        return YOUTUBE_API_REQUEST.replace("<video-id>", videoId);
     }
 }

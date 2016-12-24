@@ -22,7 +22,7 @@ public class YoutubeParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void mimeType() {
-        assertThat(parser.getMimeType(), Matchers.is(MimeType.MEDIA_YOUTUBE));
+        assertThat(parser.getMimeType(), Matchers.is(MimeType.MEDIA_YOUTUBE_V2));
     }
 
     @Test
