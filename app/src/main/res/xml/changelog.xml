@@ -17,9 +17,10 @@
 <changelog>
 
     <version
-        name="1.13.1"
-        description="December 22nd, 2016">
+        name="1.14.0"
+        description="December 26th, 2016">
         <text>"MMS Configuration" options in the "Global Settings" overflow menu</text>
+        <text>Improvements to YouTube previews</text>
         <text>Improve reading EXIF data off of captured images for MMS</text>
     </version>
 
