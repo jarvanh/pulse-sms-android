@@ -53,7 +53,7 @@ public class NewMessagesCheckService extends IntentService {
         DataSource source = DataSource.getInstance(this);
         source.open();
 
-        Message message = source.getLatestMessage();
+        Meage message = source.getLatestMessage();
 
         if (message != null) {
             List<Conversation> conversationsWithNewMessages =
@@ -71,12 +71,14 @@ public class NewMessagesCheckService extends IntentService {
 
                     progress++;
                 }
+                
+                sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
             }
 
             NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
         }
 
-        sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+      
         source.close();
 
         if (message != null) {
