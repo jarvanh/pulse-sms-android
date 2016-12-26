@@ -641,17 +641,14 @@ public class DataSource {
      * @return conversationId conversation id from Pulse's database.
      */
     public long insertNewMessages(Conversation conversation, long timestamp, Cursor messages) {
-        Long databaseConversationId = findConversationId(conversation.phoneNumbers);
-        if (databaseConversationId == null) {
-            databaseConversationId = insertConversation(conversation);
-        }
+        Long databaseConversationId = updateOrCreateConversation(conversation);
 
         beginTransaction();
 
         if (databaseConversationId != -1 && messages != null) {
             if (messages.moveToFirst()) {
                 do {
-                    if (messages.getLong(messages.getColumnIndex(Telephony.Sms.DATE)) > timestamp) {
+                    if (messages.getLong(2) > timestamp) {
                         List<ContentValues> valuesList =
                                 SmsMmsUtils.processMessage(messages, databaseConversationId, context);
                         if (valuesList != null) {
@@ -1630,6 +1627,34 @@ public class DataSource {
                 conversation.colors = contacts.get(0).colors;
             }
 
+            conversationId = insertConversation(conversation);
+        }
+
+        return conversationId;
+    }
+
+    /**
+     * Gets a current conversation id if one exists for the phone number, or inserts a new
+     * conversation and returns that id if one does not exist.
+     *
+     * @param conversation the conversation with the parameters we are looking for
+     * @return the conversation id to use.
+     */
+    private long updateOrCreateConversation(Conversation conversation) {
+        ensureActionable();
+
+        Cursor cursor = database.query(Conversation.TABLE,
+                new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
+                Conversation.COLUMN_ID_MATCHER + "=?", new String[]{conversation.idMatcher}, null, null, null);
+
+        long conversationId;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            conversationId = cursor.getLong(0);
+            updateConversation(conversationId, conversation.read, conversation.timestamp,
+                    conversation.snippet, MimeType.TEXT_PLAIN, false);
+            cursor.close();
+        } else {
             conversationId = insertConversation(conversation);
         }
 
