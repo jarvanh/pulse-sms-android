@@ -2,6 +2,7 @@ package xyz.klinker.messenger.util.media.parsers;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 
 import org.json.JSONObject;
 
@@ -53,9 +54,14 @@ public class YoutubeParser extends MediaParser {
             }
         }
 
-        JSONObject apiResponse = new UrlConnectionReader(buildUrlForVideo(videoId)).read();
+        JSONObject apiResponse = queryApi(videoId);
         YouTubePreview preview = YouTubePreview.build(apiResponse);
         return preview != null ? preview.toString() : null;
+    }
+
+    @VisibleForTesting
+    protected JSONObject queryApi(String videoId) {
+        return new UrlConnectionReader(buildUrlForVideo(videoId)).read();
     }
 
     public static String getVideoUriFromThumbnail(String thumbnail) {

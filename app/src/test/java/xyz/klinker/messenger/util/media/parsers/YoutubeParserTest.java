@@ -41,24 +41,7 @@ public class YoutubeParserTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void shouldParseBodyOfYoutubeLink() {
-        parser.canParse("https://www.youtube.com/watch?v=ohGXwX6zKow");
-        Message message = parser.parse(1);
-
-        assertThat(message.data, Matchers.is("https://img.youtube.com/vi/ohGXwX6zKow/0.jpg"));
-    }
-
-    @Test
-    public void shouldParseShortenedYoutubeLink() {
-        parser.canParse("https://www.youtu.be/ohGXwX6zKow");
-        Message message = parser.parse(1);
-
-        assertThat(message.data, Matchers.is("https://img.youtube.com/vi/ohGXwX6zKow/0.jpg"));
-    }
-
-    @Test
     public void shouldConvertThumbnailBackToVideoUri() {
-       
         assertThat(YoutubeParser.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/maxresdefault.jpg"),
                 Matchers.is("https://youtube.com/watch?v=ohGXwX6zKow"));
         assertThat(YoutubeParser.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/0.jpg"),
