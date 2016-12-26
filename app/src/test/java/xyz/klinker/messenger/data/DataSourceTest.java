@@ -325,7 +325,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getLatestMessage() {
-        when(database.query("message", null, null, null, null, null, "timestamp DESC", "1"))
+        when(database.query("message", null, null, null, null, null, "timestamp desc", "1"))
                 .thenReturn(cursor);
         when(cursor.moveToFirst()).thenReturn(true);
         assertNotNull(source.getLatestMessage());
