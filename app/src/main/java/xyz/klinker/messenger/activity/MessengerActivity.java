@@ -82,6 +82,7 @@ import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.service.ApiDownloadService;
+import xyz.klinker.messenger.service.NewMessagesCheckService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
 import xyz.klinker.messenger.util.ColorUtils;
@@ -130,6 +131,13 @@ public class MessengerActivity extends AppCompatActivity
     private DataSource dataSource;
 
     private BroadcastReceiver downloadReceiver;
+    private BroadcastReceiver refreshAllReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            recreate();
+        }
+    };
+
     public BillingHelper billing;
 
     private boolean loaded = false;
@@ -187,18 +195,18 @@ public class MessengerActivity extends AppCompatActivity
 
         TimeUtils.setupNightTheme(this);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
-                        otherFragment == null) {
-                    fab.show();
-                }
-
-                snoozeIcon();
+        new Handler().postDelayed(() -> {
+            if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
+                    otherFragment == null) {
+                fab.show();
             }
+
+            snoozeIcon();
         }, 1000);
 
+        new Handler().postDelayed(() -> {
+            startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
+        }, 3000);
 
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);
@@ -207,6 +215,10 @@ public class MessengerActivity extends AppCompatActivity
 
         handleShortcutIntent(getIntent());
         getIntent().setData(null);
+
+        registerReceiver(refreshAllReceiver,
+                new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
+
     }
 
     @Override
@@ -221,6 +233,10 @@ public class MessengerActivity extends AppCompatActivity
         MessengerAppWidgetProvider.refreshWidget(this);
 
         NotificationService.CONVERSATION_ID_OPEN = 0L;
+
+        try {
+            unregisterReceiver(refreshAllReceiver);
+        } catch (Exception e) { }
     }
 
     @Override
@@ -1124,23 +1140,20 @@ public class MessengerActivity extends AppCompatActivity
     }
 
     public void startDataDownload() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                downloadReceiver = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        recreate();
-                    }
-                };
+        new Handler().postDelayed(() -> {
+            downloadReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    recreate();
+                }
+            };
 
-                registerReceiver(downloadReceiver,
-                        new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+            registerReceiver(downloadReceiver,
+                    new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
 
-                startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
+            startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
 
-                showSnackbar(getString(R.string.downloading_and_decrypting), Snackbar.LENGTH_LONG, null, null);
-            }
+            showSnackbar(getString(R.string.downloading_and_decrypting), Snackbar.LENGTH_LONG, null, null);
         }, 1000);
     }
 

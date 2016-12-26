@@ -61,6 +61,10 @@ public class ContentObserverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (FeatureFlags.get(this).BRING_IN_NEW_MESSAGES) {
+            return super.onStartCommand(intent, flags, startId);
+        }
+
         Log.v("ContentObserverService", "starting content observer service");
         if (observer == null && Account.get(this).primary) {
             observer = new SmsContentObserver(this, new Handler());

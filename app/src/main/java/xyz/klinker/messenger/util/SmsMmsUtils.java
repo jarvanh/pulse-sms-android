@@ -110,6 +110,63 @@ public class SmsMmsUtils {
     }
 
     /**
+     * Gets a list of conversations from the internal sms database with conversations that are newer
+     * than the given time.
+     *
+     * @param context the current application context.
+     * @param latestTimestamp the time that we want to start at.
+     * @return a list of conversations that is filled and ready to be inserted into our database.
+     */
+    public static List<Conversation> queryNewConversations(Context context, long latestTimestamp) {
+        List<Conversation> conversations = new ArrayList<>();
+
+        String[] projection = new String[]{
+                Telephony.ThreadsColumns._ID,
+                Telephony.ThreadsColumns.DATE,
+                Telephony.ThreadsColumns.MESSAGE_COUNT,
+                Telephony.ThreadsColumns.RECIPIENT_IDS,
+                Telephony.ThreadsColumns.SNIPPET,
+                Telephony.ThreadsColumns.READ
+        };
+
+        Uri uri = Uri.parse(Telephony.Threads.CONTENT_URI.toString() + "?simple=true");
+
+        Cursor cursor = context.getContentResolver()
+                .query(uri, projection, Telephony.ThreadsColumns.DATE + ">?",
+                        new String[] {String.valueOf(latestTimestamp)},
+                        Telephony.ThreadsColumns.DATE + " desc");
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Conversation conversation = new Conversation();
+                conversation.id = cursor.getLong(0);
+                conversation.pinned = false;
+                conversation.read = cursor.getInt(5) == 1;
+                conversation.timestamp = cursor.getLong(1);
+                conversation.snippet = cursor.getString(4);
+                conversation.ringtoneUri = null;
+                conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
+                conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
+                conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
+                conversation.mute = false;
+                conversation.privateNotifications = false;
+                conversation.ledColor = Color.WHITE;
+                ImageUtils.fillConversationColors(conversation, context);
+                conversation.simSubscriptionId = -1;
+
+                conversations.add(conversation);
+            } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);
+        }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
+
+        return conversations;
+    }
+
+    /**
      * Creates a column that we can use later on for a findOrCreateConversationId method on my
      * database. It will take all of the comma, space separated numbers and combine them together
      * by taking the last 5 digits of each number, sorting them and then recombining them into a

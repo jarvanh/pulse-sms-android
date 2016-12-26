@@ -101,27 +101,24 @@ public class ApiUploadService extends Service {
                 .build();
         NotificationManagerCompat.from(this).notify(MESSAGE_UPLOAD_ID, notification);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                account = Account.get(getApplicationContext());
-                apiUtils = new ApiUtils();
-                encryptionUtils = account.getEncryptor();
-                source = DataSource.getInstance(getApplicationContext());
-                source.open();
+        new Thread(() -> {
+            account = Account.get(getApplicationContext());
+            apiUtils = new ApiUtils();
+            encryptionUtils = account.getEncryptor();
+            source = DataSource.getInstance(getApplicationContext());
+            source.open();
 
-                long startTime = System.currentTimeMillis();
-                uploadMessages();
-                uploadConversations();
-                uploadContacts();
-                uploadBlacklists();
-                uploadScheduledMessages();
-                uploadDrafts();
-                Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
+            long startTime = System.currentTimeMillis();
+            uploadMessages();
+            uploadConversations();
+            uploadContacts();
+            uploadBlacklists();
+            uploadScheduledMessages();
+            uploadDrafts();
+            Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
 
-                NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_UPLOAD_ID);
-                uploadMedia();
-            }
+            NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_UPLOAD_ID);
+            uploadMedia();
         }).start();
     }
 
@@ -418,7 +415,7 @@ public class ApiUploadService extends Service {
         stopSelf();
     }
 
-    private boolean noNull(List list) {
+    public static boolean noNull(List list) {
         for (Object o : list) {
             if (o == null) {
                 return false;

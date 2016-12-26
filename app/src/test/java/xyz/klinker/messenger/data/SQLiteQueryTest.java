@@ -394,6 +394,11 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void getLatestMessage() {
+        assertNotNull(source.getLatestMessage());
+    }
+
+    @Test
     public void getMessageNull() {
         assertNull(source.getMessage(100L));
     }

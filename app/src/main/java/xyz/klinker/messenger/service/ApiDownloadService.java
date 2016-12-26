@@ -101,39 +101,36 @@ public class ApiDownloadService extends Service {
                 .build();
         NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                IS_RUNNING = true;
+        new Thread(() -> {
+            IS_RUNNING = true;
 
-                account = Account.get(getApplicationContext());
+            account = Account.get(getApplicationContext());
 
-                apiUtils = new ApiUtils();
-                encryptionUtils = account.getEncryptor();
-                source = DataSource.getInstance(getApplicationContext());
-                source.open();
-                source.setUpload(false);
-                source.beginTransaction();
+            apiUtils = new ApiUtils();
+            encryptionUtils = account.getEncryptor();
+            source = DataSource.getInstance(getApplicationContext());
+            source.open();
+            source.setUpload(false);
+            source.beginTransaction();
 
-                long startTime = System.currentTimeMillis();
-                wipeDatabase();
-                downloadMessages();
-                downloadConversations();
-                downloadBlacklists();
-                downloadScheduledMessages();
-                downloadDrafts();
-                downloadContacts();
-                Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms");
+            long startTime = System.currentTimeMillis();
+            wipeDatabase();
+            downloadMessages();
+            downloadConversations();
+            downloadBlacklists();
+            downloadScheduledMessages();
+            downloadDrafts();
+            downloadContacts();
+            Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms");
 
-                sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
-                NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
-                source.setTransactionSuccessful();
-                source.setUpload(true);
-                source.endTransaction();
-                downloadMedia();
+            sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
+            NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
+            source.setTransactionSuccessful();
+            source.setUpload(true);
+            source.endTransaction();
+            downloadMedia();
 
-                IS_RUNNING = false;
-            }
+            IS_RUNNING = false;
         }).start();
     }
 
@@ -357,18 +354,12 @@ public class ApiDownloadService extends Service {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         Executor executor = new DirectExecutor();
         auth.signInAnonymously()
-                .addOnSuccessListener(executor, new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        processMediaDownload(manager, builder);
-                    }
+                .addOnSuccessListener(executor, authResult -> {
+                    processMediaDownload(manager, builder);
                 })
-                .addOnFailureListener(executor, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "failed to sign in to firebase", e);
-                        finishMediaDownload(manager);
-                    }
+                .addOnFailureListener(executor, e -> {
+                    Log.e(TAG, "failed to sign in to firebase", e);
+                    finishMediaDownload(manager);
                 });
     }
 

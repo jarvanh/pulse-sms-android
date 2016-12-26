@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.provider.Telephony;
 import android.support.annotation.VisibleForTesting;
 import android.text.Html;
 import android.text.Spanned;
@@ -629,6 +630,57 @@ public class DataSource {
     }
 
     /**
+     * The user has been away from the app for awhile and the attached conversation/message list is
+     * marked as newer than what is currently in our database. If the conversation already exists,
+     * add the messages to it, otherwise, create the conversation and add the messages to that
+     * created conversation.
+     *
+     * @param conversation Conversation from the internal database.
+     * @param messages message from the internal database.
+     *
+     * @return conversationId conversation id from Pulse's database.
+     */
+    public long insertNewMessages(Conversation conversation, long timestamp, Cursor messages) {
+        Long databaseConversationId = findConversationId(conversation.phoneNumbers);
+        if (databaseConversationId == null) {
+            databaseConversationId = insertConversation(conversation);
+        }
+
+        beginTransaction();
+
+        if (databaseConversationId != -1 && messages != null) {
+            if (messages.moveToFirst()) {
+                do {
+                    if (messages.getLong(messages.getColumnIndex(Telephony.Sms.DATE)) > timestamp) {
+                        List<ContentValues> valuesList =
+                                SmsMmsUtils.processMessage(messages, databaseConversationId, context);
+                        if (valuesList != null) {
+                            for (ContentValues value : valuesList) {
+                                database.insert(Message.TABLE, null, value);
+                            }
+                        }
+                    } else {
+                        break;
+                    }
+                } while (messages.moveToNext() && messages.getPosition() < SmsMmsUtils.INITIAL_MESSAGE_LIMIT);
+            }
+
+            try {
+                messages.close();
+            } catch (Exception e) { }
+        } else if (messages != null) {
+            try {
+                messages.close();
+            } catch (Exception e) { }
+        }
+
+        setTransactionSuccessful();
+        endTransaction();
+
+        return databaseConversationId;
+    }
+
+    /**
      * Inserts a conversation into the database.
      *
      * @param conversation the conversation to insert.
@@ -1227,6 +1279,26 @@ public class DataSource {
     }
 
     /**
+     * Gets the latest message in the database.
+     */
+    public Message getLatestMessage() {
+        ensureActionable();
+        Cursor cursor = database.query(Message.TABLE, null, null,
+                null, null, null, Message.COLUMN_TIMESTAMP + " desc", "1");
+        if (cursor.moveToFirst()) {
+            Message message = new Message();
+            message.fillFromCursor(cursor);
+            cursor.close();
+            return message;
+        } else {
+            try {
+                cursor.close();
+            } catch (Exception e) { }
+            return null;
+        }
+    }
+
+    /**
      * Gets all messages in the database where mime type is not text/plain.
      */
     public Cursor getAllMediaMessages(int limit) {
@@ -1286,6 +1358,16 @@ public class DataSource {
         ensureActionable();
         return database.query(Message.TABLE, null, null, null, null, null,
                 Message.COLUMN_TIMESTAMP + " asc");
+    }
+
+    /**
+     * Gets all messages in the database, never than the given time
+     */
+    public Cursor getNewerMessages(long timestamp) {
+        ensureActionable();
+        return database.query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + ">?",
+                new String[] {String.valueOf(timestamp)}, null, null,
+                Message.COLUMN_TIMESTAMP + " desc");
     }
 
     /**
