@@ -58,11 +58,11 @@ public class NewMessagesCheckService extends IntentService {
         SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
         long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
 
-        if (lastMessage.timestamp > lastTimestamp) {
-            lastTimestamp = lastMessage.timestamp;
-        }
-
         if (lastTimestamp != -1L) {
+            if (lastMessage != null && lastMessage.timestamp > lastTimestamp) {
+                lastTimestamp = lastMessage.timestamp;
+            }
+
             int insertedMessages = 0;
             List<Conversation> conversationsWithNewMessages =
                     SmsMmsUtils.queryNewConversations(this, lastTimestamp + TIMESTAMP_BUFFER);
@@ -89,14 +89,17 @@ public class NewMessagesCheckService extends IntentService {
             }
 
             NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
-
-            // conversations will have been uploaded already, but we need to upload any messages
-            // newer than that timestamp.
-            uploadMessages(lastTimestamp);
         }
 
         source.close();
         sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
+
+        if (lastTimestamp != -1L) {
+            // do this after closing the database, becuase it will reopen it
+            // conversations will have been uploaded already, but we need to upload any messages
+            // newer than that timestamp.
+            uploadMessages(lastTimestamp);
+        }
     }
 
     private NotificationCompat.Builder showNotification() {

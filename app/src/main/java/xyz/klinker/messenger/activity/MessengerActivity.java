@@ -174,10 +174,6 @@ public class MessengerActivity extends AppCompatActivity
                 startActivity(login);
                 finish();
             }
-        } else {
-            new Handler().postDelayed(() -> {
-                startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
-            }, 3000);
         }
 
         new UpdateUtils(this).checkForUpdate();
@@ -217,6 +213,9 @@ public class MessengerActivity extends AppCompatActivity
         registerReceiver(refreshAllReceiver,
                 new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
 
+        new Handler().postDelayed(() -> {
+            startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
+        }, 3500);
     }
 
     @Override
