@@ -51,8 +51,16 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
+        DataSource source = DataSource.getInstance(this);
+        source.open();
+
+        Message lastMessage = source.getLatestMessage();
         SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
         long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
+
+        if (lastMessage.timestamp > lastTimestamp) {
+            lastTimestamp = lastMessage.timestamp;
+        }
 
         if (lastTimestamp != -1L) {
             int insertedMessages = 0;
@@ -64,9 +72,6 @@ public class NewMessagesCheckService extends IntentService {
 
                 int progress = 1;
 
-                DataSource source = DataSource.getInstance(this);
-                source.open();
-
                 for (Conversation conversation : conversationsWithNewMessages) {
                     if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty()) {
                         insertedMessages = source.insertNewMessages(conversation, lastTimestamp + TIMESTAMP_BUFFER,
@@ -77,8 +82,6 @@ public class NewMessagesCheckService extends IntentService {
 
                     progress++;
                 }
-
-                source.close();
 
                 if (insertedMessages > 0) {
                     sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
@@ -92,6 +95,7 @@ public class NewMessagesCheckService extends IntentService {
             uploadMessages(lastTimestamp);
         }
 
+        source.close();
         sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
     }
 
