@@ -215,7 +215,7 @@ public class MessengerActivity extends AppCompatActivity
 
         new Handler().postDelayed(() -> {
             startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
-        }, 3500);
+        }, 3000);
     }
 
     @Override
