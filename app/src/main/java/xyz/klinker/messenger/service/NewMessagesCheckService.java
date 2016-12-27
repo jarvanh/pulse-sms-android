@@ -3,6 +3,7 @@ package xyz.klinker.messenger.service;
 import android.app.IntentService;
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -35,7 +36,7 @@ import xyz.klinker.messenger.util.SmsMmsUtils;
 public class NewMessagesCheckService extends IntentService {
 
     private static final String TAG = "NewMessageCheck";
-    private static final long TIMESTAMP_BUFFER = 2000;
+    private static final long TIMESTAMP_BUFFER = 15000;
 
     public static final String REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST";
     public static final int MESSAGE_CHECKING_ID = 6435;
@@ -50,23 +51,25 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
+        long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
 
-        Message message = source.getLatestMessage();
-
-        int insertedMessages = 0;
-        if (message != null) {
+        if (lastTimestamp != -1L) {
+            int insertedMessages = 0;
             List<Conversation> conversationsWithNewMessages =
-                    SmsMmsUtils.queryNewConversations(this, message.timestamp + TIMESTAMP_BUFFER);
+                    SmsMmsUtils.queryNewConversations(this, lastTimestamp + TIMESTAMP_BUFFER);
 
             if (conversationsWithNewMessages.size() > 0) {
                 NotificationCompat.Builder builder = showNotification();
 
                 int progress = 1;
+
+                DataSource source = DataSource.getInstance(this);
+                source.open();
+
                 for (Conversation conversation : conversationsWithNewMessages) {
                     if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty()) {
-                        insertedMessages = source.insertNewMessages(conversation, message.timestamp + TIMESTAMP_BUFFER,
+                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp + TIMESTAMP_BUFFER,
                                 SmsMmsUtils.queryConversation(conversation.id, this));
                         builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
                         NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
@@ -75,21 +78,21 @@ public class NewMessagesCheckService extends IntentService {
                     progress++;
                 }
 
+                source.close();
+
                 if (insertedMessages > 0) {
                     sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
                 }
             }
 
             NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
-        }
 
-        source.close();
-
-        if (message != null) {
             // conversations will have been uploaded already, but we need to upload any messages
             // newer than that timestamp.
-            uploadMessages(message.timestamp);
+            uploadMessages(lastTimestamp);
         }
+
+        sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
     }
 
     private NotificationCompat.Builder showNotification() {

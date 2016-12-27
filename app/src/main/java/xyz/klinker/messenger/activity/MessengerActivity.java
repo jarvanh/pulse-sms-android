@@ -140,8 +140,6 @@ public class MessengerActivity extends AppCompatActivity
 
     public BillingHelper billing;
 
-    private boolean loaded = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,7 +161,7 @@ public class MessengerActivity extends AppCompatActivity
             boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
                     DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
-            boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);//&& hasSim;
+            boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);
             if (hasPhoneFeature) {
                 startActivityForResult(
                         new Intent(this, OnboardingActivity.class),
@@ -176,6 +174,10 @@ public class MessengerActivity extends AppCompatActivity
                 startActivity(login);
                 finish();
             }
+        } else {
+            new Handler().postDelayed(() -> {
+                startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
+            }, 3000);
         }
 
         new UpdateUtils(this).checkForUpdate();
@@ -203,10 +205,6 @@ public class MessengerActivity extends AppCompatActivity
 
             snoozeIcon();
         }, 1000);
-
-        new Handler().postDelayed(() -> {
-            startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
-        }, 3000);
 
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);
