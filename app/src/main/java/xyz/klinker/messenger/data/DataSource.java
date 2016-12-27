@@ -638,11 +638,12 @@ public class DataSource {
      * @param conversation Conversation from the internal database.
      * @param messages message from the internal database.
      *
-     * @return conversationId conversation id from Pulse's database.
+     * @return number of messages inserted
      */
-    public long insertNewMessages(Conversation conversation, long timestamp, Cursor messages) {
+    public int insertNewMessages(Conversation conversation, long timestamp, Cursor messages) {
         Long databaseConversationId = updateOrCreateConversation(conversation);
 
+        int insertedMessages = 0;
         beginTransaction();
 
         if (databaseConversationId != -1 && messages != null) {
@@ -654,6 +655,7 @@ public class DataSource {
                         if (valuesList != null) {
                             for (ContentValues value : valuesList) {
                                 database.insert(Message.TABLE, null, value);
+                                insertedMessages++;
                             }
                         }
                     } else {
@@ -674,7 +676,7 @@ public class DataSource {
         setTransactionSuccessful();
         endTransaction();
 
-        return databaseConversationId;
+        return insertedMessages;
     }
 
     /**

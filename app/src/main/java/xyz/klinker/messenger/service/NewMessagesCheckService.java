@@ -55,6 +55,7 @@ public class NewMessagesCheckService extends IntentService {
 
         Message message = source.getLatestMessage();
 
+        int insertedMessages = 0;
         if (message != null) {
             List<Conversation> conversationsWithNewMessages =
                     SmsMmsUtils.queryNewConversations(this, message.timestamp + TIMESTAMP_BUFFER);
@@ -64,15 +65,19 @@ public class NewMessagesCheckService extends IntentService {
 
                 int progress = 1;
                 for (Conversation conversation : conversationsWithNewMessages) {
-                    long insertedConversationId = source.insertNewMessages(conversation, message.timestamp + TIMESTAMP_BUFFER,
-                            SmsMmsUtils.queryConversation(conversation.id, this));
-                    builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
-                    NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
+                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty()) {
+                        insertedMessages = source.insertNewMessages(conversation, message.timestamp + TIMESTAMP_BUFFER,
+                                SmsMmsUtils.queryConversation(conversation.id, this));
+                        builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
+                        NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
+                    }
 
                     progress++;
                 }
-                
-                sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+
+                if (insertedMessages > 0) {
+                    sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+                }
             }
 
             NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
