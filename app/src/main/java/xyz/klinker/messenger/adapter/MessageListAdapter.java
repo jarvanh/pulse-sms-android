@@ -205,15 +205,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
-                        .setToolbarColor(receivedColor)
-                        .setAccentColor(accentColor)
-                        .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
-                                ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                        .setTextSize(Settings.get(holder.itemView.getContext()).mediumFont + 1)
-                        .build();
+                if (clickedText.contains("youtube")) {
+                    Intent url = new Intent(Intent.ACTION_VIEW);
+                    url.setData(Uri.parse(clickedText));
+                    holder.itemView.getContext().startActivity(url);
+                } else {
+                    ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
+                            .setToolbarColor(receivedColor)
+                            .setAccentColor(accentColor)
+                            .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
+                                    ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                            .setTextSize(Settings.get(holder.itemView.getContext()).mediumFont + 1)
+                            .build();
 
-                intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
+                    intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
+                }
             });
 
             Link phoneNumbers = new Link(Regex.PHONE);

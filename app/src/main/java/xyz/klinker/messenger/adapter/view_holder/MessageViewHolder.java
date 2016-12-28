@@ -423,17 +423,23 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private void startArticle() {
-        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
-                .setToolbarColor(primaryColor)
-                .setAccentColor(accentColor)
-                .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
-                        ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
-                .build();
+        if (data.contains("youtube")) {
+            Intent url = new Intent(Intent.ACTION_VIEW);
+            url.setData(Uri.parse(data));
+            itemView.getContext().startActivity(url);
+        } else {
+            ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
+                    .setToolbarColor(primaryColor)
+                    .setAccentColor(accentColor)
+                    .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
+                            ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
+                    .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
+                    .build();
 
-        ArticlePreview preview = ArticlePreview.build(data);
-        if (preview != null) {
-            intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+            ArticlePreview preview = ArticlePreview.build(data);
+            if (preview != null) {
+                intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+            }
         }
     }
 }
