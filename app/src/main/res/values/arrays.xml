@@ -121,6 +121,7 @@
 
     <string-array name="delayed_sending">
         <item>@string/off</item>
+        <item>@string/one_second</item>
         <item>@string/three_seconds</item>
         <item>@string/five_seconds</item>
         <item>@string/ten_seconds</item>
@@ -131,6 +132,7 @@
 
     <string-array name="delayed_sending_values">
         <item>off</item>
+        <item>one_second</item>
         <item>three_seconds</item>
         <item>five_seconds</item>
         <item>ten_seconds</item>

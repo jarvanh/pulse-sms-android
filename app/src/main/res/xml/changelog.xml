@@ -18,6 +18,12 @@
 
     <version
         name="1.13.2"
+        description="December 31st, 2016">
+        <text>Add a one second delayed timeout</text>
+    </version>
+
+    <version
+        name="1.13.2"
         description="December 28th, 2016">
         <text>Fix some issues around keeping database up to date, after using other apps.</text>
     </version>
