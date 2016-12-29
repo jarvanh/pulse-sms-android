@@ -47,6 +47,7 @@ public class FeatureFlags {
     private static final String FLAG_CLEANUP_OLD = "flag_cleanup_old";
     private static final String FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL = "flag_global_group_colors";
     private static final String FLAG_BRING_IN_NEW_MESSAGES = "flag_bring_new_messages";
+    private static final String FLAG_BRING_IN_NEW_MESSAGES_2 = "flag_bring_new_messages_2";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -78,7 +79,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
-        BRING_IN_NEW_MESSAGES = getValue(sharedPrefs, FLAG_BRING_IN_NEW_MESSAGES);
+        BRING_IN_NEW_MESSAGES = getValue(sharedPrefs, FLAG_BRING_IN_NEW_MESSAGES_2);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -103,7 +104,7 @@ public class FeatureFlags {
             case FLAG_CLEANUP_OLD:
                 CLEANUP_OLD_MESSAGES = flag;
                 break;
-            case FLAG_BRING_IN_NEW_MESSAGES:
+            case FLAG_BRING_IN_NEW_MESSAGES_2:
                 BRING_IN_NEW_MESSAGES = flag;
                 break;
         }
