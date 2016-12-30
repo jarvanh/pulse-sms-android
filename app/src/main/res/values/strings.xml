@@ -216,6 +216,7 @@
     <string name="you">You</string>
     <string name="new_message">New Message</string>
     <string name="received_new_message">You received a new text!</string>
+    <string name="media">Media</string>
 
 
     <!-- About, Help and Feedback and Settings -->

@@ -232,6 +232,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
             string += "<i>" + getString(R.string.picture_message) + "</i>";
         } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
             string += "<i>" + getString(R.string.gif_message) + "</i>";
+        } else if (MimeType.isExpandedMedia(message.mimeType)) {
+            string += "<i>" + getString(R.string.media) + "</i>";
         } else {
             string += message.data;
         }
