@@ -748,12 +748,12 @@ public class NotificationService extends IntentService {
 
                 if (globalUri == null || globalUri.isEmpty()) {
                     return null;
-                } if (!ringtoneExists(context, globalUri)) {
-                    // there is no global ringtone defined, or it doesn't exist on the system
-                    return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                } else {
+                } if (ringtoneExists(context, globalUri)) {
                     // the global ringtone is available to use
                     return Uri.parse(globalUri);
+                } else {
+                    // there is no global ringtone defined, or it doesn't exist on the system
+                    return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 }
             } else {
                 if (conversationRingtone.isEmpty()) {
