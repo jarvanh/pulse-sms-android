@@ -28,6 +28,8 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import xyz.klinker.messenger.api.implementation.Account;
+
 public class MessengerFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FCMService";
@@ -59,6 +61,18 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
         if (!prefs.contains("subscribed_to_feature_flag")) {
             prefs.edit().putBoolean("subscribed_to_feature_flag", true).commit();
             FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
+        }
+    }
+
+    @Override
+    public void onDeletedMessages() {
+        Log.v(TAG, "deleted FCM messages");
+
+        if (!Account.get(this).primary) {
+            final Intent handleMessage = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
+            handleMessage.setComponent(new ComponentName("xyz.klinker.messenger",
+                    "xyz.klinker.messenger" + ".service.FirebaseResetService"));
+            startService(handleMessage);
         }
     }
 

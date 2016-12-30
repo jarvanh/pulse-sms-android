@@ -70,6 +70,7 @@ public class ApiDownloadService extends Service {
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
     public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 500;
+    public static final String ARG_SHOW_NOTIFICATION = "show_notification";
 
     public static boolean IS_RUNNING = false;
 
@@ -77,6 +78,8 @@ public class ApiDownloadService extends Service {
     private ApiUtils apiUtils;
     private EncryptionUtils encryptionUtils;
     private DataSource source;
+
+    private boolean showNotification = true;
 
     @Nullable
     @Override
@@ -86,6 +89,7 @@ public class ApiDownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        showNotification = intent.getBooleanExtra(ARG_SHOW_NOTIFICATION, true);
         downloadData();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -99,7 +103,10 @@ public class ApiDownloadService extends Service {
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setOngoing(true)
                 .build();
-        NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
+
+        if (showNotification) {
+            NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
+        }
 
         new Thread(() -> {
             IS_RUNNING = true;
@@ -349,7 +356,10 @@ public class ApiDownloadService extends Service {
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
-        manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+
+        if (showNotification) {
+            manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+        }
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         Executor executor = new DirectExecutor();
@@ -389,7 +399,10 @@ public class ApiDownloadService extends Service {
                 apiUtils.downloadFileFromFirebaseSynchronously(file, message.id, encryptionUtils);
                 source.updateMessageData(message.id, Uri.fromFile(file).toString());
                 builder.setProgress(media.getCount(), media.getPosition(), false);
-                manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+
+                if (showNotification) {
+                    manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+                }
             } while (media.moveToNext());
         }
 

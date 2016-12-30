@@ -48,6 +48,7 @@ public class FeatureFlags {
     private static final String FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL = "flag_global_group_colors";
     private static final String FLAG_BRING_IN_NEW_MESSAGES = "flag_bring_new_messages";
     private static final String FLAG_BRING_IN_NEW_MESSAGES_2 = "flag_bring_new_messages_3";
+    private static final String FLAG_DELETED_NOTIFICATION_FCM = "flag_fcm_deleted_notification";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -67,6 +68,7 @@ public class FeatureFlags {
     public boolean QUICK_COMPOSE;
     public boolean CLEANUP_OLD_MESSAGES;
     public boolean BRING_IN_NEW_MESSAGES;
+    public boolean DELETED_FCM_NOTIFICATION;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -80,6 +82,7 @@ public class FeatureFlags {
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
         BRING_IN_NEW_MESSAGES = getValue(sharedPrefs, FLAG_BRING_IN_NEW_MESSAGES_2);
+        DELETED_FCM_NOTIFICATION = getValue(sharedPrefs, FLAG_DELETED_NOTIFICATION_FCM);
     }
 
     public void updateFlag(String identifier, boolean flag) {
