@@ -68,7 +68,8 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 public class NotificationService extends IntentService {
 
     protected static final boolean DEBUG_QUICK_REPLY = false;
-
+    protected static final boolean AUTO_CANCEL = false;
+    
     public static Long CONVERSATION_ID_OPEN = 0L;
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
@@ -218,7 +219,7 @@ public class NotificationService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setDefaults(defaults)
@@ -380,7 +381,7 @@ public class NotificationService extends IntentService {
                         conversation.messages.size(), conversation.messages.size()))
                 .setLargeIcon(contactImage)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
@@ -654,7 +655,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
@@ -676,7 +677,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
