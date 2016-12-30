@@ -1,1 +1,1 @@
-This release adds a new "MMS Configuration" section that can be accessed from the "Global Settings" three dot overflow. It also improves the styling of YouTube previews in conversations and fixes some bugs around rotating sent images.
+This beta version fixes a ton of little bugs that had been reported. Please see the changelog in settings for a full list of bugs for this version.
