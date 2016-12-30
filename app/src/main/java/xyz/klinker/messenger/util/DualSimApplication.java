@@ -32,8 +32,7 @@ public class DualSimApplication {
     public void apply(final long conversationId) {
         boolean visible = false;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1 &&
-                (!Account.get(context).exists() || Account.get(context).primary)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             final List<SubscriptionInfo> subscriptions = DualSimUtils.get(context).getAvailableSims();
 
             if (subscriptions != null && subscriptions.size() > 1) {
@@ -88,25 +87,22 @@ public class DualSimApplication {
 
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.select_sim))
-                .setSingleChoiceItems(active, selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i == 0) {
-                            conversation.simSubscriptionId = -1;
-                            badger.setText("1");
-                        } else {
-                            conversation.simSubscriptionId =
-                                    subscriptions.get(i - 1).getSubscriptionId();
-                            badger.setText("" + i);
-                        }
-
-                        DataSource source = DataSource.getInstance(context);
-                        source.open();
-                        source.updateConversationSettings(conversation);
-                        source.close();
-
-                        dialogInterface.dismiss();
+                .setSingleChoiceItems(active, selected, (dialogInterface, i) -> {
+                    if (i == 0) {
+                        conversation.simSubscriptionId = -1;
+                        badger.setText("1");
+                    } else {
+                        conversation.simSubscriptionId =
+                                subscriptions.get(i - 1).getSubscriptionId();
+                        badger.setText("" + i);
                     }
+
+                    DataSource source = DataSource.getInstance(context);
+                    source.open();
+                    source.updateConversationSettings(conversation);
+                    source.close();
+
+                    dialogInterface.dismiss();
                 }).show();
     }
 

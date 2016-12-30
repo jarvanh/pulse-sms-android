@@ -195,7 +195,7 @@ public class Account {
     }
 
     public boolean exists() {
-        return accountId != null && deviceId != null && salt != null && passhash != null
+        return accountId != null && !accountId.isEmpty() && deviceId != null && salt != null && passhash != null
                 && key != null;
     }
 }

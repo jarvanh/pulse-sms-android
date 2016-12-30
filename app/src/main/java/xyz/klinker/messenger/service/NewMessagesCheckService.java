@@ -47,7 +47,8 @@ public class NewMessagesCheckService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (!FeatureFlags.get(this).BRING_IN_NEW_MESSAGES || ApiDownloadService.IS_RUNNING) {
+        if (!FeatureFlags.get(this).BRING_IN_NEW_MESSAGES || ApiDownloadService.IS_RUNNING ||
+                (Account.get(this).exists() && !Account.get(this).primary)) {
             return;
         }
 

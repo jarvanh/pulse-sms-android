@@ -228,10 +228,10 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         if (MimeType.isExpandedMedia(message.mimeType)) {
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
                 YouTubePreview preview = YouTubePreview.build(message.data);
-                return preview != null ? preview.url + "\n" + preview.title : "";
+                return preview != null ? preview.url + "\n\n" + preview.title : "";
             } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
                 ArticlePreview preview = ArticlePreview.build(message.data);
-                return preview != null ? preview.webUrl + "\n" + preview.title : "";
+                return preview != null ? preview.webUrl + "\n\n" + preview.title : "";
             }
         }
 
