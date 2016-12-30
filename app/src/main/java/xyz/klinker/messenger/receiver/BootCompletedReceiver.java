@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
 import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 import xyz.klinker.messenger.service.ContactSyncService;
 import xyz.klinker.messenger.service.ContentObserverRunCheckService;
@@ -46,6 +47,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             ContactSyncService.scheduleNextRun(context);
             SubscriptionExpirationCheckService.scheduleNextRun(context);
             SignoutService.scheduleNextRun(context);
+            ScheduledTokenRefreshService.scheduleNextRun(context);
         }
     }
 

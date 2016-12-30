@@ -20,6 +20,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.service.ContactSyncService;
@@ -72,6 +73,7 @@ public class UpdateUtils {
         ContactSyncService.scheduleNextRun(context);
         SubscriptionExpirationCheckService.scheduleNextRun(context);
         SignoutService.scheduleNextRun(context);
+        ScheduledTokenRefreshService.scheduleNextRun(context);
 
         context.startService(new Intent(context, ForceTokenRefreshService.class));
     }
