@@ -24,6 +24,9 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.ArticlePreview;
+import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.YouTubePreview;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment;
@@ -137,7 +140,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                 ClipboardManager clipboard = (ClipboardManager)
                         fragment.getActivity().getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("messenger",
-                        message.data.toString());
+                        getMessageContent(message));
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(fragment.getActivity(), R.string.message_copied_to_clipboard,
                         Toast.LENGTH_SHORT).show();
@@ -219,5 +222,19 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         }
 
         return result;
+    }
+
+    public static String getMessageContent(Message message) {
+        if (MimeType.isExpandedMedia(message.mimeType)) {
+            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                YouTubePreview preview = YouTubePreview.build(message.data);
+                return preview != null ? preview.url + "\n" + preview.title : "";
+            } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                ArticlePreview preview = ArticlePreview.build(message.data);
+                return preview != null ? preview.webUrl + "\n" + preview.title : "";
+            }
+        }
+
+        return message.data;
     }
 }

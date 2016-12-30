@@ -15,6 +15,7 @@ import android.widget.Toast;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -33,7 +34,7 @@ public class MessageShareFragment extends TabletOptimizedBottomSheetDialogFragme
         shareExternal.setOnClickListener(view -> {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, MessageMultiSelectDelegate.getMessageContent(message));
             shareIntent.setType(message.mimeType);
             getActivity().startActivity(Intent.createChooser(shareIntent,
                     getActivity().getResources().getText(R.string.share_content)));
@@ -44,7 +45,7 @@ public class MessageShareFragment extends TabletOptimizedBottomSheetDialogFragme
         forwardToContact.setOnClickListener(view -> {
             Intent shareIntent = new Intent(getActivity(), ComposeActivity.class);
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, MessageMultiSelectDelegate.getMessageContent(message));
             shareIntent.setType(message.mimeType);
             getActivity().startActivity(shareIntent);
 
@@ -55,7 +56,7 @@ public class MessageShareFragment extends TabletOptimizedBottomSheetDialogFragme
             ClipboardManager clipboard = (ClipboardManager)
                     getActivity().getSystemService(CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("messenger",
-                    message.data.toString());
+                    MessageMultiSelectDelegate.getMessageContent(message));
             clipboard.setPrimaryClip(clip);
             Toast.makeText(getActivity(), R.string.message_copied_to_clipboard,
                     Toast.LENGTH_SHORT).show();
