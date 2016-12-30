@@ -29,6 +29,7 @@
     <string name="menu_invite">Zaproś znajomych</string>
     <string name="menu_feature_settings">Ustawienia zaawansowane</string>
     <string name="menu_settings">Ustawienia aplikacji</string>
+    <string name="menu_mms_configuration">Konfiguracja MMS</string>
     <string name="menu_account">Moje konto</string>
     <string name="menu_device_texting">Pisz z dowolnego urządzenia</string>
     <string name="menu_help">Pomoc i opinie</string>
@@ -258,6 +259,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="repeat_ten_mins">Co dziesięć minut</string>
     <string name="repeat_half_hour">Co pół godziny</string>
     <string name="repeat_hour">Co godzinę</string>
+    <string name="wake_screen">Wybudzanie ekranu</string>
     <string name="vibrate">Styl wibracji</string>
     <string name="vibrate_off">Brak wibracji</string>
     <string name="vibrate_default">Domyślna wibracja</string>
@@ -266,12 +268,15 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="vibrate_three_short">Trzy krótkie wibracje</string>
     <string name="vibrate_one_short_one_long">Krótka i długa wibracja</string>
     <string name="vibrate_one_long_one_short">Długa i krótka wibracja</string>
+    <string name="vibrate_one_short">Jedna krótka wibracja</string>
+    <string name="vibrate_one_long">Jedna długa wibracja</string>
     <string name="sound_effects">Dźwięki aplikacji</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
     <string name="theme_settings">Personalizacja</string>
     <string name="base_theme">Motyw podstawowy</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
+    <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
     <string name="add_blacklist">%1$s\n\nCzy jesteś pewien aby dodać ten numer do czarnej listy? Wiadomości przysłane z tego numeru nie będą już zapisywane i nie będziesz o nich informowany!</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
@@ -310,6 +315,15 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS</string>
     <string name="alert_types">Typy ostrzeżeń</string>
     <string name="alert_types_summary">Personalizacja powiadomień</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Maksymalna wielkość obrazu</string>
+    <string name="apn_configuration">Konfiguracja APN</string>
+    <string name="override_system_apn">Pomiń systemowe APNy</string>
+    <string name="mmsc_url">URL MMSC</string>
+    <string name="mms_proxy">Proxy MMS</string>
+    <string name="mms_port">port MMS</string>
+    <string name="user_agent">User Agent</string>
+    <string name="user_agent_profile_url">User agent - adres profilu</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Podpis</string>
     <string name="signature_summary">Informacja: wysłane podpisy NIE będą pokazywane na liście wiadomości Pulse. Podpisy będą jedynie widoczne dla odbiorcy wiadomości</string>
@@ -369,6 +383,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="conversation_with">Konwersacja z %1$s</string>
     <string name="send">Wyślij</string>
     <!-- Other -->
+    <string name="updating_database">Wyszukiwanie najnowszych wiadomości...</string>
     <string name="dashclock_description">Informacja o nieprzeczytanych SMS/MMS</string>
     <string name="default_text">Domyślny</string>
     <string name="did_you_know">Czy wiesz że?</string>
@@ -383,7 +398,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="minutes">Minuty</string>
     <string name="test">Test</string>
     <string name="off">Wyłącz</string>
+    <string name="on">Włączony</string>
     <!-- Times -->
+    <string name="one_second">1 sekunda</string>
+    <string name="three_seconds">Trzy sekundy</string>
     <string name="five_seconds">Pięć sekund</string>
     <string name="ten_seconds">Dziesięć sekund</string>
     <string name="fifteen_seconds">Piętnaście sekund</string>

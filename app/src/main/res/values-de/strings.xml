@@ -27,7 +27,9 @@
     <string name="menu_schedule">Geplante Nachrichten</string>
     <string name="menu_mute_contacts">Blockiert</string>
     <string name="menu_invite">Freunde einladen</string>
+    <string name="menu_feature_settings">Erweiterte Funktionen</string>
     <string name="menu_settings">Globale Einstellungen</string>
+    <string name="menu_mms_configuration">MMS Konfiguration</string>
     <string name="menu_account">Mein Account</string>
     <string name="menu_device_texting">Schreiben Sie SMS von jedem Gerät</string>
     <string name="menu_help">Hilfe &amp; Feedback</string>
@@ -54,6 +56,7 @@
     <string name="menu_snooze_8">8 Stunden</string>
     <string name="menu_snooze_24">24 Stunden</string>
     <string name="menu_snooze_72">72 Stunden</string>
+    <string name="menu_snooze_custom">Zeit auswählen</string>
     <!-- Empty Screen -->
     <string name="no_messages">Keine Nachrichten</string>
     <string name="no_messages_summary">Neue Unterhaltung starten, oder einfach den Tag genießen!</string>
@@ -204,6 +207,8 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="beta_disclaimer">Diese Projekt ist noch im Betastadium, bitte melden Sie Fehler, falls Sie welche finden!</string>
     <string name="faqs">FAQ</string>
     <string name="features">Features</string>
+    <string name="issues">Issue Tracker</string>
+    <string name="issues_summary">Dient auch für die Planung neuer Funktionen</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse Beta Community</string>
     <string name="email">E-Mail</string>
@@ -232,6 +237,14 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="ringtone">Klingelton</string>
     <string name="group_name">Gruppenname</string>
     <string name="notification_settings">Benachrichtigungen</string>
+    <string name="repeat_interval">Benachrichtigung wiederholen</string>
+    <string name="repeat_never">Nie</string>
+    <string name="repeat_one_min">Jede Minute</string>
+    <string name="repeat_five_mins">Alle fünf Minuten</string>
+    <string name="repeat_ten_mins">Alle zehn Minuten</string>
+    <string name="repeat_half_hour">Jede halbe Stunde</string>
+    <string name="repeat_hour">Jede Stunde</string>
+    <string name="wake_screen">Bildschirm aufwecken</string>
     <string name="vibrate">Vibrationsmuster</string>
     <string name="vibrate_off">Keine Vibration</string>
     <string name="vibrate_default">Standardvibration</string>
@@ -240,12 +253,15 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="vibrate_three_short">Drei kurze Vibrationen</string>
     <string name="vibrate_one_short_one_long">Eine lange, eine kurze Vibration</string>
     <string name="vibrate_one_long_one_short">Eine lange, eine kurze Vibration</string>
+    <string name="vibrate_one_short">Eine kurze Vibration</string>
+    <string name="vibrate_one_long">Eine lange Vibration</string>
     <string name="sound_effects">Soundeffekte</string>
     <string name="delivery_reports">Übertragungsberichte</string>
     <string name="theme_settings">Personalisierung</string>
     <string name="base_theme">Basisschema</string>
     <string name="global_theme_color">Schema-Farbe</string>
     <string name="font_size">Schriftgröße</string>
+    <string name="rounder_bubbles">Runde Nachrichten-Blasen</string>
     <string name="blacklist_hint">Nummer zum Blockieren eintippen...</string>
     <string name="add_blacklist">%1$s\n\nSind Sie sicher, dass diese Nummer blockiert werden soll? Nachrichten werden nicht länger gespeichert, wenn sie von dieser Nummer kommen, und sie werden nicht benachrichtigt!</string>
     <string name="remove_blacklist">%1$s\n\nDiese Blockierung aufheben?</string>
@@ -282,6 +298,27 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="advanced">Fortgeschritten</string>
     <string name="send_as_mms">In MMS konvertieren</string>
     <string name="send_as_mms_summary">Lange Nachrichten werden als MMS statt mehrerer SMS verschickt</string>
+    <string name="alert_types">Benachrichtigungstypen</string>
+    <string name="alert_types_summary">Benachrichtigungen personalisieren</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Maximale Bildgröße</string>
+    <string name="apn_configuration">APN Konfiguration</string>
+    <string name="override_system_apn">System-APN-Einstellungen überschreiben</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_proxy">MMS Proxy</string>
+    <string name="mms_port">MMS Port</string>
+    <string name="user_agent">User Agent</string>
+    <string name="user_agent_profile_url">User Agent Profil-URL</string>
+    <string name="user_agent_profile_tag">User Agent Profil Tag-Name</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Signatur</string>
+    <string name="signature_summary">ACHTUNG: Signaturen an gesendeten Nachrichten werden NICHT in der Nachrichtenliste von Pulse angezeigt. Nur die Empfänger werden die Signaturen sehen.</string>
+    <string name="cleanup_old_messages">Alte Nachrichten löschen</string>
+    <string name="delayed_sending">Verzögertes Senden</string>
+    <string name="quick_compose">Schnell Verfassen</string>
+    <string name="quick_compose_summary">Ständige Benachrichtigung, um sofort zum Verfassen-Fenster zu springen</string>
+    <string name="secure_private_conversations">Private Unterhaltungen sichern</string>
+    <string name="secure_private_conversations_summary">Benötige PIN, um private Unterhaltungen zu entsperren</string>
     <!-- Theming Options -->
     <string name="day_night">Standard (Tag/Nacht)</string>
     <string name="always_light">Immer Hell</string>
@@ -332,16 +369,35 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="conversation_with">Unterhaltung mit %1$s</string>
     <string name="send">Senden</string>
     <!-- Other -->
+    <string name="dashclock_description">Ungelesene SMS/MMS Information</string>
     <string name="default_text">Standard</string>
     <string name="did_you_know">Wussten Sie schon?</string>
-    <string name="use_from_anywhere">Pulse kann von jedem Gerät mit Internetverbindung aus genutzt werden -
-probieren Sie es jetzt aus!</string>
+    <string name="use_from_anywhere">Pulse kann auf jedem Gerät mit Internetverbindung genutzt werden -
+jetzt ausprobieren!</string>
     <string name="use_from_anywhere_short">Pulse kann von jedem Ihrer Geräte aus genutzt werden!</string>
     <string name="learn_more">Mehr erfahren</string>
     <string name="dismiss">Verwerfen</string>
     <string name="renew">Erneuern</string>
     <string name="no">Nein</string>
     <string name="cancel">Abbrechen</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
+    <string name="test">Test</string>
+    <string name="off">Aus</string>
+    <string name="on">Ein</string>
+    <!-- Times -->
+    <string name="three_seconds">Drei Sekunden</string>
+    <string name="five_seconds">Fünf Sekunden</string>
+    <string name="ten_seconds">Zehn Sekunden</string>
+    <string name="fifteen_seconds">15 Sekunden</string>
+    <string name="thirty_seconds">30 Sekunden</string>
+    <string name="one_minute">Eine Minute</string>
+    <string name="one_week">Eine Woche</string>
+    <string name="two_weeks">Zwei Wochen</string>
+    <string name="one_month">Ein Monat</string>
+    <string name="three_months">Drei Monate</string>
+    <string name="six_months">Sechs Monate</string>
+    <string name="one_year">Ein Jahr</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Kein Abo gefunden!</string>
     <string name="cancelled_subscription_error">Anscheinend haben Sie Ihr Abo gekündigt.
