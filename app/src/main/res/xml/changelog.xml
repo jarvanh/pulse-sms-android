@@ -20,6 +20,12 @@
         name="1.13.2"
         description="December 31st, 2016">
         <text>Add a one second delayed timeout</text>
+        <text>Fix: draft being deleted when you receive a message</text>
+        <text>Fix: some ringtone issues</text>
+        <text>Fix: sharing youtube/articles</text>
+        <text>Fix: calling contact from the archive list</text>
+        <text>Update translations</text>
+        <text>Update open source library list</text>
     </version>
 
     <version

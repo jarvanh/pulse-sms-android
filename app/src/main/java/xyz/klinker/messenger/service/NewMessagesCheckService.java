@@ -73,7 +73,8 @@ public class NewMessagesCheckService extends IntentService {
                 int progress = 1;
 
                 for (Conversation conversation : conversationsWithNewMessages) {
-                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() && !conversation.title.contains("UNKNOWN_SENDER")) {
+                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() && !conversation.title.contains("UNKNOWN_SENDER") &&
+                            conversation.snippet != null && !conversation.snippet.isEmpty()) {
                         insertedMessages = source.insertNewMessages(conversation, lastTimestamp + TIMESTAMP_BUFFER,
                                 SmsMmsUtils.queryConversation(conversation.id, this));
                         builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);

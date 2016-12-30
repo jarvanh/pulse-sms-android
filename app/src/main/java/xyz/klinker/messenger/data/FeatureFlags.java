@@ -47,7 +47,7 @@ public class FeatureFlags {
     private static final String FLAG_CLEANUP_OLD = "flag_cleanup_old";
     private static final String FLAG_NO_GROUP_MESSAGE_COLORS_FOR_GLOBAL = "flag_global_group_colors";
     private static final String FLAG_BRING_IN_NEW_MESSAGES = "flag_bring_new_messages";
-    private static final String FLAG_BRING_IN_NEW_MESSAGES_2 = "flag_bring_new_messages_2";
+    private static final String FLAG_BRING_IN_NEW_MESSAGES_2 = "flag_bring_new_messages_3";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
