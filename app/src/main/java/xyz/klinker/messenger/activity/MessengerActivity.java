@@ -791,9 +791,26 @@ public class MessengerActivity extends AppCompatActivity
             }
 
             return true;
-        } else {
-            return false;
+        } else if (otherFragment instanceof ArchivedConversationListFragment) {
+            ArchivedConversationListFragment frag = (ArchivedConversationListFragment) otherFragment;
+            if (frag.isExpanded()) {
+                String uri = "tel:" +
+                        frag.getExpandedItem().conversation.phoneNumbers;
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse(uri));
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, R.string.no_apps_found, Toast.LENGTH_SHORT).show();
+                } catch (SecurityException e) {
+                    Toast.makeText(this, R.string.you_denied_permission, Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            }
         }
+
+        return false;
     }
 
     private boolean viewContact() {
