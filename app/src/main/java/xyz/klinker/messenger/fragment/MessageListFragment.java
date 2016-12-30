@@ -423,7 +423,7 @@ public class MessageListFragment extends Fragment implements
         multiSelect.clearActionMode();
     }
 
-    private void createDrafts() {
+    public void createDrafts() {
         if (messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
             if (drafts.size() > 0) {
                 source.deleteDrafts(getConversationId());
@@ -957,6 +957,7 @@ public class MessageListFragment extends Fragment implements
         for (Draft draft : drafts) {
             if (draft.mimeType.equals(MimeType.TEXT_PLAIN)) {
                 messageEntry.setText(draft.data);
+                messageEntry.setSelection(messageEntry.getText().length());
             } else if (MimeType.isStaticImage(draft.mimeType)) {
                 attachImage(Uri.parse(draft.data));
             } else if (draft.mimeType.equals(MimeType.IMAGE_GIF)) {
