@@ -63,7 +63,6 @@ public class FeatureFlags {
 
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
-    public boolean CONTENT_OBSERVER_TIMEOUT;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean CLEANUP_OLD_MESSAGES;
@@ -77,7 +76,6 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
-        CONTENT_OBSERVER_TIMEOUT = getValue(sharedPrefs, FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
@@ -95,9 +93,6 @@ public class FeatureFlags {
             /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
-            case FLAG_TURN_DOWN_CONTENT_OBSERVER_TIMEOUT:
-                CONTENT_OBSERVER_TIMEOUT = flag;
-                break;
             case FLAG_SECURE_PRIVATE:
                 SECURE_PRIVATE = flag;
                 break;

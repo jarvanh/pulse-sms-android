@@ -104,7 +104,7 @@ public class ContentObserverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(FeatureFlags.get(ContentObserverService.this).CONTENT_OBSERVER_TIMEOUT ? 5000 : 10000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
 
                     }
