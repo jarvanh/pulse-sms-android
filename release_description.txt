@@ -1,1 +1,1 @@
-This beta version fixes a ton of little bugs that had been reported. Please see the changelog in settings for a full list of bugs for this version.
+This beta version fixes a ton of little bugs that had been reported: drafts being deleted, problems sharing articles and YouTube videos, archive list not allowing you to call, tablets getting out of sync, some notification issues, and some smaller ones that users reported.
