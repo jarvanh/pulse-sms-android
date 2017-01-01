@@ -105,6 +105,9 @@ public class FeatureFlags {
             case FLAG_BRING_IN_NEW_MESSAGES_2:
                 BRING_IN_NEW_MESSAGES = flag;
                 break;
+            case FLAG_DELETED_NOTIFICATION_FCM:
+                DELETED_FCM_NOTIFICATION = flag;
+                break;
         }
     }
 
