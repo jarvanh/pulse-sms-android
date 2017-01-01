@@ -155,6 +155,12 @@ public class SmsMmsUtils {
                 ImageUtils.fillConversationColors(conversation, context);
                 conversation.simSubscriptionId = -1;
 
+                String myNumber = PhoneNumberUtils.getMyPhoneNumber(context);
+                if (conversation.phoneNumbers.contains(myNumber)); {
+                    conversation.phoneNumbers = conversation.phoneNumbers.replace(myNumber + ", ", "");
+                    conversation.phoneNumbers = conversation.phoneNumbers.replace(myNumber, "");
+                }
+
                 conversations.add(conversation);
             } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);
         }

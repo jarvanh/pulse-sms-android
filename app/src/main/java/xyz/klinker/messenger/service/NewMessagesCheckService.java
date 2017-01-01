@@ -36,7 +36,7 @@ import xyz.klinker.messenger.util.SmsMmsUtils;
 public class NewMessagesCheckService extends IntentService {
 
     private static final String TAG = "NewMessageCheck";
-    private static final long TIMESTAMP_BUFFER = 15000;
+    private static final long TIMESTAMP_BUFFER = 30000;
 
     public static final String REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST";
     public static final int MESSAGE_CHECKING_ID = 6435;
