@@ -61,12 +61,12 @@ public class NewMessagesCheckService extends IntentService {
 
         if (lastTimestamp != -1L) {
             if (lastMessage != null && lastMessage.timestamp > lastTimestamp) {
-                lastTimestamp = lastMessage.timestamp;
+                lastTimestamp = lastMessage.timestamp + TIMESTAMP_BUFFER;
             }
 
             int insertedMessages = 0;
             List<Conversation> conversationsWithNewMessages =
-                    SmsMmsUtils.queryNewConversations(this, lastTimestamp + TIMESTAMP_BUFFER);
+                    SmsMmsUtils.queryNewConversations(this, lastTimestamp);
 
             if (conversationsWithNewMessages.size() > 0) {
                 NotificationCompat.Builder builder = showNotification();
@@ -76,7 +76,7 @@ public class NewMessagesCheckService extends IntentService {
                 for (Conversation conversation : conversationsWithNewMessages) {
                     if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() && !conversation.title.contains("UNKNOWN_SENDER") &&
                             conversation.snippet != null && !conversation.snippet.isEmpty()) {
-                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp + TIMESTAMP_BUFFER,
+                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp,
                                 SmsMmsUtils.queryConversation(conversation.id, this));
                         builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
                         NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
