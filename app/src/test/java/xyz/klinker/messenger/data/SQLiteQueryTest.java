@@ -145,8 +145,8 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContacts("5159911493, 5154224558");
 
         assertEquals(2, contacts.size());
-        assertEquals("Luke K", contacts.get(0).name);
-        assertEquals("Jake K", contacts.get(1).name);
+        assertEquals("Jake K", contacts.get(0).name);
+        assertEquals("Luke K", contacts.get(1).name);
     }
 
     @Test
@@ -174,8 +174,8 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContactsByNames("Luke K, Jake K");
 
         assertEquals(2, contacts.size());
-        assertEquals("5159911493", contacts.get(0).phoneNumber);
-        assertEquals("5154224558", contacts.get(1).phoneNumber);
+        assertEquals("5154224558", contacts.get(0).phoneNumber);
+        assertEquals("5159911493", contacts.get(1).phoneNumber);
     }
 
     @Test

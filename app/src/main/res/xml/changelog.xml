@@ -19,14 +19,15 @@
     <version
         name="1.13.2"
         description="December 31st, 2016">
-        <text>Add a one second delayed timeout</text>
+        <text>Add a one second delayed sending option</text>
+        <text>Improvements for keeping tablets up to date</text>
+        <text>Improvements to contact colors on group messages</text>
         <text>Fix: draft being deleted when you receive a message</text>
-        <text>Fix: some ringtone issues</text>
-        <text>Fix: sharing youtube/articles</text>
+        <text>Fix: some ringtone/notification issues</text>
+        <text>Fix: sharing youtube videos/articles</text>
         <text>Fix: calling contact from the archive list</text>
         <text>Update translations</text>
         <text>Update open source library list</text>
-        <text>Improvements for keeping tablets up to date</text>
     </version>
 
     <version

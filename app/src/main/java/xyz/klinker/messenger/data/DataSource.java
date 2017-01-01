@@ -417,7 +417,7 @@ public class DataSource {
         }
 
         List<Contact> contacts = new ArrayList<>();
-        Cursor cursor = database.query(Contact.TABLE, null, where, array, null, null, null);
+        Cursor cursor = database.query(Contact.TABLE, null, where, array, Contact.COLUMN_NAME, null, Contact.COLUMN_ID + " desc");
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
@@ -462,7 +462,7 @@ public class DataSource {
         }
 
         List<Contact> contacts = new ArrayList<>();
-        Cursor cursor = database.query(Contact.TABLE, null, where, array, null, null, null);
+        Cursor cursor = database.query(Contact.TABLE, null, where, array, Contact.COLUMN_NAME, null, Contact.COLUMN_ID + " desc");
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
