@@ -111,9 +111,15 @@ public class NotificationService extends IntentService {
             }
 
             if (Settings.get(this).wakeScreen) {
-                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
-                wl.acquire(5000);
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(600);
+                    } catch (Exception e) { }
+
+                    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
+                    wl.acquire(5000);
+                }).start();
             }
         }
 
