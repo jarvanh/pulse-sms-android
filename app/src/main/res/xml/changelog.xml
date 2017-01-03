@@ -17,7 +17,14 @@
 <changelog>
 
     <version
-        name="1.13.2"
+        name="1.13.4"
+        description="January 2nd, 2017">
+        <text>Fix: some issues around notifications for muted conversations</text>
+        <text>Fix: drafts being applied when messages are received</text>
+    </version>
+
+    <version
+        name="1.13.3 BETA only"
         description="December 31st, 2016">
         <text>Add a one second delayed sending option</text>
         <text>Improvements for keeping tablets up to date</text>
@@ -31,7 +38,7 @@
     </version>
 
     <version
-        name="1.13.2"
+        name="1.13.2 BETA only"
         description="December 28th, 2016">
         <text>Fix some issues around keeping database up to date, after using other apps.</text>
     </version>
