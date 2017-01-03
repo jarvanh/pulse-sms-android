@@ -155,7 +155,7 @@ public class NotificationService extends IntentService {
 
                 if (conversation == null) {
                     Conversation c = source.getConversation(conversationId);
-                    if (c != null) {
+                    if (c != null && !c.mute) {
                         conversation = new NotificationConversation();
                         conversation.id = c.id;
                         conversation.title = c.title;
@@ -558,29 +558,27 @@ public class NotificationService extends IntentService {
         builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
         builder.extend(wearableExtender);
 
-        if (!conversation.mute) {
-            if (CONVERSATION_ID_OPEN == conversation.id) {
-                // skip this notification since we are already on the conversation.
-                skipSummaryNotification = true;
-            } else {
-                NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
-            }
+        if (CONVERSATION_ID_OPEN == conversation.id) {
+            // skip this notification since we are already on the conversation.
+            skipSummaryNotification = true;
+        } else {
+            NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+        }
 
-            try {
-                if (!TvUtils.hasTouchscreen(this)) {
-                    if (notificationWindowManager == null) {
-                        notificationWindowManager = new NotificationWindowManager(this);
-                    }
-
-                    NotificationView.newInstance(notificationWindowManager)
-                            .setImage(null)
-                            .setTitle(conversation.title)
-                            .setDescription(content)
-                            .show();
+        try {
+            if (!TvUtils.hasTouchscreen(this)) {
+                if (notificationWindowManager == null) {
+                    notificationWindowManager = new NotificationWindowManager(this);
                 }
-            } catch (WindowManager.BadTokenException e) {
-                e.printStackTrace();
+
+                NotificationView.newInstance(notificationWindowManager)
+                        .setImage(null)
+                        .setTitle(conversation.title)
+                        .setDescription(content)
+                        .show();
             }
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
         }
 
         return "<b>" + conversation.title + "</b>  " + content;

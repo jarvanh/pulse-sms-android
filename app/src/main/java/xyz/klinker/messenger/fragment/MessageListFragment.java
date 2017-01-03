@@ -198,6 +198,7 @@ public class MessageListFragment extends Fragment implements
     private boolean dismissOnStartup = false;
     private boolean textChanged = false;
     private List<Draft> drafts;
+    private boolean pullDrafts = true;
 
     private MessageMultiSelectDelegate multiSelect;
 
@@ -421,6 +422,10 @@ public class MessageListFragment extends Fragment implements
         createDrafts();
 
         multiSelect.clearActionMode();
+    }
+
+    public void setShouldPullDrafts(boolean pullDrafts) {
+        this.pullDrafts = pullDrafts;
     }
 
     public void createDrafts() {
@@ -832,7 +837,12 @@ public class MessageListFragment extends Fragment implements
 
                 handler.post(() -> {
                     setMessages(cursor, contactMap, contactByNameMap);
-                    setDrafts(drafts);
+
+                    if (pullDrafts) {
+                        setDrafts(drafts);
+                    } else {
+                        pullDrafts = true;
+                    }
 
                     if (position != -1) {
                         messageList.scrollToPosition(position);
