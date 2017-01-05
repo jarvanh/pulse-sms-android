@@ -974,6 +974,7 @@ public class DataSource {
 
         ContentValues values = new ContentValues(1);
         values.put(Conversation.COLUMN_ARCHIVED, archive);
+        values.put(Conversation.COLUMN_READ, true);
 
         int updated = database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
                 new String[]{Long.toString(conversationId)});
