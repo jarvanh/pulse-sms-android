@@ -29,10 +29,6 @@ public class DualSimUtils {
         return dualSimUtils;
     }
 
-    protected DualSimUtils() {
-        throw new RuntimeException("Don't initialize this!");
-    }
-
     private DualSimUtils(final Context context) {
         init(context);
     }
@@ -47,7 +43,13 @@ public class DualSimUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             manager = SubscriptionManager.from(context);
             try {
-                this.availableSims = manager.getActiveSubscriptionInfoList();
+                for (int i = 0; i < manager.getActiveSubscriptionInfoCountMax(); i++) {
+                    SubscriptionInfo info = manager.getActiveSubscriptionInfoForSimSlotIndex(i);
+                    if (info != null) {
+                        availableSims.add(info);
+                    }
+                }
+
                 if (availableSims.size() <= 1) {
                     // not a dual sim phone, ignore this.
                     this.availableSims = new ArrayList<>();
@@ -64,6 +66,20 @@ public class DualSimUtils {
         return availableSims;
     }
 
+    public SubscriptionInfo getSubscriptionInfo(Integer simSubscription) {
+        if (simSubscription == null || simSubscription == 0 || simSubscription == -1) {
+            return null;
+        }
+
+        for (SubscriptionInfo sim : availableSims) {
+            if (sim.getSubscriptionId() == simSubscription) {
+                return sim;
+            }
+        }
+
+        return null;
+    }
+
     public String getNumberFromSimSlot(int simSlot) {
         for (SubscriptionInfo sim : availableSims) {
             if (sim.getSimSlotIndex() == simSlot) {
@@ -75,7 +91,6 @@ public class DualSimUtils {
     }
 
     public String getPhoneNumberFromSimSubscription(int simSubscription) {
-
         if (simSubscription == 0 || simSubscription == -1) {
             return null;
         }
@@ -89,6 +104,14 @@ public class DualSimUtils {
         return null;
     }
 
+    public int getNumberOfSims() {
+        if (canHandleDualSim()) {
+            return manager.getActiveSubscriptionInfoCount();
+        } else {
+            return 1;
+        }
+    }
+
     public String getDefaultPhoneNumber() {
         try {
             if (manager != null && manager.getActiveSubscriptionInfoCount() > 0) {
@@ -100,5 +123,9 @@ public class DualSimUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private boolean canHandleDualSim() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
     }
 }
