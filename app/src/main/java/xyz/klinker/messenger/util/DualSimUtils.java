@@ -59,7 +59,7 @@ public class DualSimUtils {
                 try {
                     Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (NullPointerException e) { }
-                
+
                 this.availableSims = new ArrayList<>();
             }
         } else {
