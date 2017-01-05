@@ -20,6 +20,8 @@
         name="1.13.5"
         description="January 5nd, 2017">
         <text>Improvements for dual SIM support</text>
+        <text>Mark messages as read when they are archived</text>
+        <text>Handle sharing video directly, from other apps</text>
     </version>
 
     <version
