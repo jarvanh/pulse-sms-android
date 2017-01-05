@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class DualSimUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             manager = SubscriptionManager.from(context);
             try {
-                for (int i = 0; i < manager.getActiveSubscriptionInfoCountMax(); i++) {
+                for (int i = 0; i < 10; i++) {
                     SubscriptionInfo info = manager.getActiveSubscriptionInfoForSimSlotIndex(i);
                     if (info != null) {
                         availableSims.add(info);
@@ -55,6 +56,7 @@ public class DualSimUtils {
                     this.availableSims = new ArrayList<>();
                 }
             } catch (Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                 this.availableSims = new ArrayList<>();
             }
         } else {
