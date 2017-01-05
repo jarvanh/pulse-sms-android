@@ -56,7 +56,10 @@ public class DualSimUtils {
                     this.availableSims = new ArrayList<>();
                 }
             } catch (Throwable t) {
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) { }
+                
                 this.availableSims = new ArrayList<>();
             }
         } else {
