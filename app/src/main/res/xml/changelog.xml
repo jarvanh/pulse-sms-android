@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.13.5"
+        description="January 5nd, 2017">
+        <text>Improvements for dual SIM support</text>
+    </version>
+
+    <version
         name="1.13.4"
         description="January 2nd, 2017">
         <text>Fix: some issues around notifications for muted conversations</text>
