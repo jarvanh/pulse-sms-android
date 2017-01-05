@@ -26,7 +26,6 @@ import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.SmsManager;
-import android.text.Html;
 
 import com.klinker.android.send_message.SentReceiver;
 
@@ -35,7 +34,6 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**

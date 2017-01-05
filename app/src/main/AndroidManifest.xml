@@ -300,8 +300,6 @@
         <service android:name=".service.NotificationMarkReadService" />
         <service android:name=".service.NotificationCallService" />
         <service android:name=".service.ReplyService" />
-        <service android:name=".service.ContentObserverService" />
-        <service android:name=".service.ContentObserverRunCheckService" />
         <service android:name=".service.ContactSyncService" />
         <service android:name=".service.ScheduledMessageService" />
         <service android:name=".service.ApiUploadService" />
