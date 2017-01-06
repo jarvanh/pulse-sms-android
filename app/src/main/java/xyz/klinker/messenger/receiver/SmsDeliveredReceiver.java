@@ -28,6 +28,7 @@ import com.klinker.android.send_message.DeliveredReceiver;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**

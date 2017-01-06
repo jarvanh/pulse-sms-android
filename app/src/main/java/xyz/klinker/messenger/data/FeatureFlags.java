@@ -66,6 +66,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean CLEANUP_OLD_MESSAGES;
+    public boolean BRING_IN_NEW_MESSAGES;
     public boolean DELETED_FCM_NOTIFICATION;
 
     private Context context;
@@ -78,6 +79,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         CLEANUP_OLD_MESSAGES = getValue(sharedPrefs, FLAG_CLEANUP_OLD);
+        BRING_IN_NEW_MESSAGES = getValue(sharedPrefs, FLAG_BRING_IN_NEW_MESSAGES_2);
         DELETED_FCM_NOTIFICATION = getValue(sharedPrefs, FLAG_DELETED_NOTIFICATION_FCM);
     }
 
@@ -99,6 +101,9 @@ public class FeatureFlags {
                 break;
             case FLAG_CLEANUP_OLD:
                 CLEANUP_OLD_MESSAGES = flag;
+                break;
+            case FLAG_BRING_IN_NEW_MESSAGES_2:
+                BRING_IN_NEW_MESSAGES = flag;
                 break;
             case FLAG_DELETED_NOTIFICATION_FCM:
                 DELETED_FCM_NOTIFICATION = flag;

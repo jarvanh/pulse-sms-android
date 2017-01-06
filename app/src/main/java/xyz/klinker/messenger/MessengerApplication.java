@@ -25,10 +25,12 @@ import android.support.v7.app.AppCompatDelegate;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.service.ContentObserverService;
 import xyz.klinker.messenger.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 
@@ -58,6 +60,8 @@ public class MessengerApplication extends Application {
         } else if (theme.isDark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+
+        startService(new Intent(this, ContentObserverService.class));
     }
 
     public void refreshDynamicShortcuts() {
