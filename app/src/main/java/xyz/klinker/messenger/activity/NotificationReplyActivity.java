@@ -159,17 +159,14 @@ public class NotificationReplyActivity extends AppCompatActivity {
             });
         });
 
-        messageInput.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                messageInput.requestFocus();
-                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
-                        .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
-                
-                NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.id);
-                new ApiUtils().dismissNotification(Account.get(NotificationReplyActivity.this).accountId,
-                        Account.get(NotificationReplyActivity.this).deviceId, conversation.id);
-            }
+        messageInput.postDelayed(() -> {
+            messageInput.requestFocus();
+            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
+
+            NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.id);
+            new ApiUtils().dismissNotification(Account.get(NotificationReplyActivity.this).accountId,
+                    Account.get(NotificationReplyActivity.this).deviceId, conversation.id);
         }, 300);
     }
 

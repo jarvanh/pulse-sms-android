@@ -111,6 +111,7 @@ import xyz.klinker.messenger.data.model.Draft;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.AudioWrapper;
 import xyz.klinker.messenger.util.ColorUtils;
@@ -141,7 +142,8 @@ import static android.app.Activity.RESULT_OK;
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment, InputConnectionCompat.OnCommitContentListener {
+        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment,
+        InputConnectionCompat.OnCommitContentListener {
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -252,7 +254,7 @@ public class MessageListFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
-        source = DataSource.getInstance(getContext());
+        source = DataSource.getInstance(getActivity());
         source.open();
 
         delayedSendingHandler = new Handler();
@@ -771,8 +773,8 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         try {
-            if (dismissNotification) {//&& notificationActive()) {
-                NotificationManagerCompat.from(getContext())
+            if (dismissNotification && notificationActive()) {
+                NotificationManagerCompat.from(getActivity())
                         .cancel((int) getConversationId());
 
                 new ApiUtils().dismissNotification(Account.get(getActivity()).accountId,
@@ -790,8 +792,8 @@ public class MessageListFragment extends Fragment implements
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         } else {
-            NotificationManager manager = (NotificationManager) getContext().getSystemService(
-                    Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) getActivity()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
             StatusBarNotification[] notifications = manager.getActiveNotifications();
 
             int notificationId = (int) getConversationId();
@@ -903,8 +905,12 @@ public class MessageListFragment extends Fragment implements
 
                 Thread.sleep(1000);
 
-                dismissNotification();
-                source.readConversation(getContext(), conversationId);
+                if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
+                    // this could happen in the background, we don't want to dismiss that then!
+                    dismissNotification();
+                }
+
+                source.readConversation(getActivity(), conversationId);
             } catch (Exception e) {
 
             }
@@ -1105,7 +1111,7 @@ public class MessageListFragment extends Fragment implements
 
             new Thread(() -> {
                 Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                        .send(getContext(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                        .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
 
                 if (imageUri != null) {
@@ -1124,7 +1130,7 @@ public class MessageListFragment extends Fragment implements
 
                     new Thread(() -> {
                         Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                                .send(getContext(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                                .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
 
                         if (imageUri != null) {
@@ -1139,7 +1145,7 @@ public class MessageListFragment extends Fragment implements
             new AudioWrapper(getActivity(), R.raw.message_ping).play();
 
             if (notificationActive()) {
-                NotificationManagerCompat.from(getContext())
+                NotificationManagerCompat.from(getActivity())
                         .cancel((int) getConversationId());
                 NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
             }
@@ -1162,7 +1168,7 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(0);
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachImageView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
@@ -1231,9 +1237,9 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(4);
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getContext(),
+                ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new RecordAudioView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
@@ -1255,9 +1261,9 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(5);
-        if (ContextCompat.checkSelfPermission(getContext(),
+        if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getContext(),
+                ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachLocationView(getActivity(), this, this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
@@ -1399,7 +1405,7 @@ public class MessageListFragment extends Fragment implements
     private void dismissKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager)
-                    getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
         } catch (Exception e) {
 
