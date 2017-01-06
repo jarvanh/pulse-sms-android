@@ -27,7 +27,9 @@
     <string name="menu_schedule">Messages programmés</string>
     <string name="menu_mute_contacts">Liste noire</string>
     <string name="menu_invite">Inviter des amis</string>
+    <string name="menu_feature_settings">Fonctionnalités avancées</string>
     <string name="menu_settings">Réglages généraux</string>
+    <string name="menu_mms_configuration">Configuration des MMS</string>
     <string name="menu_account">Mon compte</string>
     <string name="menu_device_texting">Écrire depuis un appareil</string>
     <string name="menu_help">Aide et commentaire</string>
@@ -54,6 +56,7 @@
     <string name="menu_snooze_8">8 heures</string>
     <string name="menu_snooze_24">24 heures</string>
     <string name="menu_snooze_72">72 heures</string>
+    <string name="menu_snooze_custom">Sélectionnez une heure</string>
     <!-- Empty Screen -->
     <string name="no_messages">Pas de message</string>
     <string name="no_messages_summary">Commencez une nouvelle conversation ou simplement profitez de votre journée!</string>
@@ -123,6 +126,12 @@ Commencez !
     <string name="message_sending_failed">Échec de l\'envoi du message</string>
     <string name="preparing_video">Préparation de la vidéo&#8230;</string>
     <string name="delete_message">Supprimer ce message?</string>
+    <string name="forward_message">Transférer</string>
+    <string name="share_message">Partager</string>
+    <string name="copy_message_text">Copier le texte du message</string>
+    <string name="open_link_to_browser">Ouvrir dans le navigateur</string>
+    <string name="open_link_internal">Ouvrir dans l\'application</string>
+    <string name="copy_link">Copier le lien</string>
     <!-- Compose Screen -->
     <string name="compose_message">Écrire un nouveau message</string>
     <string name="send_message">Envoyer un message</string>
@@ -142,6 +151,15 @@ Commencez !
     <string name="message_anywhere_onboarding_title_1">Envoyez des messages de partout</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement ou Paiement Unique</string>
     <!-- Notifications -->
+    <string name="notification_ticker">Nouveau message de %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d nouvelle conversation</item>
+        <item quantity="other">%1$d nouvelles conversations</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d nouveau message</item>
+        <item quantity="other">%1$d nouveaux messages</item>
+    </plurals>
     <string name="read">Lire</string>
     <string name="reply">Répondre</string>
     <string name="reply_to">Répondre à %1$s</string>
@@ -190,12 +208,14 @@ pourrez rencontrer !</string>
     <string name="ringtone">Sonnerie</string>
     <string name="group_name">Nom du groupe</string>
     <string name="notification_settings">Notifications</string>
+    <string name="repeat_interval">Répéter l\'alerte</string>
     <string name="repeat_never">Jamais</string>
     <string name="repeat_one_min">Toutes les minutes</string>
     <string name="repeat_five_mins">Toutes les 5 minutes</string>
     <string name="repeat_ten_mins">Toutes les 10 minutes</string>
     <string name="repeat_half_hour">Toutes les 30 minutes</string>
     <string name="repeat_hour">Toutes les heures</string>
+    <string name="wake_screen">Allumer l\'écran</string>
     <string name="vibrate">Personnaliser la vibration</string>
     <string name="vibrate_off">Pas de vibration</string>
     <string name="vibrate_default">Vibration par défaut</string>
@@ -210,6 +230,7 @@ pourrez rencontrer !</string>
     <string name="base_theme">Thème de base</string>
     <string name="global_theme_color">Thème couleur</string>
     <string name="font_size">Taille de la police</string>
+    <string name="rounder_bubbles">Bulles arrondies</string>
     <string name="blacklist_hint">Tapez un nombre dans la liste noire</string>
     <string name="add_blacklist">%1$s
 
@@ -234,8 +255,15 @@ pourrez rencontrer !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
     <string name="cancel_on_the_play_store">Annuler et afficher votre abonnement sur Play Store</string>
     <string name="resync_account">Resynchroniser le compte</string>
+    <string name="font_size_small">Petit</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Grand</string>
+    <string name="font_size_extra_large">Très grand</string>
+    <string name="advanced">Avancé</string>
+    <string name="send_as_mms">Convenir en MMS</string>
     <string name="alert_types">Types d\'alertes</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
+    <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
     <string name="cleanup_old_messages">Supprimer les anciens messages</string>
@@ -258,6 +286,7 @@ pourrez rencontrer !</string>
     <string name="conversation_with">Conversation avec %1$s</string>
     <string name="send">Envoyer</string>
     <!-- Other -->
+    <string name="updating_database">Recherche des derniers messages...</string>
     <string name="default_text">Défaut</string>
     <string name="did_you_know">Le saviez-vous ?</string>
     <string name="use_from_anywhere">Pulse peut être utilisé depuis n\'importe quel appareil connecté à Internet -
@@ -272,6 +301,7 @@ Essayez aujourd\'hui !</string>
     <string name="test">Test</string>
     <string name="off">Inactif</string>
     <!-- Times -->
+    <string name="one_second">Une seconde</string>
     <string name="five_seconds">5 secondes</string>
     <string name="ten_seconds">10 secondes</string>
     <string name="fifteen_seconds">15 secondes</string>

@@ -317,8 +317,8 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="delayed_sending">Verzögertes Senden</string>
     <string name="quick_compose">Schnell Verfassen</string>
     <string name="quick_compose_summary">Ständige Benachrichtigung, um sofort zum Verfassen-Fenster zu springen</string>
-    <string name="secure_private_conversations">Private Unterhaltungen sichern</string>
-    <string name="secure_private_conversations_summary">Benötige PIN, um private Unterhaltungen zu entsperren</string>
+    <string name="secure_private_conversations">Schütze private Unterhaltungen</string>
+    <string name="secure_private_conversations_summary">PIN benötigt, um private Unterhaltungen zu entsperren.</string>
     <!-- Theming Options -->
     <string name="day_night">Standard (Tag/Nacht)</string>
     <string name="always_light">Immer Hell</string>
@@ -356,7 +356,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Verschlüssele und lade hoch...</string>
     <string name="encrypting_and_uploading_media">Verschlüssele und komprimiere Medien...</string>
-    <string name="encrypting_and_uploading_count">Verschlüssele und komprimiere Medien...
+    <string name="encrypting_and_uploading_count">Verschlüssele und komprimiere Nachrichten mit Medien...
 (%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">Lade herunter und entschlüssele...</string>
     <string name="decrypting_and_downloading_media">Lade Medien herunter und entschlüssele...</string>
@@ -369,6 +369,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="conversation_with">Unterhaltung mit %1$s</string>
     <string name="send">Senden</string>
     <!-- Other -->
+    <string name="updating_database">Finde die neusten Nachrichten...</string>
     <string name="dashclock_description">Ungelesene SMS/MMS Information</string>
     <string name="default_text">Standard</string>
     <string name="did_you_know">Wussten Sie schon?</string>
@@ -386,6 +387,7 @@ jetzt ausprobieren!</string>
     <string name="off">Aus</string>
     <string name="on">Ein</string>
     <!-- Times -->
+    <string name="one_second">Eine Sekunde</string>
     <string name="three_seconds">Drei Sekunden</string>
     <string name="five_seconds">Fünf Sekunden</string>
     <string name="ten_seconds">Zehn Sekunden</string>
@@ -400,8 +402,8 @@ jetzt ausprobieren!</string>
     <string name="one_year">Ein Jahr</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Kein Abo gefunden!</string>
-    <string name="cancelled_subscription_error">Anscheinend haben Sie Ihr Abo gekündigt.
-Wenn Sie in diesem Zeitraum kein neues Abo abschließen wird die App sie in zwei Tagen automatisch aus Ihrem Account ausloggen. Falls sie diese Nachricht fälschlich sehen, kontaktieren Sie mich per E-Mail.</string>
+    <string name="cancelled_subscription_error">Offenbar haben Sie Ihr Abo gekündigt.
+Wenn Sie innerhalb von zwei Tagen kein neues Abo abschließen, werden Sie aus Ihrem Account ausgeloggt. Falls sie diese Nachricht fälschlicherweise sehen, kontaktieren Sie mich bitte per E-Mail.</string>
     <string name="subscription_found">Abo gefunden - Willkommen zurück!</string>
     <string name="subscription_not_found">Kein Abo gefunden. Starten Sie jetzt Ihren kostenlosen Testzeitraum!</string>
     <string name="checking_for_active_subscriptions">Suche nach Abos&#8230;</string>
