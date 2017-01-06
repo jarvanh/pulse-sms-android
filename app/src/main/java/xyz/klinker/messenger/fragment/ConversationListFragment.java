@@ -250,7 +250,7 @@ public class ConversationListFragment extends Fragment
         } else {
             adapter = new ConversationListAdapter(conversations, multiSelector, this, this);
 
-            layoutManager = new FixedScrollLinearLayoutManager(getContext());
+            layoutManager = new FixedScrollLinearLayoutManager(getActivity());
             layoutManager.setCanScroll(true);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
@@ -355,7 +355,7 @@ public class ConversationListFragment extends Fragment
                 for (Conversation conversation : copiedList) {
                     if (conversation != null) { // there are those blank convos that get populated with a new one
                         dataSource.deleteConversation(conversation);
-                        SmsMmsUtils.deleteConversation(getContext(),
+                        SmsMmsUtils.deleteConversation(getActivity(),
                                 conversation.phoneNumbers);
                     }
                 }
