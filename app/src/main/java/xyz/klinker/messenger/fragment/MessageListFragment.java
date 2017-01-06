@@ -771,7 +771,7 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         try {
-            if (dismissNotification && notificationActive()) {
+            if (dismissNotification) {//&& notificationActive()) {
                 NotificationManagerCompat.from(getContext())
                         .cancel((int) getConversationId());
 
@@ -794,8 +794,9 @@ public class MessageListFragment extends Fragment implements
                     Context.NOTIFICATION_SERVICE);
             StatusBarNotification[] notifications = manager.getActiveNotifications();
 
+            int notificationId = (int) getConversationId();
             for (StatusBarNotification notification : notifications) {
-                if (notification.getId() == (int) getConversationId()) {
+                if (notification.getId() == notificationId) {
                     return true;
                 }
             }

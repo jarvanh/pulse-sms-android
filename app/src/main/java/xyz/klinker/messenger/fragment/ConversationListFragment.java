@@ -53,6 +53,7 @@ import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.ActivityUtils;
 import xyz.klinker.messenger.util.AnimationUtils;
 import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.util.NotificationUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.UnreadBadger;
@@ -155,6 +156,17 @@ public class ConversationListFragment extends Fragment
         }
 
         checkUnreadCount();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(() -> {
+            if (getActivity() != null) {
+                NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
+            }
+        }, 1000);
     }
 
     @Override
