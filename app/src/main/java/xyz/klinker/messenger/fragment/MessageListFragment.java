@@ -773,7 +773,7 @@ public class MessageListFragment extends Fragment implements
 
     private void dismissNotification() {
         try {
-            if (dismissNotification/* && notificationActive()*/) {
+            if (dismissNotification && notificationActive()) {
                 NotificationManagerCompat.from(getActivity())
                         .cancel((int) getConversationId());
 
