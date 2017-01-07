@@ -23,7 +23,9 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
 import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.service.CleanupOldMessagesService;
 import xyz.klinker.messenger.service.ContactSyncService;
+import xyz.klinker.messenger.service.ContentObserverRunCheckService;
 import xyz.klinker.messenger.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.service.SignoutService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
@@ -70,6 +72,8 @@ public class UpdateUtils {
     }
 
     private void runEveryUpdate() {
+        CleanupOldMessagesService.scheduleNextRun(context);
+        ContentObserverRunCheckService.scheduleNextRun(context);
         ContactSyncService.scheduleNextRun(context);
         SubscriptionExpirationCheckService.scheduleNextRun(context);
         SignoutService.scheduleNextRun(context);

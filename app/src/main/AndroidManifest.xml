@@ -314,6 +314,7 @@
         <service android:name=".service.MediaParserService" />
         <service android:name=".service.NewMessagesCheckService" />
         <service android:name=".service.FirebaseResetService" />
+        <service android:name=".service.CleanupOldMessagesService" />
 
         <service
             android:name=".service.ComposeTileService"

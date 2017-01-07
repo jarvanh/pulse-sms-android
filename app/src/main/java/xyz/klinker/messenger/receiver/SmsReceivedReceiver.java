@@ -135,7 +135,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
     }
 
-    private boolean shouldSaveMessages(DataSource source, Message message) {
+    public static boolean shouldSaveMessages(DataSource source, Message message) {
         try {
             List<Message> search = source.searchMessagesAsList(message.data, 1);
             if (!search.isEmpty()) {

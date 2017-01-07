@@ -37,6 +37,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
+import xyz.klinker.messenger.util.TimeUtils;
 
 /**
  * Receiver for notifying us when a new MMS has been received by the device. By default it will
@@ -102,7 +103,9 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     message.from = null;
                 }
 
-                conversationId = source.insertMessage(message, phoneNumbers, context);
+                if (SmsReceivedReceiver.shouldSaveMessages(source, message)) {
+                    conversationId = source.insertMessage(message, phoneNumbers, context);
+                }
             }
 
             source.close();
