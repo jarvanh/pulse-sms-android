@@ -82,6 +82,7 @@ import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.service.ApiDownloadService;
+import xyz.klinker.messenger.service.CleanupOldMessagesService;
 import xyz.klinker.messenger.service.NewMessagesCheckService;
 import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
@@ -146,7 +147,7 @@ public class MessengerActivity extends AppCompatActivity
 
         dataSource = DataSource.getInstance(this);
         dataSource.open();
-
+        
         setContentView(R.layout.activity_messenger);
         initToolbar();
         initDrawer();

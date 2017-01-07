@@ -8,6 +8,9 @@ import android.content.Intent;
 
 import java.util.Date;
 
+import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.Settings;
+
 public class CleanupOldMessagesService extends IntentService {
 
     public CleanupOldMessagesService() {
@@ -19,7 +22,17 @@ public class CleanupOldMessagesService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        DataSource source = DataSource.getInstance(this);
+        source.open();
 
+        long timeout = Settings.get(this).cleanupMessagesTimeout;
+        if (timeout > 0) {
+            source.cleanupOldMessages(System.currentTimeMillis() - timeout);
+        }
+
+        source.close();
+
+        scheduleNextRun(this);
     }
 
     public static void scheduleNextRun(Context context) {
