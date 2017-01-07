@@ -46,7 +46,8 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/notification_settings">
+    <PreferenceCategory android:key="@string/pref_notification_category"
+        android:title="@string/notification_settings">
 
         <xyz.klinker.messenger.view.NotificationAlertsPreference
             android:key="@string/pref_alert_types"
@@ -56,6 +57,11 @@
         <SwitchPreference
             android:key="@string/pref_delivery_reports"
             android:title="@string/delivery_reports"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="@string/pref_giffgaff"
+            android:title="@string/giffgaff_delivery"
             android:defaultValue="false" />
 
         <SwitchPreference

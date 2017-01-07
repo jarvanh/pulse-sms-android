@@ -16,13 +16,14 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -121,13 +122,31 @@ public class GlobalSettingsFragment extends PreferenceFragment {
     }
 
     private void initDeliveryReports() {
-        findPreference(getString(R.string.pref_delivery_reports))
-                .setOnPreferenceChangeListener((preference, o) -> {
+        Preference normal = findPreference(getString(R.string.pref_delivery_reports));
+        Preference giffgaff = findPreference(getString(R.string.pref_giffgaff));
+
+        normal.setOnPreferenceChangeListener((preference, o) -> {
                     boolean delivery = (boolean) o;
                     new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
                             delivery);
                     return true;
                 });
+
+        giffgaff.setOnPreferenceChangeListener((preference, o) -> {
+                    boolean delivery = (boolean) o;
+                    new ApiUtils().updateGiffgaffDeliveryReports(Account.get(getActivity()).accountId,
+                            delivery);
+                    return true;
+                });
+
+        TelephonyManager manager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String carrierName = manager.getNetworkOperatorName();
+
+        if (!(carrierName.equalsIgnoreCase("giffgaff") || carrierName.replace(" ", "").equalsIgnoreCase("o2-uk"))) {
+            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(giffgaff);
+        } else {
+            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(normal);
+        }
     }
 
     private void initStripUnicode() {

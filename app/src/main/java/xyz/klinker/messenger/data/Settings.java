@@ -70,6 +70,7 @@ public class Settings {
     public VibratePattern vibrate;
     public boolean useGlobalThemeColor;
     public boolean deliveryReports;
+    public boolean giffgaffDeliveryReports;
     public boolean mobileOnly;
     public boolean soundEffects;
     public boolean securePrivateConversations;
@@ -127,6 +128,7 @@ public class Settings {
 
         // settings_global
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);
+        this.giffgaffDeliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_giffgaff), false);
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false);
         this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true);
         this.securePrivateConversations = sharedPrefs.getBoolean(context.getString(R.string.pref_secure_private_conversations), false);

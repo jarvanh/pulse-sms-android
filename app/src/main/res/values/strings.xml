@@ -335,6 +335,7 @@
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">Unicode characters will be stripped from the outgoing messages.
         This will not affect what they look like in the app.</string>
+    <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
 
 
     <!-- MMS Configuration Settings -->

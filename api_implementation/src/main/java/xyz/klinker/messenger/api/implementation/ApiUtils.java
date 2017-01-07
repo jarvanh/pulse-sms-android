@@ -1137,6 +1137,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the delivery reports setting.
+     */
+    public void updateGiffgaffDeliveryReports(final String accountId, final boolean deliveryReports) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "giffgaff_delivery", "boolean", deliveryReports);
+        }
+    }
+
+    /**
      * Update the strip Unicode setting.
      */
     public void updateStripUnicode(final String accountId, final boolean stripUnicode) {
