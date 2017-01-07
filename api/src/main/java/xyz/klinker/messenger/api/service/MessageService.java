@@ -41,6 +41,9 @@ public interface MessageService {
     @POST("messages/remove/{device_id}")
     Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
+    @POST("messages/cleanup")
+    Object cleanup(@Query("account_id") String accountId, @Query("timestamp") long timestamp);
+
     @GET("messages")
     MessageBody[] list(@Query("account_id") String accountId,
                        @Query("conversation_id") Integer conversationId,

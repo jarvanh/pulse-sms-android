@@ -658,6 +658,27 @@ public class ApiUtils {
     }
 
     /**
+     * Deletes messages older than the given timestamp.
+     */
+    public void cleanupMessages(final String accountId, final long timestamp) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Object response = api.message().cleanup(accountId, timestamp);
+                if (response == null) {
+                    Log.e(TAG, "error cleaning up messages");
+                } else {
+                    Log.v(TAG, "successfully cleaned up messages older than: " + timestamp);
+                }
+            }
+        }).start();
+    }
+
+    /**
      * Adds a draft.
      */
     public void addDraft(final String accountId, final long deviceId,
