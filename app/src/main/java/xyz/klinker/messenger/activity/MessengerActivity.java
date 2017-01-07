@@ -147,7 +147,7 @@ public class MessengerActivity extends AppCompatActivity
 
         dataSource = DataSource.getInstance(this);
         dataSource.open();
-        
+
         setContentView(R.layout.activity_messenger);
         initToolbar();
         initDrawer();

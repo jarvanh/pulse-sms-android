@@ -136,6 +136,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 case "removed_message":
                     removeMessage(json, source);
                     break;
+                case "cleanup_messages":
+                    cleanupMessages(json, source);
+                    break;
                 case "added_contact":
                     addContact(json, source);
                     break;
@@ -432,6 +435,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long id = getLong(json, "id");
         source.deleteMessage(id);
         Log.v(TAG, "removed message");
+    }
+
+    private void cleanupMessages(JSONObject json, DataSource source) throws JSONException {
+        long timestamp = getLong(json, "timestamp");
+        source.cleanupOldMessages(timestamp);
+        Log.v(TAG, "cleaned up old messages");
     }
 
     private void addConversation(JSONObject json, DataSource source, Context context)
