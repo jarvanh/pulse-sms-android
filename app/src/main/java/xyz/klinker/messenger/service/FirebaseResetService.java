@@ -14,9 +14,6 @@ public class FirebaseResetService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (!FeatureFlags.get(this).DELETED_FCM_NOTIFICATION) {
-            return;
-        }
 
         // going to re-download everything I guess..
 
