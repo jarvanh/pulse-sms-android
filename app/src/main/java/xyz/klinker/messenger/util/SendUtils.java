@@ -72,6 +72,8 @@ public class SendUtils {
                 .deliveryReports);
         settings.setSendLongAsMms(xyz.klinker.messenger.data.MmsSettings.get(context)
                 .convertLongMessagesToMMS);
+        settings.setStripUnicode(xyz.klinker.messenger.data.Settings.get(context)
+                .stripUnicode);
 
         MmsSettings mmsSettings = MmsSettings.get(context);
         if (mmsSettings.overrideSystemAPN) {

@@ -79,6 +79,7 @@ import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
+import com.klinker.android.send_message.StripAccents;
 import com.sgottard.sofa.ContentFragment;
 import com.yalantis.ucrop.UCrop;
 
@@ -675,9 +676,14 @@ public class MessageListFragment extends Fragment implements
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP)) {
             int[] count;
-                
+
+            String entry = messageEntry.getText().toString();
+            if (Settings.get(getActivity()).stripUnicode) {
+                entry = StripAccents.stripAccents(entry);
+            }
+
             try {
-                count = SmsMessage.calculateLength(messageEntry.getText().toString(), false);
+                count = SmsMessage.calculateLength(entry, false);
             } catch (Exception e) {
                 return;
             }

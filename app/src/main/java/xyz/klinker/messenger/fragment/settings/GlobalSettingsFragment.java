@@ -52,6 +52,7 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initRounderBubbles();
         initDeliveryReports();
         initSoundEffects();
+        initStripUnicode();
     }
 
     @Override
@@ -125,6 +126,16 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                     boolean delivery = (boolean) o;
                     new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
                             delivery);
+                    return true;
+                });
+    }
+
+    private void initStripUnicode() {
+        findPreference(getString(R.string.pref_strip_unicode))
+                .setOnPreferenceChangeListener((preference, o) -> {
+                    boolean strip = (boolean) o;
+                    new ApiUtils().updateStripUnicode(Account.get(getActivity()).accountId,
+                            strip);
                     return true;
                 });
     }

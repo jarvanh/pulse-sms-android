@@ -1137,6 +1137,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the strip Unicode setting.
+     */
+    public void updateStripUnicode(final String accountId, final boolean stripUnicode) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "strip_unicode", "boolean", stripUnicode);
+        }
+    }
+
+    /**
      * Update the rounder bubbles setting.
      */
     public void updateRounderBubbles(final String accountId, final boolean rounder_bubbles) {

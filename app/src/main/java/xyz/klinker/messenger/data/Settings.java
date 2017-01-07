@@ -76,6 +76,7 @@ public class Settings {
     public boolean quickCompose;
     public boolean wakeScreen;
     public boolean rounderBubbles;
+    public boolean stripUnicode;
     public long snooze;
     public long repeatNotifications;
     public long delayedSendingTimeout;
@@ -138,6 +139,7 @@ public class Settings {
         this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "");
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off").equals("on");
         this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false);
+        this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false);
 
         // configuration
         if (this.ringtone == null) {

@@ -70,6 +70,7 @@
     <string name="pref_convert_to_mms" translatable="false">convert_to_mms</string>
     <string name="pref_alert_types" translatable="false">alert_types</string>
     <string name="pref_wake_screen" translatable="false">wake_screen</string>
+    <string name="pref_strip_unicode" translatable="false">strip_unicode</string>
 
     <string name="pref_secure_private_conversations" translatable="false">secure_private_conversations</string>
     <string name="pref_quick_compose" translatable="false">quick_compose</string>

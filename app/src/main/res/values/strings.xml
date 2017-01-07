@@ -332,6 +332,9 @@
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
+    <string name="strip_unicode">Strip Unicode</string>
+    <string name="strip_unicode_summary">Unicode characters will be stripped from the outgoing messages.
+        This will not affect what they look like in the app.</string>
 
 
     <!-- MMS Configuration Settings -->
@@ -347,7 +350,8 @@
 
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
-    <string name="signature_summary">NOTE: sent signatures will NOT be displayed in Pulse\'s message list. Signatures will only be shown to the receiver of the message.</string>
+    <string name="signature_summary">Signatures will NOT be displayed in Pulse\'s message list.
+        Signatures will only be shown to the receiver of the message.</string>
     <string name="cleanup_old_messages">Cleanup Old Messages</string>
     <string name="delayed_sending">Delayed Sending</string>
     <string name="quick_compose">Quick Compose</string>

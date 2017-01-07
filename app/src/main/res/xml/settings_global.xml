@@ -65,9 +65,15 @@
 
     </PreferenceCategory>
 
-    <!-- <PreferenceCategory android:key="@string/pref_advanced_category"
+    <PreferenceCategory android:key="@string/pref_advanced_category"
         android:title="@string/advanced">
 
-    </PreferenceCategory> -->
+        <SwitchPreference
+            android:key="@string/pref_strip_unicode"
+            android:title="@string/strip_unicode"
+            android:summary="@string/strip_unicode_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
