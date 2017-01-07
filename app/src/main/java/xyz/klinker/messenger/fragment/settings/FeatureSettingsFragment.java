@@ -81,10 +81,6 @@ public class FeatureSettingsFragment extends PreferenceFragment {
                             Account.get(getActivity()).accountId, cleanup);
                     return true;
                 });
-
-        if (!FeatureFlags.get(getActivity()).CLEANUP_OLD_MESSAGES) {
-            getPreferenceScreen().removePreference(preference);
-        }
     }
 
     private void initSignature() {
