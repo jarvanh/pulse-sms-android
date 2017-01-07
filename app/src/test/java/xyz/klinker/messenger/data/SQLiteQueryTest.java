@@ -519,6 +519,20 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         assertEquals(1, initialSize - newSize);
     }
 
+    @Test
+    public void cleanupMessages() {
+        int initialMessageSize = source.getMessageCount();
+        int initialConversationSize = source.getConversationCount();
+
+        source.cleanupOldMessages(750);
+
+        int newMessageSize = source.getMessageCount();
+        int newConversationSize = source.getConversationCount();
+
+        assertEquals(4, initialMessageSize - newMessageSize);
+        assertEquals(2, initialConversationSize - newConversationSize);
+    }
+
     private Message getFakeMessage() {
         Message m = new Message();
         m.conversationId = 2;

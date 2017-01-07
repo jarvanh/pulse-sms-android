@@ -412,6 +412,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void cleanupMessages() {
+        source.cleanupOldMessages(1);
+
+        verify(database).delete("message", "timestamp<?", new String[]{"1"});
+        verify(database).delete("conversation", "timestamp<?", new String[]{"1"});
+    }
+
+    @Test
     public void readConversation() {
         source.readConversation(RuntimeEnvironment.application, 3);
 

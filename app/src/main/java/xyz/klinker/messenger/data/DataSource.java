@@ -1775,6 +1775,25 @@ public class DataSource {
     }
 
     /**
+     * Deletes messages and conversations older than the given timestamp
+     */
+    public int cleanupOldMessages(long timestamp) {
+        ensureActionable();
+
+        int deleted = database.delete(Message.TABLE, Message.COLUMN_TIMESTAMP + "<?",
+                new String[]{Long.toString(timestamp)});
+
+        database.delete(Conversation.TABLE, Conversation.COLUMN_TIMESTAMP + "<?",
+                new String[]{Long.toString(timestamp)});
+
+        if (deleted > 0) {
+            apiUtils.cleanupMessages(accountId, timestamp);
+        }
+
+        return deleted;
+    }
+
+    /**
      * Marks a conversation and all messages inside of it as read and seen.
      *
      * @param conversationId the conversation id to mark.
