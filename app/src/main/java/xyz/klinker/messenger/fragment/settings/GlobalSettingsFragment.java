@@ -142,7 +142,8 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         TelephonyManager manager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         String carrierName = manager.getNetworkOperatorName();
 
-        if (!(carrierName.equalsIgnoreCase("giffgaff") || carrierName.replace(" ", "").equalsIgnoreCase("o2-uk"))) {
+        if (carrierName != null && !(carrierName.equalsIgnoreCase("giffgaff") ||
+                carrierName.replace(" ", "").equalsIgnoreCase("o2-uk"))) {
             ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(giffgaff);
         } else {
             ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(normal);
