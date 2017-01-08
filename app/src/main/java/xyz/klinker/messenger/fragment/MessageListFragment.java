@@ -895,12 +895,7 @@ public class MessageListFragment extends Fragment implements
                             fragment.setNewConversationTitle(name);
                         }
 
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                toolbar.setTitle(name);
-                            }
-                        });
+                        handler.post(() -> toolbar.setTitle(name));
                     }
 
                     String originalImage = getArguments().getString(ARG_IMAGE_URI);
@@ -914,9 +909,8 @@ public class MessageListFragment extends Fragment implements
                 if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
                     // this could happen in the background, we don't want to dismiss that then!
                     dismissNotification();
+                    source.readConversation(getActivity(), conversationId);
                 }
-
-                source.readConversation(getActivity(), conversationId);
             } catch (Exception e) {
 
             }
