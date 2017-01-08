@@ -41,10 +41,10 @@ public class DualSimUtils {
     private void init(Context context) {
         this.context = context;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if (canHandleDualSim()) {
             manager = SubscriptionManager.from(context);
             try {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 100; i++) {
                     SubscriptionInfo info = manager.getActiveSubscriptionInfoForSimSlotIndex(i);
                     if (info != null) {
                         availableSims.add(info);
@@ -104,15 +104,7 @@ public class DualSimUtils {
 
         return null;
     }
-
-    public int getNumberOfSims() {
-        if (canHandleDualSim()) {
-            return manager.getActiveSubscriptionInfoCount();
-        } else {
-            return 1;
-        }
-    }
-
+    
     public String getDefaultPhoneNumber() {
         try {
             if (manager != null && manager.getActiveSubscriptionInfoCount() > 0) {

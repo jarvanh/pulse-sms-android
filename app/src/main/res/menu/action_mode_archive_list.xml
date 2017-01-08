@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_delete_conversation"
+        android:title="@string/menu_delete_conversation"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_archive_conversation"
         android:title="@string/menu_move_to_inbox"
         android:icon="@drawable/ic_unarchive"
