@@ -95,7 +95,7 @@ public class NewMessagesCheckService extends IntentService {
         source.close();
         sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
 
-        if (lastTimestamp != -1L) {
+        if (lastTimestamp != -1L && Account.get(this).exists()) {
             // do this after closing the database, becuase it will reopen it
             // conversations will have been uploaded already, but we need to upload any messages
             // newer than that timestamp.

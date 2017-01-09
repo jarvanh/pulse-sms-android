@@ -208,54 +208,46 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
     }
 
     private void attachAddress() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v(TAG, "getting addresses");
+        new Thread(() -> {
+            Log.v(TAG, "getting addresses");
 
-                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                List<Address> addresses = null;
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            List<Address> addresses = null;
 
-                try {
-                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                    Log.v(TAG, "got " + addresses.size() + " addresses");
-                } catch (IOException exception) {
-                    Log.e(TAG, "service not available", exception);
-                } catch (IllegalArgumentException exception) {
-                    Log.e(TAG, "invalid lat long", exception);
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                Log.v(TAG, "got " + addresses.size() + " addresses");
+            } catch (IOException exception) {
+                Log.e(TAG, "service not available", exception);
+            } catch (IllegalArgumentException exception) {
+                Log.e(TAG, "invalid lat long", exception);
+            }
+
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                ArrayList<String> addressFragments = new ArrayList<>();
+
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    addressFragments.add(address.getAddressLine(i));
                 }
 
-                if (addresses != null && addresses.size() > 0) {
-                    Address address = addresses.get(0);
-                    ArrayList<String> addressFragments = new ArrayList<>();
+                final String a = TextUtils.join(System.getProperty("line.separator"),
+                        addressFragments);
+                Log.v(TAG, "got address: " + a);
 
-                    for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                        addressFragments.add(address.getAddressLine(i));
-                    }
-
-                    final String a = TextUtils.join(System.getProperty("line.separator"),
-                            addressFragments);
-                    Log.v(TAG, "got address: " + a);
-
-                    if (getHandler() != null) {
-                        getHandler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.v(TAG, "posting back to fragment");
-                                textListener.onTextSelected(a);
-                            }
-                        });
-                    }
-                } else {
-                    Log.e(TAG, "could not find any addresses, using map lat long");
-                    getHandler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            textListener.onTextSelected(
-                                    "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
-                            );
-                        }
+                if (getHandler() != null) {
+                    getHandler().post(() -> {
+                        Log.v(TAG, "posting back to fragment");
+                        textListener.onTextSelected(a);
                     });
+                }
+            } else {
+                Log.e(TAG, "could not find any addresses, using map lat long");
+
+                if (getHandler() != null) {
+                    getHandler().post(() -> textListener.onTextSelected(
+                            "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+                    ));
                 }
             }
         }).start();
