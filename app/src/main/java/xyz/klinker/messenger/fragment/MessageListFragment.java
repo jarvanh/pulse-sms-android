@@ -904,9 +904,10 @@ public class MessageListFragment extends Fragment implements
                     }
                 }
 
-                Thread.sleep(2500);
 
                 if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
+                    Thread.sleep(1000);
+
                     // this could happen in the background, we don't want to dismiss that then!
                     dismissNotification();
                     source.readConversation(getActivity(), conversationId);
