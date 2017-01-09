@@ -104,7 +104,7 @@ public class DualSimUtils {
 
         return null;
     }
-    
+
     public String getDefaultPhoneNumber() {
         try {
             if (manager != null && manager.getActiveSubscriptionInfoCount() > 0) {
