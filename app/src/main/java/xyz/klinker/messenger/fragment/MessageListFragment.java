@@ -1556,6 +1556,7 @@ public class MessageListFragment extends Fragment implements
         }
 
         sendMessage(uris);
+        messageEntry.setText("");
     }
 
     public long getConversationId() {
