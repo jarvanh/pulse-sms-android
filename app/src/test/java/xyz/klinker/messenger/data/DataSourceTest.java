@@ -97,7 +97,6 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         verify(database).delete("scheduled_message", null, null);
         verify(database).delete("contact", null, null);
 
-        verify(database).isOpen();
         verifyNoMoreInteractions(database);
     }
 
