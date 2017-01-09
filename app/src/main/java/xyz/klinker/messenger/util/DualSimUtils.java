@@ -44,13 +44,7 @@ public class DualSimUtils {
         if (canHandleDualSim()) {
             manager = SubscriptionManager.from(context);
             try {
-                for (int i = 0; i < 100; i++) {
-                    SubscriptionInfo info = manager.getActiveSubscriptionInfoForSimSlotIndex(i);
-                    if (info != null) {
-                        availableSims.add(info);
-                    }
-                }
-
+                this.availableSims = manager.getActiveSubscriptionInfoList();
                 if (availableSims.size() <= 1) {
                     // not a dual sim phone, ignore this.
                     this.availableSims = new ArrayList<>();
