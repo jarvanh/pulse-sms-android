@@ -17,8 +17,15 @@
 <changelog>
 
     <version
-        name="1.14.0"
+        name="1.14.1"
         description="January 9nd, 2017">
+        <text>Fixed reported bugs from beta</text>
+        <text>Stability improvements</text>
+    </version>
+
+    <version
+        name="1.14.0 BETA only"
+        description="January 8nd, 2017">
         <text>Option to automatically delete old messages after a set time (Advanced Features)</text>
         <text>Option to strip out unicode characters from messages</text>
         <text>Giffgaff users now have the option to use their specific delivery report format</text>
