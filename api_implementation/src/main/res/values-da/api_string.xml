@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Log ind</string>
+    <string name="api_signup">Opret</string>
+    <string name="api_signup_failed">Kan ikke oprettes på denne enhed. Du skal registrere dig via en primær enhed, som har tilknyttet et mobilnummer.</string>
+    <string name="api_skip_signup">Eller, hvis du blot ønsker at bruge app´en på denne enhed og ikke på netværket
+        funktioner som at skrive fra en tablet eller computer, så kan du springe dette trin over:</string>
+    <string name="api_skip">Spring over</string>
+    <string name="api_email">E-mailadresse</string>
+    <string name="api_password">Kodeord</string>
+    <string name="api_forgot_password">Glemt kodeord?</string>
+    <string name="api_password_confirmation">Bekræft kodeord</string>
+    <string name="api_name">Navn</string>
+    <string name="api_phone_number">Mobilnummer</string>
+    <string name="api_connecting">Forbinder til server…</string>
+    <string name="api_error">Der opstod en fejl under handlingen</string>
+    <string name="api_device_error">Der er opstået en fejl under tilføjelse af denne enhed. Lad os prøve igen!</string>
+    <string name="api_yes">Ja</string>
+    <string name="api_no">Nej</string>
+    <string name="api_no_email">Ingen e-mailadresse tilføjet</string>
+    <string name="api_email_invalid">Fejl ved email adresse</string>
+    <string name="api_no_password">Intet kodeord registreret</string>
+    <string name="api_no_password_confirmation">Kodeordbekræftelse ikke registreret</string>
+    <string name="api_password_mismatch">Kodeord er ikke ens</string>
+    <string name="api_no_name">Intet navn tilføjet</string>
+    <string name="api_no_phone_number">Intet telefonnummer tilføjet</string>
+    <string name="api_login_error">Forsøget på at logge på lykkedes ikke , forkert e-mail eller kodeord?</string>
+    <string name="api_activate_summary">Log på for at få alle dine beskeder på denne enhed!</string>
+    <string name="api_activate_1_1">Gå til</string>
+    <string name="api_activate_1_3">på en mobil enhed eller en computer</string>
+    <string name="api_activate_2_1">På hjemmesiden</string>
+    <string name="api_activate_2_2">indtast koden til højre</string>
+    <string name="api_activate_2_3">for at forbinde til din konto!</string>
+    <string name="api_confirm_password">Bekræft venligst dit kode:</string>
+    <string name="api_wrong_password">Bekræftelse fejlede. Er dit kode korrekt?</string>
+    <string name="api_email_taken">Der opstod en fejl ved forsøget på at logge på. Har du allerede en konto tilknyttet denne email?</string>
+    <string name="api_confirm">Bekræft</string>
+    <string name="api_continue">Fortsæt</string>
+</resources>

@@ -202,7 +202,7 @@ public class MessengerActivity extends AppCompatActivity
             }
 
             snoozeIcon();
-            
+
             new Thread(() -> {
                 DataSource source = DataSource.getInstance(MessengerActivity.this);
                 source.open();
