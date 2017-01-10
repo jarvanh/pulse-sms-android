@@ -156,9 +156,6 @@ public class DataSource {
         } catch (Exception e) { }
 
         // ensure we are closing everything and getting a brand new database connection
-        openCounter.set(0);
-        dbHelper = new DatabaseSQLiteHelper(context);
-
         try {
             dbHelper.close();
         } catch (Exception e) { }
@@ -167,8 +164,10 @@ public class DataSource {
             database.close();
         } catch (Exception e) { }
 
-        close();
-        open();
+        dbHelper = new DatabaseSQLiteHelper(context);
+        database = dbHelper.getWritableDatabase();
+
+        openCounter.set(1);
     }
 
     /**
