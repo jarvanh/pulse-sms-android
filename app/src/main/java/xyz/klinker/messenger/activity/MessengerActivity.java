@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -201,6 +202,23 @@ public class MessengerActivity extends AppCompatActivity
             }
 
             snoozeIcon();
+            
+            new Thread(() -> {
+                DataSource source = DataSource.getInstance(MessengerActivity.this);
+                source.open();
+                Cursor c = source.getUnseenMessages();
+                int count = c.getCount();
+                try {
+                    c.close();
+                } catch (Exception e) { }
+                source.close();
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && count > 1) {
+                    // since the notification functionality here is not nearly as good as 7.0,
+                    // we will just remove them all, if there is more than one
+                    NotificationManagerCompat.from(MessengerActivity.this).cancelAll();
+                }
+            }).start();
         }, 1000);
 
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
