@@ -352,8 +352,8 @@
 
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
-    <string name="signature_summary">Signatures will NOT be displayed in Pulse\'s message list.
-        Signatures will only be shown to the receiver of the message.</string>
+    <string name="signature_summary">Signatures will not be displayed in Pulse\'s message list, they
+        will only be shown to the receiver of the message.</string>
     <string name="cleanup_old_messages">Cleanup Old Messages</string>
     <string name="delayed_sending">Delayed Sending</string>
     <string name="quick_compose">Quick Compose</string>
