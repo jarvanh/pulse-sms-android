@@ -147,44 +147,42 @@ public class NotificationService extends IntentService {
                 String from = unseenMessages
                         .getString(unseenMessages.getColumnIndex(Message.COLUMN_FROM));
 
-                if (MimeType.isExpandedMedia(mimeType)) {
-                    continue;
-                }
+                if (!MimeType.isExpandedMedia(mimeType)) {
+                    NotificationConversation conversation = conversations.get(conversationId);
 
-                NotificationConversation conversation = conversations.get(conversationId);
+                    if (conversation == null) {
+                        Conversation c = source.getConversation(conversationId);
+                        if (c != null && !c.mute) {
+                            conversation = new NotificationConversation();
+                            conversation.id = c.id;
+                            conversation.title = c.title;
+                            conversation.imageUri = c.imageUri;
+                            conversation.color = c.colors.color;
+                            conversation.ringtoneUri = c.ringtoneUri;
+                            conversation.ledColor = c.ledColor;
+                            conversation.timestamp = c.timestamp;
+                            conversation.mute = c.mute;
+                            conversation.phoneNumbers = c.phoneNumbers;
+                            conversation.groupConversation = c.phoneNumbers.contains(",");
 
-                if (conversation == null) {
-                    Conversation c = source.getConversation(conversationId);
-                    if (c != null && !c.mute) {
-                        conversation = new NotificationConversation();
-                        conversation.id = c.id;
-                        conversation.title = c.title;
-                        conversation.imageUri = c.imageUri;
-                        conversation.color = c.colors.color;
-                        conversation.ringtoneUri = c.ringtoneUri;
-                        conversation.ledColor = c.ledColor;
-                        conversation.timestamp = c.timestamp;
-                        conversation.mute = c.mute;
-                        conversation.phoneNumbers = c.phoneNumbers;
-                        conversation.groupConversation = c.phoneNumbers.contains(",");
+                            if (c.privateNotifications) {
+                                conversation.title = getString(R.string.new_message);
+                                conversation.imageUri = null;
+                                conversation.ringtoneUri = null;
+                                conversation.color = Settings.get(this).globalColorSet.color;
+                                conversation.privateNotification = true;
+                                conversation.ledColor = Color.WHITE;
+                            } else {
+                                conversation.privateNotification = false;
+                            }
 
-                        if (c.privateNotifications) {
-                            conversation.title = getString(R.string.new_message);
-                            conversation.imageUri = null;
-                            conversation.ringtoneUri = null;
-                            conversation.color = Settings.get(this).globalColorSet.color;
-                            conversation.privateNotification = true;
-                            conversation.ledColor = Color.WHITE;
-                        } else {
-                            conversation.privateNotification = false;
+                            conversations.put(conversationId, conversation);
                         }
-
-                        conversations.put(conversationId, conversation);
                     }
-                }
 
-                if (conversation != null) {
-                    conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
+                    if (conversation != null) {
+                        conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
+                    }
                 }
             } while (unseenMessages.moveToNext());
         }
