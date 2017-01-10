@@ -83,11 +83,15 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        if (direction == ItemTouchHelper.START && this instanceof UnarchiveSwipeSimpleCallback) {
+        if (direction == ItemTouchHelper.START && canDelete()) {
             adapter.deleteItem(viewHolder.getAdapterPosition());
         } else {
             adapter.archiveItem(viewHolder.getAdapterPosition());
         }
+    }
+
+    private boolean canDelete() {
+        return this instanceof UnarchiveSwipeSimpleCallback || this instanceof SwipeDeleteSimpleCallback;
     }
 
     @Override

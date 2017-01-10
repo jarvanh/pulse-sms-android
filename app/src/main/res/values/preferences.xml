@@ -59,6 +59,7 @@
     <string name="pref_ringtone" translatable="false">ringtone</string>
     <string name="pref_base_theme" translatable="false">base_theme</string>
     <string name="pref_rounder_bubbles" translatable="false">rounder_bubbles</string>
+    <string name="pref_swipe_delete" translatable="false">swipe_delete</string>
     <string name="pref_global_color_theme" translatable="false">global_color_theme</string>
     <string name="pref_font_size" translatable="false">font_size</string>
     <string name="pref_vibrate" translatable="false">vibrate_pattern_identifier</string>

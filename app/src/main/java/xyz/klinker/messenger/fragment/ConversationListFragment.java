@@ -232,7 +232,7 @@ public class ConversationListFragment extends Fragment
     }
 
     public ItemTouchHelper getSwipeTouchHelper(ConversationListAdapter adapter) {
-        return new SwipeTouchHelper(adapter);
+        return new SwipeTouchHelper(adapter, getActivity());
     }
 
     private void setConversations(List<Conversation> conversations) {

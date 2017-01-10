@@ -44,6 +44,11 @@
             android:title="@string/rounder_bubbles"
             android:defaultValue="false" />
 
+        <SwitchPreference
+            android:key="@string/pref_swipe_delete"
+            android:title="@string/swipe_delete"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="@string/pref_notification_category"

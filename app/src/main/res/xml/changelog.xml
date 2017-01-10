@@ -17,19 +17,13 @@
 <changelog>
 
     <version
-        name="1.14.1"
-        description="January 9nd, 2017">
-        <text>Fixed reported bugs from beta</text>
-        <text>Stability improvements</text>
-    </version>
-
-    <version
-        name="1.14.0 BETA only"
-        description="January 8nd, 2017">
+        name="1.14.0"
+        description="January 11th, 2017">
+        <text>Option to enable swipe to delete on the conversation list (Global Settings)</text>
         <text>Option to automatically delete old messages after a set time (Advanced Features)</text>
-        <text>Option to strip out unicode characters from messages</text>
-        <text>Giffgaff users now have the option to use their specific delivery report format</text>
-        <text>Add delete option to conversation list multi-select</text>
+        <text>Option to strip out unicode characters from messages (Global Settings)</text>
+        <text>Giffgaff users now have the option to use their specific delivery report format (Global Settings)</text>
+        <text>Add delete option to archive list multi-select</text>
         <text>Improvements for dual SIM support</text>
         <text>Mark messages as read when they are archived</text>
         <text>Handle sharing video directly, from other apps</text>

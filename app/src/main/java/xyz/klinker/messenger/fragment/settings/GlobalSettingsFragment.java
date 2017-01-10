@@ -51,6 +51,7 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initGlobalTheme();
         initFontSize();
         initRounderBubbles();
+        initSwipeDelete();
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
@@ -117,6 +118,16 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                     boolean rounder = (boolean) o;
                     new ApiUtils().updateRounderBubbles(Account.get(getActivity()).accountId,
                             rounder);
+                    return true;
+                });
+    }
+
+    private void initSwipeDelete() {
+        findPreference(getString(R.string.pref_swipe_delete))
+                .setOnPreferenceChangeListener((preference, o) -> {
+                    boolean delete = (boolean) o;
+                    new ApiUtils().updateSwipeToDelete(Account.get(getActivity()).accountId,
+                            delete);
                     return true;
                 });
     }

@@ -1161,11 +1161,22 @@ public class ApiUtils {
     /**
      * Update the rounder bubbles setting.
      */
-    public void updateRounderBubbles(final String accountId, final boolean rounder_bubbles) {
+    public void updateRounderBubbles(final String accountId, final boolean rounderBubbles) {
         if (!active || accountId == null) {
             return;
         } else {
-            updateSetting(accountId, "rounder_bubbles", "boolean", rounder_bubbles);
+            updateSetting(accountId, "rounder_bubbles", "boolean", rounderBubbles);
+        }
+    }
+
+    /**
+     * Update the swipe to delete setting
+     */
+    public void updateSwipeToDelete(final String accountId, final boolean swipeDelete) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "swipe_delete", "boolean", swipeDelete);
         }
     }
 

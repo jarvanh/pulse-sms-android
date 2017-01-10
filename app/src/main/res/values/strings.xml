@@ -287,6 +287,7 @@
     <string name="global_theme_color">Theme Color</string>
     <string name="font_size">Font Size</string>
     <string name="rounder_bubbles">Round Message Bubbles</string>
+    <string name="swipe_delete">Swipe to Delete</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they come from this number and you will not be notified!</string>
