@@ -76,8 +76,14 @@ public class SmsMmsUtils {
 
         Uri uri = Uri.parse(Telephony.Threads.CONTENT_URI.toString() + "?simple=true");
 
-        Cursor cursor = context.getContentResolver()
-                .query(uri, projection, null, null, Telephony.ThreadsColumns.DATE + " desc");
+        Cursor cursor;
+
+        try {
+            cursor = context.getContentResolver()
+                    .query(uri, projection, null, null, Telephony.ThreadsColumns.DATE + " desc");
+        } catch (SecurityException e) {
+            cursor = null;
+        }
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -131,10 +137,16 @@ public class SmsMmsUtils {
 
         Uri uri = Uri.parse(Telephony.Threads.CONTENT_URI.toString() + "?simple=true");
 
-        Cursor cursor = context.getContentResolver()
-                .query(uri, projection, Telephony.ThreadsColumns.DATE + ">?",
-                        new String[] {String.valueOf(latestTimestamp)},
-                        Telephony.ThreadsColumns.DATE + " desc");
+        Cursor cursor;
+
+        try {
+            cursor = context.getContentResolver()
+                    .query(uri, projection, Telephony.ThreadsColumns.DATE + ">?",
+                            new String[] {String.valueOf(latestTimestamp)},
+                            Telephony.ThreadsColumns.DATE + " desc");
+        } catch (SecurityException e) {
+            cursor = null;
+        }
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
