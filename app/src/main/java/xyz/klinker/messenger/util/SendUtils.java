@@ -75,7 +75,7 @@ public class SendUtils {
         settings.setStripUnicode(xyz.klinker.messenger.data.Settings.get(context)
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.data.Settings.get(context)
-                .stripUnicode ? "*0#" : "");
+                .giffgaffDeliveryReports ? "*0#" : "");
 
         MmsSettings mmsSettings = MmsSettings.get(context);
         if (mmsSettings.overrideSystemAPN) {
