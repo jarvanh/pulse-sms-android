@@ -42,6 +42,10 @@ public class Settings {
         }
     }
 
+    public enum KeyboardLayout {
+        DEFAULT, SEND, ENTER
+    }
+
     public enum VibratePattern {
         OFF(null), DEFAULT(null),
         TWO_LONG(new long[] {0, 1000, 500, 1000}),
@@ -95,6 +99,7 @@ public class Settings {
     public int largeFont;
     public ColorSet globalColorSet;
     public BaseTheme baseTheme;
+    public KeyboardLayout keyboardLayout;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -285,6 +290,19 @@ public class Settings {
                 break;
             default:
                 this.cleanupMessagesTimeout = -1;
+                break;
+        }
+
+        String keyboardLayoutString = sharedPrefs.getString(context.getString(R.string.pref_keyboard_layout), "default");
+        switch (keyboardLayoutString) {
+            case "default":
+                this.keyboardLayout = KeyboardLayout.DEFAULT;
+                break;
+            case "send":
+                this.keyboardLayout = KeyboardLayout.SEND;
+                break;
+            case "enter":
+                this.keyboardLayout = KeyboardLayout.ENTER;
                 break;
         }
 

@@ -120,6 +120,7 @@ import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.DualSimApplication;
 import xyz.klinker.messenger.util.DualSimUtils;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.KeyboardLayoutHelper;
 import xyz.klinker.messenger.util.NotificationUtils;
 import xyz.klinker.messenger.util.PermissionsUtils;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
@@ -584,6 +585,7 @@ public class MessageListFragment extends Fragment implements
             messageEntry.setHint(R.string.type_message);
         }
 
+        new KeyboardLayoutHelper(getActivity()).applyLayout(messageEntry);
         messageEntry.setTextSize(Settings.get(getActivity()).largeFont);
 
         messageEntry.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -599,12 +601,9 @@ public class MessageListFragment extends Fragment implements
             return handled;
         });
 
-        messageEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (attachLayout.getVisibility() == View.VISIBLE) {
-                    attach.performClick();
-                }
+        messageEntry.setOnClickListener(view -> {
+            if (attachLayout.getVisibility() == View.VISIBLE) {
+                attach.performClick();
             }
         });
 

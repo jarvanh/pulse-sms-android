@@ -50,6 +50,7 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initBaseTheme();
         initGlobalTheme();
         initFontSize();
+        initKeyboardLayout();
         initRounderBubbles();
         initSwipeDelete();
         initDeliveryReports();
@@ -110,6 +111,22 @@ public class GlobalSettingsFragment extends PreferenceFragment {
 
                     return true;
                 });
+    }
+
+    private void initKeyboardLayout() {
+        findPreference(getString(R.string.pref_keyboard_layout))
+                .setOnPreferenceChangeListener((preference, o) -> {
+                    String layout = (String) o;
+                    new ApiUtils().updateKeyboardLayout(Account.get(getActivity()).accountId,
+                            layout);
+
+                    return true;
+                });
+
+        if (!FeatureFlags.get(getActivity()).KEYBOARD_LAYOUT) {
+            ((PreferenceGroup) findPreference(getString(R.string.pref_customization_category)))
+                    .removePreference(findPreference(getString(R.string.pref_customization_category)));
+        }
     }
 
     private void initRounderBubbles() {

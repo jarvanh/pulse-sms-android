@@ -186,7 +186,7 @@
                 android:paddingEnd="18dp"
                 android:textSize="16sp"
                 android:id="@+id/message_entry"
-                android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                android:inputType="textCapSentences|textAutoCorrect"
                 android:imeOptions="actionSend|flagNoExtractUi"
                 android:maxLines="8" />
 

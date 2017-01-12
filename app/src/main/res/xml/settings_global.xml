@@ -16,7 +16,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/theme_settings">
+    <PreferenceCategory android:key="" android:title="@string/theme_settings">
 
         <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_base_theme"
@@ -38,6 +38,14 @@
             android:entries="@array/font_size"
             android:entryValues="@array/font_size_values"
             android:defaultValue="normal" />
+
+        <xyz.klinker.messenger.view.AutoSummaryListPreference
+            android:key="@string/pref_keyboard_layout"
+            android:title="@string/keyboard_layout"
+            android:entries="@array/keyboard_layout"
+            android:entryValues="@array/keyboard_layout_values"
+            android:defaultValue="default" />
+
 
         <SwitchPreference
             android:key="@string/pref_rounder_bubbles"

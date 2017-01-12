@@ -1282,13 +1282,24 @@ public class ApiUtils {
     }
 
     /**
-     * Update the font size
+     * Update the font size setting
      */
     public void updateFontSize(final String accountId, final String size) {
         if (!active || accountId == null) {
             return;
         } else {
             updateSetting(accountId, "font_size", "string", size);
+        }
+    }
+
+    /**
+     * Update the keyboard layout setting
+     */
+    public void updateKeyboardLayout(final String accountId, final String layout) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "keyboard_layout", "string", layout);
         }
     }
 
