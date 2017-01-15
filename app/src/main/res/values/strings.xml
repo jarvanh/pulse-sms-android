@@ -338,8 +338,7 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
-    <string name="strip_unicode_summary">Unicode characters will be stripped from the outgoing messages.
-        This will not affect what they look like in the app.</string>
+    <string name="strip_unicode_summary">These characters will be removed from outgoing messages.</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
 
 
