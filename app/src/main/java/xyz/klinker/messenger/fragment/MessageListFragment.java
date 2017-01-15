@@ -877,7 +877,7 @@ public class MessageListFragment extends Fragment implements
                     String number = getArguments().getString(ARG_PHONE_NUMBERS);
                     final String name = ContactUtils.findContactNames(number, getActivity());
                     String photoUri = ContactUtils.findImageUri(number, getActivity());
-                    if (photoUri != null) {
+                    if (photoUri != null && !photoUri.isEmpty()) {
                         photoUri += "/photo";
                     }
 
