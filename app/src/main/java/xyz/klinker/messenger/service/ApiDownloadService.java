@@ -89,7 +89,12 @@ public class ApiDownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        showNotification = intent.getBooleanExtra(ARG_SHOW_NOTIFICATION, true);
+        if (intent != null) {
+            showNotification = intent.getBooleanExtra(ARG_SHOW_NOTIFICATION, true);
+        } else {
+            showNotification = true;
+        }
+
         downloadData();
         return super.onStartCommand(intent, flags, startId);
     }

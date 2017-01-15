@@ -787,15 +787,20 @@ public class DataSource {
     private List<Conversation> convertConversationCursorToList(Cursor cursor) {
         List<Conversation> conversations = new ArrayList<>();
 
-        if (cursor.moveToFirst()) {
-            do {
-                Conversation c = new Conversation();
-                c.fillFromCursor(cursor);
-                conversations.add(c);
-            } while (cursor.moveToNext());
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Conversation c = new Conversation();
+                    c.fillFromCursor(cursor);
+                    conversations.add(c);
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+
         }
 
-        cursor.close();
         return conversations;
     }
 
