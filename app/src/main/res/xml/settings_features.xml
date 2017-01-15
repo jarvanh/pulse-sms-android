@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <SwitchPreference
-        android:key="@string/pref_secure_private_conversations"
-        android:title="@string/secure_private_conversations"
-        android:summary="@string/secure_private_conversations_summary"
-        android:defaultValue="false" />
-
-    <SwitchPreference
-        android:key="@string/pref_quick_compose"
-        android:title="@string/quick_compose"
-        android:summary="@string/quick_compose_summary"
-        android:defaultValue="false" />
-
+    
     <xyz.klinker.messenger.view.AutoSummaryListPreference
         android:key="@string/pref_delayed_sending"
         android:title="@string/delayed_sending"
@@ -26,6 +14,18 @@
         android:entries="@array/cleanup"
         android:entryValues="@array/cleanup_values"
         android:defaultValue="never" />
+
+    <SwitchPreference
+        android:key="@string/pref_secure_private_conversations"
+        android:title="@string/secure_private_conversations"
+        android:summary="@string/secure_private_conversations_summary"
+        android:defaultValue="false" />
+
+    <SwitchPreference
+        android:key="@string/pref_quick_compose"
+        android:title="@string/quick_compose"
+        android:summary="@string/quick_compose_summary"
+        android:defaultValue="false" />
 
     <Preference
         android:key="@string/pref_signature"
