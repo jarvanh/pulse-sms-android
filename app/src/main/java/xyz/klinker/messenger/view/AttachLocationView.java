@@ -223,33 +223,41 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                 Log.e(TAG, "invalid lat long", exception);
             }
 
-            if (addresses != null && addresses.size() > 0) {
-                Address address = addresses.get(0);
-                ArrayList<String> addressFragments = new ArrayList<>();
-
-                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                    addressFragments.add(address.getAddressLine(i));
-                }
-
-                final String a = TextUtils.join(System.getProperty("line.separator"),
-                        addressFragments);
-                Log.v(TAG, "got address: " + a);
-
-                if (getHandler() != null) {
-                    getHandler().post(() -> {
-                        Log.v(TAG, "posting back to fragment");
-                        textListener.onTextSelected(a);
-                    });
-                }
-            } else {
-                Log.e(TAG, "could not find any addresses, using map lat long");
-
-                if (getHandler() != null) {
-                    getHandler().post(() -> textListener.onTextSelected(
-                            "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
-                    ));
-                }
+            if (getHandler() != null) {
+                getHandler().post(() -> textListener.onTextSelected(
+                        "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+                ));
             }
+
+            // always attach the link above, instead of trying to find an address, which
+            // didn't seem to work great
+//            if (addresses != null && addresses.size() > 0) {
+//                Address address = addresses.get(0);
+//                ArrayList<String> addressFragments = new ArrayList<>();
+//
+//                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+//                    addressFragments.add(address.getAddressLine(i));
+//                }
+//
+//                final String a = TextUtils.join(System.getProperty("line.separator"),
+//                        addressFragments);
+//                Log.v(TAG, "got address: " + a);
+//
+//                if (getHandler() != null) {
+//                    getHandler().post(() -> {
+//                        Log.v(TAG, "posting back to fragment");
+//                        textListener.onTextSelected(a);
+//                    });
+//                }
+//            } else {
+//                Log.e(TAG, "could not find any addresses, using map lat long");
+//
+//                if (getHandler() != null) {
+//                    getHandler().post(() -> textListener.onTextSelected(
+//                            "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+//                    ));
+//                }
+//            }
         }).start();
     }
 
