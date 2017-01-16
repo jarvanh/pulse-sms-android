@@ -36,6 +36,7 @@ import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.ContentObserverService;
+import xyz.klinker.messenger.service.ResendFailedMessage;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 
 /**
@@ -110,17 +111,26 @@ public class SmsSentReceiver extends SentReceiver {
                     PendingIntent pendingOpen = PendingIntent.getActivity(context,
                             (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                    Notification notification = new NotificationCompat.Builder(context)
+                    NotificationCompat.Builder notification = new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_stat_notify)
                             .setContentTitle(context.getString(R.string.message_sending_failed))
                             .setContentText(messages.getString(
                                     messages.getColumnIndex(Message.COLUMN_DATA)))
                             .setColor(context.getResources().getColor(R.color.colorPrimary))
                             .setAutoCancel(true)
-                            .setContentIntent(pendingOpen)
-                            .build();
+                            .setContentIntent(pendingOpen);
+
+                    Intent resend = new Intent(context, ResendFailedMessage.class);
+                    resend.putExtra(ResendFailedMessage.EXTRA_MESSAGE_ID, id);
+                    resend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    PendingIntent resendPending = PendingIntent.getService(context,
+                            (int) id, resend, PendingIntent.FLAG_UPDATE_CURRENT);
+                    NotificationCompat.Action action = new NotificationCompat.Action(
+                            R.drawable.ic_reply_dark, context.getString(R.string.resend), resendPending);
+
+                    notification.addAction(action);
                     NotificationManagerCompat.from(context)
-                            .notify(6666 + (int) id, notification);
+                            .notify(6666 + (int) id, notification.build());
                 }
             }
 
