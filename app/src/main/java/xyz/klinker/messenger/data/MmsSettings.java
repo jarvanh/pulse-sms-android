@@ -28,6 +28,7 @@ public class MmsSettings {
     private Context context;
 
     public boolean convertLongMessagesToMMS;
+    public boolean groupMMS;
     public boolean overrideSystemAPN;
 
     public String mmscUrl;
@@ -49,6 +50,7 @@ public class MmsSettings {
         SharedPreferences sharedPrefs = getSharedPrefs();
 
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
+        this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true);
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false);
 
         this.mmscUrl = sharedPrefs.getString(context.getString(R.string.pref_mmsc_url), "");

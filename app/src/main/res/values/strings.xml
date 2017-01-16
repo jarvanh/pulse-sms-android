@@ -344,6 +344,7 @@
 
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max image size</string>
+    <string name="use_group_mms">Use group MMS</string>
     <string name="apn_configuration">APN Configuration</string>
     <string name="override_system_apn">Override system APNs</string>
     <string name="mmsc_url">MMSC URL</string>

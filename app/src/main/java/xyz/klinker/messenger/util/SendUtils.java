@@ -67,17 +67,17 @@ public class SendUtils {
             text += "\n" + appSettings.signature;
         }
 
+        MmsSettings mmsSettings = MmsSettings.get(context);
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.data.Settings.get(context)
                 .deliveryReports);
-        settings.setSendLongAsMms(xyz.klinker.messenger.data.MmsSettings.get(context)
-                .convertLongMessagesToMMS);
+        settings.setSendLongAsMms(mmsSettings.convertLongMessagesToMMS);
+        settings.setGroup(mmsSettings.groupMMS);
         settings.setStripUnicode(xyz.klinker.messenger.data.Settings.get(context)
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.data.Settings.get(context)
                 .giffgaffDeliveryReports ? "*0#" : "");
 
-        MmsSettings mmsSettings = MmsSettings.get(context);
         if (mmsSettings.overrideSystemAPN) {
             settings.setUseSystemSending(false);
 
