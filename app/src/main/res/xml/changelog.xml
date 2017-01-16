@@ -20,6 +20,7 @@
         name="1.15.0"
         description="January 16th, 2017">
         <text>Option to send group messages as SMS instead of MMS, for individual replies</text>
+        <text>Add a "Resend" button to the notifications when messages fail to send</text>
     </version>
 
     <version
