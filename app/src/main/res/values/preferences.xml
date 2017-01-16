@@ -85,6 +85,7 @@
 
     <string name="pref_mms_size" translatable="false">mms_size_limit</string>
     <string name="pref_group_mms" translatable="false">group_mms</string>
+    <string name="pref_auto_save_media" translatable="false">auto_save_media</string>
     <string name="pref_override_system_apn" translatable="false">mms_override</string>
     <string name="pref_mmsc_url" translatable="false">mmsc_url</string>
     <string name="pref_mms_proxy" translatable="false">mms_proxy</string>

@@ -1181,13 +1181,123 @@ public class ApiUtils {
     }
 
     /**
-     * Update the delivery reports setting.
+     * Update the convert to MMS setting, for long messages
      */
     public void updateConvertToMMS(final String accountId, final boolean convert) {
         if (!active || accountId == null) {
             return;
         } else {
             updateSetting(accountId, "convert_to_mms", "boolean", convert);
+        }
+    }
+
+    /**
+     * Update the MMS size limit setting.
+     */
+    public void updateMmsSize(final String accountId, final String mmsSize) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mms_size_limit", "string", mmsSize);
+        }
+    }
+
+    /**
+     * Update the group MMS setting.
+     */
+    public void updateGroupMMS(final String accountId, final boolean groupMMS) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "group_mms", "boolean", groupMMS);
+        }
+    }
+
+    /**
+     * Update the auto save media setting.
+     */
+    public void updateAutoSaveMedia(final String accountId, final boolean save) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "auto_save_media", "boolean", save);
+        }
+    }
+
+    /**
+     * Update the override system apn setting.
+     */
+    public void updateOverrideSystemApn(final String accountId, final boolean override) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mms_override", "boolean", override);
+        }
+    }
+
+    /**
+     * Update the mmsc url for MMS.
+     */
+    public void updateMmscUrl(final String accountId, final String mmsc) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mmsc_url", "string", mmsc);
+        }
+    }
+
+    /**
+     * Update the MMS proxy setting.
+     */
+    public void updateMmsProxy(final String accountId, final String proxy) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mms_proxy", "string", proxy);
+        }
+    }
+
+    /**
+     * Update the MMS port setting.
+     */
+    public void updateMmsPort(final String accountId, final String port) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "mms_port", "string", port);
+        }
+    }
+
+    /**
+     * Update the user agent setting.
+     */
+    public void updateUserAgent(final String accountId, final String userAgent) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "user_agent", "string", userAgent);
+        }
+    }
+
+    /**
+     * Update the user agent profile url setting.
+     */
+    public void updateUserAgentProfileUrl(final String accountId, final String userAgentProfileUrl) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "user_agent_profile_url", "string", userAgentProfileUrl);
+        }
+    }
+
+    /**
+     * Update the user agent tag name setting.
+     */
+    public void updateUserAgentProfileTagName(final String accountId, final String tagName) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "user_agent_profile_tag_name", "string", tagName);
         }
     }
 
