@@ -355,6 +355,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
                     utils.removeDevice(accountId, device.id);
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) { }
+
                     addDevice(utils, accountId, true, false);
                 } else {
                     runOnUiThread(new Runnable() {
