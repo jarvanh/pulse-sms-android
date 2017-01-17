@@ -17,7 +17,8 @@ import static org.junit.Assert.*;
 public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     private static final int DEFAULT_INPUT_TYPE =
-            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT;
+            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT |
+                    InputType.TYPE_TEXT_FLAG_MULTI_LINE;
 
     private KeyboardLayoutHelper helper;
 
@@ -37,8 +38,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
         helper = new KeyboardLayoutHelper(settings);
 
         helper.applyLayout(editText);
-        verify(editText).setInputType(DEFAULT_INPUT_TYPE |
-                InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
+        verify(editText).setInputType(DEFAULT_INPUT_TYPE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
     }
 
     @Test
@@ -47,15 +47,15 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
         helper = new KeyboardLayoutHelper(settings);
 
         helper.applyLayout(editText);
-        verify(editText).setInputType(DEFAULT_INPUT_TYPE | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-    }
-
-    @Test
-    public void shouldNotChangeForSendKeyboard() {
-        settings.keyboardLayout = Settings.KeyboardLayout.SEND;
-        helper = new KeyboardLayoutHelper(settings);
-
-        helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
     }
+
+//    @Test
+//    public void shouldNotChangeForSendKeyboard() {
+//        settings.keyboardLayout = Settings.KeyboardLayout.SEND;
+//        helper = new KeyboardLayoutHelper(settings);
+//
+//        helper.applyLayout(editText);
+//        verify(editText).setInputType(DEFAULT_INPUT_TYPE & InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//    }
 }

@@ -25,6 +25,10 @@ public class AutoSummaryListPreference extends ListPreference {
     @Override
     public CharSequence getSummary() {
         int pos = findIndexOfValue(getValue());
-        return getEntries()[pos];
+        try {
+            return getEntries()[pos];
+        } catch (Exception e) {
+            return "";
+        }
     }
 }
