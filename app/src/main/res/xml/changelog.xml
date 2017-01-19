@@ -20,6 +20,7 @@
         name="1.14.1"
         description="January 11th, 2017">
         <text>Fixes for signatures</text>
+        <text>Dismiss notifications when you swipe to archive or delete conversations</text>
         <text>Improvements to login process</text>
     </version>
 
