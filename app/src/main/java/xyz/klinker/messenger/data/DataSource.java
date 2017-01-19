@@ -1735,18 +1735,20 @@ public class DataSource {
      * conversation id will be returned. If not, null will be returned.
      */
     public Long findConversationId(String phoneNumbers) {
-        String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
+        IdMatcher matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor;
 
         try {
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
         } catch (Exception e) {
             ensureActionable();
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
         }
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -1800,18 +1802,20 @@ public class DataSource {
      * @return the conversation id to use.
      */
     private long updateOrCreateConversation(String phoneNumbers, Message message, Context context) {
-        String matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
+        IdMatcher matcher = SmsMmsUtils.createIdMatcher(phoneNumbers);
         Cursor cursor;
 
         try {
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
         } catch (Exception e) {
             ensureActionable();
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=?", new String[]{matcher}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
         }
 
         long conversationId;
@@ -1845,7 +1849,7 @@ public class DataSource {
             conversation.phoneNumbers = phoneNumbers;
             conversation.title = ContactUtils.findContactNames(phoneNumbers, context);
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context);
-            conversation.idMatcher = matcher;
+            conversation.idMatcher = matcher.sevenLetter;
             conversation.mute = false;
             conversation.archive = false;
             conversation.ledColor = Color.WHITE;

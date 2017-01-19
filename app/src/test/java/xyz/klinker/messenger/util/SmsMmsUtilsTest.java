@@ -24,25 +24,25 @@ public class SmsMmsUtilsTest {
 
     @Test
     public void createIdMatcherSingleNumber() {
-        assertEquals("11555", SmsMmsUtils.createIdMatcher("+15154211555"));
+        assertEquals("4211555", SmsMmsUtils.createIdMatcher("+15154211555").sevenLetter);
     }
 
     @Test
     public void createIdMatcherMultipleNumbers() {
-        assertEquals("085321149396726",
-                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493"));
+        assertEquals("419672648085329911493",
+                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493").sevenLetter);
     }
 
     @Test
     public void createIdMatcherEmail() {
         assertEquals("jklinker1@gmail.com",
-                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com"));
+                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com").sevenLetter);
     }
 
     @Test
     public void createIdMatcherForSpacedWeirdNumbers() {
-        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210"),
-                SmsMmsUtils.createIdMatcher("1 987-654-3210"));
+        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210").sevenLetter,
+                SmsMmsUtils.createIdMatcher("1 987-654-3210").sevenLetter);
     }
 
 }
