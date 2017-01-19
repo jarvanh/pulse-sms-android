@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="1.14.1"
+        description="January 11th, 2017">
+        <text>Fixes for signatures</text>
+        <text>Improvements to login process</text>
+    </version>
+
+    <version
         name="1.14.0"
         description="January 11th, 2017">
         <text>Option to enable swipe to delete on the conversation list (Global Settings)</text>
