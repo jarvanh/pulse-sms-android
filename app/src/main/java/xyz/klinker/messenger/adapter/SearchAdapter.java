@@ -130,7 +130,9 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 h.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
                 if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                     h.imageLetter.setText(conversation.title.substring(0, 1));
+                    h.groupIcon.setVisibility(View.GONE);
                 } else {
+                    h.groupIcon.setVisibility(View.VISIBLE);
                     h.imageLetter.setText(null);
                 }
             } else {
@@ -140,12 +142,9 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                         .into(h.image);
             }
 
-            View.OnClickListener click = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        listener.onSearchSelected(conversation);
-                    }
+            View.OnClickListener click = view -> {
+                if (listener != null) {
+                    listener.onSearchSelected(conversation);
                 }
             };
 
@@ -182,12 +181,9 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                     .addLink(highlight)
                     .build();
 
-            View.OnClickListener click = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        listener.onSearchSelected(message);
-                    }
+            View.OnClickListener click = view -> {
+                if (listener != null) {
+                    listener.onSearchSelected(message);
                 }
             };
 
