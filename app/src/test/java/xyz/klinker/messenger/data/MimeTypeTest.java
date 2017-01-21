@@ -27,6 +27,11 @@ import static org.junit.Assert.assertTrue;
 public class MimeTypeTest {
 
     @Test
+    public void shouldIgnoreCase() {
+        assertTrue(MimeType.isVcard("text/VCard"));
+    }
+
+    @Test
     public void textPlainSupported() {
         assertTrue(MimeType.isSupported(MimeType.TEXT_PLAIN));
     }
