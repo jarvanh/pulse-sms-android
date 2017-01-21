@@ -94,6 +94,7 @@ public class MimeType {
                 mimeType.equals(TEXT_VCARD) ||
                 mimeType.equals(TEXT_X_VCARD) ||
                 mimeType.equals(TEXT_X_VCALENDAR) ||
+                mimeType.contains("vcard") ||
                 mimeType.equals(TEXT_DIRECTORY) ||
                 mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) ||
                 mimeType.equals(APPLICATION_VCARD) ||
@@ -119,7 +120,7 @@ public class MimeType {
      */
     public static boolean isVcard(String mimeType) {
         mimeType = mimeType.toLowerCase();
-        return mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR) ||
+        return mimeType.contains("vcard") || mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR) ||
                 mimeType.equals(TEXT_DIRECTORY) || mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) || mimeType.equals(APPLICATION_VCARD);
     }
 
