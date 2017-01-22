@@ -380,10 +380,10 @@ public class NotificationService extends IntentService {
 
         NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
-                .setContentTitle(conversation.title)
+                .setContentTitle(getResources().getQuantityString(R.plurals.new_conversations, 1, 1))
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
-                .setLargeIcon(contactImage)
+                .setLargeIcon(null)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)

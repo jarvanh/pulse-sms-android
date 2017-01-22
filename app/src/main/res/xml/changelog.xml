@@ -18,9 +18,10 @@
 
     <version
         name="1.14.1"
-        description="January 11th, 2017">
+        description="January 19th, 2017">
         <text>Dismiss notifications when you swipe to archive or delete conversations</text>
         <text>Improvements to login process</text>
+        <text>Hide more information when using the system-level private notifications on the lockscreen</text>
         <text>Fixes for signatures</text>
         <text>Fixes to contacts with similar phone numbers getting eaten up by other contacts</text>
     </version>
