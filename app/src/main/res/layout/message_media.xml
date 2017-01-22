@@ -103,6 +103,7 @@
         android:textColor="@color/secondaryText"
         android:id="@+id/timestamp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp" />
 
 </LinearLayout>

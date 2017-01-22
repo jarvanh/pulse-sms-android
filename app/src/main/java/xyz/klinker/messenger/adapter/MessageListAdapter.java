@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -33,6 +32,8 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -44,7 +45,6 @@ import com.klinker.android.link_builder.TouchableMovementMethod;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
@@ -64,6 +64,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.LinkLongClickFragment;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.MessageListStylingHelper;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -89,7 +90,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private MessageListFragment fragment;
     private int timestampHeight;
 
-    private MessageMultiSelectDelegate multiSelect;
+    private MessageListStylingHelper stylingHelper;
 
     private int imageHeight;
     private int imageWidth;
@@ -109,6 +110,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 350);
         }
+
+        stylingHelper = new MessageListStylingHelper(fragment.getActivity());
 
         if (fragment.getMultiSelect() != null)
             fragment.getMultiSelect().setAdapter(this);
@@ -406,14 +409,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             setVisible(holder.image);
         }
 
-        long nextTimestamp;
-        if (position != getItemCount() - 1) {
-            messages.moveToPosition(position + 1);
-            nextTimestamp = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
-        } else {
-            nextTimestamp = System.currentTimeMillis();
-        }
-
         if (message.simPhoneNumber != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
                     message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
@@ -422,10 +417,35 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     message.timestamp));
         }
 
-        if (TimeUtils.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
-            holder.timestamp.getLayoutParams().height = timestampHeight;
+        if (!isGroup && FeatureFlags.get(holder.itemView.getContext()).MESSAGE_PADDING) {
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .setMargins(holder)
+                    .setBackground(holder)
+                    .applyTimestampHeight(holder, timestampHeight);
         } else {
-            holder.timestamp.getLayoutParams().height = 0;
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .applyTimestampHeight(holder, timestampHeight);
+
+            try {
+                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
+            }
         }
 
         if (isGroup && holder.contact != null && message.from != null) {

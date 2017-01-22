@@ -18,8 +18,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:focusable="true"
@@ -45,6 +45,8 @@
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
+            android:layout_marginTop="-6dp"
+            android:layout_marginBottom="3dp"
             android:contentDescription="@string/mms_image" />
 
         <TextView
@@ -53,6 +55,8 @@
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
             android:textColor="@android:color/white"
+            android:layout_marginTop="-6dp"
+            android:layout_marginBottom="3dp"
             android:id="@+id/message" />
 
     </LinearLayout>
@@ -62,7 +66,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp">
 
         <TextView
             android:layout_width="wrap_content"
