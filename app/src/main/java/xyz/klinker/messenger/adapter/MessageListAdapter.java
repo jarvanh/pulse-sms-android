@@ -522,7 +522,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
 
                 notifyItemInserted(finalCount - 1);
-                manager.scrollToPosition(finalCount - 1);
+
+                if (Math.abs(manager.findLastVisibleItemPosition() - initialCount) < 4) {
+                    // near the bottom, scroll to the new item
+                    manager.scrollToPosition(finalCount - 1);
+                }
             }
         }
     }
