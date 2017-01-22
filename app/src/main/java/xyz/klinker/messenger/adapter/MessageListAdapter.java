@@ -32,6 +32,8 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,6 +52,7 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.YouTubePreview;
@@ -414,10 +417,36 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     message.timestamp));
         }
 
-        stylingHelper.calculateAdjacentItems(messages, position)
-                .setMargins(holder)
-                .setBackground(holder)
-                .applyTimestampHeight(holder, timestampHeight);
+        if (!isGroup && FeatureFlags.get(holder.itemView.getContext()).MESSAGE_PADDING) {
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .setMargins(holder)
+                    .setBackground(holder)
+                    .applyTimestampHeight(holder, timestampHeight);
+        } else {
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .applyTimestampHeight(holder, timestampHeight);
+
+            try {
+                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
+            }
+        }
 
         if (isGroup && holder.contact != null && message.from != null) {
             if (holder.contact.getVisibility() == View.GONE) {
