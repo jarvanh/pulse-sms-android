@@ -28,8 +28,13 @@ public class MessageListStylingHelper {
     private long nextTimestamp;
 
     public MessageListStylingHelper(Context context) {
-        eightDp = DensityUtil.toDp(context, 16);
-        roundMessages = Settings.get(context).rounderBubbles;
+        try {
+            eightDp = DensityUtil.toDp(context, 16);
+            roundMessages = Settings.get(context).rounderBubbles;
+        } catch (NullPointerException e) {
+            eightDp = 8;
+            roundMessages = false;
+        }
     }
 
     public MessageListStylingHelper calculateAdjacentItems(Cursor cursor, int currentPosition) {
@@ -66,6 +71,10 @@ public class MessageListStylingHelper {
     }
 
     public MessageListStylingHelper setMargins(MessageViewHolder holder) {
+        if (holder.itemView.getLayoutParams() == null) {
+            return this;
+        }
+
         if (currentType != lastType) {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp * 2;
         } else {
@@ -82,7 +91,7 @@ public class MessageListStylingHelper {
     }
 
     public MessageListStylingHelper setBackground(MessageViewHolder holder) {
-        if (roundMessages || MimeType.isExpandedMedia(holder.mimeType) || currentType == Message.TYPE_INFO ) {
+        if (roundMessages || MimeType.isExpandedMedia(holder.mimeType) || currentType == Message.TYPE_INFO || holder.messageHolder == null) {
             return this;
         }
 
