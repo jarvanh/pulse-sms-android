@@ -516,6 +516,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             } else if (initialCount > finalCount) {
                 notifyDataSetChanged();
             } else {
+                if (finalCount - 2 >= 0) {
+                    // with the new paddings, we need to notify the second to last item too
+                    notifyItemChanged(finalCount - 2);
+                }
+
                 notifyItemInserted(finalCount - 1);
                 manager.scrollToPosition(finalCount - 1);
             }

@@ -20,6 +20,7 @@ public class MessageListStylingHelper {
     private int columnType = -1;
     private int columnTimestamp = -1;
 
+    private boolean isJustSentMessage;
     private int currentType;
     private long currentTimestamp;
     private int lastType;
@@ -63,6 +64,7 @@ public class MessageListStylingHelper {
             nextType = cursor.getInt(columnType);
             nextTimestamp = cursor.getLong(columnTimestamp);
         } else {
+            isJustSentMessage = currentType != Message.TYPE_RECEIVED;
             nextType = -1;
             nextTimestamp = System.currentTimeMillis();
         }
@@ -81,7 +83,7 @@ public class MessageListStylingHelper {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = 0;
         }
 
-        if (currentType != nextType || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)) {
+        if (!isJustSentMessage && (currentType != nextType || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp))) {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = eightDp * 2;
         } else {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = 0;
