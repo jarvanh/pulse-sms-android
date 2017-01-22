@@ -21,6 +21,10 @@ public class MediaParserService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (intent == null) {
+            return;
+        }
+
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1L);
         String text = intent.getStringExtra(EXTRA_BODY_TEXT);
 

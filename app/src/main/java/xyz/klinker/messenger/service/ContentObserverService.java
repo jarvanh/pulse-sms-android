@@ -97,17 +97,14 @@ public class ContentObserverService extends Service {
 
         @Override
         public void onChange(boolean selfChange) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10000);
-                    } catch (Exception e) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                } catch (Exception e) {
 
-                    }
-
-                    processLastMessage();
                 }
+
+                processLastMessage();
             }).start();
         }
 

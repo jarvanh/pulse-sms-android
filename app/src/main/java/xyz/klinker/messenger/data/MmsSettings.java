@@ -25,8 +25,6 @@ public class MmsSettings {
 
     private static volatile MmsSettings settings;
 
-    private Context context;
-
     public boolean convertLongMessagesToMMS;
     public boolean overrideSystemAPN;
 
@@ -45,8 +43,7 @@ public class MmsSettings {
 
     @VisibleForTesting
     protected void init(Context context) {
-        this.context = context;
-        SharedPreferences sharedPrefs = getSharedPrefs();
+        SharedPreferences sharedPrefs = getSharedPrefs(context);
 
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false);
@@ -85,7 +82,7 @@ public class MmsSettings {
     }
 
     @VisibleForTesting
-    public SharedPreferences getSharedPrefs() {
+    public SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }
