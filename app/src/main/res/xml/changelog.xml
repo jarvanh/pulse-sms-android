@@ -22,8 +22,10 @@
         <text>Dismiss notifications when you swipe to archive or delete conversations</text>
         <text>Improvements to login process</text>
         <text>Hide more information when using the system-level private notifications on the lockscreen</text>
+        <text>Only scroll the message list if we are near the bottom when a new message comes in</text>
         <text>Fixes for signatures</text>
         <text>Fixes to contacts with similar phone numbers getting eaten up by other contacts</text>
+        <text>Fix some crashes</text>
     </version>
 
     <version
