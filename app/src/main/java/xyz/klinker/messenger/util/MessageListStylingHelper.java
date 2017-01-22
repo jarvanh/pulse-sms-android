@@ -63,6 +63,7 @@ public class MessageListStylingHelper {
             cursor.moveToPosition(currentPosition + 1);
             nextType = cursor.getInt(columnType);
             nextTimestamp = cursor.getLong(columnTimestamp);
+            isJustSentMessage = false;
         } else {
             isJustSentMessage = currentType != Message.TYPE_RECEIVED;
             nextType = -1;

@@ -23,6 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
@@ -193,6 +195,27 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             if (h.message != null) {
                 h.message.setOnClickListener(click);
+            }
+
+            try {
+                ((LinearLayout.LayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) h.message.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) h.message.getLayoutParams()).topMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
+            }
+            try {
+                ((LinearLayout.LayoutParams) h.image.getLayoutParams()).topMargin = 0;
+            } catch (Exception e) {
+                ((FrameLayout.LayoutParams) h.image.getLayoutParams()).topMargin = 0;
             }
         }
 
