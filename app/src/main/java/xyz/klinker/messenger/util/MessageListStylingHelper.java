@@ -24,7 +24,7 @@ public class MessageListStylingHelper {
     private long nextTimestamp;
 
     public MessageListStylingHelper(Context context) {
-        eightDp = DensityUtil.toDp(context, 8);
+        eightDp = DensityUtil.toDp(context, 16);
         paddingFlag = FeatureFlags.get(context).MESSAGE_PADDING;
     }
 
@@ -65,7 +65,7 @@ public class MessageListStylingHelper {
         }
 
         if (currentType != lastType) {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp * 4;
+            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp * 2;
         } else {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = 0;
         }
