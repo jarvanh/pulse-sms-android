@@ -205,20 +205,26 @@ public class SmsMmsUtils {
 
         List<String> fiveMatchers = new ArrayList<>();
         List<String> sevenMatchers = new ArrayList<>();
+
+        for (String n : numbers) {
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
+                fiveMatchers.add(n);
+            } else if (n.length() >= 5) {
+                fiveMatchers.add(n.substring(n.length() - 5));
+            } else {
+                fiveMatchers.add(n);
+            }
+        }
+
         for (String n : numbers) {
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
                 sevenMatchers.add(n);
-                fiveMatchers.add(n);
             } else if (n.length() >= 7) {
                 sevenMatchers.add(n.substring(n.length() - 7));
-                fiveMatchers.add(n.substring(n.length() - 5));
-            } else if (n.length() >= 5) {
-                sevenMatchers.add(n.substring(n.length() - 5));
-                fiveMatchers.add(n.substring(n.length() - 5));
             } else {
                 sevenMatchers.add(n);
-                fiveMatchers.add(n);
             }
         }
 
