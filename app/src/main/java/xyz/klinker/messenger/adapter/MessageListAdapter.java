@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -44,7 +43,6 @@ import com.klinker.android.link_builder.TouchableMovementMethod;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
@@ -52,7 +50,6 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.data.ArticlePreview;
 import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.YouTubePreview;
@@ -64,6 +61,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.LinkLongClickFragment;
 import xyz.klinker.messenger.util.ColorUtils;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.ImageUtils;
+import xyz.klinker.messenger.util.MessageListStylingHelper;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.Regex;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -89,7 +87,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private MessageListFragment fragment;
     private int timestampHeight;
 
-    private MessageMultiSelectDelegate multiSelect;
+    private MessageListStylingHelper stylingHelper;
 
     private int imageHeight;
     private int imageWidth;
@@ -109,6 +107,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 350);
         }
+
+        stylingHelper = new MessageListStylingHelper(fragment.getActivity());
 
         if (fragment.getMultiSelect() != null)
             fragment.getMultiSelect().setAdapter(this);
@@ -406,14 +406,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             setVisible(holder.image);
         }
 
-        long nextTimestamp;
-        if (position != getItemCount() - 1) {
-            messages.moveToPosition(position + 1);
-            nextTimestamp = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
-        } else {
-            nextTimestamp = System.currentTimeMillis();
-        }
-
         if (message.simPhoneNumber != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
                     message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
@@ -422,11 +414,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     message.timestamp));
         }
 
-        if (TimeUtils.shouldDisplayTimestamp(message.timestamp, nextTimestamp)) {
-            holder.timestamp.getLayoutParams().height = timestampHeight;
-        } else {
-            holder.timestamp.getLayoutParams().height = 0;
-        }
+        stylingHelper.calculateAdjacentItems(messages, position)
+                .setMargins(holder)
+                .setBackground(holder)
+                .applyTimestampHeight(holder, timestampHeight);
 
         if (isGroup && holder.contact != null && message.from != null) {
             if (holder.contact.getVisibility() == View.GONE) {
