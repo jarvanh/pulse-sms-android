@@ -106,6 +106,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     public void addMessage() {
         when(cursor.getCount()).thenReturn(20);
         when(cursor.moveToFirst()).thenReturn(true);
+        when(manager.findLastVisibleItemPosition()).thenReturn(15);
         adapter = spy(adapter);
         adapter.addMessage(cursor);
         verify(adapter).notifyItemInserted(19);
