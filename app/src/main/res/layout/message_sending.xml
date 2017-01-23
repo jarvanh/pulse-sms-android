@@ -46,8 +46,8 @@
             android:maxHeight="@dimen/max_message_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
-            android:layout_marginTop="-6dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="2dp"
             android:contentDescription="@string/mms_image" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:textSize="16sp"
             android:textColor="@color/primaryText"
             android:paddingTop="2dp"
-            android:paddingBottom="2dp"
+            android:paddingBottom="1dp"
             android:layout_marginTop="-6dp"
             android:layout_marginBottom="3dp"
             android:id="@+id/message" />
