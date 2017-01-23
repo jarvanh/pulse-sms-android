@@ -34,7 +34,6 @@
         android:backgroundTint="@color/drawerBackground"
         android:maxWidth="@dimen/max_message_width"
         android:minWidth="@dimen/min_mms_picture_width"
-        android:padding="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="20dp"
         android:clickable="true"
@@ -56,6 +55,8 @@
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
             android:textColor="@color/primaryText"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:layout_marginTop="-6dp"
             android:layout_marginBottom="3dp"
             android:id="@+id/message" />
