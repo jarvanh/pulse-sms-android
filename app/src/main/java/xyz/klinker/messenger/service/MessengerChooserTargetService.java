@@ -78,7 +78,7 @@ public class MessengerChooserTargetService extends ChooserTargetService {
         Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
                 cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
 
-        Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 148), DensityUtil.toDp(this, 148), Bitmap.Config.ARGB_8888);
+        Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 48), DensityUtil.toDp(this, 48), Bitmap.Config.ARGB_8888);
         color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
         color = ImageUtils.clipToCircle(color);
 

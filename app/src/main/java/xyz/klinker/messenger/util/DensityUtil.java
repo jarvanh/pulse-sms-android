@@ -7,11 +7,11 @@ import android.util.TypedValue;
 public class DensityUtil {
 
     public static int toPx(Context context, int dp) {
-        return convert(context, dp, TypedValue.COMPLEX_UNIT_DIP);
+        return convert(context, dp, TypedValue.COMPLEX_UNIT_PX);
     }
 
     public static int toDp(Context context, int px) {
-        return convert(context, px, TypedValue.COMPLEX_UNIT_PX);
+        return convert(context, px, TypedValue.COMPLEX_UNIT_DIP);
     }
 
     private static int convert(Context context, int amount, int conversionUnit) {

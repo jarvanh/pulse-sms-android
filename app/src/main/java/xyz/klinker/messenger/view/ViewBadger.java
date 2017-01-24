@@ -26,7 +26,7 @@ import xyz.klinker.messenger.util.DensityUtil;
 
 public class ViewBadger extends TextView {
 
-    private static final int CORNER_RADIUS = 12;
+    private static final int CORNER_RADIUS = 2;
     private static final int MARGIN_LEFT = 14;
     private static final int MARGIN_TOP = 14;
 
@@ -40,7 +40,7 @@ public class ViewBadger extends TextView {
     private void init(Context context, View target) {
         this.context = context;
 
-        int paddingPixels = DensityUtil.toDp(context, 4);
+        int paddingPixels = DensityUtil.toDp(context, 1);
 
         setTextSize(10);
         setTypeface(Typeface.DEFAULT_BOLD);

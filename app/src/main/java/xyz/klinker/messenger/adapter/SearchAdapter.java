@@ -16,14 +16,12 @@
 
 package xyz.klinker.messenger.adapter;
 
-import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
@@ -37,9 +35,12 @@ import java.util.regex.Pattern;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.data.FeatureFlags;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.util.ContactUtils;
+import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.TimeUtils;
 import xyz.klinker.messenger.util.listener.SearchListener;
 
@@ -51,6 +52,8 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     private List<Conversation> conversations;
     private List<Message> messages;
     private SearchListener listener;
+
+    private int topMargin = -1;
 
     public SearchAdapter(String search, List<Conversation> conversations, List<Message> messages,
                          SearchListener listener) {
@@ -101,6 +104,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     @SuppressWarnings("deprecation")
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int section,
                                  int relativePosition, int absolutePosition) {
+
+        if (topMargin == -1) {
+            topMargin = DensityUtil.toDp(holder.itemView.getContext(), 3);
+        }
 
         Pattern pattern;
         try {
@@ -197,25 +204,11 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 h.message.setOnClickListener(click);
             }
 
-            try {
-                ((LinearLayout.LayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) h.message.getLayoutParams()).topMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) h.message.getLayoutParams()).topMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) h.image.getLayoutParams()).topMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) h.image.getLayoutParams()).topMargin = 0;
+            if (!Settings.get(h.itemView.getContext()).rounderBubbles) {
+                ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
+                ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).topMargin = -1 * topMargin;
+                ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
+                ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).topMargin = -1 * topMargin;
             }
         }
 
@@ -238,22 +231,24 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             int layoutId;
             int color;
 
+            Settings settings = Settings.get(parent.getContext());
+
             if (viewType == Message.TYPE_RECEIVED) {
-                layoutId = R.layout.message_received;
+                layoutId = settings.rounderBubbles ? R.layout.message_received_round : R.layout.message_received;
                 color = parent.getContext().getResources().getColor(R.color.colorPrimary);
             } else {
                 color = -1;
 
                 if (viewType == Message.TYPE_SENDING) {
-                    layoutId = R.layout.message_sending;
+                    layoutId = settings.rounderBubbles ? R.layout.message_sending_round : R.layout.message_sending;
                 } else if (viewType == Message.TYPE_ERROR) {
-                    layoutId = R.layout.message_error;
+                    layoutId = settings.rounderBubbles ? R.layout.message_error_round : R.layout.message_error;
                 } else if (viewType == Message.TYPE_DELIVERED) {
-                    layoutId = R.layout.message_delivered;
+                    layoutId = settings.rounderBubbles ? R.layout.message_delivered_round : R.layout.message_delivered;
                 } else if (viewType == Message.TYPE_INFO) {
                     layoutId = R.layout.message_info;
                 } else {
-                    layoutId = R.layout.message_sent;
+                    layoutId = settings.rounderBubbles ? R.layout.message_sent_round : R.layout.message_sent;
                 }
             }
 

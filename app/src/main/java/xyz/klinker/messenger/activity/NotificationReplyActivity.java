@@ -240,7 +240,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = DensityUtil.toDp(this, 12);
+        params.topMargin = DensityUtil.toDp(this, 4);
         params.bottomMargin = params.topMargin;
         tv.setLayoutParams(params);
 
@@ -356,7 +356,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         messagesMore.setOnClickListener(v -> messagesInitialHolder.performClick());
 
         if (getResources().getBoolean(R.bool.is_tablet)) {
-            scrollView.getLayoutParams().width = DensityUtil.toPx(this, 418);
+            scrollView.getLayoutParams().width = DensityUtil.toDp(this, 418);
         }
 
         final GestureDetectorCompat detectorCompat = new GestureDetectorCompat(this,

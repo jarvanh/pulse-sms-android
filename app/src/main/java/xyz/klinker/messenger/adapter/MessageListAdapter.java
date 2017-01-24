@@ -425,27 +425,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .applyTimestampHeight(holder, timestampHeight);
-
-            try {
-                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).bottomMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) holder.message.getLayoutParams()).topMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).bottomMargin = 0;
-            }
-            try {
-                ((LinearLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
-            } catch (Exception e) {
-                ((FrameLayout.LayoutParams) holder.image.getLayoutParams()).topMargin = 0;
-            }
         }
 
         if (isGroup && holder.contact != null && message.from != null) {

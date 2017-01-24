@@ -30,7 +30,7 @@ public class MessageListStylingHelper {
 
     public MessageListStylingHelper(Context context) {
         try {
-            eightDp = DensityUtil.toDp(context, 16);
+            eightDp = DensityUtil.toDp(context, 8);
             roundMessages = Settings.get(context).rounderBubbles;
         } catch (NullPointerException e) {
             eightDp = 8;
@@ -79,13 +79,13 @@ public class MessageListStylingHelper {
         }
 
         if (currentType != lastType) {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp * 2;
+            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp;
         } else {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = 0;
         }
 
         if (!isJustSentMessage && (currentType != nextType || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp))) {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = eightDp * 2;
+            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = eightDp;
         } else {
             ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = 0;
         }

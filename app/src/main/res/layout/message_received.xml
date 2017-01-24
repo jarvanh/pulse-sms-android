@@ -32,7 +32,6 @@
         android:background="@drawable/message_received_background"
         android:backgroundTint="@color/colorPrimary"
         android:maxWidth="@dimen/max_message_width"
-        android:padding="8dp"
         android:paddingStart="20dp"
         android:paddingEnd="8dp"
         android:clickable="true"
