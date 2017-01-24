@@ -152,14 +152,16 @@ public class MessageListStylingHelper {
             } else {
                 return R.drawable.message_circle_sent_group_both_background;
             }
-        } else if (currentType == lastType && currentType != nextType && !displayLastTimestamp) {
+        } else if ((currentType == lastType && currentType != nextType && !displayLastTimestamp) ||
+                (currentType == nextType && currentType == lastType && displayNextTimestamp)) {
             // top corner bubble
             if (currentType == Message.TYPE_RECEIVED) {
                 return R.drawable.message_circle_received_group_top_background;
             } else {
                 return R.drawable.message_circle_sent_group_top_background;
             }
-        } else if (currentType == nextType && currentType != lastType && !displayNextTimestamp) {
+        } else if ((currentType == nextType && currentType != lastType && !displayNextTimestamp) ||
+                (currentType == nextType && currentType == lastType && displayLastTimestamp)) {
             // bottom corner bubble
             if (currentType == Message.TYPE_RECEIVED) {
                 return R.drawable.message_circle_received_group_bottom_background;
