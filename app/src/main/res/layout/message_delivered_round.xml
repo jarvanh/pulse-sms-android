@@ -44,8 +44,6 @@
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
-            android:layout_marginTop="-6dp"
-            android:layout_marginBottom="3dp"
             android:contentDescription="@string/mms_image" />
 
         <TextView
@@ -54,8 +52,6 @@
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
             android:textColor="@color/primaryText"
-            android:layout_marginTop="-6dp"
-            android:layout_marginBottom="3dp"
             android:id="@+id/message" />
 
     </LinearLayout>
