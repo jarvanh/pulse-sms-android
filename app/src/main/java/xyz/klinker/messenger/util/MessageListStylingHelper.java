@@ -142,6 +142,32 @@ public class MessageListStylingHelper {
 
     @DrawableRes
     private int roundBubbleBackground() {
-        return R.drawable.message_circle_background;
+        boolean displayNextTimestamp = TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp);
+        boolean displayLastTimestamp = TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp);
+
+        if (currentType == lastType && currentType == nextType && !displayLastTimestamp && !displayNextTimestamp) {
+            // both corners
+            if (currentType == Message.TYPE_RECEIVED) {
+                return R.drawable.message_circle_received_group_both_background;
+            } else {
+                return R.drawable.message_circle_sent_group_both_background;
+            }
+        } else if (currentType == lastType && currentType != nextType && !displayLastTimestamp) {
+            // top corner bubble
+            if (currentType == Message.TYPE_RECEIVED) {
+                return R.drawable.message_circle_received_group_top_background;
+            } else {
+                return R.drawable.message_circle_sent_group_top_background;
+            }
+        } else if (currentType == nextType && currentType != lastType && !displayNextTimestamp) {
+            // bottom corner bubble
+            if (currentType == Message.TYPE_RECEIVED) {
+                return R.drawable.message_circle_received_group_bottom_background;
+            } else {
+                return R.drawable.message_circle_sent_group_bottom_background;
+            }
+        } else {
+            return R.drawable.message_circle_background;
+        }
     }
 }
