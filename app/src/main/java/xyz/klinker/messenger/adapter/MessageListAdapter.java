@@ -108,7 +108,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         if (fragment.getActivity() == null) {
             imageHeight = imageWidth = 50;
         } else {
-            imageHeight = imageWidth = DensityUtil.toDp(fragment.getActivity(), 350);
+            imageHeight = imageWidth = DensityUtil.toPx(fragment.getActivity(), 350);
         }
 
         stylingHelper = new MessageListStylingHelper(fragment.getActivity());

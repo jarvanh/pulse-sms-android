@@ -71,7 +71,7 @@ public class DynamicShortcutUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(context, uri));
 
-            Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 148), DensityUtil.toDp(context, 148), Bitmap.Config.ARGB_8888);
+            Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888);
             color.eraseColor(backgroundColor);
             color = ImageUtils.clipToCircle(color);
 
