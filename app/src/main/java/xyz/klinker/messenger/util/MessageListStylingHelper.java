@@ -3,6 +3,7 @@ package xyz.klinker.messenger.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 
 import xyz.klinker.messenger.R;
@@ -94,23 +95,20 @@ public class MessageListStylingHelper {
     }
 
     public MessageListStylingHelper setBackground(MessageViewHolder holder) {
-        if (roundMessages || MimeType.isExpandedMedia(holder.mimeType) || currentType == Message.TYPE_INFO || holder.messageHolder == null) {
+        if (MimeType.isExpandedMedia(holder.mimeType) || currentType == Message.TYPE_INFO || holder.messageHolder == null) {
             return this;
         }
 
-        if (currentType == lastType && !TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)) {
-            if (currentType == Message.TYPE_RECEIVED) {
-                holder.messageHolder.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.message_received_group_background));
-            } else {
-                holder.messageHolder.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.message_sent_group_background));
-            }
+        int background;
+        if (roundMessages) {
+            background = roundBubbleBackground();
         } else {
-            if (currentType == Message.TYPE_RECEIVED) {
-                holder.messageHolder.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.message_received_background));
-            } else {
-                holder.messageHolder.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.message_sent_background));
-            }
+            background = dialogSquareBackground();
         }
+
+        holder.messageHolder.setBackground(
+                holder.itemView.getContext().getResources().getDrawable(background)
+        );
 
         return this;
     }
@@ -123,5 +121,27 @@ public class MessageListStylingHelper {
         }
 
         return this;
+    }
+
+    @DrawableRes
+    private int dialogSquareBackground() {
+        if (currentType == lastType && !TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)) {
+            if (currentType == Message.TYPE_RECEIVED) {
+                return R.drawable.message_received_group_background;
+            } else {
+                return R.drawable.message_sent_group_background;
+            }
+        } else {
+            if (currentType == Message.TYPE_RECEIVED) {
+                return R.drawable.message_received_background;
+            } else {
+                return R.drawable.message_sent_background;
+            }
+        }
+    }
+
+    @DrawableRes
+    private int roundBubbleBackground() {
+        return R.drawable.message_circle_background;
     }
 }
