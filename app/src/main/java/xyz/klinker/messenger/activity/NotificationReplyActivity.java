@@ -47,6 +47,8 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.service.ReplyService;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.DualSimUtils;
@@ -398,6 +400,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
                         conversation.phoneNumbers);
         }).start();
 
+        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);
+        MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
         MessengerAppWidgetProvider.refreshWidget(this);
     }
 
