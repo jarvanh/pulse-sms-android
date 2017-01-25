@@ -21,7 +21,7 @@ public class ScheduledTokenRefreshService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        TokenUtil.refreshToken(this);
+        //TokenUtil.refreshToken(this);
         scheduleNextRun(this);
     }
 
