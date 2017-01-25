@@ -204,12 +204,10 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 h.message.setOnClickListener(click);
             }
 
-            if (!Settings.get(h.itemView.getContext()).rounderBubbles) {
-                ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
-                ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).topMargin = -1 * topMargin;
-                ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
-                ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).topMargin = -1 * topMargin;
-            }
+            ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
+            ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).topMargin = -1 * topMargin;
+            ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
+            ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).topMargin = -1 * topMargin;
         }
 
     }
