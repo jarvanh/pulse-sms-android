@@ -1660,12 +1660,12 @@ public class DataSource {
         values.put(Message.COLUMN_TYPE, type);
 
         try {
-            database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
-                    new String[]{Long.toString(messageId)});
+            database.update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>?",
+                    new String[]{Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED)});
         } catch (Exception e) {
             ensureActionable();
-            database.update(Message.TABLE, values, Message.COLUMN_ID + "=?",
-                    new String[]{Long.toString(messageId)});
+            database.update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>?",
+                    new String[]{Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED)});
         }
 
         apiUtils.updateMessageType(accountId, messageId, type);
