@@ -127,12 +127,12 @@ public class ContactUtils {
                             .query(
                                     phoneUri,
                                     new String[]{
-                                            ContactsContract.Contacts.DISPLAY_NAME,
+                                            ContactsContract.PhoneLookup.DISPLAY_NAME,
                                             ContactsContract.Contacts._ID
                                     },
                                     null,
                                     null,
-                                    ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
+                                    ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
 
                 } catch (Exception e) {
                     // funky placeholder number coming from an mms message, dont do anything with it
