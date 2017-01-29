@@ -9,10 +9,21 @@
         android:defaultValue="1_mb"/>
 
     <SwitchPreference
+        android:key="@string/pref_group_mms"
+        android:title="@string/use_group_mms"
+        android:defaultValue="true" />
+
+    <SwitchPreference
         android:key="@string/pref_convert_to_mms"
         android:title="@string/send_as_mms"
         android:summary="@string/send_as_mms_summary"
         android:defaultValue="true" />
+
+    <SwitchPreference
+        android:key="@string/pref_auto_save_media"
+        android:title="@string/auto_save_media"
+        android:summary="@string/auto_save_media_summary"
+        android:defaultValue="false" />
 
     <PreferenceCategory
         android:title="@string/apn_configuration" >

@@ -30,13 +30,19 @@ public class MediaSaver {
     private static final int REQUEST_STORAGE_PERMISSION = 119;
 
     private Activity activity;
+    private Context context;
 
     public MediaSaver(Activity activity) {
         this.activity = activity;
+        this.context = activity;
+    }
+
+    public MediaSaver(Context context) {
+        this.context = context;
     }
 
     public void saveMedia(long messageId) {
-        DataSource source = DataSource.getInstance(activity);
+        DataSource source = DataSource.getInstance(context);
         source.open();
         Message message = source.getMessage(messageId);
         source.close();
@@ -45,11 +51,11 @@ public class MediaSaver {
     }
 
     public void saveMedia(Message message) {
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             saveMessage(message);
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
             } else {
                 saveMessage(message);
@@ -78,7 +84,7 @@ public class MediaSaver {
 
         if (MimeType.isStaticImage(message.mimeType)) {
             try {
-                Bitmap bmp = ImageUtils.getBitmap(activity, message.data);
+                Bitmap bmp = ImageUtils.getBitmap(context, message.data);
                 FileOutputStream stream = new FileOutputStream(dst);
                 bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                 stream.close();
@@ -91,21 +97,21 @@ public class MediaSaver {
                 values.put(MediaStore.Images.Media.MIME_TYPE, message.mimeType);
                 values.put(MediaStore.MediaColumns.DATA, dst.getPath());
 
-                activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-                Toast.makeText(activity, R.string.saved, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(activity, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
             }
         } else {
             try {
-                InputStream in = activity.getContentResolver().openInputStream(Uri.parse(message.data));
+                InputStream in = context.getContentResolver().openInputStream(Uri.parse(message.data));
                 FileUtils.copy(in, dst);
-                Toast.makeText(activity, R.string.saved, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(activity, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
             }
         }
     }

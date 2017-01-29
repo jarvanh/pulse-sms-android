@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="1.15.0"
+        description="January 29th, 2017">
+        <text>Option to choose the "keyboard type" under global settings</text>
+        <text>Option to automatically save media to the external storage, that is received in MMS messages</text>
+        <text>Option to send group messages as SMS instead of MMS, for individual replies</text>
+        <text>Add a "Resend" button to the notifications when messages fail to send</text>
+        <text>Improvements to syncing "MMS Configuration" settings between devices</text>
+
+    <version
         name="1.14.1"
         description="January 23th, 2017">
         <text>Dismiss notifications when you swipe to archive or delete conversations</text>

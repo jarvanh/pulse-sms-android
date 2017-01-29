@@ -344,6 +344,10 @@
 
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max image size</string>
+    <string name="use_group_mms">Use group MMS</string>
+    <string name="auto_save_media">Auto-save media</string>
+    <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
+        it is received.</string>
     <string name="apn_configuration">APN Configuration</string>
     <string name="override_system_apn">Override system APNs</string>
     <string name="mmsc_url">MMSC URL</string>

@@ -35,6 +35,7 @@ import xyz.klinker.messenger.service.NotificationService;
 import xyz.klinker.messenger.util.BlacklistUtils;
 import xyz.klinker.messenger.util.ContactUtils;
 import xyz.klinker.messenger.util.DualSimUtils;
+import xyz.klinker.messenger.util.MediaSaver;
 import xyz.klinker.messenger.util.PhoneNumberUtils;
 import xyz.klinker.messenger.util.SmsMmsUtils;
 import xyz.klinker.messenger.util.TimeUtils;
@@ -105,6 +106,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
                 if (SmsReceivedReceiver.shouldSaveMessages(source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
+
+                    if (!MimeType.TEXT_PLAIN.equals(message.mimeType)) {
+                        new MediaSaver(context).saveMedia(message);
+                    }
                 }
             }
 

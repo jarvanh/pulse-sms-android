@@ -26,6 +26,8 @@ public class MmsSettings {
     private static volatile MmsSettings settings;
 
     public boolean convertLongMessagesToMMS;
+    public boolean groupMMS;
+    public boolean autoSaveMedia;
     public boolean overrideSystemAPN;
 
     public String mmscUrl;
@@ -46,6 +48,8 @@ public class MmsSettings {
         SharedPreferences sharedPrefs = getSharedPrefs(context);
 
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
+        this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true);
+        this.autoSaveMedia = sharedPrefs.getBoolean(context.getString(R.string.pref_auto_save_media), false);
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false);
 
         this.mmscUrl = sharedPrefs.getString(context.getString(R.string.pref_mmsc_url), "");
