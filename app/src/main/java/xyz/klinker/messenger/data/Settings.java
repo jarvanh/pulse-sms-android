@@ -147,7 +147,7 @@ public class Settings {
         this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "");
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off").equals("on");
         this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false);
-        this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false);
+        this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), true);
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false);
 
         // configuration
