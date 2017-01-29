@@ -90,23 +90,23 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanAMin() {
+    public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanThirtySeconds() {
         List<NotificationService.NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
         messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
         messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.MINUTE + 1, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", (TimeUtils.SECOND * 30) + 1, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
     }
 
     @Test
-    public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanAMin() {
+    public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanThirtySeconds() {
         List<NotificationService.NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
         messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
         messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.MINUTE - 100, ""));
+        messages.add(new NotificationService.NotificationMessage("", "", (TimeUtils.SECOND * 30) - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
