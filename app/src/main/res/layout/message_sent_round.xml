@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +19,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:gravity="end"
@@ -34,7 +35,6 @@
         android:backgroundTint="@color/drawerBackground"
         android:maxWidth="@dimen/max_message_width"
         android:minWidth="@dimen/min_mms_picture_width"
-        android:padding="12dp"
         android:clickable="true"
         android:id="@+id/message_holder">
 
@@ -44,6 +44,7 @@
             android:maxHeight="@dimen/max_message_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
+            android:padding="3dp"
             android:contentDescription="@string/mms_image" />
 
         <TextView
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
+            android:padding="3dp"
             android:textColor="@color/primaryText"
             android:id="@+id/message" />
 

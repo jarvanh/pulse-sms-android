@@ -157,7 +157,11 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public long getItemId(int position) {
-        return conversations.get(position).id;
+        if (conversations.size() > 0 && position < conversations.size()) {
+            return conversations.get(position).id;
+        } else {
+            return 0;
+        }
     }
 
     @Override

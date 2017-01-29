@@ -16,14 +16,13 @@ public class FirebaseResetService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         // going to re-download everything I guess..
-
         DataSource source = DataSource.getInstance(this);
         source.open();
         source.clearTables();
         source.close();
 
         Intent download = new Intent(this, ApiDownloadService.class);
-        download.putExtra(ApiDownloadService.ARG_SHOW_NOTIFICATION, false);
+        download.putExtra(ApiDownloadService.ARG_SHOW_NOTIFICATION, true);
         startService(download);
     }
 }

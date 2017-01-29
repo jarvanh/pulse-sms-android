@@ -25,10 +25,9 @@ public class KeyboardLayoutHelper {
 
         switch (layout) {
             case DEFAULT:
-                inputType |= InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+                inputType |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
                 break;
             case ENTER:
-                inputType |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
                 break;
         }
 

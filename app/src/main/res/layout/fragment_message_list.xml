@@ -186,9 +186,9 @@
                 android:paddingEnd="18dp"
                 android:textSize="16sp"
                 android:id="@+id/message_entry"
-                android:inputType="textCapSentences|textAutoCorrect"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
                 android:imeOptions="actionSend|flagNoExtractUi"
-                android:maxLines="8" />
+                android:maxLines="5" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/send"

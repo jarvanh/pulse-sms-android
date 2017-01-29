@@ -51,7 +51,11 @@ public class MessengerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ApiUtils.environment = getString(R.string.environment);
+        try {
+            ApiUtils.environment = getString(R.string.environment);
+        } catch (Exception e) {
+            ApiUtils.environment = "release";
+        }
         enableSecurity();
 
         Settings.BaseTheme theme = Settings.get(this).baseTheme;
@@ -66,22 +70,19 @@ public class MessengerApplication extends Application {
 
     public void refreshDynamicShortcuts() {
         if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1()) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10 * 1000);
-                        DataSource source = DataSource.getInstance(MessengerApplication.this);
-                        source.open();
-                        List<Conversation> conversations = source.getPinnedConversationsAsList();
-                        if (conversations.size() == 0) {
-                            conversations = source.getUnarchivedConversationsAsList();
-                        }
-                        source.close();
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10 * 1000);
+                    DataSource source = DataSource.getInstance(MessengerApplication.this);
+                    source.open();
+                    List<Conversation> conversations = source.getPinnedConversationsAsList();
+                    if (conversations.size() == 0) {
+                        conversations = source.getUnarchivedConversationsAsList();
+                    }
+                    source.close();
 
-                        new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
-                    } catch (Exception e) { }
-                }
+                    new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
+                } catch (Exception e) { }
             }).start();
         }
     }

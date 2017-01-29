@@ -47,6 +47,8 @@ import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.service.ReplyService;
 import xyz.klinker.messenger.util.DensityUtil;
 import xyz.klinker.messenger.util.DualSimUtils;
@@ -240,7 +242,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = DensityUtil.toDp(this, 12);
+        params.topMargin = DensityUtil.toDp(this, 4);
         params.bottomMargin = params.topMargin;
         tv.setLayoutParams(params);
 
@@ -356,7 +358,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         messagesMore.setOnClickListener(v -> messagesInitialHolder.performClick());
 
         if (getResources().getBoolean(R.bool.is_tablet)) {
-            scrollView.getLayoutParams().width = DensityUtil.toPx(this, 418);
+            scrollView.getLayoutParams().width = DensityUtil.toDp(this, 418);
         }
 
         final GestureDetectorCompat detectorCompat = new GestureDetectorCompat(this,
@@ -398,6 +400,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
                         conversation.phoneNumbers);
         }).start();
 
+        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);
+        MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
         MessengerAppWidgetProvider.refreshWidget(this);
     }
 

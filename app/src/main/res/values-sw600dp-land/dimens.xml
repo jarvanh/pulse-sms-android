@@ -19,5 +19,6 @@
 
     <dimen name="header_height">160dp</dimen>
     <dimen name="header_image_top_margin">0dp</dimen>
+    <dimen name="attach_menu_height">288dp</dimen>
 
 </resources>

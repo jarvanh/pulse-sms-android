@@ -40,12 +40,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.data.IdMatcher;
 import xyz.klinker.messenger.data.MimeType;
 import xyz.klinker.messenger.data.model.Conversation;
 import xyz.klinker.messenger.data.model.Message;
@@ -97,7 +99,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -160,7 +162,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers);
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -187,36 +189,59 @@ public class SmsMmsUtils {
     /**
      * Creates a column that we can use later on for a findOrCreateConversationId method on my
      * database. It will take all of the comma, space separated numbers and combine them together
-     * by taking the last 5 digits of each number, sorting them and then recombining them into a
+     * by taking the last 5  (and 7) digits of each number, sorting them and then recombining them into a
      * single string. We can then do the same process for any string of phone numbers later on
      * and search for that string in the data source to see if it exists yet.
+     *
+     * I added the seven digit finder after some issues that people ran into with conversations not
+     * being able to be saved correctly. It is now being used throughout the app, but I needed
+     * to continue supporting the legacy version (5 digits) as well.
      *
      * @param phoneNumbers the phone numbers to look for.
      * @return the combined string.
      */
-    public static String createIdMatcher(String phoneNumbers) {
+    public static IdMatcher createIdMatcher(String phoneNumbers) {
         String[] numbers = phoneNumbers.split(", ");
 
-        List<String> matchers = new ArrayList<>();
+        List<String> fiveMatchers = new ArrayList<>();
+        List<String> sevenMatchers = new ArrayList<>();
+
         for (String n : numbers) {
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
-                matchers.add(n);
+                fiveMatchers.add(n);
             } else if (n.length() >= 5) {
-                matchers.add(n.substring(n.length() - 5));
+                fiveMatchers.add(n.substring(n.length() - 5));
             } else {
-                matchers.add(n);
+                fiveMatchers.add(n);
             }
         }
 
-        Collections.sort(matchers);
-
-        StringBuilder builder = new StringBuilder();
-        for (String m : matchers) {
-            builder.append(m);
+        for (String n : numbers) {
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
+                sevenMatchers.add(n);
+            } else if (n.length() >= 7) {
+                sevenMatchers.add(n.substring(n.length() - 7));
+            } else {
+                sevenMatchers.add(n);
+            }
         }
 
-        return builder.toString();
+        Collections.sort(sevenMatchers);
+        Collections.sort(fiveMatchers);
+
+        StringBuilder sevenBuilder = new StringBuilder();
+        for (String m : sevenMatchers) {
+            sevenBuilder.append(m);
+        }
+
+        StringBuilder fiveBuilder = new StringBuilder();
+        for (String m : fiveMatchers) {
+            fiveBuilder.append(m);
+        }
+
+        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString());
     }
 
     /**

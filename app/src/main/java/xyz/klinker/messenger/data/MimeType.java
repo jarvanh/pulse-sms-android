@@ -88,10 +88,13 @@ public class MimeType {
      * @return true if supported, otherwise false.
      */
     public static boolean isSupported(String mimeType) {
+        mimeType = mimeType.toLowerCase();
+
         return mimeType.equals(TEXT_PLAIN) ||
                 mimeType.equals(TEXT_VCARD) ||
                 mimeType.equals(TEXT_X_VCARD) ||
                 mimeType.equals(TEXT_X_VCALENDAR) ||
+                mimeType.contains("vcard") ||
                 mimeType.equals(TEXT_DIRECTORY) ||
                 mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) ||
                 mimeType.equals(APPLICATION_VCARD) ||
@@ -116,7 +119,8 @@ public class MimeType {
      * Gets whether the mime type is a vcard extension.
      */
     public static boolean isVcard(String mimeType) {
-        return mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR) ||
+        mimeType = mimeType.toLowerCase();
+        return mimeType.contains("vcard") || mimeType.equals(TEXT_VCARD) || mimeType.equals(TEXT_X_VCARD) || mimeType.equals(TEXT_X_VCALENDAR) ||
                 mimeType.equals(TEXT_DIRECTORY) || mimeType.equals(TEXT_DIRECTORY_VCARD_PROFILE) || mimeType.equals(APPLICATION_VCARD);
     }
 
@@ -124,6 +128,7 @@ public class MimeType {
      * Gets whether the mime type is a supported static image (not a gif).
      */
     public static boolean isStaticImage(String mimeType) {
+        mimeType = mimeType.toLowerCase();
         return mimeType.startsWith("image/") && !mimeType.equals(IMAGE_GIF);
     }
 
@@ -131,6 +136,7 @@ public class MimeType {
      * Gets whether the mime type is a video file.
      */
     public static boolean isVideo(String mimeType) {
+        mimeType = mimeType.toLowerCase();
         return mimeType.startsWith("video/");
     }
 
@@ -138,10 +144,12 @@ public class MimeType {
      * Gets whether the mime type is an audio file.
      */
     public static boolean isAudio(String mimeType) {
+        mimeType = mimeType.toLowerCase();
         return mimeType.startsWith("audio/");
     }
 
     public static boolean isExpandedMedia(String mimeType) {
+        mimeType = mimeType != null ? mimeType.toLowerCase() : null;
         return mimeType != null && mimeType.startsWith("media");
     }
 

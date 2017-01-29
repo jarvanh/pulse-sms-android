@@ -196,7 +196,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void findConversationByNumbers() {
         source.findConversationId("515");
         verify(database).query("conversation", new String[]{"_id", "id_matcher"},
-                "id_matcher=?", new String[]{"515"}, null, null, null);
+                "id_matcher=? OR id_matcher=?", new String[]{"515", "515"}, null, null, null);
     }
 
     @Test
@@ -390,8 +390,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void updateMessageType() {
         source.updateMessageType(1, Message.TYPE_SENT);
-        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=?"),
-                eq(new String[]{"1"}));
+        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>?"),
+                eq(new String[]{"1", "0"}));
     }
 
     @Test

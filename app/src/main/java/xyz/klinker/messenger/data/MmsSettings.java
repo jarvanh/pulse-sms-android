@@ -25,8 +25,6 @@ public class MmsSettings {
 
     private static volatile MmsSettings settings;
 
-    private Context context;
-
     public boolean convertLongMessagesToMMS;
     public boolean groupMMS;
     public boolean autoSaveMedia;
@@ -47,8 +45,7 @@ public class MmsSettings {
 
     @VisibleForTesting
     protected void init(Context context) {
-        this.context = context;
-        SharedPreferences sharedPrefs = getSharedPrefs();
+        SharedPreferences sharedPrefs = getSharedPrefs(context);
 
         this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true);
@@ -89,7 +86,7 @@ public class MmsSettings {
     }
 
     @VisibleForTesting
-    public SharedPreferences getSharedPrefs() {
+    public SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

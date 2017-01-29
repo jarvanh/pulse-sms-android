@@ -18,8 +18,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:gravity="end"
@@ -33,7 +33,6 @@
         android:background="@drawable/message_circle_background"
         android:backgroundTint="@color/drawerBackground"
         android:maxWidth="@dimen/max_message_width"
-        android:padding="12dp"
         android:clickable="true"
         android:id="@+id/message_holder">
 
@@ -44,6 +43,7 @@
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
+            android:padding="3dp"
             android:contentDescription="@string/mms_image" />
 
         <TextView
@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/max_message_width"
             android:textSize="16sp"
+            android:padding="3dp"
             android:textColor="@color/primaryText"
             android:id="@+id/message" />
 

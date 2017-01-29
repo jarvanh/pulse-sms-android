@@ -96,9 +96,12 @@ public class FeatureSettingsFragment extends PreferenceFragment {
             new AlertDialog.Builder(getActivity())
                     .setView(layout)
                     .setPositiveButton(R.string.save, (dialogInterface, i) -> {
+                        String signature = editText.getText().toString();
+                        Settings.get(getActivity()).setValue(getActivity().getString(R.string.pref_signature),
+                                signature);
                         if (editText.getText().length() > 0) {
                             new ApiUtils().updateSignature(Account.get(getActivity()).accountId,
-                                    editText.getText().toString());
+                                    signature);
                         } else {
                             new ApiUtils().updateSignature(Account.get(getActivity()).accountId, "");
                         }

@@ -51,58 +51,59 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-
-        Message lastMessage = source.getLatestMessage();
-        SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
-        long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
-
-        if (lastTimestamp != -1L) {
-            if (lastMessage != null && lastMessage.timestamp > lastTimestamp) {
-                lastTimestamp = lastMessage.timestamp + TIMESTAMP_BUFFER;
-            }
-
-            int insertedMessages = 0;
-            List<Conversation> conversationsWithNewMessages =
-                    SmsMmsUtils.queryNewConversations(this, lastTimestamp);
-
-            if (conversationsWithNewMessages.size() > 0) {
-                NotificationCompat.Builder builder = showNotification();
-
-                int progress = 1;
-
-                for (Conversation conversation : conversationsWithNewMessages) {
-                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() &&
-                            !conversation.title.contains("UNKNOWN_SENDER") &&
-                            !conversation.title.contains("insert-address-token") &&
-                            conversation.snippet != null && !conversation.snippet.isEmpty()) {
-                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp,
-                                SmsMmsUtils.queryConversation(conversation.id, this));
-                        builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
-                        NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
-                    }
-
-                    progress++;
-                }
-
-                if (insertedMessages > 0) {
-                    sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
-                }
-            }
-
-            NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
-        }
-
-        source.close();
-        sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
-
-        if (lastTimestamp != -1L && Account.get(this).exists()) {
-            // do this after closing the database, becuase it will reopen it
-            // conversations will have been uploaded already, but we need to upload any messages
-            // newer than that timestamp.
-            uploadMessages(lastTimestamp);
-        }
+//        DataSource source = DataSource.getInstance(this);
+//        source.open();
+//
+//        Message lastMessage = source.getLatestMessage();
+//        SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
+//        long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
+//
+//        if (lastTimestamp != -1L) {
+//            if (lastMessage != null && lastMessage.timestamp > lastTimestamp) {
+//                lastTimestamp = lastMessage.timestamp + TIMESTAMP_BUFFER;
+//            }
+//
+//            int insertedMessages = 0;
+//            List<Conversation> conversationsWithNewMessages =
+//                    SmsMmsUtils.queryNewConversations(this, lastTimestamp);
+//
+//            if (conversationsWithNewMessages.size() > 0) {
+//                NotificationCompat.Builder builder = showNotification();
+//
+//                int progress = 1;
+//
+//                for (Conversation conversation : conversationsWithNewMessages) {
+//                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() &&
+//                            conversation.title != null && !conversation.title.isEmpty() &&
+//                            !conversation.title.contains("UNKNOWN_SENDER") &&
+//                            !conversation.title.contains("insert-address-token") &&
+//                            conversation.snippet != null && !conversation.snippet.isEmpty()) {
+//                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp,
+//                                SmsMmsUtils.queryConversation(conversation.id, this));
+//                        builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
+//                        NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
+//                    }
+//
+//                    progress++;
+//                }
+//
+//                if (insertedMessages > 0) {
+//                    sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+//                }
+//            }
+//
+//            NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
+//        }
+//
+//        source.close();
+//        sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
+//
+//        if (lastTimestamp != -1L && Account.get(this).exists()) {
+//            // do this after closing the database, becuase it will reopen it
+//            // conversations will have been uploaded already, but we need to upload any messages
+//            // newer than that timestamp.
+//            uploadMessages(lastTimestamp);
+//        }
     }
 
     private NotificationCompat.Builder showNotification() {

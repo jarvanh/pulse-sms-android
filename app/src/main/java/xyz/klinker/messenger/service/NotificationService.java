@@ -101,9 +101,7 @@ public class NotificationService extends IntentService {
                 rows.add(giveConversationNotification(conversation, conversations.size()));
             }
 
-            if (conversations.size() > 1) {
-                giveSummaryNotification(conversations, rows);
-            }
+            giveSummaryNotification(conversations, rows);
 
             Settings settings = Settings.get(this);
             if (settings.repeatNotifications != -1) {
@@ -380,10 +378,10 @@ public class NotificationService extends IntentService {
 
         NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
-                .setContentTitle(conversation.title)
+                .setContentTitle(getResources().getQuantityString(R.plurals.new_conversations, 1, 1))
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
-                .setLargeIcon(contactImage)
+                .setLargeIcon(null)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setAutoCancel(false)
                 .setCategory(Notification.CATEGORY_MESSAGE)
@@ -599,7 +597,7 @@ public class NotificationService extends IntentService {
             NotificationMessage one = messages.get(messages.size() - 2);
             NotificationMessage two = messages.get(messages.size() - 1);
 
-            if (Math.abs(one.timestamp - two.timestamp) > TimeUtils.MINUTE) {
+            if (Math.abs(one.timestamp - two.timestamp) > TimeUtils.SECOND * 30) {
                 return false;
             }
         }
@@ -657,7 +655,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
@@ -679,7 +677,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
