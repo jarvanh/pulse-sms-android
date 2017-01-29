@@ -68,7 +68,7 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 public class NotificationService extends IntentService {
 
     protected static final boolean DEBUG_QUICK_REPLY = false;
-    protected static final boolean AUTO_CANCEL = false;
+    protected static final boolean AUTO_CANCEL = true;
     
     public static Long CONVERSATION_ID_OPEN = 0L;
 
@@ -96,12 +96,16 @@ public class NotificationService extends IntentService {
         List<String> rows = new ArrayList<>();
 
         if (conversations.size() > 0) {
+            NotificationManagerCompat.from(this).cancelAll();
+
             for (int i = 0; i < conversations.size(); i++) {
                 NotificationConversation conversation = conversations.get(conversations.keyAt(i));
                 rows.add(giveConversationNotification(conversation, conversations.size()));
             }
 
-            giveSummaryNotification(conversations, rows);
+            if (conversations.size() > 1) {
+                giveSummaryNotification(conversations, rows);
+            }
 
             Settings settings = Settings.get(this);
             if (settings.repeatNotifications != -1) {
@@ -221,7 +225,7 @@ public class NotificationService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
-                .setAutoCancel(false)
+                .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setDefaults(defaults)
@@ -383,7 +387,7 @@ public class NotificationService extends IntentService {
                         conversation.messages.size(), conversation.messages.size()))
                 .setLargeIcon(null)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
-                .setAutoCancel(false)
+                .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
@@ -655,7 +659,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(true)
+                .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
@@ -677,7 +681,7 @@ public class NotificationService extends IntentService {
                 .setContentText(summary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
-                .setAutoCancel(true)
+                .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Notification.PRIORITY_HIGH)
