@@ -206,6 +206,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="you">Ty</string>
     <string name="new_message">Nowa wiadomość</string>
     <string name="received_new_message">Otrzymałeś nową wiadomość SMS!</string>
+    <string name="media">Multimedia</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Lista zmian</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -259,7 +260,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="repeat_ten_mins">Co dziesięć minut</string>
     <string name="repeat_half_hour">Co pół godziny</string>
     <string name="repeat_hour">Co godzinę</string>
-    <string name="wake_screen">Wybudzanie ekranu</string>
+    <string name="wake_screen">Włącz ekran</string>
     <string name="vibrate">Styl wibracji</string>
     <string name="vibrate_off">Brak wibracji</string>
     <string name="vibrate_default">Domyślna wibracja</string>
@@ -270,6 +271,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="vibrate_one_long_one_short">Długa i krótka wibracja</string>
     <string name="vibrate_one_short">Jedna krótka wibracja</string>
     <string name="vibrate_one_long">Jedna długa wibracja</string>
+    <string name="keyboard_layout">Układ klawiatury</string>
+    <string name="keyboard_default">Standardowa klawiatura</string>
+    <string name="keyboard_send_key">Przycisk \"Wyślij\"</string>
+    <string name="keyboard_enter_key">Przycisk Enter</string>
     <string name="sound_effects">Dźwięki aplikacji</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
     <string name="theme_settings">Personalizacja</string>
@@ -277,6 +282,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
     <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
+    <string name="swipe_delete">Przesuń aby usunąć</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
     <string name="add_blacklist">%1$s\n\nCzy jesteś pewien aby dodać ten numer do czarnej listy? Wiadomości przysłane z tego numeru nie będą już zapisywane i nie będziesz o nich informowany!</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
@@ -315,6 +321,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS</string>
     <string name="alert_types">Typy ostrzeżeń</string>
     <string name="alert_types_summary">Personalizacja powiadomień</string>
+    <string name="strip_unicode">Wyklucz znaki unicode</string>
+    <string name="strip_unicode_summary">Znaki te zostaną usunięte z wysyłanych wiadomości</string>
+    <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="apn_configuration">Konfiguracja APN</string>

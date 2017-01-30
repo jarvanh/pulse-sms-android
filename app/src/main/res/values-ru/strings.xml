@@ -99,7 +99,7 @@
     <string name="invite_friends_sms">Я начал использовать новое приложение для переписки и думаю, что оно тебе бы понравилось! К тому же оно бесплатное. Можешь загрузить его тут: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Введите сообщение</string>
-    <string name="type_message_to">Введите сообщение для %1$s</string>
+    <string name="type_message_to">Ваше сообщение для %1$s</string>
     <string name="attach">Прикрепить</string>
     <string name="select_sim">Выбрать SIM</string>
     <string name="message_from">%1$s</string>
@@ -189,7 +189,7 @@
         <item quantity="few">Несколько новых сообщений</item>
         <item quantity="many">Много новых сообщений</item>
     </plurals>
-    <string name="read">Прочитать</string>
+    <string name="read">Прочитано</string>
     <string name="reply">Ответ</string>
     <string name="reply_to">Ответить %1$s</string>
     <string name="call">Вызов</string>
@@ -204,6 +204,7 @@
     <string name="you">Вы</string>
     <string name="new_message">Новое сообщение</string>
     <string name="received_new_message">Получено новое сообщение!</string>
+    <string name="media">Медиа</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Список изменений</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -257,7 +258,7 @@
     <string name="repeat_ten_mins">Каждые 10 минут</string>
     <string name="repeat_half_hour">Каждые полчаса</string>
     <string name="repeat_hour">Каждый час</string>
-    <string name="wake_screen">Включать экран</string>
+    <string name="wake_screen">Экран</string>
     <string name="vibrate">Вибрация</string>
     <string name="vibrate_off">Без вибрации</string>
     <string name="vibrate_default">Стандартная</string>
@@ -268,6 +269,10 @@
     <string name="vibrate_one_long_one_short">Одна длинная и одна короткая</string>
     <string name="vibrate_one_short">Короткая</string>
     <string name="vibrate_one_long">Длинная</string>
+    <string name="keyboard_layout">Настройка клавиши Enter</string>
+    <string name="keyboard_default">По умолчанию</string>
+    <string name="keyboard_send_key">Отправить сообщение</string>
+    <string name="keyboard_enter_key">Перенос строки</string>
     <string name="sound_effects">Звуковые эффекты</string>
     <string name="delivery_reports">Отчёт о доставке</string>
     <string name="theme_settings">Персонализация</string>
@@ -275,6 +280,7 @@
     <string name="global_theme_color">Цвет темы</string>
     <string name="font_size">Размер шрифта</string>
     <string name="rounder_bubbles">Закруглённые пузырьки сообщений</string>
+    <string name="swipe_delete">Удалить жестом</string>
     <string name="blacklist_hint">Номер для добавления в ч/с</string>
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
     <string name="remove_blacklist">%1$s\n\nВы хотите удалить этот номер из ч/с?</string>
@@ -308,11 +314,14 @@
     <string name="font_size_normal">Нормальный</string>
     <string name="font_size_large">Большой</string>
     <string name="font_size_extra_large">Очень большой</string>
-    <string name="advanced">Продвинутый</string>
+    <string name="advanced">Дополнительно</string>
     <string name="send_as_mms">Преобразовать в MMS</string>
     <string name="send_as_mms_summary">Длинные сообщения будут отправлены как MMS, вместо нескольких SMS</string>
     <string name="alert_types">Виды уведомлений</string>
     <string name="alert_types_summary">Различные настройки уведомлений</string>
+    <string name="strip_unicode">Не использовать Unicode</string>
+    <string name="strip_unicode_summary">Специальные символы будут убраны из отправляемого сообщения</string>
+    <string name="giffgaff_delivery">Отчёт о доставке Giffgaff</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Максимальный размер изображения</string>
     <string name="apn_configuration">Настройка APN</string>
@@ -396,8 +405,8 @@
     <string name="hours">Часы</string>
     <string name="minutes">Минуты</string>
     <string name="test">Тест</string>
-    <string name="off">Выкл.</string>
-    <string name="on">Вкл.</string>
+    <string name="off">Не включать</string>
+    <string name="on">Включать</string>
     <!-- Times -->
     <string name="one_second">1 секунда</string>
     <string name="three_seconds">3 секунды</string>

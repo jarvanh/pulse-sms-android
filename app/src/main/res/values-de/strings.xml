@@ -195,6 +195,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="you">Sie</string>
     <string name="new_message">Neue Nachricht</string>
     <string name="received_new_message">Sie haben eine neue SMS erhalten!</string>
+    <string name="media">Medien</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Letzte Änderungen</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -255,6 +256,10 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="vibrate_one_long_one_short">Eine lange, eine kurze Vibration</string>
     <string name="vibrate_one_short">Eine kurze Vibration</string>
     <string name="vibrate_one_long">Eine lange Vibration</string>
+    <string name="keyboard_layout">Tastaturlayout</string>
+    <string name="keyboard_default">Standard-Tastatur</string>
+    <string name="keyboard_send_key">Senden-Taste</string>
+    <string name="keyboard_enter_key">Eingabetaste</string>
     <string name="sound_effects">Soundeffekte</string>
     <string name="delivery_reports">Übertragungsberichte</string>
     <string name="theme_settings">Personalisierung</string>
@@ -262,6 +267,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="global_theme_color">Schema-Farbe</string>
     <string name="font_size">Schriftgröße</string>
     <string name="rounder_bubbles">Runde Nachrichten-Blasen</string>
+    <string name="swipe_delete">Wischen, um zu löschen</string>
     <string name="blacklist_hint">Nummer zum Blockieren eintippen...</string>
     <string name="add_blacklist">%1$s\n\nSind Sie sicher, dass diese Nummer blockiert werden soll? Nachrichten werden nicht länger gespeichert, wenn sie von dieser Nummer kommen, und sie werden nicht benachrichtigt!</string>
     <string name="remove_blacklist">%1$s\n\nDiese Blockierung aufheben?</string>
@@ -300,6 +306,9 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="send_as_mms_summary">Lange Nachrichten werden als MMS statt mehrerer SMS verschickt</string>
     <string name="alert_types">Benachrichtigungstypen</string>
     <string name="alert_types_summary">Benachrichtigungen personalisieren</string>
+    <string name="strip_unicode">Unicode-Zeichen entfernen</string>
+    <string name="strip_unicode_summary">Diese Zeichen werden aus ausgehenden Nachrichten entfernt.</string>
+    <string name="giffgaff_delivery">Giffgaff-Zustellberichte</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximale Bildgröße</string>
     <string name="apn_configuration">APN Konfiguration</string>
