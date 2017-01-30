@@ -17,13 +17,13 @@
 <resources>
     <string name="api_login">Увійти</string>
     <string name="api_signup">Зареєструватися</string>
-    <string name="api_signup_failed">Неможливо зареєструватися на цьому пристрої, необхідно зареєструватися з основного
-пристрою, що отримав номер телефону першим!</string>
+    <string name="api_signup_failed">Неможливо зареєструватися на цьому пристрої, необхідно зареєструвати основний
+пристрій з номером телефону!</string>
     <string name="api_skip_signup">Або, якщо Ви лише хочете використовувати додаток на цьому пристрої, без можливостей мережі, таких як текстові повідомлення з планшета або комп\'ютера, Ви можете пропустити цей крок:</string>
     <string name="api_skip">Пропустити</string>
     <string name="api_email">Адреса електронної пошти</string>
     <string name="api_password">Пароль</string>
-    <string name="api_forgot_password">Забули пароль?</string>
+    <string name="api_forgot_password">Забули пароль? ЗіВ</string>
     <string name="api_password_confirmation">Підтвердження паролю</string>
     <string name="api_name">Ім\'я</string>
     <string name="api_phone_number">Номер телефону</string>
@@ -44,6 +44,8 @@
     <string name="api_no_phone_number">Не введено номер телефону</string>
     <string name="api_login_error">Сталася помилка при вході в систему, невірна адреса електронної пошти або пароль?</string>
     <string name="api_activate_summary">Увійдіть, щоб отримати всі ваші повідомлення на цьому пристрої!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Важливе до</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">на мобільному пристрої або комп\'ютері.</string>
