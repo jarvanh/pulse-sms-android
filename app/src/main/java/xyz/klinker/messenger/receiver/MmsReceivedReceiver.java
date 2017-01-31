@@ -29,6 +29,8 @@ import java.util.List;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.data.DataSource;
 import xyz.klinker.messenger.data.MimeType;
+import xyz.klinker.messenger.data.MmsSettings;
+import xyz.klinker.messenger.data.Settings;
 import xyz.klinker.messenger.data.model.Message;
 import xyz.klinker.messenger.service.MediaParserService;
 import xyz.klinker.messenger.service.NotificationService;
@@ -107,7 +109,8 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 if (SmsReceivedReceiver.shouldSaveMessages(source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
 
-                    if (!MimeType.TEXT_PLAIN.equals(message.mimeType)) {
+                    if (MmsSettings.get(context).autoSaveMedia &&
+                            !MimeType.TEXT_PLAIN.equals(message.mimeType)) {
                         new MediaSaver(context).saveMedia(message);
                     }
                 }
