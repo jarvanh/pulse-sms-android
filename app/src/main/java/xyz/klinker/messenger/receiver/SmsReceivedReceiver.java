@@ -126,7 +126,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
                     .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
             source.close();
 
-            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, false);
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId);
             MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
 
             return conversationId;
