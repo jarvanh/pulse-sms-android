@@ -46,7 +46,7 @@ public class ApiUtilsTest extends MessengerRobolectricSuite {
         } else if (environment.equals("staging")) {
             assertEquals("https://klinkerapps-messenger-staging.herokuapp.com/api/v1/", url);
         } else {
-            assertEquals("https://api.messenger.klinkerapps.com.com/api/v1/", url);
+            assertEquals("https://api.messenger.klinkerapps.com/api/v1/", url);
         }
     }
 
