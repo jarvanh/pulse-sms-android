@@ -1,9 +1,8 @@
-package xyz.klinker.messenger;
+package xyz.klinker.messenger.activity;
 
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,17 +14,19 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.Locale;
 import java.util.Random;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.Api;
 import xyz.klinker.messenger.api.entity.ContactBody;
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.implementation.AccountEncryptionCreator;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
-public class ActivateActivity extends Activity {
+public class ActivateWearActivity extends Activity {
 
-    private static final String TAG = "ActivateActivity";
+    private static final String TAG = "ActivateWearActivity";
 
     /**
      * Retry the activation request every 5 seconds.
@@ -116,7 +117,7 @@ public class ActivateActivity extends Activity {
             public void run() {
 
                 AccountEncryptionCreator encryptionCreator =
-                        new AccountEncryptionCreator(ActivateActivity.this, password);
+                        new AccountEncryptionCreator(ActivateWearActivity.this, password);
                 EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);
 
                 try {
@@ -134,13 +135,13 @@ public class ActivateActivity extends Activity {
                             Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                             false, FirebaseInstanceId.getInstance().getToken());
 
-                    setResult(RESULT_OK);
+                    setResult(LoginActivity.RESULT_START_NETWORK_SYNC);
                     finish();
                 } catch (Exception e) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(ActivateActivity.this, xyz.klinker.messenger.api.implementation.R.string.api_wrong_password,
+                            Toast.makeText(ActivateWearActivity.this, xyz.klinker.messenger.api.implementation.R.string.api_wrong_password,
                                     Toast.LENGTH_LONG).show();
                             activated(response);
                         }
