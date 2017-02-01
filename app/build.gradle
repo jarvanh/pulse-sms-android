@@ -122,6 +122,8 @@ android {
 
 dependencies {
 
+    wearApp project(':wear')
+
     compile project(":shared")
     compile project(":api_implementation")
     compile project(":encryption")

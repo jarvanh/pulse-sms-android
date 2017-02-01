@@ -1,21 +1,6 @@
-/*
- * Copyright (C) 2016 Jacob Klinker
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package xyz.klinker.messenger.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -34,9 +18,7 @@ import com.klinker.android.send_message.Utils;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.api.implementation.ActivateActivity;
-import xyz.klinker.messenger.api.implementation.LoginActivity;
-import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.api.implementation.*;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
@@ -47,13 +29,9 @@ import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
-import xyz.klinker.messenger.shared.util.TvUtils;
 import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener;
 
-/**
- * Activity for onboarding and initial database load.
- */
-public class InitialLoadActivity extends AppCompatActivity implements ProgressUpdateListener {
+public class InitialLoadWearActivity extends Activity implements ProgressUpdateListener {
 
     private static final int SETUP_REQUEST = 54321;
 
@@ -65,7 +43,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_load);
+        setContentView(xyz.klinker.messenger.R.layout.activity_initial_load);
 
         handler = new Handler();
         requestPermissions();
@@ -120,7 +98,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
                 registerReceiver(downloadReceiver,
                         new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
-            } else if (responseCode == ActivateActivity.RESULT_FAILED) {
+            } else if (responseCode == xyz.klinker.messenger.api.implementation.ActivateActivity.RESULT_FAILED) {
                 finish();
             }
         }
@@ -139,7 +117,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     private void startLogin() {
         // we want to pass the extras from the last intent to this one, since they will tell us if
         // we should automatically skip the login and just go into the data load.
-        Intent login = new Intent(this, LoginActivity.class);
+        Intent login = new Intent(this, ActivateWearActivity.class);
         login.putExtras(getIntent());
 
         startActivityForResult(login, SETUP_REQUEST);
@@ -163,7 +141,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 source.open();
 
                 List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
-                source.insertConversations(conversations, context, InitialLoadActivity.this);
+                source.insertConversations(conversations, context, InitialLoadWearActivity.this);
 
                 handler.post(new Runnable() {
                     @Override
@@ -171,7 +149,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                         progress.setIndeterminate(true);
                     }
                 });
-                
+
                 List<Contact> contacts = ContactUtils.queryContacts(context, source);
                 source.insertContacts(contacts, null);
                 source.close();
@@ -179,7 +157,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                    close();
+                        close();
                     }
                 }, 5000);
 
@@ -192,11 +170,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     private void close() {
         Settings.get(this).setValue(getString(R.string.pref_first_start), false);
 
-        if (TvUtils.hasTouchscreen(this)) {
-            startActivity(new Intent(this, MessengerActivity.class));
-        } else {
-            startActivity(new Intent(this, MessengerTvActivity.class));
-        }
+        startActivity(new Intent(this, MessengerWearActivity.class));
 
         if (startUploadAfterSync) {
             startService(new Intent(this, ApiUploadService.class));
