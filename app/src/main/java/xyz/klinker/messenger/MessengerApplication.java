@@ -25,14 +25,14 @@ import android.support.v7.app.AppCompatDelegate;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.service.ContentObserverService;
-import xyz.klinker.messenger.util.DynamicShortcutUtils;
-import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
+import xyz.klinker.messenger.shared.service.ContentObserverService;
+import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -58,8 +58,8 @@ public class MessengerApplication extends Application {
         }
         enableSecurity();
 
-        Settings.BaseTheme theme = Settings.get(this).baseTheme;
-        if (theme == Settings.BaseTheme.ALWAYS_LIGHT) {
+        BaseTheme theme = Settings.get(this).baseTheme;
+        if (theme == BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else if (theme.isDark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

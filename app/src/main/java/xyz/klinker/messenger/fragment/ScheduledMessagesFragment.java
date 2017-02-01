@@ -58,15 +58,15 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment;
-import xyz.klinker.messenger.service.ScheduledMessageService;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
+import xyz.klinker.messenger.shared.service.ScheduledMessageService;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener;
 
 /**
  * Fragment for displaying scheduled messages.

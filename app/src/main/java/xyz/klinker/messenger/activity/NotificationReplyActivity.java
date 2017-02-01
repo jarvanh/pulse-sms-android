@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -42,18 +41,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
-import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.service.ReplyService;
-import xyz.klinker.messenger.util.DensityUtil;
-import xyz.klinker.messenger.util.DualSimUtils;
-import xyz.klinker.messenger.util.SendUtils;
-import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.ReplyService;
+import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.DualSimUtils;
+import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
 public class NotificationReplyActivity extends AppCompatActivity {
 
@@ -134,7 +135,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         sendButton = (ImageButton) findViewById(R.id.send_button);
         conversationIndicator = (TextView) findViewById(R.id.conversation_indicator);
         
-        if (Settings.get(this).baseTheme == Settings.BaseTheme.BLACK) {
+        if (Settings.get(this).baseTheme == BaseTheme.BLACK) {
             messagesInitialHolder.setBackgroundColor(Color.BLACK);
             messagesMore.setBackgroundColor(Color.BLACK);
         }
@@ -349,8 +350,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
             onBackPressed();
 
             Intent intent = new Intent(NotificationReplyActivity.this, MessengerActivity.class);
-            intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
-            intent.putExtra(MessengerActivity.EXTRA_FROM_NOTIFICATION, true);
+            intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId);
+            intent.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, true);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });

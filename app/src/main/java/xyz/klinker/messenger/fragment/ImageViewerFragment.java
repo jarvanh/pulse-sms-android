@@ -29,9 +29,9 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import uk.co.senab.photoview.PhotoView;
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.util.listener.EasyVideoCallbackAdapter;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.listener.EasyVideoCallbackAdapter;
 
 /**
  * Fragment for viewing an image using Chris Banes's PhotoView library.

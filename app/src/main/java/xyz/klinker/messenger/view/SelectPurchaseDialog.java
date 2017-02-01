@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.util.billing.ProductAvailable;
+import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
 
 public class SelectPurchaseDialog extends AlertDialog.Builder {
 

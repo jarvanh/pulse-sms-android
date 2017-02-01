@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.view.ColorPreviewButton;
 
 import static org.junit.Assert.*;

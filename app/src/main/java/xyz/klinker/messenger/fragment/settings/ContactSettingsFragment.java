@@ -16,11 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -31,20 +27,18 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.SubscriptionInfo;
-import android.telephony.SubscriptionManager;
 import android.text.InputType;
 
 import java.util.List;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.ColorSet;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Contact;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.listener.ColorSelectedListener;
+import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Contact;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
 /**

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
-import android.telecom.Call;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 
 @SuppressLint("ViewConstructor")
 public class MaterialTooltip extends FrameLayout {

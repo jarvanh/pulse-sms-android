@@ -17,9 +17,9 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.listener.ImageSelectedListener;
-import xyz.klinker.messenger.util.listener.MediaSelectedListener;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener;
+import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener;
 
 /**
  * An adapter for displaying images in a grid for the user to select to attach to a message.

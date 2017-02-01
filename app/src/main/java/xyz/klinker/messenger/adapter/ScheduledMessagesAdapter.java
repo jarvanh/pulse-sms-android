@@ -30,9 +30,9 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ScheduledMessageViewHolder;
-import xyz.klinker.messenger.data.model.Blacklist;
-import xyz.klinker.messenger.data.model.ScheduledMessage;
-import xyz.klinker.messenger.util.listener.ScheduledMessageClickListener;
+import xyz.klinker.messenger.shared.data.model.Blacklist;
+import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
+import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener;
 
 /**
  * Adapter for displaying scheduled messages in a recyclerview.

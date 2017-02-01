@@ -34,7 +34,7 @@ import java.io.File;
 import java.io.IOException;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.util.listener.AudioRecordedListener;
+import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener;
 
 /**
  * View that allows you to record audio samples and provides a callback to put them back into the

@@ -30,11 +30,11 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 
 /**
  * Adapter for displaying a list of contacts. Each contact should be loaded into a conversation

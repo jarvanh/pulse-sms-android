@@ -27,11 +27,10 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import xyz.klinker.messenger.data.DataSource;
+import xyz.klinker.messenger.shared.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 23, constants = BuildConfig.class)

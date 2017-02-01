@@ -38,8 +38,8 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

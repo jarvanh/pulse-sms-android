@@ -35,14 +35,14 @@ import java.util.regex.Pattern;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.DensityUtil;
-import xyz.klinker.messenger.util.TimeUtils;
-import xyz.klinker.messenger.util.listener.SearchListener;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.shared.util.listener.SearchListener;
 
 public class SearchAdapter extends SectionedRecyclerViewAdapter {
 

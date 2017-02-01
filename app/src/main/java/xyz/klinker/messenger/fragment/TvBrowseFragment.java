@@ -23,8 +23,8 @@ import android.support.v17.leanback.widget.ListRow;
 
 import com.sgottard.sofa.support.BrowseSupportFragment;
 
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.model.Conversation;
 
 /**
  * A fragment that displays messages on the right side of the screen and conversations on the left

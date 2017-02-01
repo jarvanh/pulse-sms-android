@@ -24,7 +24,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
@@ -39,9 +38,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ColorPickerAdapter;
-import xyz.klinker.messenger.data.ColorSet;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.listener.ColorSelectedListener;
+import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
 
 /**
  * Preference that supports a color picker.

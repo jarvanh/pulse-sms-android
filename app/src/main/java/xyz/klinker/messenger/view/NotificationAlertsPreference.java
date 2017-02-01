@@ -4,27 +4,22 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import java.util.Set;
-
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.service.RepeatNotificationService;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 
 public class NotificationAlertsPreference extends Preference implements
         Preference.OnPreferenceClickListener {
@@ -191,7 +186,7 @@ public class NotificationAlertsPreference extends Preference implements
 
     private void makeTestNotification() {
         Settings settings = Settings.get(getContext());
-        Settings.VibratePattern vibratePattern = settings.vibrate;
+        VibratePattern vibratePattern = settings.vibrate;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
@@ -209,9 +204,9 @@ public class NotificationAlertsPreference extends Preference implements
         }
 
         Notification notification = builder.build();
-        if (vibratePattern == Settings.VibratePattern.DEFAULT) {
+        if (vibratePattern == VibratePattern.DEFAULT) {
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-        } else if (vibratePattern == Settings.VibratePattern.OFF) {
+        } else if (vibratePattern == VibratePattern.OFF) {
             builder.setVibrate(new long[0]);
             notification = builder.build();
         } else if (vibratePattern.pattern != null) {

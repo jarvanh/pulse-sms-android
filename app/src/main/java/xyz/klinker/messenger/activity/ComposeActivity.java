@@ -53,17 +53,18 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.service.MessengerChooserTargetService;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.SendUtils;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.service.MessengerChooserTargetService;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 
 /**
  * Activity to display UI for creating a new conversation.
@@ -221,12 +222,12 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         source.close();
 
         Intent open = new Intent(this, MessengerActivity.class);
-        open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+        open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         if (contactEntry.getRecipients().length == 1) {
             String name = contactEntry.getRecipients()[0].getEntry().getDisplayName();
-            open.putExtra(MessengerActivity.EXTRA_CONVERSATION_NAME, name);
+            open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_NAME, name);
         }
 
         startActivity(open);
@@ -235,7 +236,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     private void showConversation(long conversationId) {
         Intent open = new Intent(this, MessengerActivity.class);
-        open.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversationId);
+        open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         startActivity(open);

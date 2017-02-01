@@ -20,8 +20,8 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 
 /**
  * Adds a checkbox to the base contact adapter so that you can select multiple items.

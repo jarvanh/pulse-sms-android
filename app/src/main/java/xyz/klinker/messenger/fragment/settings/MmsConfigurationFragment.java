@@ -6,7 +6,7 @@ import android.preference.PreferenceFragment;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.shared.data.Settings;
 
 public class MmsConfigurationFragment extends PreferenceFragment {
 

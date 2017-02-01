@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.fragment;
 
-import android.database.Cursor;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -10,14 +9,10 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.ActivityUtils;
-import xyz.klinker.messenger.util.AnimationUtils;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
-import xyz.klinker.messenger.util.swipe_to_dismiss.UnarchiveSwipeSimpleCallback;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeTouchHelper;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.UnarchiveSwipeSimpleCallback;
 
 public class ArchivedConversationListFragment extends ConversationListFragment {
 

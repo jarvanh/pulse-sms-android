@@ -29,9 +29,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.fragment.TvBrowseFragment;
-import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
  * Activity for displaying content on your tv.

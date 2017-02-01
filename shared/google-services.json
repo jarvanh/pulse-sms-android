@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "957154022410",
+    "firebase_url": "https://messenger-42616.firebaseio.com",
+    "project_id": "messenger-42616",
+    "storage_bucket": "messenger-42616.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957154022410:android:ddc593423b4987f1",
+        "android_client_info": {
+          "package_name": "xyz.klinker.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957154022410-icr3vt12gukuptdodhfpr59dvlgnoaq3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.klinker.messenger",
+            "certificate_hash": "ECFFCC45041C6637FF05E4365E47BDE2EEFD09AB"
+          }
+        },
+        {
+          "client_id": "957154022410-m85bqsm0g00bdr39h8irh2jlml5cckdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj8Uulf4QCLfqpc_ECcl_NT3aw06nRMto"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957154022410-m85bqsm0g00bdr39h8irh2jlml5cckdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

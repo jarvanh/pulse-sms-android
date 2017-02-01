@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import xyz.klinker.messenger.fragment.MediaGridFragment;
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
-import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 public class MediaGridActivity extends AppCompatActivity {
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
