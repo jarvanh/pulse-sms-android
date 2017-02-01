@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-include ':app', ':shared', ':encryption', ':api', ':api_implementation'
+include ':app', ':shared', ':encryption', ':api', ':api_implementation', ':wear'

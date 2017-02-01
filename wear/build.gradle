@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+
+def propsFile = rootProject.file('keystore.properties')
+def props = new Properties()
+props.load(new FileInputStream(propsFile))
+
+def buildNumber = System.getenv("BUILD_NUMBER") as Integer ?: Integer.parseInt(VERSION_CODE)
+
+propsFile = rootProject.file('api_keys.properties')
+def apiKeys = new Properties()
+apiKeys.load(new FileInputStream(propsFile))
+
+android {
+    dexOptions {
+        jumboMode = true
+    }
+
+    try {
+        compileSdkVersion Integer.parseInt(COMPILE_SDK)
+    } catch (Exception e) {
+        compileSdkVersion COMPILE_SDK
+    }
+
+    buildToolsVersion BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        multiDexEnabled true
+
+        applicationId "xyz.klinker.messenger"
+        minSdkVersion 25
+
+        try {
+            targetSdkVersion Integer.parseInt(TARGET_SDK)
+        } catch (Exception e) {
+            targetSdkVersion TARGET_SDK
+        }
+
+        versionName(VERSION_NAME + '.' + buildNumber)
+        versionCode buildNumber
+        project.archivesBaseName = "wear-${versionName}"
+
+        jackOptions {
+            enabled Boolean.parseBoolean(USE_JACK)
+        }
+
+        buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
+        buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
+        buildConfigField("String", "YOUTUBE_API_KEY", "\"${apiKeys['YOUTUBE']}\"")
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        release {
+            storeFile file(props['keystorefile'])
+            storePassword props['keystorepassword']
+            keyAlias props['keyalias']
+            keyPassword props['keypassword']
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-DEBUG"
+            signingConfig signingConfigs.debug
+        }
+        staging {
+            versionNameSuffix "-STAGING"
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+        release_fast {
+            versionNameSuffix "-RELEASE"
+            debuggable true
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-android-optimize.txt', 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        abortOnError true
+        disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
+                'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
+                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams', 'MissingTranslation'
+        textOutput 'stdout'
+        xmlReport false
+        htmlReport true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.support:wearable:2.0.0-beta2'
+    compile 'com.google.android.gms:play-services-wearable:10.0.1'
+}

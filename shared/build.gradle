@@ -33,7 +33,7 @@ android {
     }
 
     buildToolsVersion BUILD_TOOLS_VERSION
-    resourcePrefix 'api_'
+    resourcePrefix 'shared_'
 
     defaultConfig {
         multiDexEnabled true
