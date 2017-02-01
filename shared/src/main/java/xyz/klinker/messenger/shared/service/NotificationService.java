@@ -51,6 +51,8 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
+import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver;
@@ -792,41 +794,6 @@ public class NotificationService extends IntentService {
     @VisibleForTesting
     DataSource getDataSource() {
         return DataSource.getInstance(this);
-    }
-
-    @VisibleForTesting
-    static class NotificationConversation {
-        public long id;
-        public String title;
-        public String imageUri;
-        public int color;
-        public String ringtoneUri;
-        public int ledColor;
-        public long timestamp;
-        public boolean mute;
-        public boolean privateNotification;
-        public boolean groupConversation;
-        public String phoneNumbers;
-        public List<NotificationMessage> messages;
-
-        private NotificationConversation() {
-            messages = new ArrayList<>();
-        }
-    }
-
-    @VisibleForTesting
-    static class NotificationMessage {
-        public String data;
-        public String mimeType;
-        public long timestamp;
-        public String from;
-
-        protected NotificationMessage(String data, String mimeType, long timestamp, String from) {
-            this.data = data;
-            this.mimeType = mimeType;
-            this.timestamp = timestamp;
-            this.from = from;
-        }
     }
 
     public static void cancelRepeats(Context context) {

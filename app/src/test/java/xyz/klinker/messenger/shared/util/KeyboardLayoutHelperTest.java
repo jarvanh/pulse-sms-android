@@ -9,6 +9,7 @@ import org.mockito.Mock;
 
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 
 import static org.mockito.Mockito.*;
 
@@ -32,7 +33,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptDefaultKeyboard() {
-        settings.keyboardLayout = Settings.KeyboardLayout.DEFAULT;
+        settings.keyboardLayout = KeyboardLayout.DEFAULT;
         helper = new KeyboardLayoutHelper(settings);
 
         helper.applyLayout(editText);
@@ -41,7 +42,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptEnterKeyboard() {
-        settings.keyboardLayout = Settings.KeyboardLayout.ENTER;
+        settings.keyboardLayout = KeyboardLayout.ENTER;
         helper = new KeyboardLayoutHelper(settings);
 
         helper.applyLayout(editText);

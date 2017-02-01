@@ -32,6 +32,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.shared.data.pojo.ReorderType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -160,7 +161,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
         receiver.onReceive(context, intent);
 
-        verify(adapter).removeItem(3, ConversationListAdapter.ReorderType.NEITHER);
+        verify(adapter).removeItem(3, ReorderType.NEITHER);
         verify(conversations).add(eq(0), any(Conversation.class));
         verify(sectionTypes).add(0, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(0, 2);
@@ -175,7 +176,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
         receiver.onReceive(context, intent);
 
-        verify(adapter).removeItem(5, ConversationListAdapter.ReorderType.NEITHER);
+        verify(adapter).removeItem(5, ReorderType.NEITHER);
         verify(conversations).add(eq(1), any(Conversation.class));
         verify(sectionTypes).add(1, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(2, 2);
@@ -191,7 +192,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
         receiver.onReceive(context, intent);
 
-        verify(adapter).removeItem(4, ConversationListAdapter.ReorderType.NEITHER);
+        verify(adapter).removeItem(4, ReorderType.NEITHER);
         verify(conversations).add(eq(0), any(Conversation.class));
         assertEquals(2, today.count);
         verify(adapter).notifyItemInserted(1);
@@ -207,7 +208,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
         receiver.onReceive(context, intent);
 
-        verify(adapter).removeItem(6, ConversationListAdapter.ReorderType.NEITHER);
+        verify(adapter).removeItem(6, ReorderType.NEITHER);
         verify(conversations).add(eq(1), any(Conversation.class));
         assertEquals(2, today.count);
         verify(adapter).notifyItemInserted(3);

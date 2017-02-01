@@ -33,7 +33,8 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.shared.service.NotificationService.NotificationConversation;
+import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
+import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -91,30 +92,30 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     @Test
     public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanThirtySeconds() {
-        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", (TimeUtils.SECOND * 30) + 1, ""));
+        List<NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationMessage("", "", 1000, ""));
+        messages.add(new NotificationMessage("", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage("", "", 0, ""));
+        messages.add(new NotificationMessage("", "", (TimeUtils.SECOND * 30) + 1, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
     }
 
     @Test
     public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanThirtySeconds() {
-        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationService.NotificationMessage("", "", 1000, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationService.NotificationMessage("", "", (TimeUtils.SECOND * 30) - 100, ""));
+        List<NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationMessage("", "", 1000, ""));
+        messages.add(new NotificationMessage("", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage("", "", 0, ""));
+        messages.add(new NotificationMessage("", "", (TimeUtils.SECOND * 30) - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
 
     @Test
     public void smallMessageListsShouldOnlyAlertOnce() {
-        List<NotificationService.NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationService.NotificationMessage("", "", TimeUtils.DAY - 100, ""));
+        List<NotificationMessage> messages = new ArrayList<>();
+        messages.add(new NotificationMessage("", "", TimeUtils.DAY - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
