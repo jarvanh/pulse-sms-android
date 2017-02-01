@@ -259,6 +259,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         if (context == null) {
             context = getActivity();
         }
+        
+        if (context == null) {
+            return;
+        }
 
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(context, (datePicker, year, month, day) -> {
