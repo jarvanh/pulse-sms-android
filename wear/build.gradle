@@ -98,7 +98,13 @@ android {
 }
 
 dependencies {
+    compile project(":shared")
+    compile project(":api_implementation")
+    compile project(":encryption")
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.support:wearable:2.0.0-beta2'
-    compile 'com.google.android.gms:play-services-wearable:10.0.1'
+    compile "com.google.android.support:wearable:${WEARABLE_SUPPORT_VERSION}"
+    compile "com.google.android.gms:play-services-wearable:${GOOGLE_PLAY_SERVICES_VERSION}"
 }
+
+apply plugin: 'com.google.gms.google-services'

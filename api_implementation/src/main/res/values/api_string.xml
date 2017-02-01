@@ -51,9 +51,11 @@
     <string name="api_activate_1_1">Head to</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">on a mobile device or computer.</string>
+    <string name="api_activate_1_4">on a computer.</string>
     <string name="api_activate_2_1">On the website</string>
     <string name="api_activate_2_2">enter the code to the right</string>
     <string name="api_activate_2_3">to connect your account!</string>
+    <string name="api_activate_3_1">Enter the code:</string>
     <string name="api_confirm_password">Please confirm your password:</string>
     <string name="api_wrong_password">Confirmation failed. Is your password correct?</string>
     <string name="api_email_taken">An error occurred logging in, do you already have an account with this email?</string>
