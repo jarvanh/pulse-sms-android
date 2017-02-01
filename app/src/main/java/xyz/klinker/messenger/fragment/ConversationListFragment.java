@@ -17,14 +17,11 @@
 package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -37,40 +34,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.MessengerApplication;
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.FixedScrollLinearLayoutManager;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
-import xyz.klinker.messenger.service.NotificationService;
-import xyz.klinker.messenger.util.ActivityUtils;
-import xyz.klinker.messenger.util.AnimationUtils;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.SmsMmsUtils;
-import xyz.klinker.messenger.util.TimeUtils;
-import xyz.klinker.messenger.util.UnreadBadger;
-import xyz.klinker.messenger.util.UpdateUtils;
-import xyz.klinker.messenger.util.listener.BackPressedListener;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
-import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeItemDecoration;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeTouchHelper;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.SectionType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.AnimationUtils;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.shared.util.UnreadBadger;
+import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
+import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeItemDecoration;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeToDeleteListener;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeTouchHelper;
 
 /**
  * Fragment for displaying the conversation list or an empty screen if there are currently no
  * open conversations.
  */
 public class ConversationListFragment extends Fragment
-        implements SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener {
+        implements SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener, IConversationListFragment {
 
     private static final String ARG_CONVERSATION_TO_OPEN_ID = "conversation_to_open";
     private static final String ARG_MESSAGE_TO_OPEN_ID = "message_to_open";
@@ -90,7 +87,7 @@ public class ConversationListFragment extends Fragment
     private ConversationsMultiSelectDelegate multiSelector;
 
     private String newConversationTitle = null;
-    public ConversationListUpdatedReceiver.ConversationUpdateInfo updateInfo = null;
+    public ConversationUpdateInfo updateInfo = null;
 
     public static ConversationListFragment newInstance() {
         return newInstance(-1);
@@ -513,7 +510,7 @@ public class ConversationListFragment extends Fragment
         }
 
         if (getActivity() != null)
-                getActivity().getIntent().putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, -1L);
+                getActivity().getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
         if (getArguments() != null)
                 getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
 
@@ -615,7 +612,7 @@ public class ConversationListFragment extends Fragment
             expandedConversation.summary.setText(m.data);
         }
 
-        setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
+        setConversationUpdateInfo(new ConversationUpdateInfo(
                 expandedConversation.conversation.id, getString(R.string.you) + ": " + m.data, true));
     }
 
@@ -623,7 +620,7 @@ public class ConversationListFragment extends Fragment
         return adapter;
     }
 
-    public void setConversationUpdateInfo(ConversationListUpdatedReceiver.ConversationUpdateInfo info) {
+    public void setConversationUpdateInfo(ConversationUpdateInfo info) {
         this.updateInfo = info;
     }
 

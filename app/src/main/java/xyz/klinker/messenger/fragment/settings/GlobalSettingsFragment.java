@@ -24,17 +24,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.support.v7.app.AppCompatDelegate;
 import android.telephony.TelephonyManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.ColorSet;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**

@@ -28,8 +28,8 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ChangelogAdapter;
 import xyz.klinker.messenger.adapter.OpenSourceAdapter;
-import xyz.klinker.messenger.util.xml.ChangelogParser;
-import xyz.klinker.messenger.util.xml.OpenSourceParser;
+import xyz.klinker.messenger.shared.util.xml.ChangelogParser;
+import xyz.klinker.messenger.shared.util.xml.OpenSourceParser;
 
 /**
  * Fragment for displaying information about the app.

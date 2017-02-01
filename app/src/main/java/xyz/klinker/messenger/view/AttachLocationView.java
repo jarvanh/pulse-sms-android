@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -30,7 +29,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,17 +45,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.util.FileUtils;
-import xyz.klinker.messenger.util.listener.ImageSelectedListener;
-import xyz.klinker.messenger.util.listener.TextSelectedListener;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.util.FileUtils;
+import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener;
+import xyz.klinker.messenger.shared.util.listener.TextSelectedListener;
 
 /**
  * View for attaching a location as an image.

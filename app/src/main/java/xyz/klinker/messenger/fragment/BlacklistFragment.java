@@ -37,12 +37,12 @@ import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.BlacklistAdapter;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Blacklist;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.listener.BlacklistClickedListener;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Blacklist;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.listener.BlacklistClickedListener;
 
 /**
  * Fragment for displaying/managing blacklisted contacts.

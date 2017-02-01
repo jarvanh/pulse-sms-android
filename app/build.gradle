@@ -18,7 +18,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'me.tatarka.retrolambda'
 
-
 def propsFile = rootProject.file('keystore.properties')
 def props = new Properties()
 props.load(new FileInputStream(propsFile))
@@ -43,6 +42,8 @@ android {
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
+        multiDexEnabled true
+
         applicationId "xyz.klinker.messenger"
         minSdkVersion Integer.parseInt(project.MIN_SDK)
 
@@ -120,6 +121,11 @@ android {
 }
 
 dependencies {
+
+    compile project(":shared")
+    compile project(":api_implementation")
+    compile project(":encryption")
+    
     compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
@@ -154,9 +160,6 @@ dependencies {
     compile 'me.leolin:ShortcutBadger:1.1.10@aar'
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
-
-    compile project(":api_implementation")
-    compile project(":encryption")
 
     compile(name: 'sofa', ext: 'aar')
 

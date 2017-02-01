@@ -23,7 +23,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
-import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 /**
  * Activity for changing contact settings_global.
@@ -65,7 +66,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
         fragment.saveSettings();
 
         Intent intent = new Intent(this, MessengerActivity.class);
-        intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID,
+        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

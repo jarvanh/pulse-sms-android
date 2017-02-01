@@ -22,8 +22,8 @@ import java.util.GregorianCalendar;
 import java.util.IllegalFormatConversionException;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.model.ScheduledMessage;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 
 

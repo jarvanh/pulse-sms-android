@@ -1,7 +1,6 @@
 package xyz.klinker.messenger.view;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
@@ -10,10 +9,7 @@ import android.support.v4.os.BuildCompat;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.EditText;
-
-import xyz.klinker.messenger.data.MimeType;
 
 public class ImageKeyboardEditText extends EditText {
 

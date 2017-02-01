@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.adapter;
 
-import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
-import com.bignerdranch.android.multiselector.MultiSelector;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 
@@ -35,25 +32,23 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.TimeUtils;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
-import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
+import xyz.klinker.messenger.shared.data.SectionType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.pojo.ReorderType;
+import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter;
+import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeToDeleteListener;
 
 /**
  * Adapter for displaying conversation items in a list. The adapter splits items into different
  * sections depending on whether they are pinned and when the last message was received.
  */
-public class ConversationListAdapter extends SectionedRecyclerViewAdapter<ConversationViewHolder> {
-
-    public enum ReorderType {
-        DELETE, ARCHIVE, NEITHER
-    }
+public class ConversationListAdapter extends SectionedRecyclerViewAdapter<ConversationViewHolder> implements IConversationListAdapter {
 
     private long time;
 

@@ -39,18 +39,18 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.ActivateActivity;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Contact;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.service.ApiDownloadService;
-import xyz.klinker.messenger.service.ApiUploadService;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.PermissionsUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.SmsMmsUtils;
-import xyz.klinker.messenger.util.TvUtils;
-import xyz.klinker.messenger.util.listener.ProgressUpdateListener;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Contact;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.service.ApiDownloadService;
+import xyz.klinker.messenger.shared.service.ApiUploadService;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.PermissionsUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.TvUtils;
+import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener;
 
 /**
  * Activity for onboarding and initial database load.

@@ -17,11 +17,11 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.adapter.MediaGridAdapter;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.listener.MediaSelectedListener;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener;
 
 public class MediaGridFragment extends Fragment implements MediaSelectedListener {
 

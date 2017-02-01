@@ -22,10 +22,10 @@ import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.media.parsers.ArticleParser;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 

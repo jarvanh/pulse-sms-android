@@ -34,10 +34,11 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.SearchAdapter;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.listener.SearchListener;
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.listener.SearchListener;
 
 /**
  * A fragment for searching through conversations and messages.
@@ -120,8 +121,8 @@ public class SearchFragment extends Fragment implements SearchListener {
         source.close();
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
-        intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, message.conversationId);
-        intent.putExtra(MessengerActivity.EXTRA_MESSAGE_ID, message.id);
+        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, message.conversationId);
+        intent.putExtra(MessengerActivityExtras.EXTRA_MESSAGE_ID, message.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getActivity().startActivity(intent);
     }
@@ -138,7 +139,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         }
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
-        intent.putExtra(MessengerActivity.EXTRA_CONVERSATION_ID, conversation.id);
+        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getActivity().startActivity(intent);
     }

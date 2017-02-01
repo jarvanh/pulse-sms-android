@@ -21,9 +21,9 @@ import android.database.sqlite.SQLiteDatabase;
 import org.junit.Before;
 import org.robolectric.RuntimeEnvironment;
 
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.DatabaseSQLiteHelper;
-import xyz.klinker.messenger.util.FixtureLoader;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.DatabaseSQLiteHelper;
+import xyz.klinker.messenger.shared.util.FixtureLoader;
 
 public abstract class MessengerRealDataSuite extends MessengerRobolectricSuite {
 

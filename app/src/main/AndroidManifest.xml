@@ -67,28 +67,6 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
-
-        <meta-data
-            android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBg-de2pZC1JTdIEidArhOpSRs_AmxNomY"/>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".activity.MessengerActivity"
             android:theme="@style/AppTheme.MessengerActivity"
@@ -151,7 +129,7 @@
                 android:value=".service.MessengerChooserTargetService" />
         </activity>
 
-        <activity android:name=".util.RedirectToMyAccount"
+        <activity android:name=".shared.util.RedirectToMyAccount"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -195,141 +173,8 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"/>
 
-        <service android:name="com.android.mms.transaction.TransactionService" />
-
-        <service
-            android:name=".service.MessengerChooserTargetService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.chooser.ChooserTargetService" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name=".receiver.SmsReceivedReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receiver.SmsSentReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.SMS_SENT" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receiver.SmsDeliveredReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.SMS_DELIVERED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.android.mms.transaction.PushReceiver"
-            android:permission="android.permission.BROADCAST_WAP_PUSH">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
-                <data android:mimeType="application/vnd.wap.mms-message" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receiver.MmsSentReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.klinker.android.messaging.MMS_SENT" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receiver.MmsReceivedReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.klinker.android.messaging.MMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".receiver.BootCompletedReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".receiver.NotificationDismissedReceiver"
-            android:exported="false" />
-
-        <receiver android:name=".receiver.CarReplyReceiver"
-            android:exported="false" />
-
-        <service
-            android:name=".service.HeadlessSmsSendService"
-            android:exported="true"
-            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
-            <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".service.DashclockExtension"
-            android:icon="@drawable/ic_stat_notify_group"
-            android:label="@string/app_name"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension" />
-            </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="true" />
-        </service>
-
-        <service android:name=".service.ForceTokenRefreshService" />
-        <service android:name=".service.FirebaseHandlerService" />
-        <service android:name=".service.NotificationService" />
-        <service android:name=".service.RepeatNotificationService" />
-        <service android:name=".service.NotificationDismissedService" />
-        <service android:name=".service.NotificationMarkReadService" />
-        <service android:name=".service.NotificationCallService" />
-        <service android:name=".service.ReplyService" />
-        <service android:name=".service.ContentObserverService" />
-        <service android:name=".service.ContentObserverRunCheckService" />
-        <service android:name=".service.ContactSyncService" />
-        <service android:name=".service.ScheduledMessageService" />
-        <service android:name=".service.ApiUploadService" />
-        <service android:name=".service.ApiDownloadService" />
-        <service android:name=".service.SubscriptionExpirationCheckService" />
-        <service android:name=".service.SignoutService" />
-        <service android:name=".service.SimpleSubscriptionCheckService" />
-        <service android:name=".service.SimpleLifetimeSubscriptionCheckService" />
-        <service android:name=".service.MediaParserService" />
-        <service android:name=".service.NewMessagesCheckService" />
-        <service android:name=".service.FirebaseResetService" />
-        <service android:name=".service.CleanupOldMessagesService" />
-        <service android:name=".service.ResendFailedMessage" />
-
-        <service
-            android:name=".service.ComposeTileService"
-            android:icon="@drawable/ic_stat_notify_group"
-            android:label="@string/shortcut_compose_short"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action
-                    android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
-
         <!-- Widget -->
-        <receiver android:name=".widget.MessengerAppWidgetProvider">
+        <receiver android:name=".shared.widget.MessengerAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -343,7 +188,7 @@
         </receiver>
 
         <service
-            android:name=".widget.MessengerWidgetService"
+            android:name=".shared.widget.MessengerWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
 
@@ -354,8 +199,6 @@
         <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/multiwindow_defaultsize_h" />
         <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/multiwindow_minimumsize_w" />
         <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/multiwindow_minimumsize_h" />
-
-
 
     </application>
 

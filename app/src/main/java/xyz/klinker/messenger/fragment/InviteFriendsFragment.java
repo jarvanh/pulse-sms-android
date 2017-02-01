@@ -35,12 +35,12 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.InviteFriendsAdapter;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.SendUtils;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 
 /**
  * Fragment for inviting friends to the app.

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.data.model.Blacklist;
+import xyz.klinker.messenger.shared.data.model.Blacklist;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;

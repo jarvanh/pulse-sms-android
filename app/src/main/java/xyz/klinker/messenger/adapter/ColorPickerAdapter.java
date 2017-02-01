@@ -21,11 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import java.util.List;
 
-import xyz.klinker.messenger.data.ColorSet;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.view.ColorPreviewButton;
 
 /**

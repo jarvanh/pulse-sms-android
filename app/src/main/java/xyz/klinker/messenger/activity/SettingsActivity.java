@@ -27,11 +27,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.data.Settings;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment;
-import xyz.klinker.messenger.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 

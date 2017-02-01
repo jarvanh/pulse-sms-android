@@ -22,7 +22,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.ImageViewerFragment;
 
 /**

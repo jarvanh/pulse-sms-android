@@ -19,7 +19,6 @@ package xyz.klinker.messenger.adapter.view_holder;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -32,13 +31,13 @@ import com.bignerdranch.android.multiselector.SwappingHolder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.AnimationUtils;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
-import xyz.klinker.messenger.util.multi_select.ConversationsMultiSelectDelegate;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
+import xyz.klinker.messenger.shared.util.AnimationUtils;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate;
 
 /**
  * View holder for recycling inflated conversations.
@@ -142,9 +141,9 @@ public class ConversationViewHolder extends SwappingHolder {
             summary.setTextSize(settings.mediumFont);
         }
 
-        if (settings.baseTheme == Settings.BaseTheme.BLACK && headerBackground != null) {
+        if (settings.baseTheme == BaseTheme.BLACK && headerBackground != null) {
             headerBackground.setBackgroundColor(Color.BLACK);
-        } else if (settings.baseTheme == Settings.BaseTheme.BLACK) {
+        } else if (settings.baseTheme == BaseTheme.BLACK) {
             itemView.setBackgroundColor(Color.BLACK);
         }
     }

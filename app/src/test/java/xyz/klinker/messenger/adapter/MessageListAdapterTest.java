@@ -35,7 +35,7 @@ import org.robolectric.RuntimeEnvironment;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
-import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 
 import static org.junit.Assert.assertEquals;

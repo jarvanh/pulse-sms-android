@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -33,17 +32,16 @@ import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
-import xyz.klinker.messenger.data.ColorSet;
-import xyz.klinker.messenger.data.SectionType;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.util.listener.ConversationExpandedListener;
-import xyz.klinker.messenger.util.swipe_to_dismiss.SwipeToDeleteListener;
+import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.data.SectionType;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeToDeleteListener;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

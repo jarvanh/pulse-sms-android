@@ -8,8 +8,8 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.util.TimeUtils;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class CustomSnoozeFragment extends TabletOptimizedBottomSheetDialogFragment {
 

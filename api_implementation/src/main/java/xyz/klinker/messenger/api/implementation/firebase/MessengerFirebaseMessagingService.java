@@ -51,7 +51,7 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
             Log.v(TAG, "operation: " + operation + ", contents: " + data);
             final Intent handleMessage = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
             handleMessage.setComponent(new ComponentName("xyz.klinker.messenger",
-                    "xyz.klinker.messenger" + ".service.FirebaseHandlerService"));
+                    "xyz.klinker.messenger.shared" + ".service.FirebaseHandlerService"));
             handleMessage.putExtra(EXTRA_OPERATION, operation);
             handleMessage.putExtra(EXTRA_DATA, data);
             startService(handleMessage);

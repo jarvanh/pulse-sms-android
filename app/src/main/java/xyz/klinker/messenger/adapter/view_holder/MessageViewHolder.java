@@ -16,26 +16,14 @@
 
 package xyz.klinker.messenger.adapter.view_holder;
 
-import android.Manifest;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,36 +36,25 @@ import android.widget.Toast;
 import com.bignerdranch.android.multiselector.MultiSelector;
 import com.bignerdranch.android.multiselector.SwappingHolder;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import xyz.klinker.android.article.ArticleIntent;
-import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
-import xyz.klinker.messenger.data.ArticlePreview;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.YouTubePreview;
-import xyz.klinker.messenger.data.model.Message;
+import xyz.klinker.messenger.shared.data.ArticlePreview;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.YouTubePreview;
+import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
-import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.DensityUtil;
-import xyz.klinker.messenger.util.FileUtils;
-import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.MediaSaver;
-import xyz.klinker.messenger.util.listener.ForcedRippleTouchListener;
-import xyz.klinker.messenger.util.listener.MessageDeletedListener;
-import xyz.klinker.messenger.util.media.parsers.ArticleParser;
-import xyz.klinker.messenger.util.media.parsers.YoutubeParser;
-import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
+import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.MediaSaver;
+import xyz.klinker.messenger.shared.util.listener.ForcedRippleTouchListener;
+import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener;
+import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
+import xyz.klinker.messenger.shared.util.media.parsers.YoutubeParser;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -246,11 +223,13 @@ public class MessageViewHolder extends SwappingHolder {
         Settings settings = Settings.get(itemView.getContext());
 
         message.setTextSize(settings.largeFont);
-        contact.setTextSize(settings.smallFont);
         timestamp.setTextSize(settings.smallFont);
-
-        contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
         timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+
+        if (contact != null) {
+            contact.setTextSize(settings.smallFont);
+            contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+        }
 
         if ((color != -1 && messageHolder != null) ||
                 settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {

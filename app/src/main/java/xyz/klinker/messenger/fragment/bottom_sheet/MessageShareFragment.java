@@ -1,21 +1,16 @@
 package xyz.klinker.messenger.fragment.bottom_sheet;
 
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 

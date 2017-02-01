@@ -50,13 +50,13 @@ import java.util.List;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ImageViewerAdapter;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.FileUtils;
-import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.MediaSaver;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.FileUtils;
+import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.MediaSaver;
 
 /**
  * Activity that allows you to scroll between images in a given conversation.

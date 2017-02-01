@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Conversation;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

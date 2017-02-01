@@ -102,34 +102,36 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.MimeType;
-import xyz.klinker.messenger.data.MmsSettings;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Contact;
-import xyz.klinker.messenger.data.model.Conversation;
-import xyz.klinker.messenger.data.model.Draft;
-import xyz.klinker.messenger.data.model.Message;
-import xyz.klinker.messenger.receiver.ConversationListUpdatedReceiver;
-import xyz.klinker.messenger.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.service.NotificationService;
-import xyz.klinker.messenger.util.AnimationUtils;
-import xyz.klinker.messenger.util.AudioWrapper;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.DualSimApplication;
-import xyz.klinker.messenger.util.DualSimUtils;
-import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.KeyboardLayoutHelper;
-import xyz.klinker.messenger.util.NotificationUtils;
-import xyz.klinker.messenger.util.PermissionsUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.SendUtils;
-import xyz.klinker.messenger.util.TvUtils;
-import xyz.klinker.messenger.util.listener.AudioRecordedListener;
-import xyz.klinker.messenger.util.listener.ImageSelectedListener;
-import xyz.klinker.messenger.util.listener.TextSelectedListener;
-import xyz.klinker.messenger.util.multi_select.MessageMultiSelectDelegate;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.MmsSettings;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Contact;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Draft;
+import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
+import xyz.klinker.messenger.shared.util.AnimationUtils;
+import xyz.klinker.messenger.shared.util.AudioWrapper;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.DualSimApplication;
+import xyz.klinker.messenger.shared.util.DualSimUtils;
+import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
+import xyz.klinker.messenger.shared.util.PermissionsUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.util.TvUtils;
+import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener;
+import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener;
+import xyz.klinker.messenger.shared.util.listener.TextSelectedListener;
+import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
@@ -145,7 +147,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class MessageListFragment extends Fragment implements
         ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment,
-        InputConnectionCompat.OnCommitContentListener {
+        InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -1634,7 +1636,7 @@ public class MessageListFragment extends Fragment implements
                 .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
 
         if (fragment != null && newMessage != null) {
-            fragment.setConversationUpdateInfo(new ConversationListUpdatedReceiver.ConversationUpdateInfo(
+            fragment.setConversationUpdateInfo(new ConversationUpdateInfo(
                     getConversationId(), newMessage, true));
         }
     }

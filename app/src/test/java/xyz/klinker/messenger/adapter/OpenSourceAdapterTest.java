@@ -26,7 +26,7 @@ import org.robolectric.Robolectric;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.util.xml.OpenSourceParser;
+import xyz.klinker.messenger.shared.util.xml.OpenSourceParser;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -61,17 +61,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
-import xyz.klinker.messenger.data.DataSource;
-import xyz.klinker.messenger.data.FeatureFlags;
-import xyz.klinker.messenger.data.Settings;
-import xyz.klinker.messenger.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.fragment.BlacklistFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
@@ -82,24 +80,25 @@ import xyz.klinker.messenger.fragment.bottom_sheet.CustomSnoozeFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
-import xyz.klinker.messenger.service.ApiDownloadService;
-import xyz.klinker.messenger.service.CleanupOldMessagesService;
-import xyz.klinker.messenger.service.NewMessagesCheckService;
-import xyz.klinker.messenger.service.NotificationService;
-import xyz.klinker.messenger.service.SubscriptionExpirationCheckService;
-import xyz.klinker.messenger.util.ColorUtils;
-import xyz.klinker.messenger.util.ContactUtils;
-import xyz.klinker.messenger.util.DualSimUtils;
-import xyz.klinker.messenger.util.ImageUtils;
-import xyz.klinker.messenger.util.PermissionsUtils;
-import xyz.klinker.messenger.util.PhoneNumberUtils;
-import xyz.klinker.messenger.util.StringUtils;
-import xyz.klinker.messenger.util.TimeUtils;
-import xyz.klinker.messenger.util.UpdateUtils;
-import xyz.klinker.messenger.util.billing.BillingHelper;
-import xyz.klinker.messenger.util.listener.BackPressedListener;
-import xyz.klinker.messenger.util.listener.ContactClickedListener;
-import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
+import xyz.klinker.messenger.shared.service.ApiDownloadService;
+import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
+import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.service.SubscriptionExpirationCheckService;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.DualSimUtils;
+import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.PermissionsUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.StringUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.utils.UpdateUtils;
+import xyz.klinker.messenger.shared.util.billing.BillingHelper;
+import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
+import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
+import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
+
+import static xyz.klinker.messenger.shared.MessengerActivityExtras.*;
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -108,17 +107,6 @@ import xyz.klinker.messenger.widget.MessengerAppWidgetProvider;
 public class MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
-
-    public static boolean START_DOWNLOAD_SERVICE = false;
-
-    public static final String EXTRA_START_MY_ACCOUNT = "start_my_account";
-    public static final String EXTRA_CONVERSATION_ID = "conversation_id";
-    public static final String EXTRA_FROM_NOTIFICATION = "from_notification";
-    public static final String EXTRA_MESSAGE_ID = "message_id";
-    public static final String EXTRA_CONVERSATION_NAME = "conversation_name";
-
-    public static final int REQUEST_ONBOARDING = 101;
-    public static final int REQUEST_CALL_PERMISSION = 104;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
