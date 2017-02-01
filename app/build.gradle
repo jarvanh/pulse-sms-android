@@ -121,56 +121,7 @@ android {
 }
 
 dependencies {
-
     compile project(":shared")
-    compile project(":api_implementation")
-    compile project(":encryption")
-    
-    compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-annotations:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:palette-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:percent:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:leanback-v17:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:exifinterface:${ANDROID_SUPPORT_VERSION}"
-
-    compile "com.google.firebase:firebase-crash:${FIREBASE_VERSION}"
-    compile "com.google.android.gms:play-services-maps:${GOOGLE_PLAY_SERVICES_VERSION}"
-
-    compile 'com.klinkerapps:android-smsmms:3.4.5'
-    compile 'com.klinkerapps:link_builder:1.5.2'
-    compile 'com.klinkerapps:android-chips:1.1.0@aar'
-    compile 'com.klinkerapps:android-transcoder:1.0.1'
-    compile 'com.klinkerapps:article_viewer:0.14.0'
-    compile 'com.klinkerapps:giphy:1.0.3'
-
-    compile 'com.github.paolorotolo:appintro:4.0.0'
-    compile 'com.yalantis:ucrop:2.2.0'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.afollestad:sectioned-recyclerview:0.2.3'
-    compile 'com.afollestad:easyvideoplayer:0.3.0'
-    compile 'com.afollestad:material-camera:0.4.4'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.larswerkman:lobsterpicker:1.0.1'
-    compile 'com.github.chrisbanes:PhotoView:1.3.1'
-    compile 'me.leolin:ShortcutBadger:1.1.10@aar'
-    compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
-    compile 'com.google.android.apps.dashclock:dashclock-api:+'
-
-    compile(name: 'sofa', ext: 'aar')
-
-    testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.1.1"
-    testCompile 'org.mockito:mockito-all:1.9.5'
-    testCompile 'org.powermock:powermock-mockito-release-full:1.6.1'
-    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.0'
-    testCompile 'org.powermock:powermock-api-mockito:1.6.0'
-    testCompile 'org.powermock:powermock-classloading-xstream:1.6.0'
-    testCompile 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

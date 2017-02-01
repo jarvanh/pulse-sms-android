@@ -107,9 +107,9 @@ public class SendUtils {
                 Log.v("Sending MMS", "size: " + bytes.length + " bytes, mime type: " + mimeType);
                 message.addMedia(bytes, mimeType);
             } catch (NullPointerException e) {
-                Log.e("Sending Exception", "Could not attach media", e);
+                Log.e("Sending Exception", "Could not attach media: " + data, e);
             } catch (IOException e) {
-                Log.e("Sending Exception", "Could not attach media", e);
+                Log.e("Sending Exception", "Could not attach media: " + data, e);
             }
         }
 
@@ -124,7 +124,7 @@ public class SendUtils {
         return data;
     }
 
-    private static byte[] getBytes(Context context, Uri data) throws IOException, NullPointerException {
+    public  static byte[] getBytes(Context context, Uri data) throws IOException, NullPointerException {
         InputStream stream = context.getContentResolver().openInputStream(data);
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;

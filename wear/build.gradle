@@ -99,10 +99,7 @@ android {
 
 dependencies {
     compile project(":shared")
-    compile project(":api_implementation")
-    compile project(":encryption")
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.google.android.support:wearable:${WEARABLE_SUPPORT_VERSION}"
     compile "com.google.android.gms:play-services-wearable:${GOOGLE_PLAY_SERVICES_VERSION}"
 }

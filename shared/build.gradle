@@ -57,6 +57,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+        release_fast {
+            versionNameSuffix "-RELEASE"
+            debuggable true
+        }
         release {
             minifyEnabled true
             shrinkResources true
@@ -101,7 +109,6 @@ dependencies {
     compile 'com.klinkerapps:article_viewer:0.13.0'
     compile 'com.klinkerapps:giphy:1.0.3'
 
-    compile 'com.github.paolorotolo:appintro:4.0.0'
     compile 'com.yalantis:ucrop:2.2.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'

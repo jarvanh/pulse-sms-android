@@ -448,7 +448,7 @@ public class ImageUtils {
      */
     public static Uri createContentUri(Context context, File file) {
         return  FileProvider.getUriForFile(context,
-                BuildConfig.APPLICATION_ID + ".provider", file);
+                context.getPackageName() + ".provider", file);
     }
 
     public static Uri getUriForPhotoCaptureIntent(Context context) {
