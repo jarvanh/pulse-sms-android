@@ -103,7 +103,7 @@ public class NotificationService extends IntentService {
 
             for (int i = 0; i < conversations.size(); i++) {
                 NotificationConversation conversation = conversations.get(conversations.keyAt(i));
-                rows.add(giveConversationNotification(conversation, conversations.size()));
+                rows.add(giveConversationNotification(conversation, i, conversations.size()));
             }
 
             if (conversations.size() > 1) {
@@ -204,7 +204,7 @@ public class NotificationService extends IntentService {
     /**
      * Displays a notification for a single conversation.
      */
-    private String giveConversationNotification(NotificationConversation conversation, int numConversations) {
+    private String giveConversationNotification(NotificationConversation conversation, int conversationIndex, int numConversations) {
         Bitmap contactImage = ImageUtils.clipToCircle(
                 ImageUtils.getBitmap(this, conversation.imageUri));
 
@@ -251,14 +251,16 @@ public class NotificationService extends IntentService {
         }
 
         Uri sound = getRingtone(this, conversation.ringtoneUri);
-        if (sound != null) {
-            builder.setSound(sound);
-        }
+        if (conversationIndex == 0) {
+            if (sound != null) {
+                builder.setSound(sound);
+            }
 
-        if (vibratePattern.pattern != null) {
-            builder.setVibrate(vibratePattern.pattern);
-        } else if (vibratePattern == VibratePattern.OFF) {
-            builder.setVibrate(new long[0]);
+            if (vibratePattern.pattern != null) {
+                builder.setVibrate(vibratePattern.pattern);
+            } else if (vibratePattern == VibratePattern.OFF) {
+                builder.setVibrate(new long[0]);
+            }
         }
 
         try {
@@ -402,14 +404,16 @@ public class NotificationService extends IntentService {
             builder.setLights(conversation.ledColor, 1000, 500);
         }
 
-        if (sound != null) {
-            builder.setSound(sound);
-        }
+        if (conversationIndex == 0) {
+            if (sound != null) {
+                builder.setSound(sound);
+            }
 
-        if (vibratePattern.pattern != null) {
-            builder.setVibrate(vibratePattern.pattern);
-        } else if (vibratePattern == VibratePattern.OFF) {
-            builder.setVibrate(new long[0]);
+            if (vibratePattern.pattern != null) {
+                builder.setVibrate(vibratePattern.pattern);
+            } else if (vibratePattern == VibratePattern.OFF) {
+                builder.setVibrate(new long[0]);
+            }
         }
 
         if (numConversations == 1) {
