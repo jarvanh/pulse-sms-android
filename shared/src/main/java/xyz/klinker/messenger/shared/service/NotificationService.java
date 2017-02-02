@@ -529,7 +529,7 @@ public class NotificationService extends IntentService {
         Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
         open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id);
         open.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, true);
-        open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this,
                 (int) conversation.id, open, PendingIntent.FLAG_UPDATE_CURRENT);
 

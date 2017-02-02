@@ -67,6 +67,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
+import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -229,6 +230,12 @@ public class MessengerActivity extends AppCompatActivity
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleShortcutIntent(intent);
+
+        long convoId = intent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+        if (convoId != -1L) {
+            getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, convoId);
+            displayConversations();
+        }
     }
 
     @Override
@@ -1178,13 +1185,16 @@ public class MessengerActivity extends AppCompatActivity
         }, 1000);
     }
 
-    private void handleShortcutIntent(Intent intent) {
+    private boolean handleShortcutIntent(Intent intent) {
         if (intent.getData() != null && intent.getDataString().contains("https://messenger.klinkerapps.com/")) {
             try {
                 displayShortcutConversation(Long.parseLong(intent.getData().getLastPathSegment()));
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        return false;
     }
 }
