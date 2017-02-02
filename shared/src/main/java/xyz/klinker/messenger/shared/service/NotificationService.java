@@ -527,11 +527,11 @@ public class NotificationService extends IntentService {
                 delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
-        open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id);
+        open.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
         open.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, true);
-        open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingOpen = PendingIntent.getActivity(this, (int) conversation.id,
-                open, PendingIntent.FLAG_UPDATE_CURRENT);
+        open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingOpen = PendingIntent.getActivity(this,
+                (int) conversation.id, open, PendingIntent.FLAG_UPDATE_CURRENT);
 
         wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
         builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
