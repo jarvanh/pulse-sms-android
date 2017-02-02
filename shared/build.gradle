@@ -33,7 +33,6 @@ android {
     }
 
     buildToolsVersion BUILD_TOOLS_VERSION
-    resourcePrefix 'shared_'
 
     defaultConfig {
         multiDexEnabled true

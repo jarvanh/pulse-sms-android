@@ -35,7 +35,7 @@ public class ActivityUtils {
     public static final ComponentName COMPOSE_ACTIVITY = new ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.ComposeActivity");
     public static final ComponentName NOTIFICATION_REPLY = new ComponentName("xyz.klinker.messenger",
-            "xyz.klinker.messenger" + ".activity.MessengerActivity");
+            "xyz.klinker.messenger" + ".activity.NotificationReplyActivity");
 
     public static Intent buildForComponent(ComponentName component) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
