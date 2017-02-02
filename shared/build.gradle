@@ -57,6 +57,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            versionNameSuffix "-DEBUG"
+        }
+        staging {
+            versionNameSuffix "-STAGING"
+            debuggable true
+        }
+        release_fast {
+            versionNameSuffix "-RELEASE"
+            debuggable true
+        }
         release {
             minifyEnabled true
             shrinkResources true
