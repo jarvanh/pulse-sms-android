@@ -229,10 +229,11 @@ public class MessengerActivity extends AppCompatActivity
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleShortcutIntent(intent);
 
+        boolean handled = handleShortcutIntent(intent);
         long convoId = intent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
-        if (convoId != -1L) {
+
+        if (!handled && convoId != -1L) {
             getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, convoId);
             displayConversations();
         }
