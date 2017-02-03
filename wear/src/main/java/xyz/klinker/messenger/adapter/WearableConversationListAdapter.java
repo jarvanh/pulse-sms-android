@@ -26,7 +26,7 @@ import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
-public class WearableConversationListAdapter extends SectionedRecyclerViewAdapter<WearableConversationViewHolder> {
+public class WearableConversationListAdapter extends SectionedRecyclerViewAdapter<WearableConversationViewHolder> implements IConversationListAdapter {
 
     private long time;
 
@@ -205,8 +205,58 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         return new WearableConversationViewHolder(view);
     }
 
+    @Override
+    public int findPositionForConversationId(long id) {
+        int headersAbove = 1;
+        int conversationPosition = -1;
+
+        for (int i = 0; i < conversations.size(); i++) {
+            if (conversations.get(i) != null && conversations.get(i).id == id) {
+                conversationPosition = i;
+                break;
+            }
+        }
+
+        if (conversationPosition == -1) {
+            return -1;
+        }
+
+        int totalSectionsCount = 0;
+
+        for (int i = 0; i < sectionCounts.size(); i++) {
+            totalSectionsCount += sectionCounts.get(i).count;
+
+            if (conversationPosition < totalSectionsCount) {
+                break;
+            } else {
+                headersAbove++;
+            }
+        }
+
+        return conversationPosition + headersAbove;
+    }
+
+    public int getCountForSection(int sectionType) {
+        for (int i = 0; i < sectionCounts.size(); i++) {
+            if (sectionCounts.get(i).type == sectionType) {
+                return sectionCounts.get(i).count;
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
+    public boolean removeItem(int position, ReorderType type) {
+        return false;
+    }
+
     public List<Conversation> getConversations() {
         return conversations;
+    }
+
+    public List<SectionType> getSectionCounts() {
+        return sectionCounts;
     }
 
 }

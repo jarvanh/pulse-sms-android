@@ -17,15 +17,20 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter;
+import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.util.CircularOffsettingHelper;
 
-public class MessengerActivity extends AppCompatActivity {
+public class MessengerActivity extends AppCompatActivity implements IConversationListFragment {
 
     private WearableRecyclerView recyclerView;
     private WearableConversationListAdapter adapter;
+
+    private ConversationListUpdatedReceiver updatedReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +54,20 @@ public class MessengerActivity extends AppCompatActivity {
 
         loadConversations();
         displayConversations();
+
+        updatedReceiver = new ConversationListUpdatedReceiver(this);
+        registerReceiver(updatedReceiver,
+                ConversationListUpdatedReceiver.getIntentFilter());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (updatedReceiver != null) {
+            unregisterReceiver(updatedReceiver);
+        }
+    }
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -109,5 +126,25 @@ public class MessengerActivity extends AppCompatActivity {
         if (convoId != -1L) {
             MessageListActivity.startActivity(this, convoId);
         }
+    }
+
+    @Override
+    public boolean isAdded() {
+        return true;
+    }
+
+    @Override
+    public long getExpandedId() {
+        return -1; // don't ignore any, since this is a separate activity for wear
+    }
+
+    @Override
+    public IConversationListAdapter getAdapter() {
+        return adapter;
+    }
+
+    @Override
+    public void checkEmptyViewDisplay() {
+
     }
 }
