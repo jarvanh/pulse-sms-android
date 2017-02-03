@@ -13,10 +13,6 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
-        <meta-data
-            android:name="com.google.android.wearable.notificationBridgeMode"
-            android:value="NO_BRIDGING" />
-
         <activity android:name=".activity.MessengerActivity" android:theme="@style/AppThemeWearable" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
