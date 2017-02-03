@@ -25,8 +25,8 @@
     tools:ignore="Overdraw">
 
     <ImageView
-        android:layout_width="196dp"
-        android:layout_height="196dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:src="@drawable/ic_inbox"
         android:tint="@color/emptyIconTint"
         android:contentDescription="@string/loading_messages" />
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/emptyTextPrimary"
         android:textSize="20sp"
         android:text="@string/loading_messages"
@@ -49,10 +49,10 @@
         android:gravity="center_horizontal" />
 
     <ProgressBar
-        android:layout_width="@dimen/max_message_width"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:indeterminate="true"
         android:id="@+id/loading_progress" />
 

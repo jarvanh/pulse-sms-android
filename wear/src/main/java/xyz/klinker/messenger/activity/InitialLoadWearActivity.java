@@ -170,7 +170,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     private void close() {
         Settings.get(this).setValue(getString(R.string.pref_first_start), false);
 
-        startActivity(new Intent(this, MessengerWearActivity.class));
+        startActivity(new Intent(this, MessengerActivity.class));
 
         if (startUploadAfterSync) {
             startService(new Intent(this, ApiUploadService.class));

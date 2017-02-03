@@ -450,6 +450,11 @@ public class NotificationService extends IntentService {
         NotificationCompat.WearableExtender wearableExtender =
                 new NotificationCompat.WearableExtender().addPage(wear.build());
 
+        NotificationCompat.Action.WearableExtender actionExtender =
+                new NotificationCompat.Action.WearableExtender()
+                        .setHintLaunchesActivity(true)
+                        .setHintDisplayActionInline(true);
+
         PendingIntent pendingReply;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !DEBUG_QUICK_REPLY) {
             // with Android N, we only need to show the the reply service intent through the wearable extender
@@ -461,6 +466,8 @@ public class NotificationService extends IntentService {
             NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     getString(R.string.reply), pendingReply)
                     .addRemoteInput(remoteInput)
+                    .setAllowGeneratedReplies(true)
+                    .extend(actionExtender)
                     .build();
 
             if (!conversation.privateNotification) builder.addAction(action);
@@ -481,6 +488,8 @@ public class NotificationService extends IntentService {
                 // the remote input or else it will keep using the direct reply
                 NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         getString(R.string.reply), pendingReply)
+                        .extend(actionExtender)
+                        .setAllowGeneratedReplies(true)
                         .build();
 
                 if (!conversation.privateNotification) builder.addAction(action);
@@ -504,6 +513,7 @@ public class NotificationService extends IntentService {
                 NotificationCompat.Action wearAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         getString(R.string.reply), wearPendingReply)
                         .addRemoteInput(remoteInput)
+                        .extend(actionExtender)
                         .build();
 
                 wearableExtender.addAction(wearAction);
