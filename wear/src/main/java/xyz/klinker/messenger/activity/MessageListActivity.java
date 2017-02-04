@@ -32,6 +32,7 @@ import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.util.CircularOffsettingHelper;
+import xyz.klinker.wear.reply.WearableReplyActivity;
 
 public class MessageListActivity extends AppCompatActivity implements IMessageListFragment {
 
