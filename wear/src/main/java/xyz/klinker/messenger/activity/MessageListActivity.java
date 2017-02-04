@@ -78,10 +78,17 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
 
-        actionDrawer.setBackgroundColor(conversation.colors.colorAccent);
+        actionDrawer.setBackgroundColor(conversation.colors.color);
         actionDrawer.setOnMenuItemClickListener(new WearableActionDrawer.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_close:
+                        finish();
+                        break;
+                    case R.id.menu_reply:
+                        break;
+                }
                 return false;
             }
         });
