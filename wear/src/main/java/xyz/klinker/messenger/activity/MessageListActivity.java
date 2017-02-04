@@ -36,7 +36,6 @@ import xyz.klinker.messenger.util.CircularOffsettingHelper;
 public class MessageListActivity extends AppCompatActivity implements IMessageListFragment {
 
     private static final String CONVERSATION_ID = "conversation_id";
-    private static final int SPEECH_REQUEST_CODE = 0;
 
     public static void startActivity(Context context, long conversationId) {
         Intent intent = new Intent(context, MessageListActivity.class);
@@ -89,14 +88,17 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         actionDrawer.setOnMenuItemClickListener(new WearableActionDrawer.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                actionDrawer.closeDrawer();
+
                 switch (menuItem.getItemId()) {
                     case R.id.menu_close:
                         finish();
-                        break;
+                        return true;
                     case R.id.menu_reply:
-                        displaySpeechRecognizer();
-                        break;
+                        WearableReplyActivity.start(MessageListActivity.this);
+                        return true;
                 }
+
                 return false;
             }
         });
@@ -182,25 +184,14 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         NotificationUtils.cancelGroupedNotificationWithNoContent(this);
     }
 
-    private void displaySpeechRecognizer() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        startActivityForResult(intent, SPEECH_REQUEST_CODE);
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
-        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
-            List<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0);
-
-            sendMessage(spokenText);
-        }
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        String result = WearableReplyActivity.getResultText(data);
+        if (result != null) {
+            sendMessage(result);
+        }
     }
 
     private void sendMessage(String text) {
