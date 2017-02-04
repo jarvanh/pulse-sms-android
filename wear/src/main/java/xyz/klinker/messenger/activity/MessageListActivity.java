@@ -113,7 +113,12 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         manager = new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
 
-        adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent);
+        Settings settings = Settings.get(this);
+        if (settings.useGlobalThemeColor) {
+            adapter = new WearableMessageListAdapter(this, manager, null, settings.globalColorSet.color, settings.globalColorSet.colorAccent);
+        } else {
+            adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent);
+        }
 
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
