@@ -108,7 +108,7 @@ dependencies {
     compile 'com.klinkerapps:link_builder:1.5.2'
     compile 'com.klinkerapps:android-chips:1.1.0@aar'
     compile 'com.klinkerapps:android-transcoder:1.0.1'
-    compile 'com.klinkerapps:article_viewer:0.13.0'
+    compile 'com.klinkerapps:article_viewer:0.15.1'
     compile 'com.klinkerapps:giphy:1.0.3'
 
     compile 'com.github.paolorotolo:appintro:4.0.0'

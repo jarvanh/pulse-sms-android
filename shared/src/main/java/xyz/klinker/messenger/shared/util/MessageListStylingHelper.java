@@ -1,17 +1,16 @@
-package xyz.klinker.messenger.utils;
+package xyz.klinker.messenger.shared.util;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import xyz.klinker.messenger.shared.R;
-import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.shared.util.DensityUtil;
-import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class MessageListStylingHelper {
 
@@ -74,28 +73,28 @@ public class MessageListStylingHelper {
         return this;
     }
 
-    public MessageListStylingHelper setMargins(MessageViewHolder holder) {
-        if (holder.itemView.getLayoutParams() == null) {
+    public MessageListStylingHelper setMargins(View itemView) {
+        if (itemView.getLayoutParams() == null) {
             return this;
         }
 
         if (currentType != lastType) {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = eightDp;
+            ((RecyclerView.LayoutParams) itemView.getLayoutParams()).topMargin = eightDp;
         } else {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).topMargin = 0;
+            ((RecyclerView.LayoutParams) itemView.getLayoutParams()).topMargin = 0;
         }
 
         if (!isJustSentMessage && (currentType != nextType || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp))) {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = eightDp;
+            ((RecyclerView.LayoutParams) itemView.getLayoutParams()).bottomMargin = eightDp;
         } else {
-            ((RecyclerView.LayoutParams) holder.itemView.getLayoutParams()).bottomMargin = 0;
+            ((RecyclerView.LayoutParams) itemView.getLayoutParams()).bottomMargin = 0;
         }
 
         return this;
     }
 
-    public MessageListStylingHelper setBackground(MessageViewHolder holder) {
-        if (MimeType.isExpandedMedia(holder.mimeType) || currentType == Message.TYPE_INFO || holder.messageHolder == null) {
+    public MessageListStylingHelper setBackground(View messageHolder,String mimeType) {
+        if (MimeType.isExpandedMedia(mimeType) || currentType == Message.TYPE_INFO || messageHolder == null) {
             return this;
         }
 
@@ -106,18 +105,18 @@ public class MessageListStylingHelper {
             background = dialogSquareBackground();
         }
 
-        holder.messageHolder.setBackground(
-                holder.itemView.getContext().getResources().getDrawable(background)
+        messageHolder.setBackground(
+                messageHolder.getContext().getResources().getDrawable(background)
         );
 
         return this;
     }
 
-    public MessageListStylingHelper applyTimestampHeight(MessageViewHolder holder, int timestampHeight) {
+    public MessageListStylingHelper applyTimestampHeight(TextView timestamp, int timestampHeight) {
         if (TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)) {
-            holder.timestamp.getLayoutParams().height = timestampHeight;
+            timestamp.getLayoutParams().height = timestampHeight;
         } else {
-            holder.timestamp.getLayoutParams().height = 0;
+            timestamp.getLayoutParams().height = 0;
         }
 
         return this;

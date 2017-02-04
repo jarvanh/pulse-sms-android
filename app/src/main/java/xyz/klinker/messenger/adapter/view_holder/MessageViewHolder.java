@@ -223,12 +223,15 @@ public class MessageViewHolder extends SwappingHolder {
         Settings settings = Settings.get(itemView.getContext());
 
         message.setTextSize(settings.largeFont);
-        timestamp.setTextSize(settings.smallFont);
-        timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
-        if (contact != null) {
-            contact.setTextSize(settings.smallFont);
-            contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+        if (type != Message.TYPE_MEDIA) {
+            timestamp.setTextSize(settings.smallFont);
+            timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+
+            if (contact != null) {
+                contact.setTextSize(settings.smallFont);
+                contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+            }
         }
 
         if ((color != -1 && messageHolder != null) ||

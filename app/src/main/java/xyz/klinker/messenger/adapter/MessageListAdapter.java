@@ -62,7 +62,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.LinkLongClickFragment;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
-import xyz.klinker.messenger.utils.MessageListStylingHelper;
+import xyz.klinker.messenger.shared.util.MessageListStylingHelper;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.Regex;
 import xyz.klinker.messenger.shared.util.TimeUtils;
@@ -416,12 +416,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         if (!isGroup && FeatureFlags.get(holder.itemView.getContext()).MESSAGE_PADDING) {
             stylingHelper.calculateAdjacentItems(messages, position)
-                    .setMargins(holder)
-                    .setBackground(holder)
-                    .applyTimestampHeight(holder, timestampHeight);
+                    .setMargins(holder.itemView)
+                    .setBackground(holder.messageHolder, message.mimeType)
+                    .applyTimestampHeight(holder.timestamp, timestampHeight);
         } else {
             stylingHelper.calculateAdjacentItems(messages, position)
-                    .applyTimestampHeight(holder, timestampHeight);
+                    .applyTimestampHeight(holder.timestamp, timestampHeight);
         }
 
         if (isGroup && holder.contact != null && message.from != null) {
