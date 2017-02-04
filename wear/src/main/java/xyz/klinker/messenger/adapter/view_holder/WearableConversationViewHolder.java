@@ -50,6 +50,9 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 if (conversation != null) {
                     MessageListActivity.startActivity(itemView.getContext(), conversation.id);
+
+                    unreadIndicator.setVisibility(View.GONE);
+                    setTypeface(false, isItalic());
                 }
             }
         });
