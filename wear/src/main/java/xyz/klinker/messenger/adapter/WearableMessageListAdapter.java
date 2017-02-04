@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.WearableMessageViewHolder;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.YouTubePreview;
@@ -36,6 +37,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
     private static final String TAG = "MessageListAdapter";
 
     private Cursor messages;
+    private boolean isGroup;
     private int receivedColor;
     private int accentColor;
     private int timestampHeight;
@@ -46,8 +48,9 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
     private int imageHeight;
     private int imageWidth;
 
-    public WearableMessageListAdapter(Context context, LinearLayoutManager manager, Cursor messages, int receivedColor, int accentColor) {
+    public WearableMessageListAdapter(Context context, LinearLayoutManager manager, Cursor messages, int receivedColor, int accentColor, boolean isGroup) {
         this.messages = messages;
+        this.isGroup = isGroup;
         this.receivedColor = receivedColor;
         this.accentColor = accentColor;
         this.timestampHeight = 0;
@@ -280,10 +283,25 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                     message.timestamp));
         }
 
-        stylingHelper.calculateAdjacentItems(messages, position)
-                .setMargins(holder.itemView)
-                .setBackground(holder.messageHolder, message.mimeType)
-                .applyTimestampHeight(holder.timestamp, timestampHeight);
+        if (!isGroup) {
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .setMargins(holder.itemView)
+                    .setBackground(holder.messageHolder, message.mimeType)
+                    .applyTimestampHeight(holder.timestamp, timestampHeight);
+        } else {
+            stylingHelper.calculateAdjacentItems(messages, position)
+                    .applyTimestampHeight(holder.timestamp, timestampHeight);
+        }
+
+        if (isGroup && holder.contact != null && message.from != null) {
+            if (holder.contact.getVisibility() == View.GONE) {
+                holder.contact.setVisibility(View.VISIBLE);
+            }
+
+            int label = holder.timestamp.getLayoutParams().height > 0 ?
+                    R.string.message_from_bullet : R.string.message_from;
+            holder.contact.setText(holder.contact.getResources().getString(label, message.from));
+        }
     }
 
     @Override

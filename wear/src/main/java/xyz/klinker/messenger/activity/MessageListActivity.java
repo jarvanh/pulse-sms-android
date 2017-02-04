@@ -126,9 +126,9 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            adapter = new WearableMessageListAdapter(this, manager, null, settings.globalColorSet.color, settings.globalColorSet.colorAccent);
+            adapter = new WearableMessageListAdapter(this, manager, null, settings.globalColorSet.color, settings.globalColorSet.colorAccent, conversation.phoneNumbers.contains(", "));
         } else {
-            adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent);
+            adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent, conversation.phoneNumbers.contains(", "));
         }
 
         recyclerView.setLayoutManager(manager);
