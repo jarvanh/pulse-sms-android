@@ -135,12 +135,12 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
 
     @Override
     public long getExpandedId() {
-        return -1; // don't ignore any, since this is a separate activity for wear
+        return -1; // don't ignore any, since this is a seprate activity
     }
 
     @Override
     public IConversationListAdapter getAdapter() {
-        return adapter;
+        return null;
     }
 
     @Override

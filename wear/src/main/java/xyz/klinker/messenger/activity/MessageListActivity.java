@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.support.wearable.view.drawer.WearableDrawerLayout;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.WearableConversationListAdapter;
@@ -20,16 +22,21 @@ import xyz.klinker.messenger.adapter.WearableMessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
+import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
+import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.util.CircularOffsettingHelper;
 
 public class MessageListActivity extends AppCompatActivity implements IMessageListFragment {
 
     private static final String CONVERSATION_ID = "conversation_id";
+    private static final int SPEECH_REQUEST_CODE = 0;
 
     public static void startActivity(Context context, long conversationId) {
         Intent intent = new Intent(context, MessageListActivity.class);
@@ -87,6 +94,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
                         finish();
                         break;
                     case R.id.menu_reply:
+                        displaySpeechRecognizer();
                         break;
                 }
                 return false;
@@ -173,4 +181,50 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
         NotificationUtils.cancelGroupedNotificationWithNoContent(this);
     }
+
+    private void displaySpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            String spokenText = results.get(0);
+
+            sendMessage(spokenText);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void sendMessage(String text) {
+        final Message m = new Message();
+        m.conversationId = getConversationId();
+        m.type = Message.TYPE_SENDING;
+        m.data = text;
+        m.timestamp = System.currentTimeMillis();
+        m.mimeType = MimeType.TEXT_PLAIN;
+        m.read = true;
+        m.seen = true;
+        m.from = null;
+        m.color = null;
+        m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
+                DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
+
+
+        if (text.length() != 0) {
+            source.insertMessage(this, m, m.conversationId);
+            loadMessages();
+
+            new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                    .send(this, m.data, conversation.phoneNumbers, null, MimeType.TEXT_PLAIN);
+        }
+    }
+
 }

@@ -45,14 +45,14 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
         unreadIndicator = itemView.findViewById(R.id.unread_indicator);
         checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
 
-        if (conversation != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (conversation != null) {
                     MessageListActivity.startActivity(itemView.getContext(), conversation.id);
                 }
-            });
-        }
+            }
+        });
     }
 
 
