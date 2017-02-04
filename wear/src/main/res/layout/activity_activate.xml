@@ -41,8 +41,8 @@
                         android:layout_below="@+id/number_1_1"
                         android:layout_toEndOf="@+id/number_1"
                         android:layout_toRightOf="@+id/number_1"
-                        android:id="@+id/number_1_21"
-                        android:text="@string/api_activate_1_2"
+                        android:id="@+id/number_1_2"
+                        android:text="@string/api_activity_1_21"
                         android:textColor="@color/api_text_accent"/>
 
                     <TextView
