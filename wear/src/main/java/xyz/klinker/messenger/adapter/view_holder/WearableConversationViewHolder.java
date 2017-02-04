@@ -51,8 +51,9 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
                 if (conversation != null) {
                     MessageListActivity.startActivity(itemView.getContext(), conversation.id);
 
-                    unreadIndicator.setVisibility(View.GONE);
-                    setTypeface(false, isItalic());
+                    if (unreadIndicator != null && unreadIndicator.getVisibility() == View.VISIBLE) {
+                        setTypeface(false, isItalic());
+                    }
                 }
             }
         });
