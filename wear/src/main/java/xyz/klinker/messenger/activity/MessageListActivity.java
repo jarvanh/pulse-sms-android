@@ -22,10 +22,12 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.util.CircularOffsettingHelper;
 
-public class MessageListActivity extends AppCompatActivity {
+public class MessageListActivity extends AppCompatActivity implements IMessageListFragment {
 
     private static final String CONVERSATION_ID = "conversation_id";
 
@@ -45,6 +47,8 @@ public class MessageListActivity extends AppCompatActivity {
 
     private LinearLayoutManager manager;
     private WearableMessageListAdapter adapter;
+
+    private MessageListUpdatedReceiver updatedReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,10 @@ public class MessageListActivity extends AppCompatActivity {
         loadMessages();
         dismissNotification();
 
+        updatedReceiver = new MessageListUpdatedReceiver(this);
+        registerReceiver(updatedReceiver,
+                MessageListUpdatedReceiver.getIntentFilter());
+
         actionDrawer.setBackgroundColor(conversation.colors.colorAccent);
         actionDrawer.setOnMenuItemClickListener(new WearableActionDrawer.OnMenuItemClickListener() {
             @Override
@@ -82,6 +90,8 @@ public class MessageListActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        unregisterReceiver(updatedReceiver);
 
         if (adapter != null) {
             adapter.getMessages().close();
@@ -103,7 +113,8 @@ public class MessageListActivity extends AppCompatActivity {
         recyclerView.setOffsettingHelper(new CircularOffsettingHelper());
     }
 
-    private void loadMessages() {
+    @Override
+    public void loadMessages() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -120,6 +131,26 @@ public class MessageListActivity extends AppCompatActivity {
                 });
             }
         }).start();
+    }
+
+    @Override
+    public long getConversationId() {
+        return conversation.id;
+    }
+
+    @Override
+    public void setShouldPullDrafts(boolean pull) {
+
+    }
+
+    @Override
+    public void setDismissOnStartup() {
+
+    }
+
+    @Override
+    public void setConversationUpdateInfo(String text) {
+
     }
 
     private void dismissNotification() {
