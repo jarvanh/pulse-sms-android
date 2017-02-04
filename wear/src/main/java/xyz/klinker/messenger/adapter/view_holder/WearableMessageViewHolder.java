@@ -141,10 +141,10 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
                                 YoutubeParser.getVideoUriFromThumbnail(data)
                         )));
                     } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
-                        YouTubePreview preview = YouTubePreview.build(data);
-                        if (preview != null) {
-                            itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
-                        }
+//                        YouTubePreview preview = YouTubePreview.build(data);
+//                        if (preview != null) {
+//                            itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
+//                        }
                     } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
                         startArticle();
                     } else {
