@@ -36,7 +36,7 @@ android {
         }
 
         versionName(VERSION_NAME + '.' + buildNumber)
-        versionCode buildNumber
+        versionCode buildNumber * 100000
         project.archivesBaseName = "wear-${versionName}"
 
         jackOptions {
