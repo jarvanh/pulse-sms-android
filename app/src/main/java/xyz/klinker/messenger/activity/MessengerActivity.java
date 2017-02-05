@@ -91,6 +91,7 @@ import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.PromotionUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.UpdateUtils;
@@ -168,6 +169,7 @@ public class MessengerActivity extends AppCompatActivity
         }
 
         new UpdateUtils(this).checkForUpdate();
+        new PromotionUtils(this).checkPromotions();
     }
 
     @Override

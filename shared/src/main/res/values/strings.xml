@@ -442,6 +442,13 @@
     <string name="test">Test</string>
     <string name="off">Off</string>
     <string name="on">On</string>
+    <string name="rate_it">Rate It!</string>
+    <string name="love_pulse_question">Love Pulse?</string>
+    <string name="give_a_rating">Consider giving it a rating or sharing it with your friends!\n\n
+        Your 5 star reviews warm my heart :)</string>
+    <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
+        https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+
 
     <!-- Times -->
     <string name="one_second">One second</string>
