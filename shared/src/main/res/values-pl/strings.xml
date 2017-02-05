@@ -330,9 +330,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="override_system_apn">Pomiń systemowe APNy</string>
     <string name="mmsc_url">URL MMSC</string>
     <string name="mms_proxy">Proxy MMS</string>
-    <string name="mms_port">port MMS</string>
-    <string name="user_agent">User Agent</string>
-    <string name="user_agent_profile_url">User agent - adres profilu</string>
+    <string name="mms_port">Port MMS</string>
+    <string name="user_agent">Tag urządzenia</string>
+    <string name="user_agent_profile_url">Adres URL profilu urządzenia</string>
+    <string name="user_agent_profile_tag">Znacznik nazwy profilu urządzenia</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Podpis</string>
     <string name="signature_summary">Informacja: wysłane podpisy NIE będą pokazywane na liście wiadomości Pulse. Podpisy będą jedynie widoczne dla odbiorcy wiadomości</string>
