@@ -17,7 +17,15 @@
 <changelog>
 
     <version
-        name="1.15.0"
+        name="1.15.1"
+        description="February 4th, 2017">
+        <text>Improvements to overriding system controlled APNs for MMS</text>
+        <text>Update translations</text>
+        <text>Tons of little reported fixes</text>
+    </version>
+
+    <version
+        name="1.15.0 BETAs"
         description="January 29th, 2017">
         <text>Option to choose the "keyboard type" under global settings</text>
         <text>Option to automatically save media to the external storage, that is received in MMS messages</text>
