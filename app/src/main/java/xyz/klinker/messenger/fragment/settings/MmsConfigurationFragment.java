@@ -1,7 +1,13 @@
 package xyz.klinker.messenger.fragment.settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
@@ -83,6 +89,29 @@ public class MmsConfigurationFragment extends PreferenceFragment {
                     boolean override = (boolean) o;
                     new ApiUtils().updateOverrideSystemApn(Account.get(getActivity()).accountId,
                             override);
+
+                    if (override) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.System.canWrite(getActivity())) {
+                            new AlertDialog.Builder(getActivity())
+                                    .setMessage(com.klinker.android.send_message.R.string.write_settings_permission)
+                                    .setPositiveButton(com.klinker.android.send_message.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                                            intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                            try {
+                                                startActivity(intent);
+                                            } catch (Exception e) {
+                                                Log.e("MainActivity", "error starting permission intent", e);
+                                            }
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+
                     return true;
                 });
     }
