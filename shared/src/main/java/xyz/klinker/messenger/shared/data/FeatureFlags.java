@@ -78,6 +78,7 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        MESSAGE_PADDING = getValue(sharedPrefs, FLAG_IMPROVE_MESSAGE_PADDING);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -95,6 +96,9 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
+                break;
+            case FLAG_IMPROVE_MESSAGE_PADDING:
+                MESSAGE_PADDING = flag;
                 break;
         }
     }

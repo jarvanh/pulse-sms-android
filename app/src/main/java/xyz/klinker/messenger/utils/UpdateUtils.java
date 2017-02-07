@@ -94,22 +94,19 @@ public class UpdateUtils {
         final Account account = Account.get(context);
 
         if (account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false) && context instanceof MessengerActivity) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    long installTime = sharedPrefs.getLong("install_time", 0);
-                    if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS) {
-                        ((MessengerActivity)context).showSnackbar(context.getString(R.string.use_from_anywhere_short), Snackbar.LENGTH_INDEFINITE, context.getString(R.string.learn_more), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ((MessengerActivity) context).menuItemClicked(R.id.drawer_account);
-                            }
-                        });
+            new Handler().postDelayed(() -> {
+                long installTime = sharedPrefs.getLong("install_time", 0);
+                if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS / 2) {
+                    ((MessengerActivity)context).showSnackbar(context.getString(R.string.use_from_anywhere_short), Snackbar.LENGTH_INDEFINITE, context.getString(R.string.learn_more), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((MessengerActivity) context).menuItemClicked(R.id.drawer_account);
+                        }
+                    });
 
-                        sharedPrefs.edit().putBoolean("seen_use_anywhere", true).commit();
-                    } else if (installTime == 0) {
-                        sharedPrefs.edit().putLong("install_time", new Date().getTime()).commit();
-                    }
+                    sharedPrefs.edit().putBoolean("seen_use_anywhere", true).commit();
+                } else if (installTime == 0) {
+                    sharedPrefs.edit().putLong("install_time", new Date().getTime()).commit();
                 }
             }, 2000);
         }
