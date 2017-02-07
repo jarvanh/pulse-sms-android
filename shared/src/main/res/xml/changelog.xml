@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="1.15.2"
+        description="February 7th, 2017">
+        <text>Few small bug fixes</text>
+    </version>
+
+    <version
         name="1.15.1"
         description="February 4th, 2017">
         <text>Improvements to overriding system controlled APNs for MMS</text>
