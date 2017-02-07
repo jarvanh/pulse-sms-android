@@ -119,11 +119,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
 
                     return true;
                 });
-
-        if (!FeatureFlags.get(getActivity()).KEYBOARD_LAYOUT) {
-            ((PreferenceGroup) findPreference(getString(R.string.pref_customization_category)))
-                    .removePreference(findPreference(getString(R.string.pref_customization_category)));
-        }
     }
 
     private void initRounderBubbles() {
