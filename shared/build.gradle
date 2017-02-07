@@ -104,11 +104,11 @@ dependencies {
     compile "com.google.firebase:firebase-crash:${FIREBASE_VERSION}"
     compile "com.google.android.gms:play-services-maps:${GOOGLE_PLAY_SERVICES_VERSION}"
 
-    compile 'com.klinkerapps:android-smsmms:3.4.6-SNAPSHOT'
+    compile 'com.klinkerapps:android-smsmms:3.4.6'
     compile 'com.klinkerapps:link_builder:1.5.2'
     compile 'com.klinkerapps:android-chips:1.1.0@aar'
     compile 'com.klinkerapps:android-transcoder:1.0.1'
-    compile 'com.klinkerapps:article_viewer:0.15.6'
+    compile 'com.klinkerapps:article_viewer:0.15.7'
     compile 'com.klinkerapps:giphy:1.0.3'
 
     compile 'com.github.paolorotolo:appintro:4.0.0'
