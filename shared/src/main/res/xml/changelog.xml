@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.0.0"
+        description="February 8th, 2017">
+        <text>NEW: Stand-alone Android Wear 2.0 app! The first of its kind.</text>
+        <text>Improved grouping of sent and received messages within a conversation</text>
+    </version>
+
+    <version
         name="1.15.2"
         description="February 7th, 2017">
         <text>Few small bug fixes</text>

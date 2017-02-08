@@ -414,7 +414,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     message.timestamp));
         }
 
-        if (!isGroup && FeatureFlags.get(holder.itemView.getContext()).MESSAGE_PADDING) {
+        if (!isGroup) {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .setMargins(holder.itemView)
                     .setBackground(holder.messageHolder, message.mimeType)
