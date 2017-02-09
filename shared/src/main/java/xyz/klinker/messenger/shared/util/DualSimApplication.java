@@ -62,6 +62,7 @@ public class DualSimApplication {
 
         if (!visible && switchSim.getVisibility() != View.GONE) {
             switchSim.setVisibility(View.GONE);
+            switchSim.setEnabled(false);
         }
     }
 
