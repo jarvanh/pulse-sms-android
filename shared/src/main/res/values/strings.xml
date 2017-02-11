@@ -340,6 +340,8 @@
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages.</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
+    <string name="notification_actions">Notification Actions</string>
+    <string name="notification_actions_summary">A max of three actions can be used in a notification</string>
 
 
     <!-- MMS Configuration Settings -->

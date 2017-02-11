@@ -21,9 +21,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
+import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -43,6 +47,7 @@ public class Settings {
 
     // settings_global
     public VibratePattern vibrate;
+    public Set<NotificationAction> notificationActions;
     public boolean useGlobalThemeColor;
     public boolean deliveryReports;
     public boolean giffgaffDeliveryReports;
@@ -296,7 +301,37 @@ public class Settings {
                 break;
         }
 
+        notificationActions = new HashSet<>();
+        Set<String> actions = sharedPrefs.getStringSet(context.getString(R.string.pref_notification_actions),
+                getDefaultNotificationActions());
+
+        if (actions.contains("reply")) {
+            notificationActions.add(NotificationAction.REPLY);
+        }
+
+        if (actions.contains("call")) {
+            notificationActions.add(NotificationAction.CALL);
+        }
+
+        if (actions.contains("read")) {
+            notificationActions.add(NotificationAction.READ);
+        }
+
+        if (actions.contains("delete")) {
+            notificationActions.add(NotificationAction.DELETE);
+        }
+
         this.globalColorSet = ColorSet.getFromString(context, themeColorString);
+    }
+
+    private Set<String> getDefaultNotificationActions() {
+        Set<String> set = new HashSet<>();
+
+        for (String s : context.getResources().getStringArray(R.array.notification_actions_default)) {
+            set.add(s);
+        }
+
+        return set;
     }
 
     @VisibleForTesting
@@ -364,6 +399,17 @@ public class Settings {
         }
     }
 
+    @VisibleForTesting
+    protected void setValue(String key, Set<String> value, boolean forceUpdate) {
+        getSharedPrefs().edit()
+                .putStringSet(key, value)
+                .apply();
+
+        if (forceUpdate) {
+            forceUpdate();
+        }
+    }
+
     /**
      * Stores a new boolean value.
      *
@@ -401,6 +447,16 @@ public class Settings {
      * @param value the new value.
      */
     public void setValue(String key, long value) {
+        setValue(key, value, true);
+    }
+
+    /**
+     * Stores a new long value.
+     *
+     * @param key   the shared preferences key.
+     * @param value the new value.
+     */
+    public void setValue(String key, Set<String> value) {
         setValue(key, value, true);
     }
 

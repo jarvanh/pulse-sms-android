@@ -60,6 +60,7 @@ import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 
 /**
@@ -725,6 +726,10 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     break;
                 case "string":
                     Settings.get(context).setValue(pref, json.getString("value"));
+                    break;
+                case "set":
+                    Settings.get(context).setValue(pref, SetUtils.createSet(json.getString("value")));
+                    break;
             }
         }
     }

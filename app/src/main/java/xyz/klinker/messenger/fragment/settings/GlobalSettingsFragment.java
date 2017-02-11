@@ -25,6 +25,9 @@ import android.preference.PreferenceGroup;
 import android.support.v7.app.AppCompatDelegate;
 import android.telephony.TelephonyManager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -32,6 +35,7 @@ import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**
@@ -50,6 +54,7 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initKeyboardLayout();
         initRounderBubbles();
         initSwipeDelete();
+        initNotificationActions();
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
@@ -129,6 +134,20 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                             rounder);
                     return true;
                 });
+    }
+
+    private void initNotificationActions() {
+        Preference actions = findPreference(getString(R.string.pref_notification_actions));
+        actions.setOnPreferenceChangeListener((preference, o) -> {
+            Set<String> options = (Set<String>) o;
+            new ApiUtils().updateNotificationActions(Account.get(getActivity()).accountId,
+                    SetUtils.stringify(options));
+            return true;
+        });
+
+        if (!FeatureFlags.get(getActivity()).NOTIFICATION_ACTIONS) {
+            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(actions);
+        }
     }
 
     private void initSwipeDelete() {

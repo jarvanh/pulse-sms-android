@@ -93,10 +93,10 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanThirtySeconds() {
         List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage("", "", 1000, ""));
-        messages.add(new NotificationMessage("", "", TimeUtils.DAY, ""));
-        messages.add(new NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationMessage("", "", (TimeUtils.SECOND * 30) + 1, ""));
+        messages.add(new NotificationMessage(1, "", "", 1000, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage(1, "", "", 0, ""));
+        messages.add(new NotificationMessage(1, "", "", (TimeUtils.SECOND * 30) + 1, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
     }
@@ -104,10 +104,10 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanThirtySeconds() {
         List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage("", "", 1000, ""));
-        messages.add(new NotificationMessage("", "", TimeUtils.DAY, ""));
-        messages.add(new NotificationMessage("", "", 0, ""));
-        messages.add(new NotificationMessage("", "", (TimeUtils.SECOND * 30) - 100, ""));
+        messages.add(new NotificationMessage(1, "", "", 1000, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage(1, "", "", 0, ""));
+        messages.add(new NotificationMessage(1, "", "", (TimeUtils.SECOND * 30) - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
@@ -115,13 +115,14 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void smallMessageListsShouldOnlyAlertOnce() {
         List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage("", "", TimeUtils.DAY - 100, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
 
     private Cursor getUnseenCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
+                Message.COLUMN_ID,
                 Message.COLUMN_CONVERSATION_ID,
                 Message.COLUMN_DATA,
                 Message.COLUMN_MIME_TYPE,
@@ -131,6 +132,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 1,
+                1,
                 "Hey what's up?",
                 "text/plain",
                 1000L,
@@ -139,6 +141,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 1,
+                1,
                 "Yo, you around?",
                 "text/plain",
                 2000L,
@@ -146,6 +149,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         });
 
         cursor.addRow(new Object[]{
+                1,
                 2,
                 "Can we hang out tonight?",
                 "text/plain",
@@ -155,6 +159,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 1,
+                1,
                 "Hello?",
                 "text/plain",
                 4000L,
@@ -162,6 +167,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         });
 
         cursor.addRow(new Object[]{
+                1,
                 3,
                 "content://mms/part/1",
                 "image/jpg",

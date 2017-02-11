@@ -51,6 +51,7 @@ public class FeatureFlags {
     private static final String FLAG_DELETED_NOTIFICATION_FCM = "flag_fcm_deleted_notification";
     private static final String FLAG_KEYBOARD_LAYOUT = "flag_keyboard_layout";
     private static final String FLAG_IMPROVE_MESSAGE_PADDING = "flag_improve_message_list";
+    private static final String FLAG_NOTIFICATION_ACTIONS = "flag_notification_actions";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -67,7 +68,7 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean MESSAGE_PADDING;
+    public boolean NOTIFICATION_ACTIONS;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -78,6 +79,7 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        NOTIFICATION_ACTIONS = getValue(sharedPrefs, FLAG_NOTIFICATION_ACTIONS);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -95,6 +97,9 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
+                break;
+            case FLAG_NOTIFICATION_ACTIONS:
+                NOTIFICATION_ACTIONS = flag;
                 break;
         }
     }

@@ -186,6 +186,7 @@
         <service android:name=".service.RepeatNotificationService" />
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.NotificationMarkReadService" />
+        <service android:name=".service.NotificationDeleteService" />
         <service android:name=".service.NotificationCallService" />
         <service android:name=".service.ReplyService" />
         <service android:name=".service.ContentObserverService" />

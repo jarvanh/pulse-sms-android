@@ -47,7 +47,6 @@
             android:entryValues="@array/keyboard_layout_values"
             android:defaultValue="default" />
 
-
         <SwitchPreference
             android:key="@string/pref_rounder_bubbles"
             android:title="@string/rounder_bubbles"
@@ -67,6 +66,14 @@
             android:key="@string/pref_alert_types"
             android:title="@string/alert_types"
             android:summary="@string/alert_types_summary" />
+
+        <MultiSelectListPreference
+            android:key="@string/pref_notification_actions"
+            android:title="@string/notification_actions"
+            android:summary="@string/notification_actions_summary"
+            android:defaultValue="@array/notification_actions_default"
+            android:entries="@array/notification_actions"
+            android:entryValues="@array/notification_actions_values" />
 
         <SwitchPreference
             android:key="@string/pref_delivery_reports"

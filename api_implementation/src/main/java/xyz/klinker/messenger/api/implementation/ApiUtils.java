@@ -1170,6 +1170,17 @@ public class ApiUtils {
     }
 
     /**
+     * Update the notification actions setting.
+     */
+    public void updateNotificationActions(final String accountId, final String stringified) {
+        if (!active || accountId == null) {
+            return;
+        } else {
+            updateSetting(accountId, "notification_actions", "set", stringified);
+        }
+    }
+
+    /**
      * Update the swipe to delete setting
      */
     public void updateSwipeToDelete(final String accountId, final boolean swipeDelete) {

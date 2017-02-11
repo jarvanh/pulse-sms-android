@@ -201,4 +201,25 @@
         <item>enter</item>
     </string-array>
 
+    <string-array name="notification_actions">
+        <item>@string/reply</item>
+        <item>@string/call</item>
+        <item>@string/read</item>
+        <item>@string/delete</item>
+    </string-array>
+
+    <string-array name="notification_actions_values">
+        <item>reply</item>
+        <item>call</item>
+        <item>read</item>
+        <item>delete</item>
+    </string-array>
+
+    <string-array name="notification_actions_default">
+        <item>reply</item>
+        <item>call</item>
+        <item>read</item>
+    </string-array>
+
+
 </resources>

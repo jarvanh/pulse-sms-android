@@ -51,6 +51,7 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
@@ -143,6 +144,8 @@ public class NotificationService extends IntentService {
             do {
                 long conversationId = unseenMessages
                         .getLong(unseenMessages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                long id = unseenMessages
+                        .getLong(unseenMessages.getColumnIndex(Message.COLUMN_ID));
                 String data = unseenMessages
                         .getString(unseenMessages.getColumnIndex(Message.COLUMN_DATA));
                 String mimeType = unseenMessages
@@ -160,6 +163,7 @@ public class NotificationService extends IntentService {
                         if (c != null && !c.mute) {
                             conversation = new NotificationConversation();
                             conversation.id = c.id;
+                            conversation.unseenMessageId = id;
                             conversation.title = c.title;
                             conversation.imageUri = c.imageUri;
                             conversation.color = c.colors.color;
@@ -186,7 +190,7 @@ public class NotificationService extends IntentService {
                     }
 
                     if (conversation != null) {
-                        conversation.messages.add(new NotificationMessage(data, mimeType, timestamp, from));
+                        conversation.messages.add(new NotificationMessage(id, data, mimeType, timestamp, from));
                     }
                 }
             } while (unseenMessages.moveToNext());
@@ -470,7 +474,9 @@ public class NotificationService extends IntentService {
                     .extend(actionExtender)
                     .build();
 
-            if (!conversation.privateNotification) builder.addAction(action);
+            if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                builder.addAction(action);
+            }
 
             wearableExtender.addAction(action);
         } else {
@@ -492,7 +498,9 @@ public class NotificationService extends IntentService {
                         .setAllowGeneratedReplies(true)
                         .build();
 
-                if (!conversation.privateNotification) builder.addAction(action);
+                if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                    builder.addAction(action);
+                }
 
                 action.icon = R.drawable.ic_reply_white;
                 wearableExtender.addAction(action);
@@ -501,7 +509,9 @@ public class NotificationService extends IntentService {
                         getString(R.string.reply), pendingReply)
                         .build();
 
-                if (!conversation.privateNotification) builder.addAction(action);
+                if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                    builder.addAction(action);
+                }
 
                 Intent wearReply = new Intent(this, ReplyService.class);
                 Bundle extras = new Bundle();
@@ -520,12 +530,8 @@ public class NotificationService extends IntentService {
             }
         }
 
-        Intent read = new Intent(this, NotificationMarkReadService.class);
-        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
-        PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
-                read, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (!conversation.groupConversation && Account.get(this).primary) {
+        if (!conversation.groupConversation && settings.notificationActions.contains(NotificationAction.CALL)
+                && (!Account.get(this).exists() || Account.get(this).primary)) {
             Intent call = new Intent(this, NotificationCallService.class);
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
             call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);
@@ -533,6 +539,29 @@ public class NotificationService extends IntentService {
                     call, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_call_dark, getString(R.string.call), callPending));
+        }
+
+        Intent read = new Intent(this, NotificationMarkReadService.class);
+        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
+        PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
+                read, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
+
+        if (settings.notificationActions.contains(NotificationAction.READ)) {
+            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
+        }
+
+        Intent deleteMessage = new Intent(this, NotificationDeleteService.class);
+        deleteMessage.putExtra(NotificationDeleteService.EXTRA_CONVERSATION_ID, conversation.id);
+        deleteMessage.putExtra(NotificationDeleteService.EXTRA_MESSAGE_ID, conversation.unseenMessageId);
+        PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.id,
+                deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.delete), pendingDeleteMessage));
+
+        if (settings.notificationActions.contains(NotificationAction.READ)) {
+            builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.delete), pendingDeleteMessage));
         }
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
@@ -546,9 +575,6 @@ public class NotificationService extends IntentService {
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this,
                 (int) conversation.id, open, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
-        builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
 
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);

@@ -52,5 +52,4 @@ public class StringUtilsTest extends MessengerSuite {
         assertEquals("Scheduled Messages", StringUtils.titleize("Scheduled messages"));
         assertEquals("Help & Feedback", StringUtils.titleize("Help & feedback"));
     }
-
 }
