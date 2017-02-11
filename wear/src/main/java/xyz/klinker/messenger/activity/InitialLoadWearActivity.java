@@ -81,7 +81,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
             if (responseCode == RESULT_CANCELED) {
                 Account account = Account.get(this);
                 account.setDeviceId(null);
-                account.setPrimary(true);
+                account.setPrimary(false);
 
                 startDatabaseSync();
             } else if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {

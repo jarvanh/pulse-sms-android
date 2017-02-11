@@ -92,10 +92,6 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
         if (PermissionsUtils.checkRequestMainPermissions(this)) {
             PermissionsUtils.startMainPermissionRequest(this);
         }
-
-        if (Account.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
-            PermissionsUtils.setDefaultSmsApp(this);
-        }
     }
 
     private void loadConversations() {
