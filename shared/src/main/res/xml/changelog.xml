@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.0.1"
+        description="February 12th, 2017">
+        <text>Fix for double click sounds when exiting a conversation</text>
+    </version>
+
+    <version
         name="2.0.0"
         description="February 8th, 2017">
         <text>NEW: Stand-alone Android Wear 2.0 app! The first of its kind.</text>
