@@ -580,7 +580,10 @@ public class ConversationListFragment extends Fragment
         if (messageListFragment != null && messageListFragment.onBackPressed()) {
             return true;
         } else if (expandedConversation != null) {
-            expandedConversation.itemView.performClick();
+            View conversation = expandedConversation.itemView;
+            conversation.setSoundEffectsEnabled(false);
+            conversation.performClick();
+            conversation.setSoundEffectsEnabled(true);
             return true;
         } else {
             return false;
