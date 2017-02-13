@@ -669,7 +669,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.insertScheduledMessage(message);
-        startService(new Intent(this, ScheduledMessageService.class));
+        ScheduledMessageService.scheduleNextRun(this, source);
         Log.v(TAG, "added scheduled message");
     }
 
@@ -683,14 +683,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.updateScheduledMessage(message);
-        startService(new Intent(this, ScheduledMessageService.class));
+        ScheduledMessageService.scheduleNextRun(this, source);
         Log.v(TAG, "updated scheduled message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
         source.deleteScheduledMessage(id);
-        startService(new Intent(this, ScheduledMessageService.class));
+        ScheduledMessageService.scheduleNextRun(this, source);
         Log.v(TAG, "removed scheduled message");
     }
 

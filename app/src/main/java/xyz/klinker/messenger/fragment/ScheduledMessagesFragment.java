@@ -20,11 +20,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -40,11 +37,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.ex.chips.BaseRecipientAdapter;
@@ -139,7 +134,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().startService(new Intent(getActivity(), ScheduledMessageService.class));
+
+        ScheduledMessageService.scheduleNextRun(getActivity());
     }
 
     @Override
@@ -149,21 +145,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     public void loadMessages() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final DataSource source = DataSource.getInstance(getActivity());
-                source.open();
-                final List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
-                source.close();
+        new Thread(() -> {
+            final DataSource source = DataSource.getInstance(getActivity());
+            source.open();
+            final List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
+            source.close();
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setMessages(messages);
-                    }
-                });
-            }
+            handler.post(() -> setMessages(messages));
         }).start();
     }
 
@@ -184,18 +172,6 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         fragment.setMessage(message);
         fragment.setFragment(this);
         fragment.show(getActivity().getSupportFragmentManager(), "");
-        /*new AlertDialog.Builder(getActivity())
-                .setMessage(getString(R.string.delete_scheduled_message, message.title))
-                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    DataSource source = DataSource.getInstance(getActivity());
-                    source.open();
-                    source.deleteScheduledMessage(message.id);
-                    source.close();
-
-                    loadMessages();
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();*/
     }
 
     private void startSchedulingMessage() {

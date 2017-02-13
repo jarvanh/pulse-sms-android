@@ -40,9 +40,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             context.startService(new Intent(context, ContentObserverService.class));
-            context.startService(new Intent(context, ScheduledMessageService.class));
             context.startService(new Intent(context, ForceTokenRefreshService.class));
 
+            ScheduledMessageService.scheduleNextRun(context);
             ContentObserverRunCheckService.scheduleNextRun(context);
             CleanupOldMessagesService.scheduleNextRun(context);
             ContactSyncService.scheduleNextRun(context);

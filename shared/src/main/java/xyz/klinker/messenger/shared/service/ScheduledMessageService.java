@@ -17,9 +17,9 @@
 package xyz.klinker.messenger.shared.service;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -29,6 +29,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.Html;
 import android.util.Log;
+
+import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
@@ -42,9 +44,13 @@ import xyz.klinker.messenger.shared.util.SendUtils;
  * Service responsible for sending scheduled message that are coming up, removing that message
  * from the database and then scheduling the next one.
  */
-public class ScheduledMessageService extends Service {
+public class ScheduledMessageService extends IntentService {
 
     private static final int SCHEDULED_ALARM_REQUEST_CODE = 5424;
+
+    public ScheduledMessageService() {
+        super("ScheduledMessageService");
+    }
 
     @Nullable
     @Override
@@ -53,7 +59,7 @@ public class ScheduledMessageService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    protected void onHandleIntent(Intent intent) {
         DataSource source = DataSource.getInstance(this);
         source.open();
 
@@ -103,42 +109,44 @@ public class ScheduledMessageService extends Service {
 
         try {
             messages.close();
+            source.close();
         } catch (Exception e) { }
 
-        // get scheduled messages again so that we have an accurate time for the next message
-        messages = source.getScheduledMessages();
-        if (messages != null && messages.moveToFirst()) {
-            scheduleNext(messages);
-            messages.close();
-        } else {
-            Log.v("scheduled message", "no more messages to schedule");
-        }
-
-        source.close();
-        stopSelf();
-        return super.onStartCommand(intent, flags, startId);
+        scheduleNextRun(this);
     }
 
-    private void scheduleNext(Cursor messages) {
-        Account account = Account.get(this);
+    public static void scheduleNextRun(Context context) {
+        DataSource source = DataSource.getInstance(context);
+        source.open();
+
+        scheduleNextRun(context, source);
+
+        source.close();
+    }
+
+    public static void scheduleNextRun(Context context, DataSource source) {
+        Account account = Account.get(context);
         if (account.exists() && !account.primary) {
             // if they have an online account, we only want scheduled messages to go through the phone
             return;
         }
 
-        Intent intent = new Intent(this, ScheduledMessageService.class);
-        PendingIntent pIntent = PendingIntent.getService(this, SCHEDULED_ALARM_REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (messages.size() > 0) {
+            Intent intent = new Intent(context, ScheduledMessageService.class);
+            PendingIntent pIntent = PendingIntent.getService(context, SCHEDULED_ALARM_REQUEST_CODE,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // cancel the current request if it exists, we'll just make a completely new one
-        alarmManager.cancel(pIntent);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
-                messages.getLong(messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP)),
-                pIntent);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        Log.v("scheduled messsage", "new message scheduled");
+            // cancel the current request if it exists, we'll just make a completely new one
+            alarmManager.cancel(pIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, messages.get(0).timestamp, pIntent);
+
+            Log.v("scheduled messsage", "new message scheduled");
+        } else {
+            Log.v("scheduled messsage", "no more scheduled messages");
+        }
     }
-
 }
