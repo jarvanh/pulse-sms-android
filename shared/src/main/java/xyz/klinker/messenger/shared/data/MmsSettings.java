@@ -59,7 +59,7 @@ public class MmsSettings {
         this.userAgentProfileUrl = sharedPrefs.getString(context.getString(R.string.pref_user_agent_profile_url), "");
         this.userAgentProfileTagName = sharedPrefs.getString(context.getString(R.string.pref_user_agent_profile_tag), "x-wap-profile");
 
-        String sizeString = sharedPrefs.getString(context.getString(R.string.pref_mms_size), "1_mb");
+        String sizeString = sharedPrefs.getString(context.getString(R.string.pref_mms_size), "500_kb");
         switch (sizeString) {
             case "100_kb":
                 this.maxImageSize = 100 * 1024;
