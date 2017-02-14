@@ -435,7 +435,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void createDrafts() {
-        if (messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
+        if (sendProgress.getVisibility() != View.VISIBLE && messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
             if (drafts.size() > 0) {
                 source.deleteDrafts(getConversationId());
             }
