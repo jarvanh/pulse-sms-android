@@ -20,6 +20,8 @@
         name="2.0.1"
         description="February 12th, 2017">
         <text>Fix for double click sounds when exiting a conversation</text>
+        <text>Fix for delayed sending not always clearing the message text</text>
+        <text>Some MMS tweaks</text>
     </version>
 
     <version
