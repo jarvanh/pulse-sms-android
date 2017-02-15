@@ -110,8 +110,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             imageHeight = imageWidth = DensityUtil.toPx(fragment.getActivity(), 350);
         }
 
-        Account account = Account.get(fragment.getActivity());
-        ignoreSendingStatus = account.exists() && !account.primary;
+        try {
+            Account account = Account.get(fragment.getActivity());
+            ignoreSendingStatus = account.exists() && !account.primary;
+        } catch (Exception e) {
+            ignoreSendingStatus = false;
+        }
 
         stylingHelper = new MessageListStylingHelper(fragment.getActivity());
 
