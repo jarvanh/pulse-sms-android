@@ -64,6 +64,13 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
  */
 public class ApiUtils {
 
+    private interface RetrofitCall {
+        Object run();
+    }
+
+    private static final int RETRY_COUNT = 2;
+    private static final int RETRY_TIMEOUT = 5000;
+
     private static final String TAG = "ApiUtils";
     private static final long MAX_SIZE = 1024 * 1024 * 5;
     private static final String FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com";
@@ -93,6 +100,29 @@ public class ApiUtils {
         return active;
     }
 
+    private void executeWithRetry(final RetrofitCall retrofit, final String callType) {
+        executeWithRetry(retrofit, callType, RETRY_COUNT);
+    }
+
+    private void executeWithRetry(final RetrofitCall retrofit, final String callType, final int times) {
+        new Thread(() -> {
+            Object response = retrofit.run();
+
+            int attempt = 0;
+            while (response == null && attempt < times) {
+                attempt++;
+                try { Thread.sleep(RETRY_TIMEOUT); } catch (Exception e) { }
+                response = retrofit.run();
+            }
+
+            if (response == null) {
+                Log.e(TAG, callType + ": FAILED");
+            } else {
+                Log.v(TAG, callType + ": SUCCESS");
+            }
+        }).start();
+    }
+
     /**
      * Logs into the server.
      */
@@ -113,12 +143,7 @@ public class ApiUtils {
      * Removes the account from the server.
      */
     public void deleteAccount(final String accountId) {
-        Object response = api.account().remove(accountId);
-        if (response == null) {
-            Log.e(TAG, "error removing account");
-        } else {
-            Log.v(TAG, "successfully removed account");
-        }
+        executeWithRetry(() -> api.account().remove(accountId), "remove account");
     }
 
     /**
@@ -126,8 +151,8 @@ public class ApiUtils {
      */
     public Integer registerDevice(String accountId, String info, String name,
                                   boolean primary, String fcmToken) {
-        DeviceBody deviceBody = new DeviceBody(info, name, primary, fcmToken);
-        AddDeviceRequest request = new AddDeviceRequest(accountId, deviceBody);
+        final DeviceBody deviceBody = new DeviceBody(info, name, primary, fcmToken);
+        final AddDeviceRequest request = new AddDeviceRequest(accountId, deviceBody);
         AddDeviceResponse response = api.device().add(request);
 
         if (response != null) {
@@ -149,17 +174,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.device().updatePrimary(newPrimaryDeviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error updating primary device");
-                } else {
-                    Log.v(TAG, "successfully updated primary device");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.device().updatePrimary(newPrimaryDeviceId, accountId),
+                "update primary device");
     }
 
     /**
@@ -186,22 +202,12 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ContactBody body = new ContactBody(
-                        encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
-                        color, colorDark, colorLight, colorAccent);
-                AddContactRequest request = new AddContactRequest(accountId, body);
+        final ContactBody body = new ContactBody(
+                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
+                color, colorDark, colorLight, colorAccent);
+        final AddContactRequest request = new AddContactRequest(accountId, body);
 
-                Object response = api.contact().add(request);
-                if (response == null) {
-                    Log.e(TAG, "error adding contact");
-                } else {
-                    Log.v(TAG, "successfully added contact");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.contact().add(request), "adding contact");
     }
 
     /**
@@ -213,17 +219,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting contact");
-                } else {
-                    Log.v(TAG, "successfully deleted contact");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId),
+                "delete contact");
     }
 
     /**
@@ -237,21 +234,12 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UpdateContactRequest request = new UpdateContactRequest(
-                        encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
-                        color, colorDark, colorLight, colorAccent);
+        final UpdateContactRequest request = new UpdateContactRequest(
+                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
+                color, colorDark, colorLight, colorAccent);
 
-                Object response = api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request);
-                if (response == null) {
-                    Log.e(TAG, "error updating contact");
-                } else {
-                    Log.v(TAG, "successfully updated contact");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request),
+                "update contact");
     }
 
     /**
@@ -268,25 +256,15 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ConversationBody body = new ConversationBody(
-                        deviceId, color, colorDark, colorLight, colorAccent, ledColor,
-                        pinned, read, timestamp, encryptionUtils.encrypt(title),
-                        encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
-                        encryptionUtils.encrypt(ringtone), null,
-                        encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications);
-                AddConversationRequest request = new AddConversationRequest(accountId, body);
+        final ConversationBody body = new ConversationBody(
+                deviceId, color, colorDark, colorLight, colorAccent, ledColor,
+                pinned, read, timestamp, encryptionUtils.encrypt(title),
+                encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
+                encryptionUtils.encrypt(ringtone), null,
+                encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications);
+        final AddConversationRequest request = new AddConversationRequest(accountId, body);
 
-                Object response = api.conversation().add(request);
-                if (response == null) {
-                    Log.e(TAG, "error adding conversation");
-                } else {
-                    Log.v(TAG, "successfully added conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().add(request), "add conversation");
     }
 
     /**
@@ -297,17 +275,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().remove(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting conversation");
-                } else {
-                    Log.v(TAG, "successfully deleted conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().remove(deviceId, accountId),
+                "delete conversation");
     }
 
     /**
@@ -318,17 +287,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().archive(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error archiving conversation");
-                } else {
-                    Log.v(TAG, "successfully archived conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().archive(deviceId, accountId),
+                "archive conversation");
     }
 
     /**
@@ -339,17 +299,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().unarchive(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error un-archiving conversation");
-                } else {
-                    Log.v(TAG, "successfully un-archived conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().unarchive(deviceId, accountId),
+                "unarchive conversation");
     }
 
     /**
@@ -366,22 +317,13 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UpdateConversationRequest request = new UpdateConversationRequest(color,
-                        colorDark, colorLight, colorAccent, ledColor, pinned, read, timestamp,
-                        encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
-                        encryptionUtils.encrypt(ringtone), mute, archive, privateNotifications);
+        final UpdateConversationRequest request = new UpdateConversationRequest(color,
+                colorDark, colorLight, colorAccent, ledColor, pinned, read, timestamp,
+                encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
+                encryptionUtils.encrypt(ringtone), mute, archive, privateNotifications);
 
-                Object response = api.conversation().update(deviceId, accountId, request);
-                if (response == null) {
-                    Log.e(TAG, "error updating conversation");
-                } else {
-                    Log.v(TAG, "successfully updated conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().update(deviceId, accountId, request),
+                "update conversation");
     }
 
     /**
@@ -395,21 +337,12 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UpdateConversationRequest request = new UpdateConversationRequest(null, null, null,
-                        null, null, null, read, timestamp, null, encryptionUtils.encrypt(snippet),
-                        null, null, archive, null);
+        final UpdateConversationRequest request = new UpdateConversationRequest(null, null, null,
+                null, null, null, read, timestamp, null, encryptionUtils.encrypt(snippet),
+                null, null, archive, null);
 
-                Object response = api.conversation().updateSnippet(deviceId, accountId, request);
-                if (response == null) {
-                    Log.e(TAG, "error updating conversation snippet");
-                } else {
-                    Log.v(TAG, "successfully updated conversation snippet");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().updateSnippet(deviceId, accountId, request),
+                "update conversation snippet");
     }
 
     /**
@@ -421,17 +354,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().updateTitle(deviceId, accountId, encryptionUtils.encrypt(title));
-                if (response == null) {
-                    Log.e(TAG, "error updating conversation title");
-                } else {
-                    Log.v(TAG, "successfully updated conversation title");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().updateTitle(deviceId, accountId, encryptionUtils.encrypt(title)),
+                "update conversation title");
     }
 
     /**
@@ -442,17 +366,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().read(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error reading conversation");
-                } else {
-                    Log.v(TAG, "successfully read conversation");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.conversation().read(deviceId, accountId),
+                "read conversation");
     }
 
     /**
@@ -463,17 +378,8 @@ public class ApiUtils {
             return;
         }
 
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().seen(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error seeing conversation");
-                } else {
-                    Log.v(TAG, "successfully seen conversation");
-                }
-            }
-        }).start();*/
+//        executeWithRetry(() -> api.conversation().seen(deviceId, accountId),
+//                "seen conversation");
     }
 
     /**
@@ -484,17 +390,8 @@ public class ApiUtils {
             return;
         }
 
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.conversation().seen(accountId);
-                if (response == null) {
-                    Log.e(TAG, "error seeing all conversations");
-                } else {
-                    Log.v(TAG, "successfully seen all conversations");
-                }
-            }
-        }).start();*/
+//        executeWithRetry(() -> api.conversation().seen(accountId),
+//                "seen all conversations");
     }
 
     /**
@@ -509,74 +406,58 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String messageData;
-                int type;
+        new Thread(() -> {
+            String messageData;
+            int type;
 
-                // media or plain text. media doesn't need to be encrypted as an image
-                if (mimeType.equals("text/plain") || messageType == 6) {
-                    messageData = data;
-                    type = messageType;
+            // media or plain text. media doesn't need to be encrypted as an image
+            if (mimeType.equals("text/plain") || messageType == 6) {
+                messageData = data;
+                type = messageType;
 
-                    MessageBody body = new MessageBody(deviceId,
-                            deviceConversationId,
-                            type,
-                            encryptionUtils.encrypt(messageData),
-                            timestamp,
-                            encryptionUtils.encrypt(mimeType),
-                            read,
-                            seen,
-                            encryptionUtils.encrypt(messageFrom),
-                            color);
-                    AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+                final MessageBody body = new MessageBody(deviceId,
+                        deviceConversationId,
+                        type,
+                        encryptionUtils.encrypt(messageData),
+                        timestamp,
+                        encryptionUtils.encrypt(mimeType),
+                        read,
+                        seen,
+                        encryptionUtils.encrypt(messageFrom),
+                        color);
+                final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
 
-                    Object response = api.message().add(request);
-                    if (response == null) {
-                        Log.e(TAG, "error adding message");
-                    } else {
-                        Log.v(TAG, "successfully added message");
+                executeWithRetry(() -> api.message().add(request), "add message");
+            } else {
+                messageData = "firebase -1";
+                // if type is received, then received else sent. don't save sending status here
+                type = messageType/* == 0 ? 0 : 1*/;
+
+                final String fData = messageData;
+                final int fType = type;
+
+                saveFirebaseFolderRef(accountId);
+                byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
+                uploadBytesToFirebase(bytes, deviceId, encryptionUtils, new FirebaseUploadCallback() {
+                    @Override
+                    public void onUploadFinished() {
+                        new Thread(() -> {
+                            final MessageBody body = new MessageBody(deviceId,
+                                    deviceConversationId,
+                                    fType,
+                                    encryptionUtils.encrypt(fData),
+                                    timestamp,
+                                    encryptionUtils.encrypt(mimeType),
+                                    read,
+                                    seen,
+                                    encryptionUtils.encrypt(messageFrom),
+                                    color);
+                            final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+
+                            executeWithRetry(() -> api.message().add(request), "add message");
+                        }).start();
                     }
-                } else {
-                    messageData = "firebase -1";
-                    // if type is received, then received else sent. don't save sending status here
-                    type = messageType/* == 0 ? 0 : 1*/;
-
-                    final String fData = messageData;
-                    final int fType = type;
-
-                    saveFirebaseFolderRef(accountId);
-                    byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
-                    uploadBytesToFirebase(bytes, deviceId, encryptionUtils, new FirebaseUploadCallback() {
-                        @Override
-                        public void onUploadFinished() {
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    MessageBody body = new MessageBody(deviceId,
-                                            deviceConversationId,
-                                            fType,
-                                            encryptionUtils.encrypt(fData),
-                                            timestamp,
-                                            encryptionUtils.encrypt(mimeType),
-                                            read,
-                                            seen,
-                                            encryptionUtils.encrypt(messageFrom),
-                                            color);
-                                    AddMessagesRequest request = new AddMessagesRequest(accountId, body);
-
-                                    Object response = api.message().add(request);
-                                    if (response == null) {
-                                        Log.e(TAG, "error adding message");
-                                    } else {
-                                        Log.v(TAG, "successfully added message");
-                                    }
-                                }
-                            }).start();
-                        }
-                    });
-                }
+                });
             }
         }).start();
     }
@@ -592,27 +473,8 @@ public class ApiUtils {
 
         final UpdateMessageRequest request = new UpdateMessageRequest(type, read, seen);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int attempt = 1;
-                Object response = api.message().update(deviceId, accountId, request);
-
-                // retry up to three times. A failure can occur when the image has not yet finished
-                // uploading to firebase but has been sent and marked as so on the device.
-                while (response == null && attempt <= 6) {
-                    attempt++;
-                    try { Thread.sleep(5000); } catch (Exception e) { }
-                    response = api.message().update(deviceId, accountId, request);
-                }
-
-                if (response == null) {
-                    Log.e(TAG, "error updating message");
-                } else {
-                    Log.v(TAG, "successfully updated");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.message().update(deviceId, accountId, request),
+                "update message", 6);
     }
 
     /**
@@ -623,17 +485,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.message().updateType(deviceId, accountId, type);
-                if (response == null) {
-                    Log.e(TAG, "error updating message type");
-                } else {
-                    Log.v(TAG, "successfully updated message type");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.message().updateType(deviceId, accountId, type),
+                "update message type");
     }
 
     /**
@@ -644,17 +497,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.message().remove(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting message");
-                } else {
-                    Log.v(TAG, "successfully deleted message");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.message().remove(deviceId, accountId),
+                "delete message");
     }
 
     /**
@@ -665,17 +509,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.message().cleanup(accountId, timestamp);
-                if (response == null) {
-                    Log.e(TAG, "error cleaning up messages");
-                } else {
-                    Log.v(TAG, "successfully cleaned up messages older than: " + timestamp);
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.message().cleanup(accountId, timestamp),
+                "clean up messages");
     }
 
     /**
@@ -688,21 +523,11 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DraftBody body = new DraftBody(deviceId, deviceConversationId,
-                        encryptionUtils.encrypt(data), encryptionUtils.encrypt(mimeType));
-                AddDraftRequest request = new AddDraftRequest(accountId, body);
+        final DraftBody body = new DraftBody(deviceId, deviceConversationId,
+                encryptionUtils.encrypt(data), encryptionUtils.encrypt(mimeType));
+        final AddDraftRequest request = new AddDraftRequest(accountId, body);
 
-                Object response = api.draft().add(request);
-                if (response == null) {
-                    Log.e(TAG, "error adding draft");
-                } else {
-                    Log.v(TAG, "successfully added draft");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.draft().add(request), "add draft");
     }
 
     /**
@@ -713,17 +538,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.draft().remove(deviceConversationId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting draft");
-                } else {
-                    Log.v(TAG, "successfully deleted drafts");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.draft().remove(deviceConversationId, accountId),
+                "delete drafts");
     }
 
     /**
@@ -735,21 +551,11 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BlacklistBody body = new BlacklistBody(deviceId,
-                        encryptionUtils.encrypt(phoneNumber));
-                AddBlacklistRequest request = new AddBlacklistRequest(accountId, body);
+        final BlacklistBody body = new BlacklistBody(deviceId,
+                encryptionUtils.encrypt(phoneNumber));
+        final AddBlacklistRequest request = new AddBlacklistRequest(accountId, body);
 
-                Object response = api.blacklist().add(request);
-                if (response == null) {
-                    Log.e(TAG, "error adding blacklist");
-                } else {
-                    Log.v(TAG, "successfully added blacklist");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.blacklist().add(request), "add blacklist");
     }
 
     /**
@@ -760,17 +566,7 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.blacklist().remove(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting blacklist");
-                } else {
-                    Log.v(TAG, "successfully deleted blacklist");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.blacklist().remove(deviceId, accountId), "delete blacklist");
     }
 
     /**
@@ -783,28 +579,18 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ScheduledMessageBody body = new ScheduledMessageBody(
-                        deviceId,
-                        encryptionUtils.encrypt(to),
-                        encryptionUtils.encrypt(data),
-                        encryptionUtils.encrypt(mimeType),
-                        timestamp,
-                        encryptionUtils.encrypt(title));
+        final ScheduledMessageBody body = new ScheduledMessageBody(
+                deviceId,
+                encryptionUtils.encrypt(to),
+                encryptionUtils.encrypt(data),
+                encryptionUtils.encrypt(mimeType),
+                timestamp,
+                encryptionUtils.encrypt(title));
 
-                AddScheduledMessageRequest request =
-                        new AddScheduledMessageRequest(accountId, body);
-                Object response = api.scheduled().add(request);
+        final AddScheduledMessageRequest request =
+                new AddScheduledMessageRequest(accountId, body);
 
-                if (response == null) {
-                    Log.e(TAG, "error adding scheduled message");
-                } else {
-                    Log.v(TAG, "successfully added scheduled message");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.scheduled().add(request), "add scheduled message");
     }
 
     public void updateScheduledMessage(final String accountId, final long deviceId, final String title,
@@ -814,23 +600,13 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UpdateScheduledMessageRequest request = new UpdateScheduledMessageRequest(
-                        encryptionUtils.encrypt(to), encryptionUtils.encrypt(data),
-                        encryptionUtils.encrypt(mimeType), timestamp,
-                        encryptionUtils.encrypt(title));
+        final UpdateScheduledMessageRequest request = new UpdateScheduledMessageRequest(
+                encryptionUtils.encrypt(to), encryptionUtils.encrypt(data),
+                encryptionUtils.encrypt(mimeType), timestamp,
+                encryptionUtils.encrypt(title));
 
-                Object response = api.scheduled().update(deviceId, accountId, request);
-
-                if (response == null) {
-                    Log.e(TAG, "error updating scheduled message");
-                } else {
-                    Log.v(TAG, "successfully updated scheduled message");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.scheduled().update(deviceId, accountId, request),
+                "update scheduled message");
     }
 
     /**
@@ -841,17 +617,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.scheduled().remove(deviceId, accountId);
-                if (response == null) {
-                    Log.e(TAG, "error deleting scheduled message");
-                } else {
-                    Log.v(TAG, "successfully deleted scheduled message");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.scheduled().remove(deviceId, accountId),
+                "delete scheduled message");
     }
 
     /**
@@ -873,19 +640,13 @@ public class ApiUtils {
 
         StorageReference fileRef = folderRef.child(messageId + "");
         fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
-                addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.v(TAG, "finished uploading and exiting for " + messageId);
-                        callback.onUploadFinished();
-                    }
+                addOnSuccessListener(taskSnapshot -> {
+                    Log.v(TAG, "finished uploading and exiting for " + messageId);
+                    callback.onUploadFinished();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "failed to upload file", e);
-                        callback.onUploadFinished();
-                    }
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "failed to upload file", e);
+                    callback.onUploadFinished();
                 });
     }
 
@@ -910,19 +671,13 @@ public class ApiUtils {
         StorageReference fileRef = folderRef.child(messageId + "");
 
         fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
-                addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.v(TAG, "finished uploading " + messageId);
-                        firebaseFinished.set(true);
-                    }
+                addOnSuccessListener(taskSnapshot -> {
+                    Log.v(TAG, "finished uploading " + messageId);
+                    firebaseFinished.set(true);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "failed to upload file", e);
-                        firebaseFinished.set(true);
-                    }
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "failed to upload file", e);
+                    firebaseFinished.set(true);
                 });
 
         // wait for the upload to finish. Firebase only support async requests, which
@@ -951,31 +706,25 @@ public class ApiUtils {
 
         StorageReference fileRef = folderRef.child(messageId + "");
         fileRef.getBytes(MAX_SIZE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        bytes = encryptionUtils.decryptData(new String(bytes));
+                .addOnSuccessListener(bytes -> {
+                    bytes = encryptionUtils.decryptData(new String(bytes));
 
-                        try {
-                            BufferedOutputStream bos =
-                                    new BufferedOutputStream(new FileOutputStream(file));
-                            bos.write(bytes);
-                            bos.flush();
-                            bos.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        Log.v(TAG, "finished downloading " + messageId);
-                        callback.onDownloadComplete();
+                    try {
+                        BufferedOutputStream bos =
+                                new BufferedOutputStream(new FileOutputStream(file));
+                        bos.write(bytes);
+                        bos.flush();
+                        bos.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+                    Log.v(TAG, "finished downloading " + messageId);
+                    callback.onDownloadComplete();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.v(TAG, "failed to download file", e);
-                        callback.onDownloadComplete();
-                    }
+                .addOnFailureListener(e -> {
+                    Log.v(TAG, "failed to download file", e);
+                    callback.onDownloadComplete();
                 });
     }
 
@@ -996,31 +745,25 @@ public class ApiUtils {
         StorageReference fileRef = folderRef.child(messageId + "");
 
         fileRef.getBytes(MAX_SIZE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        bytes = encryptionUtils.decryptData(new String(bytes));
+                .addOnSuccessListener(bytes -> {
+                    bytes = encryptionUtils.decryptData(new String(bytes));
 
-                        try {
-                            BufferedOutputStream bos =
-                                    new BufferedOutputStream(new FileOutputStream(file));
-                            bos.write(bytes);
-                            bos.flush();
-                            bos.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        firebaseFinished.set(true);
-                        Log.v(TAG, "finished downloading " + messageId);
+                    try {
+                        BufferedOutputStream bos =
+                                new BufferedOutputStream(new FileOutputStream(file));
+                        bos.write(bytes);
+                        bos.flush();
+                        bos.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+                    firebaseFinished.set(true);
+                    Log.v(TAG, "finished downloading " + messageId);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        firebaseFinished.set(true);
-                        Log.v(TAG, "failed to download file", e);
-                    }
+                .addOnFailureListener(e -> {
+                    firebaseFinished.set(true);
+                    Log.v(TAG, "failed to download file", e);
                 });
 
         while (!firebaseFinished.get()) {
@@ -1047,17 +790,8 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().dismissedNotification(accountId, deviceId, conversationId);
-                if (response == null) {
-                    Log.e(TAG, "error dismissing notification");
-                } else {
-                    Log.v(TAG, "successfully dismissed notification");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.account().dismissedNotification(accountId, deviceId, conversationId),
+                "dismiss notification");
     }
 
     /**
@@ -1068,26 +802,15 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateSubscription(accountId, subscriptionType, expirationDate);
-                if (response == null) {
-                    Log.e(TAG, "error updating subscription");
-                } else {
-                    Log.v(TAG, "successfully updated subscription");
-                }
-            }
-        }).start();
+        executeWithRetry(() -> api.account().updateSubscription(accountId, subscriptionType, expirationDate),
+                "update subscription");
     }
 
     /**
      * Update the snooze time setting.
      */
     public void updateSnooze(final String accountId, final long snoozeTil) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "snooze", "long", snoozeTil);
         }
     }
@@ -1096,9 +819,7 @@ public class ApiUtils {
      * Update the vibrate setting.
      */
     public void updateVibrate(final String accountId, final String vibratePattern) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "vibrate_pattern_identifier", "string", vibratePattern);
         }
     }
@@ -1107,9 +828,7 @@ public class ApiUtils {
      * Update the repeat notifications setting.
      */
     public void updateRepeatNotifications(final String accountId, final String repeatString) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "repeat_notifications_interval", "string", repeatString);
         }
     }
@@ -1118,9 +837,7 @@ public class ApiUtils {
      * Update the wake screen setting
      */
     public void updateWakeScreen(final String accountId, final String wake) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "wake_screen", "string", wake);
         }
     }
@@ -1129,9 +846,7 @@ public class ApiUtils {
      * Update the delivery reports setting.
      */
     public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "delivery_reports", "boolean", deliveryReports);
         }
     }
@@ -1140,9 +855,7 @@ public class ApiUtils {
      * Update the delivery reports setting.
      */
     public void updateGiffgaffDeliveryReports(final String accountId, final boolean deliveryReports) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "giffgaff_delivery", "boolean", deliveryReports);
         }
     }
@@ -1151,9 +864,7 @@ public class ApiUtils {
      * Update the strip Unicode setting.
      */
     public void updateStripUnicode(final String accountId, final boolean stripUnicode) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "strip_unicode", "boolean", stripUnicode);
         }
     }
@@ -1162,9 +873,7 @@ public class ApiUtils {
      * Update the rounder bubbles setting.
      */
     public void updateRounderBubbles(final String accountId, final boolean rounderBubbles) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "rounder_bubbles", "boolean", rounderBubbles);
         }
     }
@@ -1173,9 +882,7 @@ public class ApiUtils {
      * Update the notification actions setting.
      */
     public void updateNotificationActions(final String accountId, final String stringified) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "notification_actions", "set", stringified);
         }
     }
@@ -1184,9 +891,7 @@ public class ApiUtils {
      * Update the swipe to delete setting
      */
     public void updateSwipeToDelete(final String accountId, final boolean swipeDelete) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "swipe_delete", "boolean", swipeDelete);
         }
     }
@@ -1195,9 +900,7 @@ public class ApiUtils {
      * Update the convert to MMS setting, for long messages
      */
     public void updateConvertToMMS(final String accountId, final boolean convert) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "convert_to_mms", "boolean", convert);
         }
     }
@@ -1206,9 +909,7 @@ public class ApiUtils {
      * Update the MMS size limit setting.
      */
     public void updateMmsSize(final String accountId, final String mmsSize) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mms_size_limit", "string", mmsSize);
         }
     }
@@ -1217,9 +918,7 @@ public class ApiUtils {
      * Update the group MMS setting.
      */
     public void updateGroupMMS(final String accountId, final boolean groupMMS) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "group_mms", "boolean", groupMMS);
         }
     }
@@ -1228,9 +927,7 @@ public class ApiUtils {
      * Update the auto save media setting.
      */
     public void updateAutoSaveMedia(final String accountId, final boolean save) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "auto_save_media", "boolean", save);
         }
     }
@@ -1239,9 +936,7 @@ public class ApiUtils {
      * Update the override system apn setting.
      */
     public void updateOverrideSystemApn(final String accountId, final boolean override) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mms_override", "boolean", override);
         }
     }
@@ -1250,9 +945,7 @@ public class ApiUtils {
      * Update the mmsc url for MMS.
      */
     public void updateMmscUrl(final String accountId, final String mmsc) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mmsc_url", "string", mmsc);
         }
     }
@@ -1261,9 +954,7 @@ public class ApiUtils {
      * Update the MMS proxy setting.
      */
     public void updateMmsProxy(final String accountId, final String proxy) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mms_proxy", "string", proxy);
         }
     }
@@ -1272,9 +963,7 @@ public class ApiUtils {
      * Update the MMS port setting.
      */
     public void updateMmsPort(final String accountId, final String port) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mms_port", "string", port);
         }
     }
@@ -1283,9 +972,7 @@ public class ApiUtils {
      * Update the user agent setting.
      */
     public void updateUserAgent(final String accountId, final String userAgent) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "user_agent", "string", userAgent);
         }
     }
@@ -1294,9 +981,7 @@ public class ApiUtils {
      * Update the user agent profile url setting.
      */
     public void updateUserAgentProfileUrl(final String accountId, final String userAgentProfileUrl) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "user_agent_profile_url", "string", userAgentProfileUrl);
         }
     }
@@ -1305,9 +990,7 @@ public class ApiUtils {
      * Update the user agent tag name setting.
      */
     public void updateUserAgentProfileTagName(final String accountId, final String tagName) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "user_agent_profile_tag_name", "string", tagName);
         }
     }
@@ -1316,9 +999,7 @@ public class ApiUtils {
      * Update the secure private conversations setting.
      */
     public void updateSecurePrivateConversations(final String accountId, final boolean secure) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "secure_private_conversations", "boolean", secure);
         }
     }
@@ -1327,9 +1008,7 @@ public class ApiUtils {
      * Update the quick compose setting.
      */
     public void updateQuickCompose(final String accountId, final boolean quickCompose) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "quick_compose", "boolean", quickCompose);
         }
     }
@@ -1338,9 +1017,7 @@ public class ApiUtils {
      * Update the signature setting.
      */
     public void updateSignature(final String accountId, final String signature) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "signature", "string", signature);
         }
     }
@@ -1350,9 +1027,7 @@ public class ApiUtils {
      * Update the delayed sending setting.
      */
     public void updateDelayedSending(final String accountId, final String delayedSending) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "delayed_sending", "string", delayedSending);
         }
     }
@@ -1362,9 +1037,7 @@ public class ApiUtils {
      * Update the cleanup old messages setting.
      */
     public void updateCleanupOldMessages(final String accountId, final String cleanup) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "cleanup_old_messages", "string", cleanup);
         }
     }
@@ -1373,9 +1046,7 @@ public class ApiUtils {
      * Update the sound effects setting.
      */
     public void updateSoundEffects(final String accountId, final boolean effects) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "sound_effects", "boolean", effects);
         }
     }
@@ -1384,21 +1055,8 @@ public class ApiUtils {
      * Update the mobile only setting
      */
     public void updateMobileOnly(final String accountId, final boolean mobileOnly) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "mobile_only", "boolean", mobileOnly);
-        }
-    }
-
-    /**
-     * Update whether or not the user has seen the conversation tool tip
-     */
-    public void updateSeenTooltip(final String accountId, final boolean seenTooltip) {
-        if (!active || accountId == null) {
-            return;
-        } else {
-            updateSetting(accountId, "seen_convo_nav_tooltip", "boolean", seenTooltip);
         }
     }
 
@@ -1406,9 +1064,7 @@ public class ApiUtils {
      * Update the font size setting
      */
     public void updateFontSize(final String accountId, final String size) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "font_size", "string", size);
         }
     }
@@ -1417,9 +1073,7 @@ public class ApiUtils {
      * Update the keyboard layout setting
      */
     public void updateKeyboardLayout(final String accountId, final String layout) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "keyboard_layout", "string", layout);
         }
     }
@@ -1428,9 +1082,7 @@ public class ApiUtils {
      * Update the global theme color setting
      */
     public void updateGlobalThemeColor(final String accountId, final String color) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "global_color_theme", "string", color);
         }
     }
@@ -1439,9 +1091,7 @@ public class ApiUtils {
      * Update the base theme (day/night, always dark, always black)
      */
     public void updateBaseTheme(final String accountId, final String themeString) {
-        if (!active || accountId == null) {
-            return;
-        } else {
+        if (active && accountId != null) {
             updateSetting(accountId, "base_theme", "string", themeString);
         }
     }
@@ -1449,22 +1099,9 @@ public class ApiUtils {
     /**
      * Dismiss a notification across all devices.
      */
-    public void updateSetting(final String accountId, final String pref, final String type, final Object value) {
-        if (!active || accountId == null) {
-            return;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object response = api.account().updateSetting(accountId, pref, type, value);
-                if (response == null) {
-                    Log.e(TAG, "error updating setting: " + pref);
-                } else {
-                    Log.v(TAG, "successfully updated setting: " + pref);
-                }
-            }
-        }).start();
+    private void updateSetting(final String accountId, final String pref, final String type, final Object value) {
+        executeWithRetry(() -> api.account().updateSetting(accountId, pref, type, value),
+                "update " + pref + " setting");
     }
 
     /**
