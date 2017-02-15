@@ -48,6 +48,7 @@ import xyz.klinker.android.article.ArticleIntent;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
@@ -83,6 +84,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private int receivedColor;
     private int accentColor;
     private boolean isGroup;
+    private boolean ignoreSendingStatus;
     private LinearLayoutManager manager;
     private MessageListFragment fragment;
     private int timestampHeight;
@@ -107,6 +109,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             imageHeight = imageWidth = DensityUtil.toPx(fragment.getActivity(), 350);
         }
+
+        Account account = Account.get(fragment.getActivity());
+        ignoreSendingStatus = account.exists() && !account.primary;
 
         stylingHelper = new MessageListStylingHelper(fragment.getActivity());
 
@@ -451,7 +456,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
 
         messages.moveToPosition(position);
-        return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+        int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+        if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
+            type = Message.TYPE_SENT;
+        }
+
+        return type;
     }
 
     private void setVisible(View v) {

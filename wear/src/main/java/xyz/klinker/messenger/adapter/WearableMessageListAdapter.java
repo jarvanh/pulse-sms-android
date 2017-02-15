@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.WearableMessageViewHolder;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -38,6 +39,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
 
     private Cursor messages;
     private boolean isGroup;
+    private boolean ignoreSendingStatus;
     private int receivedColor;
     private int accentColor;
     private int timestampHeight;
@@ -57,6 +59,9 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
 
         this.manager = manager;
         this.stylingHelper = new MessageListStylingHelper(context);
+
+        Account account = Account.get(context);
+        ignoreSendingStatus = account.exists() && !account.primary;
 
         if (context == null) {
             imageHeight = imageWidth = 50;
@@ -320,7 +325,12 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         }
 
         messages.moveToPosition(position);
-        return messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+        int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+        if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
+            type = Message.TYPE_SENT;
+        }
+
+        return type;
     }
 
     private void setVisible(View v) {
