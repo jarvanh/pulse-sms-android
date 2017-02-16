@@ -549,7 +549,7 @@ public class NotificationService extends IntentService {
 
         wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_delete_white, getString(R.string.delete), pendingDeleteMessage));
 
-        if (settings.notificationActions.contains(NotificationAction.READ)) {
+        if (settings.notificationActions.contains(NotificationAction.DELETE)) {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_delete_dark, getString(R.string.delete), pendingDeleteMessage));
         }
 
