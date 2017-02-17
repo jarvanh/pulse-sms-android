@@ -99,7 +99,7 @@ public class NotificationService extends IntentService {
         LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
         List<String> rows = new ArrayList<>();
 
-        if (conversations.size() > 0) {
+        if (conversations != null && conversations.size() > 0) {
             NotificationManagerCompat.from(this).cancelAll();
 
             for (int i = 0; i < conversations.size(); i++) {
@@ -160,7 +160,7 @@ public class NotificationService extends IntentService {
 
                     if (conversation == null) {
                         Conversation c = source.getConversation(conversationId);
-                        if (c != null && !c.mute) {
+                        if (c != null) {
                             conversation = new NotificationConversation();
                             conversation.id = c.id;
                             conversation.unseenMessageId = id;
@@ -201,6 +201,17 @@ public class NotificationService extends IntentService {
         } catch (Exception e) { }
 
         source.close();
+
+        for (int i = 0; i < conversations.size(); i++) {
+            boolean muted = conversations.get(i).mute;
+
+            if (muted && i == conversations.size() - 1) {
+                return null;
+            } else if (muted) {
+                conversations.remove(i);
+                i--;
+            }
+        }
 
         return conversations;
     }
