@@ -276,6 +276,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data)).fitCenter()
+                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .into(holder.image);
             } else if (MimeType.isVideo(message.mimeType)) {

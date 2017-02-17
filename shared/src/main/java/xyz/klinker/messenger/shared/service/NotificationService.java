@@ -203,7 +203,7 @@ public class NotificationService extends IntentService {
         source.close();
 
         for (int i = 0; i < conversations.size(); i++) {
-            boolean muted = conversations.get(i).mute;
+            boolean muted = conversations.get(i) != null && conversations.get(i).mute;
 
             if (muted && i == conversations.size() - 1) {
                 return null;
