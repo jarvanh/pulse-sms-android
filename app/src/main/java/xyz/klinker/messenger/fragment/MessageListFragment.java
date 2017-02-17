@@ -111,6 +111,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
+import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.NotificationService;
@@ -594,6 +595,7 @@ public class MessageListFragment extends Fragment implements
             boolean handled = false;
 
             if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                    Settings.get(getActivity()).keyboardLayout != KeyboardLayout.ENTER &&
                     keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
                     actionId == EditorInfo.IME_ACTION_SEND) {
                 requestPermissionThenSend();
