@@ -561,8 +561,6 @@ public class NotificationService extends IntentService {
         PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.id,
                 deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_delete_white, getString(R.string.delete), pendingDeleteMessage));
-
         if (settings.notificationActions.contains(NotificationAction.DELETE)) {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_delete_dark, getString(R.string.delete), pendingDeleteMessage));
         }
@@ -572,11 +570,12 @@ public class NotificationService extends IntentService {
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
                 read, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
-
         if (settings.notificationActions.contains(NotificationAction.READ)) {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
         }
+
+        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_done_white, getString(R.string.read), pendingRead));
+        wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_delete_white, getString(R.string.delete), pendingDeleteMessage));
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
         delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
