@@ -139,6 +139,7 @@ public class NotificationService extends IntentService {
 
         Cursor unseenMessages = source.getUnseenMessages();
         LongSparseArray<NotificationConversation> conversations = new LongSparseArray<>();
+        List<Long> keys = new ArrayList<>();
 
         if (unseenMessages != null && unseenMessages.moveToFirst()) {
             do {
@@ -186,6 +187,7 @@ public class NotificationService extends IntentService {
                             }
 
                             conversations.put(conversationId, conversation);
+                            keys.add(conversationId);
                         }
                     }
 
@@ -202,13 +204,14 @@ public class NotificationService extends IntentService {
 
         source.close();
 
-        for (int i = 0; i < conversations.size(); i++) {
-            boolean muted = conversations.get(i) != null && conversations.get(i).mute;
+        for (int i = 0; i < keys.size(); i++) {
+            long conversationId = keys.get(i);
+            boolean muted = conversations.get(conversationId).mute;
 
-            if (muted && i == conversations.size() - 1) {
+            if (muted && i == keys.size() - 1) {
                 return null;
             } else if (muted) {
-                conversations.remove(i);
+                conversations.remove(conversationId);
                 i--;
             }
         }
