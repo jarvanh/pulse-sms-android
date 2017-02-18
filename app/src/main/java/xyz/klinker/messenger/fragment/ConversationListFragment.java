@@ -289,8 +289,11 @@ public class ConversationListFragment extends Fragment
 
         clickHandler.postDelayed(() -> {
             try {
-                recyclerView.findViewHolderForAdapterPosition(position)
-                        .itemView.performClick();
+                View itemView = recyclerView.findViewHolderForAdapterPosition(position)
+                        .itemView;
+                itemView.setSoundEffectsEnabled(false);
+                itemView.performClick();
+                itemView.setSoundEffectsEnabled(true);
             } catch (Exception e) {
                 // not yet ready to click
                 clickConversationAtPosition(position);
