@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.0.2"
+        description="February 19th, 2017">
+        <text>Some improvements for Android Wear</text>
+    </version>
+
+    <version
         name="2.0.1"
         description="February 12th, 2017">
         <text>Improvements to sync reliability</text>
