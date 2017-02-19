@@ -93,34 +93,35 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Account account = Account.get(getActivity());
 
         if ((!account.exists()) && preference != null) {
-            preference.setOnPreferenceClickListener(preference1 -> {
-                final ProgressDialog dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
-                dialog.setCancelable(false);
-                dialog.setIndeterminate(true);
-                dialog.show();
-
-                new Thread(() -> {
-                    final boolean hasSubs = billing.hasPurchasedProduct();
-                    dialog.dismiss();
-
-                    getActivity().runOnUiThread(() -> {
-                        if (hasSubs) {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            startLoginActivity();
-                        } else {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            pickSubscription();
-                        }
-                    });
-                }).start();
-
-                return true;
-            });
+            startLoginActivity();
+//            preference.setOnPreferenceClickListener(preference1 -> {
+//                final ProgressDialog dialog = new ProgressDialog(getActivity());
+//                dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
+//                dialog.setCancelable(false);
+//                dialog.setIndeterminate(true);
+//                dialog.show();
+//
+//                new Thread(() -> {
+//                    final boolean hasSubs = billing.hasPurchasedProduct();
+//                    dialog.dismiss();
+//
+//                    getActivity().runOnUiThread(() -> {
+//                        if (hasSubs) {
+//                            try {
+//                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+//                            } catch (Exception e) { }
+//                            startLoginActivity();
+//                        } else {
+//                            try {
+//                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+//                            } catch (Exception e) { }
+//                            pickSubscription();
+//                        }
+//                    });
+//                }).start();
+//
+//                return true;
+//            });
 
             removeAccountOptions();
             return false;
