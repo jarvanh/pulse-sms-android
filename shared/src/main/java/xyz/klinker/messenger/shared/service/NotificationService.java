@@ -102,7 +102,7 @@ public class NotificationService extends IntentService {
         if (conversations != null && conversations.size() > 0) {
             NotificationManagerCompat.from(this).cancelAll();
 
-            for (int i = 0; i < conversations.size(); i++) {
+            for (int i = conversations.size() - 1; i >= 0; i--) {
                 NotificationConversation conversation = conversations.get(conversations.keyAt(i));
                 rows.add(giveConversationNotification(conversation, i, conversations.size()));
             }
