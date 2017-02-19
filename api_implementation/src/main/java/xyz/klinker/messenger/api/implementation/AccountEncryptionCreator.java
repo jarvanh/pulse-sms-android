@@ -69,7 +69,7 @@ public class AccountEncryptionCreator {
                 .commit();
 
         Account account = Account.get(context);
-        account.forceUpdate(context);
+        account = account.forceUpdate(context);
         return account.getEncryptor();
     }
 

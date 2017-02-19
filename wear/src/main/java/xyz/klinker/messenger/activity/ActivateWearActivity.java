@@ -63,7 +63,6 @@ public class ActivateWearActivity extends Activity {
         codeText = (TextView) findViewById(R.id.code);
         codeText.setText(code);
 
-
         queryEndpoint();
     }
 

@@ -112,8 +112,9 @@ public class Account {
         return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
-    public void forceUpdate(Context context) {
+    public Account forceUpdate(Context context) {
         account = new Account(context);
+        return account;
     }
 
     public EncryptionUtils getEncryptor() {
