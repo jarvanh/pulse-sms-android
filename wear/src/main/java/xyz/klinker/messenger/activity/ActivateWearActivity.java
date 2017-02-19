@@ -3,6 +3,7 @@ package xyz.klinker.messenger.activity;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -45,6 +46,8 @@ public class ActivateWearActivity extends Activity {
     private String code;
     private int attempts = 0;
 
+    private Handler handler;
+
     private TextView codeText;
 
     @Override
@@ -53,100 +56,80 @@ public class ActivateWearActivity extends Activity {
 
         setContentView(R.layout.activity_activate);
 
+        handler = new Handler();
         code = generateActivationCode();
         api = new ApiUtils().getApi();
 
         codeText = (TextView) findViewById(R.id.code);
         codeText.setText(code);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                queryEndpoint();
-            }
-        }).start();
+
+        queryEndpoint();
     }
 
     private void queryEndpoint() {
-        try { Thread.sleep(RETRY_INTERVAL); } catch (Exception e) { }
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(() -> new Thread(() -> {
+            Log.v(TAG, "checking activate response");
+            final LoginResponse response = api.activate().check(code);
 
-        Log.v(TAG, "checking activate response");
-        final LoginResponse response = api.activate().check(code);
-
-        if (response == null) {
-            if (attempts < RETRY_ATTEMPTS) {
-                attempts++;
-                queryEndpoint();
-            } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+            if (response == null) {
+                if (attempts < RETRY_ATTEMPTS) {
+                    attempts++;
+                    queryEndpoint();
+                } else {
+                    runOnUiThread(() -> {
                         setResult(RESULT_FAILED);
                         finish();
-                    }
-                });
-            }
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    activated(response);
+                    });
                 }
-            });
-        }
+            } else {
+                runOnUiThread(() -> activated(response));
+            }
+        }).start(), RETRY_INTERVAL);
     }
 
     private void activated(final LoginResponse response) {
         findViewById(R.id.waiting_to_activate).setVisibility(View.GONE);
         findViewById(R.id.password_confirmation).setVisibility(View.VISIBLE);
         final EditText password = (EditText) findViewById(R.id.password);
+
         password.setText(null);
         password.requestFocus();
 
-        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkPassword(response, password.getText().toString());
-            }
-        });
+        findViewById(R.id.confirm).setOnClickListener(v -> checkPassword(response, password.getText().toString()));
     }
 
     private void checkPassword(final LoginResponse response, final String password) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                AccountEncryptionCreator encryptionCreator =
-                        new AccountEncryptionCreator(ActivateWearActivity.this, password);
-                EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);
+            AccountEncryptionCreator encryptionCreator =
+                    new AccountEncryptionCreator(ActivateWearActivity.this, password);
+            EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);
 
-                try {
-                    ConversationBody[] bodies = api.conversation().list(response.accountId);
-                    if (bodies.length > 0) {
-                        utils.decrypt(bodies[0].title);
-                    } else {
-                        ContactBody[] contacts = api.contact().list(response.accountId);
-                        if (contacts.length > 0) {
-                            utils.decrypt(contacts[0].name);
-                        }
+            try {
+                ConversationBody[] bodies = api.conversation().list(response.accountId);
+                if (bodies.length > 0) {
+                    utils.decrypt(bodies[0].title);
+                } else {
+                    ContactBody[] contacts = api.contact().list(response.accountId);
+                    if (contacts.length > 0) {
+                        utils.decrypt(contacts[0].name);
                     }
-
-                    new ApiUtils().registerDevice(response.accountId,
-                            Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
-                            false, FirebaseInstanceId.getInstance().getToken());
-
-                    setResult(LoginActivity.RESULT_START_NETWORK_SYNC);
-                    finish();
-                } catch (Exception e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(ActivateWearActivity.this, xyz.klinker.messenger.api.implementation.R.string.api_wrong_password,
-                                    Toast.LENGTH_LONG).show();
-                            activated(response);
-                        }
-                    });
                 }
+
+                new ApiUtils().registerDevice(response.accountId,
+                        Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
+                        false, FirebaseInstanceId.getInstance().getToken());
+
+                setResult(LoginActivity.RESULT_START_NETWORK_SYNC);
+                finish();
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(ActivateWearActivity.this, xyz.klinker.messenger.api.implementation.R.string.api_wrong_password,
+                            Toast.LENGTH_LONG).show();
+                    activated(response);
+                });
             }
         }).start();
     }
