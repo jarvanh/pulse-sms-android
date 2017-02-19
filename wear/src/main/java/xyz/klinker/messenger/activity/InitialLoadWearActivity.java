@@ -43,7 +43,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(xyz.klinker.messenger.R.layout.activity_initial_load);
+        setContentView(xyz.klinker.messenger.R.layout.activity_initial_load_wear);
 
         handler = new Handler();
         requestPermissions();
