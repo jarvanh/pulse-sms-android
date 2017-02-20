@@ -16,6 +16,13 @@
 
 <changelog>
 
+
+    <version
+        name="2.0.2"
+        description="February 20th, 2017">
+        <text>Bug and force close fixes</text>
+    </version>
+
     <version
         name="2.0.2"
         description="February 19th, 2017">
