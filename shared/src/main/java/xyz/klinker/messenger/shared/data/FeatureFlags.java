@@ -2,12 +2,7 @@ package xyz.klinker.messenger.shared.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.VisibleForTesting;
-import android.support.compat.BuildConfig;
-
-import javax.microedition.khronos.opengles.GL;
 
 import xyz.klinker.messenger.shared.R;
 
@@ -52,6 +47,7 @@ public class FeatureFlags {
     private static final String FLAG_KEYBOARD_LAYOUT = "flag_keyboard_layout";
     private static final String FLAG_IMPROVE_MESSAGE_PADDING = "flag_improve_message_list";
     private static final String FLAG_NOTIFICATION_ACTIONS = "flag_notification_actions";
+    private static final String FLAG_DISABLE_HEADS_UP = "flag_disable_heads_up";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -69,6 +65,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean NOTIFICATION_ACTIONS;
+    public boolean DISABLE_HEADS_UP;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -80,6 +77,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         NOTIFICATION_ACTIONS = getValue(sharedPrefs, FLAG_NOTIFICATION_ACTIONS);
+        DISABLE_HEADS_UP = getValue(sharedPrefs, FLAG_DISABLE_HEADS_UP);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -100,6 +98,9 @@ public class FeatureFlags {
                 break;
             case FLAG_NOTIFICATION_ACTIONS:
                 NOTIFICATION_ACTIONS = flag;
+                break;
+            case FLAG_DISABLE_HEADS_UP:
+                DISABLE_HEADS_UP = flag;
                 break;
         }
     }
