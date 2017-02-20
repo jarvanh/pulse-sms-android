@@ -607,7 +607,9 @@ public class MessageListFragment extends Fragment implements
 
         messageEntry.setOnClickListener(view -> {
             if (attachLayout.getVisibility() == View.VISIBLE) {
+                attach.setSoundEffectsEnabled(false);
                 attach.performClick();
+                attach.setSoundEffectsEnabled(true);
             }
         });
 
