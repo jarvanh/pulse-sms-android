@@ -206,13 +206,15 @@ public class NotificationService extends IntentService {
 
         for (int i = 0; i < keys.size(); i++) {
             long conversationId = keys.get(i);
-            boolean muted = conversations.get(conversationId).mute;
+            if (conversations.get(conversationId) != null) {
+                boolean muted = conversations.get(conversationId).mute;
 
-            if (muted && i == keys.size() - 1) {
-                return null;
-            } else if (muted) {
-                conversations.remove(conversationId);
-                i--;
+                if (muted && i == keys.size() - 1) {
+                    return null;
+                } else if (muted) {
+                    conversations.remove(conversationId);
+                    i--;
+                }
             }
         }
 
