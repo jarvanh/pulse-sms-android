@@ -1,5 +1,7 @@
 package xyz.klinker.messenger.utils.multi_select;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -7,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
-import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bignerdranch.android.multiselector.SelectableHolder;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -15,10 +17,14 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 
 public class ConversationsMultiSelectDelegate extends MultiSelector {
 
@@ -154,5 +160,41 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
         if (mode != null) {
             mode.finish();
         }
+    }
+
+    @Override
+    protected void refreshHolder(SelectableHolder holder) {
+        if (holder == null || !(holder instanceof ConversationViewHolder) || !isSelectable() ||
+                Settings.get(fragment.getActivity()).baseTheme != BaseTheme.BLACK) {
+            super.refreshHolder(holder);
+            return;
+        }
+
+        ConversationViewHolder conversation = (ConversationViewHolder) holder;
+        conversation.setSelectable(mIsSelectable);
+
+        boolean isActivated = mSelections.get(conversation.getAdapterPosition());
+        ColorStateList states;
+
+        if (isActivated) {
+            states = ColorStateList.valueOf(activity.getResources().getColor(R.color.actionModeBackground));
+        } else {
+            states = ColorStateList.valueOf(Color.BLACK);
+        }
+
+        if (conversation.itemView != null) {
+            conversation.itemView.setBackgroundTintList(states);
+        }
+    }
+
+    @Override
+    public boolean tapSelection(SelectableHolder holder) {
+        boolean result = super.tapSelection(holder);
+
+        if (mode != null && Settings.get(fragment.getActivity()).baseTheme != BaseTheme.BLACK) {
+            mode.invalidate();
+        }
+
+        return result;
     }
 }
