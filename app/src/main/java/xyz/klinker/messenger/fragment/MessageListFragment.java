@@ -1530,7 +1530,9 @@ public class MessageListFragment extends Fragment implements
         dismissDetailsChoiceDialog();
 
         if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
+            attach.setSoundEffectsEnabled(false);
             attach.performClick();
+            attach.setSoundEffectsEnabled(true);
             return true;
         } else if (sendProgress != null && sendProgress.getVisibility() == View.VISIBLE) {
             sendMessageOnFragmentClosed();
