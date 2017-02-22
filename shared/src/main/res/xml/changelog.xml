@@ -16,6 +16,12 @@
 
 <changelog>
 
+    <!--<version
+        name="2.1.0"
+        description="February 28th, 2017">
+        <text>Option to customize which buttons appear on a notification</text>
+        <text>Option to disable heads up on notifications (Global Settings -> Alert Types)</text>
+    </version>-->
 
     <version
         name="2.0.2"

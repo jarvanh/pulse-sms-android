@@ -18,6 +18,7 @@ import android.view.View;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 
@@ -58,6 +59,12 @@ public class NotificationAlertsPreference extends Preference implements
         layout.findViewById(R.id.ringtone).setOnClickListener(view -> ringtoneClicked());
         layout.findViewById(R.id.repeat).setOnClickListener(view -> repeatClicked());
         layout.findViewById(R.id.wake_screen).setOnClickListener(view -> wakeClicked());
+
+        if (!FeatureFlags.get(getContext()).HEADS_UP) {
+            layout.findViewById(R.id.heads_up).setVisibility(View.GONE);
+        } else {
+            layout.findViewById(R.id.heads_up).setOnClickListener(view -> headsUpClicked());
+        }
 
         new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
                 .setView(layout)
@@ -142,6 +149,31 @@ public class NotificationAlertsPreference extends Preference implements
                 }).show();
     }
 
+    private void headsUpClicked() {
+        final Settings settings = Settings.get(getContext());
+        final SharedPreferences prefs = settings.getSharedPrefs();
+        final String current = prefs.getString(getContext().getString(R.string.pref_heads_up), "on");
+
+        int actual = 0;
+        for (String s : getContext().getResources().getStringArray(R.array.wake_screen_values)) {
+            if (s.equals(current)) {
+                break;
+            } else {
+                actual++;
+            }
+        }
+
+        new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
+                .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
+                    String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
+
+                    settings.setValue(getContext().getString(R.string.pref_heads_up), newVal);
+                    new ApiUtils().updateHeadsUp(Account.get(getContext()).accountId, newVal);
+
+                    dialogInterface.dismiss();
+                }).show();
+    }
+
     private void vibrateClicked() {
         final Settings settings = Settings.get(getContext());
         final SharedPreferences prefs = settings.getSharedPrefs();
@@ -194,7 +226,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.globalColorSet.color)
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());
 

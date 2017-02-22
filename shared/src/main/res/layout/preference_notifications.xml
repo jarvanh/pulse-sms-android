@@ -123,6 +123,39 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/heads_up"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless" >
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_heads_up"
+                    android:tint="@color/subscriptionPrimaryText"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:textColor="@color/subscriptionPrimaryText"
+                    android:text="@string/heads_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -843,6 +843,15 @@ public class ApiUtils {
     }
 
     /**
+     * Update the wake screen setting
+     */
+    public void updateHeadsUp(final String accountId, final String headsUp) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "heads_up", "string", headsUp);
+        }
+    }
+
+    /**
      * Update the delivery reports setting.
      */
     public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {

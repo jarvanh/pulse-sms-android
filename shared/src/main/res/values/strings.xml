@@ -263,6 +263,7 @@
     <string name="group_name">Group Name</string>
     <string name="notification_settings">Notifications</string>
     <string name="repeat_interval">Repeat Alert</string>
+    <string name="heads_up">Heads Up</string>
     <string name="repeat_never">Never</string>
     <string name="repeat_one_min">Every minute</string>
     <string name="repeat_five_mins">Every five minutes</string>
@@ -341,7 +342,7 @@
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages.</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
-    <string name="notification_actions_summary">A max of three actions can be used in a notification</string>
+    <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
 
 
     <!-- MMS Configuration Settings -->

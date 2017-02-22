@@ -256,7 +256,7 @@ public class NotificationService extends IntentService {
                 .setLargeIcon(contactImage)
                 .setOnlyAlertOnce(this instanceof RepeatNotificationService ?
                         false : shouldAlertOnce(conversation.messages))
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
@@ -722,7 +722,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
 
@@ -744,7 +744,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.get(this).globalColorSet.color)
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
