@@ -28,6 +28,7 @@
         description="February 23rd, 2017">
         <text>Fix for the widget not refreshing</text>
         <text>Crash fixes</text>
+        <text>Update translations</text>
     </version>
 
     <version
