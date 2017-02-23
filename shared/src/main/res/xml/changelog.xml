@@ -24,6 +24,13 @@
     </version>-->
 
     <version
+        name="2.0.3"
+        description="February 23rd, 2017">
+        <text>Fix for the widget not refreshing</text>
+        <text>Crash fixes</text>
+    </version>
+
+    <version
         name="2.0.2"
         description="February 20th, 2017">
         <text>Bug and force close fixes</text>

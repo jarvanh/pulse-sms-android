@@ -29,6 +29,7 @@
     <string name="api_connecting">Connexion en cours...</string>
     <string name="api_error">Une erreur est survenue durant l\'opération</string>
     <string name="api_device_error">Une erreur est survenue en ajoutant votre appareil, veuillez réessayer !</string>
+    <string name="api_add_second_primary_device">Il semble que vous ayez déjà un appareil principal (%1$s) pour votre compte, et vous n\'en avez le droit qu\'à un seul. Voulez-vous remplacer l\'appareil principal par celui-ci, ce qui supprimerait l\'ancien ?</string>
     <string name="api_yes">Oui</string>
     <string name="api_no">Non</string>
     <string name="api_no_email">L\'adresse n\'a pas été entrée</string>
@@ -40,6 +41,8 @@
     <string name="api_no_phone_number">Pas de numéro de téléphone entré</string>
     <string name="api_login_error">Une erreur s\'est produite lors de la connexion. Peut-être une mauvaise adresse e-mail ou mot de passe?</string>
     <string name="api_activate_summary">Connectez-vous pour recevoir tous vos messages sur cet appareil !</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Rediriger vers</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">Sur un appareil mobile ou sur un ordinateur.</string>

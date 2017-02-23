@@ -180,7 +180,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
         <item quantity="one">%1$d neue Nachricht</item>
         <item quantity="other">%1$d neue Nachrichten</item>
     </plurals>
-    <string name="read">Lesen</string>
+    <string name="read">Gelesen</string>
     <string name="reply">Antworten</string>
     <string name="reply_to">Antwort an %1$s</string>
     <string name="call">Anrufen</string>

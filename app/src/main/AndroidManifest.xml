@@ -184,7 +184,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="xyz.klinker.messenger.widget.REFRESH" />
+                <action android:name="xyz.klinker.messenger.shared.widget.REFRESH" />
             </intent-filter>
 
             <meta-data

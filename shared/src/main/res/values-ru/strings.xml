@@ -334,7 +334,7 @@
     <string name="user_agent_profile_tag">Тэг профиля в системе</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Подпись</string>
-    <string name="signature_summary">Примечание: отправленные подписи не будут отображаться в списке сообщений Pulse. Подписи будут показаны только получателю сообщения.</string>
+    <string name="signature_summary">Подпись не будет отображаться в списке сообщений Pulse, её увидит только получатель сообщения.</string>
     <string name="cleanup_old_messages">Удалить старые сообщения</string>
     <string name="delayed_sending">Отложенная отправка</string>
     <string name="quick_compose">Быстрый ответ</string>

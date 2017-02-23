@@ -70,6 +70,18 @@
     <string name="older">Anciens</string>
     <string name="mark_section_as_read">Marquer les %1$s en lus</string>
     <string name="marking_section_as_read">Marquer tous les %1$s comme lus</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d conversation supprimée</item>
+        <item quantity="other">%1$d conversations supprimées</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d conversation archivée</item>
+        <item quantity="other">%1$d conversations archivées</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d conversation déplacée dans la boîte de réception</item>
+        <item quantity="other">%1$d conversations déplacées dans la boîte de réception</item>
+    </plurals>
     <string name="undo">Annuler</string>
     <string name="enter_search">Recherche...</string>
     <!-- Search Screen -->
@@ -151,6 +163,9 @@ Commencez !
     <string name="message_anywhere_onboarding_title_1">Envoyez des messages de partout</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement ou Paiement Unique</string>
     <string name="message_anywhere_onboarding_title_3">Une semaine d\'essai</string>
+    <string name="start_trial">Démarrer l\'essai</string>
+    <string name="not_now">Pas maintenant</string>
+    <string name="onboarding_done">Terminé</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nouveau message de %1$s</string>
     <plurals name="new_conversations">
@@ -176,6 +191,7 @@ Commencez !
     <string name="you">Vous</string>
     <string name="new_message">Nouveau message</string>
     <string name="received_new_message">Vous avez reçu un nouveau message !</string>
+    <string name="media">Médias</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historiques des versions de l\'application</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -189,6 +205,8 @@ Commencez !
 pourrez rencontrer !</string>
     <string name="faqs">Les questions fréquemment posées</string>
     <string name="features">Caractéristiques</string>
+    <string name="issues">Report des problèmes</string>
+    <string name="issues_summary">Sert également aux demandes de fonctionnalités</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Communauté de BétaTesteurs de Pulse</string>
     <string name="email">E-Mail</string>
@@ -196,6 +214,14 @@ pourrez rencontrer !</string>
     <string name="twitter">Twitter</string>
     <string name="twitter_summary">\@KlinkerApps</string>
     <string name="support">Support</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d message</item>
+        <item quantity="other">%1$d messages</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">dans %1$d conversation</item>
+        <item quantity="other">dans %1$d conversations</item>
+    </plurals>
     <string name="pin_conversation">Conversations épinglées</string>
     <string name="pin_conversation_summary">Laisser cette conversation en haut de la liste</string>
     <string name="mute_conversation">Mettre en sourdine cette conversation</string>
@@ -225,6 +251,11 @@ pourrez rencontrer !</string>
     <string name="vibrate_three_short">Trois courtes vibrations</string>
     <string name="vibrate_one_short_one_long">Une courte, et une longue vibration</string>
     <string name="vibrate_one_long_one_short">Une longue, et une courte vibration</string>
+    <string name="vibrate_one_short">Une courte vibration</string>
+    <string name="vibrate_one_long">Une longue vibration</string>
+    <string name="keyboard_layout">Disposition du clavier</string>
+    <string name="keyboard_default">Clavier par défaut</string>
+    <string name="keyboard_send_key">Touche Envoi</string>
     <string name="keyboard_enter_key">Touche \"Entrée\"</string>
     <string name="sound_effects">Effets sonores</string>
     <string name="delivery_reports">Accusés de réception</string>
@@ -258,28 +289,77 @@ pourrez rencontrer !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
     <string name="cancel_on_the_play_store">Annuler et afficher votre abonnement sur Play Store</string>
     <string name="resync_account">Resynchroniser le compte</string>
+    <string name="resync_account_summary">Des messages manquants ?
+A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
+    <string name="no_apps_found">Aucune application pour exécuter cette action</string>
+    <string name="you_denied_permission">Vous avez refusé cette permission</string>
+    <string name="supported_platforms">Appareils pris en charges</string>
     <string name="font_size_small">Petit</string>
     <string name="font_size_normal">Normal</string>
     <string name="font_size_large">Grand</string>
     <string name="font_size_extra_large">Très grand</string>
     <string name="advanced">Avancé</string>
     <string name="send_as_mms">Convertir en MMS</string>
+    <string name="send_as_mms_summary">Envoyer les longs messages par MMS plutôt que par SMS individuels</string>
     <string name="alert_types">Types d\'alertes</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
+    <string name="strip_unicode">Remplacer l\'Unicode</string>
+    <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants</string>
     <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Taille maximale de l\'image</string>
+    <string name="apn_configuration">Configuration des APN</string>
+    <string name="override_system_apn">Remplacer les APN du système</string>
+    <string name="mmsc_url">MMSC</string>
+    <string name="mms_proxy">Proxy MMS</string>
+    <string name="mms_port">Port MMS</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
     <string name="cleanup_old_messages">Supprimer les anciens messages</string>
     <string name="delayed_sending">Envoi différé</string>
     <string name="quick_compose">Réponse rapide</string>
+    <string name="quick_compose_summary">Notification permanente pour un accès rapide a la composition des messages.</string>
     <string name="secure_private_conversations">Conversations privées sécurisées</string>
+    <string name="secure_private_conversations_summary">Demander un code pour déverrouiller les conversations privées</string>
     <!-- Theming Options -->
+    <string name="day_night">Par défaut (Jour/Nuit)</string>
+    <string name="always_light">Toujours clair</string>
+    <string name="always_dark">Toujours sombre</string>
+    <string name="always_black">Toujours noir</string>
+    <string name="set_color_per_conversation">Régler la couleur dans chaque conversation</string>
+    <string name="material_color_red">Rouge</string>
+    <string name="material_color_pink">Rose</string>
+    <string name="material_color_purple">Violet</string>
+    <string name="material_color_deep_purple">Violet foncé</string>
+    <string name="material_color_indigo">Indigo</string>
+    <string name="material_color_blue">Bleu</string>
+    <string name="material_color_light_blue">Bleu clair</string>
+    <string name="material_color_cyan">Cyan</string>
+    <string name="material_color_teal">Turquoise</string>
+    <string name="material_color_green">Vert</string>
+    <string name="material_color_light_green">Vert clair</string>
+    <string name="material_color_lime">Citron vert</string>
+    <string name="material_color_yellow">Jaune</string>
+    <string name="material_color_amber">Ambre</string>
+    <string name="material_color_orange">Orange</string>
+    <string name="material_color_deep_orange">Orange foncé</string>
+    <string name="material_color_brown">Marron</string>
+    <string name="material_color_gray">Gris</string>
+    <string name="material_color_blue_gray">Bleu-gris</string>
+    <string name="material_color_black">Noir</string>
     <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Voulez-vous vraiment annuler ce message programmé à %1$s ?</string>
+    <string name="scheduled_message_hint">Message à envoyer...</string>
+    <string name="scheduled_to_hint">Destinataire...</string>
+    <string name="scheduled_message_sent">Envoi du message programmé réussi</string>
+    <string name="no_scheduled_messages">Pas de message programmé</string>
+    <string name="no_scheduled_messages_summary">Vous pouvez en créer un avec le bouton \'+\' en dessous !</string>
+    <string name="scheduled_message_in_future">La date ne doit pas être déjà dépassée !</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Cryptage et upload...</string>
     <string name="encrypting_and_uploading_media">Cryptage et compression des messages médias.</string>
     <string name="encrypting_and_uploading_count">Cryptage et compression des messages médias.</string>
     <string name="downloading_and_decrypting">Téléchargement et cryptage...</string>
+    <string name="decrypting_and_downloading_media">Téléchargement et décryptage du fichier...</string>
     <!-- Quick Reply -->
     <string name="audio_message">Message audio</string>
     <string name="video_message">Message Vidéo</string>
@@ -290,6 +370,7 @@ pourrez rencontrer !</string>
     <string name="send">Envoyer</string>
     <!-- Other -->
     <string name="updating_database">Recherche des derniers messages...</string>
+    <string name="dashclock_description">Information sur les SMS/MMS non lus</string>
     <string name="default_text">Défaut</string>
     <string name="did_you_know">Le saviez-vous ?</string>
     <string name="use_from_anywhere">Pulse peut être utilisé depuis n\'importe quel appareil connecté à Internet -
@@ -301,10 +382,12 @@ Essayez aujourd\'hui !</string>
     <string name="no">Non</string>
     <string name="cancel">Annuler</string>
     <string name="hours">Heures</string>
+    <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="off">Inactif</string>
     <!-- Times -->
     <string name="one_second">Une seconde</string>
+    <string name="three_seconds">Trois secondes</string>
     <string name="five_seconds">5 secondes</string>
     <string name="ten_seconds">10 secondes</string>
     <string name="fifteen_seconds">15 secondes</string>
