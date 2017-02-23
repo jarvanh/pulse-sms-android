@@ -26,6 +26,7 @@
     <version
         name="2.0.3"
         description="February 23rd, 2017">
+        <text>Improve the article viewer</text>
         <text>Fix for the widget not refreshing</text>
         <text>Crash fixes</text>
         <text>Update translations</text>
