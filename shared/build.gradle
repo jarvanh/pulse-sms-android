@@ -123,6 +123,7 @@ dependencies {
     compile 'me.leolin:ShortcutBadger:1.1.13@aar'
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
+    compile 'com.github.codekidX:storage-chooser:1.0.30'
 
     compile project(":api_implementation")
     compile project(":encryption")

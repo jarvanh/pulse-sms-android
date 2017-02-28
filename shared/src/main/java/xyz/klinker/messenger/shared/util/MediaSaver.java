@@ -23,6 +23,7 @@ import java.util.Date;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.model.Message;
 
 public class MediaSaver {
@@ -64,13 +65,14 @@ public class MediaSaver {
     }
 
     private void saveMessage(Message message) {
-        String extension = MimeType.getExtension(message.mimeType);
-        File dst = new File(Environment.getExternalStorageDirectory() + "/Download",
+        final String directory = MmsSettings.get(context).saveDirectory;
+        final String extension = MimeType.getExtension(message.mimeType);
+        File dst = new File(directory,
                 SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + extension);
 
         int count = 1;
         while (dst.exists()) {
-            dst = new File(Environment.getExternalStorageDirectory() + "/Download",
+            dst = new File(directory,
                     SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) +
                             "-" + Integer.toString(count) + extension);
             count++;

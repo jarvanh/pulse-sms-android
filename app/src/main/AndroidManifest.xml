@@ -177,6 +177,7 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysVisible"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"/>
+        <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
 
         <!-- Widget -->
         <receiver android:name=".shared.widget.MessengerAppWidgetProvider">

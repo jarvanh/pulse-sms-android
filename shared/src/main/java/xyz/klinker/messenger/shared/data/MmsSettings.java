@@ -2,8 +2,13 @@ package xyz.klinker.messenger.shared.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
+
+import com.codekidlabs.storagechooser.utils.DiskUtil;
+
+import java.io.File;
 
 import xyz.klinker.messenger.shared.R;
 
@@ -29,6 +34,7 @@ public class MmsSettings {
     public boolean groupMMS;
     public boolean autoSaveMedia;
     public boolean overrideSystemAPN;
+    public String saveDirectory;
 
     public String mmscUrl;
     public String mmsProxy;
@@ -51,6 +57,8 @@ public class MmsSettings {
         this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true);
         this.autoSaveMedia = sharedPrefs.getBoolean(context.getString(R.string.pref_auto_save_media), false);
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false);
+        this.saveDirectory = sharedPrefs.getString(DiskUtil.SC_PREFERENCE_KEY,
+                new File(Environment.getExternalStorageDirectory(), "Download").getPath());
 
         this.mmscUrl = sharedPrefs.getString(context.getString(R.string.pref_mmsc_url), "");
         this.mmsProxy = sharedPrefs.getString(context.getString(R.string.pref_mms_proxy), "");

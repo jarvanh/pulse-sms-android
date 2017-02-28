@@ -1,17 +1,24 @@
 package xyz.klinker.messenger.fragment.settings;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.codekidlabs.storagechooser.StorageChooser;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
 
 public class MmsConfigurationFragment extends PreferenceFragment {
@@ -25,6 +32,7 @@ public class MmsConfigurationFragment extends PreferenceFragment {
         initMaxImageSize();
         initGroupMMS();
         initAutoSaveMedia();
+        initDownloadLocation();
 
         // MMS APN settings
         initOverrideSystemSettings();
@@ -81,6 +89,39 @@ public class MmsConfigurationFragment extends PreferenceFragment {
                             save);
                     return true;
                 });
+    }
+
+    private void initDownloadLocation() {
+        findPreference(getString(R.string.pref_mms_save_location))
+                .setOnPreferenceClickListener(preference -> {
+
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        showStorageChooser();
+                    } else {
+                        if (getActivity() != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, -1);
+                        } else {
+                            showStorageChooser();
+                        }
+                    }
+
+                    return false;
+                });
+    }
+
+    private void showStorageChooser() {
+        StorageChooser chooser = new StorageChooser.Builder()
+                .withActivity(getActivity())
+                .withFragmentManager(((AppCompatActivity) getActivity()).getSupportFragmentManager())
+                .allowCustomPath(true)
+                .setType(StorageChooser.DIRECTORY_CHOOSER)
+                .actionSave(true)
+                .withPreference(MmsSettings.get(getActivity()).getSharedPrefs(getActivity()))
+                .build();
+
+        chooser.show();
+        chooser.setOnSelectListener(s -> { });
     }
 
     private void initOverrideSystemSettings() {

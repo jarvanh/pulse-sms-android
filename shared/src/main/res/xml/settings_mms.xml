@@ -25,6 +25,10 @@
         android:summary="@string/auto_save_media_summary"
         android:defaultValue="false" />
 
+    <Preference
+        android:key="@string/pref_mms_save_location"
+        android:title="@string/mms_download_directory" />
+
     <PreferenceCategory
         android:title="@string/apn_configuration" >
 

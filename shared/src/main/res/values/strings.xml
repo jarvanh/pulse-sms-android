@@ -139,7 +139,7 @@
     <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="share_content">Share content…</string>
-    <string name="saved">Saved to /Download folder!</string>
+    <string name="saved">Saved to downloads folder!</string>
     <string name="failed_to_save">Failed to save</string>
     <string name="start_recording_audio">Press the button to start recording audio!</string>
     <string name="audio_recording_error">Error with recording :(</string>
@@ -343,6 +343,7 @@
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
     <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
+    <string name="mms_download_directory">Media Download Directory</string>
 
 
     <!-- MMS Configuration Settings -->
