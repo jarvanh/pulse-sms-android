@@ -148,13 +148,13 @@ public class MessengerActivity extends AppCompatActivity
 
         dismissIfFromNotification();
 
-        if (checkInitialStart()) {
+        if (checkInitialStart() && savedInstanceState == null) {
             boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
             boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
                     DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
             boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);
-            if (hasPhoneFeature) {
+            if (hasPhoneFeature ) {
                 startActivityForResult(
                         new Intent(this, OnboardingActivity.class),
                         REQUEST_ONBOARDING

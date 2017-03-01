@@ -141,6 +141,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".activity.OnboardingActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppIntro" />
         <activity android:name=".activity.OnBoardingPayActivity"
             android:theme="@style/AppIntro" />
