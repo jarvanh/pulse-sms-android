@@ -15,7 +15,7 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
-        <activity android:name=".activity.MessengerActivity" android:theme="@style/AppThemeWearable" android:label="@string/app_name">
+        <activity android:name=".activity.MessengerActivity" android:theme="@style/PulseThemeWearable" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +24,8 @@
         </activity>
 
         <activity android:name=".activity.ActivateWearActivity" android:label="@string/app_name" />
-        <activity android:name=".activity.InitialLoadWearActivity" android:theme="@style/AppTheme" android:label="@string/app_name" />
-        <activity android:name=".activity.MessageListActivity"  android:theme="@style/AppThemeWearable" android:label="@string/app_name" />
+        <activity android:name=".activity.InitialLoadWearActivity" android:theme="@style/PulseTheme" android:label="@string/app_name" />
+        <activity android:name=".activity.MessageListActivity"  android:theme="@style/PulseThemeWearable" android:label="@string/app_name" />
 
     </application>
 

@@ -16,7 +16,7 @@
 
 <resources>
 
-    <style name="AppTheme.NoActionBar" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+    <style name="PulseTheme.NoActionBar" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -28,14 +28,14 @@
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
-    <style name="AppTheme.MessengerActivity" parent="@style/AppTheme.NoActionBar">
+    <style name="PulseTheme.MessengerActivity" parent="@style/PulseTheme.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="PulseTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -44,7 +44,7 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
-    <style name="AppThemeWearable" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+    <style name="PulseThemeWearable" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -53,7 +53,7 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
-    <style name="AppTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="PulseTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/materialGrey</item>
         <item name="colorPrimaryDark">@color/materialGreyDark</item>
         <item name="colorAccent">@color/primaryText</item>
@@ -62,7 +62,7 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Translucent" parent="@style/AppTheme.NoActionBar">
+    <style name="PulseTheme.NoActionBar.Translucent" parent="@style/PulseTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@android:color/black</item>

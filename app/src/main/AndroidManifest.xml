@@ -65,11 +65,11 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:hardwareAccelerated="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/PulseTheme">
 
         <activity
             android:name=".activity.MessengerActivity"
-            android:theme="@style/AppTheme.MessengerActivity"
+            android:theme="@style/PulseTheme.MessengerActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden">
             <intent-filter>
@@ -103,7 +103,7 @@
         <activity
             android:name=".activity.ComposeActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/PulseTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -148,20 +148,20 @@
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />
         <activity
             android:name=".activity.InitialLoadTvActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/PulseTheme.NoActionBar"/>
         <activity
             android:name=".activity.MediaGridActivity"
-            android:theme="@style/AppTheme.NoColors" />
+            android:theme="@style/PulseTheme.NoColors" />
         <activity
             android:name=".activity.ContactSettingsActivity"
-            android:theme="@style/AppTheme.NoColors" />
+            android:theme="@style/PulseTheme.NoColors" />
         <activity
             android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.NoColors"
+            android:theme="@style/PulseTheme.NoColors"
             android:label="@string/menu_settings" />
         <activity
             android:name=".activity.ImageViewerActivity"
-            android:theme="@style/AppTheme.NoActionBar.Translucent" />
+            android:theme="@style/PulseTheme.NoActionBar.Translucent" />
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity"
             android:theme="@style/MaterialCamera.CaptureActivity" />
@@ -170,7 +170,7 @@
             android:theme="@style/MaterialCamera.CaptureActivity" />
         <activity
             android:name="xyz.klinker.giphy.GiphyActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/PulseTheme.NoActionBar"
             tools:replace="android:theme" />
         <activity android:name=".activity.NotificationReplyActivity"
             android:theme="@style/api_Theme.AppCompat.Translucent"
