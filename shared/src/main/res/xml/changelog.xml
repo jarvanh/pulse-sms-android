@@ -22,6 +22,7 @@
         <text>Option to customize which buttons appear on a notification</text>
         <text>Option to disable heads up on notifications (Global Settings -> Alert Types)</text>
         <text>Option to pick the location to save media to (Global Settings -> MMS Configuration)</text>
+        <text>Fixes for the "Strip Unicode" setting</text>
     </version>-->
 
     <version

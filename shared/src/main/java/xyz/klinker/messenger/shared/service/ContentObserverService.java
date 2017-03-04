@@ -184,7 +184,9 @@ public class ContentObserverService extends Service {
         }
 
         private void insertSentMessage(DataSource source, String body, String address) {
-            insertMessage(source, body, address, Message.TYPE_SENT);
+            if (!Settings.get(ContentObserverService.this).stripUnicode) {
+                insertMessage(source, body, address, Message.TYPE_SENT);
+            }
         }
 
         private void insertMessage(DataSource source, String body, String address, int type) {
