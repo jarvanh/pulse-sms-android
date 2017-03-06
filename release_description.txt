@@ -1,1 +1,1 @@
-v2.0.3 improves the reliability of syncing messages between devices, fixes some issues/crashes that had been reported, and fixes the widget not getting updated. ICYMI, v2.0 added a standalone Android Wear app!
+The latest version of Pulse comes with a few awesome new features!<br/><br/>- Customize which buttons appear on the notifications<br/>- Option to disable the heads up notification<br/>- Pick the location that media gets saved to<br/><br/>Of course, it has bugs squashed as well. Enjoy the update!
