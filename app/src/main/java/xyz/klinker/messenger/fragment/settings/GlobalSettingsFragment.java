@@ -144,10 +144,6 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                     SetUtils.stringify(options));
             return true;
         });
-
-        if (!FeatureFlags.get(getActivity()).NOTIFICATION_ACTIONS) {
-            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(actions);
-        }
     }
 
     private void initSwipeDelete() {

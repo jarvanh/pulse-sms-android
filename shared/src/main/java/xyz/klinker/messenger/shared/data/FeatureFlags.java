@@ -64,8 +64,6 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean NOTIFICATION_ACTIONS;
-    public boolean HEADS_UP;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -76,8 +74,6 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        NOTIFICATION_ACTIONS = getValue(sharedPrefs, FLAG_NOTIFICATION_ACTIONS);
-        HEADS_UP = getValue(sharedPrefs, FLAG_HEADS_UP);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -95,12 +91,6 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
-                break;
-            case FLAG_NOTIFICATION_ACTIONS:
-                NOTIFICATION_ACTIONS = flag;
-                break;
-            case FLAG_HEADS_UP:
-                HEADS_UP = flag;
                 break;
         }
     }

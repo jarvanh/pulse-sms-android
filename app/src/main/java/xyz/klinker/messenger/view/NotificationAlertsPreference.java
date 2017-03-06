@@ -59,12 +59,7 @@ public class NotificationAlertsPreference extends Preference implements
         layout.findViewById(R.id.ringtone).setOnClickListener(view -> ringtoneClicked());
         layout.findViewById(R.id.repeat).setOnClickListener(view -> repeatClicked());
         layout.findViewById(R.id.wake_screen).setOnClickListener(view -> wakeClicked());
-
-        if (!FeatureFlags.get(getContext()).HEADS_UP) {
-            layout.findViewById(R.id.heads_up).setVisibility(View.GONE);
-        } else {
-            layout.findViewById(R.id.heads_up).setOnClickListener(view -> headsUpClicked());
-        }
+        layout.findViewById(R.id.heads_up).setOnClickListener(view -> headsUpClicked());
 
         new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
                 .setView(layout)

@@ -16,7 +16,7 @@
 
 <changelog>
 
-    <!--<version
+    <version
         name="2.1.0"
         description="February 28th, 2017">
         <text>Option to customize which buttons appear on a notification</text>
@@ -24,7 +24,7 @@
         <text>Option to pick the location to save media to (Global Settings -> MMS Configuration)</text>
         <text>Fixes for the "Strip Unicode" setting</text>
         <text>Fixes for conversations having duplicate recipients</text>
-    </version>-->
+    </version>
 
     <version
         name="2.0.3"
