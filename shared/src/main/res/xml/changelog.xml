@@ -23,6 +23,7 @@
         <text>Option to disable heads up on notifications (Global Settings -> Alert Types)</text>
         <text>Option to pick the location to save media to (Global Settings -> MMS Configuration)</text>
         <text>Fixes for the "Strip Unicode" setting</text>
+        <text>Fixes for conversations having duplicate recipients</text>
     </version>-->
 
     <version
