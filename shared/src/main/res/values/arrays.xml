@@ -177,6 +177,8 @@
         <item>500 KB</item>
         <item>700 KB</item>
         <item>1 MB</item>
+        <item>2 MB</item>
+        <item>3 MB</item>
         <item>5 MB</item>
     </string-array>
 
@@ -186,6 +188,8 @@
         <item>500_kb</item>
         <item>700_kb</item>
         <item>1_mb</item>
+        <item>2_mb</item>
+        <item>3_mb</item>
         <item>5_mb</item>
     </string-array>
 
