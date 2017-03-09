@@ -16,6 +16,11 @@
 
 <resources>
 
+    <color name="colorPrimary">@color/materialTeal</color>
+    <color name="colorPrimaryDark">@color/materialTealDark</color>
+    <color name="colorPrimaryLight">@color/materialTealLight</color>
+    <color name="colorAccent">@color/materialOrangeAccent</color>
+
     <color name="background">#374248</color>
     <color name="quickReplyBackground">@color/background</color>
     <color name="swipeBackground">#2c353a</color>
