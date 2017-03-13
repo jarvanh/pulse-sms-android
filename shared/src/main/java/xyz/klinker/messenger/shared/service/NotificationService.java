@@ -235,8 +235,9 @@ public class NotificationService extends IntentService {
         } catch (Exception e) { }
 
         VibratePattern vibratePattern = Settings.get(this).vibrate;
+        boolean shouldVibrate = !shouldAlertOnce(conversation.messages) && conversationIndex == 0;
         int defaults = 0;
-        if (vibratePattern == VibratePattern.DEFAULT) {
+        if (shouldVibrate && vibratePattern == VibratePattern.DEFAULT) {
             defaults = Notification.DEFAULT_VIBRATE;
         }
 
@@ -254,8 +255,6 @@ public class NotificationService extends IntentService {
                 .setDefaults(defaults)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setLargeIcon(contactImage)
-                .setOnlyAlertOnce(this instanceof RepeatNotificationService ?
-                        false : shouldAlertOnce(conversation.messages))
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(getString(R.string.notification_ticker, conversation.title))
