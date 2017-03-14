@@ -1,1 +1,1 @@
-The latest version of Pulse comes with a few awesome new features!<br/><br/>- Customize which buttons appear on the notifications<br/>- Option to disable the heads up notification<br/>- Pick the location that media gets saved to<br/><br/>Of course, it has bugs squashed as well. Enjoy the update!
+The latest version of Pulse comes with a few awesome new features! Customize which buttons appear on the notifications, an option to disable the heads up notification an option to pick the location that media gets saved to, and a new notification icon!
