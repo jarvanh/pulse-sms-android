@@ -17,9 +17,10 @@
 <changelog>
 
     <version
-        name="2.1.0"
-        description="March 7th, 2017">
+        name="2.1.1"
+        description="March 13th, 2017">
         <text>New notification icon</text>
+        <text>Fixes for recurring notifications</text>
     </version>
 
     <version
