@@ -105,17 +105,17 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     dialog.dismiss();
 
                     getActivity().runOnUiThread(() -> {
-//                        if (hasSubs) {
-//                            try {
-//                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-//                            } catch (Exception e) { }
+                        if (hasSubs) {
+                            try {
+                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+                            } catch (Exception e) { }
                             startLoginActivity();
-//                        } else {
-//                            try {
-//                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-//                            } catch (Exception e) { }
-//                            pickSubscription();
-//                        }
+                        } else {
+                            try {
+                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
+                            } catch (Exception e) { }
+                            pickSubscription();
+                        }
                     });
                 }).start();
 
