@@ -40,6 +40,8 @@ import android.util.LongSparseArray;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -102,7 +104,7 @@ public class NotificationService extends IntentService {
         if (conversations != null && conversations.size() > 0) {
             NotificationManagerCompat.from(this).cancelAll();
 
-            for (int i = conversations.size() - 1; i >= 0; i--) {
+            for (int i = 0; i < conversations.size(); i++) {
                 NotificationConversation conversation = conversations.get(conversations.keyAt(i));
                 rows.add(giveConversationNotification(conversation, i, conversations.size()));
             }
@@ -141,7 +143,7 @@ public class NotificationService extends IntentService {
         LongSparseArray<NotificationConversation> conversations = new LongSparseArray<>();
         List<Long> keys = new ArrayList<>();
 
-        if (unseenMessages != null && unseenMessages.moveToFirst()) {
+        if (unseenMessages != null && unseenMessages.moveToLast()) {
             do {
                 long conversationId = unseenMessages
                         .getLong(unseenMessages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
@@ -195,7 +197,7 @@ public class NotificationService extends IntentService {
                         conversation.messages.add(new NotificationMessage(id, data, mimeType, timestamp, from));
                     }
                 }
-            } while (unseenMessages.moveToNext());
+            } while (unseenMessages.moveToPrevious());
         }
 
         try {
