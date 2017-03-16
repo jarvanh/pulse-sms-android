@@ -344,6 +344,9 @@
     <string name="notification_actions">Notification Actions</string>
     <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
     <string name="mms_download_directory">Media Download Directory</string>
+    <string name="refresh_firebase">Refresh Push Notifications</string>
+    <string name="refresh_firebase_summary">Messages not making it to this device? Try again after this using this option.</string>
+    <string name="refreshing_notifications">Refreshing notification token…</string>
 
 
     <!-- MMS Configuration Settings -->

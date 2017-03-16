@@ -15,15 +15,15 @@ public class TokenUtil {
     public static void refreshToken(Context context) {
         Log.v(TAG, "starting refresh");
 
-        Account account = Account.get(context);
-        String accountId = account.accountId;
-        String token = FirebaseInstanceId.getInstance().getToken();
+        final Account account = Account.get(context);
+        final String accountId = account.accountId;
+        final String token = FirebaseInstanceId.getInstance().getToken();
 
         Log.v(TAG, "token: " + token);
         if (account.exists() && token != null) {
             Log.v(TAG, "refreshing on server");
-            new ApiUtils().updateDevice(accountId, Long.parseLong(account.deviceId),
-                    null, token);
+            new Thread(() -> new ApiUtils().updateDevice(accountId, Long.parseLong(account.deviceId),
+                    null, token)).start();
         }
 
         FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");

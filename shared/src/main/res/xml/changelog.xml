@@ -21,6 +21,7 @@
         description="March 13th, 2017">
         <text>New notification icon</text>
         <text>Fixes for recurring notifications</text>
+        <text>Fix devices getting dis-associated with an account</text>
     </version>
 
     <version

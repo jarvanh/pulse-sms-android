@@ -20,12 +20,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Date;
 
@@ -35,6 +38,7 @@ import xyz.klinker.messenger.activity.OnBoardingPayActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
+import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.ApiUploadService;
@@ -75,6 +79,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initMessageCountPreference();
             initRemoveAccountPreference();
             initResyncAccountPreference();
+            initFirebaseRefreshPreference();
         } else {
             startActivityForResult(
                     new Intent(getActivity(), OnBoardingPayActivity.class),
@@ -144,6 +149,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     .removePreference(findPreference(getString(R.string.pref_delete_account)));
             getPreferenceScreen()
                     .removePreference(findPreference(getString(R.string.pref_resync_account)));
+            getPreferenceScreen()
+                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
         } catch (Exception e) {
 
         }
@@ -247,6 +254,15 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 return true;
             });
         }
+    }
+
+    private void initFirebaseRefreshPreference() {
+        Preference preference = findPreference(getString(R.string.pref_refresh_firebase));
+        preference.setOnPreferenceClickListener(preference1 -> {
+            TokenUtil.refreshToken(getActivity());
+            Toast.makeText(getActivity(), R.string.refreshing_notifications, Toast.LENGTH_SHORT).show();
+            return true;
+        });
     }
 
     /**
