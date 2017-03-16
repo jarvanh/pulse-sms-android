@@ -143,7 +143,7 @@ public class NotificationService extends IntentService {
         LongSparseArray<NotificationConversation> conversations = new LongSparseArray<>();
         List<Long> keys = new ArrayList<>();
 
-        if (unseenMessages != null && unseenMessages.moveToLast()) {
+        if (unseenMessages != null && unseenMessages.moveToFirst()) {
             do {
                 long conversationId = unseenMessages
                         .getLong(unseenMessages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
@@ -197,7 +197,7 @@ public class NotificationService extends IntentService {
                         conversation.messages.add(new NotificationMessage(id, data, mimeType, timestamp, from));
                     }
                 }
-            } while (unseenMessages.moveToPrevious());
+            } while (unseenMessages.moveToNext());
         }
 
         try {
