@@ -296,9 +296,12 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                 if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
                     returnToConversationsAfterLogin();
                 } else if (responseCode == RESPONSE_START_TRIAL) {
-                    getPreferenceScreen()
-                            .findPreference(getString(R.string.pref_my_account_setup))
-                            .performClick();
+                    Preference preference = getPreferenceScreen()
+                            .findPreference(getString(R.string.pref_my_account_setup));
+
+                    if (preference.getOnPreferenceClickListener() != null) {
+                        preference.getOnPreferenceClickListener().onPreferenceClick(preference);
+                    }
                 }
             }
         }
