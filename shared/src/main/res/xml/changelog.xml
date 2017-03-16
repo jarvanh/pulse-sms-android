@@ -22,6 +22,7 @@
         <text>New notification icon</text>
         <text>Fixes for recurring notifications</text>
         <text>Fix devices getting dis-associated with an account</text>
+        <text>Fixes for global themes using the wrong overscroll color on the conversation list</text>
     </version>
 
     <version

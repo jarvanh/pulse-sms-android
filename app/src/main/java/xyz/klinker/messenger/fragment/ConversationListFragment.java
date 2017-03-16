@@ -557,7 +557,12 @@ public class ConversationListFragment extends Fragment
         ColorUtils.adjustStatusBarColor(color, getActivity());
         ColorUtils.adjustDrawerColor(color, getActivity());
 
-        if (!Settings.get(getActivity()).useGlobalThemeColor) {
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.globalColorSet.color);
+        }
+
+        if (!settings.useGlobalThemeColor) {
             ActivityUtils.setTaskDescription(getActivity());
         }
 
