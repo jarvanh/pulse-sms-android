@@ -353,54 +353,34 @@ public class LoginActivity extends AppCompatActivity {
 
                 final DeviceBody device = devices[primaryLocation];
 
-                if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
-                    utils.removeDevice(accountId, device.id);
+//                if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
+//                    utils.removeDevice(accountId, device.id);
+//
+//                    try {
+//                        Thread.sleep(100);
+//                    } catch (InterruptedException e) { }
+//
+//                    addDevice(utils, accountId, true, false);
+//                } else {
+                    runOnUiThread(() -> {
+                        String message = getString(R.string.api_add_second_primary_device,
+                                device.name);
 
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) { }
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(message)
+                                .setPositiveButton(R.string.api_yes, (dialogInterface, i) -> new Thread(() -> {
+                                    utils.removeDevice(accountId, device.id);
+                                    Integer deviceId1 = addDevice(utils, accountId, true, false);
 
-                    addDevice(utils, accountId, true, false);
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String message = getString(R.string.api_add_second_primary_device,
-                                    device.name);
-
-                            new AlertDialog.Builder(LoginActivity.this)
-                                    .setMessage(message)
-                                    .setPositiveButton(R.string.api_yes, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    utils.removeDevice(accountId, device.id);
-                                                    Integer deviceId = addDevice(utils, accountId, true, false);
-
-                                                    if (deviceId != null) {
-                                                        utils.updatePrimaryDevice(accountId, deviceId.toString());
-                                                    }
-                                                }
-                                            }).start();
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.api_no, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    addDevice(utils, accountId, false, false);
-                                                }
-                                            }).start();
-                                        }
-                                    })
-                                    .show();
-                        }
+                                    if (deviceId1 != null) {
+                                        utils.updatePrimaryDevice(accountId, deviceId1.toString());
+                                    }
+                                }).start())
+                                .setNegativeButton(R.string.api_no, (dialogInterface, i) -> new Thread(() ->
+                                        addDevice(utils, accountId, false, false)).start())
+                                .show();
                     });
-                }
+//                }
             }
         }
 
