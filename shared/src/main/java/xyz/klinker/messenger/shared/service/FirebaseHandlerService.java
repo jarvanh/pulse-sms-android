@@ -805,7 +805,17 @@ public class FirebaseHandlerService extends WakefulIntentService {
         }
 
         String text = json.getString("message");
-        String to = PhoneNumberUtils.clearFormatting(json.getString("to"));
+        String toFromWeb = json.getString("to");
+        String[] split = toFromWeb.split(",");
+        
+        String to = "";
+        for (int i = 0; i < split.length; i++) {
+            if (i != 0) {
+                to += ", ";
+            }
+            
+            to += PhoneNumberUtils.clearFormatting(split[i]);
+        }
 
         Message message = new Message();
         message.type = Message.TYPE_SENDING;
