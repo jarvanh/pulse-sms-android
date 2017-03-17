@@ -353,15 +353,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 final DeviceBody device = devices[primaryLocation];
 
-//                if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
-//                    utils.removeDevice(accountId, device.id);
-//
-//                    try {
-//                        Thread.sleep(100);
-//                    } catch (InterruptedException e) { }
-//
-//                    addDevice(utils, accountId, true, false);
-//                } else {
+                if (device != null && device.name != null && device.name.equals(Build.MODEL)) {
+                    utils.removeDevice(accountId, device.id);
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) { }
+
+                    addDevice(utils, accountId, true, false);
+                } else {
                     runOnUiThread(() -> {
                         String message = getString(R.string.api_add_second_primary_device,
                                 device.name);
@@ -380,7 +380,7 @@ public class LoginActivity extends AppCompatActivity {
                                         addDevice(utils, accountId, false, false)).start())
                                 .show();
                     });
-//                }
+                }
             }
         }
 
