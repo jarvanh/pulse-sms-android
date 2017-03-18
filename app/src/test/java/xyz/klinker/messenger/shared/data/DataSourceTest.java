@@ -220,6 +220,18 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void deleteMultipleContactsById() {
+        source.deleteContacts(new String[] { "1", "2" });
+        verify(database).delete("contact", "_id=? OR _id=?", new String[]{ "1", "2" });
+    }
+
+    @Test
+    public void deleteSingleContactById() {
+        source.deleteContacts(new String[] { "1" });
+        verify(database).delete("contact", "_id=?", new String[]{"1"});
+    }
+
+    @Test
     public void getPinnedConversations() {
         when(database.query("conversation", null, "pinned=1", null, null, null, "timestamp desc"))
                 .thenReturn(cursor);

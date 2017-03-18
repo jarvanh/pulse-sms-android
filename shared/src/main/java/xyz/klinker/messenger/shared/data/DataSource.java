@@ -531,6 +531,33 @@ public class DataSource {
     }
 
     /**
+     * Deletes a contact from the database.
+     *
+     * @param ids the phone number to delete
+     */
+    public void deleteContacts(String[] ids) {
+        if (ids.length == 0) {
+            return;
+        }
+
+        String where = "";
+        for (int i = 0; i < ids.length; i++) {
+            if (i != 0) {
+                where += " OR ";
+            }
+
+            where += Contact.COLUMN_ID + "=?";
+        }
+
+        try {
+            database.delete(Contact.TABLE, where, ids);
+        } catch (Exception e) {
+            ensureActionable();
+            database.delete(Contact.TABLE, where, ids);
+        }
+    }
+
+    /**
      * Updates the conversation with given values.
      *
      * @param contact the contact with new values

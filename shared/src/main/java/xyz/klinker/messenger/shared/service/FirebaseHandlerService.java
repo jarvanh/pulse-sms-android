@@ -148,6 +148,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 case "removed_contact":
                     removeContact(json, source);
                     break;
+                case "removed_contact_by_id":
+                    removeContactById(json, source);
+                    break;
                 case "added_conversation":
                     addConversation(json, source, context);
                     break;
@@ -507,6 +510,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
         String phoneNumber = json.getString("phone_number");
         source.deleteContact(phoneNumber);
         Log.v(TAG, "removed contact");
+    }
+
+    private void removeContactById(JSONObject json, DataSource source) throws JSONException {
+        String[] ids = json.getString("id").split(",");
+        source.deleteContacts(ids);
+        Log.v(TAG, "removed contacts by id");
     }
 
     private void addContact(JSONObject json, DataSource source)
