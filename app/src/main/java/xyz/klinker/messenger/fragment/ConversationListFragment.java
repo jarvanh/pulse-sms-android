@@ -508,6 +508,7 @@ public class ConversationListFragment extends Fragment
         if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
                     getArguments().getLong(ARG_MESSAGE_TO_OPEN_ID));
+            getArguments().remove(ARG_MESSAGE_TO_OPEN_ID);
         } else {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
