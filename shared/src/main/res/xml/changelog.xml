@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="2.1.3"
+        description="March 26th, 2017">
+        <text>Improvements to deleting from the notification</text>
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="2.1.2"
         description="March 18th, 2017">
         <text>Tons of support for new web updates:</text>
