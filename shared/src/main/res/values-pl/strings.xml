@@ -254,6 +254,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="group_name">Nazwa grupy</string>
     <string name="notification_settings">Powiadomienia</string>
     <string name="repeat_interval">Powtórz alarm</string>
+    <string name="heads_up">Wyskakujące powiadomienia</string>
     <string name="repeat_never">Nigdy</string>
     <string name="repeat_one_min">Co minutę</string>
     <string name="repeat_five_mins">Co pięć minut</string>
@@ -324,8 +325,15 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="strip_unicode">Wyklucz znaki unicode</string>
     <string name="strip_unicode_summary">Znaki te zostaną usunięte z wysyłanych wiadomości</string>
     <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
+    <string name="notification_actions">Akcje na powiadomieniach</string>
+    <string name="notification_actions_summary">Maksymalnie trzy akcje mogą być aktywne na powiadomieniach</string>
+    <string name="mms_download_directory">Miejsce pobierania załączników​</string>
+    <string name="refresh_firebase">Odśwież powiadomienia push</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
+    <string name="use_group_mms">Grupowe wiadomości MMS</string>
+    <string name="auto_save_media">Automatyczne zapisywanie załączników</string>
+    <string name="auto_save_media_summary">Po odebraniu wiadomości MMS automatycznie zapisuje załączniki w systemowym folderze pobierania</string>
     <string name="apn_configuration">Konfiguracja APN</string>
     <string name="override_system_apn">Pomiń systemowe APNy</string>
     <string name="mmsc_url">URL MMSC</string>
@@ -409,6 +417,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="test">Test</string>
     <string name="off">Wyłącz</string>
     <string name="on">Włączony</string>
+    <string name="rate_it">Oceń aplikacje!</string>
+    <string name="love_pulse_question">Lubisz Pulse?</string>
     <!-- Times -->
     <string name="one_second">1 sekunda</string>
     <string name="three_seconds">Trzy sekundy</string>

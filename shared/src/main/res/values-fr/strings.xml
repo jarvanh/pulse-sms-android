@@ -305,6 +305,10 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
     <string name="strip_unicode">Remplacer l\'Unicode</string>
     <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants</string>
+    <string name="notification_actions">Actions depuis les notifications</string>
+    <string name="notification_actions_summary">Trois actions maximales par notification.</string>
+    <string name="mms_download_directory">Dossier de téléchargement des médias</string>
+    <string name="refresh_firebase">Actualiser les notifications push</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
     <string name="apn_configuration">Configuration des APN</string>

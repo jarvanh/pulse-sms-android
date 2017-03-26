@@ -129,7 +129,7 @@
     <string name="save">Сохранить</string>
     <string name="share">Поделиться</string>
     <string name="share_content">Поделиться содержимым...</string>
-    <string name="saved">Сохранить в папку Загрузки!</string>
+    <string name="saved">Сохранено в папку загрузок!</string>
     <string name="failed_to_save">Не удалось сохранить</string>
     <string name="start_recording_audio">Нажмите кнопку, чтобы начать запись!</string>
     <string name="audio_recording_error">Возникла ошибка :(</string>
@@ -252,6 +252,7 @@
     <string name="group_name">Имя группы</string>
     <string name="notification_settings">Уведомления</string>
     <string name="repeat_interval">Повтор</string>
+    <string name="heads_up">Всплывающее окно</string>
     <string name="repeat_never">Никогда</string>
     <string name="repeat_one_min">Каждую минуту</string>
     <string name="repeat_five_mins">Каждые 5 минут</string>
@@ -322,8 +323,17 @@
     <string name="strip_unicode">Не использовать Unicode</string>
     <string name="strip_unicode_summary">Специальные символы будут убраны из отправляемого сообщения</string>
     <string name="giffgaff_delivery">Отчёт о доставке Giffgaff</string>
+    <string name="notification_actions">Быстрые действия в уведомлениях</string>
+    <string name="notification_actions_summary">Можно включить не более трёх быстрых действий в уведомлениях</string>
+    <string name="mms_download_directory">Папка загрузки медиафайлов</string>
+    <string name="refresh_firebase">Обновить пуш-уведомления</string>
+    <string name="refresh_firebase_summary">Сообщения не отправляются на это устройство? Повторите после использования этой опции.</string>
+    <string name="refreshing_notifications">Обновляем уведомления...</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Максимальный размер изображения</string>
+    <string name="use_group_mms">Использовать групповые MMS</string>
+    <string name="auto_save_media">Автосохранение медиафайлов</string>
+    <string name="auto_save_media_summary">Автоматически сохранять содержимое MMS в папке Загрузки при получении.</string>
     <string name="apn_configuration">Настройка APN</string>
     <string name="override_system_apn">Свои настройки APN</string>
     <string name="mmsc_url">MMSC URL</string>
@@ -407,6 +417,10 @@
     <string name="test">Тест</string>
     <string name="off">Не включать</string>
     <string name="on">Включать</string>
+    <string name="rate_it">Оценить!</string>
+    <string name="love_pulse_question">Понравился Pulse?</string>
+    <string name="give_a_rating">Оцените приложение или поделитесь им с вашими друзьями!\n\nВаша оценка на 5 звезд согреет моё сердце :)</string>
+    <string name="share_promo">Привет! Мне очень понравилось переписываться через Pulse! Попробуй и ты, по это ссылке: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
     <string name="one_second">1 секунда</string>
     <string name="three_seconds">3 секунды</string>

@@ -239,6 +239,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="group_name">Gruppenname</string>
     <string name="notification_settings">Benachrichtigungen</string>
     <string name="repeat_interval">Benachrichtigung wiederholen</string>
+    <string name="heads_up">Heads Up</string>
     <string name="repeat_never">Nie</string>
     <string name="repeat_one_min">Jede Minute</string>
     <string name="repeat_five_mins">Alle fünf Minuten</string>
@@ -309,8 +310,17 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt."</string>
     <string name="strip_unicode">Unicode-Zeichen entfernen</string>
     <string name="strip_unicode_summary">Diese Zeichen werden aus ausgehenden Nachrichten entfernt.</string>
     <string name="giffgaff_delivery">Giffgaff-Zustellberichte</string>
+    <string name="notification_actions">Benachrichtigungsaktionen</string>
+    <string name="notification_actions_summary">Maximal drei Aktionen können auf eine Benachrichtigung angewendet werden</string>
+    <string name="mms_download_directory">Mediendownload-Ordner</string>
+    <string name="refresh_firebase">Pushbenachrichtigungen aktualisieren</string>
+    <string name="refresh_firebase_summary">Nachrichten erscheinen nicht auf diesem Gerät? Versuchen Sie es erneut, nachdem Sie diese Option gewählt haben.</string>
+    <string name="refreshing_notifications">Benachrichtigungs-Token wird erneuert...</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximale Bildgröße</string>
+    <string name="use_group_mms">Nutze Gruppen-MMS</string>
+    <string name="auto_save_media">Medien automatisch speichern</string>
+    <string name="auto_save_media_summary">Speichere alle MMS-Medien nach dem Empfang automatisch in den /Downloads-Ordner</string>
     <string name="apn_configuration">APN Konfiguration</string>
     <string name="override_system_apn">System-APN-Einstellungen überschreiben</string>
     <string name="mmsc_url">MMSC URL</string>
@@ -395,6 +405,11 @@ jetzt ausprobieren!</string>
     <string name="test">Test</string>
     <string name="off">Aus</string>
     <string name="on">Ein</string>
+    <string name="rate_it">Jetzt bewerten!</string>
+    <string name="love_pulse_question">Gefällt Ihnen Pulse?</string>
+    <string name="give_a_rating">Erzählen Sie Ihren Freunden von Pulse, oder hinterlassen Sie eine Bewertung!\n\n
+Ich würde mich sehr über eine 5-Sterne-Bewertung freuen! :)</string>
+    <string name="share_promo">Hey, ich liebe diese tolle neue SMS-App: Pulse! Probier sie jetzt aus: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
     <string name="one_second">Eine Sekunde</string>
     <string name="three_seconds">Drei Sekunden</string>
