@@ -55,6 +55,7 @@ import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener;
  */
 public class InitialLoadActivity extends AppCompatActivity implements ProgressUpdateListener {
 
+    public static final String UPLOAD_AFTER_SYNC = "upload_after_sync";
     private static final int SETUP_REQUEST = 54321;
 
     private Handler handler;
@@ -66,6 +67,10 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_load);
+
+        if (getIntent().getBooleanExtra(UPLOAD_AFTER_SYNC, false)) {
+            startUploadAfterSync = true;
+        }
 
         handler = new Handler();
         requestPermissions();
@@ -101,9 +106,11 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             Settings.get(this).forceUpdate();
 
             if (responseCode == RESULT_CANCELED) {
-                Account account = Account.get(this);
-                account.setDeviceId(null);
-                account.setPrimary(true);
+                if (!startUploadAfterSync) {
+                    Account account = Account.get(this);
+                    account.setDeviceId(null);
+                    account.setPrimary(true);
+                }
 
                 startDatabaseSync();
             } else if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
@@ -146,46 +153,33 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void startDatabaseSync() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Context context = getApplicationContext();
-                long startTime = System.currentTimeMillis();
+        new Thread(() -> {
+            final Context context = getApplicationContext();
+            long startTime = System.currentTimeMillis();
 
-                String myName = getName();
-                String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
+            String myName = getName();
+            String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
-                final Account account = Account.get(context);
-                account.setName(myName);
-                account.setPhoneNumber(myPhoneNumber);
+            final Account account = Account.get(context);
+            account.setName(myName);
+            account.setPhoneNumber(myPhoneNumber);
 
-                DataSource source = DataSource.getInstance(context);
-                source.open();
+            DataSource source = DataSource.getInstance(context);
+            source.open();
 
-                List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
-                source.insertConversations(conversations, context, InitialLoadActivity.this);
+            List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
+            source.insertConversations(conversations, context, InitialLoadActivity.this);
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setIndeterminate(true);
-                    }
-                });
-                
-                List<Contact> contacts = ContactUtils.queryContacts(context, source);
-                source.insertContacts(contacts, null);
-                source.close();
+            handler.post(() -> progress.setIndeterminate(true));
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    close();
-                    }
-                }, 5000);
+            List<Contact> contacts = ContactUtils.queryContacts(context, source);
+            source.insertContacts(contacts, null);
+            source.close();
 
-                Log.v("initial_load", "load took " +
-                        (System.currentTimeMillis() - startTime) + " ms");
-            }
+            handler.postDelayed(() -> close(), 5000);
+
+            Log.v("initial_load", "load took " +
+                    (System.currentTimeMillis() - startTime) + " ms");
         }).start();
     }
 

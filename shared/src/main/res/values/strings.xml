@@ -318,9 +318,11 @@
         everything else with it? You can always sign up again later!</string>
     <string name="change_subscription">Change Subscription</string>
     <string name="cancel_on_the_play_store">Cancel and view your subscription on the Play Store</string>
-    <string name="resync_account">Resync Account</string>
+    <string name="resync_account">Resync Messages</string>
     <string name="resync_account_summary">Missing messages? Use this to bring this device up to date
         with what is on your primary device.</string>
+    <string name="resync_account_summary_phone">This will clear your account, and refresh it with
+        what is currently in your internal SMS database.</string>
     <string name="resync_account_confirmation">This will delete all messages from this device, and
         start with a clean copy of what is currently on your primary device. Are you sure this is what you want?</string>
     <string name="normalize_color_scheme">Or, you can choose a single color that you want to

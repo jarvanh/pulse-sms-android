@@ -42,6 +42,9 @@ public interface AccountService {
     @POST("accounts/remove/{account_id}")
     Object remove(@Path("account_id") String accountId);
 
+    @POST("accounts/clean/{account_id}")
+    Object clean(@Path("account_id") String accountId);
+
     @GET("accounts/count")
     AccountCountResponse count(@Query("account_id") String accountId);
 

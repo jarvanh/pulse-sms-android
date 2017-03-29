@@ -33,6 +33,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.Date;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.OnBoardingPayActivity;
 import xyz.klinker.messenger.api.implementation.Account;
@@ -242,7 +243,16 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_resync_account));
 
         if (Account.get(getActivity()).primary) {
-            getPreferenceScreen().removePreference(preference);
+            preference.setSummary(R.string.resync_account_summary_phone);
+            preference.setOnPreferenceClickListener(preference1 -> {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.resync_account_confirmation)
+                        .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> cleanAccount())
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+
+                return true;
+            });
         } else {
             preference.setOnPreferenceClickListener(preference1 -> {
                 new AlertDialog.Builder(getActivity())
@@ -337,6 +347,34 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
         // after a login, lets query the subscription status and write it to their account for them
         getActivity().startService(new Intent(getActivity(), SimpleSubscriptionCheckService.class));
+    }
+
+    private void cleanAccount() {
+        final Account account = Account.get(getActivity());
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.preparing_new_account));
+        dialog.show();
+
+        new Thread(() -> {
+            DataSource source = DataSource.getInstance(getActivity());
+            source.open();
+            source.clearTables();
+            source.close();
+
+            new ApiUtils().cleanAccount(account.accountId);
+
+            getActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+
+                Intent login = new Intent(getActivity(), InitialLoadActivity.class);
+                login.putExtra(InitialLoadActivity.UPLOAD_AFTER_SYNC, true);
+                login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
+                startActivity(login);
+                getActivity().finish();
+            });
+        }).start();
     }
 
     private void returnToConversationsAfterLogin() {

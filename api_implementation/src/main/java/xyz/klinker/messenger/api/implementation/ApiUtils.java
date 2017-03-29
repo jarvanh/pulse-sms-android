@@ -147,6 +147,13 @@ public class ApiUtils {
     }
 
     /**
+     * Cleans all the database tables, for the account, on the server
+     */
+    public void cleanAccount(final String accountId) {
+        executeWithRetry(() -> api.account().clean(accountId), "cleaned account");
+    }
+
+    /**
      * Registers your device as a new device on the server.
      */
     public Integer registerDevice(String accountId, String info, String name,

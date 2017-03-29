@@ -18,7 +18,8 @@
 
     <version
         name="2.2.0"
-        description="March 26th, 2017">
+        description="March 30th, 2017">
+        <text>Option to forcefully refresh your Pulse account with what is on the phone's internal SMS/MMS database (Under "My Account" on your phone)</text>
         <text>Option to pick how many messages before an SMS should be converted to an MMS message</text>
         <text>Improvements to launcher shortcuts</text>
         <text>Improvements to the quick reply for Lollipop and Marshmallow devices</text>

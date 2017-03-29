@@ -99,12 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!skipLogin || !hasTelephony(this)) {
             // we should only skip the login if they are on a phone. A tablet should never be able to login
             setUpInitialLayout();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    circularRevealIn();
-                }
-            }, 100);
+            new Handler().postDelayed(() -> circularRevealIn(), 100);
         } else {
             onBackPressed();
         }
@@ -136,26 +131,9 @@ public class LoginActivity extends AppCompatActivity {
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
         }
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signup();
-            }
-        });
-
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        login.setOnClickListener(view -> login());
+        signup.setOnClickListener(view -> signup());
+        skip.setOnClickListener(view -> onBackPressed());
     }
 
     public static boolean hasTelephony(Activity activity) {
@@ -170,41 +148,30 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.login_password);
         forgotPassword = findViewById(R.id.forgot_password);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                performLogin();
+        fab.setOnClickListener(view -> performLogin());
+
+        password.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            boolean handled = false;
+
+            if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                    keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
+                    actionId == EditorInfo.IME_ACTION_DONE) {
+                fab.performClick();
+                handled = true;
             }
+
+            return handled;
         });
 
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                boolean handled = false;
+        forgotPassword.setOnClickListener(view -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://messenger.klinkerapps.com/forgot_password.html"));
 
-                if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
-                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
-                        actionId == EditorInfo.IME_ACTION_DONE) {
-                    fab.performClick();
-                    handled = true;
-                }
-
-                return handled;
-            }
-        });
-
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://messenger.klinkerapps.com/forgot_password.html"));
-                
-                try {
-                    startActivity(browserIntent);
-                } catch(Exception e) {
-                    // no browser found
-                    Toast.makeText(view.getContext(), "No browser app found.", Toast.LENGTH_SHORT).show();
-                }
+            try {
+                startActivity(browserIntent);
+            } catch(Exception e) {
+                // no browser found
+                Toast.makeText(view.getContext(), "No browser app found.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -224,12 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.signup_phone_number);
         errorHint = (TextView) findViewById(R.id.signup_error_hint);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                performSignup();
-            }
-        });
+        fab.setOnClickListener(view -> performSignup());
 
         fab.hide();
         attachSignupTextWatcher(email);
@@ -250,30 +212,27 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ApiUtils utils = new ApiUtils();
-                final LoginResponse response = utils.login(email.getText().toString(),
-                        password.getText().toString());
+        new Thread(() -> {
+            ApiUtils utils = new ApiUtils();
+            final LoginResponse response = utils.login(email.getText().toString(),
+                    password.getText().toString());
 
-                if (response == null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            setResult(RESULT_CANCELED);
-                            Toast.makeText(getApplicationContext(), R.string.api_login_error,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    AccountEncryptionCreator encryptionCreator =
-                            new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
-                    encryptionCreator.createAccountEncryptionFromLogin(response);
+            if (response == null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        setResult(RESULT_CANCELED);
+                        Toast.makeText(getApplicationContext(), R.string.api_login_error,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                AccountEncryptionCreator encryptionCreator =
+                        new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
+                encryptionCreator.createAccountEncryptionFromLogin(response);
 
-                    addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
-                }
+                addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
             }
         }).start();
     }
@@ -283,33 +242,27 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ApiUtils utils = new ApiUtils();
-                final SignupResponse response = utils.signup(email.getText().toString(),
-                        password.getText().toString(), name.getText().toString(),
-                        phoneNumber.getText().toString());
+        new Thread(() -> {
+            ApiUtils utils = new ApiUtils();
+            final SignupResponse response = utils.signup(email.getText().toString(),
+                    password.getText().toString(), name.getText().toString(),
+                    phoneNumber.getText().toString());
 
-                if (response == null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                            setResult(RESULT_CANCELED);
-                            Toast.makeText(getApplicationContext(), R.string.api_email_taken,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    AccountEncryptionCreator encryptionCreator =
-                            new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
-                    encryptionCreator.createAccountEncryptionFromSignup(
-                            name.getText().toString(), phoneNumber.getText().toString(),
-                            response);
+            if (response == null) {
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    setResult(RESULT_CANCELED);
+                    Toast.makeText(getApplicationContext(), R.string.api_email_taken,
+                            Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                AccountEncryptionCreator encryptionCreator =
+                        new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
+                encryptionCreator.createAccountEncryptionFromSignup(
+                        name.getText().toString(), phoneNumber.getText().toString(),
+                        response);
 
-                    addDevice(utils, response.accountId, true, true);
-                }
+                addDevice(utils, response.accountId, true, true);
             }
         }).start();
     }
@@ -392,14 +345,11 @@ public class LoginActivity extends AppCompatActivity {
         account.setDeviceId(null);
         account.setPrimary(false);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), R.string.api_device_error,
-                        Toast.LENGTH_SHORT).show();
+        runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), R.string.api_device_error,
+                    Toast.LENGTH_SHORT).show();
 
-                recreate();
-            }
+            recreate();
         });
     }
 
