@@ -54,7 +54,7 @@ public class DynamicShortcutUtils {
                         .setRank(infos.size())
                         .setShortLabel(conversation.title.isEmpty() ? "No title" : conversation.title)
                         .setCategories(category)
-                        .setIcon(getIcon(conversation.imageUri, conversation.colors.color))
+                        .setIcon(getIcon(conversation))
                         .build();
 
                 infos.add(info);
@@ -64,15 +64,17 @@ public class DynamicShortcutUtils {
         }
     }
 
-    private Icon getIcon(String uri, int backgroundColor) {
+    private Icon getIcon(Conversation conversation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(context, uri));
+            Bitmap image = ImageUtils.clipToCircle(ImageUtils
+                    .getBitmap(context, conversation.imageUri));
 
-            Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888);
-            color.eraseColor(backgroundColor);
-            color = ImageUtils.clipToCircle(color);
-
-            return image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+            if (image != null) {
+                return Icon.createWithBitmap(image);
+            } else {
+                Bitmap color = ContactImageCreator.getLetterPicture(context, conversation);
+                return Icon.createWithBitmap(color);
+            }
         } else {
             return null;
         }
