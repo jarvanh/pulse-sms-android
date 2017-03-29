@@ -259,7 +259,9 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     private void initFirebaseRefreshPreference() {
         Preference preference = findPreference(getString(R.string.pref_refresh_firebase));
         preference.setOnPreferenceClickListener(preference1 -> {
-            TokenUtil.refreshToken(getActivity());
+            new Thread(() -> {
+                TokenUtil.refreshToken(getActivity());
+            }).start();
             Toast.makeText(getActivity(), R.string.refreshing_notifications, Toast.LENGTH_SHORT).show();
             return true;
         });

@@ -325,13 +325,10 @@ public class LoginActivity extends AppCompatActivity {
             account.setDeviceId(Long.toString(deviceId));
             account.setPrimary(primary);
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-                    setResult(deviceSync ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
-                    close();
-                }
+            runOnUiThread(() -> {
+                dialog.dismiss();
+                setResult(deviceSync ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
+                close();
             });
         } else {
             DeviceBody[] devices = utils.getDevices(accountId);

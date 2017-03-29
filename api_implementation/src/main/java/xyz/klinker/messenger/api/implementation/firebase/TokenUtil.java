@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.api.implementation.firebase;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -16,14 +17,23 @@ public class TokenUtil {
         Log.v(TAG, "starting refresh");
 
         final Account account = Account.get(context);
-        final String accountId = account.accountId;
         final String token = FirebaseInstanceId.getInstance().getToken();
 
         Log.v(TAG, "token: " + token);
         if (account.exists() && token != null) {
             Log.v(TAG, "refreshing on server");
-            new Thread(() -> new ApiUtils().updateDevice(accountId, Long.parseLong(account.deviceId),
-                    null, token)).start();
+            new Thread(() -> {
+                ApiUtils api = new ApiUtils();
+
+                api.removeDevice(account.accountId, Integer.parseInt(account.deviceId));
+                Integer deviceId = api.registerDevice(account.accountId,
+                        Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
+                        account.primary, FirebaseInstanceId.getInstance().getToken());
+
+                if (deviceId != null) {
+                    account.setDeviceId(deviceId.toString());
+                }
+            }).start();
         }
 
         FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
