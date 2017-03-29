@@ -54,7 +54,7 @@ public class MmsConfigurationFragment extends PreferenceFragment {
     private void initConvertToMMS() {
         findPreference(getString(R.string.pref_convert_to_mms))
                 .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean convert = (boolean) o;
+                    String convert = (String) o;
                     new ApiUtils().updateConvertToMMS(Account.get(getActivity()).accountId,
                             convert);
                     return true;

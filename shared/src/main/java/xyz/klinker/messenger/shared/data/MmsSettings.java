@@ -43,6 +43,7 @@ public class MmsSettings {
     public String userAgentProfileUrl;
     public String userAgentProfileTagName;
 
+    public int numberOfMessagesBeforeMms;
     public long maxImageSize;
 
     private MmsSettings(final Context context) {
@@ -53,7 +54,6 @@ public class MmsSettings {
     protected void init(Context context) {
         SharedPreferences sharedPrefs = getSharedPrefs(context);
 
-        this.convertLongMessagesToMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_convert_to_mms), true);
         this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true);
         this.autoSaveMedia = sharedPrefs.getBoolean(context.getString(R.string.pref_auto_save_media), false);
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false);
@@ -97,9 +97,24 @@ public class MmsSettings {
                 this.maxImageSize = 900 * 1024;
                 break;
         }
+
+        String convertToMmsAfterXMessages = sharedPrefs.getString(context.getString(R.string.pref_convert_to_mms), "3");
+        if (convertToMmsAfterXMessages.equals("0")) {
+            this.convertLongMessagesToMMS = false;
+            this.numberOfMessagesBeforeMms = -1;
+        } else {
+            this.convertLongMessagesToMMS = true;
+            this.numberOfMessagesBeforeMms = Integer.parseInt(convertToMmsAfterXMessages);
+        }
     }
 
-    @VisibleForTesting
+    /**
+     * Forces a reload of all MMS Settings data.
+     */
+    public void forceUpdate(Context context) {
+        init(context);
+    }
+
     public SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }

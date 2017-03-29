@@ -72,6 +72,7 @@ public class SendUtils {
         settings.setDeliveryReports(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .deliveryReports);
         settings.setSendLongAsMms(mmsSettings.convertLongMessagesToMMS);
+        settings.setSendLongAsMmsAfter(mmsSettings.numberOfMessagesBeforeMms);
         settings.setGroup(mmsSettings.groupMMS);
         settings.setStripUnicode(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .stripUnicode);

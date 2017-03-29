@@ -18,6 +18,7 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
+import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.CleanupOldMessagesService;
 import xyz.klinker.messenger.shared.service.ContactSyncService;
@@ -44,15 +45,17 @@ public class UpdateUtils {
 
         Account account = Account.get(context);
         Settings settings = Settings.get(context);
-        if (account.exists() && account.primary && sharedPreferences.getBoolean("1.13.0", true)) {
-            sharedPreferences.edit().putBoolean("1.13.0", false).apply();
+        MmsSettings mmsSettings = MmsSettings.get(context);
 
-            new Thread(() -> {
-                ApiUtils utils = new ApiUtils();
-                utils.updateRounderBubbles(account.accountId, settings.rounderBubbles);
-                utils.updateBaseTheme(account.accountId, settings.baseThemeString);
-                utils.updateGlobalThemeColor(account.accountId, settings.themeColorString);
-            }).start();
+        if (sharedPreferences.getBoolean("v2.2.0", true)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit()
+                    .putBoolean("v2.2.0", false);
+
+            if (!mmsSettings.convertLongMessagesToMMS) {
+                editor.putInt(context.getString(R.string.pref_convert_to_mms), 0);
+            }
+
+            editor.apply();
         }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);

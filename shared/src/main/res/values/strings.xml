@@ -335,6 +335,10 @@
     <string name="font_size_extra_large">Extra Large</string>
     <string name="advanced">Advanced</string>
     <string name="send_as_mms">Convert to MMS</string>
+    <string name="after_one_message">After one message</string>
+    <string name="after_two_messages">After two messages</string>
+    <string name="after_three_messages">After three messages</string>
+    <string name="after_four_messages">After four messages</string>
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>

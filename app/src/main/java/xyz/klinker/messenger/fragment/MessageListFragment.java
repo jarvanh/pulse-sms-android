@@ -124,6 +124,7 @@ import xyz.klinker.messenger.shared.util.DualSimApplication;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
+import xyz.klinker.messenger.shared.util.MessageCountHelper;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -680,36 +681,11 @@ public class MessageListFragment extends Fragment implements
 
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP)) {
-            int[] count;
+            Settings settings = Settings.get(getActivity());
+            MmsSettings mmsSettings = MmsSettings.get(getActivity());
+            String text = messageEntry.getText().toString();
 
-            String entry = messageEntry.getText().toString();
-            if (Settings.get(getActivity()).stripUnicode) {
-                entry = StripAccents.stripAccents(entry);
-            }
-
-            try {
-                count = SmsMessage.calculateLength(entry, false);
-            } catch (Exception e) {
-                return;
-            }
-
-            boolean convertToMMS = MmsSettings.get(getActivity()).convertLongMessagesToMMS;
-
-            if ((count[0] > 1 && count[0] < 4) || (count[0] == 1 && count[2] < 30)) {
-                //noinspection AndroidLintSetTextI18n
-                counter.setText(count[0] + "/" + count[2]);
-            } else {
-                if (count[0] >= 4) {
-                    if (convertToMMS) {
-                        counter.setText(null);
-                    } else {
-                        //noinspection AndroidLintSetTextI18n
-                        counter.setText(count[0] + "/" + count[2]);
-                    }
-                } else {
-                    counter.setText(null);
-                }
-            }
+            counter.setText(MessageCountHelper.getMessageCounterText(settings, mmsSettings, text));
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }

@@ -908,9 +908,9 @@ public class ApiUtils {
     /**
      * Update the convert to MMS setting, for long messages
      */
-    public void updateConvertToMMS(final String accountId, final boolean convert) {
+    public void updateConvertToMMS(final String accountId, final String convert) {
         if (active && accountId != null) {
-            updateSetting(accountId, "convert_to_mms", "boolean", convert);
+            updateSetting(accountId, "sms_to_mms_message_conversion_count", "string", convert);
         }
     }
 

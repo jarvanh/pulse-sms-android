@@ -8,15 +8,17 @@
         android:entryValues="@array/mms_size_values"
         android:defaultValue="500_kb"/>
 
-    <SwitchPreference
-        android:key="@string/pref_group_mms"
-        android:title="@string/use_group_mms"
-        android:defaultValue="true" />
-
-    <SwitchPreference
+    <ListPreference
         android:key="@string/pref_convert_to_mms"
         android:title="@string/send_as_mms"
         android:summary="@string/send_as_mms_summary"
+        android:entries="@array/convert_to_mms"
+        android:entryValues="@array/convert_to_mms_values"
+        android:defaultValue="3" />
+
+    <SwitchPreference
+        android:key="@string/pref_group_mms"
+        android:title="@string/use_group_mms"
         android:defaultValue="true" />
 
     <SwitchPreference

@@ -71,7 +71,6 @@
     <string name="pref_sound_effects" translatable="false">sound_effects</string>
     <string name="pref_seen_convo_nav_tooltip" translatable="false">seen_convo_nav_tooltip</string>
     <string name="pref_snooze" translatable="false">snooze</string>
-    <string name="pref_convert_to_mms" translatable="false">convert_to_mms</string>
     <string name="pref_alert_types" translatable="false">alert_types</string>
     <string name="pref_wake_screen" translatable="false">wake_screen</string>
     <string name="pref_heads_up" translatable="false">heads_up</string>
@@ -87,6 +86,7 @@
     <string name="pref_keyboard_layout" translatable="false">keyboard_layout</string>
 
     <string name="pref_mms_size" translatable="false">mms_size_limit</string>
+    <string name="pref_convert_to_mms" translatable="false">sms_to_mms_message_conversion_count</string>
     <string name="pref_group_mms" translatable="false">group_mms</string>
     <string name="pref_auto_save_media" translatable="false">auto_save_media</string>
     <string name="pref_mms_save_location" translatable="false">mms_save_location</string>
