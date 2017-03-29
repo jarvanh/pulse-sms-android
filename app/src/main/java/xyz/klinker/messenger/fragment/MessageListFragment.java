@@ -1261,12 +1261,7 @@ public class MessageListFragment extends Fragment implements
     private void attachPermissionRequest(final int permissionRequestCode, final String... permissions) {
         getLayoutInflater(null).inflate(R.layout.permission_request, attachHolder, true);
         Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
-        request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestPermissions(permissions, permissionRequestCode);
-            }
-        });
+        request.setOnClickListener(view -> requestPermissions(permissions, permissionRequestCode));
     }
 
     @Override

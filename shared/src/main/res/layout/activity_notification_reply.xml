@@ -103,7 +103,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:hint="@null"
-                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
                     android:imeOptions="actionSend|flagNoExtractUi"
                     android:background="@null"/>
 

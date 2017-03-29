@@ -51,8 +51,11 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.ReplyService;
+import xyz.klinker.messenger.shared.util.ContactImageCreator;
+import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
+import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
@@ -252,7 +255,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     private void showContactImage() {
         if (conversation.imageUri == null) {
-            if (Settings.get(this).useGlobalThemeColor) {
+            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+                image.setImageBitmap(ContactImageCreator.getLetterPicture(this, conversation));
+            } else if (Settings.get(this).useGlobalThemeColor) {
                 image.setImageDrawable(new ColorDrawable(Settings.get(this).globalColorSet.color));
             } else {
                 image.setImageDrawable(new ColorDrawable(conversation.colors.color));
@@ -297,6 +302,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
             sendButton.postDelayed(() -> onBackPressed(), 1000);
         });
 
+
+        new KeyboardLayoutHelper(this).applyLayout(messageInput);
         messageInput.setHint(getString(R.string.type_message));
         messageInput.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }

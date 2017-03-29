@@ -6,14 +6,20 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.TypedValue;
 
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 
 public class ContactImageCreator {
 
     public static Bitmap getLetterPicture(Context context, Conversation conversation) {
+        int backgroundColor = conversation.colors.color;
+        if (Settings.get(context).useGlobalThemeColor) {
+            backgroundColor = Settings.get(context).globalColorSet.color;
+        }
+
         if (conversation.title.length() == 0 || conversation.title.contains(", ")) {
             Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888);
-            color.eraseColor(conversation.colors.color);
+            color.eraseColor(backgroundColor);
             return ImageUtils.clipToCircle(color);
         }
 
@@ -28,7 +34,7 @@ public class ContactImageCreator {
         }
 
         Canvas canvas = new Canvas(image);
-        canvas.drawColor(conversation.colors.color);
+        canvas.drawColor(backgroundColor);
 
         Paint textPaint = new Paint();
         textPaint.setStyle(Paint.Style.FILL);
