@@ -43,7 +43,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
 
         getFragmentManager().beginTransaction()
-                .add(android.R.id.content, fragment)
+                .replace(android.R.id.content, fragment)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
