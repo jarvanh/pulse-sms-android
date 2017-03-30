@@ -1,1 +1,1 @@
-The latest version of Pulse comes with a few awesome new features! Customize which buttons appear on the notifications, an option to disable the heads up notification an option to pick the location that media gets saved to, and a new notification icon!
+The latest version of adds the ability to forcefully update your online account to what is on your phone, adds an option to pick how many SMS messages are sent before converting the text to an MMS, improves launcher shortcuts, and comes with a host of bug fixes. Enjoy the update!
