@@ -513,11 +513,6 @@ public class ConversationListFragment extends Fragment
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
         }
 
-        if (getActivity() != null)
-                getActivity().getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
-        if (getArguments() != null)
-                getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
-
         try {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.message_list_container, messageListFragment)
@@ -533,6 +528,11 @@ public class ConversationListFragment extends Fragment
         
         checkUnreadCount();
         layoutManager.setCanScroll(false);
+
+        if (getActivity() != null)
+            getActivity().getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+        if (getArguments() != null)
+            getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
         
         return true;
     }
@@ -545,14 +545,18 @@ public class ConversationListFragment extends Fragment
         long contractedId = messageListFragment.getConversationId();
 
         try {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .remove(messageListFragment)
-                    .commit();
+            new Handler().postDelayed(() -> {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(messageListFragment)
+                        .commit();
+
+                messageListFragment = null;
+            }, AnimationUtils.EXPAND_CONVERSATION_DURATION);
+
+            messageListFragment.getView().animate().alpha(0f).setDuration(100).start();
         } catch (Exception e) {
 
         }
-
-        messageListFragment = null;
 
         int color = getResources().getColor(R.color.colorPrimaryDark);
         ColorUtils.adjustStatusBarColor(color, getActivity());

@@ -331,97 +331,84 @@ public class MessengerActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Account account = Account.get(getApplicationContext());
-                try {
-                    ((TextView) findViewById(R.id.drawer_header_my_name))
-                            .setText(account.myName);
-                    ((TextView) findViewById(R.id.drawer_header_my_phone_number))
-                            .setText(PhoneNumberUtils.format(account.myPhoneNumber));
+        navigationView.postDelayed(() -> {
+            Account account = Account.get(getApplicationContext());
+            try {
+                ((TextView) findViewById(R.id.drawer_header_my_name))
+                        .setText(account.myName);
+                ((TextView) findViewById(R.id.drawer_header_my_phone_number))
+                        .setText(PhoneNumberUtils.format(account.myPhoneNumber));
 
-                    // change the text to
-                    if (Account.get(MessengerActivity.this).accountId == null) {
-                        navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
-                    }
-
-                    initSnooze();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
+                // change the text to
+                if (Account.get(MessengerActivity.this).accountId == null) {
+                    navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
                 }
+
+                initSnooze();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }, 250);
     }
 
     private void initSnooze() {
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
-        snooze.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu menu = new PopupMenu(MessengerActivity.this, view);
-                boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
-                        System.currentTimeMillis();
-                menu.inflate(currentlySnoozed ? R.menu.snooze_off : R.menu.snooze);
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        long snoozeTil;
-                        switch (item.getItemId()) {
-                            case R.id.menu_snooze_off:
-                                snoozeTil = System.currentTimeMillis();
-                                break;
-                            case R.id.menu_snooze_1:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60);
-                                break;
-                            case R.id.menu_snooze_2:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 2);
-                                break;
-                            case R.id.menu_snooze_4:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 4);
-                                break;
-                            case R.id.menu_snooze_8:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 8);
-                                break;
-                            case R.id.menu_snooze_24:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 24);
-                                break;
-                            case R.id.menu_snooze_72:
-                                snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 72);
-                                break;
-                            case R.id.menu_snooze_custom:
-                                CustomSnoozeFragment fragment = new CustomSnoozeFragment();
-                                fragment.show(getSupportFragmentManager(), "");
-                                // fall through to the default
-                            default:
-                                snoozeTil = System.currentTimeMillis();
-                                break;
-                        }
+        snooze.setOnClickListener(view -> {
+            PopupMenu menu = new PopupMenu(MessengerActivity.this, view);
+            boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
+                    System.currentTimeMillis();
+            menu.inflate(currentlySnoozed ? R.menu.snooze_off : R.menu.snooze);
+            menu.setOnMenuItemClickListener(item -> {
+                long snoozeTil;
+                switch (item.getItemId()) {
+                    case R.id.menu_snooze_off:
+                        snoozeTil = System.currentTimeMillis();
+                        break;
+                    case R.id.menu_snooze_1:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60);
+                        break;
+                    case R.id.menu_snooze_2:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 2);
+                        break;
+                    case R.id.menu_snooze_4:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 4);
+                        break;
+                    case R.id.menu_snooze_8:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 8);
+                        break;
+                    case R.id.menu_snooze_24:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 24);
+                        break;
+                    case R.id.menu_snooze_72:
+                        snoozeTil = System.currentTimeMillis() + (1000 * 60 * 60 * 72);
+                        break;
+                    case R.id.menu_snooze_custom:
+                        CustomSnoozeFragment fragment = new CustomSnoozeFragment();
+                        fragment.show(getSupportFragmentManager(), "");
+                        // fall through to the default
+                    default:
+                        snoozeTil = System.currentTimeMillis();
+                        break;
+                }
 
-                        Settings.get(getApplicationContext()).setValue(
-                                getString(R.string.pref_snooze), snoozeTil);
-                        new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
-                                snoozeTil);
+                Settings.get(getApplicationContext()).setValue(
+                        getString(R.string.pref_snooze), snoozeTil);
+                new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
+                        snoozeTil);
 
-                        snoozeIcon();
+                snoozeIcon();
 
-                        return true;
-                    }
-                });
+                return true;
+            });
 
-                menu.show();
-            }
+            menu.show();
         });
     }
 
     private void initFab() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ComposeActivity.class));
-            }
-        });
+        fab.setOnClickListener(view ->
+                startActivity(new Intent(getApplicationContext(), ComposeActivity.class)));
     }
 
     private void configureGlobalColors() {
@@ -448,15 +435,12 @@ public class MessengerActivity extends AppCompatActivity
 
             navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
             navigationView.setItemTextColor(new ColorStateList(states, textColors));
-            navigationView.post(new Runnable() {
-                @Override
-                public void run() {
-                    ColorUtils.adjustStatusBarColor(settings.globalColorSet.colorDark, MessengerActivity.this);
+            navigationView.post(() -> {
+                ColorUtils.adjustStatusBarColor(settings.globalColorSet.colorDark, MessengerActivity.this);
 
-                    View header = navigationView.findViewById(R.id.header);
-                    if (header != null) {
-                        header.setBackgroundColor(settings.globalColorSet.colorDark);
-                    }
+                View header = navigationView.findViewById(R.id.header);
+                if (header != null) {
+                    header.setBackgroundColor(settings.globalColorSet.colorDark);
                 }
             });
         }

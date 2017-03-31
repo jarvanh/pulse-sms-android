@@ -85,12 +85,9 @@ public class AnimationUtils {
                 itemView.getLayoutParams();
 
         ValueAnimator animator = ValueAnimator.ofInt(fromBottom, toBottom);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                params.bottomMargin = (int) valueAnimator.getAnimatedValue();
-                itemView.invalidate();
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            params.bottomMargin = (int) valueAnimator.getAnimatedValue();
+            itemView.invalidate();
         });
         animator.setInterpolator(interpolator);
         animator.setDuration(EXPAND_CONVERSATION_DURATION);
@@ -105,14 +102,11 @@ public class AnimationUtils {
                 activity.findViewById(R.id.toolbar).getHeight();
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
-        recyclerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                recyclerView.setTranslationY((int) valueAnimator.getAnimatedValue());
-                recyclerParams.height = originalHeight +
-                        (-1 * (int) valueAnimator.getAnimatedValue());
-                recyclerView.requestLayout();
-            }
+        recyclerAnimator.addUpdateListener(valueAnimator -> {
+            recyclerView.setTranslationY((int) valueAnimator.getAnimatedValue());
+            recyclerParams.height = originalHeight +
+                    (-1 * (int) valueAnimator.getAnimatedValue());
+            recyclerView.requestLayout();
         });
         recyclerAnimator.setInterpolator(interpolator);
         recyclerAnimator.setDuration(EXPAND_CONVERSATION_DURATION);
@@ -204,24 +198,15 @@ public class AnimationUtils {
                 activity.findViewById(R.id.toolbar).getHeight();
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
-        containerAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                fragmentContainer.setTranslationY((int) valueAnimator.getAnimatedValue());
-                containerParams.height = originalHeight +
-                        (-1 * (int) valueAnimator.getAnimatedValue());
-                fragmentContainer.requestLayout();
-            }
+        containerAnimator.addUpdateListener(valueAnimator -> {
+            fragmentContainer.setTranslationY((int) valueAnimator.getAnimatedValue());
+            containerParams.height = originalHeight +
+                    (-1 * (int) valueAnimator.getAnimatedValue());
+            fragmentContainer.requestLayout();
         });
         containerAnimator.setInterpolator(interpolator);
         containerAnimator.setDuration(PERIPHERAL_DURATION);
         containerAnimator.start();
-
-//        fab.animate().translationY(fabTranslate)
-//                .withLayer()
-//                .setDuration(PERIPHERAL_DURATION)
-//                .setInterpolator(interpolator)
-//                .setListener(null);
     }
 
     /**

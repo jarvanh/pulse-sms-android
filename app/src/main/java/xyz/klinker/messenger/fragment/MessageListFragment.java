@@ -275,83 +275,78 @@ public class MessageListFragment extends Fragment implements
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         sendBar = view.findViewById(R.id.send_bar);
         messageEntry = (ImageKeyboardEditText) view.findViewById(R.id.message_entry);
-        selectSim = view.findViewById(R.id.select_sim);
-        attach = (ImageButton) view.findViewById(R.id.attach);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         sendProgress = (ProgressBar) view.findViewById(R.id.send_progress);
-        counter = (TextView) view.findViewById(R.id.text_counter);
-        messageList = (RecyclerView) view.findViewById(R.id.message_list);
-        attachLayoutStub = (ViewStub) view.findViewById(R.id.attach_stub);
-        attachedImageHolder = view.findViewById(R.id.attached_image_holder);
-        attachedImage = (ImageView) view.findViewById(R.id.attached_image);
-        selectedImageCount = (TextView) view.findViewById(R.id.selected_images);
-        removeImage = view.findViewById(R.id.remove_image);
-        editImage = view.findViewById(R.id.edit_image);
 
-        messageEntry.setCommitContentListener(this);
-
-        dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
-        dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
-            @Override
-            public void onDragDismissed() {
-                new Handler().postDelayed(() -> {
-                    if (getActivity() != null) {
-                        getActivity().onBackPressed();
-                    }
-                }, keyboardOpen ? 300 : 100);
-                
-                dismissKeyboard();
-            }
-
-            @Override
-            public void onDrag(float elasticOffset, float elasticOffsetPixels,
-                               float rawOffset, float rawOffsetPixels) {
-
-            }
-        });
-
-        dragDismissFrameLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Rect r = new Rect();
-            dragDismissFrameLayout.getWindowVisibleDisplayFrame(r);
-            int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
-            int keypadHeight = screenHeight - r.bottom;
-
-            if (keypadHeight > screenHeight * 0.15) {
-                keyboardOpen = true;
-            } else {
-                keyboardOpen = false;
-            }
-        });
-
-        initSendbar();
-        initAttachHolder();
-        initToolbar();
-
-        if (bundle == null) {
-            initRecycler();
-        }
-
-        Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.globalColorSet.color);
-            send.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            messageEntry.setHighlightColor(settings.globalColorSet.colorAccent);
-        }
-
-        dismissNotification = true;
-        dismissNotification();
+        initNonDeferredComponents();
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
 
-        try {
-            new DualSimApplication(selectSim).apply(getConversationId());
-        } catch (Exception e) {
-            // just in case
-        }
+        new Handler().postDelayed(() -> {
+            selectSim = view.findViewById(R.id.select_sim);
+            attach = (ImageButton) view.findViewById(R.id.attach);
+            counter = (TextView) view.findViewById(R.id.text_counter);
+            messageList = (RecyclerView) view.findViewById(R.id.message_list);
+            attachLayoutStub = (ViewStub) view.findViewById(R.id.attach_stub);
+            attachedImageHolder = view.findViewById(R.id.attached_image_holder);
+            attachedImage = (ImageView) view.findViewById(R.id.attached_image);
+            selectedImageCount = (TextView) view.findViewById(R.id.selected_images);
+            removeImage = view.findViewById(R.id.remove_image);
+            editImage = view.findViewById(R.id.edit_image);
 
+            messageEntry.setCommitContentListener(this);
+
+            dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
+            dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
+                @Override
+                public void onDragDismissed() {
+                    new Handler().postDelayed(() -> {
+                        if (getActivity() != null) {
+                            getActivity().onBackPressed();
+                        }
+                    }, keyboardOpen ? 300 : 100);
+
+                    dismissKeyboard();
+                }
+
+                @Override
+                public void onDrag(float elasticOffset, float elasticOffsetPixels,
+                                   float rawOffset, float rawOffsetPixels) {
+
+                }
+            });
+
+            dragDismissFrameLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                Rect r = new Rect();
+                dragDismissFrameLayout.getWindowVisibleDisplayFrame(r);
+                int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    keyboardOpen = true;
+                } else {
+                    keyboardOpen = false;
+                }
+            });
+
+            initSendbar();
+            initAttachHolder();
+
+            if (bundle == null) {
+                initRecycler();
+            }
+
+            dismissNotification = true;
+            dismissNotification();
+
+            try {
+                new DualSimApplication(selectSim).apply(getConversationId());
+            } catch (Exception e) {
+                // just in case
+            }
+
+        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
 
         return view;
     }
@@ -468,15 +463,49 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
+    private void initNonDeferredComponents() {
+        initToolbar();
+
+        int accent = getArguments().getInt(ARG_COLOR_ACCENT);
+        send.setBackgroundTintList(ColorStateList.valueOf(accent));
+        messageEntry.setHighlightColor(accent);
+
+        String firstName;
+        try {
+            firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
+        } catch (Exception e) {
+            // no title
+            firstName = "";
+        }
+
+        if (!getArguments().getBoolean(ARG_IS_GROUP) && !firstName.isEmpty()) {
+            String hint = getResources().getString(R.string.type_message_to, firstName);
+            messageEntry.setHint(hint);
+        } else {
+            messageEntry.setHint(R.string.type_message);
+        }
+
+        Settings settings = Settings.get(getActivity());
+        if (settings.useGlobalThemeColor) {
+            toolbar.setBackgroundColor(settings.globalColorSet.color);
+            send.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
+            messageEntry.setHighlightColor(settings.globalColorSet.colorAccent);
+        }
+    }
+
     private void initToolbar() {
         String name = getArguments().getString(ARG_TITLE);
         int color = getArguments().getInt(ARG_COLOR);
         int colorAccent = getArguments().getInt(ARG_COLOR_ACCENT);
+        int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
 
         toolbar.setTitle(name);
         toolbar.setBackgroundColor(color);
 
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
+            // phone
             DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
             if (drawerLayout != null) {
                 drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -499,24 +528,33 @@ public class MessageListFragment extends Fragment implements
 
                 dismissKeyboard();
             });
+        } else {
+            setNameAndDrawerColor(getActivity());
         }
 
-        toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
-                R.menu.fragment_messages_group : R.menu.fragment_messages);
-        toolbar.setOnMenuItemClickListener(item -> {
-            new Handler().postDelayed(() -> {
-                if (getActivity() != null) {
-                    ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
-                }
-            }, keyboardOpen ? 300 : 100);
+        ColorUtils.adjustStatusBarColor(colorDarker, getActivity());
 
-            dismissKeyboard();
-            return false;
-        });
+        new Handler().postDelayed(() -> {
+            toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
+                    R.menu.fragment_messages_group : R.menu.fragment_messages);
+            toolbar.setOnMenuItemClickListener(item -> {
+                new Handler().postDelayed(() -> {
+                    if (getActivity() != null) {
+                        ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
+                    }
+                }, keyboardOpen ? 300 : 100);
 
-        setNameAndDrawerColor(getActivity());
-        ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
-        ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent);
+                dismissKeyboard();
+                return false;
+            });
+
+            if (!getResources().getBoolean(R.bool.pin_drawer)) {
+                setNameAndDrawerColor(getActivity());
+            }
+
+            ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
+            ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent);
+        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
             appBarLayout.setVisibility(View.GONE);
@@ -554,7 +592,6 @@ public class MessageListFragment extends Fragment implements
                         .into(image);
             }
 
-            ColorUtils.adjustStatusBarColor(colorDarker, activity);
             ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity);
         }
 
@@ -574,22 +611,6 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initSendbar() {
-        String firstName;
-
-        try {
-            firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
-        } catch (Exception e) {
-            // no title
-            firstName = "";
-        }
-
-        if (!getArguments().getBoolean(ARG_IS_GROUP) && !firstName.isEmpty()) {
-            String hint = getResources().getString(R.string.type_message_to, firstName);
-            messageEntry.setHint(hint);
-        } else {
-            messageEntry.setHint(R.string.type_message);
-        }
-
         new KeyboardLayoutHelper(getActivity()).applyLayout(messageEntry);
         messageEntry.setTextSize(Settings.get(getActivity()).largeFont);
 
@@ -633,13 +654,11 @@ public class MessageListFragment extends Fragment implements
         });
 
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
-        send.setBackgroundTintList(ColorStateList.valueOf(accent));
         sendProgress.setProgressTintList(ColorStateList.valueOf(accent));
         sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(accent));
         sendProgress.setProgressTintMode(PorterDuff.Mode.SRC_IN);
         sendProgress.setProgressTintMode(PorterDuff.Mode.SRC_IN);
         send.setOnClickListener(view -> requestPermissionThenSend());
-        messageEntry.setHighlightColor(accent);
 
         editImage.setBackgroundColor(accent);
         editImage.setOnClickListener(view -> {
@@ -817,12 +836,6 @@ public class MessageListFragment extends Fragment implements
         final Handler handler = new Handler();
         new Thread(() -> {
             Log.v(TAG, "loading messages");
-
-            try {
-                Thread.sleep(AnimationUtils.EXPAND_CONVERSATION_DURATION);
-            } catch (Exception e) {
-
-            }
 
             long conversationId = getConversationId();
 
