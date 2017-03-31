@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.2.1"
+        description="April 1st, 2017">
+        <text>Smooth out the animations</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.2.0"
         description="March 30th, 2017">
         <text>Option to forcefully refresh your Pulse account with what is on the phone's internal SMS/MMS database (Under "My Account" on your phone)</text>
