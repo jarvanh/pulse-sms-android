@@ -48,6 +48,7 @@ public class FeatureFlags {
     private static final String FLAG_IMPROVE_MESSAGE_PADDING = "flag_improve_message_list";
     private static final String FLAG_NOTIFICATION_ACTIONS = "flag_notification_actions";
     private static final String FLAG_HEADS_UP = "flag_heads_up";
+    private static final String FLAG_MESSAGE_REFRESH_ON_START = "flag_refresh_messages_on_start";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -62,6 +63,7 @@ public class FeatureFlags {
 
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
+    public boolean MESSAGE_REFRESH_ON_START;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
 
@@ -72,6 +74,7 @@ public class FeatureFlags {
 
         // step 2
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
+        MESSAGE_REFRESH_ON_START = getValue(sharedPrefs, FLAG_MESSAGE_REFRESH_ON_START);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
     }
@@ -86,6 +89,9 @@ public class FeatureFlags {
             /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
                 MESSAGING_STYLE_NOTIFICATIONS = flag;
                 break;*/
+            case FLAG_MESSAGE_REFRESH_ON_START:
+                MESSAGE_REFRESH_ON_START = flag;
+                break;
             case FLAG_SECURE_PRIVATE:
                 SECURE_PRIVATE = flag;
                 break;

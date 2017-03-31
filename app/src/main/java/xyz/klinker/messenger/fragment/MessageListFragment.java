@@ -103,6 +103,7 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -315,20 +316,16 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        dragDismissFrameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+        dragDismissFrameLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            dragDismissFrameLayout.getWindowVisibleDisplayFrame(r);
+            int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
 
-                Rect r = new Rect();
-                dragDismissFrameLayout.getWindowVisibleDisplayFrame(r);
-                int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
-                int keypadHeight = screenHeight - r.bottom;
-
-                if (keypadHeight > screenHeight * 0.15) {
-                    keyboardOpen = true;
-                } else {
-                    keyboardOpen = false;
-                }
+            if (keypadHeight > screenHeight * 0.15) {
+                keyboardOpen = true;
+            } else {
+                keyboardOpen = false;
             }
         });
 
@@ -394,6 +391,15 @@ public class MessageListFragment extends Fragment implements
         if (dismissOnStartup) {
             dismissNotification();
             dismissOnStartup = false;
+        }
+
+        if (adapter != null) {
+            Cursor cursor = adapter.getMessages();
+            if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START &&
+                    (!source.isOpen() || (cursor != null && cursor.isClosed()))) {
+                source.open();
+                loadMessages();
+            }
         }
     }
 
@@ -575,6 +581,7 @@ public class MessageListFragment extends Fragment implements
 
     private void initSendbar() {
         String firstName;
+
         try {
             firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
         } catch (Exception e) {
