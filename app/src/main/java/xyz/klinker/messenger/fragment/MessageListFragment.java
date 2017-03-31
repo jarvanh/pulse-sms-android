@@ -63,6 +63,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -188,6 +189,7 @@ public class MessageListFragment extends Fragment implements
     private LinearLayoutManager manager;
     private MessageListAdapter adapter;
     private ElasticDragDismissFrameLayout dragDismissFrameLayout;
+    private ViewStub attachLayoutStub;
     private View attachLayout;
     private FrameLayout attachHolder;
     private LinearLayout attachButtonHolder;
@@ -279,15 +281,7 @@ public class MessageListFragment extends Fragment implements
         sendProgress = (ProgressBar) view.findViewById(R.id.send_progress);
         counter = (TextView) view.findViewById(R.id.text_counter);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
-        attachLayout = view.findViewById(R.id.attach_layout);
-        attachHolder = (FrameLayout) view.findViewById(R.id.attach_holder);
-        attachButtonHolder = (LinearLayout) view.findViewById(R.id.attach_button_holder);
-        attachImage = (ImageButton) view.findViewById(R.id.attach_image);
-        captureImage = (ImageButton) view.findViewById(R.id.capture_image);
-        attachGif = (ImageButton) view.findViewById(R.id.attach_gif);
-        recordVideo = (ImageButton) view.findViewById(R.id.record_video);
-        recordAudio = (ImageButton) view.findViewById(R.id.record_audio);
-        attachLocation = (ImageButton) view.findViewById(R.id.attach_location);
+        attachLayoutStub = (ViewStub) view.findViewById(R.id.attach_stub);
         attachedImageHolder = view.findViewById(R.id.attached_image_holder);
         attachedImage = (ImageView) view.findViewById(R.id.attached_image);
         selectedImageCount = (TextView) view.findViewById(R.id.selected_images);
@@ -698,19 +692,44 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
-    private void initAttachHolder() {
+    private void initAttachStub() {
+        attachLayoutStub.inflate();
+        View root = getView();
+
+        attachLayout = root.findViewById(R.id.attach_layout);
+        attachHolder = (FrameLayout) root.findViewById(R.id.attach_holder);
+        attachButtonHolder = (LinearLayout) root.findViewById(R.id.attach_button_holder);
+        attachImage = (ImageButton) root.findViewById(R.id.attach_image);
+        captureImage = (ImageButton) root.findViewById(R.id.capture_image);
+        attachGif = (ImageButton) root.findViewById(R.id.attach_gif);
+        recordVideo = (ImageButton) root.findViewById(R.id.record_video);
+        recordAudio = (ImageButton) root.findViewById(R.id.record_audio);
+        attachLocation = (ImageButton) root.findViewById(R.id.attach_location);
+
+        attachImage.setOnClickListener(view -> attachImage());
+        captureImage.setOnClickListener(view -> captureImage());
+        attachGif.setOnClickListener(view -> attachGif());
+        recordVideo.setOnClickListener(view -> recordVideo());
+        recordAudio.setOnClickListener(view -> recordAudio());
+        attachLocation.setOnClickListener(view -> attachLocation());
+
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             attachButtonHolder.setBackgroundColor(settings.globalColorSet.color);
         } else {
             attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
         }
+    }
 
+    private void initAttachHolder() {
         attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ValueAnimator animator;
+                if (attachLayout == null) {
+                    initAttachStub();
+                }
 
+                ValueAnimator animator;
                 if (attachLayout.getVisibility() == View.VISIBLE) {
                     dragDismissFrameLayout.setEnabled(true);
                     animator = ValueAnimator.ofInt(attachLayout.getHeight(), 0);
@@ -745,13 +764,6 @@ public class MessageListFragment extends Fragment implements
                 animator.start();
             }
         });
-
-        attachImage.setOnClickListener(view -> attachImage());
-        captureImage.setOnClickListener(view -> captureImage());
-        attachGif.setOnClickListener(view -> attachGif());
-        recordVideo.setOnClickListener(view -> recordVideo());
-        recordAudio.setOnClickListener(view -> recordAudio());
-        attachLocation.setOnClickListener(v -> attachLocation());
     }
 
     private void initRecycler() {
