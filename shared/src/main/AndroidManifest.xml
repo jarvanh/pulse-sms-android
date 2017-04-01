@@ -183,26 +183,26 @@
         <service android:name=".service.ForceTokenRefreshService" />
         <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.NotificationService" />
-        <service android:name=".service.RepeatNotificationService" />
+        <service android:name=".service.jobs.RepeatNotificationJob" />
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.NotificationMarkReadService" />
         <service android:name=".service.NotificationDeleteService" />
         <service android:name=".service.NotificationCallService" />
         <service android:name=".service.ReplyService" />
         <service android:name=".service.ContentObserverService" />
-        <service android:name=".service.ContentObserverRunCheckService" />
-        <service android:name=".service.ContactSyncService" />
-        <service android:name=".service.ScheduledMessageService" />
+        <service android:name=".service.jobs.ContentObserverRunCheckJob" />
+        <service android:name=".service.jobs.ContactSyncJob" />
+        <service android:name=".service.jobs.ScheduledMessageJob" />
         <service android:name=".service.ApiUploadService" />
         <service android:name=".service.ApiDownloadService" />
-        <service android:name=".service.SubscriptionExpirationCheckService" />
-        <service android:name=".service.SignoutService" />
+        <service android:name=".service.jobs.SubscriptionExpirationCheckJob" />
+        <service android:name=".service.jobs.SignoutJob" />
         <service android:name=".service.SimpleSubscriptionCheckService" />
         <service android:name=".service.SimpleLifetimeSubscriptionCheckService" />
         <service android:name=".service.MediaParserService" />
         <service android:name=".service.NewMessagesCheckService" />
         <service android:name=".service.FirebaseResetService" />
-        <service android:name=".service.CleanupOldMessagesService" />
+        <service android:name=".service.jobs.CleanupOldMessagesJob" />
         <service android:name=".service.ResendFailedMessage" />
 
         <service

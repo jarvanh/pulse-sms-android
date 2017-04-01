@@ -316,4 +316,13 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 19, 59)));
     }
 
+    @Test
+    public void getsSecondsUntilHourOccurance() {
+        // 3/30/2017 @ 12:00 noon
+        long time = 1490893200000L;
+
+        // 3 AM is 15 hours away. 3600 * 15 = 54000 seconds
+        assertEquals(54000000, TimeUtils.millisUntilHourInTheNextDay(3, time));
+    }
+
 }

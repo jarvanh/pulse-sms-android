@@ -212,4 +212,29 @@ public class TimeUtils {
         }
     }
 
+    /**
+     * How many seconds until the given hour, tomorrow.
+     *
+     * @param hour 24 hour format
+     * @return seconds until that hour
+     */
+    public static int millisUntilHourInTheNextDay(int hour) {
+        return millisUntilHourInTheNextDay(hour, Calendar.getInstance().getTimeInMillis());
+    }
+
+    @VisibleForTesting
+    protected static int millisUntilHourInTheNextDay(int hour, long currentTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(currentTime));
+
+        // force the calendar to 3 in the morning, on the next day.
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        long lookingFor = calendar.getTimeInMillis();
+
+        return (int) (lookingFor - currentTime) / 1000;
+    }
 }

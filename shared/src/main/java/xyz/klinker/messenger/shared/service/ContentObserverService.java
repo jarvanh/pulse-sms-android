@@ -36,6 +36,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
@@ -68,7 +69,7 @@ public class ContentObserverService extends Service {
         }
 
         IS_RUNNING = true;
-        ContentObserverRunCheckService.scheduleNextRun(this);
+        ContentObserverRunCheckJob.scheduleNextRun(this);
 
         return START_STICKY;
     }

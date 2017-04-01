@@ -58,7 +58,7 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment;
-import xyz.klinker.messenger.shared.service.ScheduledMessageService;
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener;
@@ -135,7 +135,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void onStop() {
         super.onStop();
 
-        ScheduledMessageService.scheduleNextRun(getActivity());
+        ScheduledMessageJob.scheduleNextRun(getActivity());
     }
 
     @Override

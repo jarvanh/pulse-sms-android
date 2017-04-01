@@ -20,15 +20,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Date;
 
@@ -43,10 +40,10 @@ import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.ApiUploadService;
-import xyz.klinker.messenger.shared.service.SignoutService;
+import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckService;
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService;
-import xyz.klinker.messenger.shared.service.SubscriptionExpirationCheckService;
+import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
@@ -172,7 +169,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER ||
                 Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
 
-            long signoutTime = SignoutService.isScheduled(getActivity());
+            long signoutTime = SignoutJob.isScheduled(getActivity());
             if (signoutTime != 0L) {
                 preference.setTitle(getString(R.string.account_expiring));
                 preference.setSummary(getString(R.string.signout_time, new Date(signoutTime).toString()));
@@ -389,7 +386,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     account.subscriptionType.typeCode, account.subscriptionExpiration);
         }
 
-        SubscriptionExpirationCheckService.scheduleNextRun(getActivity());
+        SubscriptionExpirationCheckJob.scheduleNextRun(getActivity());
 
         if (getActivity() instanceof MessengerActivity) {
             ((MessengerActivity) getActivity()).displayConversations();

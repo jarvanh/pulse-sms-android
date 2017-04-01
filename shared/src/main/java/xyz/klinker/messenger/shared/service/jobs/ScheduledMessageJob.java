@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.service;
+package xyz.klinker.messenger.shared.service.jobs;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -44,12 +44,12 @@ import xyz.klinker.messenger.shared.util.SendUtils;
  * Service responsible for sending scheduled message that are coming up, removing that message
  * from the database and then scheduling the next one.
  */
-public class ScheduledMessageService extends IntentService {
+public class ScheduledMessageJob extends IntentService {
 
     private static final int SCHEDULED_ALARM_REQUEST_CODE = 5424;
 
-    public ScheduledMessageService() {
-        super("ScheduledMessageService");
+    public ScheduledMessageJob() {
+        super("ScheduledMessageJob");
     }
 
     @Nullable
@@ -134,7 +134,7 @@ public class ScheduledMessageService extends IntentService {
         List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
 
         if (messages.size() > 0) {
-            Intent intent = new Intent(context, ScheduledMessageService.class);
+            Intent intent = new Intent(context, ScheduledMessageJob.class);
             PendingIntent pIntent = PendingIntent.getService(context, SCHEDULED_ALARM_REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

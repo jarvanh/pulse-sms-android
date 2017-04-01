@@ -16,16 +16,15 @@ import java.util.Date;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.service.CleanupOldMessagesService;
-import xyz.klinker.messenger.shared.service.ContactSyncService;
-import xyz.klinker.messenger.shared.service.ContentObserverRunCheckService;
+import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
+import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
+import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
 import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
-import xyz.klinker.messenger.shared.service.SignoutService;
-import xyz.klinker.messenger.shared.service.SubscriptionExpirationCheckService;
+import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
+import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class UpdateUtils {
@@ -72,11 +71,11 @@ public class UpdateUtils {
     }
 
     private void runEveryUpdate() {
-        CleanupOldMessagesService.scheduleNextRun(context);
-        ContentObserverRunCheckService.scheduleNextRun(context);
-        ContactSyncService.scheduleNextRun(context);
-        SubscriptionExpirationCheckService.scheduleNextRun(context);
-        SignoutService.scheduleNextRun(context);
+        CleanupOldMessagesJob.scheduleNextRun(context);
+        ContentObserverRunCheckJob.scheduleNextRun(context);
+        ContactSyncJob.scheduleNextRun(context);
+        SubscriptionExpirationCheckJob.scheduleNextRun(context);
+        SignoutJob.scheduleNextRun(context);
         ScheduledTokenRefreshService.scheduleNextRun(context);
 
         context.startService(new Intent(context, ForceTokenRefreshService.class));

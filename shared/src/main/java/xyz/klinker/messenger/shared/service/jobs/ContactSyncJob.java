@@ -1,8 +1,11 @@
-package xyz.klinker.messenger.shared.service;
+package xyz.klinker.messenger.shared.service.jobs;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,14 +21,14 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
-public class ContactSyncService extends IntentService {
+public class ContactSyncJob extends IntentService {
 
-    private static final int REQUEST_CODE = 13;
-    private static final long RUN_EVERY = 1000 * 60 * 60 * 24; // 1 day
+    private static final int JOB_ID = 13;
 
-    public ContactSyncService() {
-        super("ContactSyncService");
+    public ContactSyncJob() {
+        super("ContactSyncJob");
     }
 
     @Override
@@ -91,15 +94,13 @@ public class ContactSyncService extends IntentService {
     }
 
     public static void scheduleNextRun(Context context) {
-        Intent intent = new Intent(context, ContactSyncService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        ComponentName component = new ComponentName(context, ContactSyncJob.class);
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
+                .setMinimumLatency(TimeUtils.millisUntilHourInTheNextDay(2)) // 2 AM
+                .setRequiresCharging(false)
+                .setRequiresDeviceIdle(true);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long currentTime = new Date().getTime();
-
-        alarmManager.cancel(pIntent);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + RUN_EVERY, pIntent);
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(builder.build());
     }
 }

@@ -1,8 +1,11 @@
-package xyz.klinker.messenger.shared.service;
+package xyz.klinker.messenger.shared.service.jobs;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,18 +23,18 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased;
 
-public class SubscriptionExpirationCheckService extends IntentService {
+public class SubscriptionExpirationCheckJob extends IntentService {
 
     private static final String TAG = "SubscriptionCheck";
 
-    private static final int REQUEST_CODE = 14;
+    private static final int JOB_ID = 14;
     public static final int NOTIFICATION_ID = 1004;
     private static final int REQUEST_CODE_EMAIL = 1005;
     private static final int REQUEST_CODE_RENEW = 1006;
 
     private BillingHelper billing;
 
-    public SubscriptionExpirationCheckService() {
+    public SubscriptionExpirationCheckJob() {
         super("SubscriptionCheckService");
     }
 
@@ -48,7 +51,7 @@ public class SubscriptionExpirationCheckService extends IntentService {
             if (isExpired()) {
                 Log.v(TAG, "service is expired");
                 makeSignoutNotification();
-                SignoutService.writeSignoutTime(this, new Date().getTime() + (TimeUtils.DAY * 2));
+                SignoutJob.writeSignoutTime(this, new Date().getTime() + (TimeUtils.DAY * 2));
             } else {
                 Log.v(TAG, "not expired, scheduling the next refresh");
                 scheduleNextRun(this);
@@ -142,21 +145,24 @@ public class SubscriptionExpirationCheckService extends IntentService {
 
     public static void scheduleNextRun(Context context) {
         Account account = Account.get(context);
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        Intent intent = new Intent(context, SubscriptionExpirationCheckService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE, intent, 0);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pIntent);
-
-        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
-            return;
-        }
-
+        long currentTime = new Date().getTime();
         long expiration = account.subscriptionExpiration + TimeUtils.DAY;
 
-        Log.v(TAG, "CURRENT TIME: " + new Date().toString());
-        Log.v(TAG, "SCHEDULING NEW SUBSCRIPTION CHECK FOR: " + new Date(expiration).toString());
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, expiration, pIntent);
+        ComponentName component = new ComponentName(context, SubscriptionExpirationCheckJob.class);
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
+                .setMinimumLatency(expiration - currentTime)
+                .setRequiresCharging(false)
+                .setRequiresDeviceIdle(false);
+
+        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+            jobScheduler.cancel(JOB_ID);
+        } else {
+            Log.v(TAG, "CURRENT TIME: " + new Date().toString());
+            Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + new Date(expiration).toString());
+
+            jobScheduler.schedule(builder.build());
+        }
     }
 }

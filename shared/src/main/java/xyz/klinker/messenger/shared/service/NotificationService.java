@@ -40,8 +40,6 @@ import android.util.LongSparseArray;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +57,7 @@ import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver;
+import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.NotificationWindowManager;
@@ -860,8 +859,8 @@ public class NotificationService extends IntentService {
 
     public static void scheduleNextRun(Context context, long nextRun) {
         if (!Account.get(context).exists() || (Account.get(context).exists() && Account.get(context).primary)) {
-            Intent intent = new Intent(context, RepeatNotificationService.class);
-            PendingIntent pIntent = PendingIntent.getService(context, RepeatNotificationService.REQUEST_CODE,
+            Intent intent = new Intent(context, RepeatNotificationJob.class);
+            PendingIntent pIntent = PendingIntent.getService(context, RepeatNotificationJob.REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

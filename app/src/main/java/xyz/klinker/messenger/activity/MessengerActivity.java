@@ -84,7 +84,7 @@ import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.shared.service.ApiDownloadService;
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.service.NotificationService;
-import xyz.klinker.messenger.shared.service.SubscriptionExpirationCheckService;
+import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
@@ -213,7 +213,7 @@ public class MessengerActivity extends AppCompatActivity
         }, 1000);
 
         if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
-            NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckService.NOTIFICATION_ID);
+            NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckJob.NOTIFICATION_ID);
             menuItemClicked(R.id.drawer_account);
         }
 
