@@ -158,14 +158,9 @@ public class ConversationListFragment extends Fragment
         if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START && messageListFragment != null) {
             if (!messageListFragment.isAdded()) {
                 Toast.makeText(getActivity(), "fragment not added", Toast.LENGTH_SHORT).show();
-            }
-
-            if (messageListFragment.isDetached()) {
-                Toast.makeText(getActivity(), "fragment is detached", Toast.LENGTH_SHORT).show();
-            }
-
-            if (messageListFragment.isHidden()) {
-                Toast.makeText(getActivity(), "fragment is hidden", Toast.LENGTH_SHORT).show();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.message_list_container, messageListFragment)
+                        .commit();
             }
         }
     }
