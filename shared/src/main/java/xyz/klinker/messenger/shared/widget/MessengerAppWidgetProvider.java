@@ -116,7 +116,15 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
     }
 
     public static void refreshWidget(Context context) {
-        context.sendBroadcast(new Intent(MessengerAppWidgetProvider.REFRESH_ACTION));
+        int[] ids = AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(new ComponentName(context, MessengerAppWidgetProvider.class));
+
+        Intent intent = new Intent(context, MessengerAppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+
+        context.sendBroadcast(intent);
+        context.sendBroadcast(new Intent(REFRESH_ACTION)); // send to dashclock
     }
 
 }
