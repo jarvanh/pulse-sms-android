@@ -278,12 +278,20 @@ public class MessageListFragment extends Fragment implements
         send = (FloatingActionButton) view.findViewById(R.id.send);
         sendProgress = (ProgressBar) view.findViewById(R.id.send_progress);
 
+        if (!isAdded()) {
+            return view;
+        }
+
         initNonDeferredComponents();
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
 
         new Handler().postDelayed(() -> {
+            if (!isAdded()) {
+                return;
+            }
+
             selectSim = view.findViewById(R.id.select_sim);
             attach = (ImageButton) view.findViewById(R.id.attach);
             counter = (TextView) view.findViewById(R.id.text_counter);
@@ -538,6 +546,10 @@ public class MessageListFragment extends Fragment implements
                 dismissKeyboard();
                 return false;
             });
+
+            if (!isAdded()) {
+                return;
+            }
 
             if (!getResources().getBoolean(R.bool.pin_drawer)) {
                 setNameAndDrawerColor(getActivity());
