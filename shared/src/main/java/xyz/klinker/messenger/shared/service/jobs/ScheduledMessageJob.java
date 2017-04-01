@@ -142,9 +142,9 @@ public class ScheduledMessageJob extends BackgroundJob {
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             jobScheduler.schedule(builder.build());
 
-            Log.v("scheduled messsage", "new message scheduled");
+            Log.v("scheduled message", "new message scheduled");
         } else {
-            Log.v("scheduled messsage", "no more scheduled messages");
+            Log.v("scheduled message", "no more scheduled messages");
         }
     }
 }
