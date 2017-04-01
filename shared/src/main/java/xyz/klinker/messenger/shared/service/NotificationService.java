@@ -114,7 +114,7 @@ public class NotificationService extends IntentService {
 
             Settings settings = Settings.get(this);
             if (settings.repeatNotifications != -1) {
-                NotificationService.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
+                RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
             }
 
             if (Settings.get(this).wakeScreen) {
@@ -854,22 +854,6 @@ public class NotificationService extends IntentService {
     }
 
     public static void cancelRepeats(Context context) {
-        scheduleNextRun(context, 0);
-    }
-
-    public static void scheduleNextRun(Context context, long nextRun) {
-        if (!Account.get(context).exists() || (Account.get(context).exists() && Account.get(context).primary)) {
-            Intent intent = new Intent(context, RepeatNotificationJob.class);
-            PendingIntent pIntent = PendingIntent.getService(context, RepeatNotificationJob.REQUEST_CODE,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.cancel(pIntent);
-
-            long currentTime = new Date().getTime();
-            if (currentTime < nextRun) {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, nextRun, pIntent);
-            }
-        }
+        RepeatNotificationJob.scheduleNextRun(context, 0);
     }
 }
