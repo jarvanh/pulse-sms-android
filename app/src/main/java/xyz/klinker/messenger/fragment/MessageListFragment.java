@@ -381,15 +381,6 @@ public class MessageListFragment extends Fragment implements
             dismissNotification();
             dismissOnStartup = false;
         }
-
-        if (adapter != null) {
-            Cursor cursor = adapter.getMessages();
-            if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START &&
-                    (!source.isOpen() || (cursor != null && cursor.isClosed()))) {
-                source.open();
-                loadMessages();
-            }
-        }
     }
 
     @Override

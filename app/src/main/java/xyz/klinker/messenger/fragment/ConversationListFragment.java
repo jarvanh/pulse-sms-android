@@ -41,6 +41,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.FixedScrollLinearLayoutManager;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -153,6 +154,20 @@ public class ConversationListFragment extends Fragment
         }
 
         checkUnreadCount();
+
+        if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START && messageListFragment != null) {
+            if (!messageListFragment.isAdded()) {
+                Toast.makeText(getActivity(), "fragment not added", Toast.LENGTH_SHORT).show();
+            }
+
+            if (messageListFragment.isDetached()) {
+                Toast.makeText(getActivity(), "fragment is detached", Toast.LENGTH_SHORT).show();
+            }
+
+            if (messageListFragment.isHidden()) {
+                Toast.makeText(getActivity(), "fragment is hidden", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
