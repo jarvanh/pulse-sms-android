@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
+import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +21,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased;
 
-public class SignoutJob extends IntentService {
+public class SignoutJob extends BackgroundJob {
 
     private static final String TAG = "SignoutJob";
 
@@ -28,12 +29,8 @@ public class SignoutJob extends IntentService {
 
     private BillingHelper billing;
 
-    public SignoutJob() {
-        super("SignoutJob");
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onRunJob(JobParameters parameters) {
         Log.v(TAG, "starting signout service.");
 
         Account account = Account.get(this);

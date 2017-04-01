@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
+import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,17 +16,13 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
-public class ContentObserverRunCheckJob extends IntentService {
+public class ContentObserverRunCheckJob extends BackgroundJob {
 
     private static final int JOB_ID = 12;
     private static final long RUN_EVERY = 1000 * 60 * 15; // 15 mins
 
-    public ContentObserverRunCheckJob() {
-        super("ContentObserverRunCheck");
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onRunJob(JobParameters parameters) {
         if (!ContentObserverService.IS_RUNNING) {
             startService(new Intent(this, ContentObserverService.class));
         }

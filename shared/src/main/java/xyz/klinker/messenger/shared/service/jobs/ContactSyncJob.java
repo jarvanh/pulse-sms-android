@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
+import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,16 +24,12 @@ import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
-public class ContactSyncJob extends IntentService {
+public class ContactSyncJob extends BackgroundJob {
 
     private static final int JOB_ID = 13;
 
-    public ContactSyncJob() {
-        super("ContactSyncJob");
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onRunJob(JobParameters parameters) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         long since = sharedPrefs.getLong("last_contact_update_timestamp", -1L);
 

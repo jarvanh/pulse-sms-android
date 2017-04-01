@@ -20,6 +20,10 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,6 +34,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.Html;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
@@ -39,27 +44,18 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
  * Service responsible for sending scheduled message that are coming up, removing that message
  * from the database and then scheduling the next one.
  */
-public class ScheduledMessageJob extends IntentService {
+public class ScheduledMessageJob extends BackgroundJob {
 
-    private static final int SCHEDULED_ALARM_REQUEST_CODE = 5424;
-
-    public ScheduledMessageJob() {
-        super("ScheduledMessageJob");
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    private static final int JOB_ID = 5424;
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onRunJob(JobParameters parameters) {
         DataSource source = DataSource.getInstance(this);
         source.open();
 
@@ -134,15 +130,17 @@ public class ScheduledMessageJob extends IntentService {
         List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
 
         if (messages.size() > 0) {
-            Intent intent = new Intent(context, ScheduledMessageJob.class);
-            PendingIntent pIntent = PendingIntent.getService(context, SCHEDULED_ALARM_REQUEST_CODE,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            long timeout = messages.get(0).timestamp - new Date().getTime();
 
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            ComponentName component = new ComponentName(context, ScheduledMessageJob.class);
+            JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
+                    .setMinimumLatency(timeout)
+                    .setOverrideDeadline(timeout + TimeUtils.MINUTE)
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false);
 
-            // cancel the current request if it exists, we'll just make a completely new one
-            alarmManager.cancel(pIntent);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, messages.get(0).timestamp, pIntent);
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            jobScheduler.schedule(builder.build());
 
             Log.v("scheduled messsage", "new message scheduled");
         } else {
