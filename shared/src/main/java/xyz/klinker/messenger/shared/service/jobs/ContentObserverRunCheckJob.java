@@ -9,6 +9,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import java.util.Date;
 
@@ -31,7 +32,7 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context) {
-        if (!Account.get(context).primary) {
+        if (!Account.get(context).primary || Build.VERSION.SDK_INT >= ContentObserverJob.API_LEVEL) {
             return;
         }
 
@@ -40,7 +41,7 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
                 .setPeriodic(RUN_EVERY)
                 .setPersisted(true)
                 .setRequiresCharging(false)
-                .setRequiresDeviceIdle(true);
+                .setRequiresDeviceIdle(false);
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());

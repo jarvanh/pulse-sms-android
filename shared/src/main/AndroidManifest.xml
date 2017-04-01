@@ -188,6 +188,7 @@
         <service android:name=".service.jobs.ScheduledMessageJob" android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".service.jobs.SubscriptionExpirationCheckJob" android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".service.jobs.SignoutJob" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".service.jobs.ContentObserverJob" android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name=".service.ForceTokenRefreshService" />
         <service android:name=".service.FirebaseHandlerService" />

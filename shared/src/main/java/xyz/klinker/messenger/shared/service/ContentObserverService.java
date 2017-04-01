@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Telephony;
@@ -36,6 +37,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.jobs.ContentObserverJob;
 import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
@@ -62,6 +64,12 @@ public class ContentObserverService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        if (Build.VERSION.SDK_INT >= ContentObserverJob.API_LEVEL) {
+            ContentObserverJob.scheduleNextRun(this);
+            stopSelf();
+            return START_NOT_STICKY;
+        }
+
         Log.v("ContentObserverService", "starting content observer service");
         if (observer == null && Account.get(this).primary) {
             observer = new SmsContentObserver(this, new Handler());
@@ -86,7 +94,7 @@ public class ContentObserverService extends Service {
         }
     }
 
-    private class SmsContentObserver extends ContentObserver {
+    public static class SmsContentObserver extends ContentObserver {
 
         private Context context;
 
@@ -104,11 +112,11 @@ public class ContentObserverService extends Service {
 
                 }
 
-                processLastMessage();
+                processLastMessage(context);
             }).start();
         }
 
-        private void processLastMessage() {
+        public static void processLastMessage(Context context) {
             Cursor cursor = SmsMmsUtils.getLastSmsMessage(context);
             if (cursor != null && cursor.moveToFirst()) {
                 int type = cursor.getInt(cursor.getColumnIndex(Telephony.Sms.TYPE));
@@ -116,7 +124,7 @@ public class ContentObserverService extends Service {
                 String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
                 cursor.close();
 
-                Settings settings = Settings.get(ContentObserverService.this);
+                Settings settings = Settings.get(context);
                 if (settings.signature != null && !settings.signature.isEmpty()) {
                     body = body.replace("\n" + settings.signature, "");
                 }
@@ -142,7 +150,7 @@ public class ContentObserverService extends Service {
                         // this one into the database because we already have it. Otherwise, do.
                         if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
                                 message.data.equals(body) && message.type == Message.TYPE_RECEIVED)) {
-                            insertReceivedMessage(source, body, address);
+                            insertReceivedMessage(context, source, body, address);
                         }
                     } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
                         // if a message from the same person with the exact same body exists and the
@@ -155,14 +163,14 @@ public class ContentObserverService extends Service {
                         //       another time.
                         if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
                                 message.data.equals(body) && message.type != Message.TYPE_RECEIVED)) {
-                            insertSentMessage(source, body, address);
+                            insertSentMessage(context, source, body, address);
                         }
                     }
                 } else {
                     if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
-                        insertReceivedMessage(source, body, address);
+                        insertReceivedMessage(context, source, body, address);
                     } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
-                        insertSentMessage(source, body, address);
+                        insertSentMessage(context, source, body, address);
                     }
                 }
                 
@@ -180,17 +188,17 @@ public class ContentObserverService extends Service {
             }
         }
 
-        private void insertReceivedMessage(DataSource source, String body, String address) {
-            insertMessage(source, body, address, Message.TYPE_RECEIVED);
+        private static void insertReceivedMessage(Context context, DataSource source, String body, String address) {
+            insertMessage(context, source, body, address, Message.TYPE_RECEIVED);
         }
 
-        private void insertSentMessage(DataSource source, String body, String address) {
-            if (!Settings.get(ContentObserverService.this).stripUnicode) {
-                insertMessage(source, body, address, Message.TYPE_SENT);
+        private static void insertSentMessage(Context context, DataSource source, String body, String address) {
+            if (!Settings.get(context).stripUnicode) {
+                insertMessage(context, source, body, address, Message.TYPE_SENT);
             }
         }
 
-        private void insertMessage(DataSource source, String body, String address, int type) {
+        private static void insertMessage(Context context, DataSource source, String body, String address, int type) {
             Message insert = new Message();
             insert.data = body;
             insert.mimeType = MimeType.TEXT_PLAIN;
