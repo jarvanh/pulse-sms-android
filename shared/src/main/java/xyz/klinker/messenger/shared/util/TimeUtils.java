@@ -235,6 +235,6 @@ public class TimeUtils {
 
         long lookingFor = calendar.getTimeInMillis();
 
-        return (int) (lookingFor - currentTime) / 1000;
+        return (int) (lookingFor - currentTime);
     }
 }
