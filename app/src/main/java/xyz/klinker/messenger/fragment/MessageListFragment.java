@@ -632,7 +632,7 @@ public class MessageListFragment extends Fragment implements
         });
 
         messageEntry.setOnClickListener(view -> {
-            if (attachLayout.getVisibility() == View.VISIBLE) {
+            if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
                 attach.setSoundEffectsEnabled(false);
                 attach.performClick();
                 attach.setSoundEffectsEnabled(true);
@@ -688,7 +688,7 @@ public class MessageListFragment extends Fragment implements
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
 
-            if (attachLayout.getVisibility() == View.VISIBLE) {
+            if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
                 onBackPressed();
             }
         });

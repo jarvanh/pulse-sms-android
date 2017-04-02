@@ -24,6 +24,7 @@ import android.database.sqlite.SqliteWrapper;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -502,7 +503,40 @@ public class SmsMmsUtils {
             built = built.substring(2);
         }
 
-        return built;
+        return stripDuplicatePhoneNumbers(built);
+    }
+
+    /**
+     * Expects the conversation formatted list of phone numbers and returns the same list,
+     * stripped of duplicates.
+     *
+     * @param phoneNumbers comma and space separated list of numbers.
+     * @return the same list, with any duplicates stripped out.
+     */
+    public static String stripDuplicatePhoneNumbers(String phoneNumbers) {
+        if (phoneNumbers == null) {
+            return "";
+        }
+
+        String[] split = phoneNumbers.split(", ");
+        Set<String> numbers = new HashSet<>();
+
+        for (String s : split) {
+            numbers.add(s);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (String s : numbers) {
+            builder.append(s);
+            builder.append(", ");
+        }
+
+        String result = builder.toString();
+        if (result.contains(", ")) {
+            result = result.substring(0, result.length() - 2);
+        }
+
+        return result;
     }
 
     private static String getMmsText(String id, Context context) {
