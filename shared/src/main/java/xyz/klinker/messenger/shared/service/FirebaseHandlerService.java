@@ -55,6 +55,9 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
+import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
+import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
@@ -693,7 +696,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.insertScheduledMessage(message);
-        ScheduledMessageService.scheduleNextRun(this, source);
+        ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "added scheduled message");
     }
 
@@ -707,14 +710,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
         source.updateScheduledMessage(message);
-        ScheduledMessageService.scheduleNextRun(this, source);
+        ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "updated scheduled message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
         source.deleteScheduledMessage(id);
-        ScheduledMessageService.scheduleNextRun(this, source);
+        ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "removed scheduled message");
     }
 
@@ -771,8 +774,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     Account.SubscriptionType.findByTypeCode(type), expiration, false
             );
 
-            SubscriptionExpirationCheckService.scheduleNextRun(context);
-            SignoutService.writeSignoutTime(context, 0);
+            SubscriptionExpirationCheckJob.scheduleNextRun(context);
+            SignoutJob.writeSignoutTime(context, 0);
 
             if (fromAdmin) {
                 String content = "Enjoy the app!";

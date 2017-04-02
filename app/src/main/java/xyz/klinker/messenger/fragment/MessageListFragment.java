@@ -278,12 +278,20 @@ public class MessageListFragment extends Fragment implements
         send = (FloatingActionButton) view.findViewById(R.id.send);
         sendProgress = (ProgressBar) view.findViewById(R.id.send_progress);
 
+        if (!isAdded()) {
+            return view;
+        }
+
         initNonDeferredComponents();
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
 
         new Handler().postDelayed(() -> {
+            if (!isAdded()) {
+                return;
+            }
+
             selectSim = view.findViewById(R.id.select_sim);
             attach = (ImageButton) view.findViewById(R.id.attach);
             counter = (TextView) view.findViewById(R.id.text_counter);
@@ -539,6 +547,10 @@ public class MessageListFragment extends Fragment implements
                 return false;
             });
 
+            if (!isAdded()) {
+                return;
+            }
+
             if (!getResources().getBoolean(R.bool.pin_drawer)) {
                 setNameAndDrawerColor(getActivity());
             }
@@ -620,7 +632,7 @@ public class MessageListFragment extends Fragment implements
         });
 
         messageEntry.setOnClickListener(view -> {
-            if (attachLayout.getVisibility() == View.VISIBLE) {
+            if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
                 attach.setSoundEffectsEnabled(false);
                 attach.performClick();
                 attach.setSoundEffectsEnabled(true);
@@ -676,7 +688,7 @@ public class MessageListFragment extends Fragment implements
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
 
-            if (attachLayout.getVisibility() == View.VISIBLE) {
+            if (attachLayout != null && attachLayout.getVisibility() == View.VISIBLE) {
                 onBackPressed();
             }
         });

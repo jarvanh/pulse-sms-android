@@ -21,14 +21,14 @@ import android.content.Context;
 import android.content.Intent;
 
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
-import xyz.klinker.messenger.shared.service.CleanupOldMessagesService;
-import xyz.klinker.messenger.shared.service.ContactSyncService;
-import xyz.klinker.messenger.shared.service.ContentObserverRunCheckService;
+import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
+import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
+import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
 import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
-import xyz.klinker.messenger.shared.service.ScheduledMessageService;
-import xyz.klinker.messenger.shared.service.SignoutService;
-import xyz.klinker.messenger.shared.service.SubscriptionExpirationCheckService;
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
+import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
+import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -42,12 +42,12 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             context.startService(new Intent(context, ContentObserverService.class));
             context.startService(new Intent(context, ForceTokenRefreshService.class));
 
-            ScheduledMessageService.scheduleNextRun(context);
-            ContentObserverRunCheckService.scheduleNextRun(context);
-            CleanupOldMessagesService.scheduleNextRun(context);
-            ContactSyncService.scheduleNextRun(context);
-            SubscriptionExpirationCheckService.scheduleNextRun(context);
-            SignoutService.scheduleNextRun(context);
+            ScheduledMessageJob.scheduleNextRun(context);
+            ContentObserverRunCheckJob.scheduleNextRun(context);
+            CleanupOldMessagesJob.scheduleNextRun(context);
+            ContactSyncJob.scheduleNextRun(context);
+            SubscriptionExpirationCheckJob.scheduleNextRun(context);
+            SignoutJob.scheduleNextRun(context);
             ScheduledTokenRefreshService.scheduleNextRun(context);
         }
     }

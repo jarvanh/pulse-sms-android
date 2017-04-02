@@ -45,4 +45,25 @@ public class SmsMmsUtilsTest {
                 SmsMmsUtils.createIdMatcher("1 987-654-3210").sevenLetter);
     }
 
+    @Test
+    public void stripDuplicatePhoneNumbers_handlesEmpty() {
+        assertEquals("", SmsMmsUtils.stripDuplicatePhoneNumbers(null));
+        assertEquals("", SmsMmsUtils.stripDuplicatePhoneNumbers(""));
+    }
+
+    @Test
+    public void stripDuplicatePhoneNumbers_handlesSingle() {
+        assertEquals("5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493"));
+    }
+
+    @Test
+    public void stripDuplicatePhoneNumbers_handlesMultiple() {
+        assertEquals("661223, 5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493, 661223"));
+    }
+
+    @Test
+    public void stripDuplicatePhoneNumbers_handlesDuplicates() {
+        assertEquals("661223, 5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493, 661223, 661223"));
+    }
+
 }

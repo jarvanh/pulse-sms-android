@@ -31,6 +31,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
+import xyz.klinker.messenger.shared.service.jobs.ContentObserverJob;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -56,6 +57,7 @@ public class MessengerApplication extends Application {
         } catch (Exception e) {
             ApiUtils.environment = "release";
         }
+
         enableSecurity();
 
         BaseTheme theme = Settings.get(this).baseTheme;

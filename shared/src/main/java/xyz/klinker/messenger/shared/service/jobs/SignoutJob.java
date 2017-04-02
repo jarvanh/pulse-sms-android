@@ -1,8 +1,12 @@
-package xyz.klinker.messenger.shared.service;
+package xyz.klinker.messenger.shared.service.jobs;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -13,23 +17,20 @@ import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased;
 
-public class SignoutService extends IntentService {
+public class SignoutJob extends BackgroundJob {
 
-    private static final String TAG = "SignoutService";
+    private static final String TAG = "SignoutJob";
 
-    private static final int REQUEST_CODE = 15;
+    private static final int JOB_ID = 15;
 
     private BillingHelper billing;
 
-    public SignoutService() {
-        super("SignoutService");
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onRunJob(JobParameters parameters) {
         Log.v(TAG, "starting signout service.");
 
         Account account = Account.get(this);
@@ -45,7 +46,7 @@ public class SignoutService extends IntentService {
             new ApiUtils().deleteAccount(accountId);
         } else {
             Log.v(TAG, "account not expired, scheduling the check again.");
-            SubscriptionExpirationCheckService.scheduleNextRun(this);
+            SubscriptionExpirationCheckJob.scheduleNextRun(this);
         }
 
         writeSignoutTime(this, 0);
@@ -106,21 +107,24 @@ public class SignoutService extends IntentService {
     }
 
     public static void scheduleNextRun(Context context, long signoutTime) {
+        long currentTime = new Date().getTime();
         Account account = Account.get(context);
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        Intent intent = new Intent(context, SignoutService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE, intent, 0);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pIntent);
+        ComponentName component = new ComponentName(context, SignoutJob.class);
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
+                .setMinimumLatency(signoutTime - currentTime)
+                .setRequiresCharging(false)
+                .setRequiresDeviceIdle(false);
 
         if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary || signoutTime == 0) {
-            return;
-        }
+            jobScheduler.cancel(JOB_ID);
+        } else {
+            Log.v(TAG, "CURRENT TIME: " + new Date().toString());
+            Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + new Date(signoutTime).toString());
 
-        Log.v(TAG, "CURRENT TIME: " + new Date().toString());
-        Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + new Date(signoutTime).toString());
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, signoutTime, pIntent);
+            jobScheduler.schedule(builder.build());
+        }
     }
 
     public static void writeSignoutTime(Context context, long signoutTime) {

@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.MessengerApplication;
 import xyz.klinker.messenger.R;
@@ -157,15 +159,14 @@ public class ConversationListFragment extends Fragment
 
         if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START && messageListFragment != null) {
             if (!messageListFragment.isAdded()) {
-                Toast.makeText(getActivity(), "fragment not added", Toast.LENGTH_SHORT).show();
-            }
+                getActivity().overridePendingTransition(0,0);
+                Intent main = new Intent(getActivity(), MessengerActivity.class);
+                main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
+                        messageListFragment.getConversationId());
+                getActivity().startActivity(main);
 
-            if (messageListFragment.isDetached()) {
-                Toast.makeText(getActivity(), "fragment is detached", Toast.LENGTH_SHORT).show();
-            }
-
-            if (messageListFragment.isHidden()) {
-                Toast.makeText(getActivity(), "fragment is hidden", Toast.LENGTH_SHORT).show();
+                getActivity().overridePendingTransition(0,0);
+                getActivity().finish();
             }
         }
     }
