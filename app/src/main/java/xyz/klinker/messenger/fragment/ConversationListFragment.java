@@ -558,13 +558,23 @@ public class ConversationListFragment extends Fragment
         expandedConversation = null;
         AnimationUtils.contractActivityFromConversation(getActivity());
 
+        if (messageListFragment == null) {
+            return;
+        }
+
         long contractedId = messageListFragment.getConversationId();
 
         try {
             new Handler().postDelayed(() -> {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .remove(messageListFragment)
-                        .commit();
+                if (getActivity() != null) {
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .remove(messageListFragment)
+                                .commit();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 messageListFragment = null;
             }, AnimationUtils.EXPAND_CONVERSATION_DURATION);

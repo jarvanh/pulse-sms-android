@@ -980,10 +980,12 @@ public class MessageListFragment extends Fragment implements
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
-            messageList.setAdapter(adapter);
 
-            messageList.animate().withLayer()
-                    .alpha(1f).setDuration(100).setStartDelay(0).setListener(null);
+            if (messageList != null) {
+                messageList.setAdapter(adapter);
+                messageList.animate().withLayer()
+                        .alpha(1f).setDuration(100).setStartDelay(0).setListener(null);
+            }
         }
     }
 
