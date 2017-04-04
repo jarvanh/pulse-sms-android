@@ -103,19 +103,13 @@
 
         <receiver
             android:name=".receiver.SmsSentReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.SMS_SENT" />
-            </intent-filter>
-        </receiver>
+            android:exported="false"
+            android:taskAffinity="${applicationId}.SMS_SENT" />
 
         <receiver
             android:name=".receiver.SmsDeliveredReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.SMS_DELIVERED" />
-            </intent-filter>
-        </receiver>
+            android:exported="false"
+            android:taskAffinity="${applicationId}.SMS_DELIVERED" />
 
         <receiver
             android:name="com.android.mms.transaction.PushReceiver"
@@ -128,19 +122,13 @@
 
         <receiver
             android:name=".receiver.MmsSentReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.klinker.android.messaging.MMS_SENT" />
-            </intent-filter>
-        </receiver>
+            android:exported="true"
+            android:taskAffinity="com.klinker.android.messaging.MMS_SENT"/>
 
         <receiver
             android:name=".receiver.MmsReceivedReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.klinker.android.messaging.MMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+            android:exported="true"
+            android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
 
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>
