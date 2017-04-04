@@ -40,6 +40,8 @@ import android.util.LongSparseArray;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -97,14 +99,14 @@ public class NotificationService extends IntentService {
 
         skipSummaryNotification = false;
 
-        LongSparseArray<NotificationConversation> conversations = getUnseenConversations();
+        List<NotificationConversation> conversations = getUnseenConversations();
         List<String> rows = new ArrayList<>();
 
         if (conversations != null && conversations.size() > 0) {
             NotificationManagerCompat.from(this).cancelAll();
 
             for (int i = 0; i < conversations.size(); i++) {
-                NotificationConversation conversation = conversations.get(conversations.keyAt(i));
+                NotificationConversation conversation = conversations.get(i);
                 rows.add(giveConversationNotification(conversation, i, conversations.size()));
             }
 
@@ -134,12 +136,13 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    LongSparseArray<NotificationConversation> getUnseenConversations() {
+    List<NotificationConversation> getUnseenConversations() {
         DataSource source = getDataSource();
         source.open();
 
+        // timestamps are ASC, so it will start with the oldest message, and move to the newest.
         Cursor unseenMessages = source.getUnseenMessages();
-        LongSparseArray<NotificationConversation> conversations = new LongSparseArray<>();
+        List<NotificationConversation> conversations = new ArrayList<>();
         List<Long> keys = new ArrayList<>();
 
         if (unseenMessages != null && unseenMessages.moveToFirst()) {
@@ -158,9 +161,10 @@ public class NotificationService extends IntentService {
                         .getString(unseenMessages.getColumnIndex(Message.COLUMN_FROM));
 
                 if (!MimeType.isExpandedMedia(mimeType)) {
-                    NotificationConversation conversation = conversations.get(conversationId);
+                    int conversationIndex = keys.indexOf(conversationId);
+                    NotificationConversation conversation = null;
 
-                    if (conversation == null) {
+                    if (conversationIndex == -1) {
                         Conversation c = source.getConversation(conversationId);
                         if (c != null) {
                             conversation = new NotificationConversation();
@@ -187,9 +191,11 @@ public class NotificationService extends IntentService {
                                 conversation.privateNotification = false;
                             }
 
-                            conversations.put(conversationId, conversation);
+                            conversations.add(conversation);
                             keys.add(conversationId);
                         }
+                    } else {
+                        conversation = conversations.get(conversationIndex);
                     }
 
                     if (conversation != null) {
@@ -205,17 +211,18 @@ public class NotificationService extends IntentService {
 
         source.close();
 
-        for (int i = 0; i < keys.size(); i++) {
-            long conversationId = keys.get(i);
-            if (conversations.get(conversationId) != null) {
-                boolean muted = conversations.get(conversationId).mute;
+        Collections.sort(conversations, (result1, result2) ->
+                new Date(result1.timestamp).compareTo(new Date(result2.timestamp)));
 
-                if (muted && i == keys.size() - 1) {
-                    return null;
-                } else if (muted) {
-                    conversations.remove(conversationId);
-                    i--;
-                }
+        // remove the mutes.
+        // If the newest conversation is muted, then we don't want to notify again.
+        for (int i = 0; i < conversations.size(); i++) {
+            boolean muted = conversations.get(i).mute;
+            if (muted && i == conversations.size() - 1) {
+                return null;
+            } else if (muted) {
+                conversations.remove(i);
+                i--;
             }
         }
 
@@ -674,14 +681,14 @@ public class NotificationService extends IntentService {
      * Displays a summary notification for all conversations using the rows returned by each
      * individual notification.
      */
-    private void giveSummaryNotification(LongSparseArray<NotificationConversation> conversations,
+    private void giveSummaryNotification(List<NotificationConversation> conversations,
                                          List<String> rows) {
         StringBuilder summaryBuilder = new StringBuilder();
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(conversations.keyAt(i)).privateNotification) {
+            if (conversations.get(i).privateNotification) {
                 summaryBuilder.append(getString(R.string.new_message));
             } else {
-                summaryBuilder.append(conversations.get(conversations.keyAt(i)).title);
+                summaryBuilder.append(conversations.get(i).title);
             }
             
             summaryBuilder.append(", ");
@@ -748,7 +755,7 @@ public class NotificationService extends IntentService {
                 .setShowWhen(true)
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
-                .setWhen(conversations.get(conversations.keyAt(conversations.size() - 1)).timestamp)
+                .setWhen(conversations.get(conversations.size() - 1).timestamp)
                 .setStyle(style)
                 .setPublicVersion(publicVersion)
                 .setDeleteIntent(pendingDelete)

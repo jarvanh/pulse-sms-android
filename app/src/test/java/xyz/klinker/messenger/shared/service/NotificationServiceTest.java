@@ -41,6 +41,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -69,25 +70,25 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void getUnseenConversations() {
         service = spy(service);
-        when(service.getDataSource()).thenReturn(source);
+        doReturn(source).when(service).getDataSource();
         when(source.getUnseenMessages()).thenReturn(getUnseenCursor());
         when(source.getConversation(1)).thenReturn(getConversation1());
         when(source.getConversation(2)).thenReturn(getConversation2());
         when(source.getConversation(3)).thenReturn(getConversation3());
 
-        LongSparseArray<NotificationConversation> conversations = service.getUnseenConversations();
+        List<NotificationConversation> conversations = service.getUnseenConversations();
 
         assertEquals(3, conversations.size());
-        assertEquals("Luke Klinker", conversations.get(1).title);
-        assertEquals(3, conversations.get(1).messages.size());
-        assertEquals("Hey what's up?", conversations.get(1).messages.get(0).data);
-        assertEquals("Yo, you around?", conversations.get(1).messages.get(1).data);
-        assertEquals("Hello?", conversations.get(1).messages.get(2).data);
-        assertEquals("Aaron Klinker", conversations.get(2).title);
+        assertEquals("Luke Klinker", conversations.get(0).title);
+        assertEquals(3, conversations.get(0).messages.size());
+        assertEquals("Hey what's up?", conversations.get(0).messages.get(0).data);
+        assertEquals("Yo, you around?", conversations.get(0).messages.get(1).data);
+        assertEquals("Hello?", conversations.get(0).messages.get(2).data);
+        assertEquals("Aaron Klinker", conversations.get(1).title);
+        assertEquals(1, conversations.get(1).messages.size());
+        assertEquals("Can we hang out tonight?", conversations.get(1).messages.get(0).data);
         assertEquals(1, conversations.get(2).messages.size());
-        assertEquals("Can we hang out tonight?", conversations.get(2).messages.get(0).data);
-        assertEquals(1, conversations.get(3).messages.size());
-        assertEquals("image/jpg", conversations.get(3).messages.get(0).mimeType);
+        assertEquals("image/jpg", conversations.get(2).messages.get(0).mimeType);
     }
 
     @Test
@@ -182,6 +183,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         Conversation conversation = new Conversation();
         conversation.title = "Luke Klinker";
         conversation.phoneNumbers = "test";
+        conversation.timestamp = 1;
         return conversation;
     }
 
@@ -189,6 +191,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         Conversation conversation = new Conversation();
         conversation.title = "Aaron Klinker";
         conversation.phoneNumbers = "test";
+        conversation.timestamp = 2;
         return conversation;
     }
 
@@ -196,6 +199,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         Conversation conversation = new Conversation();
         conversation.title = "Andrew Klinker";
         conversation.phoneNumbers = "test";
+        conversation.timestamp = 3;
         return conversation;
     }
 
