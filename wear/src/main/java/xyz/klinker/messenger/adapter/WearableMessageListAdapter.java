@@ -61,7 +61,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         this.stylingHelper = new MessageListStylingHelper(context);
 
         Account account = Account.get(context);
-        ignoreSendingStatus = account.exists() && !account.primary;
+        ignoreSendingStatus = true;
 
         if (context == null) {
             imageHeight = imageWidth = 50;
