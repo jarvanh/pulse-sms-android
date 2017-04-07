@@ -159,14 +159,15 @@ public class ConversationListFragment extends Fragment
 
         if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START && messageListFragment != null) {
             if (!messageListFragment.isAdded()) {
-                getActivity().overridePendingTransition(0,0);
                 Intent main = new Intent(getActivity(), MessengerActivity.class);
                 main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
                         messageListFragment.getConversationId());
-                getActivity().startActivity(main);
 
                 getActivity().overridePendingTransition(0,0);
                 getActivity().finish();
+
+                getActivity().overridePendingTransition(0,0);
+                getActivity().startActivity(main);
             }
         }
     }
