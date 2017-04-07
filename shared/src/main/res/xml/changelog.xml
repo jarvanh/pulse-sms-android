@@ -17,8 +17,15 @@
 <changelog>
 
     <version
+        name="2.2.2"
+        description="April 6th, 2017">
+        <text>Preparations for Android O</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.2.1"
-        description="April 1st, 2017">
+        description="April 2nd, 2017">
         <text>Smooth out the animations</text>
         <text>Preparations for Android O</text>
         <text>Bug fixes</text>
