@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.adapter.view_holder;
 
 import android.animation.ValueAnimator;
+import android.app.ActivityOptions;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -284,6 +285,10 @@ public class MessageViewHolder extends SwappingHolder {
                     Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
                     intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
                     intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+
+//                    ActivityOptions options = ActivityOptions
+//                            .makeSceneTransitionAnimation(fragment.getActivity(), image, "image");
+//                    itemView.getContext().startActivity(intent, options.toBundle());
                     itemView.getContext().startActivity(intent);
                 }
             });

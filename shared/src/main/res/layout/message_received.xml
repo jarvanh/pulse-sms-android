@@ -44,6 +44,7 @@
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:id="@+id/image"
+            android:transitionName="image"
             android:layout_marginBottom="6dp"
             android:layout_marginEnd="2dp"
             android:contentDescription="@string/mms_image" />

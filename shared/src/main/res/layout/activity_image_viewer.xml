@@ -24,6 +24,12 @@
         android:layout_height="match_parent"
         android:id="@+id/view_pager" />
 
+    <ImageView
+        android:id="@+id/image_transition_holder"
+        android:transitionName="image"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
