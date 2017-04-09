@@ -157,18 +157,16 @@ public class ConversationListFragment extends Fragment
 
         checkUnreadCount();
 
-        if (FeatureFlags.get(getActivity()).MESSAGE_REFRESH_ON_START && messageListFragment != null) {
-            if (!messageListFragment.isAdded()) {
-                Intent main = new Intent(getActivity(), MessengerActivity.class);
-                main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
-                        messageListFragment.getConversationId());
+        if (messageListFragment != null && !messageListFragment.isAdded()) {
+            Intent main = new Intent(getActivity(), MessengerActivity.class);
+            main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
+                    messageListFragment.getConversationId());
 
-                getActivity().overridePendingTransition(0,0);
-                getActivity().finish();
+            getActivity().overridePendingTransition(0,0);
+            getActivity().finish();
 
-                getActivity().overridePendingTransition(0,0);
-                getActivity().startActivity(main);
-            }
+            getActivity().overridePendingTransition(0,0);
+            getActivity().startActivity(main);
         }
     }
 
