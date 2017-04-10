@@ -71,14 +71,6 @@ public class MessengerApplication extends Application {
         }
 
         startService(new Intent(this, ContentObserverService.class));
-
-        if (!Account.get(this).exists()) {
-            BridgingManager.fromContext(this).setConfig(
-                    new BridgingConfig.Builder(this, true).build());
-        } else {
-            BridgingManager.fromContext(this).setConfig(
-                    new BridgingConfig.Builder(this, false).build());
-        }
     }
 
     public void refreshDynamicShortcuts() {

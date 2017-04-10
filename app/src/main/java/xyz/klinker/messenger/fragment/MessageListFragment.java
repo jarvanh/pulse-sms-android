@@ -1115,9 +1115,11 @@ public class MessageListFragment extends Fragment implements
                 ((ConversationListFragment) fragment).notifyOfSentMessage(m);
             }
 
+            boolean loadMessages = false;
+
             if (message.length() != 0) {
                 source.insertMessage(getActivity(), m, m.conversationId);
-                loadMessages();
+                loadMessages = true;
             }
 
             if (uris.size() > 0) {
@@ -1129,7 +1131,7 @@ public class MessageListFragment extends Fragment implements
                 }
 
                 m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
-                loadMessages();
+                loadMessages = true;
             }
 
             new Thread(() -> {
@@ -1162,6 +1164,10 @@ public class MessageListFragment extends Fragment implements
                     }).start();
                 }
 
+                loadMessages = true;
+            }
+
+            if (loadMessages) {
                 loadMessages();
             }
 
