@@ -1102,6 +1102,10 @@ public class MessageListFragment extends Fragment implements
                 source.deleteMessage(adapter.getItemId(0));
             }
 
+            clearAttachedData();
+            selectedImageUris.clear();
+            selectedImageCount.setVisibility(View.GONE);
+            source.deleteDrafts(getConversationId());
             messageEntry.setText(null);
 
             Fragment fragment = getActivity()
@@ -1168,12 +1172,6 @@ public class MessageListFragment extends Fragment implements
                         .cancel((int) getConversationId());
                 NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
             }
-
-            clearAttachedData();
-            selectedImageUris.clear();
-            selectedImageCount.setVisibility(View.GONE);
-
-            source.deleteDrafts(getConversationId());
         }
     }
 
