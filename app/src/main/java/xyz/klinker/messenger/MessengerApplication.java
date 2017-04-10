@@ -21,10 +21,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.os.BuildCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.wearable.notifications.BridgingConfig;
+import android.support.wearable.notifications.BridgingManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -68,6 +71,14 @@ public class MessengerApplication extends Application {
         }
 
         startService(new Intent(this, ContentObserverService.class));
+
+        if (!Account.get(this).exists()) {
+            BridgingManager.fromContext(this).setConfig(
+                    new BridgingConfig.Builder(this, true).build());
+        } else {
+            BridgingManager.fromContext(this).setConfig(
+                    new BridgingConfig.Builder(this, false).build());
+        }
     }
 
     public void refreshDynamicShortcuts() {

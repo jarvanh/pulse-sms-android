@@ -123,6 +123,8 @@ android {
 dependencies {
     compile project(":shared")
 
+    compile "com.google.android.support:wearable:${WEARABLE_SUPPORT_VERSION}"
+
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.3.1"
     testCompile 'org.mockito:mockito-all:1.9.5'
