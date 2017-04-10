@@ -6,10 +6,12 @@ import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.Date;
 
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class RepeatNotificationJob extends JobService {
@@ -18,7 +20,8 @@ public class RepeatNotificationJob extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        return false;
+        startService(new Intent(this, NotificationService.class));
+        return true;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class RepeatNotificationJob extends JobService {
                     .setMinimumLatency(timeout)
                     .setOverrideDeadline(timeout + TimeUtils.MINUTE)
                     .setRequiresCharging(false)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setRequiresDeviceIdle(false);
 
             if (currentTime < nextRun) {
