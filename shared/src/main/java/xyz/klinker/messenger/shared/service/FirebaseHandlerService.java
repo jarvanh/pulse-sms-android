@@ -127,6 +127,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 case "removed_account":
                     removeAccount(json, source, context);
                     break;
+                case "updated_account":
+                    updatedAccount(json, source, context);
+                    break;
                 case "cleaned_account":
                     cleanAccount(json, source, context);
                     break;
@@ -245,6 +248,21 @@ public class FirebaseHandlerService extends WakefulIntentService {
             Log.v(TAG, "clearing account");
             source.clearTables();
             account.clearAccount();
+        } else {
+            Log.v(TAG, "ids do not match, did not clear account");
+        }
+    }
+
+    private void updatedAccount(JSONObject json, DataSource source, Context context)
+            throws JSONException {
+        Account account = Account.get(context);
+        String name = json.getString("real_name");
+        String number = json.getString("phone_number");
+
+        if (json.getString("id").equals(account.accountId)) {
+            account.setName(name);
+            account.setPhoneNumber(number);
+            Log.v(TAG, "updated account name and number");
         } else {
             Log.v(TAG, "ids do not match, did not clear account");
         }
