@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.2.3"
+        description="April 11th, 2017">
+        <text>Rework the option to refresh the push notifications</text>
+        <text>Bug fixes</text>
+    </version>
+  
+    <version
         name="2.2.2"
         description="April 6th, 2017">
         <text>Preparations for Android O</text>
