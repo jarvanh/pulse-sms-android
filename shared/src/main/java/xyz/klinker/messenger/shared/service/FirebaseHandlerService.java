@@ -128,7 +128,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     removeAccount(json, source, context);
                     break;
                 case "updated_account":
-                    updatedAccount(json, source, context);
+                    updatedAccount(json, context);
                     break;
                 case "cleaned_account":
                     cleanAccount(json, source, context);
@@ -253,7 +253,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         }
     }
 
-    private void updatedAccount(JSONObject json, DataSource source, Context context)
+    private void updatedAccount(JSONObject json, Context context)
             throws JSONException {
         Account account = Account.get(context);
         String name = json.getString("real_name");
