@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText name;
     private EditText phoneNumber;
     private TextView errorHint;
-    private View forgotPassword;
     private ProgressDialog dialog;
 
     @Override
@@ -140,13 +139,13 @@ public class LoginActivity extends AppCompatActivity {
         return activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
-    private void login() {
+    protected void login() {
         slideLoginIn();
 
         fab = (FloatingActionButton) findViewById(R.id.login_fab);
         email = (EditText) findViewById(R.id.login_email);
         password = (EditText) findViewById(R.id.login_password);
-        forgotPassword = findViewById(R.id.forgot_password);
+        View forgotPassword = findViewById(R.id.forgot_password);
 
         fab.setOnClickListener(view -> performLogin());
 
@@ -180,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
         attachLoginTextWatcher(password);
     }
 
-    private void signup() {
+    protected void signup() {
         slideSignUpIn();
 
         fab = (FloatingActionButton) findViewById(R.id.signup_fab);
@@ -218,14 +217,11 @@ public class LoginActivity extends AppCompatActivity {
                     password.getText().toString());
 
             if (response == null) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                        setResult(RESULT_CANCELED);
-                        Toast.makeText(getApplicationContext(), R.string.api_login_error,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    setResult(RESULT_CANCELED);
+                    Toast.makeText(getApplicationContext(), R.string.api_login_error,
+                            Toast.LENGTH_SHORT).show();
                 });
             } else {
                 AccountEncryptionCreator encryptionCreator =
@@ -559,7 +555,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void close() {
+    protected void close() {
         finish();
         overridePendingTransition(0, 0);
     }

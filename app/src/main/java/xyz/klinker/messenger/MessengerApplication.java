@@ -25,14 +25,12 @@ import android.support.v7.app.AppCompatDelegate;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
-import xyz.klinker.messenger.shared.service.jobs.ContentObserverJob;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 

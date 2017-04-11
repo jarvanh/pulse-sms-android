@@ -25,6 +25,12 @@
             android:launchMode="singleTask"/>
 
         <activity
+            android:name=".RecreateAccountActivity"
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
+            android:launchMode="singleTask"/>
+
+        <activity
             android:name=".ActivateActivity"
             android:theme="@style/api_Theme.AppCompat.Activate"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
