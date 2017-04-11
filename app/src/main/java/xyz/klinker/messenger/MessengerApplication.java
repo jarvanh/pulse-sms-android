@@ -21,8 +21,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.os.BuildCompat;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.wearable.notifications.BridgingConfig;
-import android.support.wearable.notifications.BridgingManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
