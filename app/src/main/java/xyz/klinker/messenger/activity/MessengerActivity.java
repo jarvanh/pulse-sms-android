@@ -106,7 +106,7 @@ import static xyz.klinker.messenger.shared.MessengerActivityExtras.*;
  * Main entry point to the app. This will serve for setting up the drawer view, finding
  * conversations and displaying things on the screen to get the user started.
  */
-public class MessengerActivity extends AppCompatActivity
+public class  MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
@@ -1175,6 +1175,10 @@ public class MessengerActivity extends AppCompatActivity
     private boolean handleShortcutIntent(Intent intent) {
         if (intent.getData() != null && intent.getDataString().contains("https://messenger.klinkerapps.com/")) {
             try {
+                if (conversationListFragment != null && conversationListFragment.isExpanded()) {
+                    onBackPressed();
+                }
+
                 displayShortcutConversation(Long.parseLong(intent.getData().getLastPathSegment()));
                 return true;
             } catch (Exception e) {

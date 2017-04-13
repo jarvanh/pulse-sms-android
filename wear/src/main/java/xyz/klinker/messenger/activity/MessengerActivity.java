@@ -95,24 +95,18 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
     }
 
     private void loadConversations() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataSource source = DataSource.getInstance(MessengerActivity.this);
-                source.open();
+        new Thread(() -> {
+            DataSource source = DataSource.getInstance(MessengerActivity.this);
+            source.open();
 
-                final List<Conversation> conversations = source.getUnarchivedConversationsAsList();
+            final List<Conversation> conversations = source.getUnarchivedConversationsAsList();
 
-                source.close();
+            source.close();
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.setConversations(conversations);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
+            runOnUiThread(() -> {
+                adapter.setConversations(conversations);
+                adapter.notifyDataSetChanged();
+            });
         }).start();
     }
 
