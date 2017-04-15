@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.shared.util;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -60,6 +61,58 @@ public class StringUtils {
         }
 
         return output.toString();
+    }
+
+    /**
+     * List of items that should be joined with the separator.
+     *
+     * @param items
+     * @param separator
+     *
+     * @return the combined string.
+     */
+    public static <T> String join(final List<T> items, String separator) {
+        if (items == null) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < items.size(); i++) {
+            if (i != 0) {
+                builder.append(separator);
+            }
+
+            builder.append(items.get(i));
+        }
+
+        return builder.toString();
+    }
+
+    /**
+     * List of items that should be joined to create a SQLite OR statement
+     *
+     * @param items the items to join.
+     * @param column the name of the column in the database.
+     *
+     * @return the combined string
+     */
+    public static <T> String buildSqlOrStatement(final String column, final List<T> items) {
+        if (items == null || items.size() == 0) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder(column);
+
+        for (int i = 0; i < items.size(); i++) {
+            if (i != 0) {
+                builder.append(" OR " + column);
+            }
+
+            builder.append("=" + items.get(i));
+        }
+
+        return builder.toString();
     }
 
 }

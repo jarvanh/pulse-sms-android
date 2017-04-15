@@ -231,17 +231,14 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
     @Override
     public void onProgressUpdate(final int current, final int max) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                progress.setIndeterminate(false);
-                progress.setMax(max);
+        handler.post(() -> {
+            progress.setIndeterminate(false);
+            progress.setMax(max);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    progress.setProgress(current, true);
-                } else {
-                    progress.setProgress(current);
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                progress.setProgress(current, true);
+            } else {
+                progress.setProgress(current);
             }
         });
     }

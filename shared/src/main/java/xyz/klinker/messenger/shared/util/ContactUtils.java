@@ -84,7 +84,7 @@ public class ContactUtils {
                 number.append(n);
             }
 
-            return number.toString().substring(2);
+            return number.toString().substring(2).replaceAll(",", ", ").replaceAll("  ", " ");
         } catch (Exception e) {
             return recipientIds;
         }

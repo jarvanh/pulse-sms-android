@@ -19,6 +19,9 @@ package xyz.klinker.messenger.shared.util;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.MessengerSuite;
 
 import static org.junit.Assert.assertEquals;
@@ -51,5 +54,46 @@ public class StringUtilsTest extends MessengerSuite {
         assertEquals("Conversation List", StringUtils.titleize("Conversation list"));
         assertEquals("Scheduled Messages", StringUtils.titleize("Scheduled messages"));
         assertEquals("Help & Feedback", StringUtils.titleize("Help & feedback"));
+    }
+
+    @Test
+    public void split() {
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        longs.add(2L);
+        longs.add(3L);
+        longs.add(4L);
+
+        assertEquals("1,2,3,4", StringUtils.join(longs, ","));
+        assertEquals("", StringUtils.join(null, ","));
+        assertEquals("", StringUtils.join(new ArrayList<Long>(), ","));
+    }
+
+    @Test
+    public void sqlOr() {
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        longs.add(2L);
+        longs.add(3L);
+        longs.add(4L);
+
+        assertEquals("test=1 OR test=2 OR test=3 OR test=4", StringUtils.buildSqlOrStatement("test", longs));
+
+        longs = new ArrayList<>();
+        longs.add(1L);
+
+        assertEquals("test=1", StringUtils.buildSqlOrStatement("test", longs));
+
+        longs = new ArrayList<>();
+        longs.add(1L);
+        longs.add(2L);
+
+        assertEquals("test=1 OR test=2", StringUtils.buildSqlOrStatement("test", longs));
+
+
+        assertEquals("", StringUtils.buildSqlOrStatement("test", null));
+        assertEquals("", StringUtils.buildSqlOrStatement("test", new ArrayList<Long>()));
+
+
     }
 }

@@ -481,7 +481,7 @@ public class ConversationListFragment extends Fragment
                         shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
                         break;
                     default:
-                        shouldRead = true;
+                        shouldRead = false;
                         break;
                 }
 
@@ -492,9 +492,7 @@ public class ConversationListFragment extends Fragment
 
             DataSource source = DataSource.getInstance(getActivity());
             source.open();
-            for (Conversation conversation : markAsRead) {
-                source.readConversation(getActivity(), conversation.id);
-            }
+            source.readConversations(getActivity(), markAsRead);
             source.close();
 
             handler.post(() -> loadConversations());

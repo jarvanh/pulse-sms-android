@@ -150,7 +150,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
         builder.append(from);
 //        return SmsMmsUtils.stripDuplicatePhoneNumbers(builder.toString());
-        return builder.toString();
+        return builder.toString().replaceAll(",", ", ").replaceAll("  ", " ");
     }
 
     @VisibleForTesting

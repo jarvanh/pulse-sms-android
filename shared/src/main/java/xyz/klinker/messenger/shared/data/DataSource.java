@@ -27,6 +27,7 @@ import android.support.annotation.VisibleForTesting;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.Formatter;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener;
 
@@ -2119,6 +2121,62 @@ public class DataSource {
 
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);
+        } catch (NullPointerException e) {
+            // thrown in robolectric tests
+        }
+    }
+
+    /**
+     * Marks a conversation and all messages inside of it as read and seen.
+     *
+     * @param conversations the conversation ids to mark.
+     */
+    public void readConversations(Context context, List<Conversation> conversations) {
+        List<Long> conversationIds = new ArrayList<>();
+        for (Conversation conversation : conversations) {
+            conversationIds.add(conversation.id);
+        }
+
+        ContentValues values = new ContentValues(2);
+        values.put(Message.COLUMN_READ, 1);
+        values.put(Message.COLUMN_SEEN, 1);
+
+        int updated;
+
+        try {
+            updated = database.update(Message.TABLE, values, StringUtils.buildSqlOrStatement(Message.COLUMN_CONVERSATION_ID, conversationIds),
+                    new String[]{ });
+        } catch (Exception e) {
+            ensureActionable();
+            updated = database.update(Message.TABLE, values, StringUtils.buildSqlOrStatement(Message.COLUMN_CONVERSATION_ID, conversationIds),
+                    new String[]{ });
+        }
+
+        values = new ContentValues(1);
+        values.put(Conversation.COLUMN_READ, 1);
+
+        try {
+            updated += database.update(Conversation.TABLE, values, StringUtils.buildSqlOrStatement(Conversation.COLUMN_ID, conversationIds),
+                    new String[]{ });
+        } catch (Exception e) {
+            ensureActionable();
+            updated += database.update(Conversation.TABLE, values, StringUtils.buildSqlOrStatement(Conversation.COLUMN_ID, conversationIds),
+                    new String[]{ });
+        }
+
+        Log.v("Data Source", "updated: " + updated);
+        if (updated > 0) {
+            for (Long id : conversationIds) {
+                apiUtils.readConversation(accountId, id);
+            }
+
+            writeUnreadCount();
+        }
+
+        try {
+            for (Conversation conversation : conversations) {
+                SmsMmsUtils.markConversationRead(context, conversation.phoneNumbers);
+            }
         } catch (NullPointerException e) {
             // thrown in robolectric tests
         }
