@@ -83,10 +83,6 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts"/>
 
-            <meta-data
-                android:name="com.yotadevices.keep_on_epd_screen"
-                android:value="true" />
-
         </activity>
 
         <activity
