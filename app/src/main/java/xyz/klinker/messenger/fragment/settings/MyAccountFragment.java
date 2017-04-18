@@ -18,7 +18,6 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,9 +25,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -41,13 +37,12 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.RecreateAccountActivity;
-import xyz.klinker.messenger.api.implementation.firebase.TokenUtil;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.ApiUploadService;
-import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckService;
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService;
+import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
@@ -113,7 +108,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
                     dialog.dismiss();
 
                     getActivity().runOnUiThread(() -> {
-                        if (hasSubs) {
+                        if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
                             try {
                                 Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
                             } catch (Exception e) { }
