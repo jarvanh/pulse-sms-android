@@ -18,5 +18,6 @@
 <resources>
 
     <bool name="feature_flag_default">true</bool>
+    <bool name="check_subscription">false</bool>
 
 </resources>
