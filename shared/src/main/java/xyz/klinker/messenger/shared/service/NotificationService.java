@@ -212,7 +212,7 @@ public class NotificationService extends IntentService {
         source.close();
 
         Collections.sort(conversations, (result1, result2) ->
-                new Date(result1.timestamp).compareTo(new Date(result2.timestamp)));
+                new Date(result2.timestamp).compareTo(new Date(result1.timestamp)));
 
         // remove the mutes.
         // If the newest conversation is muted, then we don't want to notify again.
