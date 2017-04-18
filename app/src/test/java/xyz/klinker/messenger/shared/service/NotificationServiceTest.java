@@ -79,16 +79,16 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         List<NotificationConversation> conversations = service.getUnseenConversations();
 
         assertEquals(3, conversations.size());
-        assertEquals("Luke Klinker", conversations.get(0).title);
-        assertEquals(3, conversations.get(0).messages.size());
-        assertEquals("Hey what's up?", conversations.get(0).messages.get(0).data);
-        assertEquals("Yo, you around?", conversations.get(0).messages.get(1).data);
-        assertEquals("Hello?", conversations.get(0).messages.get(2).data);
+        assertEquals("Luke Klinker", conversations.get(2).title);
+        assertEquals(3, conversations.get(2).messages.size());
+        assertEquals("Hey what's up?", conversations.get(2).messages.get(0).data);
+        assertEquals("Yo, you around?", conversations.get(2).messages.get(1).data);
+        assertEquals("Hello?", conversations.get(2).messages.get(2).data);
         assertEquals("Aaron Klinker", conversations.get(1).title);
         assertEquals(1, conversations.get(1).messages.size());
         assertEquals("Can we hang out tonight?", conversations.get(1).messages.get(0).data);
-        assertEquals(1, conversations.get(2).messages.size());
-        assertEquals("image/jpg", conversations.get(2).messages.get(0).mimeType);
+        assertEquals(1, conversations.get(0).messages.size());
+        assertEquals("image/jpg", conversations.get(0).messages.get(0).mimeType);
     }
 
     @Test
