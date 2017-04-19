@@ -125,7 +125,7 @@ public class Settings {
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off").equals("on");
         this.headsUp = sharedPrefs.getString(context.getString(R.string.pref_heads_up), "on").equals("on");
         this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false);
-        this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), true);
+        this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false);
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false);
 
         // configuration

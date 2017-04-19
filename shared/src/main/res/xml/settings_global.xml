@@ -55,7 +55,7 @@
         <SwitchPreference
             android:key="@string/pref_swipe_delete"
             android:title="@string/swipe_delete"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
