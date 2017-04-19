@@ -52,6 +52,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
             } else {
                 Log.v(TAG, "not expired, scheduling the next refresh");
                 scheduleNextRun(this);
+                SignoutJob.writeSignoutTime(this, 0);
             }
         }
     }

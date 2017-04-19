@@ -43,7 +43,7 @@ public class SignoutJob extends BackgroundJob {
             final String accountId = account.accountId;
 
             account.clearAccount();
-            new ApiUtils().deleteAccount(accountId);
+            //new ApiUtils().deleteAccount(accountId);
         } else {
             Log.v(TAG, "account not expired, scheduling the check again.");
             SubscriptionExpirationCheckJob.scheduleNextRun(this);
