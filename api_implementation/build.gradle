@@ -22,29 +22,15 @@ android {
         jumboMode = true
     }
 
-    try {
-        compileSdkVersion Integer.parseInt(COMPILE_SDK)
-    } catch (Exception e) {
-        compileSdkVersion COMPILE_SDK
-    }
-
+    compileSdkVersion parseSdkVersion(COMPILE_SDK)
     buildToolsVersion BUILD_TOOLS_VERSION
     resourcePrefix 'api_'
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(project.MIN_SDK)
-
-        try {
-            targetSdkVersion Integer.parseInt(TARGET_SDK)
-        } catch (Exception e) {
-            targetSdkVersion TARGET_SDK
-        }
-
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion parseSdkVersion(project.MIN_SDK)
+        targetSdkVersion parseSdkVersion(TARGET_SDK)
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {

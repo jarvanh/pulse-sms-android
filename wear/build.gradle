@@ -16,12 +16,7 @@ android {
         jumboMode = true
     }
 
-    try {
-        compileSdkVersion Integer.parseInt(COMPILE_SDK)
-    } catch (Exception e) {
-        compileSdkVersion COMPILE_SDK
-    }
-
+    compileSdkVersion parseSdkVersion(COMPILE_SDK)
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
@@ -29,20 +24,11 @@ android {
 
         applicationId "xyz.klinker.messenger"
         minSdkVersion 25
-
-        try {
-            targetSdkVersion Integer.parseInt(TARGET_SDK)
-        } catch (Exception e) {
-            targetSdkVersion TARGET_SDK
-        }
+        targetSdkVersion parseSdkVersion(TARGET_SDK)
 
         versionName(VERSION_NAME + '.' + buildNumber)
         versionCode buildNumber * 100000
         project.archivesBaseName = "wear-${versionName}"
-
-        jackOptions {
-            enabled Boolean.parseBoolean(USE_JACK)
-        }
 
         buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
         buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
