@@ -853,6 +853,8 @@ public class MessageListFragment extends Fragment implements
 
             try {
                 long startTime = System.currentTimeMillis();
+                drafts = source.getDrafts(conversationId);
+
                 final Cursor cursor = source.getMessages(conversationId);
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
@@ -861,8 +863,6 @@ public class MessageListFragment extends Fragment implements
                 final List<Contact> contactsByName = source.getContactsByNames(title);
                 final Map<String, Contact> contactMap = fillMapByNumber(numbers, contacts);
                 final Map<String, Contact> contactByNameMap = fillMapByName(title, contactsByName);
-
-                drafts = source.getDrafts(conversationId);
 
                 final int position = findMessagePositionFromId(cursor);
 
