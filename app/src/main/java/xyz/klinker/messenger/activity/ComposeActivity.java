@@ -299,7 +299,16 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 }
             }
 
-            showConversation(builder.toString());
+            String numbers = builder.toString();
+            String data = intent.getStringExtra("sms_body");
+            
+            if (data != null) {
+                setupSend(data, MimeType.TEXT_PLAIN, false);
+            }
+            
+            if (!numbers.isEmpty()) {
+                showConversation(builder.toString());
+            }
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
             final String mimeType = getIntent().getType();
             String data = "";
