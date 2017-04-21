@@ -387,8 +387,17 @@ public class MessageListFragment extends Fragment implements
 
         if (dismissOnStartup) {
             dismissNotification();
+            //new Thread(() -> source.readConversation(getActivity(), getConversationId())).start();
             dismissOnStartup = false;
         }
+        
+        // TODO: evaluate if this needs to be here or if it can go in the if block above
+        // It is probably safer here... It will mark messages as read with more frequency then,
+        // and that action isn't a huge strain on the backend
+        new Thread(() -> {
+                try { Thread.sleep(1000); } catch (Exception e) { }
+                source.readConversation(getActivity(), getConversationId());
+        }).start();
     }
 
     @Override
@@ -927,6 +936,7 @@ public class MessageListFragment extends Fragment implements
                     // this could happen in the background, we don't want to dismiss that then!
                     dismissNotification();
                     source.readConversation(getActivity(), conversationId);
+                    dismissOnStartup = false;
                 }
             } catch (Exception e) {
 
