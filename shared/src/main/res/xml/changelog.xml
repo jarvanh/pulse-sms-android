@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="2.2.5"
+        description="April 22nd, 2017">
+        <text>Improvements to marking messages as read</text>
+        <text>Some fixes for notifications re-appearing</text>
+        <text>Some account related improvements</text>
+        <text>Various other reported bug fixes</text>
+    </version>
+  
+    <version
         name="2.2.4"
         description="April 17th, 2017">
         <text>Bug fixes and performance improvements</text>
