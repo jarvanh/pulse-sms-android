@@ -33,6 +33,7 @@ import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.StringUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -71,12 +72,12 @@ public class SettingsActivity extends AppCompatActivity {
         switch (type) {
             case TYPE_GLOBAL:
                 globalFragment = new GlobalSettingsFragment();
-                setTitle(R.string.menu_settings);
+                setTitle(StringUtils.titleize(getString(R.string.menu_settings)));
                 startFragment(globalFragment);
                 break;
             case TYPE_FEATURE:
                 featureFragment = new FeatureSettingsFragment();
-                setTitle(R.string.menu_feature_settings);
+                setTitle(StringUtils.titleize(getString(R.string.menu_feature_settings)));
                 startFragment(featureFragment);
                 break;
             case TYPE_MMS:
