@@ -456,7 +456,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if (messages == null || messages.getCount() == 0) {
+        if (messages == null || messages.getCount() == 0 || messages.isClosed()) {
             return -1;
         }
 

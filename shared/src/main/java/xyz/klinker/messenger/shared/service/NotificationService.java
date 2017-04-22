@@ -92,47 +92,52 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        long snoozeTil = Settings.get(this).snooze;
-        if (snoozeTil > System.currentTimeMillis()) {
-            return;
+        try {
+            long snoozeTil = Settings.get(this).snooze;
+            if (snoozeTil > System.currentTimeMillis()) {
+                return;
+            }
+
+            skipSummaryNotification = false;
+
+            List<NotificationConversation> conversations = getUnseenConversations();
+            List<String> rows = new ArrayList<>();
+
+            if (conversations != null && conversations.size() > 0) {
+                NotificationManagerCompat.from(this).cancelAll();
+
+                for (int i = 0; i < conversations.size(); i++) {
+                    NotificationConversation conversation = conversations.get(i);
+                    rows.add(giveConversationNotification(conversation, i, conversations.size()));
+                }
+
+                if (conversations.size() > 1) {
+                    giveSummaryNotification(conversations, rows);
+                }
+
+                Settings settings = Settings.get(this);
+                if (settings.repeatNotifications != -1) {
+                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
+                }
+
+                if (Settings.get(this).wakeScreen) {
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(600);
+                        } catch (Exception e) {
+                        }
+
+                        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
+                        wl.acquire(5000);
+                    }).start();
+                }
+            }
+
+            MessengerAppWidgetProvider.refreshWidget(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        skipSummaryNotification = false;
-
-        List<NotificationConversation> conversations = getUnseenConversations();
-        List<String> rows = new ArrayList<>();
-
-        if (conversations != null && conversations.size() > 0) {
-            NotificationManagerCompat.from(this).cancelAll();
-
-            for (int i = 0; i < conversations.size(); i++) {
-                NotificationConversation conversation = conversations.get(i);
-                rows.add(giveConversationNotification(conversation, i, conversations.size()));
-            }
-
-            if (conversations.size() > 1) {
-                giveSummaryNotification(conversations, rows);
-            }
-
-            Settings settings = Settings.get(this);
-            if (settings.repeatNotifications != -1) {
-                RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
-            }
-
-            if (Settings.get(this).wakeScreen) {
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(600);
-                    } catch (Exception e) { }
-
-                    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
-                    wl.acquire(5000);
-                }).start();
-            }
-        }
-
-        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
     @VisibleForTesting

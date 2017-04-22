@@ -786,7 +786,11 @@ public class ApiUtils {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage
                 .getReferenceFromUrl(FIREBASE_STORAGE_URL);
-        folderRef = storageRef.child(accountId);
+        try {
+            folderRef = storageRef.child(accountId);
+        } catch (Exception e) {
+            folderRef = null;
+        }
     }
 
     /**

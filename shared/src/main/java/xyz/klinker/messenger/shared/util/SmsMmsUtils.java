@@ -20,6 +20,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SqliteWrapper;
 import android.graphics.Color;
 import android.net.Uri;
@@ -83,7 +84,7 @@ public class SmsMmsUtils {
         try {
             cursor = context.getContentResolver()
                     .query(uri, projection, null, null, Telephony.ThreadsColumns.DATE + " desc");
-        } catch (SecurityException e) {
+        } catch (SQLException | SecurityException e) {
             cursor = null;
         }
 
