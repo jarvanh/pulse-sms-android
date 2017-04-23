@@ -15,8 +15,12 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">Přihlásit</string>
-    <string name="api_signup">Registrace</string>
+    <string name="api_login">Přihlásit se</string>
+    <string name="api_signup">Registrovat se</string>
+    <string name="api_signup_failed">Nemůžete se registrovat na tomto zařízení. Nejdříve se registrujte
+na primárním zařízení, které má vaše telefonní číslo!</string>
+    <string name="api_skip_signup">Nebo pokud chcete používat aplikaci na tomto zařízení a nechcete
+psát zprávy z vašeho tabletu či počítače, tak můžete přeskočit tento krok:</string>
     <string name="api_skip">Přeskočit</string>
     <string name="api_email">Emailová adresa</string>
     <string name="api_password">Heslo</string>
@@ -24,7 +28,11 @@
     <string name="api_password_confirmation">Potvrzení hesla</string>
     <string name="api_name">Jméno</string>
     <string name="api_phone_number">Telefonní číslo</string>
-    <string name="api_connecting">Připojení k serveru...</string>
+    <string name="api_connecting">Připojuji se k serveru...</string>
+    <string name="api_error">Při provádění operace nastala chyba</string>
+    <string name="api_device_error">Nastala chyba při přidávání tohoto zařízení. Zkuste to znovu.</string>
+    <string name="api_add_second_primary_device">Vypadá to, že už máte primární zařízení (%1$s) pro tento účet a pouze jedno je povolené.
+Chcete odstranit současné zařízení a nastavit toto jako primární?</string>
     <string name="api_yes">Ano</string>
     <string name="api_no">Ne</string>
     <string name="api_no_email">Emailová adresa nebyla zadána</string>
@@ -32,8 +40,21 @@
     <string name="api_no_password">Heslo nebylo zadáno</string>
     <string name="api_no_password_confirmation">Potvrzení hesla nebylo zadáno</string>
     <string name="api_password_mismatch">Hesla se neshodují</string>
+    <string name="api_no_name">Jméno nebylo zadáno</string>
     <string name="api_no_phone_number">Telefonní číslo nebylo zadáno</string>
     <string name="api_login_error">Došlo k chybě při přihlášení, špatný email nebo heslo?</string>
+    <string name="api_activate_summary">Přihlašte se pro získání všech zpráv na tomto zařízení!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">Přejděte na</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">na mobilním zařízení, nebo počítači.</string>
+    <string name="api_activate_2_1">Na webové stránce</string>
+    <string name="api_activate_2_2">vložte kód napravo</string>
+    <string name="api_activate_2_3">pro propojení vašeho účtu.</string>
+    <string name="api_confirm_password">Prosím, potvrďte své heslo:</string>
+    <string name="api_wrong_password">Potvrzení selhalo. Je heslo správně?</string>
+    <string name="api_email_taken">Nastala chyba při přihlašování. Máte účet s tímto emailem?</string>
     <string name="api_confirm">Potvrdit</string>
     <string name="api_continue">Pokračovat</string>
 </resources>

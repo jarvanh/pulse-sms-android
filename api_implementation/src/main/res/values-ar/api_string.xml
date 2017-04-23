@@ -16,16 +16,16 @@
   -->
 <resources>
     <string name="api_login">تسجيل الدخول</string>
-    <string name="api_signup">تسجيل</string>
+    <string name="api_signup">تسجيل جديد</string>
     <string name="api_signup_failed">لا يمكن التسجيل عبر هذا الجهاز،
  ولكن يجب عليك الاشتراك عن طريق الجهاز الأساسي المسجل عليه رقم الهاتف أولا.</string>
     <string name="api_skip_signup">أو، في حالة رغبتك في استخدام التطبيق على هذا الجهاز فقط ولا تريد استخدام خصائص الشبكة مثل إرسال الرسائل النصية من الكمبيوتر اللوحي أو جهاز الكمبيوتر، يمكنك تخطي هذه الخطوة:</string>
     <string name="api_skip">تخطي</string>
     <string name="api_email">عنوان البريد الإلكتروني</string>
     <string name="api_password">كلمة المرور</string>
-    <string name="api_forgot_password">هل نست كلمة المرور؟</string>
+    <string name="api_forgot_password">نسيت كلمة المرور التعليمات</string>
     <string name="api_password_confirmation">تأكيد كلمة المرور</string>
-    <string name="api_name">اسم</string>
+    <string name="api_name">الإسم</string>
     <string name="api_phone_number">رقم الهاتف</string>
     <string name="api_connecting">الاتصال بالخادم…</string>
     <string name="api_error">حدث خطأ أثناء العملية</string>
@@ -45,6 +45,8 @@
     <string name="api_no_phone_number">رقم الهاتف الذي ادخلته غير موجود</string>
     <string name="api_login_error">حدث خطأ أثناء تسجيل الدخول، البريد الإلكتروني غير صحيح أو كلمة المرور؟</string>
     <string name="api_activate_summary">الدخول للحصول على كل رسائلك على هذا الجهاز!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">في المقدمه</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">على جهاز محمول أو جهاز الكمبيوتر.</string>
@@ -53,7 +55,7 @@
     <string name="api_activate_2_3">متابعه إلى حسابك</string>
     <string name="api_confirm_password">الرجاء تأكيد كلمة المرور:</string>
     <string name="api_wrong_password">فشل التأكيد. هل كلمة السر الخاصة بك صحيحه؟</string>
-    <string name="api_email_taken">حدث خطأ أثناء تسجيل الدخول، هل لديك بالفعل حساب بهذا البريد الإلكتروني؟</string>
+    <string name="api_email_taken">للأسف لقد حدث خطأ أثناء تسجيل الدخول، هل لديك بالفعل حساب قديم بهذا البريد الإلكتروني؟</string>
     <string name="api_confirm">تاكيد</string>
     <string name="api_continue">استمرار</string>
 </resources>

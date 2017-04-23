@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">התחבר/י</string>
+    <string name="api_signup">הירשם/י</string>
+    <string name="api_signup_failed">לא ניתן להירשם במכשיר זה, עליך להירשם באמצעות מכשיר ראשי שיש לו מספר טלפון.</string>
+    <string name="api_skip_signup">לחלופין, אם אתה רק רוצה להשתמש ביישום במכשיר זה ולא ברשת
+תכונות כגון הודעות טקסט בטאבלט או במחשב, תוכל לדלג על שלב זה:</string>
+    <string name="api_skip">דלג/י</string>
+    <string name="api_email">דואר אלקטרוני</string>
+    <string name="api_password">סיסמה</string>
+    <string name="api_forgot_password">שאלות נפוצות לגבי שכיחת סיסמה</string>
+    <string name="api_password_confirmation">אימות סיסמה</string>
+    <string name="api_name">שם</string>
+    <string name="api_phone_number">מספר טלפון</string>
+    <string name="api_connecting">מתחבר לשרת...</string>
+    <string name="api_error">אירעה שגיאה במהלך הפעולה</string>
+    <string name="api_device_error">אירעה שגיאה בעת הוספת המכשיר. בואו ננסה שוב!</string>
+    <string name="api_add_second_primary_device">נראה שיש לך מכשיר ראשי
+(% 1 $ s) עבור החשבון שלך ורק אחד מותר! האם ברצונך להסיר את
+המכשיר הראשי ולהגדיר את זה כמו הראשי החדש?</string>
+    <string name="api_yes">כן</string>
+    <string name="api_no">לא</string>
+    <string name="api_no_email">לא הוזנה כתובת דוא\"ל</string>
+    <string name="api_email_invalid">כתובת אימייל לא חוקית</string>
+    <string name="api_no_password">לא הוזנה סיסמה</string>
+    <string name="api_no_password_confirmation">לא הוזן אישור סיסמה</string>
+    <string name="api_password_mismatch">סיסמאות אינן תואמות</string>
+    <string name="api_no_name">לא הוזן שם</string>
+    <string name="api_no_phone_number">לא הוזן מספר טלפון</string>
+    <string name="api_login_error">אירעה שגיאה בכניסה, דוא\"ל או סיסמה שגויים?</string>
+    <string name="api_activate_summary">התחבר כדי לקבל את כל ההודעות שלך במכשיר זה!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">גש אל</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">במכשיר נייד או במחשב.</string>
+    <string name="api_activate_2_1">באתר</string>
+    <string name="api_activate_2_2">הזן את הקוד ימינה</string>
+    <string name="api_activate_2_3">כדי לחבר את החשבון שלך!</string>
+    <string name="api_confirm_password">אשר את הסיסמה שלך:</string>
+    <string name="api_wrong_password">האישור נכשל. האם הסיסמה שלך נכונה?</string>
+    <string name="api_email_taken">אירעה שגיאה בכניסה, האם כבר יש לך חשבון עם דואר אלקטרוני זו?</string>
+    <string name="api_confirm">אשר</string>
+    <string name="api_continue">המשך</string>
+</resources>

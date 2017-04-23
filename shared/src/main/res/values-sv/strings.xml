@@ -29,6 +29,7 @@
     <string name="menu_invite">Bjud in vänner</string>
     <string name="menu_feature_settings">Avancerade funktioner</string>
     <string name="menu_settings">Globala Inställningar</string>
+    <string name="menu_mms_configuration">MMS Inställningar</string>
     <string name="menu_account">Mitt konto</string>
     <string name="menu_device_texting">Skriv från valfri enhet</string>
     <string name="menu_help">Hjälp &amp; feedback</string>
@@ -77,9 +78,87 @@
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Älskar du Pulse?</string>
     <!-- Message List Screen -->
+    <string name="type_message">Skriv meddelande</string>
+    <string name="type_message_to">Skriv meddelande till %1$s</string>
+    <string name="attach">Bifoga</string>
+    <string name="select_sim">Välj SIM</string>
+    <string name="mms_image">MMS bild</string>
+    <string name="now">Nu</string>
+    <string name="sending">Skickar...</string>
+    <string name="failed">Misslyckades</string>
+    <string name="delivered">Meddelande levererat</string>
+    <string name="attach_image">Bifoga bild</string>
+    <string name="capture_image">Ta bild</string>
+    <string name="attach_gif">Bifoga GIF</string>
+    <string name="record_video">Spela in video</string>
+    <string name="record_audio">Spela in ljud</string>
+    <string name="attach_location">Bifoga plats</string>
+    <string name="no_location_found">Kunde inte hitta din plats.</string>
+    <string name="camera_permission_needed">Din tillåtelse krävs för att använda din kamera!</string>
+    <string name="take_picture">Ta kort</string>
+    <string name="flip_picture">Byt kamera</string>
+    <string name="fullscreen">Helskärm</string>
+    <string name="attached_image">Bifogad bild</string>
+    <string name="remove_image">Ta bort bifogad bild</string>
+    <string name="edit_image">Redigera bifogad bild</string>
+    <string name="permission_needed_for_action">Tillåtelse krävs för att slutföra.</string>
+    <string name="request_permission">Begär tillåtelse</string>
+    <string name="no_messages_with_contact">Du har inga meddelanden i denna konversationen än, dags att börja skriva!</string>
+    <string name="save">Spara</string>
+    <string name="share">Dela</string>
+    <string name="share_content">Dela innehåll...</string>
+    <string name="saved">Sparad till nedladdningsfolder!</string>
+    <string name="failed_to_save">Misslyckades att spara</string>
+    <string name="start_recording_audio">Tryck på knappen för att spela in ljud!</string>
+    <string name="audio_recording_error">Fel vid inspelning :(</string>
+    <string name="message_copied_to_clipboard">Kopierad till urklipp</string>
+    <string name="view_details">Se detaljer</string>
+    <string name="delete">Ta bort</string>
+    <string name="copy_message">Kopiera text</string>
+    <string name="resend">Sänd igen</string>
+    <string name="no_media">Konversationen innehåller ingen media!</string>
+    <string name="message_sending_failed">Meddelandet kunde inte skickas!</string>
+    <string name="preparing_video">Förbereder video &#8230;</string>
+    <string name="delete_message">Ta bort meddelandet?</string>
+    <string name="forward_message">Vidarebefordra meddelande</string>
+    <string name="share_message">Dela meddelande</string>
+    <string name="copy_message_text">Kopiera meddelandetext</string>
+    <string name="open_link_to_browser">Öppna länk i webläsare</string>
+    <string name="copy_link">Kopiera länk</string>
     <!-- Compose Screen -->
+    <string name="compose_message">Skriv nytt meddelande</string>
+    <string name="send_message">Skicka meddelande</string>
+    <string name="enter_contact_name">Skriv kontaktnamn</string>
     <!-- Onboarding Screen -->
+    <string name="loading_messages">Optimerar...</string>
+    <string name="onboarding_title_2">Tillgänglig överallt</string>
+    <string name="onboarding_content_2">Meddelande från din platta, dator, klocka eller annan ansluten enhet.</string>
+    <string name="message_anywhere_onboarding_title_1">Meddelande Överallt</string>
+    <string name="message_anywhere_onboarding_title_2">Prenumeration eller Engångsavgift</string>
+    <string name="message_anywhere_onboarding_title_3">En veckas testperiod</string>
+    <string name="start_trial">Börja\nTestperiod.</string>
+    <string name="not_now">Inte\nNu</string>
+    <string name="onboarding_done">Klart</string>
     <!-- Notifications -->
+    <plurals name="new_messages">
+        <item quantity="one">%1$d nytt meddelande</item>
+        <item quantity="other">%1$d nya meddelanden</item>
+    </plurals>
+    <string name="read">Läs</string>
+    <string name="reply">Svara</string>
+    <string name="reply_to">Svara till  %1$s</string>
+    <string name="call">Ring</string>
+    <string-array name="reply_choices">
+        <item>Ja</item>
+        <item>Nej</item>
+        <item>Kanske</item>
+        <item>OK</item>
+        <item>Tack</item>
+    </string-array>
+    <string name="new_mms_message">Nytt MMS meddelande</string>
+    <string name="you">Du</string>
+    <string name="new_message">Nytt meddelande</string>
+    <string name="media">Media</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="issues">Problemsökning</string>
     <string name="issues_summary">Fungerar även som en framtida färdplan</string>
@@ -90,8 +169,12 @@
     <string name="repeat_ten_mins">Var tionde minut</string>
     <string name="repeat_half_hour">Varje halvtimme</string>
     <string name="repeat_hour">Varje timme</string>
+    <string name="font_size">Textstorlek</string>
+    <string name="swipe_delete">Svep för att ta bort</string>
+    <string name="add">Lägg till</string>
     <string name="alert_types">Larmtyper</string>
     <string name="alert_types_summary">Olika anpassningar för notifikationer</string>
+    <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="cleanup_old_messages">Rensa gamla meddelanden</string>
     <string name="delayed_sending">Fördröjd sändning</string>
@@ -99,7 +182,16 @@
     <!-- Scheduled Messages Screen -->
     <!-- Encryption -->
     <!-- Quick Reply -->
+    <string name="audio_message">Ljudmeddelande</string>
+    <string name="video_message">Videomeddelande</string>
+    <string name="picture_message">Bildmeddelande</string>
+    <string name="gif_message">Infoga GIF</string>
+    <string name="contact_card">Kontakt</string>
+    <string name="send">Skicka</string>
     <!-- Other -->
     <!-- Times -->
+    <string name="six_months">Sex månader</string>
+    <string name="one_year">Ett år</string>
     <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Prenumeration saknas!</string>
 </resources>
