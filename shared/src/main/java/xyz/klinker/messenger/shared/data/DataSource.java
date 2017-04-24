@@ -2088,8 +2088,8 @@ public class DataSource {
      */
     public void readConversation(Context context, long conversationId) {
         ContentValues values = new ContentValues(2);
-        values.put(Message.COLUMN_READ, 1);
-        values.put(Message.COLUMN_SEEN, 1);
+        values.put(Message.COLUMN_READ, true);
+        values.put(Message.COLUMN_SEEN, true);
 
         int updated;
 
@@ -2103,7 +2103,7 @@ public class DataSource {
         }
 
         values = new ContentValues(1);
-        values.put(Conversation.COLUMN_READ, 1);
+        values.put(Conversation.COLUMN_READ, true);
 
         try {
             updated += database.update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
@@ -2116,8 +2116,9 @@ public class DataSource {
 
         if (updated > 0) {
             apiUtils.readConversation(accountId, conversationId);
-            writeUnreadCount();
         }
+
+        writeUnreadCount();
 
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(conversationId).phoneNumbers);
