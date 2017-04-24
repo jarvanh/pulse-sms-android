@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.2.6"
+        description="April 25nd, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.2.5"
         description="April 22nd, 2017">
         <text>Improvements to marking messages as read</text>
