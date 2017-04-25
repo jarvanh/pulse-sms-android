@@ -664,14 +664,15 @@ public class ApiUtils {
      * @param messageId the message id that the data belongs to.
      * @param encryptionUtils the utils to encrypt the byte array with.
      */
-    public void uploadBytesToFirebaseSynchronously(byte[] bytes, final long messageId,
+    public void uploadBytesToFirebaseSynchronously(String accountId, byte[] bytes, final long messageId,
                                                    EncryptionUtils encryptionUtils) {
         if (!active || encryptionUtils == null) {
             return;
         }
 
         if (folderRef == null) {
-            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+            saveFirebaseFolderRef(accountId);
+            //throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
         }
 
         final AtomicBoolean firebaseFinished = new AtomicBoolean(false);

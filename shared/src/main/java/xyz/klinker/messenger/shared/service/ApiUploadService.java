@@ -396,7 +396,7 @@ public class ApiUploadService extends Service {
                 Log.v(TAG, "started uploading " + message.id);
 
                 byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
-                apiUtils.uploadBytesToFirebaseSynchronously(bytes, message.id, encryptionUtils);
+                apiUtils.uploadBytesToFirebaseSynchronously(account.accountId, bytes, message.id, encryptionUtils);
 
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,

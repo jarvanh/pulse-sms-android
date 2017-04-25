@@ -1118,11 +1118,13 @@ public class MessageListFragment extends Fragment implements
             source.deleteDrafts(getConversationId());
             messageEntry.setText(null);
 
-            Fragment fragment = getActivity()
-                    .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+            if (getActivity() != null) {
+                Fragment fragment = getActivity()
+                        .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
 
-            if (fragment != null && fragment instanceof ConversationListFragment) {
-                ((ConversationListFragment) fragment).notifyOfSentMessage(m);
+                if (fragment != null && fragment instanceof ConversationListFragment) {
+                    ((ConversationListFragment) fragment).notifyOfSentMessage(m);
+                }
             }
 
             boolean loadMessages = false;

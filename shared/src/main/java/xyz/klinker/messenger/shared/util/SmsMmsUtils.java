@@ -653,7 +653,7 @@ public class SmsMmsUtils {
                     ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
         } catch (IllegalStateException e) {
             // the conversation doesn't exist
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
             // no permission
