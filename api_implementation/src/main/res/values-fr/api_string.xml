@@ -39,19 +39,19 @@
     <string name="api_password_mismatch">Les mots de passe ne correspondent pas</string>
     <string name="api_no_name">Pas de nom entré</string>
     <string name="api_no_phone_number">Pas de numéro de téléphone entré</string>
-    <string name="api_login_error">Une erreur s\'est produite lors de la connexion. Peut-être une mauvaise adresse e-mail ou mot de passe?</string>
+    <string name="api_login_error">Une erreur s\'est produite lors de la connexion, peut-être une mauvaise adresse e-mail ou un mauvais mot de passe ?</string>
     <string name="api_activate_summary">Connectez-vous pour recevoir tous vos messages sur cet appareil !</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Rediriger vers</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
-    <string name="api_activate_1_3">Sur un appareil mobile ou sur un ordinateur.</string>
-    <string name="api_activate_2_1">Sur le siteweb</string>
+    <string name="api_activate_1_3">sur un appareil mobile ou sur un ordinateur.</string>
+    <string name="api_activate_2_1">Sur le site web</string>
     <string name="api_activate_2_2">Entrer le code à droite</string>
     <string name="api_activate_2_3">pour connecter votre compte</string>
     <string name="api_confirm_password">S\'il vous plaît, veuillez confirmer votre mot de passe :</string>
     <string name="api_wrong_password">Confirmation échouée. Votre mot de passe est correct?</string>
-    <string name="api_email_taken">Erreur de connexion, avez-vous un compte associé à cet adresse mail ?</string>
+    <string name="api_email_taken">Erreur de connexion, avez-vous déjà un compte associé à cette adresse mail ?</string>
     <string name="api_confirm">Confirmer</string>
     <string name="api_continue">Continuer</string>
 </resources>

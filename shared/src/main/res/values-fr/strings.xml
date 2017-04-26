@@ -89,6 +89,12 @@
     <string name="messages">Messages</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Vous aimez Pulse?</string>
+    <string name="invite_friends_summary">Alors, nous et d\'autres aussi ! Nous essayons de la 
+ mettre entre toutes les mains possibles pour continuer à en faire le meilleur produit possible et en
+ invitant vos amis à essayer, vous nous aidez ! \n\n Sélectionnez vos amis ci-dessous
+ à qui vous voulez partager l\'application et un SMS avec une courte description sera envoyé
+ avec un lien pour télécharger Pulse !</string>
+    <string name="invite_friends_sms">J\'ai commencé à utiliser une nouvelle application de messagerie et je pense que tu vas l\'aimer ! En plus, elle est gratuite, pense à la télécharger ici : http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Composez votre message</string>
     <string name="type_message_to">Composez votre message à %1$s</string>
@@ -158,11 +164,16 @@ Commencez !
     <string name="onboarding_title_1">Messagerie réinventée</string>
     <string name="onboarding_title_2">Disponible Partout</string>
     <string name="onboarding_title_3">Forte Personalisation</string>
+    <string name="onboarding_content_1">"Lisse, avec une disposition fluide, un design puissant et une intégration transparente. Pulse place vos conversations au centre de tout."</string>
     <string name="onboarding_content_2">Envoyez des messages depuis votre tablette, ordinateur, montre connectée, ou tout autre appareil connecté.</string>
     <string name="onboarding_content_3">Épingler, désactiver ou personnaliser les notifications pour chacun de vos contacts. Faite de Pulse votre application.</string>
     <string name="message_anywhere_onboarding_title_1">Envoyez des messages de partout</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement ou Paiement Unique</string>
     <string name="message_anywhere_onboarding_title_3">Une semaine d\'essai</string>
+    <string name="message_anywhere_onboarding_content_1">"S'intègre parfaitement avec n'importe quel appareil (tablette, montre, télé, internet, Google Chrome et Firefox) pour prendre en charge les SMS et les MMS de n'importe où !
+"</string>
+    <string name="message_anywhere_onboarding_content_2">Des prix incroyablement bas ! Payer lorsque vous en avez besoin : 10,99 $ à vie, 5,99 $ par an, 1,99 $ pour 3 mois ou 0,99 $ par mois. Moins d\'une tasse de café.</string>
+    <string name="message_anywhere_onboarding_content_3">Utilisez l\'application Android, GRATUITEMENT (pour toujours !) sur votre téléphone, ou commencez à écrire vos messages depuis tous vos appareils avec UNE SEMAINE gratuite d\'essai.</string>
     <string name="start_trial">Démarrer l\'essai</string>
     <string name="not_now">Pas maintenant</string>
     <string name="onboarding_done">Terminé</string>
@@ -236,6 +247,7 @@ pourrez rencontrer !</string>
     <string name="group_name">Nom du groupe</string>
     <string name="notification_settings">Notifications</string>
     <string name="repeat_interval">Répéter l\'alerte</string>
+    <string name="heads_up">Infos</string>
     <string name="repeat_never">Jamais</string>
     <string name="repeat_one_min">Toutes les minutes</string>
     <string name="repeat_five_mins">Toutes les 5 minutes</string>
@@ -291,9 +303,13 @@ pourrez rencontrer !</string>
     <string name="resync_account">Resynchroniser le compte</string>
     <string name="resync_account_summary">Des messages manquants ?
 A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
+    <string name="resync_account_confirmation">Cela va supprimer tous les messages de l\'appareil, et
+démarrer avec une copie propre de ce qui est actuellement sur votre appareil principal. Etes-vous sûr de vouloir faire ça ?</string>
+    <string name="normalize_color_scheme">Ou, vous pouvez choisir une couleur unique basée sur le contact :</string>
     <string name="no_apps_found">Aucune application pour exécuter cette action</string>
     <string name="you_denied_permission">Vous avez refusé cette permission</string>
     <string name="supported_platforms">Appareils pris en charges</string>
+    <string name="supported_platforms_summary">Tous les lieux officiels auxquels vous pouvez accéder dans l\'application</string>
     <string name="font_size_small">Petit</string>
     <string name="font_size_normal">Normal</string>
     <string name="font_size_large">Grand</string>
@@ -305,19 +321,30 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
     <string name="strip_unicode">Remplacer l\'Unicode</string>
     <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants</string>
+    <string name="giffgaff_delivery">Accusés de réception giffgaff</string>
     <string name="notification_actions">Actions depuis les notifications</string>
     <string name="notification_actions_summary">Trois actions maximales par notification.</string>
     <string name="mms_download_directory">Dossier de téléchargement des médias</string>
     <string name="refresh_firebase">Actualiser les notifications push</string>
+    <string name="refresh_firebase_summary">Les messages ne s\'affichent pas sur cet appareil ? Réessayez après avoir utilisé cette option.</string>
+    <string name="refreshing_notifications">Rafraîchissement du jeton de notification...</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
+    <string name="use_group_mms">Utiliser les MMS groupés</string>
+    <string name="auto_save_media">Sauvegarde auto des médias</string>
+    <string name="auto_save_media_summary">Sauver automatiquement tous les médias MMS dans le dossier /Téléchargements quand ils sont reçus.</string>
     <string name="apn_configuration">Configuration des APN</string>
     <string name="override_system_apn">Remplacer les APN du système</string>
     <string name="mmsc_url">MMSC</string>
     <string name="mms_proxy">Proxy MMS</string>
     <string name="mms_port">Port MMS</string>
+    <string name="user_agent">User Agent</string>
+    <string name="user_agent_profile_url">URL du profil d\'User Agent</string>
+    <string name="user_agent_profile_tag">Nom du profil d\'User Agent</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
+    <string name="signature_summary">Les signatures ne seront pas affichées dans la liste des messages, elles
+seront uniquement affichées au destinataire du message.</string>
     <string name="cleanup_old_messages">Supprimer les anciens messages</string>
     <string name="delayed_sending">Envoi différé</string>
     <string name="quick_compose">Réponse rapide</string>
@@ -389,6 +416,12 @@ Essayez aujourd\'hui !</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="off">Inactif</string>
+    <string name="on">Sur</string>
+    <string name="rate_it">Noter l\'application !</string>
+    <string name="love_pulse_question">Vous aimez Pulse ?</string>
+    <string name="give_a_rating">Merci de noter l\'application ou de la partager avec vos amis !\n\n
+ La note de 5 étoiles réchauffe mon cœur :)</string>
+    <string name="share_promo">Hey, j\'utilise Pulse pour envoyer des messages ! Essaye la : https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
     <string name="one_second">Une seconde</string>
     <string name="three_seconds">Trois secondes</string>

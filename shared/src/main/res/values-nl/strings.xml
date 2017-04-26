@@ -1,0 +1,446 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Nieuw bericht</string>
+    <string name="shortcut_compose_long">Maak een nieuwe conversatie!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Conversaties</string>
+    <string name="menu_archived_conversations">Archief</string>
+    <string name="menu_schedule">Geplande berichten</string>
+    <string name="menu_mute_contacts">Geblokkeerd</string>
+    <string name="menu_invite">Vrienden uitnodigen</string>
+    <string name="menu_feature_settings">Geavanceerde opties</string>
+    <string name="menu_settings">Algemene instellingen</string>
+    <string name="menu_mms_configuration">MMS Configuratie</string>
+    <string name="menu_account">Mijn account</string>
+    <string name="menu_device_texting">SMS van elk toestel</string>
+    <string name="menu_help">Help &amp; feedback</string>
+    <string name="menu_about">Over</string>
+    <string name="menu_search">Zoeken</string>
+    <string name="menu_mobile_only">Enkel Mobiel</string>
+    <string name="menu_snooze">Snooze notificaties</string>
+    <string name="menu_call">Bel contact</string>
+    <string name="menu_view_contact">Bekijk contact</string>
+    <string name="menu_view_contacts">Bekijk contacten</string>
+    <string name="menu_view_media">Bekijk media</string>
+    <string name="menu_delete_conversation">Conversatie verwijderen</string>
+    <string name="menu_archive_conversation">Conversatie archiveren</string>
+    <string name="menu_move_to_inbox">Verplaatsen naar Inbox</string>
+    <string name="menu_conversation_information">Conversatie informatie</string>
+    <string name="menu_conversation_blacklist">Blokkeer contact</string>
+    <string name="menu_conversation_schedule">Plan een bericht</string>
+    <string name="menu_contact_settings">Instellingen contact</string>
+    <string name="menu_group_settings">Instellingen groep</string>
+    <string name="menu_snooze_off">Uit</string>
+    <string name="menu_snooze_1">1 uur</string>
+    <string name="menu_snooze_2">2 uur</string>
+    <string name="menu_snooze_4">4 uur</string>
+    <string name="menu_snooze_8">8 uur</string>
+    <string name="menu_snooze_24">24 uur</string>
+    <string name="menu_snooze_72">72 uur</string>
+    <string name="menu_snooze_custom">Kies een tijd</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Geen berichten</string>
+    <string name="no_messages_summary">Start een nieuwe conversatie of geniet van je dag!</string>
+    <string name="close">Sluiten</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Vastgezet</string>
+    <string name="today">Vandaag</string>
+    <string name="yesterday">Gisteren</string>
+    <string name="last_week">Deze week</string>
+    <string name="last_month">Deze maand</string>
+    <string name="older">Ouder</string>
+    <string name="mark_section_as_read">Markeer alle %1$s als gelezen</string>
+    <string name="marking_section_as_read">Alle %1$s gemarkeerd als gelezen</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d conversatie verwijderd</item>
+        <item quantity="other">%1$d conversaties verwijderd</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d conversatie gearchiveerd</item>
+        <item quantity="other">%1$d conversaties gearchiveerd</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d conversatie verplaatst naar Inbox</item>
+        <item quantity="other">%1$d conversaties verplaatst naar Inbox</item>
+    </plurals>
+    <string name="undo">Ongedaan maken</string>
+    <string name="enter_search">Zoeken naar...</string>
+    <!-- Search Screen -->
+    <string name="conversations">Conversaties</string>
+    <string name="messages">Berichten</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Hou je van Pulse?</string>
+    <string name="invite_friends_summary">Net zoals ons en vele andere! We proberen Pulse naar zoveel mogelijk gebruikers te krijgen als mogelijk zodat we kunnen blijven optimaliseren en functies kunnen blijven toevoegen. Nodig je vrienden uit en help ons bij het verspreiden!\n\nSelecteer vrienden die je wilt uitnodigen. Wij zenden hen een korte SMS met informatie en een link om Pulse te downloaden.</string>
+    <string name="invite_friends_sms">Ik gebruik een nieuwe SMS app en ik denk dat je er ook zal van gaan houden! En het is gratis om te downloaden: http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Type bericht</string>
+    <string name="type_message_to">Typ bericht naar %1$s</string>
+    <string name="attach">Bijvoegen</string>
+    <string name="select_sim">Selecteer SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">MMS afbeelding</string>
+    <string name="now">Nu</string>
+    <string name="sending">Verzenden...</string>
+    <string name="failed">Mislukt</string>
+    <string name="delivered">Bericht afgeleverd</string>
+    <string name="attach_image">Afbeelding bijvoegen</string>
+    <string name="capture_image">Afbeeldingen vastleggen</string>
+    <string name="attach_gif">GIF bijvoegen</string>
+    <string name="record_video">Video opnemen</string>
+    <string name="record_audio">Audio opnemen</string>
+    <string name="attach_location">Locatie bijvoegen</string>
+    <string name="no_location_found">We kunnen je locatie nu niet vinden.</string>
+    <string name="camera_permission_needed">We hebben jammer genoeg geen toegang tot jouw camera dus kunnen geen foto maken</string>
+    <string name="take_picture">Snap afbeelding</string>
+    <string name="flip_picture">Flip camera</string>
+    <string name="fullscreen">Volledig scherm</string>
+    <string name="attached_image">Afbeelding bijvoegen</string>
+    <string name="remove_image">Verwijder bijgevoegde afbeelding</string>
+    <string name="edit_image">Bewerk bijgevoegde afbeelding</string>
+    <string name="permission_needed_for_action">Permissies nodig voor deze actie</string>
+    <string name="request_permission">Verzoek om permissies</string>
+    <string name="no_messages_with_contact">Je hebt nog geen berichten in deze conversatie, tijd om te beginnen!</string>
+    <string name="save">Opslaan</string>
+    <string name="share">Delen</string>
+    <string name="share_content">Deel content...</string>
+    <string name="saved">Opgeslagen in downloads map!</string>
+    <string name="failed_to_save">Mislukt om op te slaan</string>
+    <string name="start_recording_audio">Druk de knop om te starten met opnemen</string>
+    <string name="audio_recording_error">Fout bij opnemen</string>
+    <string name="message_copied_to_clipboard">Gekopieerd naar klembord</string>
+    <string name="view_details">Bekijk details</string>
+    <string name="delete">Verwijderen</string>
+    <string name="copy_message">Kopieer tekst</string>
+    <string name="resend">Herzenden</string>
+    <string name="no_media">Geen media in deze conversatie</string>
+    <string name="error_decrypting">Fout bij decrypteren! Bekijk dit bericht op je smartphone.</string>
+    <string name="message_sending_failed">Kon bericht niet verzenden!</string>
+    <string name="preparing_video">Video&#8230; voorbereiden</string>
+    <string name="delete_message">Deze conversatie verwijderen?</string>
+    <string name="forward_message">Bericht doorsturen</string>
+    <string name="share_message">Bericht delen</string>
+    <string name="copy_message_text">Kopieer inhoud bericht</string>
+    <string name="open_link_to_browser">Open link in browser</string>
+    <string name="open_link_internal">Open link intern</string>
+    <string name="copy_link">Kopieer link</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Stel nieuw bericht op</string>
+    <string name="send_message">Verstuur bericht</string>
+    <string name="enter_contact_name">Kies contact</string>
+    <string name="error_processing_vcard">Fout bij verwerken vcard</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">De app kan niet werken zonder deze permissies! Je moet ze accepteren voordat we verder kunnen gaan.</string>
+    <string name="loading_messages">Optimaliseren...</string>
+    <string name="loading_messages_summary">Jouw berichten aan het inladen in de app, dit duurt niet lang!</string>
+    <string name="tooltip_got_it">Got it!</string>
+    <string name="navigation_drawer_conversation_hint">Meer opties voor deze conversatie vind je in de navigatiemenu.</string>
+    <string name="onboarding_title_1">Berichten anders ingedeeld</string>
+    <string name="onboarding_title_2">Overal toegankelijk</string>
+    <string name="onboarding_title_3">Enorme aanpassingsmogelijkheden</string>
+    <string name="onboarding_content_1">"Snel, eenvoudig, modern design en naadloze integratie. Pulse plaatst jouw conversaties in de spotlight. "</string>
+    <string name="onboarding_content_2">SMS vanaf jouw tablet, computer, smartwatch, of elk ander verbonden toestel.</string>
+    <string name="onboarding_content_3">Prik berichten vast, jouw eigen thema en pas notificaties aan voor elk contact. Maak Pulse van jou!</string>
+    <string name="message_anywhere_onboarding_title_1">SMS overal</string>
+    <string name="message_anywhere_onboarding_title_2">Abonnement of eenmalige betaling</string>
+    <string name="message_anywhere_onboarding_title_3">1 week trial</string>
+    <string name="message_anywhere_onboarding_content_1">Naadloze integratie met elk toestel (tablet, smartwatch, web, Google Chrome en Firefox) om SMS en MMS van overal te versturen!</string>
+    <string name="message_anywhere_onboarding_content_2">Ongelooflijke lage prijs wanneer jij het nodig hebt: $10.99 voor het leven, $5.99 per jaar, $1.99 voor 3 maand of $0.99 per maand. Minder dan een kop koffie!</string>
+    <string name="message_anywhere_onboarding_content_3">Gebruik de Android app GRATIS (voor altijd!) op je smartphone of start met SMS\'en vanop al jouw toestellen met EEN WEEK gratis trial.</string>
+    <string name="start_trial">Start\nTrial</string>
+    <string name="not_now">Niet \nNu</string>
+    <string name="onboarding_done">Klaar</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">Nieuw bericht van %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d nieuwe conversatie</item>
+        <item quantity="other">%1$d nieuwe conversaties</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d nieuw bericht</item>
+        <item quantity="other">%1$d nieuwe berichten</item>
+    </plurals>
+    <string name="read">Gelezen</string>
+    <string name="reply">Beantwoorden</string>
+    <string name="reply_to">Beantwoord %1$s</string>
+    <string name="call">Bellen</string>
+    <string-array name="reply_choices">
+        <item>Ja</item>
+        <item>Neen</item>
+        <item>Misschien</item>
+        <item>Ok</item>
+        <item>Bedankt</item>
+    </string-array>
+    <string name="new_mms_message">Nieuwe MMS</string>
+    <string name="you">Jij</string>
+    <string name="new_message">Nieuw bericht</string>
+    <string name="received_new_message">Je hebt een nieuw bericht ontvangen!</string>
+    <string name="media">Media</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Changelog</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Bekijk open source license information</string>
+    <string name="app_version">App Versie</string>
+    <string name="device_id">Toestel ID</string>
+    <string name="device_info">Toestel Info</string>
+    <string name="website">Website</string>
+    <string name="access_messages_from_any_device">Krijg toegang en verzend berichten vanop elk toestel!</string>
+    <string name="beta_disclaimer">Dit project is nog in ontwikkeling, gelieve eventuele fouten te rapporteren!</string>
+    <string name="faqs">Veelgestelde vragen</string>
+    <string name="features">Functies</string>
+    <string name="issues">Issue Tracker</string>
+    <string name="issues_summary">Toont ook een feature roadmap</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse Beta Community</string>
+    <string name="email">E-mail</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Support</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d bericht</item>
+        <item quantity="other">%1$d berichten</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">in %1$d bericht</item>
+        <item quantity="other">in %1$d berichten</item>
+    </plurals>
+    <string name="pin_conversation">Zet conversatie vast</string>
+    <string name="pin_conversation_summary">Hou deze conversatie bovenaan de lijst</string>
+    <string name="mute_conversation">Demp conversatie</string>
+    <string name="mute_conversation_summary">Verberg notificaties voor deze conversatie</string>
+    <string name="private_conversation">Private conversatie</string>
+    <string name="private_conversation_summary">Verberg inhoud van deze conversatie op notificaties</string>
+    <string name="primary_color">Hoofdkleur</string>
+    <string name="primary_dark_color">Hoofdkleur Donker</string>
+    <string name="accent_color">Accentkleur</string>
+    <string name="led_color">LED kleur</string>
+    <string name="ringtone">Beltoon</string>
+    <string name="group_name">Groepsnaam</string>
+    <string name="notification_settings">Notificaties</string>
+    <string name="repeat_interval">Herhaal melding</string>
+    <string name="heads_up">Heads Up</string>
+    <string name="repeat_never">Nooit</string>
+    <string name="repeat_one_min">Elke minuut</string>
+    <string name="repeat_five_mins">Elke vijf minuten</string>
+    <string name="repeat_ten_mins">Elke tien minuten</string>
+    <string name="repeat_half_hour">Elk half uur</string>
+    <string name="repeat_hour">Elk uur</string>
+    <string name="wake_screen">Scherm oplichten</string>
+    <string name="vibrate">Vibratie atroon</string>
+    <string name="vibrate_off">Geen vibratie</string>
+    <string name="vibrate_default">Standaard vibratie</string>
+    <string name="vibrate_two_long">Twee lange vibraties</string>
+    <string name="vibrate_two_short">Twee korte vibraties</string>
+    <string name="vibrate_three_short">Drie korte vibraties</string>
+    <string name="vibrate_one_short_one_long">Een korte, een lange vibratie</string>
+    <string name="vibrate_one_long_one_short">Een lange, een korte vibratie</string>
+    <string name="vibrate_one_short">Een korte vibratie</string>
+    <string name="vibrate_one_long">Een lange vibratie</string>
+    <string name="keyboard_layout">Keyboard Layout</string>
+    <string name="keyboard_default">Standaard Keyboard</string>
+    <string name="keyboard_send_key">Verstuur sleutel</string>
+    <string name="keyboard_enter_key">Vul sleutel in</string>
+    <string name="sound_effects">Geluidseffecten</string>
+    <string name="delivery_reports">Afleverrapporten</string>
+    <string name="theme_settings">Aanpassingen</string>
+    <string name="base_theme">Standaard thema</string>
+    <string name="global_theme_color">Thema kleur</string>
+    <string name="font_size">Grootte lettertype</string>
+    <string name="rounder_bubbles">Ronde berichtenbubbels</string>
+    <string name="swipe_delete">Swipe om te verwijderen</string>
+    <string name="blacklist_hint">Type nummer om te blokkeren...</string>
+    <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
+    <string name="remove_blacklist">%1$s\n\nWil je deze blokkering verwijderen?</string>
+    <string name="blacklist_need_number">Je dient een telefoonnummer in te geven om te blokkeren!</string>
+    <string name="no_blacklists">Geen blokkeringen</string>
+    <string name="no_blacklists_summary">Je kan eentje toevoegen met de plus knop onderaan!</string>
+    <string name="add">Toevoegen</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_summary">Bekijk onze Privacy Policy op het web</string>
+    <string name="account_expiring">Account vervalt!</string>
+    <string name="signout_time">Uitloggen op: %1$s</string>
+    <string name="lifetime_subscriber">Levenslang abonnement</string>
+    <string name="trial_period">Trial periode</string>
+    <string name="setup_my_account">Instellen account</string>
+    <string name="setup_my_account_summary">Registreer of login op je account om gebruik te maken van meer functies zoals SMS\'en vanaf jouw tablet of computer</string>
+    <string name="preparing_new_account">Account voorbereiden&#8230;</string>
+    <string name="delete_account">Account verwijderen</string>
+    <string name="delete_account_summary">Verwijder het account van dit toestel, alle andere toestellen waar je bent op ingelogd en de server. Dit is niet omkeerbaar!</string>
+    <string name="delete_account_confirmation">Ben je echt zeker dat je jouw account wilt verwijderen en alles wat zich in jouw account bevindt? Je kan later altijd opnieuw registreren!</string>
+    <string name="change_subscription">Verander abonnement</string>
+    <string name="cancel_on_the_play_store">Annuleer en bekijk jouw abonnement in de Play Store</string>
+    <string name="resync_account">Synchroniseer jouw account</string>
+    <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
+    <string name="resync_account_confirmation">Dit zal alle berichten verwijderen van dit toestel en zal alle berichten van jouw hoofdtoestel overbrengen naar hier. Zeker dat je dit wil?</string>
+    <string name="normalize_color_scheme">Of, je kan een kleur kiezen om jouw contact te tonen:</string>
+    <string name="no_apps_found">Geen apps gevonden om deze actie mee uit te voeren</string>
+    <string name="you_denied_permission">Je hebt de permissie geweigerd</string>
+    <string name="supported_platforms">Supported Platforms</string>
+    <string name="supported_platforms_summary">Alle officiële plaatsen waar je toegang hebt tot de app</string>
+    <string name="font_size_small">Klein</string>
+    <string name="font_size_normal">Normaal</string>
+    <string name="font_size_large">Groot</string>
+    <string name="font_size_extra_large">Extra groot</string>
+    <string name="advanced">Geavanceerd</string>
+    <string name="send_as_mms">Omzetten naar MMS</string>
+    <string name="send_as_mms_summary">Lange berichten verzenden als MMS i.p.v. SMS</string>
+    <string name="alert_types">Types notificaties</string>
+    <string name="alert_types_summary">Vele aanpassingen voor notificaties</string>
+    <string name="strip_unicode">Strip Unicode</string>
+    <string name="strip_unicode_summary">Deze karakters zullen verwijderd worden voor uitgaande berichten</string>
+    <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
+    <string name="notification_actions">Notificatieacties</string>
+    <string name="notification_actions_summary">Je kan maximum 3 acties toevoegen aan een notificatie</string>
+    <string name="mms_download_directory">Media Download Map</string>
+    <string name="refresh_firebase">Ververs push notificaties</string>
+    <string name="refresh_firebase_summary">Berichten die dit toestel niet vinden? Probeer opnieuw na het gebruiken van deze optie.</string>
+    <string name="refreshing_notifications">Nieuw notificatie token aanmaken...</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Max afbeelding grootte</string>
+    <string name="use_group_mms">Gebruik groep MMS</string>
+    <string name="auto_save_media">Auto-save media</string>
+    <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
+it is received.</string>
+    <string name="apn_configuration">APN Configuratie</string>
+    <string name="override_system_apn">Override system APNs</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS port</string>
+    <string name="user_agent">User agent</string>
+    <string name="user_agent_profile_url">User agent profile URL</string>
+    <string name="user_agent_profile_tag">User agent profile tag name</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Handtekening</string>
+    <string name="signature_summary">Handtekeningen worden niet weergegeven in Pulse maar worden wel verzonden.</string>
+    <string name="cleanup_old_messages">Oude berichten opkuisen</string>
+    <string name="delayed_sending">Vertraagd verzenden</string>
+    <string name="quick_compose">Snel opstellen</string>
+    <string name="quick_compose_summary">Altijd-actief notificatie zodat je steeds snel een nieuw bericht kan opstellen</string>
+    <string name="secure_private_conversations">Beveilig private conversaties</string>
+    <string name="secure_private_conversations_summary">Geef PIN in om private conversaties te bekijken</string>
+    <!-- Theming Options -->
+    <string name="day_night">Standaard (dag/nacht)</string>
+    <string name="always_light">Altijd licht</string>
+    <string name="always_dark">Altijd donker</string>
+    <string name="always_black">Altijd zwart</string>
+    <string name="set_color_per_conversation">Kies kleur per conversatie</string>
+    <string name="material_color_red">Rood</string>
+    <string name="material_color_pink">Roze</string>
+    <string name="material_color_purple">Paars</string>
+    <string name="material_color_deep_purple">Donker paars</string>
+    <string name="material_color_indigo">Indigo</string>
+    <string name="material_color_blue">Blauw</string>
+    <string name="material_color_light_blue">Licht blauw</string>
+    <string name="material_color_cyan">Cyan</string>
+    <string name="material_color_teal">Teal</string>
+    <string name="material_color_green">Groen</string>
+    <string name="material_color_light_green">Licht groen</string>
+    <string name="material_color_lime">Limoen</string>
+    <string name="material_color_yellow">Geel</string>
+    <string name="material_color_amber">Amber</string>
+    <string name="material_color_orange">Oranje</string>
+    <string name="material_color_deep_orange">Donker oranje</string>
+    <string name="material_color_brown">Bruin</string>
+    <string name="material_color_gray">Grijs</string>
+    <string name="material_color_blue_gray">Blauwgrijs</string>
+    <string name="material_color_black">Zwart</string>
+    <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Ben je zeker dat je dit gepland bericht naar %1$s wilt verwijderen?</string>
+    <string name="scheduled_message_hint">Bericht om te versturen...</string>
+    <string name="scheduled_to_hint">Contact om naar te verzenden...</string>
+    <string name="scheduled_message_sent">Gepland bericht met succes verstuurd</string>
+    <string name="no_scheduled_messages">Geen geplande berichten</string>
+    <string name="no_scheduled_messages_summary">Je kan een nieuw creëren met de plus knop onderaan!</string>
+    <string name="scheduled_message_in_future">De tijd moet in de toekomst zijn!</string>
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Encrypteren en uploaden...</string>
+    <string name="encrypting_and_uploading_media">Encrypteren en comprimeren berichten...</string>
+    <string name="encrypting_and_uploading_count">Encrypteren en comprimeren media berichten (%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">Downloaden en decrypteren...</string>
+    <string name="decrypting_and_downloading_media">Downloaden en decrypteren van media...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Audio bericht</string>
+    <string name="video_message">Video bericht</string>
+    <string name="picture_message">Afbeelding bericht</string>
+    <string name="gif_message">GIF bericht</string>
+    <string name="contact_card">Contact card</string>
+    <string name="conversation_with">Conversatie met %1$s</string>
+    <string name="send">Verzenden</string>
+    <!-- Other -->
+    <string name="updating_database">Laatste berichten zoeken...</string>
+    <string name="dashclock_description">Ongelezen SMS/MMS informatie</string>
+    <string name="default_text">Standaard</string>
+    <string name="did_you_know">Wist je dat?</string>
+    <string name="use_from_anywhere">Pulse kan gebruikt worden om vanaf elk toestel met internet te SMS\'en!</string>
+    <string name="use_from_anywhere_short">Pulse kan gebruikt worden op elk toestel!</string>
+    <string name="learn_more">Kom meer te weten</string>
+    <string name="dismiss">Negeren</string>
+    <string name="renew">Hernieuwen</string>
+    <string name="no">Neen</string>
+    <string name="cancel">Annuleren</string>
+    <string name="hours">Uren</string>
+    <string name="minutes">Minuten</string>
+    <string name="test">Test</string>
+    <string name="off">Uit</string>
+    <string name="on">Aan</string>
+    <string name="rate_it">Rate it!</string>
+    <string name="love_pulse_question">Hou je van Pulse?</string>
+    <string name="give_a_rating">Overweeg om een waardering te plaatsen of te delen met vrienden!\n\nJouw 5-sterren reviews verwarmen mijn hart.</string>
+    <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
+https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <!-- Times -->
+    <string name="one_second">Eén second</string>
+    <string name="three_seconds">Drie seconden</string>
+    <string name="five_seconds">Vijf seconden</string>
+    <string name="ten_seconds">Tien seconden</string>
+    <string name="fifteen_seconds">Vijftien seconden</string>
+    <string name="thirty_seconds">Dertig seconden</string>
+    <string name="one_minute">Eén minuut</string>
+    <string name="one_week">Eén week</string>
+    <string name="two_weeks">Twee weken</string>
+    <string name="one_month">Eén maand</string>
+    <string name="three_months">Drie maand</string>
+    <string name="six_months">Zes maand</string>
+    <string name="one_year">Eén jaar</string>
+    <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Geen abonnement gevonden!</string>
+    <string name="cancelled_subscription_error">Het lijkt erop dat je jouw abonnement hebt beëindigd.
+Indien je geen nieuw abonnement hebt voor 2 dagen, zal je automatisch worden uitgelogd. Indien dit een fout is, neem contact met me op.</string>
+    <string name="subscription_found">Abonnement gevonden - welkom terug!</string>
+    <string name="subscription_not_found">Geen abonnement gevonden, laten we met jouw trial beginnen!</string>
+    <string name="checking_for_active_subscriptions">Voor abonnement zoeken&#8230;</string>
+    <string name="purchase_error_cancelled">Je annuleerde de betaling :\'(</string>
+    <string name="purchase_error_bad_google_play">Oeps! Google Play heeft precies enkele problemen.</string>
+    <string name="purchase_error_bad_sku">Hmmm&#8230; Deze betaling kon niet worden goedgekeurd.</string>
+    <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden:</string>
+    <string name="billed_immediately">Dit wordt direct afgerekend.</string>
+    <string name="lifetime_purchase">$10.99 - Levenslang abonnement</string>
+    <string name="lifetime_purchase_summary">Betaal eenmalig, geniet voor altijd!</string>
+    <string name="yearly_purchase">$5.99 elk jaar</string>
+    <string name="yearly_purchase_summary">De beste deal.</string>
+    <string name="three_month_purchase">$1.99 elke drie maand</string>
+    <string name="three_month_purchase_summary">Je kan niet missen met deze!</string>
+    <string name="monthly_purchase">$0.99 elke maand</string>
+    <string name="monthly_purchase_summary">Wil je juist proberen? Geen probleem.</string>
+    <string name="change_subscription_message">Wil je upgraden? Super! Nadat je je selectie hebt aangepast in het volgende scherm, dien je naar de Play Store te gaan en annuleer je het oude abonnement manueel.</string>
+</resources>
