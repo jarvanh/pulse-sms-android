@@ -34,7 +34,7 @@ import xyz.klinker.messenger.shared.util.xml.OpenSourceParser;
 /**
  * Fragment for displaying information about the app.
  */
-public class AboutFragment extends PreferenceFragmentCompat {
+public class AboutFragment extends MaterialPreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {

@@ -18,12 +18,17 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.widget.ListView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,13 +40,14 @@ import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**
  * Fragment for modifying app settings_global.
  */
-public class GlobalSettingsFragment extends PreferenceFragment {
+public class GlobalSettingsFragment extends MaterialPreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

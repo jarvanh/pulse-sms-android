@@ -26,7 +26,7 @@
         android:key="@string/pref_contact_group_name"
         android:title="@string/group_name" />
 
-    <PreferenceCategory
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">
 
@@ -45,9 +45,9 @@
             android:title="@string/accent_color"
             app:display_normalize="false" />
 
-    </PreferenceCategory>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
-    <PreferenceCategory
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:title="@string/notification_settings">
 
         <SwitchPreference
@@ -72,6 +72,6 @@
             android:title="@string/led_color"
             app:display_normalize="true"/>
 
-    </PreferenceCategory>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

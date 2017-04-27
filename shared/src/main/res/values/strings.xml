@@ -224,12 +224,18 @@
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">View open source license information</string>
     <string name="app_version">App Version</string>
+    <string name="account_information">Account Information</string>
+    <string name="account_actions">Account Actions</string>
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>
     <string name="access_messages_from_any_device">Access and send messages from any device!</string>
     <string name="beta_disclaimer">This project is still in beta, please report issues that you
         might find!</string>
+    <string name="app_info">App Info</string>
+    <string name="platform_info">Platform Info</string>
+    <string name="troubleshooting">Troubleshooting</string>
+    <string name="get_in_touch">Get in Touch</string>
     <string name="faqs">Frequently Asked Questions</string>
     <string name="features">Features</string>
     <string name="issues">Issue Tracker</string>

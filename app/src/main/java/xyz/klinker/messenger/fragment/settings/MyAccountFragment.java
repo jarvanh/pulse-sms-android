@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
@@ -55,7 +56,7 @@ import xyz.klinker.messenger.view.SelectPurchaseDialog;
  * Fragment for displaying information about the user's account. We can display different stats
  * for the user here, along with subscription status.
  */
-public class MyAccountFragment extends PreferenceFragmentCompat {
+public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     public static final int ONBOARDING_REQUEST = 54320;
     public static final int RESPONSE_START_TRIAL = 101;
@@ -128,7 +129,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             removeAccountOptions();
             return false;
         } else if (preference != null) {
-            getPreferenceScreen().removePreference(preference);
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
+                    .removePreference(preference);
             return true;
         } else {
             return true;
@@ -137,17 +139,17 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
     private void removeAccountOptions() {
         try {
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_subscriber_status)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_message_count)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_about_device_id)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
                     .removePreference(findPreference(getString(R.string.pref_delete_account)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
                     .removePreference(findPreference(getString(R.string.pref_resync_account)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
                     .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
         } catch (Exception e) {
 
@@ -162,7 +164,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         preference.setIcon(icon);
 
         if (!Account.get(getActivity()).primary) {
-            getPreferenceScreen().removePreference(preference);
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
+                    .removePreference(preference);
             return;
         }
 

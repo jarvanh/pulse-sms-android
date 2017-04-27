@@ -16,8 +16,9 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:key="@string/pref_customization_category" 
-            android:title="@string/theme_settings">
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_customization_category"
+        android:title="@string/theme_settings">
 
         <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_base_theme"
@@ -57,9 +58,10 @@
             android:title="@string/swipe_delete"
             android:defaultValue="false" />
 
-    </PreferenceCategory>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
-    <PreferenceCategory android:key="@string/pref_notification_category"
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_notification_category"
         android:title="@string/notification_settings">
 
         <xyz.klinker.messenger.view.NotificationAlertsPreference
@@ -90,9 +92,10 @@
             android:title="@string/sound_effects"
             android:defaultValue="true" />
 
-    </PreferenceCategory>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
-    <PreferenceCategory android:key="@string/pref_advanced_category"
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_advanced_category"
         android:title="@string/advanced">
 
         <SwitchPreference
@@ -101,6 +104,6 @@
             android:summary="@string/strip_unicode_summary"
             android:defaultValue="false" />
 
-    </PreferenceCategory>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

@@ -25,9 +25,12 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
+import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.View;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -38,6 +41,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
@@ -45,7 +49,7 @@ import xyz.klinker.messenger.view.ColorPreference;
  * Fragment for modifying contact preferences. This includes pinning, changing colors, changing
  * ringtone, and changing the group name.
  */
-public class ContactSettingsFragment extends PreferenceFragment {
+public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
     private static final String ARG_CONVERSATION_ID = "conversation_id";
 
