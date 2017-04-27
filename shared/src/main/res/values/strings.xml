@@ -359,8 +359,8 @@
     <string name="refresh_firebase">Refresh Push Notifications</string>
     <string name="refresh_firebase_summary">Messages not making it to this device? Try again after using this option.</string>
     <string name="refreshing_notifications">Refreshing notification token…</string>
-    <string name="refresh_firebase_warning">You will need to log in again, on all your other devices.
-        Do you wish to continue?</string>
+    <string name="refresh_firebase_warning">If you start this process, you <b>must</b> go through the whole thing.
+        After it is done, you will need to log in again, on all your other devices. Do you wish to continue?</string>
 
 
     <!-- MMS Configuration Settings -->
