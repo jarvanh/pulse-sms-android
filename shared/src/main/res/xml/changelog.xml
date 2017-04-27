@@ -17,8 +17,14 @@
 <changelog>
 
     <version
+        name="2.2.7"
+        description="April 27th, 2017">
+        <text>Settings UI overhaul</text>
+    </version>
+  
+    <version
         name="2.2.6"
-        description="April 25nd, 2017">
+        description="April 25th, 2017">
         <text>Bug fixes</text>
     </version>
 
