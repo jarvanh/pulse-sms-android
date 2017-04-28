@@ -20,6 +20,7 @@
         name="2.2.7"
         description="April 27th, 2017">
         <text>Settings UI overhaul</text>
+        <text>Improvements to the system level private notification support</text>
     </version>
   
     <version
