@@ -700,6 +700,8 @@ public class NotificationService extends IntentService {
         }
 
         String summary = summaryBuilder.toString();
+        String privateSummary = getResources().getQuantityString(R.plurals.new_conversations,
+                conversations.size(), conversations.size());
         if (summary.endsWith(", ")) {
             summary = summary.substring(0, summary.length() - 2);
         }
@@ -710,18 +712,24 @@ public class NotificationService extends IntentService {
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
                 .setSummaryText(summary)
                 .setBigContentTitle(title);
+        NotificationCompat.InboxStyle privateStyle = new NotificationCompat.InboxStyle()
+                .setSummaryText(privateSummary)
+                .setBigContentTitle(title);
 
         for (String row : rows) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     style.addLine(Html.fromHtml(row, 0));
+                    privateStyle.addLine(Html.fromHtml(row, 0));
                 } else {
                     style.addLine(Html.fromHtml(row));
+                    privateStyle.addLine(Html.fromHtml(row));
                 }
             } catch (Throwable t) {
                 // there was a motorola device running api 24, but was on 6.0.1? WTF?
                 // so catch the throwable instead of checking the api version
                 style.addLine(Html.fromHtml(row));
+                privateStyle.addLine(Html.fromHtml(row));
             }
         }
 
@@ -736,6 +744,7 @@ public class NotificationService extends IntentService {
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setStyle(style)
                 .build();
 
         Intent delete = new Intent(this, NotificationDismissedService.class);
@@ -750,7 +759,7 @@ public class NotificationService extends IntentService {
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
-                .setContentText(summary)
+                .setContentText(privateSummary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
@@ -761,7 +770,7 @@ public class NotificationService extends IntentService {
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversations.get(conversations.size() - 1).timestamp)
-                .setStyle(style)
+                .setStyle(privateStyle)
                 .setPublicVersion(publicVersion)
                 .setDeleteIntent(pendingDelete)
                 .setContentIntent(pendingOpen)
