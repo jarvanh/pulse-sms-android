@@ -891,6 +891,15 @@ public class ApiUtils {
     }
 
     /**
+     * Update the strip Unicode setting.
+     */
+    public void updateShowHistoryInNotification(final String accountId, final boolean showHistory) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "history_in_notifications", "boolean", showHistory);
+        }
+    }
+
+    /**
      * Update the rounder bubbles setting.
      */
     public void updateRounderBubbles(final String accountId, final boolean rounderBubbles) {

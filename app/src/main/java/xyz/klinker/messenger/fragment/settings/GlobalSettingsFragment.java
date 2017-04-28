@@ -20,8 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.support.annotation.Nullable;
@@ -64,6 +66,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
+        initNotificationHistory();
     }
 
     @Override
@@ -199,6 +202,21 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                             strip);
                     return true;
                 });
+    }
+
+    private void initNotificationHistory() {
+        Preference pref = findPreference(getString(R.string.pref_history_in_notifications));
+        pref.setOnPreferenceChangeListener((preference, o) -> {
+                    boolean history = (boolean) o;
+                    new ApiUtils().updateShowHistoryInNotification(Account.get(getActivity()).accountId,
+                            history);
+                    return true;
+                });
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !FeatureFlags.get(getActivity()).NOUGAT_NOTIFICATIONS) {
+            ((PreferenceCategory) findPreference(getString(R.string.pref_notification_category)))
+                    .removePreference(pref);
+        }
     }
 
     private void initSoundEffects() {

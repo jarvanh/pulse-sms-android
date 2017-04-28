@@ -49,6 +49,7 @@ public class FeatureFlags {
     private static final String FLAG_NOTIFICATION_ACTIONS = "flag_notification_actions";
     private static final String FLAG_HEADS_UP = "flag_heads_up";
     private static final String FLAG_MESSAGE_REFRESH_ON_START = "flag_refresh_messages_on_start";
+    private static final String FLAG_NOUGAT_NOTIFICATION_HISTORY = "flag_nougat_notifications";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -65,6 +66,7 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
+    public boolean NOUGAT_NOTIFICATIONS;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -75,6 +77,7 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        NOUGAT_NOTIFICATIONS = getValue(sharedPrefs, FLAG_NOUGAT_NOTIFICATION_HISTORY);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -91,6 +94,9 @@ public class FeatureFlags {
                 SECURE_PRIVATE = flag;
                 break;
             case FLAG_QUICK_COMPOSE:
+                QUICK_COMPOSE = flag;
+                break;
+            case FLAG_NOUGAT_NOTIFICATION_HISTORY:
                 QUICK_COMPOSE = flag;
                 break;
         }

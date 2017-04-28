@@ -60,6 +60,7 @@ public class Settings {
     public boolean rounderBubbles;
     public boolean swipeDelete;
     public boolean stripUnicode;
+    public boolean historyInNotifications;
     public long snooze;
     public long repeatNotifications;
     public long delayedSendingTimeout;
@@ -127,6 +128,7 @@ public class Settings {
         this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false);
         this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false);
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false);
+        this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true);
 
         // configuration
         if (this.ringtone == null) {

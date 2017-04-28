@@ -342,8 +342,8 @@ public class NotificationService extends IntentService {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            // build a messaging style notifation for Android Nougat
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && settings.historyInNotifications) {
+            // build a messaging style notification for Android Nougat
             messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
 
             if (conversation.groupConversation) {
