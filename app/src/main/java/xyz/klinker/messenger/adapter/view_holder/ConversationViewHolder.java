@@ -35,6 +35,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate;
@@ -44,6 +45,7 @@ import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate
  */
 public class ConversationViewHolder extends SwappingHolder {
 
+    public View conversationImageHolder;
     public View headerBackground;
     public TextView header;
     public ImageButton headerDone;
@@ -68,6 +70,7 @@ public class ConversationViewHolder extends SwappingHolder {
         this.position = -1;
         this.expandedListener = listener;
 
+        conversationImageHolder = itemView.findViewById(R.id.image_holder);
         headerBackground = itemView.findViewById(R.id.header_background);
         header = (TextView) itemView.findViewById(R.id.header);
         headerDone = (ImageButton) itemView.findViewById(R.id.section_done);
@@ -139,6 +142,17 @@ public class ConversationViewHolder extends SwappingHolder {
         if (name!= null && summary != null) {
             name.setTextSize(settings.largeFont);
             summary.setTextSize(settings.mediumFont);
+        }
+
+        if (settings.smallFont == 10 && conversationImageHolder != null) {
+            // user selected small font from the settings
+            int fourtyDp = DensityUtil.toDp(itemView.getContext(), 40);
+            conversationImageHolder.getLayoutParams().height = fourtyDp;
+            conversationImageHolder.getLayoutParams().width = fourtyDp;
+            conversationImageHolder.invalidate();
+
+            itemView.getLayoutParams().height = DensityUtil.toDp(itemView.getContext(), 66);
+            itemView.invalidate();
         }
 
         if (settings.baseTheme == BaseTheme.BLACK && headerBackground != null) {
