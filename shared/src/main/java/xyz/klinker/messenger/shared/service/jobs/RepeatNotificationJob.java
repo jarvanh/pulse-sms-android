@@ -38,7 +38,7 @@ public class RepeatNotificationJob extends JobService {
             ComponentName component = new ComponentName(context, RepeatNotificationJob.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(timeout)
-                    .setOverrideDeadline(timeout + TimeUtils.MINUTE)
+                    .setOverrideDeadline(timeout + (TimeUtils.SECOND * 15))
                     .setRequiresCharging(false)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setRequiresDeviceIdle(false);
