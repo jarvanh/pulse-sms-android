@@ -78,7 +78,11 @@ public class DualSimUtils {
     public String getNumberFromSimSlot(int simSlot) {
         for (SubscriptionInfo sim : availableSims) {
             if (sim.getSimSlotIndex() == simSlot) {
-                return sim.getNumber();
+                if (sim.getNumber() != null && !sim.getNumber().isEmpty()) {
+                    return sim.getNumber();
+                } else {
+                    return sim.getSimSlotIndex() + 1 + "";
+                }
             }
         }
 
@@ -92,7 +96,11 @@ public class DualSimUtils {
 
         for (SubscriptionInfo sim : availableSims) {
             if (sim.getSubscriptionId() == simSubscription) {
-                return sim.getNumber();
+                if (sim.getNumber() != null && !sim.getNumber().isEmpty()) {
+                    return sim.getNumber();
+                } else {
+                    return sim.getSimSlotIndex() + 1 + "";
+                }
             }
         }
 
