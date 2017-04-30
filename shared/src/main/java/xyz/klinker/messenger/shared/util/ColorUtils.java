@@ -316,6 +316,7 @@ public class ColorUtils {
         } else {
             colorWithGlobalCalculated = color;
         }
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean invoked = false;
 
@@ -333,13 +334,13 @@ public class ColorUtils {
                 try {
                     final Class<?> clazz = RecyclerView.class;
 
-                    for (final String name : new String[]{"ensureTopGlow", "ensureBottomGlow"}) {
+                    for (final String name : new String[]{"ensureTopGlow", "ensureBottomGlow", "ensureLeftGlow", "ensureRightGlow"}) {
                         Method method = clazz.getDeclaredMethod(name);
                         method.setAccessible(true);
                         method.invoke(recyclerView);
                     }
 
-                    for (final String name : new String[]{"mTopGlow", "mBottomGlow"}) {
+                    for (final String name : new String[]{"mTopGlow", "mBottomGlow", "mLeftGlow", "mRightGlow"}) {
                         final Field field = clazz.getDeclaredField(name);
                         field.setAccessible(true);
                         final Object edge = field.get(recyclerView);

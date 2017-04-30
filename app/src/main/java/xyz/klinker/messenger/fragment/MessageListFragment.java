@@ -1335,8 +1335,8 @@ public class MessageListFragment extends Fragment implements
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachContactView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.colorAccent :
-                            getArguments().getInt(ARG_COLOR_ACCENT)));
+                            Settings.get(getActivity()).globalColorSet.color :
+                            getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -1344,7 +1344,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachPermissionRequest(final int permissionRequestCode, final String... permissions) {
-        getLayoutInflater(null).inflate(R.layout.permission_request, attachHolder, true);
+        LayoutInflater.from(getActivity()).inflate(R.layout.permission_request, attachHolder, true);
         Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
         request.setOnClickListener(view -> requestPermissions(permissions, permissionRequestCode));
     }

@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.media.MediaRecorder;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +19,14 @@ import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.AttachContactAdapter;
+import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.listener.AttachContactListener;
 import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener;
@@ -67,5 +77,24 @@ public class AttachContactView extends FrameLayout {
                 listener.onContactAttached(firstName, lastName, phone);
             }
         });
+
+        final RecyclerView recentsList = (RecyclerView) findViewById(R.id.recycler_view);
+        ColorUtils.changeRecyclerOverscrollColors(recentsList, color);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recentsList.setLayoutManager(layoutManager);
+
+        final AttachContactAdapter adapter = new AttachContactAdapter(listener);
+        recentsList.setAdapter(adapter);
+
+        final Handler ui = new Handler();
+        new Thread(() -> {
+            DataSource source = DataSource.getInstance(getContext());
+            source.open();
+            List<Conversation> conversations = source.getUnarchivedConversationsAsList();
+            source.close();
+
+            ui.post(() -> adapter.setContacts(conversations));
+        }).start();
     }
 }

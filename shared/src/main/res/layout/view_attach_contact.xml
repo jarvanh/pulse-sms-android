@@ -11,20 +11,35 @@
         android:textColorHint="@color/secondaryText"
         android:textColor="@color/primaryText"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_gravity="bottom|start"
         android:gravity="start"
         android:id="@+id/contact_entry" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
     <TextView
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="56dp"
-        android:layout_width="185dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="@string/attach_contact_summary"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginBottom="24dp"/>
 
 </LinearLayout>
