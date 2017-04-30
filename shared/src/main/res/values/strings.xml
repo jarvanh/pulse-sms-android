@@ -123,6 +123,8 @@
     <string name="record_video">Record Video</string>
     <string name="record_audio">Record Audio</string>
     <string name="attach_location">Attach Location</string>
+    <string name="attach_contact">Attach Contact</string>
+    <string name="attach_contact_summary">Enter a contact to attach them to the message!</string>
     <string name="no_location_found">Could not find your location.</string>
     <string name="camera_permission_needed">The camera permission needs to be granted to take
         pictures!</string>

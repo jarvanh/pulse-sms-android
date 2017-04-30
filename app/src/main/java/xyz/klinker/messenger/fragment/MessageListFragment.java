@@ -132,10 +132,13 @@ import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.shared.util.TvUtils;
+import xyz.klinker.messenger.shared.util.VCardWriter;
+import xyz.klinker.messenger.shared.util.listener.AttachContactListener;
 import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener;
 import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener;
 import xyz.klinker.messenger.shared.util.listener.TextSelectedListener;
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
+import xyz.klinker.messenger.view.AttachContactView;
 import xyz.klinker.messenger.view.AttachImageView;
 import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
@@ -150,8 +153,8 @@ import static android.app.Activity.RESULT_OK;
  * Fragment for displaying messages for a certain conversation.
  */
 public class MessageListFragment extends Fragment implements
-        ImageSelectedListener, AudioRecordedListener, TextSelectedListener, ContentFragment,
-        InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
+        ImageSelectedListener, AudioRecordedListener, AttachContactListener, TextSelectedListener,
+        ContentFragment, InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -199,6 +202,7 @@ public class MessageListFragment extends Fragment implements
     private ImageButton recordVideo;
     private ImageButton recordAudio;
     private ImageButton attachLocation;
+    private ImageButton attachContact;
     private View attachedImageHolder;
     private ImageView attachedImage;
     private TextView selectedImageCount;
@@ -736,6 +740,11 @@ public class MessageListFragment extends Fragment implements
         recordVideo = (ImageButton) root.findViewById(R.id.record_video);
         recordAudio = (ImageButton) root.findViewById(R.id.record_audio);
         attachLocation = (ImageButton) root.findViewById(R.id.attach_location);
+        attachContact = (ImageButton) root.findViewById(R.id.attach_contact);
+
+        if (!FeatureFlags.get(getActivity()).ATTACH_CONTACT) {
+            attachContact.setVisibility(View.GONE);
+        }
 
         attachImage.setOnClickListener(view -> attachImage());
         captureImage.setOnClickListener(view -> captureImage());
@@ -743,6 +752,7 @@ public class MessageListFragment extends Fragment implements
         recordVideo.setOnClickListener(view -> recordVideo());
         recordAudio.setOnClickListener(view -> recordAudio());
         attachLocation.setOnClickListener(view -> attachLocation());
+        attachContact.setOnClickListener(view -> attachContact());
 
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
@@ -1016,6 +1026,10 @@ public class MessageListFragment extends Fragment implements
                 editImage.setVisibility(View.GONE);
             } else if (draft.mimeType.contains("video/")) {
                 attachImage(Uri.parse(draft.data));
+                attachedMimeType = draft.mimeType;
+                editImage.setVisibility(View.GONE);
+            } else if (draft.mimeType.equals(MimeType.TEXT_VCARD)) {
+                attachContact(Uri.parse(draft.data));
                 attachedMimeType = draft.mimeType;
                 editImage.setVisibility(View.GONE);
             }
@@ -1311,6 +1325,24 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
+    private void attachContact() {
+        if (getBoldedAttachHolderPosition() == 6) {
+            return;
+        }
+
+        prepareAttachHolder(6);
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            attachHolder.addView(new AttachContactView(getActivity(), this,
+                    Settings.get(getActivity()).useGlobalThemeColor ?
+                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            getArguments().getInt(ARG_COLOR_ACCENT)));
+        } else {
+            attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
     private void attachPermissionRequest(final int permissionRequestCode, final String... permissions) {
         getLayoutInflater(null).inflate(R.layout.permission_request, attachHolder, true);
         Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
@@ -1515,6 +1547,18 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
+    public void onContactAttached(String firstName, String lastName, String phone) {
+        onBackPressed();
+
+        try {
+            Uri contactFile = VCardWriter.writeContactCard(getActivity(), firstName, lastName, phone);
+            attachContact(contactFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void onTextSelected(String text) {
         messageEntry.setText(text);
     }
@@ -1549,6 +1593,18 @@ public class MessageListFragment extends Fragment implements
 
         attachedImageHolder.setVisibility(View.VISIBLE);
         attachedImage.setImageResource(R.drawable.ic_audio_sent);
+        changeCounterText();
+    }
+
+    private void attachContact(Uri uri) {
+        clearAttachedData();
+        attachedUri = uri;
+        attachedMimeType = MimeType.TEXT_VCARD;
+        editImage.setVisibility(View.GONE);
+
+        attachedImageHolder.setVisibility(View.VISIBLE);
+        attachedImage.setImageResource(R.drawable.ic_contacts);
+        attachedImage.setImageTintList(ColorStateList.valueOf(Color.BLACK));
         changeCounterText();
     }
 
