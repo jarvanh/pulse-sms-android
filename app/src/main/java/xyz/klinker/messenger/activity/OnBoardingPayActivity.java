@@ -54,7 +54,7 @@ public class OnBoardingPayActivity extends AppIntro {
                 }
             });
 
-            skip.setText(getString(R.string.not_now));
+            skip.setText(getString(R.string.api_login));
             done.setText(getString(R.string.start_trial));
         } else {
             // just in case a tablet makes it in here, lets exit and let them sign in
@@ -74,6 +74,8 @@ public class OnBoardingPayActivity extends AppIntro {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
+
+        setResult(MyAccountFragment.RESPONSE_START_TRIAL);
         finish();
     }
 }
