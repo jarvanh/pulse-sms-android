@@ -197,10 +197,10 @@ public class Settings {
             case "one_min":
                 this.repeatNotifications = TimeUtils.MINUTE;
                 break;
-            case "five_mins":
+            case "five_min":
                 this.repeatNotifications = TimeUtils.MINUTE * 5;
                 break;
-            case "ten_mins":
+            case "ten_min":
                 this.repeatNotifications = TimeUtils.MINUTE * 10;
                 break;
             case "half_hour":
