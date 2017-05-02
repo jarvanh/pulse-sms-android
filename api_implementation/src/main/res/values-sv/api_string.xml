@@ -44,6 +44,8 @@ primära enheten och ställa in denna som den nya primära?</string>
     <string name="api_no_phone_number">Inget mobilnummer angivet</string>
     <string name="api_login_error">Problem uppstod vid inloggning, fel e-post eller lösenord?</string>
     <string name="api_activate_summary">Logga in för att få dina meddelanden på denna enhet!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Bege dig till</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">på en mobilenhet eller dator.</string>

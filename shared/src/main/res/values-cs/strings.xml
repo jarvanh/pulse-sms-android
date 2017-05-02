@@ -20,7 +20,7 @@
     <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">Nová zpráva</string>
-    <string name="shortcut_compose_long">Začít novou konverzaci</string>
+    <string name="shortcut_compose_long">Zahájit novou konverzaci</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Seznam konverzací</string>
     <string name="menu_archived_conversations">Archivované konverzace</string>
@@ -45,9 +45,9 @@
     <string name="menu_archive_conversation">Archivovat konverzaci</string>
     <string name="menu_move_to_inbox">Přesunout do doručených zpráv</string>
     <string name="menu_conversation_information">Informace o konverzaci</string>
-    <string name="menu_conversation_blacklist">Seznam blokovaných kontaktů</string>
+    <string name="menu_conversation_blacklist">Blokovat tento kontakt</string>
     <string name="menu_conversation_schedule">Naplánovat zprávu</string>
-    <string name="menu_contact_settings">Nastavené kontaktu</string>
+    <string name="menu_contact_settings">Nastavení kontaktu</string>
     <string name="menu_group_settings">Nastavení skupiny</string>
     <string name="menu_snooze_off">Vypnuto</string>
     <string name="menu_snooze_1">1 hodina</string>
@@ -120,9 +120,8 @@ http://messenger.klinkerapps.com</string>
     <string name="record_video">Nahrát video</string>
     <string name="record_audio">Nahrát zvuk</string>
     <string name="attach_location">Připojit polohu</string>
-    <string name="no_location_found">Nemohu zjistit vaši polohu</string>
-    <string name="camera_permission_needed">Musíte nám udělit povolení k přístupu ke kameře, abyste mohli
-fotit!</string>
+    <string name="no_location_found">Nelze zjistit vaši polohu</string>
+    <string name="camera_permission_needed">Pro pořizování fotografií je nejprve nutné povolit přístupu k funkci fotoaparátu.</string>
     <string name="take_picture">Vyfotit obrázek</string>
     <string name="flip_picture">Druhý foťák</string>
     <string name="fullscreen">Na celou obrazovku</string>
@@ -254,11 +253,11 @@ na které narazíte!</string>
     <string name="mute_conversation">Ztišit konverzaci</string>
     <string name="mute_conversation_summary">Skryje oznámení k této konverzaci</string>
     <string name="private_conversation">Soukromá konverzace</string>
-    <string name="private_conversation_summary">Skryje obsah zprávy v oznámeních</string>
+    <string name="private_conversation_summary">Skrýt obsah zprávy v oznámeních</string>
     <string name="primary_color">Primární barva</string>
     <string name="primary_dark_color">Primární tmavá barva</string>
     <string name="accent_color">Sekundární barva</string>
-    <string name="led_color">Barva LEDky</string>
+    <string name="led_color">Barva LED diody</string>
     <string name="ringtone">Vyzvánění</string>
     <string name="group_name">Jméno skupiny</string>
     <string name="notification_settings">Oznámení</string>
@@ -472,10 +471,10 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="lifetime_purchase">$10.99 - Celoživotní členství</string>
     <string name="lifetime_purchase_summary">Zaplaťte jednou a nikdy víc!</string>
     <string name="yearly_purchase">$5.99 každý rok</string>
-    <string name="yearly_purchase_summary">Nejlepší nabídka</string>
+    <string name="yearly_purchase_summary">Nejlepší nabídka.</string>
     <string name="three_month_purchase">$1.99 každé tři měsíce</string>
     <string name="three_month_purchase_summary">S touto volbou nemůžete nic pokazit.</string>
     <string name="monthly_purchase">$0.99 každý měsíc</string>
-    <string name="monthly_purchase_summary">Pouze to chcete vyzkoušet? Žádný problém.</string>
-    <string name="change_subscription_message">Chcete upgrade? Skvěle! Až uděláte výběr na následující obrazovce, měli byste jít do Play Store aplikace a zrušit staré předplatné ručně.</string>
+    <string name="monthly_purchase_summary">Nechcete platit? Žádný problém. Vyzkoušejte si aplikaci zdarma.</string>
+    <string name="change_subscription_message">Chcete upgrade? Skvěle! Až uděláte výběr na následující obrazovce, otevřete obchod Play Store a zrušte staré předplatné ručně.</string>
 </resources>

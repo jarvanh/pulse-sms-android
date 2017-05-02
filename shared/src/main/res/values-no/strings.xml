@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Ny melding</string>
+    <string name="shortcut_compose_long">Start en ny samtale!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Samtaleliste</string>
+    <string name="menu_archived_conversations">Arkiverte samtaler</string>
+    <string name="menu_schedule">Planlagte meldinger</string>
+    <string name="menu_mute_contacts">Svarteliste</string>
+    <string name="menu_invite">Inviter venner</string>
+    <string name="menu_feature_settings">Avanserte funksjoner</string>
+    <string name="menu_settings">Globale innstillinger</string>
+    <string name="menu_mms_configuration">MMS konfigurasjon</string>
+    <string name="menu_account">Min konto</string>
+    <string name="menu_device_texting">Tekst fra hvilken som helst enhet</string>
+    <string name="menu_help">Hjelp &amp; tilbakemeldinger</string>
+    <string name="menu_about">Om</string>
+    <string name="menu_search">Søk</string>
+    <string name="menu_mobile_only">Bare mobil</string>
+    <string name="menu_snooze">Snooze varsler</string>
+    <string name="menu_call">Ring kontakt</string>
+    <string name="menu_view_contact">Vis kontakt</string>
+    <string name="menu_view_contacts">Vis kontakter</string>
+    <string name="menu_view_media">Vis media</string>
+    <string name="menu_delete_conversation">Slett samtale</string>
+    <string name="menu_archive_conversation">Arkiver samtalen</string>
+    <string name="menu_move_to_inbox">Flytt til innboks</string>
+    <string name="menu_conversation_information">Samtale informasjon</string>
+    <string name="menu_conversation_blacklist">Svartelist kontakt</string>
+    <string name="menu_conversation_schedule">Planlegg en melding</string>
+    <string name="menu_contact_settings">Kontakt innstillinger</string>
+    <string name="menu_group_settings">Gruppe innstillinger</string>
+    <string name="menu_snooze_off">Av</string>
+    <string name="menu_snooze_1">1 time</string>
+    <string name="menu_snooze_2">2 timer</string>
+    <string name="menu_snooze_4">4 timer</string>
+    <string name="menu_snooze_8">8 timer</string>
+    <string name="menu_snooze_24">24 timer</string>
+    <string name="menu_snooze_72">72 timer</string>
+    <string name="menu_snooze_custom">Velg en tid</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Ingen beskjeder</string>
+    <string name="no_messages_summary">Start en ny samtale, eller bare nyt dagen!</string>
+    <string name="close">Lukk</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Låst</string>
+    <string name="today">I dag</string>
+    <string name="yesterday">I går</string>
+    <string name="last_week">Denne uken</string>
+    <string name="last_month">Denne måneden</string>
+    <string name="older">Eldre</string>
+    <string name="mark_section_as_read">Merk alle %1$s som lest</string>
+    <string name="marking_section_as_read">Merker alle %1$s  som lest</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d samtalen slettet</item>
+        <item quantity="other">%1$d samtaler slettet</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d samtalen arkivert</item>
+        <item quantity="other">%1$d samtaler arkivert</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d samtalen flyttet til innboks</item>
+        <item quantity="other">%1$d samtaler flytter til innboks</item>
+    </plurals>
+    <string name="undo">Angre</string>
+    <string name="enter_search">Søk etter ...</string>
+    <!-- Search Screen -->
+    <string name="conversations">Samtaler</string>
+    <string name="messages">Meldinger</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Elsker Pulse?</string>
+    <string name="invite_friends_summary">Så gjør vi og så andre! Vi prøver å få det inn i
+så mange hender som mulig for å fortsette å gjøre det til det beste produktet som det kan være og ved å 
+inviterer vennene dine til å prøve, hjelper du med dette! \ N \ nVelg vennene under, som
+du vil sende appen til og den vil sende dem en SMS med en kort beskrivelse og
+en lenke for å laste ned!</string>
+    <string name="invite_friends_sms">Jeg begynte å bruke en ny SMS-app og jeg tror du vil like den! I tillegg er den gratis, så kan like godt laste den ned:
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Skriv melding</string>
+    <string name="type_message_to">Skriv melding til %1$s</string>
+    <string name="attach">Legg ved</string>
+    <string name="select_sim">Velg SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">MMS bilde</string>
+    <string name="now">Nå</string>
+    <string name="sending">Sender ...</string>
+    <string name="failed">Feilet</string>
+    <string name="delivered">Melding levert</string>
+    <string name="attach_image">Legg ved bilde</string>
+    <string name="capture_image">Ta bilde</string>
+    <string name="attach_gif">Legg ved GIF</string>
+    <string name="record_video">Ta opp video</string>
+    <string name="record_audio">Ta opp lyd</string>
+    <string name="attach_location">Legg ved plassering</string>
+    <string name="no_location_found">Kunne ikke finne din plassering.</string>
+    <string name="camera_permission_needed">Kamera tillatelse må bli gitt for å ta bilder!</string>
+    <string name="take_picture">Snap bilde</string>
+    <string name="flip_picture">Vend kamera</string>
+    <string name="fullscreen">Fullskjerm</string>
+    <string name="attached_image">Vedlagt bilde</string>
+    <string name="remove_image">Fjern vedlagt bilde</string>
+    <string name="edit_image">Redigér vedlagt bilde</string>
+    <string name="permission_needed_for_action">Tillatelser nødvendig for denne handlingen.</string>
+    <string name="request_permission">Be om tillatelse</string>
+    <string name="no_messages_with_contact">Du har ingen meldinger i denne samtalen ennå. så på tide å begynne!</string>
+    <string name="save">Lagre</string>
+    <string name="share">Del</string>
+    <string name="share_content">Del innhold ...</string>
+    <string name="saved">Lagret i nedlastingsmappen!</string>
+    <string name="failed_to_save">Kunne ikke lagre</string>
+    <string name="start_recording_audio">Press knappen for å ta opp lyd!</string>
+    <string name="audio_recording_error">Feil ved opptak :(</string>
+    <string name="message_copied_to_clipboard">Kopiert til utklippstavla</string>
+    <string name="view_details">Vis detaljer</string>
+    <string name="delete">Slett</string>
+    <string name="copy_message">Kopier tekst</string>
+    <string name="resend">Send på nytt</string>
+    <string name="no_media">Ingen media i denne samtalen!</string>
+    <string name="error_decrypting">Feil ved dekrypteringen! Vennligst se denne meldingen på telefonen din.</string>
+    <string name="message_sending_failed">Kunne ikke sende melding!</string>
+    <string name="preparing_video">Forbereder video &#8230;</string>
+    <string name="delete_message">Slett denne meldingen?</string>
+    <string name="forward_message">Videresend melding</string>
+    <string name="share_message">Del melding</string>
+    <string name="copy_message_text">Kopier meldingstekst</string>
+    <string name="open_link_to_browser">Åpne link til nettleser</string>
+    <string name="open_link_internal">Åpne link internt</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Skriv ny melding</string>
+    <string name="send_message">Send melding</string>
+    <string name="enter_contact_name">Skriv kontakt navn</string>
+    <string name="error_processing_vcard">Feil ved behandling av vcard</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">Appen virker ikke med de tillatelsene! Du må akseptere de før vi kan fortsette.</string>
+    <string name="loading_messages">Optimaliserer ...</string>
+    <string name="loading_messages_summary">Bare jobber med å få meldingene dine til appen, det
+vil ikke ta lang tid!</string>
+    <string name="tooltip_got_it">Fikk det!</string>
+    <string name="navigation_drawer_conversation_hint">Flere valg for denne samtalen er lagret i navigasjons skuffen.</string>
+    <string name="onboarding_title_2">Tilgjengelig overalt</string>
+    <string name="onboarding_title_3">Kraftig tilpasningsmuligheter</string>
+    <string name="message_anywhere_onboarding_title_1">Melding hvor som helst</string>
+    <string name="message_anywhere_onboarding_title_3">En uke lang prøveperiode</string>
+    <string name="start_trial">Start\nPrøveperiode</string>
+    <string name="not_now">Ikke\nNå</string>
+    <string name="onboarding_done">Ferdig</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">Ny melding fra %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d ny samtale</item>
+        <item quantity="other">%1$d nye samtaler</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d ny melding</item>
+        <item quantity="other">%1$d nye meldinger</item>
+    </plurals>
+    <string name="read">Les</string>
+    <string name="reply">Svar</string>
+    <string name="reply_to">Svar til %1$s</string>
+    <string name="call">Ring</string>
+    <string-array name="reply_choices">
+        <item>Ja</item>
+        <item>Nei</item>
+        <item>Kanskje</item>
+        <item>Ok</item>
+        <item>Takk</item>
+    </string-array>
+    <string name="new_mms_message">Ny MMS melding</string>
+    <string name="you">Du</string>
+    <string name="new_message">Ny melding</string>
+    <string name="received_new_message">Du mottok en ny tekst!</string>
+    <string name="media">Media</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Endringslogg</string>
+    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Se informasjon om åpen kildekode lisens</string>
+    <string name="app_version">App versjon</string>
+    <string name="device_id">Enhets ID</string>
+    <string name="device_info">Enhets info</string>
+    <string name="website">Webside</string>
+    <string name="access_messages_from_any_device">Få tilgang til og send meldinger fra en hvilken som helst enhet!</string>
+    <string name="google_plus">Google+</string>
+    <string name="email">E-post</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Brukerstøtte</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d melding</item>
+        <item quantity="other">%1$d meldinger</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">i %1$d samtale</item>
+        <item quantity="other">i %1$d samtaler</item>
+    </plurals>
+    <string name="pin_conversation">Fest samtale</string>
+    <string name="pin_conversation_summary">Holder denne samtalen på toppen av listen</string>
+    <string name="mute_conversation">Dempe samtale</string>
+    <string name="mute_conversation_summary">Skjuler varslinger for denne samtalen</string>
+    <string name="private_conversation">Privat samtale</string>
+    <string name="primary_color">Hovedfarge</string>
+    <string name="led_color">LED farge</string>
+    <string name="group_name">Gruppenavn</string>
+    <string name="notification_settings">Varslinger</string>
+    <string name="repeat_interval">Gjenta alarm</string>
+    <string name="repeat_never">Aldri</string>
+    <string name="repeat_one_min">Hvert minutt</string>
+    <string name="repeat_five_mins">Hvert femte minutt</string>
+    <string name="repeat_ten_mins">Hvert tiende minutt</string>
+    <string name="repeat_half_hour">Hver halvtime</string>
+    <string name="repeat_hour">Hver time</string>
+    <string name="vibrate_off">Ingen vibrasjon</string>
+    <string name="vibrate_default">Standard vibrasjon</string>
+    <string name="vibrate_two_long">To lange vibrasjoner</string>
+    <string name="vibrate_two_short">To korte vibrasjoner</string>
+    <string name="vibrate_three_short">Tre korte vibrasjoner</string>
+    <string name="vibrate_one_short_one_long">En kort, en lang vibrasjon</string>
+    <string name="vibrate_one_long_one_short">En lang, en kort vibrasjon</string>
+    <string name="vibrate_one_short">En kort vibrasjon</string>
+    <string name="vibrate_one_long">En lang vibrasjon</string>
+    <string name="keyboard_layout">Tastatur utforming</string>
+    <string name="keyboard_default">Standard tastatur</string>
+    <string name="keyboard_send_key">Send kode</string>
+    <string name="keyboard_enter_key">Skriv kode</string>
+    <string name="swipe_delete">Sveip for å slette</string>
+    <string name="blacklist_hint">Skriv nummer som skal svartelistes ...</string>
+    <string name="remove_blacklist">%1$s\n\nVil du slette denne svartelisten?</string>
+    <string name="blacklist_need_number">Du må skrive inn ett telefonnummer for svartelisting!</string>
+    <string name="no_blacklists">Ingen svartelister</string>
+    <string name="no_blacklists_summary">Du kan legge til en med pluss knappen nedenfor!</string>
+    <string name="add">Legg til</string>
+    <string name="signout_time">Logger ut: %1$s</string>
+    <string name="delete_account">Slett konto</string>
+    <string name="font_size_small">Liten</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Stor</string>
+    <string name="font_size_extra_large">Ekstra stor</string>
+    <string name="advanced">Avansert</string>
+    <string name="send_as_mms">Konverter til MMS</string>
+    <string name="send_as_mms_summary">Lange meldinger vil bli sent som MMS istedet for individuelle SMS</string>
+    <string name="strip_unicode">Fjern Unicode</string>
+    <string name="strip_unicode_summary">Disse tegnene vil bli fjernet fra sendte meldinger</string>
+    <string name="giffgaff_delivery">Giffgaff leveringsrapport</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Maks bildestørrelse</string>
+    <string name="use_group_mms">Bruk gruppe MMS</string>
+    <string name="apn_configuration">APN konfigurasjon</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_port">MMS port</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">Signatur</string>
+    <!-- Theming Options -->
+    <string name="always_light">Alltid lys</string>
+    <string name="always_dark">Alltid mørk</string>
+    <string name="always_black">Alltid svart</string>
+    <string name="set_color_per_conversation">Sett farge pr samtale</string>
+    <string name="material_color_red">Rød</string>
+    <string name="material_color_pink">Rosa</string>
+    <string name="material_color_purple">Lilla</string>
+    <string name="material_color_indigo">Indigo</string>
+    <string name="material_color_blue">Blå</string>
+    <string name="material_color_light_blue">Lys blå</string>
+    <string name="material_color_cyan">Cyan</string>
+    <string name="material_color_teal">Blågrønn</string>
+    <string name="material_color_green">Grønn</string>
+    <string name="material_color_light_green">Lys grønn</string>
+    <string name="material_color_lime">Lime</string>
+    <string name="material_color_yellow">Gul</string>
+    <string name="material_color_orange">Oransje</string>
+    <string name="material_color_deep_orange">Dyp oransje</string>
+    <string name="material_color_brown">Brun</string>
+    <string name="material_color_gray">Grå</string>
+    <string name="material_color_blue_gray">Blågrå</string>
+    <string name="material_color_black">Svart</string>
+    <!-- Scheduled Messages Screen -->
+    <string name="scheduled_message_hint">Melding for å sende ...</string>
+    <string name="scheduled_to_hint">Kontakt for å sende til ...</string>
+    <string name="scheduled_message_sent">Planlagt melding sendt suksessfullt</string>
+    <string name="no_scheduled_messages">Ingen planlagte meldinger</string>
+    <string name="no_scheduled_messages_summary">Du kan lage en ny med pluss knappen nedenfor!</string>
+    <string name="scheduled_message_in_future">Tiden må være i framtiden!</string>
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Krypterer og laster opp ...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Lyd melding</string>
+    <string name="video_message">Video melding</string>
+    <string name="picture_message">Bilde melding</string>
+    <string name="gif_message">GIF melding</string>
+    <string name="contact_card">Kontakt kort</string>
+    <string name="conversation_with">Samtale med %1$s</string>
+    <string name="send">Send</string>
+    <!-- Other -->
+    <string name="updating_database">Finner nyeste meldinger...</string>
+    <string name="dashclock_description">Ulest SMS/MMS informasjon</string>
+    <string name="default_text">Standard</string>
+    <string name="did_you_know">Viste du?</string>
+    <string name="learn_more">Lær mer</string>
+    <string name="renew">Forny</string>
+    <string name="no">Nei</string>
+    <string name="cancel">Avbryt</string>
+    <string name="hours">Timer</string>
+    <string name="minutes">Minutter</string>
+    <string name="test">Test</string>
+    <string name="off">Av</string>
+    <string name="on">På</string>
+    <string name="rate_it">Rangere det!</string>
+    <string name="love_pulse_question">Elsker Pulse?</string>
+    <!-- Times -->
+    <string name="one_second">Ett sekund</string>
+    <string name="three_seconds">Tre sekunder</string>
+    <string name="five_seconds">Fem sekunder</string>
+    <string name="ten_seconds">Ti sekunder</string>
+    <string name="fifteen_seconds">Femten sekunder</string>
+    <string name="thirty_seconds">Tredve sekunder</string>
+    <string name="one_minute">Ett minutt</string>
+    <string name="one_week">En uke</string>
+    <string name="two_weeks">To uker</string>
+    <string name="one_month">En måned</string>
+    <string name="three_months">Tre måneder</string>
+    <string name="six_months">Seks måneder</string>
+    <string name="one_year">Ett år</string>
+    <!-- Purchase/Subscriptions -->
+</resources>

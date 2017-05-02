@@ -70,6 +70,18 @@
     <string name="older">Äldre</string>
     <string name="mark_section_as_read">Markera alla %1$s som lästa</string>
     <string name="marking_section_as_read">Markerar alla %1$s som lästa</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d konversation raderad</item>
+        <item quantity="other">%1$d konversationer raderade</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">%1$d konversation arkiverad</item>
+        <item quantity="other">%1$d konversationer arkiverade</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d  konversation flyttad till inkorg</item>
+        <item quantity="other">%1$d konversationer flyttade till inkorg</item>
+    </plurals>
     <string name="undo">Ångra</string>
     <string name="enter_search">Sök efter...</string>
     <!-- Search Screen -->
@@ -77,18 +89,26 @@
     <string name="messages">Meddelanden</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Älskar du Pulse?</string>
+    <string name="invite_friends_summary">Det gör vi och det kommer andra också göra! Vi försöker få så många användare som möjligt för att kunna fortsätta utveckla den bästa produkten och genom
+att bjuda in dina vänner att prova appen hjälper du till! \n\nVälj vänner nedan som
+du vill ska prova appen och de får då ett SMS med en kort beskrivning om appen och
+en länk för att ladda ner!</string>
+    <string name="invite_friends_sms">Jag har börjat använda en ny meddelande app och jag tror
+att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Skriv meddelande</string>
     <string name="type_message_to">Skriv meddelande till %1$s</string>
     <string name="attach">Bifoga</string>
     <string name="select_sim">Välj SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">MMS bild</string>
     <string name="now">Nu</string>
     <string name="sending">Skickar...</string>
     <string name="failed">Misslyckades</string>
     <string name="delivered">Meddelande levererat</string>
     <string name="attach_image">Bifoga bild</string>
-    <string name="capture_image">Ta bild</string>
+    <string name="capture_image">Ta Bild</string>
     <string name="attach_gif">Bifoga GIF</string>
     <string name="record_video">Spela in video</string>
     <string name="record_audio">Spela in ljud</string>
@@ -99,7 +119,7 @@
     <string name="flip_picture">Byt kamera</string>
     <string name="fullscreen">Helskärm</string>
     <string name="attached_image">Bifogad bild</string>
-    <string name="remove_image">Ta bort bifogad bild</string>
+    <string name="remove_image">Radera bifogad bild</string>
     <string name="edit_image">Redigera bifogad bild</string>
     <string name="permission_needed_for_action">Tillåtelse krävs för att slutföra.</string>
     <string name="request_permission">Begär tillåtelse</string>
@@ -113,24 +133,31 @@
     <string name="audio_recording_error">Fel vid inspelning :(</string>
     <string name="message_copied_to_clipboard">Kopierad till urklipp</string>
     <string name="view_details">Se detaljer</string>
-    <string name="delete">Ta bort</string>
+    <string name="delete">Radera</string>
     <string name="copy_message">Kopiera text</string>
     <string name="resend">Sänd igen</string>
     <string name="no_media">Konversationen innehåller ingen media!</string>
+    <string name="error_decrypting">"Ett fel uppstod med dekryptering! Vänligen se på detta meddelande på din telefon. "</string>
     <string name="message_sending_failed">Meddelandet kunde inte skickas!</string>
     <string name="preparing_video">Förbereder video &#8230;</string>
-    <string name="delete_message">Ta bort meddelandet?</string>
+    <string name="delete_message">Radera meddelandet?</string>
     <string name="forward_message">Vidarebefordra meddelande</string>
     <string name="share_message">Dela meddelande</string>
     <string name="copy_message_text">Kopiera meddelandetext</string>
     <string name="open_link_to_browser">Öppna länk i webläsare</string>
+    <string name="open_link_internal">Öppna länk lokalt</string>
     <string name="copy_link">Kopiera länk</string>
     <!-- Compose Screen -->
     <string name="compose_message">Skriv nytt meddelande</string>
     <string name="send_message">Skicka meddelande</string>
     <string name="enter_contact_name">Skriv kontaktnamn</string>
+    <string name="error_processing_vcard">Fel vid bearbetning av vcard</string>
     <!-- Onboarding Screen -->
+    <string name="permissions_needed">Appen fungerar inte utan dessa behörigheter! Du måste tillåta dem innan vi kan fortsätta.</string>
     <string name="loading_messages">Optimerar...</string>
+    <string name="loading_messages_summary">Arbetar med att få in meddelanden i appen, detta är strax klart!</string>
+    <string name="tooltip_got_it">Klart!</string>
+    <string name="navigation_drawer_conversation_hint">Mer alternativ för denna konversation finns i navigationslisten.</string>
     <string name="onboarding_title_2">Tillgänglig överallt</string>
     <string name="onboarding_content_2">Meddelande från din platta, dator, klocka eller annan ansluten enhet.</string>
     <string name="message_anywhere_onboarding_title_1">Meddelande Överallt</string>
@@ -140,11 +167,16 @@
     <string name="not_now">Inte\nNu</string>
     <string name="onboarding_done">Klart</string>
     <!-- Notifications -->
+    <string name="notification_ticker">Nytt meddelande från %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d ny konversation</item>
+        <item quantity="other">%1$d nya konversationer</item>
+    </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d nytt meddelande</item>
         <item quantity="other">%1$d nya meddelanden</item>
     </plurals>
-    <string name="read">Läs</string>
+    <string name="read">Läst</string>
     <string name="reply">Svara</string>
     <string name="reply_to">Svara till  %1$s</string>
     <string name="call">Ring</string>
@@ -158,10 +190,33 @@
     <string name="new_mms_message">Nytt MMS meddelande</string>
     <string name="you">Du</string>
     <string name="new_message">Nytt meddelande</string>
+    <string name="received_new_message">Du har fått ett nytt textmeddelande!</string>
     <string name="media">Media</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="features">Funktioner</string>
     <string name="issues">Problemsökning</string>
     <string name="issues_summary">Fungerar även som en framtida färdplan</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d meddelande</item>
+        <item quantity="other">%1$d meddelanden</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">i %1$d konversation</item>
+        <item quantity="other">i %1$d konversationer</item>
+    </plurals>
+    <string name="pin_conversation">Fäst konversation</string>
+    <string name="pin_conversation_summary">Fäster din konversation i toppen på listan</string>
+    <string name="mute_conversation">Tysta konversation</string>
+    <string name="mute_conversation_summary">Dölj aviseringar för denna konversation</string>
+    <string name="private_conversation">Privat konversation</string>
+    <string name="private_conversation_summary">Göm konversationsinnehåll i aviseringen</string>
+    <string name="primary_color">Huvudfärg</string>
+    <string name="primary_dark_color">Sekundär mörk färg</string>
+    <string name="accent_color">Accent färg</string>
+    <string name="led_color">LED Färg</string>
+    <string name="ringtone">Ringsignal</string>
+    <string name="group_name">Gruppnamn</string>
+    <string name="notification_settings">Notifikationer</string>
     <string name="repeat_interval">Upprepa larm</string>
     <string name="repeat_never">Aldrig</string>
     <string name="repeat_one_min">Varje minut</string>
@@ -169,17 +224,117 @@
     <string name="repeat_ten_mins">Var tionde minut</string>
     <string name="repeat_half_hour">Varje halvtimme</string>
     <string name="repeat_hour">Varje timme</string>
+    <string name="wake_screen">Väck skärm</string>
+    <string name="vibrate">Vibrationsmönster</string>
+    <string name="vibrate_off">Ingen vibration</string>
+    <string name="vibrate_default">Standard vibration</string>
+    <string name="vibrate_two_long">Två långa vibrationer</string>
+    <string name="vibrate_two_short">Två korta vibrationer</string>
+    <string name="vibrate_three_short">Tre korta vibrationer</string>
+    <string name="vibrate_one_short_one_long">En kort och en lång vibration</string>
+    <string name="vibrate_one_long_one_short">En lång och en kort vibration</string>
+    <string name="vibrate_one_short">En kort vibration</string>
+    <string name="vibrate_one_long">En lång vibration</string>
+    <string name="keyboard_layout">Tangentbordslayout</string>
+    <string name="keyboard_default">Standard tangentbord</string>
+    <string name="keyboard_send_key">Sändknapp</string>
+    <string name="keyboard_enter_key">Enter-tangent</string>
+    <string name="sound_effects">Ljudeffekter</string>
+    <string name="delivery_reports">Leveransrapporter</string>
+    <string name="theme_settings">Anpassning</string>
+    <string name="base_theme">Bastema</string>
+    <string name="global_theme_color">Temafärg</string>
     <string name="font_size">Textstorlek</string>
+    <string name="rounder_bubbles">Runda meddelandebubblor</string>
     <string name="swipe_delete">Svep för att ta bort</string>
+    <string name="blacklist_hint">Ange nummer som ska svartlistas...</string>
+    <string name="add_blacklist">"%1$s\n\nÄr du säker att du vill svartlista detta nummer? Meddelanden sparas inte längre från detta nummer och du får heller ingen notifikation! "</string>
+    <string name="remove_blacklist">%1$s\n\nVill du radera denna svartlistning?</string>
+    <string name="blacklist_need_number">Du måste ange det telefonnummer som ska svartlistas!</string>
+    <string name="no_blacklists">Inga är svartlistade</string>
+    <string name="no_blacklists_summary">Du kan lägga till ett genom pluset nedan!</string>
     <string name="add">Lägg till</string>
-    <string name="alert_types">Larmtyper</string>
-    <string name="alert_types_summary">Olika anpassningar för notifikationer</string>
+    <string name="privacy_policy">Integritetspolicy</string>
+    <string name="privacy_policy_summary">Läs om din integritetspolicy på webben</string>
+    <string name="account_expiring">Kontot förfaller!</string>
+    <string name="signout_time">Loggar ut på: %1$s</string>
+    <string name="lifetime_subscriber">Livstidsprenumeration</string>
+    <string name="trial_period">Testperiod</string>
+    <string name="setup_my_account">Skapa konto</string>
+    <string name="setup_my_account_summary">Skapa eller logga in på ditt konto för att använda mer
+funktioner, som skicka meddelanden från din platta eller dator</string>
+    <string name="preparing_new_account">Förbereder konto&#8230;</string>
+    <string name="delete_account">Radera kontot</string>
+    <string name="delete_account_summary">Raderar kontot på denna enhet, dina andra aktiva enheter
+och servern. Detta går inte att ångra!</string>
+    <string name="delete_account_confirmation">Är du säker på att du vill radera ditt konto och allt
+det medför? Du kan alltid registrera dig igen senare!</string>
+    <string name="change_subscription">Ändra prenumeration</string>
+    <string name="cancel_on_the_play_store">Avbryta och se din prenumeration på Play Store</string>
+    <string name="resync_account">Omsynkronisera konto</string>
+    <string name="font_size_small">Liten</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Stor</string>
+    <string name="font_size_extra_large">Extra Stor</string>
+    <string name="advanced">Avancerad</string>
+    <string name="send_as_mms">Konvertera till MMS</string>
+    <string name="send_as_mms_summary">Långa meddelanden kommer skickas som MMS istället för enskilda SMS</string>
+    <string name="alert_types">Aviseringstyper</string>
+    <string name="alert_types_summary">Olika anpassningar för aviseringar</string>
+    <string name="strip_unicode_summary">De här tecknen kommer raderas från det utgående meddelandet</string>
+    <string name="giffgaff_delivery">Giffgaff Leveransrapporter</string>
+    <string name="notification_actions">Aviseringsåtgärder</string>
+    <string name="notification_actions_summary">Max tre alternativ kan användas i snabbsvar</string>
+    <string name="mms_download_directory">"Nedladdningsmapp för media "</string>
+    <string name="refresh_firebase">"Uppdatera Push-Aviseringar "</string>
     <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Max bild storlek</string>
+    <string name="use_group_mms">Använd grupp MMS</string>
+    <string name="auto_save_media">Auto spara media</string>
+    <string name="auto_save_media_summary">Spara automatiskt all inkommen MMS media i /Downloads-mappen.</string>
+    <string name="apn_configuration">APN konfiguration</string>
+    <string name="override_system_apn">Ersätt systemets APN</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS port</string>
     <!-- Advanced Features Settings -->
+    <string name="signature">Signatur</string>
     <string name="cleanup_old_messages">Rensa gamla meddelanden</string>
     <string name="delayed_sending">Fördröjd sändning</string>
+    <string name="quick_compose">Snabbsvar</string>
     <!-- Theming Options -->
+    <string name="day_night">Standard (Dag/Natt)</string>
+    <string name="always_light">Alltid Ljust</string>
+    <string name="always_dark">Alltid Mörkt</string>
+    <string name="always_black">Alltid Svart</string>
+    <string name="set_color_per_conversation">Ange färg på varje konversation</string>
+    <string name="material_color_red">Röd</string>
+    <string name="material_color_pink">Rosa</string>
+    <string name="material_color_purple">Lila</string>
+    <string name="material_color_deep_purple">Djup lila</string>
+    <string name="material_color_indigo">Indigoblått</string>
+    <string name="material_color_blue">Blått</string>
+    <string name="material_color_light_blue">Ljusblått</string>
+    <string name="material_color_cyan">Turkos</string>
+    <string name="material_color_teal">Blågrönt</string>
+    <string name="material_color_green">Grönt</string>
+    <string name="material_color_light_green">Ljusgrönt</string>
+    <string name="material_color_lime">Lime</string>
+    <string name="material_color_yellow">Gul</string>
+    <string name="material_color_amber">Bärnsten</string>
+    <string name="material_color_orange">Orange</string>
+    <string name="material_color_deep_orange">Djup orange</string>
+    <string name="material_color_brown">Brunt</string>
+    <string name="material_color_gray">Grått</string>
+    <string name="material_color_blue_gray">Blågrått</string>
+    <string name="material_color_black">Svart</string>
     <!-- Scheduled Messages Screen -->
+    <string name="scheduled_message_hint">Meddelande att skicka...</string>
+    <string name="scheduled_to_hint">Kontakt för att skicka till...</string>
+    <string name="scheduled_message_sent">Lyckades att skicka det schemalagda meddelandet</string>
+    <string name="no_scheduled_messages">Inga schemalagda meddelanden</string>
+    <string name="no_scheduled_messages_summary">Du kan skapa ett nytt ,ed plusknappen nedan!</string>
+    <string name="scheduled_message_in_future">Tiden måste vara i framtiden!</string>
     <!-- Encryption -->
     <!-- Quick Reply -->
     <string name="audio_message">Ljudmeddelande</string>
@@ -187,11 +342,65 @@
     <string name="picture_message">Bildmeddelande</string>
     <string name="gif_message">Infoga GIF</string>
     <string name="contact_card">Kontakt</string>
+    <string name="conversation_with">Konversation med %1$s</string>
     <string name="send">Skicka</string>
     <!-- Other -->
+    <string name="updating_database">"Letar efter senaste meddelanden... "</string>
+    <string name="dashclock_description">Oläst SMS/MMS information</string>
+    <string name="default_text">Standard</string>
+    <string name="did_you_know">Visste du att?</string>
+    <string name="use_from_anywhere">Pulse kan användas från alla enheter som är ansluta till internet - prova det idag!</string>
+    <string name="use_from_anywhere_short">Pulse kan användas på alla dina enheter!</string>
+    <string name="learn_more">Lär dig mer</string>
+    <string name="dismiss">Avfärda</string>
+    <string name="renew">Förnya</string>
+    <string name="no">Nej</string>
+    <string name="cancel">Avbryt</string>
+    <string name="hours">Timmar</string>
+    <string name="minutes">Minuter</string>
+    <string name="test">Test</string>
+    <string name="off">Av</string>
+    <string name="on">På</string>
+    <string name="rate_it">Betygsätt!</string>
+    <string name="love_pulse_question">Gillar Pulse?</string>
+    <string name="give_a_rating">Funderar du på att betygsätta eller dela med dig till dina vänner!\n\n
+Din 5 stjärniga recension värmer mitt hjärta :)</string>
+    <string name="share_promo">Hej, jag älskar Pulse för meddelanden! Prova du med: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
+    <string name="one_second">En sekund</string>
+    <string name="three_seconds">Tre sekunder</string>
+    <string name="five_seconds">Fem sekunder</string>
+    <string name="ten_seconds">Tio sekunder</string>
+    <string name="fifteen_seconds">Femton sekunder</string>
+    <string name="thirty_seconds">Trettio sekunder</string>
+    <string name="one_minute">En minut</string>
+    <string name="one_week">En vecka</string>
+    <string name="two_weeks">Två veckor</string>
+    <string name="one_month">En månad</string>
+    <string name="three_months">Tre månader</string>
     <string name="six_months">Sex månader</string>
     <string name="one_year">Ett år</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Prenumeration saknas!</string>
+    <string name="cancelled_subscription_error">"Du verkar avslutat din prenumeration.
+Om du inte återupptar din prenumeration  i tid kommer appen automatiskt logga ut
+dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
+"</string>
+    <string name="subscription_found">Prenumeration hittad - välkommen tillbaka</string>
+    <string name="subscription_not_found">"Hittade ingen prenumeration, starta prövotiden! "</string>
+    <string name="checking_for_active_subscriptions">Letar efter prenumeration &#8230;</string>
+    <string name="purchase_error_cancelled">Du avbröt ditt köp :(</string>
+    <string name="purchase_error_bad_google_play">Hoppsan, något är antagligen något fel med Google Play, de gav oss ett dåligt resultat.</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; Den betalningen matchade inte våra uppgifter.</string>
+    <string name="subscriptions">"Prenumerationen faktureras 7 dagar efter att prövotiden startas och kan ändras/avbrytas när som helst: "</string>
+    <string name="billed_immediately">Den här faktureras direkt.</string>
+    <string name="lifetime_purchase">$10.99 - Livstidsmedlemskap</string>
+    <string name="lifetime_purchase_summary">Betala en gång och aldrig igen!</string>
+    <string name="yearly_purchase">$5.99 per år</string>
+    <string name="yearly_purchase_summary">Det bästa erbjudandet.</string>
+    <string name="three_month_purchase">$1.99 var tredje månad</string>
+    <string name="three_month_purchase_summary">Med denna kan inget gå fel.</string>
+    <string name="monthly_purchase">$0.99 per månad</string>
+    <string name="monthly_purchase_summary">Vill du bara prova? Inga problem.</string>
+    <string name="change_subscription_message">"Vill du uppgradera? Härligt! Efter du gjort ditt val på nästa skärm ska du gå och avbryta din gamla prenumeration i Play Store manuellt. "</string>
 </resources>
