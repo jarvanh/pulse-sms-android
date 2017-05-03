@@ -43,6 +43,7 @@ import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.service.ApiDownloadService;
 import xyz.klinker.messenger.shared.service.ApiUploadService;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -71,6 +72,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
         if (getIntent().getBooleanExtra(UPLOAD_AFTER_SYNC, false)) {
             startUploadAfterSync = true;
         }
+
 
         handler = new Handler();
         requestPermissions();
@@ -176,10 +178,11 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             source.insertContacts(contacts, null);
             source.close();
 
-            handler.postDelayed(() -> close(), 5000);
+            long importTime = (System.currentTimeMillis() - startTime);
+            AnalyticsHelper.importFinished(this, importTime);
+            Log.v("initial_load", "load took " + importTime + " ms");
 
-            Log.v("initial_load", "load took " +
-                    (System.currentTimeMillis() - startTime) + " ms");
+            handler.postDelayed(() -> close(), 5000);
         }).start();
     }
 

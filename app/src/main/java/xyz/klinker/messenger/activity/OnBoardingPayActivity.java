@@ -12,6 +12,7 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 
 public class OnBoardingPayActivity extends AppIntro {
 
@@ -19,8 +20,10 @@ public class OnBoardingPayActivity extends AppIntro {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AnalyticsHelper.accountTutorialStarted(this);
+
         setResult(MyAccountFragment.RESPONSE_SKIP_TRIAL_FOR_NOW);
-        showSkipButton(false);
+        showSkipButton(true);
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.message_anywhere_onboarding_title_1), getString(R.string.message_anywhere_onboarding_content_1),
@@ -42,18 +45,6 @@ public class OnBoardingPayActivity extends AppIntro {
         final Button skip = (Button) findViewById(R.id.skip);
 
         if (LoginActivity.hasTelephony(this)) {
-            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-                @Override public void onPageScrollStateChanged(int state) { }
-                @Override public void onPageSelected(int position) {
-                    if (position == pager.getAdapter().getCount() - 1) {
-                        skip.setVisibility(View.VISIBLE);
-                    } else {
-                        skip.setVisibility(View.GONE);
-                    }
-                }
-            });
-
             skip.setText(getString(R.string.api_login));
             done.setText(getString(R.string.start_trial));
         } else {
@@ -67,6 +58,7 @@ public class OnBoardingPayActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
+        AnalyticsHelper.accountTutorialFinished(this);
         setResult(MyAccountFragment.RESPONSE_START_TRIAL);
         finish();
     }
@@ -75,6 +67,7 @@ public class OnBoardingPayActivity extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
 
+        AnalyticsHelper.accountTutorialFinished(this);
         setResult(MyAccountFragment.RESPONSE_START_TRIAL);
         finish();
     }

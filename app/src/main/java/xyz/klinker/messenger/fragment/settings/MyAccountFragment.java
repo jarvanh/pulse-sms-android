@@ -25,7 +25,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
-import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -45,6 +44,7 @@ import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckServi
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
@@ -105,7 +105,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                 dialog.show();
 
                 new Thread(() -> {
-                    final boolean hasSubs = billing.hasPurchasedProduct();
+                    final boolean hasSubs = true;//billing.hasPurchasedProduct();
                     dialog.dismiss();
 
                     getActivity().runOnUiThread(() -> {
@@ -139,18 +139,20 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     private void removeAccountOptions() {
         try {
+
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_subscriber_status)));
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_message_count)));
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_about_device_id)));
-            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
-            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
-            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
+            getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_category_account_actions)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
         } catch (Exception e) {
 
         }
@@ -426,6 +428,11 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         billing.purchaseItem(getActivity(), product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
+                if (getActivity() != null) {
+                    AnalyticsHelper.accountCompetedPurchase(getActivity());
+                    AnalyticsHelper.userSubscribed(getActivity(), productId);
+                }
+
                 if (Account.get(getActivity()).accountId == null) {
                     // write lifetime here, just so they don't think it is a trial..
                     if (product.getProductId().contains("lifetime")) {
@@ -449,6 +456,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
             @Override
             public void onPurchaseError(final String message) {
+                AnalyticsHelper.purchaseError(getActivity());
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
             }
         });

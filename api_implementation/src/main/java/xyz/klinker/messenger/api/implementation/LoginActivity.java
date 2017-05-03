@@ -58,6 +58,7 @@ import java.util.List;
 import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 
 /**
  * Activity for logging a user in using the API
@@ -229,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
                 encryptionCreator.createAccountEncryptionFromLogin(response);
 
                 addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
+                AnalyticsHelper.accountLoggedIn(LoginActivity.this);
             }
         }).start();
     }
@@ -259,6 +261,7 @@ public class LoginActivity extends AppCompatActivity {
                         response);
 
                 addDevice(utils, response.accountId, true, true);
+                AnalyticsHelper.accountSignedUp(LoginActivity.this);
             }
         }).start();
     }
