@@ -105,7 +105,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                 dialog.show();
 
                 new Thread(() -> {
-                    final boolean hasSubs = true;//billing.hasPurchasedProduct();
+                    final boolean hasSubs = billing.hasPurchasedProduct();
                     dialog.dismiss();
 
                     getActivity().runOnUiThread(() -> {
