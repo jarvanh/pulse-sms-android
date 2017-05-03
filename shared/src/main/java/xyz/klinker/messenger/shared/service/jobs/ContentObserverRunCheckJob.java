@@ -20,7 +20,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 public class ContentObserverRunCheckJob extends BackgroundJob {
 
     private static final int JOB_ID = 12;
-    private static final long RUN_EVERY = 1000 * 60 * 15; // 15 mins
+    private static final long RUN_EVERY = 60 * 15; // 15 mins
 
     @Override
     protected void onRunJob(JobParameters parameters) {
@@ -38,12 +38,14 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
 
         ComponentName component = new ComponentName(context, ContentObserverRunCheckJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
-                .setPeriodic(RUN_EVERY)
+                .setMinimumLatency(RUN_EVERY)
+                .setOverrideDeadline(RUN_EVERY + (TimeUtils.MINUTE * 5))
                 .setPersisted(true)
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(false);
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(JOB_ID);
         jobScheduler.schedule(builder.build());
     }
 }
