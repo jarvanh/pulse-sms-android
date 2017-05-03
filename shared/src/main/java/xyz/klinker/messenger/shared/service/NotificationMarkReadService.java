@@ -11,6 +11,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
+import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
 public class NotificationMarkReadService extends IntentService {
 
@@ -48,5 +49,6 @@ public class NotificationMarkReadService extends IntentService {
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, conversation == null ? "" : conversation.snippet, true);
 
         new UnreadBadger(this).writeCountFromDatabase();
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 }

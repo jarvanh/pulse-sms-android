@@ -14,6 +14,7 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
+import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
 public class NotificationDeleteService extends IntentService {
 
@@ -67,5 +68,6 @@ public class NotificationDeleteService extends IntentService {
                 true);
 
         new UnreadBadger(this).writeCountFromDatabase();
+        MessengerAppWidgetProvider.refreshWidget(this);
     }
 }
