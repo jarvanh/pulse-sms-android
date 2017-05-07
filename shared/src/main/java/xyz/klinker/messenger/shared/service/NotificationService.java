@@ -221,15 +221,15 @@ public class NotificationService extends IntentService {
 
         // remove the mutes.
         // If the newest conversation is muted, then we don't want to notify again.
-        for (int i = 0; i < conversations.size(); i++) {
-            boolean muted = conversations.get(i).mute;
-            if (muted && i == conversations.size() - 1) {
-                return null;
-            } else if (muted) {
-                conversations.remove(i);
-                i--;
-            }
-        }
+//        for (int i = 0; i < conversations.size(); i++) {
+//            boolean muted = conversations.get(i).mute;
+//            if (muted && i == conversations.size() - 1) {
+//                return null;
+//            } else if (muted) {
+//                conversations.remove(i);
+//                i--;
+//            }
+//        }
 
         return conversations;
     }
