@@ -49,12 +49,8 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
             String data = payload.get("contents");
 
             Log.v(TAG, "operation: " + operation + ", contents: " + data);
-            final Intent handleMessage = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
-            handleMessage.setComponent(new ComponentName("xyz.klinker.messenger",
-                    "xyz.klinker.messenger.shared" + ".service.FirebaseHandlerService"));
-            handleMessage.putExtra(EXTRA_OPERATION, operation);
-            handleMessage.putExtra(EXTRA_DATA, data);
-            startService(handleMessage);
+            ((FirebaseApplication) getApplication()).getFirebaseMessageHandler()
+                    .handleMessage(getApplication(), operation, data);
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -69,10 +65,8 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
         Log.v(TAG, "deleted FCM messages");
 
         if (!Account.get(this).primary) {
-            final Intent handleMessage = new Intent(ACTION_FIREBASE_MESSAGE_RECEIVED);
-            handleMessage.setComponent(new ComponentName("xyz.klinker.messenger",
-                    "xyz.klinker.messenger" + ".service.FirebaseResetService"));
-            startService(handleMessage);
+            ((FirebaseApplication) getApplication()).getFirebaseMessageHandler()
+                    .handleDelete(getApplication());
         }
     }
 
