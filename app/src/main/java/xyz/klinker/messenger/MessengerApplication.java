@@ -29,6 +29,7 @@ import java.util.List;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler;
+import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -118,6 +119,7 @@ public class MessengerApplication extends FirebaseApplication {
             @Override
             public void handleMessage(Application application, String operation, String data) {
                 final Intent handleMessage = new Intent(application, FirebaseHandlerService.class);
+                handleMessage.setAction(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED);
                 handleMessage.putExtra(EXTRA_OPERATION, operation);
                 handleMessage.putExtra(EXTRA_DATA, data);
                 startService(handleMessage);
