@@ -13,7 +13,6 @@ public class FirebaseResetService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
         // going to re-download everything I guess..
         DataSource source = DataSource.getInstance(this);
         source.open();
