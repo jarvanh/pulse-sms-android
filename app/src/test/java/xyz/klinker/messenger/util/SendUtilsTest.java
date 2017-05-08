@@ -47,7 +47,7 @@ public class SendUtilsTest extends MessengerSuite {
         when(telephonyManager.getNetworkOperatorName()).thenReturn(null);
         assertFalse(utils.shouldSplitMessages(context));
     }
-    
+
     @Test
     public void handlesBlankOperator() {
         when(telephonyManager.getNetworkOperatorName()).thenReturn("");

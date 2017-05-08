@@ -30,6 +30,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
+import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
 import xyz.klinker.messenger.shared.service.NotificationService;
@@ -48,6 +49,7 @@ import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsReceivedReceiver {
 
     private Long conversationId = null;
+    private boolean ignoreNotification = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -62,7 +64,9 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
         }
 
-        context.startService(new Intent(context, NotificationService.class));
+        if (!ignoreNotification) {
+            context.startService(new Intent(context, NotificationService.class));
+        }
     }
 
     private String insertMms(Context context) {
@@ -106,6 +110,12 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
                 if (SmsReceivedReceiver.shouldSaveMessages(source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
+
+                    Conversation conversation = source.getConversation(conversationId);
+                    if (conversation.mute) {
+                        source.seenConversation(conversationId);
+                        ignoreNotification = true;
+                    }
 
                     if (MmsSettings.get(context).autoSaveMedia &&
                             !MimeType.TEXT_PLAIN.equals(message.mimeType)) {

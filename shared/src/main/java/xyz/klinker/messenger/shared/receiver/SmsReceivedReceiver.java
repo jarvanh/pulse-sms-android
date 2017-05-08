@@ -129,6 +129,9 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             Conversation conversation = source.getConversation(conversationId);
             if (conversation.mute) {
                 source.seenConversation(conversationId);
+
+                // don't run the notification service
+                return -1;
             }
 
             source.close();
