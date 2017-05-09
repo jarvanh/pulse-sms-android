@@ -15,8 +15,8 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">Identifiant</string>
-    <string name="api_signup">Se connecter</string>
+    <string name="api_login">Se connecter</string>
+    <string name="api_signup">S\'enregistrer</string>
     <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez vous inscrire auprès de l\'appareil principal qui a un numéro de téléphone d\'abord !</string>
     <string name="api_skip_signup">Ou, si vous voulez juste utiliser l\'application sur cet appareil et non sur le réseau avec des fonctionnalités telles que les SMS/MMS à partir de votre tablette ou d\'un ordinateur, vous pouvez ignorer cette étape.</string>
     <string name="api_skip">Ignorer</string>
