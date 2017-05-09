@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.2.10"
+        description="May 9th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.2.9"
         description="May 5th, 2017">
         <text>Fix a battery drain issue on Samsung devices</text>

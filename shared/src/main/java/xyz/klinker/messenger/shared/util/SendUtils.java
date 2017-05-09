@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
@@ -154,6 +155,8 @@ public class SendUtils {
         try {
             TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             String carrierName = manager.getNetworkOperatorName();
+
+            Toast.makeText(context, carrierName, Toast.LENGTH_SHORT).show();
 
             if (carrierDoesntAutoSplit.contains(carrierName)) {
                 return true;
