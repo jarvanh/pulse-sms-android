@@ -155,7 +155,7 @@ public class SendUtils {
         try {
             TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             String carrierName = manager.getNetworkOperatorName();
-            if (carrierDoesntAutoSplit.contains(carrierName)) {
+            if (carrierDoesntAutoSplit.contains(carrierName.toLowerCase())) {
                 return true;
             }
         } catch (Exception e) {
