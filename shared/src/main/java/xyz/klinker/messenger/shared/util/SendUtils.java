@@ -150,7 +150,7 @@ public class SendUtils {
 
     @VisibleForTesting
     public boolean shouldSplitMessages(Context context) {
-        List<String> carrierDoesntAutoSplit = Arrays.asList("us_cellular");
+        List<String> carrierDoesntAutoSplit = Arrays.asList("u.s. cellular");
 
         try {
             TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

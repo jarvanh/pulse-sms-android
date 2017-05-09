@@ -137,15 +137,6 @@ public class  MessengerActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String carrierName = manager.getNetworkOperatorName();
-
-            Toast.makeText(this, carrierName, Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            
-        }
-
         dataSource = DataSource.getInstance(this);
         dataSource.open();
 
