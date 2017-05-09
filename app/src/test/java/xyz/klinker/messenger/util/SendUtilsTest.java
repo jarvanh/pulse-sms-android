@@ -33,7 +33,7 @@ public class SendUtilsTest extends MessengerSuite {
     @Test
     public void shouldSplit() {
         when(telephonyManager.getNetworkOperatorName()).thenReturn("us_cellular");
-        //assertTrue(utils.shouldSplitMessages(context));
+        assertTrue(utils.shouldSplitMessages(context));
     }
 
     @Test

@@ -155,9 +155,6 @@ public class SendUtils {
         try {
             TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             String carrierName = manager.getNetworkOperatorName();
-
-            Toast.makeText(context, carrierName, Toast.LENGTH_SHORT).show();
-
             if (carrierDoesntAutoSplit.contains(carrierName)) {
                 return true;
             }
