@@ -338,7 +338,6 @@ public class Settings {
         return set;
     }
 
-    @VisibleForTesting
     public SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }

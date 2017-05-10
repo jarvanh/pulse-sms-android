@@ -9,6 +9,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
@@ -64,6 +66,13 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     }
 
     private void makeSignoutNotification() {
+        SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs();
+        if (sharedPreferences.getBoolean("seen_subscription_expired_notification", false)) {
+            return;
+        } else {
+            sharedPreferences.edit().putBoolean("seen_subscription_expired_notification", true).apply();
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.no_subscription_found))
                 .setContentText(getString(R.string.cancelled_subscription_error))
