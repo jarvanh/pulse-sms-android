@@ -45,7 +45,7 @@
     <string name="menu_archive_conversation">Archiver la conversation</string>
     <string name="menu_move_to_inbox">Déplacer dans la boîte de réception</string>
     <string name="menu_conversation_information">Informations de la conversation</string>
-    <string name="menu_conversation_blacklist">Contacts en liste noire</string>
+    <string name="menu_conversation_blacklist">Mettre le contact en liste noire</string>
     <string name="menu_conversation_schedule">Programmer un message</string>
     <string name="menu_contact_settings">Paramètres du contact</string>
     <string name="menu_group_settings">Paramètres du groupe</string>
@@ -66,10 +66,10 @@
     <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="last_week">Cette semaine</string>
-    <string name="last_month">Ce mois ci</string>
-    <string name="older">Anciens</string>
-    <string name="mark_section_as_read">Marquer les %1$s comme lus</string>
-    <string name="marking_section_as_read">Marque tous les %1$s comme lus</string>
+    <string name="last_month">Ce mois-ci</string>
+    <string name="older">Plus anciennes</string>
+    <string name="mark_section_as_read">Marquer les conversations de %1$s comme lues</string>
+    <string name="marking_section_as_read">Marque les conversations de %1$s comme lues</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation supprimée</item>
         <item quantity="other">%1$d conversations supprimées</item>
@@ -89,11 +89,7 @@
     <string name="messages">Messages</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Vous aimez Pulse?</string>
-    <string name="invite_friends_summary">Alors, nous et d\'autres aussi ! Nous essayons de la 
- mettre entre toutes les mains possibles pour continuer à en faire le meilleur produit possible et en
- invitant vos amis à essayer, vous nous aidez ! \n\n Sélectionnez vos amis ci-dessous
- à qui vous voulez partager l\'application et un SMS avec une courte description sera envoyé
- avec un lien pour télécharger Pulse !</string>
+    <string name="invite_friends_summary">D\'autres l\'aimeront également ! Nous essayons de la mettre entre toutes les mains pour continuer à en faire la meilleure application possible et en invitant vos amis à essayer, vous nous aidez ! \n\nSélectionnez ci-dessous les amis avec qui vous voulez partager l\'application et un SMS avec une courte description sera envoyé avec un lien pour télécharger Pulse !</string>
     <string name="invite_friends_sms">J\'ai commencé à utiliser une nouvelle application de messagerie et je pense que tu vas l\'aimer ! En plus, elle est gratuite, pense à la télécharger ici : http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Composez votre message</string>
@@ -101,7 +97,7 @@
     <string name="attach">Attacher une pièce jointe</string>
     <string name="select_sim">Sélectionner la carte SIM</string>
     <string name="message_from">%1$s</string>
-    <string name="message_from_bullet">%1$s .</string>
+    <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">Message Image</string>
     <string name="now">Maintenant</string>
     <string name="sending">Envoi en cours...</string>
@@ -134,7 +130,7 @@ Commencez !
     <string name="failed_to_save">La sauvegarde a échoué</string>
     <string name="start_recording_audio">Appuyer pour commencer à enregistrer</string>
     <string name="audio_recording_error">Erreur d\'enregistrement :(</string>
-    <string name="message_copied_to_clipboard">Message copié dans le presse-papier</string>
+    <string name="message_copied_to_clipboard">Copié dans le presse-papier</string>
     <string name="view_details">Voir les détails</string>
     <string name="delete">Supprimer</string>
     <string name="copy_message">Copier le texte</string>
@@ -156,7 +152,7 @@ Commencez !
     <string name="enter_contact_name">Entrer le nom du contact</string>
     <string name="error_processing_vcard">Erreur de création de la vcard</string>
     <!-- Onboarding Screen -->
-    <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions! Vous devez les accepter avant de pouvoir continuer</string>
+    <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions ! Vous devez les accepter avant de pouvoir continuer.</string>
     <string name="loading_messages">Optimisation en cours...</string>
     <string name="loading_messages_summary">Nous téléchargeons vos messages dans l\'application, cela sera rapide!</string>
     <string name="tooltip_got_it">Je l\'ai !</string>
@@ -172,7 +168,7 @@ Commencez !
     <string name="message_anywhere_onboarding_title_3">Une semaine d\'essai</string>
     <string name="message_anywhere_onboarding_content_1">"S'intègre parfaitement avec n'importe quel appareil (tablette, montre, télé, internet, Google Chrome et Firefox) pour prendre en charge les SMS et les MMS de n'importe où !
 "</string>
-    <string name="message_anywhere_onboarding_content_2">Des prix incroyablement bas ! Payer lorsque vous en avez besoin : 10,99 $ à vie, 5,99 $ par an, 1,99 $ pour 3 mois ou 0,99 $ par mois. Moins d\'une tasse de café.</string>
+    <string name="message_anywhere_onboarding_content_2">Des prix incroyablement bas ! Payez lorsque vous en avez besoin : 10,99 $ à vie, 5,99 $ par an, 1,99 $ pour 3 mois ou 0,99 $ par mois. Moins cher qu\'un café.</string>
     <string name="message_anywhere_onboarding_content_3">Utilisez l\'application Android, GRATUITEMENT (pour toujours !) sur votre téléphone, ou commencez à écrire vos messages depuis tous vos appareils avec UNE SEMAINE d\'essai gratuit.</string>
     <string name="start_trial">Démarrer\nl\'essai</string>
     <string name="not_now">Pas\nMaintenant</string>
@@ -214,8 +210,8 @@ Commencez !
     <string name="access_messages_from_any_device">Accédez et envoyez des messages depuis n\'importe quel appareil !</string>
     <string name="beta_disclaimer">Ce projet est toujours en version bêta, veuillez signaler les problèmes que vous
 pourriez rencontrer !</string>
-    <string name="faqs">Questions fréquemment posées</string>
-    <string name="features">Caractéristiques</string>
+    <string name="faqs">Questions Fréquemment Posées</string>
+    <string name="features">Fonctionnalités</string>
     <string name="issues">Report des problèmes</string>
     <string name="issues_summary">Sert également aux demandes de fonctionnalités</string>
     <string name="google_plus">Google+</string>
@@ -234,20 +230,20 @@ pourriez rencontrer !</string>
         <item quantity="other">dans %1$d conversations</item>
     </plurals>
     <string name="pin_conversation">Épingler la conversation</string>
-    <string name="pin_conversation_summary">Laisse cette conversation en haut de la liste</string>
+    <string name="pin_conversation_summary">Maintient cette conversation en haut de la liste</string>
     <string name="mute_conversation">Mettre en sourdine cette conversation</string>
-    <string name="mute_conversation_summary">Cacher les notifications de cette conversation</string>
+    <string name="mute_conversation_summary">Cache les notifications de cette conversation</string>
     <string name="private_conversation">Conversation privée</string>
     <string name="private_conversation_summary">Cacher le contenu de cette conversation sur les notifications</string>
     <string name="primary_color">Couleur primaire</string>
     <string name="primary_dark_color">Couleur primaire sombre</string>
-    <string name="accent_color">Style de couleur</string>
+    <string name="accent_color">Couleur secondaire</string>
     <string name="led_color">Couleur de la LED</string>
     <string name="ringtone">Sonnerie</string>
     <string name="group_name">Nom du groupe</string>
     <string name="notification_settings">Notifications</string>
     <string name="repeat_interval">Répéter l\'alerte</string>
-    <string name="heads_up">Infos</string>
+    <string name="heads_up">Aperçu</string>
     <string name="repeat_never">Jamais</string>
     <string name="repeat_one_min">Toutes les minutes</string>
     <string name="repeat_five_mins">Toutes les 5 minutes</string>
@@ -284,17 +280,17 @@ pourriez rencontrer !</string>
     <string name="remove_blacklist">%1$s\n\nVoulez-vous retirer ce numéro de la liste noire ?</string>
     <string name="blacklist_need_number">Vous devez entrer un numéro dans la liste noire!</string>
     <string name="no_blacklists">Pas de liste noire</string>
-    <string name="no_blacklists_summary">"Vous pouvez en ajouter avec le bouton plus "</string>
+    <string name="no_blacklists_summary">"Vous pouvez en ajouter avec le bouton '+' ci-dessous! "</string>
     <string name="add">Ajouter</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="privacy_policy_summary">Voir notre politique de confidentialité sur Internet</string>
-    <string name="account_expiring">Compte bientôt expiré</string>
+    <string name="account_expiring">Compte bientôt expiré!</string>
     <string name="signout_time">Déconnexion le : %1$s</string>
     <string name="lifetime_subscriber">Abonnement à vie</string>
     <string name="trial_period">Période d\'essai</string>
-    <string name="setup_my_account">Paramètres du compte</string>
-    <string name="setup_my_account_summary">Créez un compte ou connectez-vous pour accéder à plus de fonctions comme envoyer des messages depuis votre tablette ou PC</string>
-    <string name="preparing_new_account">Préparation du compte &#8230; ...</string>
+    <string name="setup_my_account">Paramétrer le compte</string>
+    <string name="setup_my_account_summary">Créez un compte ou connectez-vous pour accéder à davantage de fonctions comme envoyer des messages depuis votre tablette ou PC</string>
+    <string name="preparing_new_account">Préparation du compte&#8230;</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_summary">Supprime le compte de vos appareils et du serveur. Cette opération est irréversible.</string>
     <string name="delete_account_confirmation">Êtes vous sur de vouloir supprimer ce compte et tout ce qui va avec ? Vous pourrez toujours vous réinscrire plus tard !</string>
@@ -319,7 +315,7 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="alert_types">Types d\'alertes</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
     <string name="strip_unicode">Remplacer l\'Unicode</string>
-    <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants</string>
+    <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants.</string>
     <string name="giffgaff_delivery">Accusés de réception giffgaff</string>
     <string name="notification_actions">Actions depuis les notifications</string>
     <string name="notification_actions_summary">Trois actions maximales par notification.</string>
@@ -367,7 +363,7 @@ seront uniquement affichées au destinataire du message.</string>
     <string name="material_color_teal">Turquoise</string>
     <string name="material_color_green">Vert</string>
     <string name="material_color_light_green">Vert clair</string>
-    <string name="material_color_lime">Citron vert</string>
+    <string name="material_color_lime">Vert citron</string>
     <string name="material_color_yellow">Jaune</string>
     <string name="material_color_amber">Ambre</string>
     <string name="material_color_orange">Orange</string>
@@ -382,7 +378,7 @@ seront uniquement affichées au destinataire du message.</string>
     <string name="scheduled_to_hint">Destinataire...</string>
     <string name="scheduled_message_sent">Envoi du message programmé réussi</string>
     <string name="no_scheduled_messages">Pas de message programmé</string>
-    <string name="no_scheduled_messages_summary">Vous pouvez en créer un avec le bouton \'+\' en dessous !</string>
+    <string name="no_scheduled_messages_summary">Vous pouvez en créer un avec le bouton \'+\' ci-dessous!</string>
     <string name="scheduled_message_in_future">La date ne doit pas être déjà dépassée !</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Cryptage et upload...</string>
@@ -439,7 +435,7 @@ Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Aucun abonnement trouvé!</string>
     <string name="cancelled_subscription_error">On dirait que vous avez annulé votre abonnement.
-Si vous ne renouvellez pas votre abonnement avant, l\'application vous déconnectera dans 2 jours. S\'il s\'agit d\'une erreur, contactez moi par email.</string>
+Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous déconnectera. S\'il s\'agit d\'une erreur, contactez-moi par email.</string>
     <string name="subscription_found">Abonnement trouvé - Ravi de vous revoir !</string>
     <string name="subscription_not_found">Aucun abonnement trouvé, commencez votre essai !</string>
     <string name="checking_for_active_subscriptions">Recherche d\'un abonnement&#8230;</string>
