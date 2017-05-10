@@ -131,7 +131,7 @@
 
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
-                android:value=".service.MessengerChooserTargetService" />
+                android:value=".shared.service.MessengerChooserTargetService" />
         </activity>
 
         <activity android:name=".shared.util.RedirectToMyAccount"
