@@ -116,5 +116,14 @@ public class MediaSaver {
                 Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
             }
         }
+        
+        updateMediaScanner(dst);
+    }
+    
+    private void updateMediaScanner(File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
     }
 }
