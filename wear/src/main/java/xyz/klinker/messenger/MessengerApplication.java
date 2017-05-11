@@ -26,19 +26,27 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler;
+import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
+import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
+import xyz.klinker.messenger.shared.service.FirebaseResetService;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
+
+import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;
+import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_OPERATION;
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
  */
-public class MessengerApplication extends Application {
+public class MessengerApplication extends FirebaseApplication {
 
     /**
      * Enable night mode and set it to auto. It will switch depending on time of day.
@@ -80,5 +88,26 @@ public class MessengerApplication extends Application {
         } catch (Exception e) {
 
         }
+    }
+
+
+    @Override
+    public FirebaseMessageHandler getFirebaseMessageHandler() {
+        return new FirebaseMessageHandler() {
+            @Override
+            public void handleMessage(Application application, String operation, String data) {
+                final Intent handleMessage = new Intent(application, FirebaseHandlerService.class);
+                handleMessage.setAction(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED);
+                handleMessage.putExtra(EXTRA_OPERATION, operation);
+                handleMessage.putExtra(EXTRA_DATA, data);
+                startService(handleMessage);
+            }
+
+            @Override
+            public void handleDelete(Application application) {
+                final Intent handleMessage = new Intent(application, FirebaseResetService.class);
+                startService(handleMessage);
+            }
+        };
     }
 }
