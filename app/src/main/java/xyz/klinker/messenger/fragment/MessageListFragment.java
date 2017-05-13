@@ -742,10 +742,6 @@ public class MessageListFragment extends Fragment implements
         attachLocation = (ImageButton) root.findViewById(R.id.attach_location);
         attachContact = (ImageButton) root.findViewById(R.id.attach_contact);
 
-        if (!FeatureFlags.get(getActivity()).ATTACH_CONTACT) {
-            attachContact.setVisibility(View.GONE);
-        }
-
         attachImage.setOnClickListener(view -> attachImage());
         captureImage.setOnClickListener(view -> captureImage());
         attachGif.setOnClickListener(view -> attachGif());

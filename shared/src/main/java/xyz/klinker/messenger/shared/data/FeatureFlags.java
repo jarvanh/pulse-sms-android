@@ -67,8 +67,6 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean NOUGAT_NOTIFICATIONS;
-    public boolean ATTACH_CONTACT;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -79,8 +77,6 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        NOUGAT_NOTIFICATIONS = getValue(sharedPrefs, FLAG_NOUGAT_NOTIFICATION_HISTORY);
-        ATTACH_CONTACT = getValue(sharedPrefs, FLAG_ATTACH_CONTACT);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -98,12 +94,6 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
-                break;
-            case FLAG_NOUGAT_NOTIFICATION_HISTORY:
-                QUICK_COMPOSE = flag;
-                break;
-            case FLAG_ATTACH_CONTACT:
-                ATTACH_CONTACT = flag;
                 break;
         }
     }

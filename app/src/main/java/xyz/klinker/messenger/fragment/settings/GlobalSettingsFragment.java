@@ -213,7 +213,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                     return true;
                 });
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !FeatureFlags.get(getActivity()).NOUGAT_NOTIFICATIONS) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             ((PreferenceCategory) findPreference(getString(R.string.pref_notification_category)))
                     .removePreference(pref);
         }

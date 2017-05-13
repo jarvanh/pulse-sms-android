@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.3.0"
+        description="May 14th, 2017">
+        <text>Attach contact cards within Pulse! Open up the attachment menu on any conversation and hit the "person" icon to search for a contact to send.</text>
+        <text>For Nougat users, you can now disable the Messaging Style notifications from within settings. Disabling these will make it so the app does not show conversation history within the notification.</text>
+    </version>
+
+    <version
         name="2.2.10"
         description="May 9th, 2017">
         <text>Bug fixes</text>
