@@ -4,15 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
 import xyz.klinker.messenger.shared.util.billing.ProductType;
@@ -31,6 +34,14 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED);
         setContentView(R.layout.activity_account_purchase);
         setUpInitialLayout();
+
+        Settings settings = Settings.get(this);
+        if (settings.useGlobalThemeColor) {
+            findViewById(R.id.initial_layout).setBackgroundColor(settings.globalColorSet.color);
+            findViewById(R.id.purchase_layout).setBackgroundColor(settings.globalColorSet.color);
+            ((TextView)findViewById(R.id.try_it))
+                    .setTextColor(ColorStateList.valueOf(settings.globalColorSet.color));
+        }
 
         new Handler().postDelayed(this::circularRevealIn, 100);
     }

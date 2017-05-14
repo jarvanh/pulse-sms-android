@@ -95,7 +95,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Account account = Account.get(getActivity());
 
-        if ((!account.exists()) && preference != null) {
+        if (true) {//(!account.exists()) && preference != null) {
             preference.setOnPreferenceClickListener(preference1 -> {
                 checkSubscriptions();
                 return true;
