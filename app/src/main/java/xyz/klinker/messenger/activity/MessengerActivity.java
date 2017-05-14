@@ -137,6 +137,8 @@ public class  MessengerActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startActivity(new Intent(this, AccountPurchaseActivity.class));
+
         dataSource = DataSource.getInstance(this);
         dataSource.open();
 

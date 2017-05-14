@@ -512,5 +512,10 @@
     <string name="monthly_purchase">$0.99 every month</string>
     <string name="monthly_purchase_summary">Just want to try? No problem.</string>
     <string name="change_subscription_message">Want to upgrade? Great! After you have made your selection on the next screen, you should go to the Play Store app, and cancel the old subscription manually.</string>
+    <string name="beautiful_powerful_instant">Beautiful, powerful, instant.</string>
+    <string name="optimized_for_all_your_devices">Pulse is optimized for <b>all</b> your devices.
+        Send texts from the web, a desktop computer, your tablet, a watch, and even your TV.</string>
+    <string name="true_imessage_competitor">The first true iMessage competitor for Android.</string>
+    <string name="try_it">Try it now!</string>
 
 </resources>

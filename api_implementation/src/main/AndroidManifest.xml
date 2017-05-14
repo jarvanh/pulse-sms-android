@@ -14,31 +14,32 @@
   ~ limitations under the License.
   -->
 
-<manifest package="xyz.klinker.messenger.api.implementation"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="xyz.klinker.messenger.api.implementation">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
+
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/api_Theme.AppCompat.Translucent" />
 
         <activity
             android:name=".RecreateAccountActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/api_Theme.AppCompat.Translucent" />
 
         <activity
             android:name=".ActivateActivity"
-            android:theme="@style/api_Theme.AppCompat.Activate"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/api_Theme.AppCompat.Activate" />
 
         <service
             android:name=".firebase.MessengerFirebaseMessagingService"
@@ -56,6 +57,7 @@
         </service>
 
         <service android:name=".firebase.ScheduledTokenRefreshService" />
+
     </application>
 
 </manifest>
