@@ -521,7 +521,7 @@
     <string name="seven_days_free">7 days free!</string>
     <string name="competition_cant_beat">The competition can\'t touch our prices, speed, or service -
         <b>take 7 days</b> to find out for yourself!</string>
-    <string name="select_a_trial_below">Select a trial below to get started.</string>
+    <string name="select_a_trial_below">Select a trial option below to get started.</string>
     <string name="charged_after_trial">Charged after the trial:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmonth</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 month</string>

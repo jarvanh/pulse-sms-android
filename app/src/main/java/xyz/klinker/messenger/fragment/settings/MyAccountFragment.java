@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.AccountPurchaseActivity;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.OnBoardingPayActivity;
@@ -59,10 +60,12 @@ import xyz.klinker.messenger.view.SelectPurchaseDialog;
 public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     public static final int ONBOARDING_REQUEST = 54320;
+    public static final int SETUP_REQUEST = 54321;
+    public static final int PURCHASE_REQUEST = 54322;
+
     public static final int RESPONSE_START_TRIAL = 101;
     public static final int RESPONSE_SKIP_TRIAL_FOR_NOW = 102;
 
-    private static final int SETUP_REQUEST = 54321;
 
     private BillingHelper billing;
 
@@ -79,10 +82,6 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             initRemoveAccountPreference();
             initResyncAccountPreference();
             initFirebaseRefreshPreference();
-        } else {
-            startActivityForResult(
-                    new Intent(getActivity(), OnBoardingPayActivity.class),
-                    ONBOARDING_REQUEST);
         }
     }
 
@@ -96,36 +95,13 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
         Account account = Account.get(getActivity());
 
-        if ((!account.exists()) && preference != null) {
+        if (true) {//(!account.exists()) && preference != null) {
             preference.setOnPreferenceClickListener(preference1 -> {
-                final ProgressDialog dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
-                dialog.setCancelable(false);
-                dialog.setIndeterminate(true);
-                dialog.show();
-
-                new Thread(() -> {
-                    final boolean hasSubs = billing.hasPurchasedProduct();
-                    dialog.dismiss();
-
-                    getActivity().runOnUiThread(() -> {
-                        if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            startLoginActivity();
-                        } else {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            pickSubscription();
-                        }
-                    });
-                }).start();
-
+                checkSubscriptions();
                 return true;
             });
 
+            checkSubscriptions();
             removeAccountOptions();
             return false;
         } else if (preference != null) {
@@ -135,6 +111,30 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         } else {
             return true;
         }
+    }
+
+    private void checkSubscriptions() {
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(true);
+        dialog.show();
+
+        new Thread(() -> {
+            final boolean hasSubs = billing.hasPurchasedProduct();
+            dialog.dismiss();
+
+            getActivity().runOnUiThread(() -> {
+                if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
+                    try {
+                        Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) { }
+                    startLoginActivity();
+                } else {
+                    pickSubscription();
+                }
+            });
+        }).start();
     }
 
     private void removeAccountOptions() {
@@ -304,7 +304,18 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         Settings.get(getActivity()).forceUpdate();
-        if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
+        if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
+            String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
+            if (productId.equals(ProductAvailable.createLifetime().getProductId())) {
+                purchaseProduct(ProductAvailable.createLifetime());
+            } else if (productId.equals(ProductAvailable.createYearly().getProductId())) {
+                purchaseProduct(ProductAvailable.createYearly());
+            } else if (productId.equals(ProductAvailable.createThreeMonth().getProductId())) {
+                purchaseProduct(ProductAvailable.createThreeMonth());
+            } else if (productId.equals(ProductAvailable.createMonthly().getProductId())) {
+                purchaseProduct(ProductAvailable.createMonthly());
+            }
+        } else if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
                 if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
                     getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
@@ -420,8 +431,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     }
 
     private void pickSubscription() {
-        new SelectPurchaseDialog(getActivity())
-                .setPurchaseSelectedListener(product -> purchaseProduct(product)).show();
+        startActivityForResult(new Intent(getActivity(), AccountPurchaseActivity.class), PURCHASE_REQUEST);
     }
 
     private void purchaseProduct(final ProductAvailable product) {

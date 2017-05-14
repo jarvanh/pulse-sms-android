@@ -2,6 +2,8 @@ package xyz.klinker.messenger.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +13,11 @@ import android.view.ViewAnimationUtils;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
 
 public class AccountPurchaseActivity extends AppCompatActivity {
+
+    public static final String PRODUCT_ID_EXTRA = "product_id";
 
     private boolean isInitial = true;
     private boolean revealedPurchaseOptions = false;
@@ -21,6 +26,7 @@ public class AccountPurchaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setResult(Activity.RESULT_CANCELED);
         setContentView(R.layout.activity_account_purchase);
         setUpInitialLayout();
 
@@ -56,6 +62,19 @@ public class AccountPurchaseActivity extends AppCompatActivity {
 
             revealedPurchaseOptions = true;
         }
+
+        monthly.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createMonthly()));
+        threeMonth.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createThreeMonth()));
+        yearly.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createYearly()));
+        lifetime.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createLifetime()));
+    }
+
+    private void finishWithPurchaseResult(ProductAvailable product) {
+        Intent result = new Intent();
+        result.putExtra(PRODUCT_ID_EXTRA, product.getProductId());
+        setResult(Activity.RESULT_OK, result);
+
+        finish();
     }
 
     private void circularRevealIn() {
