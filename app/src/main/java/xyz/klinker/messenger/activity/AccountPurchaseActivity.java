@@ -15,6 +15,7 @@ import xyz.klinker.messenger.shared.util.DensityUtil;
 public class AccountPurchaseActivity extends AppCompatActivity {
 
     private boolean isInitial = true;
+    private boolean revealedPurchaseOptions = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,20 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         slidePurchaseOptionsIn();
 
         // set up purchasing views here
+        View monthly = findViewById(R.id.monthly);
+        View threeMonth = findViewById(R.id.three_month);
+        View yearly = findViewById(R.id.yearly);
+        View lifetime = findViewById(R.id.lifetime);
+
+        if (!revealedPurchaseOptions) {
+            long startTime = 300;
+            quickViewReveal(yearly, startTime);
+            quickViewReveal(threeMonth, startTime + 75);
+            quickViewReveal(monthly, startTime + 150);
+            quickViewReveal(lifetime, startTime + 225);
+
+            revealedPurchaseOptions = true;
+        }
     }
 
     private void circularRevealIn() {
