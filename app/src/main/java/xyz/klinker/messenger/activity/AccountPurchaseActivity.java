@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
@@ -30,6 +31,8 @@ public class AccountPurchaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AnalyticsHelper.accountTutorialStarted(this);
 
         setResult(Activity.RESULT_CANCELED);
         setContentView(R.layout.activity_account_purchase);
@@ -59,6 +62,7 @@ public class AccountPurchaseActivity extends AppCompatActivity {
 
     protected void tryIt() {
         slidePurchaseOptionsIn();
+        AnalyticsHelper.accountTutorialFinished(this);
 
         // set up purchasing views here
         View monthly = findViewById(R.id.monthly);
@@ -91,6 +95,7 @@ public class AccountPurchaseActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show();
         }
 
+        AnalyticsHelper.accountSelectedPurchase(this);
         finish();
     }
 
