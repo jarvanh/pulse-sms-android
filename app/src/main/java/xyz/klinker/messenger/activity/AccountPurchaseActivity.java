@@ -10,10 +10,12 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
+import xyz.klinker.messenger.shared.util.billing.ProductType;
 
 public class AccountPurchaseActivity extends AppCompatActivity {
 
@@ -73,6 +75,10 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         Intent result = new Intent();
         result.putExtra(PRODUCT_ID_EXTRA, product.getProductId());
         setResult(Activity.RESULT_OK, result);
+
+        if (product.getType().equals(ProductType.SUBSCRIPTION)) {
+            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show();
+        }
 
         finish();
     }
