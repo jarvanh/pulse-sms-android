@@ -32,7 +32,8 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context) {
-        if (!Account.get(context).primary || Build.VERSION.SDK_INT >= ContentObserverJob.API_LEVEL) {
+        if (!Account.get(context).primary || Build.VERSION.SDK_INT >= ContentObserverJob.API_LEVEL ||
+                ContentObserverService.nougatSamsung()) {
             return;
         }
 

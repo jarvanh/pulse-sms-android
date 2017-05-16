@@ -96,7 +96,7 @@ public class ContentObserverService extends Service {
         }
     }
 
-    private boolean nougatSamsung() {
+    public static boolean nougatSamsung() {
         return Build.MANUFACTURER.toLowerCase().contains("samsung") && Build.VERSION.SDK_INT == Build.VERSION_CODES.N;
     }
 
@@ -112,12 +112,6 @@ public class ContentObserverService extends Service {
         @Override
         public void onChange(boolean selfChange) {
             new Thread(() -> {
-                try {
-                    Thread.sleep(10000);
-                } catch (Exception e) {
-
-                }
-
                 processLastMessage(context);
             }).start();
         }

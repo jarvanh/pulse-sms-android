@@ -934,8 +934,18 @@ public class DataSource {
     
     public int getUnreadConversationsCount() {
         Cursor cursor = getUnreadConversations();
-        int count = cursor.getCount();
-        cursor.close();
+
+        int count = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            int muteIndex = cursor.getColumnIndex(Conversation.COLUMN_MUTE);
+
+            do {
+                boolean muted = cursor.getInt(muteIndex) == 1;
+                count += muted ? 0 : 1;
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
         
         return count;
     }
