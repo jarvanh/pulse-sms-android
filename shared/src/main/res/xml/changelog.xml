@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.3.1"
+        description="May 18th, 2017">
+        <text>Improvements and fixes for scheduled messages</text>
+    </version>
+
+    <version
         name="2.3.0"
         description="May 14th, 2017">
         <text>Attach contact cards within Pulse! Open up the attachment menu on any conversation and hit the "person" icon to search for a contact to send.</text>

@@ -23,6 +23,7 @@ import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
 import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
 import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
 import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.TimeUtils;
@@ -72,6 +73,7 @@ public class UpdateUtils {
 
     private void runEveryUpdate() {
         CleanupOldMessagesJob.scheduleNextRun(context);
+        ScheduledMessageJob.scheduleNextRun(context);
         ContentObserverRunCheckJob.scheduleNextRun(context);
         ContactSyncJob.scheduleNextRun(context);
         SubscriptionExpirationCheckJob.scheduleNextRun(context);
