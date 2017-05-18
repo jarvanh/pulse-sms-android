@@ -35,20 +35,27 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:navigationIcon="@drawable/ic_back" />
 
-        <com.android.ex.chips.RecipientEditTextView
+        <xyz.klinker.messenger.shared.view.MaxHeightScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/enter_contact_name"
-            android:textColorHint="@color/toolbarEditTextHint"
-            android:textColor="@android:color/white"
             android:layout_marginStart="72dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
             android:layout_gravity="bottom|start"
-            android:gravity="start"
-            android:id="@+id/contact_entry" />
+            app:max_height="200dp">
+
+            <com.android.ex.chips.RecipientEditTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/enter_contact_name"
+                android:textColorHint="@color/toolbarEditTextHint"
+                android:textColor="@android:color/white"
+                android:gravity="start"
+                android:id="@+id/contact_entry" />
+
+        </xyz.klinker.messenger.shared.view.MaxHeightScrollView>
 
     </FrameLayout>
 

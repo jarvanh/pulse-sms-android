@@ -208,14 +208,14 @@ public class ImageUtils {
      * application memory.
      */
     public static Uri scaleToSend(Context context, Uri uri) throws IOException {
-        InputStream input = context.getContentResolver().openInputStream(uri);
-
-        byte[] byteArr = new byte[0];
-        byte[] buffer = new byte[1024];
-        int arraySize = 0;
-        int len;
-
         try {
+            InputStream input = context.getContentResolver().openInputStream(uri);
+
+            byte[] byteArr = new byte[0];
+            byte[] buffer = new byte[1024];
+            int arraySize = 0;
+            int len;
+
             // convert the Uri to a byte array that we can manipulate
             while ((len = input.read(buffer)) > -1) {
                 if (len != 0) {

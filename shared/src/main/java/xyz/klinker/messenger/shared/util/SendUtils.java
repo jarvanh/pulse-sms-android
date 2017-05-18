@@ -18,7 +18,10 @@ package xyz.klinker.messenger.shared.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
@@ -27,6 +30,8 @@ import com.klinker.android.send_message.Transaction;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -78,6 +83,8 @@ public class SendUtils {
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .giffgaffDeliveryReports ? "*0#" : "");
+        settings.setSplit(shouldSplitMessages(context));
+
 
         if (mmsSettings.overrideSystemAPN) {
             settings.setUseSystemSending(false);
@@ -141,4 +148,20 @@ public class SendUtils {
         return byteBuffer.toByteArray();
     }
 
+    @VisibleForTesting
+    public boolean shouldSplitMessages(Context context) {
+        List<String> carrierDoesntAutoSplit = Arrays.asList("u.s. cellular");
+
+        try {
+            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            String carrierName = manager.getNetworkOperatorName();
+            if (carrierDoesntAutoSplit.contains(carrierName.toLowerCase())) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

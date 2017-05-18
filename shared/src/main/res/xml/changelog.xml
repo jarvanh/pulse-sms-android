@@ -17,6 +17,54 @@
 <changelog>
 
     <version
+        name="2.3.0"
+        description="May 14th, 2017">
+        <text>Attach contact cards within Pulse! Open up the attachment menu on any conversation and hit the "person" icon to search for a contact to send.</text>
+        <text>For Nougat users, you can now disable the Messaging Style notifications from within settings. Disabling these will make it so the app does not show conversation history within the notification.</text>
+    </version>
+
+    <version
+        name="2.2.10"
+        description="May 9th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
+        name="2.2.9"
+        description="May 5th, 2017">
+        <text>Fix a battery drain issue on Samsung devices</text>
+    </version>
+
+    <version
+        name="2.2.8"
+        description="May 2nd, 2017">
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
+        name="2.2.7"
+        description="April 27th, 2017">
+        <text>Settings UI overhaul</text>
+        <text>Improvements to the system level private notification support</text>
+    </version>
+
+    <version
+        name="2.2.6"
+        description="April 25th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
+        name="2.2.5"
+        description="April 22nd, 2017">
+        <text>Improvements to marking messages as read</text>
+        <text>Some fixes for notifications re-appearing</text>
+        <text>Some account related improvements</text>
+        <text>Various other reported bug fixes</text>
+    </version>
+  
+    <version
         name="2.2.4"
         description="April 17th, 2017">
         <text>Bug fixes and performance improvements</text>

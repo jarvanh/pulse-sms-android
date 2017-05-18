@@ -49,6 +49,8 @@ public class FeatureFlags {
     private static final String FLAG_NOTIFICATION_ACTIONS = "flag_notification_actions";
     private static final String FLAG_HEADS_UP = "flag_heads_up";
     private static final String FLAG_MESSAGE_REFRESH_ON_START = "flag_refresh_messages_on_start";
+    private static final String FLAG_NOUGAT_NOTIFICATION_HISTORY = "flag_nougat_notifications";
+    private static final String FLAG_ATTACH_CONTACT = "flag_attach_contact";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {

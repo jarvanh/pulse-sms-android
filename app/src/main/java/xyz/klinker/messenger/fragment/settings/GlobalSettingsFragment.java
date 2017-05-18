@@ -18,12 +18,19 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.widget.ListView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,13 +42,14 @@ import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
 /**
  * Fragment for modifying app settings_global.
  */
-public class GlobalSettingsFragment extends PreferenceFragment {
+public class GlobalSettingsFragment extends MaterialPreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,7 @@ public class GlobalSettingsFragment extends PreferenceFragment {
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
+        initNotificationHistory();
     }
 
     @Override
@@ -193,6 +202,21 @@ public class GlobalSettingsFragment extends PreferenceFragment {
                             strip);
                     return true;
                 });
+    }
+
+    private void initNotificationHistory() {
+        Preference pref = findPreference(getString(R.string.pref_history_in_notifications));
+        pref.setOnPreferenceChangeListener((preference, o) -> {
+                    boolean history = (boolean) o;
+                    new ApiUtils().updateShowHistoryInNotification(Account.get(getActivity()).accountId,
+                            history);
+                    return true;
+                });
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            ((PreferenceCategory) findPreference(getString(R.string.pref_notification_category)))
+                    .removePreference(pref);
+        }
     }
 
     private void initSoundEffects() {

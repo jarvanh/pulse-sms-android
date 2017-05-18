@@ -80,13 +80,13 @@ public class MessengerChooserTargetService extends ChooserTargetService {
         color = ImageUtils.clipToCircle(color);
 
         final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
-        final float targetRanking = cursor.getCount() == 1 ? 1.0f :
-                ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
+//        final float targetRanking = cursor.getCount() == 1 ? 1.0f :
+//                ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
         final Bundle targetExtras = new Bundle();
         targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
                 cursor.getColumnIndex(Conversation.COLUMN_ID)));
 
-        return new ChooserTarget(targetName, targetIcon, targetRanking,
+        return new ChooserTarget(targetName, targetIcon, 1.0f,
                 componentName, targetExtras);
 
     }

@@ -106,6 +106,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         String operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION);
         String data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA);
+        Log.v(TAG, "operation: " + operation + ", contents: " + data);
 
         JSONObject json;
         try {

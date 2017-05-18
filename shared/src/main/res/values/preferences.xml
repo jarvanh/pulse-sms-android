@@ -16,6 +16,8 @@
 
 <resources>
 
+    <string name="pref_category_account_information" translatable="false">account_info_category</string>
+    <string name="pref_category_account_actions" translatable="false">account_actions_category</string>
     <string name="pref_first_start" translatable="false">first_start</string>
     <string name="pref_my_account_setup" translatable="false">my_account_setup</string>
     <string name="pref_delete_account" translatable="false">delete_account</string>
@@ -75,6 +77,7 @@
     <string name="pref_wake_screen" translatable="false">wake_screen</string>
     <string name="pref_heads_up" translatable="false">heads_up</string>
     <string name="pref_strip_unicode" translatable="false">strip_unicode</string>
+    <string name="pref_history_in_notifications" translatable="false">history_in_notifications</string>
     <string name="pref_giffgaff" translatable="false">giffgaff_delivery</string>
     <string name="pref_notification_actions" translatable="false">notification_actions</string>
 

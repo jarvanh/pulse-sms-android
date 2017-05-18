@@ -30,6 +30,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
 import xyz.klinker.messenger.shared.service.NotificationService;
@@ -124,6 +125,15 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         if (shouldSaveMessages(source, message)) {
             long conversationId = source
                     .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
+
+            Conversation conversation = source.getConversation(conversationId);
+            if (conversation.mute) {
+                source.seenConversation(conversationId);
+
+                // don't run the notification service
+                return -1;
+            }
+
             source.close();
 
             ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId);
@@ -131,6 +141,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
             return conversationId;
         } else {
+            source.close();
             return -1;
         }
     }

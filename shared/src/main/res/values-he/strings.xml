@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">(הודעות טקסט/ הודעות בטבלאט)Pulse</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">הודעה חדשה</string>
+    <string name="shortcut_compose_long">התחל שיחה חדשה!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">רשימת שיחות</string>
+    <string name="menu_archived_conversations">שיחות בארכיון</string>
+    <string name="menu_schedule">הודעות מתוזמנות</string>
+    <string name="menu_mute_contacts">רשימה שחורה</string>
+    <string name="menu_invite">הזמין חברים</string>
+    <string name="menu_feature_settings">הגדרות מתקדמות</string>
+    <string name="menu_settings">הגדרות כלליות</string>
+    <string name="menu_mms_configuration">תצורת MMS</string>
+    <string name="menu_account">חשבון שלי</string>
+    <string name="menu_device_texting">טקסט מכל מכשיר</string>
+    <string name="menu_help">עזרה ומשוב</string>
+    <string name="menu_about">אודות</string>
+    <string name="menu_search">חיפוש</string>
+    <string name="menu_mobile_only">נייד בלבד</string>
+    <string name="menu_snooze">השהה הודעות</string>
+    <string name="menu_call">התקשר/י לאיש קשר</string>
+    <string name="menu_view_contact">צפה באיש קשר</string>
+    <string name="menu_view_contacts">הצג אנשי קשר</string>
+    <string name="menu_view_media">הצג מדיה</string>
+    <string name="menu_delete_conversation">מחק שיחה</string>
+    <string name="menu_archive_conversation">לשלוח לארכיון</string>
+    <string name="menu_move_to_inbox">עבור אל תיבת הדואר הנכנס</string>
+    <string name="menu_conversation_information">פרטי שיחה</string>
+    <string name="menu_conversation_blacklist">הוסף לרשימה השחורה</string>
+    <string name="menu_conversation_schedule">שלח/י הודעה מאוחר יותר</string>
+    <string name="menu_contact_settings">הגדרות איש קשר</string>
+    <string name="menu_group_settings">הגדרות קבוצה</string>
+    <string name="menu_snooze_off">כבוי</string>
+    <string name="menu_snooze_1">שעה</string>
+    <string name="menu_snooze_2">2 שעות</string>
+    <string name="menu_snooze_4">4 שעות</string>
+    <string name="menu_snooze_8">8 שעות</string>
+    <string name="menu_snooze_24">24 שעות</string>
+    <string name="menu_snooze_72">72 שעות</string>
+    <string name="menu_snooze_custom">בחר/י זמן</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">אין הודעות</string>
+    <string name="no_messages_summary">התחל/י שיחה חדשה או פשוט תהנה/י מהיום שלך!</string>
+    <string name="close">סגור/י</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">הוצמד</string>
+    <string name="today">היום</string>
+    <string name="yesterday">אתמול</string>
+    <string name="last_week">השבוע</string>
+    <string name="last_month">החודש</string>
+    <string name="older">ישן</string>
+    <string name="mark_section_as_read">סמן הכל כנקרא</string>
+    <!-- Search Screen -->
+    <!-- Invite Friends Screen -->
+    <!-- Message List Screen -->
+    <!-- Compose Screen -->
+    <!-- Onboarding Screen -->
+    <!-- Notifications -->
+    <!-- About, Help and Feedback and Settings -->
+    <!-- MMS Configuration Settings -->
+    <!-- Advanced Features Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Other -->
+    <!-- Times -->
+    <!-- Purchase/Subscriptions -->
+</resources>

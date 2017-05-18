@@ -16,32 +16,42 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="@string/pref_help_faqs"
-        android:title="@string/faqs" />
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/troubleshooting">
 
-    <Preference
-        android:key="@string/pref_help_features"
-        android:title="@string/features" />
+        <Preference
+            android:key="@string/pref_help_faqs"
+            android:title="@string/faqs" />
 
-    <Preference
-        android:key="@string/pref_help_issues"
-        android:title="@string/issues"
-        android:summary="@string/issues_summary" />
+        <Preference
+            android:key="@string/pref_help_features"
+            android:title="@string/features" />
 
-    <Preference
-        android:key="@string/pref_help_google_plus"
-        android:title="@string/google_plus"
-        android:summary="@string/google_plus_summary" />
+        <Preference
+            android:key="@string/pref_help_issues"
+            android:title="@string/issues"
+            android:summary="@string/issues_summary" />
 
-    <Preference
-        android:key="@string/pref_help_email"
-        android:title="@string/email"
-        android:summary="@string/email_summary" />
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
-    <Preference
-        android:key="@string/pref_help_twitter"
-        android:title="@string/twitter"
-        android:summary="@string/twitter_summary" />
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/get_in_touch" >
+
+        <Preference
+            android:key="@string/pref_help_google_plus"
+            android:title="@string/google_plus"
+            android:summary="@string/google_plus_summary" />
+
+        <Preference
+            android:key="@string/pref_help_email"
+            android:title="@string/email"
+            android:summary="@string/email_summary" />
+
+        <Preference
+            android:key="@string/pref_help_twitter"
+            android:title="@string/twitter"
+            android:summary="@string/twitter_summary" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
 </PreferenceScreen>

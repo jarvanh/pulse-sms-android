@@ -54,37 +54,31 @@ public class AttachImageView extends RecyclerView {
         ColorUtils.changeRecyclerOverscrollColors(this, color);
         final Handler handler = new Handler();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String[] select = new String[] {
-                        BaseColumns._ID, MediaStore.Files.FileColumns.DATA,
-                        MediaStore.Files.FileColumns.MEDIA_TYPE, MediaStore.Files.FileColumns.MIME_TYPE
-                };
+        new Thread(() -> {
+            String[] select = new String[] {
+                    BaseColumns._ID, MediaStore.Files.FileColumns.DATA,
+                    MediaStore.Files.FileColumns.MEDIA_TYPE, MediaStore.Files.FileColumns.MIME_TYPE
+            };
 
-                String[] where = new String[] {
-                        "" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
-                        "" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
-                };
+            String[] where = new String[] {
+                    "" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
+                    "" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+            };
 
-                ContentResolver cr = getContext().getContentResolver();
-                images = Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
-                        select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
-                                MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
-                                MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
-                        where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC");
+            ContentResolver cr = getContext().getContentResolver();
+            images = Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
+                    select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
+                            MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
+                            MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
+                    where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC");
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setLayoutManager(new GridLayoutManager(getContext(),
-                                getResources().getInteger(R.integer.images_column_count)));
-                        setAdapter(new AttachImageListAdapter(images, callback, color));
+            handler.post(() -> {
+                setLayoutManager(new GridLayoutManager(getContext(),
+                        getResources().getInteger(R.integer.images_column_count)));
+                setAdapter(new AttachImageListAdapter(images, callback, color));
 
-                        Log.v("adapter", "count: " + getAdapter().getItemCount());
-                    }
-                });
-            }
+                Log.v("adapter", "count: " + getAdapter().getItemCount());
+            });
         }).start();
     }
 

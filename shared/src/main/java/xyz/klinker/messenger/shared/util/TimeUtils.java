@@ -175,7 +175,11 @@ public class TimeUtils {
                     formatTime(context, date);
         }
 
-        return formatted;
+        if (formatted != null) {
+            return formatted;
+        } else {
+            return "";
+        }
     }
 
     static String formatTime(Context context, Date date) {

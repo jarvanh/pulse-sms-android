@@ -33,12 +33,7 @@ public class UnreadBadger {
     }
 
     public void writeCount(final int newCount) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                shortcutBadger(newCount);
-            }
-        }).start();
+        new Thread(() -> shortcutBadger(newCount)).start();
     }
 
     public void clearCount() {

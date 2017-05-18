@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Innlogging</string>
+    <string name="api_signup">Registrer deg</string>
+    <string name="api_signup_failed">Kan ikke registrere deg på denne enheten. Du må registrere en hovedenhet som har et telefonnummer først!</string>
+    <string name="api_skip_signup">Eller, hvis du bare ønsker å bruke appen på denne enheten og ikke nettverkfunksjoner, som å sende meldinger fra PC eller nettbrett,  så kan du hoppe over dette steget:</string>
+    <string name="api_skip">Hopp over</string>
+    <string name="api_email">E-post adresse</string>
+    <string name="api_password">Passord</string>
+    <string name="api_forgot_password">Glemt passord FAQ</string>
+    <string name="api_password_confirmation">Passord verifisering</string>
+    <string name="api_name">Navn</string>
+    <string name="api_phone_number">Telefon Nummer</string>
+    <string name="api_connecting">Kobler til server ...</string>
+    <string name="api_error">En feil oppstod under operasjonen</string>
+    <string name="api_device_error">En feil oppstod når enheten ble prøvd lagt til. La oss prøve igjen!</string>
+    <string name="api_add_second_primary_device">Ser ut som du allerede har en hovedenhet
+(%1$s) for din konto og bare en er tillatt! Vil du fjerne nåværende hovedenhet og sette denne som den nye hovedenheten?</string>
+    <string name="api_yes">Ja</string>
+    <string name="api_no">Nei</string>
+    <string name="api_no_email">Ingen e-post adresse lagt inn</string>
+    <string name="api_email_invalid">Ugyldig e-post adresse</string>
+    <string name="api_no_password">Ingen passord lagt inn</string>
+    <string name="api_no_password_confirmation">Ingen passord verifisering lagt inn</string>
+    <string name="api_password_mismatch">Passordene stemmer ikke overens</string>
+    <string name="api_no_name">Ingen navn lagt inn</string>
+    <string name="api_no_phone_number">Ingen telefonnummer lagt inn</string>
+    <string name="api_login_error">En feil oppstod under innlogging, feil e-post eller passord?</string>
+    <string name="api_activate_summary">Logg inn for å få alle meldingene dine på denne enheten!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">Drar mot</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">på en mobil eller PC</string>
+    <string name="api_activate_2_1">På websiden</string>
+    <string name="api_activate_2_2">skriv inn koden til høyre</string>
+    <string name="api_activate_2_3">for å koble til kontoen din!</string>
+    <string name="api_confirm_password">Vennligst bekreft ditt passord:</string>
+    <string name="api_wrong_password">Bekreftelsen feilet. Er ditt passord korrekt?</string>
+    <string name="api_email_taken">En feil oppstod under innloggingen. Har du allerede en konto med denne e-post adressen?</string>
+    <string name="api_confirm">Bekreft</string>
+    <string name="api_continue">Fortsett</string>
+</resources>

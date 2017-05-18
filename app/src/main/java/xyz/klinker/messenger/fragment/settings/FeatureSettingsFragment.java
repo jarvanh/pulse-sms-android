@@ -1,21 +1,25 @@
 package xyz.klinker.messenger.fragment.settings;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 
-public class FeatureSettingsFragment extends PreferenceFragment {
+public class FeatureSettingsFragment extends MaterialPreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

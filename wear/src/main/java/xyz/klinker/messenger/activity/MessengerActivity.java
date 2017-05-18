@@ -114,6 +114,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
         long convoId = getIntent().getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
 
         if (convoId != -1L) {
+            ConversationListUpdatedReceiver.sendBroadcast(this, convoId, null, true);
             MessageListActivity.startActivity(this, convoId);
         }
     }

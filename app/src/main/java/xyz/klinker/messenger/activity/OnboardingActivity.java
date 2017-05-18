@@ -8,12 +8,15 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 
 public class OnboardingActivity extends AppIntro {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AnalyticsHelper.tutorialStarted(this);
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.onboarding_title_1), getString(R.string.onboarding_content_1),
@@ -30,7 +33,6 @@ public class OnboardingActivity extends AppIntro {
                 R.drawable.ic_onboarding_person,
                 getResources().getColor(R.color.materialLightGreen)));
 
-
         final Button done = (Button) findViewById(R.id.done);
         final Button skip = (Button) findViewById(R.id.skip);
 
@@ -44,11 +46,16 @@ public class OnboardingActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         finish();
+
+        AnalyticsHelper.tutorialFinished(this);
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         finish();
+
+        AnalyticsHelper.tutorialSkipped(this);
+        AnalyticsHelper.tutorialFinished(this);
     }
 }

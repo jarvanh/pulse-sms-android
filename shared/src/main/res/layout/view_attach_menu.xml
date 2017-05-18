@@ -88,6 +88,17 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"
+            android:tint="@android:color/white"
+            android:id="@+id/attach_contact"
+            android:contentDescription="@string/attach_contact"
+            android:src="@drawable/ic_contacts"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
     </LinearLayout>
 
 </LinearLayout>

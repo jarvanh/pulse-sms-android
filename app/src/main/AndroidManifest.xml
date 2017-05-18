@@ -43,37 +43,65 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
-    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
-    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
-    <uses-feature android:name="android.hardware.location" android:required="false" />
-    <uses-feature android:name="android.hardware.location.network" android:required="false" />
-    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
-    <uses-feature android:name="android.software.leanback" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-    <uses-feature android:name="android.software.app_widget" android:required="false"/>
-    <uses-feature android:name="android.hardware.screen.portrait" android:required="false"/>
-    <uses-feature android:name="android.hardware.screen.landscape" android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.app_widget"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.landscape"
+        android:required="false" />
 
     <application
-        tools:replace="android:allowBackup"
         android:name=".MessengerApplication"
         android:allowBackup="false"
         android:icon="@drawable/launcher_icon"
         android:banner="@drawable/ic_banner"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:largeHeap="true"
         android:hardwareAccelerated="true"
-        android:theme="@style/PulseTheme">
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/PulseTheme"
+        tools:replace="android:allowBackup">
+
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
 
         <activity
             android:name=".activity.MessengerActivity"
-            android:theme="@style/PulseTheme.MessengerActivity"
+            android:configChanges="keyboardHidden"
             android:launchMode="singleTop"
-            android:configChanges="keyboardHidden">
+            android:theme="@style/PulseTheme.MessengerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_MESSAGING" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
@@ -81,7 +109,7 @@
 
             <meta-data
                 android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
+                android:resource="@xml/shortcuts" />
 
         </activity>
 
@@ -117,6 +145,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="text/vcard" />
                 <data android:mimeType="text/x-vcard" />
@@ -127,25 +156,35 @@
 
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
-                android:value=".service.MessengerChooserTargetService" />
+                android:value=".shared.service.MessengerChooserTargetService" />
         </activity>
 
-        <activity android:name=".shared.util.RedirectToMyAccount"
+        <activity
+            android:name=".activity.AccountPurchaseActivity"
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".shared.util.RedirectToMyAccount"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".activity.OnboardingActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.OnboardingActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppIntro" />
-        <activity android:name=".activity.OnBoardingPayActivity"
+        <activity
+            android:name=".activity.OnBoardingPayActivity"
             android:theme="@style/AppIntro" />
-        <activity android:name=".activity.InitialLoadActivity"
+        <activity
+            android:name=".activity.InitialLoadActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />
         <activity
             android:name=".activity.InitialLoadTvActivity"
-            android:theme="@style/PulseTheme.NoActionBar"/>
+            android:theme="@style/PulseTheme.NoActionBar" />
         <activity
             android:name=".activity.MediaGridActivity"
             android:theme="@style/PulseTheme.NoColors" />
@@ -154,8 +193,8 @@
             android:theme="@style/PulseTheme.NoColors" />
         <activity
             android:name=".activity.SettingsActivity"
-            android:theme="@style/PulseTheme.NoColors"
-            android:label="@string/menu_settings" />
+            android:label="@string/menu_settings"
+            android:theme="@style/PulseTheme.NoColors" />
         <activity
             android:name=".activity.ImageViewerActivity"
             android:theme="@style/PulseTheme.NoActionBar.Translucent" />
@@ -169,11 +208,12 @@
             android:name="xyz.klinker.giphy.GiphyActivity"
             android:theme="@style/PulseTheme.NoActionBar"
             tools:replace="android:theme" />
-        <activity android:name=".activity.NotificationReplyActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
-            android:windowSoftInputMode="adjustPan|stateAlwaysVisible"
+        <activity
+            android:name=".activity.NotificationReplyActivity"
             android:excludeFromRecents="true"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" />
         <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
 
         <!-- Widget -->
@@ -193,12 +233,25 @@
 
 
         <!-- Samsung Multi-window Support -->
-        <uses-library android:required="false" android:name="com.sec.android.app.multiwindow" />
-        <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />
-        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/multiwindow_defaultsize_w" />
-        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/multiwindow_defaultsize_h" />
-        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/multiwindow_minimumsize_w" />
-        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/multiwindow_minimumsize_h" />
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.sec.android.support.multiwindow"
+            android:value="true" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
+            android:resource="@dimen/multiwindow_defaultsize_w" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
+            android:resource="@dimen/multiwindow_defaultsize_h" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
+            android:resource="@dimen/multiwindow_minimumsize_w" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
+            android:resource="@dimen/multiwindow_minimumsize_h" />
 
     </application>
 

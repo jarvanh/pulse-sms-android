@@ -42,7 +42,7 @@ public class SignoutJob extends BackgroundJob {
             Log.v(TAG, "forcing signout due to expired account!");
             final String accountId = account.accountId;
 
-            account.clearAccount();
+            //account.clearAccount();
             //new ApiUtils().deleteAccount(accountId);
         } else {
             Log.v(TAG, "account not expired, scheduling the check again.");

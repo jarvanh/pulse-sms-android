@@ -329,6 +329,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="notification_actions_summary">Maksymalnie trzy akcje mogą być aktywne na powiadomieniach</string>
     <string name="mms_download_directory">Miejsce pobierania załączników​</string>
     <string name="refresh_firebase">Odśwież powiadomienia push</string>
+    <string name="refresh_firebase_summary">Wiadomości nie docierają na to urządzenie? Spróbuj ponownie po użyciu tej opcji.</string>
+    <string name="refreshing_notifications">Odświeżanie tokena powiadomień...</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="use_group_mms">Grupowe wiadomości MMS</string>
@@ -419,6 +421,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="on">Włączony</string>
     <string name="rate_it">Oceń aplikacje!</string>
     <string name="love_pulse_question">Lubisz Pulse?</string>
+    <string name="give_a_rating">Rozważ ocenienie aplikacji lub podziel się nią ze znajomymi!/n/n
+Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
+    <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
     <!-- Times -->
     <string name="one_second">1 sekunda</string>
     <string name="three_seconds">Trzy sekundy</string>

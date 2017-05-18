@@ -20,5 +20,9 @@
     <declare-styleable name="color_picker_preference">
         <attr name="display_normalize" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="max_height_scroll_view">
+        <attr name="max_height" format="dimension" />
+    </declare-styleable>
     
 </resources>

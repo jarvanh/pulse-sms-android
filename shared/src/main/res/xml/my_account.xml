@@ -16,34 +16,46 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="@string/pref_my_account_setup"
-        android:title="@string/setup_my_account"
-        android:summary="@string/setup_my_account_summary" />
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/account_information"
+        android:key="@string/pref_category_account_information">
 
-    <Preference
-        android:key="@string/pref_subscriber_status"
-        android:title="@string/lifetime_subscriber" />
+        <Preference
+            android:key="@string/pref_my_account_setup"
+            android:title="@string/setup_my_account"
+            android:summary="@string/setup_my_account_summary" />
 
-    <Preference android:key="@string/pref_message_count" />
+        <Preference
+            android:key="@string/pref_subscriber_status"
+            android:title="@string/lifetime_subscriber" />
 
-    <Preference
-        android:key="@string/pref_about_device_id"
-        android:title="@string/device_id" />
+        <Preference android:key="@string/pref_message_count" />
 
-    <Preference
-        android:key="@string/pref_refresh_firebase"
-        android:title="@string/refresh_firebase"
-        android:summary="@string/refresh_firebase_summary" />
+        <Preference
+            android:key="@string/pref_about_device_id"
+            android:title="@string/device_id" />
 
-    <Preference
-        android:key="@string/pref_resync_account"
-        android:title="@string/resync_account"
-        android:summary="@string/resync_account_summary"/>
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
-    <Preference
-        android:key="@string/pref_delete_account"
-        android:title="@string/delete_account"
-        android:summary="@string/delete_account_summary"/>
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/account_actions"
+        android:key="@string/pref_category_account_actions">
+
+        <Preference
+            android:key="@string/pref_refresh_firebase"
+            android:title="@string/refresh_firebase"
+            android:summary="@string/refresh_firebase_summary" />
+
+        <Preference
+            android:key="@string/pref_resync_account"
+            android:title="@string/resync_account"
+            android:summary="@string/resync_account_summary"/>
+
+        <Preference
+            android:key="@string/pref_delete_account"
+            android:title="@string/delete_account"
+            android:summary="@string/delete_account_summary"/>
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
 </PreferenceScreen>

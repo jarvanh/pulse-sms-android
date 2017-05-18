@@ -24,12 +24,13 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceCategory;
 import android.widget.Toast;
 
 import java.util.Date;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.AccountPurchaseActivity;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.activity.OnBoardingPayActivity;
@@ -44,6 +45,7 @@ import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckServi
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
@@ -55,13 +57,15 @@ import xyz.klinker.messenger.view.SelectPurchaseDialog;
  * Fragment for displaying information about the user's account. We can display different stats
  * for the user here, along with subscription status.
  */
-public class MyAccountFragment extends PreferenceFragmentCompat {
+public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     public static final int ONBOARDING_REQUEST = 54320;
+    public static final int SETUP_REQUEST = 54321;
+    public static final int PURCHASE_REQUEST = 54322;
+
     public static final int RESPONSE_START_TRIAL = 101;
     public static final int RESPONSE_SKIP_TRIAL_FOR_NOW = 102;
 
-    private static final int SETUP_REQUEST = 54321;
 
     private BillingHelper billing;
 
@@ -78,10 +82,6 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
             initRemoveAccountPreference();
             initResyncAccountPreference();
             initFirebaseRefreshPreference();
-        } else {
-            startActivityForResult(
-                    new Intent(getActivity(), OnBoardingPayActivity.class),
-                    ONBOARDING_REQUEST);
         }
     }
 
@@ -97,58 +97,62 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
         if ((!account.exists()) && preference != null) {
             preference.setOnPreferenceClickListener(preference1 -> {
-                final ProgressDialog dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
-                dialog.setCancelable(false);
-                dialog.setIndeterminate(true);
-                dialog.show();
-
-                new Thread(() -> {
-                    final boolean hasSubs = billing.hasPurchasedProduct();
-                    dialog.dismiss();
-
-                    getActivity().runOnUiThread(() -> {
-                        if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            startLoginActivity();
-                        } else {
-                            try {
-                                Toast.makeText(getActivity(), R.string.subscription_not_found, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) { }
-                            pickSubscription();
-                        }
-                    });
-                }).start();
-
+                checkSubscriptions();
                 return true;
             });
 
+            checkSubscriptions();
             removeAccountOptions();
             return false;
         } else if (preference != null) {
-            getPreferenceScreen().removePreference(preference);
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
+                    .removePreference(preference);
             return true;
         } else {
             return true;
         }
     }
 
+    private void checkSubscriptions() {
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(R.string.checking_for_active_subscriptions));
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(true);
+        dialog.show();
+
+        new Thread(() -> {
+            final boolean hasSubs = billing.hasPurchasedProduct();
+            dialog.dismiss();
+
+            getActivity().runOnUiThread(() -> {
+                if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
+                    try {
+                        Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) { }
+                    startLoginActivity();
+                } else {
+                    pickSubscription();
+                }
+            });
+        }).start();
+    }
+
     private void removeAccountOptions() {
         try {
-            getPreferenceScreen()
+
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_subscriber_status)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_message_count)));
-            getPreferenceScreen()
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_about_device_id)));
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
+            getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_category_account_actions)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
+//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
+//                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
         } catch (Exception e) {
 
         }
@@ -162,7 +166,8 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
         preference.setIcon(icon);
 
         if (!Account.get(getActivity()).primary) {
-            getPreferenceScreen().removePreference(preference);
+            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
+                    .removePreference(preference);
             return;
         }
 
@@ -299,7 +304,18 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         Settings.get(getActivity()).forceUpdate();
-        if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
+        if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
+            String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
+            if (productId.equals(ProductAvailable.createLifetime().getProductId())) {
+                purchaseProduct(ProductAvailable.createLifetime());
+            } else if (productId.equals(ProductAvailable.createYearly().getProductId())) {
+                purchaseProduct(ProductAvailable.createYearly());
+            } else if (productId.equals(ProductAvailable.createThreeMonth().getProductId())) {
+                purchaseProduct(ProductAvailable.createThreeMonth());
+            } else if (productId.equals(ProductAvailable.createMonthly().getProductId())) {
+                purchaseProduct(ProductAvailable.createMonthly());
+            }
+        } else if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
                 if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
                     getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
@@ -415,14 +431,18 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
     }
 
     private void pickSubscription() {
-        new SelectPurchaseDialog(getActivity())
-                .setPurchaseSelectedListener(product -> purchaseProduct(product)).show();
+        startActivityForResult(new Intent(getActivity(), AccountPurchaseActivity.class), PURCHASE_REQUEST);
     }
 
     private void purchaseProduct(final ProductAvailable product) {
         billing.purchaseItem(getActivity(), product, new PurchasedItemCallback() {
             @Override
             public void onItemPurchased(String productId) {
+                if (getActivity() != null) {
+                    AnalyticsHelper.accountCompetedPurchase(getActivity());
+                    AnalyticsHelper.userSubscribed(getActivity(), productId);
+                }
+
                 if (Account.get(getActivity()).accountId == null) {
                     // write lifetime here, just so they don't think it is a trial..
                     if (product.getProductId().contains("lifetime")) {
@@ -446,6 +466,7 @@ public class MyAccountFragment extends PreferenceFragmentCompat {
 
             @Override
             public void onPurchaseError(final String message) {
+                AnalyticsHelper.purchaseError(getActivity());
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
             }
         });

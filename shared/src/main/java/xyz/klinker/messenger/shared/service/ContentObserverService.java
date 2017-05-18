@@ -63,9 +63,11 @@ public class ContentObserverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         if (Build.VERSION.SDK_INT >= ContentObserverJob.API_LEVEL) {
             ContentObserverJob.scheduleNextRun(this);
+            stopSelf();
+            return START_NOT_STICKY;
+        } else if (nougatSamsung()) {
             stopSelf();
             return START_NOT_STICKY;
         }
@@ -94,6 +96,10 @@ public class ContentObserverService extends Service {
         }
     }
 
+    public static boolean nougatSamsung() {
+        return Build.MANUFACTURER.toLowerCase().contains("samsung") && Build.VERSION.SDK_INT == Build.VERSION_CODES.N;
+    }
+
     public static class SmsContentObserver extends ContentObserver {
 
         private Context context;
@@ -106,12 +112,6 @@ public class ContentObserverService extends Service {
         @Override
         public void onChange(boolean selfChange) {
             new Thread(() -> {
-                try {
-                    Thread.sleep(10000);
-                } catch (Exception e) {
-
-                }
-
                 processLastMessage(context);
             }).start();
         }

@@ -92,47 +92,52 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        long snoozeTil = Settings.get(this).snooze;
-        if (snoozeTil > System.currentTimeMillis()) {
-            return;
+        try {
+            long snoozeTil = Settings.get(this).snooze;
+            if (snoozeTil > System.currentTimeMillis()) {
+                return;
+            }
+
+            skipSummaryNotification = false;
+
+            List<NotificationConversation> conversations = getUnseenConversations();
+            List<String> rows = new ArrayList<>();
+
+            if (conversations != null && conversations.size() > 0) {
+                NotificationManagerCompat.from(this).cancelAll();
+
+                for (int i = 0; i < conversations.size(); i++) {
+                    NotificationConversation conversation = conversations.get(i);
+                    rows.add(giveConversationNotification(conversation, i, conversations.size()));
+                }
+
+                if (conversations.size() > 1) {
+                    giveSummaryNotification(conversations, rows);
+                }
+
+                Settings settings = Settings.get(this);
+                if (settings.repeatNotifications != -1) {
+                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
+                }
+
+                if (Settings.get(this).wakeScreen) {
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(600);
+                        } catch (Exception e) {
+                        }
+
+                        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
+                        wl.acquire(5000);
+                    }).start();
+                }
+            }
+
+            MessengerAppWidgetProvider.refreshWidget(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        skipSummaryNotification = false;
-
-        List<NotificationConversation> conversations = getUnseenConversations();
-        List<String> rows = new ArrayList<>();
-
-        if (conversations != null && conversations.size() > 0) {
-            NotificationManagerCompat.from(this).cancelAll();
-
-            for (int i = 0; i < conversations.size(); i++) {
-                NotificationConversation conversation = conversations.get(i);
-                rows.add(giveConversationNotification(conversation, i, conversations.size()));
-            }
-
-            if (conversations.size() > 1) {
-                giveSummaryNotification(conversations, rows);
-            }
-
-            Settings settings = Settings.get(this);
-            if (settings.repeatNotifications != -1) {
-                RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
-            }
-
-            if (Settings.get(this).wakeScreen) {
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(600);
-                    } catch (Exception e) { }
-
-                    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
-                    wl.acquire(5000);
-                }).start();
-            }
-        }
-
-        MessengerAppWidgetProvider.refreshWidget(this);
     }
 
     @VisibleForTesting
@@ -216,15 +221,15 @@ public class NotificationService extends IntentService {
 
         // remove the mutes.
         // If the newest conversation is muted, then we don't want to notify again.
-        for (int i = 0; i < conversations.size(); i++) {
-            boolean muted = conversations.get(i).mute;
-            if (muted && i == conversations.size() - 1) {
-                return null;
-            } else if (muted) {
-                conversations.remove(i);
-                i--;
-            }
-        }
+//        for (int i = 0; i < conversations.size(); i++) {
+//            boolean muted = conversations.get(i).mute;
+//            if (muted && i == conversations.size() - 1) {
+//                return null;
+//            } else if (muted) {
+//                conversations.remove(i);
+//                i--;
+//            }
+//        }
 
         return conversations;
     }
@@ -269,9 +274,9 @@ public class NotificationService extends IntentService {
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
 
-        if (numConversations == 1) {
-            builder.setGroupSummary(true);
-        }
+//        if (numConversations == 1) {
+//            builder.setGroupSummary(true);
+//        }
 
         if (conversation.ledColor != Color.WHITE) {
             builder.setLights(conversation.ledColor, 1000, 500);
@@ -337,8 +342,8 @@ public class NotificationService extends IntentService {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            // build a messaging style notifation for Android Nougat
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && settings.historyInNotifications) {
+            // build a messaging style notification for Android Nougat
             messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
 
             if (conversation.groupConversation) {
@@ -695,6 +700,8 @@ public class NotificationService extends IntentService {
         }
 
         String summary = summaryBuilder.toString();
+        String privateSummary = getResources().getQuantityString(R.plurals.new_conversations,
+                conversations.size(), conversations.size());
         if (summary.endsWith(", ")) {
             summary = summary.substring(0, summary.length() - 2);
         }
@@ -705,18 +712,24 @@ public class NotificationService extends IntentService {
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
                 .setSummaryText(summary)
                 .setBigContentTitle(title);
+        NotificationCompat.InboxStyle privateStyle = new NotificationCompat.InboxStyle()
+                .setSummaryText(privateSummary)
+                .setBigContentTitle(title);
 
         for (String row : rows) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     style.addLine(Html.fromHtml(row, 0));
+                    privateStyle.addLine(Html.fromHtml(row, 0));
                 } else {
                     style.addLine(Html.fromHtml(row));
+                    privateStyle.addLine(Html.fromHtml(row));
                 }
             } catch (Throwable t) {
                 // there was a motorola device running api 24, but was on 6.0.1? WTF?
                 // so catch the throwable instead of checking the api version
                 style.addLine(Html.fromHtml(row));
+                privateStyle.addLine(Html.fromHtml(row));
             }
         }
 
@@ -731,6 +744,7 @@ public class NotificationService extends IntentService {
                 .setColor(Settings.get(this).globalColorSet.color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setStyle(style)
                 .build();
 
         Intent delete = new Intent(this, NotificationDismissedService.class);
@@ -745,7 +759,7 @@ public class NotificationService extends IntentService {
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
-                .setContentText(summary)
+                .setContentText(privateSummary)
                 .setGroup(GROUP_KEY_MESSAGES)
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
@@ -756,7 +770,7 @@ public class NotificationService extends IntentService {
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversations.get(conversations.size() - 1).timestamp)
-                .setStyle(style)
+                .setStyle(privateStyle)
                 .setPublicVersion(publicVersion)
                 .setDeleteIntent(pendingDelete)
                 .setContentIntent(pendingOpen)

@@ -28,7 +28,7 @@ import xyz.klinker.messenger.R;
  * Fragment for allowing the user to get some help from the devs or submit feedback. This will
  * contain links where the user can find help, either through a FAQs, Google+, Email, or Twitter.
  */
-public class HelpAndFeedbackFragment extends PreferenceFragmentCompat {
+public class HelpAndFeedbackFragment extends MaterialPreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {

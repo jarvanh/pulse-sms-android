@@ -16,18 +16,28 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="@string/pref_about_changelog"
-        android:title="@string/changelog" />
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/app_info">
 
-    <Preference
-        android:key="@string/pref_about_app_version"
-        android:title="@string/app_version" />
+        <Preference
+            android:key="@string/pref_about_changelog"
+            android:title="@string/changelog" />
 
-    <Preference
-        android:key="@string/pref_about_device_info"
-        android:title="@string/device_info" />
+        <Preference
+            android:key="@string/pref_about_app_version"
+            android:title="@string/app_version" />
 
+        <Preference
+            android:key="@string/pref_about_device_info"
+            android:title="@string/device_info" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:title="@string/platform_info">
+
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
     <Preference
         android:key="@string/pref_about_copyright"
         android:title="@string/copyright"

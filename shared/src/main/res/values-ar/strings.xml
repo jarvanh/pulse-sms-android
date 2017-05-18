@@ -15,9 +15,9 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">نبض</string>
-    <string name="app_name_long">برنامج pulse (لرسائل القصيرة/ وبرامج المحادثة للأجهزة اللوحية)</string>
-    <string name="app_title">نبض</string>
+    <string name="app_name">نبض الرسائل</string>
+    <string name="app_name_long">برنامج نبض الرسائل (لرسائل القصيرة/ وبرامج المحادثة للأجهزة اللوحية)</string>
+    <string name="app_title">نبض الرسائل</string>
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">رسالة جديده</string>
     <string name="shortcut_compose_long">بدأ محادثه جديده</string>
@@ -29,6 +29,7 @@
     <string name="menu_invite">دعوة الأصدقاء</string>
     <string name="menu_feature_settings">خيارات متقدمه</string>
     <string name="menu_settings">الاعدادات العامة</string>
+    <string name="menu_mms_configuration">MMS تهيئة ضبط</string>
     <string name="menu_account">حسابي</string>
     <string name="menu_device_texting">أرسل رسالتك عن طريق أي جهاز</string>
     <string name="menu_help">مساعدة وتعليقات</string>
@@ -139,7 +140,7 @@ http://messenger.klinkerapps.com</string>
     <string name="save">حفظ</string>
     <string name="share">مشاركه</string>
     <string name="share_content">مشاركة المحتوى ...</string>
-    <string name="saved">حفظ إلى مجلد / تنزيل!</string>
+    <string name="saved">حفظ إلى مجلد / التنزيلات!</string>
     <string name="failed_to_save">فشل الحفظ</string>
     <string name="start_recording_audio">اضغط على الزر لبدء تسجيل الصوت!</string>
     <string name="audio_recording_error">خطأ في التسجيل :(</string>
@@ -222,6 +223,7 @@ http://messenger.klinkerapps.com</string>
     <string name="you">انت</string>
     <string name="new_message">رسالة جديده</string>
     <string name="received_new_message">لقد تسلمت رسالة نصية جديدة</string>
+    <string name="media">الوسائط</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">تغير</string>
     <string name="copyright">الحقوق محفوظه © 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -274,12 +276,14 @@ http://messenger.klinkerapps.com</string>
     <string name="group_name">إسم المجموعه</string>
     <string name="notification_settings">الإشعارات</string>
     <string name="repeat_interval">تكرار التنبيه</string>
+    <string name="heads_up">رأس أعلى</string>
     <string name="repeat_never">ابدا</string>
     <string name="repeat_one_min">كل دقيقه</string>
     <string name="repeat_five_mins">كل خمس دقائق</string>
     <string name="repeat_ten_mins">كل عشر دقائق</string>
     <string name="repeat_half_hour">كل نصف ساعه</string>
     <string name="repeat_hour">كل ساعه</string>
+    <string name="wake_screen">شاشة إستيقاظ</string>
     <string name="vibrate">نمط الاهتزاز</string>
     <string name="vibrate_off">إيقاف الإهتزاز</string>
     <string name="vibrate_default">وضع الاهتزاز الافتراضي</string>
@@ -288,12 +292,20 @@ http://messenger.klinkerapps.com</string>
     <string name="vibrate_three_short">ثلاثه اهتزازات قصيره</string>
     <string name="vibrate_one_short_one_long">اهتزاز قصير لمرة واحده،واهتزاز طويل لمرة واحده</string>
     <string name="vibrate_one_long_one_short">اهتزاز طويل لمرة واحده،واهتزاز قصير لمره واحده</string>
+    <string name="vibrate_one_short">إهتزاز واحد قصير</string>
+    <string name="vibrate_one_long">إهتزاز واحد طويل</string>
+    <string name="keyboard_layout">تخطيط لوحة المفاتيح</string>
+    <string name="keyboard_default">لوحة المفاتيح الافتراضية</string>
+    <string name="keyboard_send_key">مفتاح الإرسال</string>
+    <string name="keyboard_enter_key">مفتاح الإدخال</string>
     <string name="sound_effects">مؤثرات صويته</string>
     <string name="delivery_reports">تقارير التسليم</string>
     <string name="theme_settings">تخصيص</string>
     <string name="base_theme">الثيم الاساسي</string>
     <string name="global_theme_color">لون الثيم</string>
     <string name="font_size">حجم الخط</string>
+    <string name="rounder_bubbles">فقاعات رسالة مستديرة</string>
+    <string name="swipe_delete">مرر سريعا للحذف</string>
     <string name="blacklist_hint">اضف الرقم إلى القائمة السوداء</string>
     <string name="add_blacklist">%1$s هل أنت متاكد من اضافة هذا الرقم إلى القائمة السوداء؟
 لن يتم حفظ الرسائل من هذا الرقم ولن يتم اعلامك بهذا.</string>
@@ -338,9 +350,32 @@ http://messenger.klinkerapps.com</string>
     <string name="send_as_mms_summary">سيتم إرسال رسالة MMS طويل بدلاً من رسالة SMS قصيره</string>
     <string name="alert_types">أنواع التنبيه</string>
     <string name="alert_types_summary">الخيارات المختلفه للاخطارات.</string>
+    <string name="strip_unicode">شريط اليونيكود</string>
+    <string name="strip_unicode_summary">ستتم إزالة هذه الأحرف من الرسائل الصادرة.</string>
+    <string name="giffgaff_delivery">Giffgaff تقارير التسليم</string>
+    <string name="notification_actions">إجراءات التنبيه</string>
+    <string name="notification_actions_summary">يمكن تطبيق ثلاثة إجراءات كحد أقصى على إشعار</string>
+    <string name="mms_download_directory">تنزيل دليل الوسائط</string>
+    <string name="refresh_firebase">تحديث إشعارات الدفع</string>
+    <string name="refresh_firebase_summary">هل لا يتم إرسال الرسائل إلى هذا الجهاز؟ أعد المحاولة بعد استخدام هذا الخيار.</string>
+    <string name="refreshing_notifications">جار تحديث رمز الإشعار ...</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">الحد الأقصى لحجم الصورة</string>
+    <string name="use_group_mms">استخدام المجموعة MMS</string>
+    <string name="auto_save_media">حفظ تلقائي  للوسائط</string>
+    <string name="auto_save_media_summary">حفظ تلقائيا MMS الوسائط في /مجلد التنزيلات عندما
+يتم التنزيل أو الرفع.</string>
+    <string name="apn_configuration">APN إعدادات التكوين</string>
+    <string name="override_system_apn">نظام التجاوز APNs</string>
+    <string name="mmsc_url">MMSC رابط</string>
+    <string name="mms_proxy">MMS بروكسي</string>
+    <string name="mms_port">MMS منفذ</string>
+    <string name="user_agent">حساب المستخدم</string>
+    <string name="user_agent_profile_url">حساب المستخدم ورابط البروفيل</string>
+    <string name="user_agent_profile_tag">حساب المستخدم و إسم البروفيل الشخصي</string>
     <!-- Advanced Features Settings -->
     <string name="signature">التوقيع</string>
-    <string name="signature_summary">ملاحظة: التوقيعات المرسلة لن تظهر في قائمة الرسائل لتطبيق pulse، ولكنها ستظهر في الرسائل لدى المستقبل.</string>
+    <string name="signature_summary">ملاحظة: توقيعك لن يظهر في قائمة الرسائل لتطبيق نبض الرسائل، ولكنه سيظهر في الرسائل لدى المستقبل.</string>
     <string name="cleanup_old_messages">تنظيف الرسائل القديمه</string>
     <string name="delayed_sending">تاخير الإرسال.</string>
     <string name="quick_compose">تأليف سريع</string>
@@ -398,6 +433,7 @@ http://messenger.klinkerapps.com</string>
     <string name="conversation_with">المحادثه مع %1$s</string>
     <string name="send">إرسال</string>
     <!-- Other -->
+    <string name="updating_database">جار البحث عن أحدث الرسائل ...</string>
     <string name="dashclock_description">معلومات SMS/MMS الغير المقروءة</string>
     <string name="default_text">افتراضي</string>
     <string name="did_you_know">هل كنت تعلم؟</string>
@@ -413,7 +449,17 @@ http://messenger.klinkerapps.com</string>
     <string name="minutes">دقيقه</string>
     <string name="test">اختبار</string>
     <string name="off">إيقاف</string>
+    <string name="on">تشغيل</string>
+    <string name="rate_it">تقييم الأن!</string>
+    <string name="love_pulse_question">يعجبني هذا التطبيق نبض الرسائل؟</string>
+    <string name="give_a_rating">شارك بتعليق وقم بوضع ملاحظتك  أو مشاركتها مع أصدقائك!\n\n
+قم بتقيمنا بـ 5 نجوم لكي تجعلنا نستمر في التطوير :)</string>
+    <string name="share_promo">مرحبا، أنا يعجبني تطبيق نبض للرسائل النصية! جربه الأن:
+https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
+    <string name="one_second">ثانية واحدة</string>
+    <string name="three_seconds">التوقيت
+ثلاثة ثواني</string>
     <string name="five_seconds">خمس ثوان</string>
     <string name="ten_seconds">عشر ثوان</string>
     <string name="fifteen_seconds">خمس عشر ثانيه</string>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
 
 public class SelectPurchaseDialog extends AlertDialog.Builder {
@@ -34,38 +35,24 @@ public class SelectPurchaseDialog extends AlertDialog.Builder {
     public void addView() {
         View root = LayoutInflater.from(context).inflate(R.layout.dialog_select_purchase, null);
 
-        root.findViewById(R.id.lifetime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectPurchase(ProductAvailable.createLifetime());
-            }
-        });
+        root.findViewById(R.id.lifetime).setOnClickListener(view ->
+                selectPurchase(ProductAvailable.createLifetime()));
 
-        root.findViewById(R.id.yearly).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectPurchase(ProductAvailable.createYearly());
-            }
-        });
+        root.findViewById(R.id.yearly).setOnClickListener(view ->
+                selectPurchase(ProductAvailable.createYearly()));
 
-        root.findViewById(R.id.three_months).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectPurchase(ProductAvailable.createThreeMonth());
-            }
-        });
+        root.findViewById(R.id.three_months).setOnClickListener(view ->
+                selectPurchase(ProductAvailable.createThreeMonth()));
 
-        root.findViewById(R.id.monthly).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectPurchase(ProductAvailable.createMonthly());
-            }
-        });
+        root.findViewById(R.id.monthly).setOnClickListener(view ->
+                selectPurchase(ProductAvailable.createMonthly()));
 
         setView(root);
     }
 
     private void selectPurchase(ProductAvailable productAvailable) {
+        AnalyticsHelper.accountSelectedPurchase(getContext());
+
         if (listener != null) {
             listener.onPurchaseSelected(productAvailable);
         }
