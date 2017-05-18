@@ -20,9 +20,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
@@ -71,9 +73,16 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
             fragment.loadMessages();
             fragment.setDismissOnStartup();
 
-            if (messageType == Message.TYPE_RECEIVED &&
+            if (Settings.get(context).soundEffects && messageType == Message.TYPE_RECEIVED &&
                     NotificationService.CONVERSATION_ID_OPEN == conversationId) {
-                new AudioWrapper(context, conversationId).play();
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (Exception e) { }
+
+                    final AudioWrapper wrapper = new AudioWrapper(context, conversationId);
+                    wrapper.play();
+                }).start();
             }
 
             if (newMessageText != null) {

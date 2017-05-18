@@ -128,6 +128,7 @@ import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
 import xyz.klinker.messenger.shared.util.MessageCountHelper;
+import xyz.klinker.messenger.shared.util.MessageListRefreshMonitor;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -219,6 +220,7 @@ public class MessageListFragment extends Fragment implements
     private boolean pullDrafts = true;
 
     private MessageMultiSelectDelegate multiSelect;
+    private MessageListRefreshMonitor listRefreshMonitor = new MessageListRefreshMonitor();
 
     private Uri attachedUri;
     private String attachedMimeType;
@@ -856,6 +858,7 @@ public class MessageListFragment extends Fragment implements
             long conversationId = getConversationId();
 
             try {
+                listRefreshMonitor.incrementRefreshThreadsCount();
                 long startTime = System.currentTimeMillis();
                 drafts = source.getDrafts(conversationId);
 
@@ -876,35 +879,40 @@ public class MessageListFragment extends Fragment implements
                 Log.v("message_load", "load took " + (
                         System.currentTimeMillis() - startTime) + " ms");
 
-                handler.post(() -> {
-                    setMessages(cursor, contactMap, contactByNameMap);
+                listRefreshMonitor.decrementRefreshThreadsCount();
+                if (listRefreshMonitor.shouldLoadMessagesToTheUi()) {
+                    listRefreshMonitor.resetRunningThreadCount();
 
-                    if (pullDrafts) {
-                        setDrafts(drafts);
-                    } else {
-                        pullDrafts = true;
-                    }
+                    handler.post(() -> {
+                        setMessages(cursor, contactMap, contactByNameMap);
 
-                    if (position != -1) {
-                        messageList.scrollToPosition(position);
-                    }
-
-                    textChanged = false;
-                    messageEntry.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (pullDrafts) {
+                            setDrafts(drafts);
+                        } else {
+                            pullDrafts = true;
                         }
 
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (position != -1) {
+                            messageList.scrollToPosition(position);
                         }
 
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            textChanged = true;
-                        }
+                        textChanged = false;
+                        messageEntry.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+                                textChanged = true;
+                            }
+                        });
                     });
-                });
+                }
 
                 if (!getArguments().getBoolean(ARG_IS_GROUP)) {
                     String number = getArguments().getString(ARG_PHONE_NUMBERS);
