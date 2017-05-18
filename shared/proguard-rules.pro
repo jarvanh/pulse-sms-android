@@ -31,6 +31,8 @@
 -keep class android.support.v7.widget.RoundRectDrawable { *; }
 
 -dontwarn android.support.**
+-dontwarn com.google.android.gms.**
+-dontwarn com.google.firebase.**
 
 -ignorewarnings
 
