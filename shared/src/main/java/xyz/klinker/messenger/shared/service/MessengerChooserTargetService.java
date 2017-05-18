@@ -32,6 +32,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ContactImageCreator;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 
@@ -70,23 +71,26 @@ public class MessengerChooserTargetService extends ChooserTargetService {
     }
 
     private ChooserTarget createTarget(Cursor cursor, ComponentName componentName) {
-        final String targetName = cursor.getString(
-                cursor.getColumnIndex(Conversation.COLUMN_TITLE));
-        Bitmap image = ImageUtils.clipToCircle(ImageUtils.getBitmap(this, cursor.getString(
-                cursor.getColumnIndex(Conversation.COLUMN_IMAGE_URI))));
+        Conversation conversation = new Conversation();
+        conversation.fillFromCursor(cursor);
 
-        Bitmap color = Bitmap.createBitmap(DensityUtil.toDp(this, 48), DensityUtil.toDp(this, 48), Bitmap.Config.ARGB_8888);
-        color.eraseColor(cursor.getInt(cursor.getColumnIndex(Conversation.COLUMN_COLOR)));
-        color = ImageUtils.clipToCircle(color);
+        Bitmap image = ImageUtils.getBitmap(this, conversation.imageUri);
 
-        final Icon targetIcon = image == null ? Icon.createWithBitmap(color) : Icon.createWithBitmap(image);
+        final Icon targetIcon;
+        if (image == null) {
+            Bitmap color = ContactImageCreator.getLetterPicture(this, conversation);
+            targetIcon = Icon.createWithBitmap(color);
+        } else {
+            targetIcon = Icon.createWithBitmap(ImageUtils.clipToCircle(image));
+        }
+
 //        final float targetRanking = cursor.getCount() == 1 ? 1.0f :
 //                ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
         final Bundle targetExtras = new Bundle();
         targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
                 cursor.getColumnIndex(Conversation.COLUMN_ID)));
 
-        return new ChooserTarget(targetName, targetIcon, 1.0f,
+        return new ChooserTarget(conversation.title, targetIcon, 1.0f,
                 componentName, targetExtras);
 
     }
