@@ -19,6 +19,7 @@
     <version
         name="2.3.1"
         description="May 18th, 2017">
+        <text>UI performance optimizations around sending and receiving messages while in a conversation thread</text>
         <text>Improvements and fixes for scheduled messages</text>
     </version>
 
