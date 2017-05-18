@@ -93,6 +93,7 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -213,6 +214,8 @@ public class MessageListFragment extends Fragment implements
     private boolean dismissOnStartup = false;
     private boolean textChanged = false;
     private List<Draft> drafts;
+    private Map<String, Contact> contactMap;
+    private Map<String, Contact> contactByNameMap;
     private boolean pullDrafts = true;
 
     private MessageMultiSelectDelegate multiSelect;
@@ -223,7 +226,6 @@ public class MessageListFragment extends Fragment implements
     private List<String> selectedImageUris = new ArrayList<>();
 
     private AlertDialog detailsChoiceDialog;
-    private MaterialTooltip navToolTip;
 
     private CountDownTimer delayedTimer;
     private Handler delayedSendingHandler;
@@ -408,10 +410,6 @@ public class MessageListFragment extends Fragment implements
     public void onStop() {
         super.onStop();
         dismissNotification = false;
-
-        if (navToolTip != null && navToolTip.isShowing()) {
-            navToolTip.hide();
-        }
     }
 
     @Override
@@ -865,10 +863,13 @@ public class MessageListFragment extends Fragment implements
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
                 final String title = getArguments().getString(ARG_TITLE);
-                final List<Contact> contacts = source.getContacts(numbers);
-                final List<Contact> contactsByName = source.getContactsByNames(title);
-                final Map<String, Contact> contactMap = fillMapByNumber(numbers, contacts);
-                final Map<String, Contact> contactByNameMap = fillMapByName(title, contactsByName);
+
+                if (contactMap == null || contactByNameMap == null) {
+                    final List<Contact> contacts = source.getContacts(numbers);
+                    final List<Contact> contactsByName = source.getContactsByNames(title);
+                    contactMap = fillMapByNumber(numbers, contacts);
+                    contactByNameMap = fillMapByName(title, contactsByName);
+                }
 
                 final int position = findMessagePositionFromId(cursor);
 
@@ -954,9 +955,9 @@ public class MessageListFragment extends Fragment implements
         try {
             return title != null && title.contains(", ") ? ContactUtils.getMessageFromMappingByTitle(
                     title, contacts
-            ) : null;
+            ) : new HashMap<>();
         } catch (Exception e) {
-            return null;
+            return new HashMap<>();
         }
     }
 
@@ -966,7 +967,7 @@ public class MessageListFragment extends Fragment implements
                     numbers, contacts, source, getActivity()
             );
         } catch (Exception e) {
-            return null;
+            return new HashMap<>();
         }
     }
 
