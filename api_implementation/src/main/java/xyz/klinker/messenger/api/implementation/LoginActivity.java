@@ -125,11 +125,11 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        if (!hasTelephony(this)) {
-            signup.setEnabled(false);
-            signupFailed.setVisibility(View.VISIBLE);
-            findViewById(R.id.skip_holder).setVisibility(View.GONE);
-        }
+//        if (!hasTelephony(this)) {
+//            signup.setEnabled(false);
+//            signupFailed.setVisibility(View.VISIBLE);
+//            findViewById(R.id.skip_holder).setVisibility(View.GONE);
+//        }
 
         login.setOnClickListener(view -> login());
         signup.setOnClickListener(view -> signup());
