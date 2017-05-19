@@ -66,9 +66,8 @@ public class ScheduledMessageJob extends BackgroundJob {
                 long timestamp = messages.getLong(
                         messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP));
 
-                // if message is newer than 5 minutes ago and older than 5 minutes in the future
-                if (timestamp > System.currentTimeMillis() - (1000 * 60 * 5) &&
-                        timestamp < System.currentTimeMillis() + (1000 * 60 * 5)) {
+                // if message scheduled to be sent in less than 5 mins
+                if (timestamp < System.currentTimeMillis() + (1000 * 60 * 5)) {
                     ScheduledMessage message = new ScheduledMessage();
                     message.fillFromCursor(messages);
 
