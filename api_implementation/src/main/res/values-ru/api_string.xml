@@ -18,9 +18,9 @@
     <string name="api_login">Войти</string>
     <string name="api_signup">Регистрация</string>
     <string name="api_signup_failed">Не получается войти с этого устройства, для начала нужно зарегистрировать основное устройство с номером телефона.</string>
-    <string name="api_skip_signup">Или, если вы хотите использовать приложение на этом устройстве без сетевых функций, таких как набор текста с планшета или компьютера, вы можете пропустить этот шаг:</string>
+    <string name="api_skip_signup">Или, если вы хотите использовать приложение на этом устройстве без сетевых функций, таких как набор текста с планшета или ПК, вы можете пропустить этот шаг:</string>
     <string name="api_skip">Пропустить</string>
-    <string name="api_email">"Адрес email "</string>
+    <string name="api_email">"Адрес e-mail "</string>
     <string name="api_password">Пароль</string>
     <string name="api_forgot_password">Забыли пароль? ЧЗВ</string>
     <string name="api_password_confirmation">Подтверждение пароля</string>
@@ -45,10 +45,13 @@
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Отправить</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activity_1_21">wear.klinkerapps.com</string>
     <string name="api_activate_1_3">на мобильном устройстве или ПК.</string>
+    <string name="api_activate_1_4">на ПК.</string>
     <string name="api_activate_2_1">На сайт</string>
     <string name="api_activate_2_2">Введите код справа</string>
     <string name="api_activate_2_3">для подключения вашего аккаунта!</string>
+    <string name="api_activate_3_1">Введите код:</string>
     <string name="api_confirm_password">Пожалуйста, подтвердите пароль:</string>
     <string name="api_wrong_password">Не удалось подтвердить. Пароль верный?</string>
     <string name="api_email_taken">Произошла ошибка входа, у вас уже есть учётная запись с этим email?</string>
