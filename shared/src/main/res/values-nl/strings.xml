@@ -47,7 +47,7 @@
     <string name="menu_conversation_information">Conversatie informatie</string>
     <string name="menu_conversation_blacklist">Blokkeer contact</string>
     <string name="menu_conversation_schedule">Plan een bericht</string>
-    <string name="menu_contact_settings">Instellingen contact</string>
+    <string name="menu_contact_settings">Instellingen conversaties</string>
     <string name="menu_group_settings">Instellingen groep</string>
     <string name="menu_snooze_off">Uit</string>
     <string name="menu_snooze_1">1 uur</string>
@@ -109,6 +109,8 @@
     <string name="record_video">Video opnemen</string>
     <string name="record_audio">Audio opnemen</string>
     <string name="attach_location">Locatie bijvoegen</string>
+    <string name="attach_contact">Voeg contact toe</string>
+    <string name="attach_contact_summary">Selecteer of vul een contact in om toe te voegen aan het bericht!</string>
     <string name="no_location_found">We kunnen je locatie nu niet vinden.</string>
     <string name="camera_permission_needed">We hebben jammer genoeg geen toegang tot jouw camera dus kunnen geen foto maken</string>
     <string name="take_picture">Snap afbeelding</string>
@@ -200,11 +202,17 @@
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Bekijk open source license information</string>
     <string name="app_version">App Versie</string>
+    <string name="account_information">Account informatie</string>
+    <string name="account_actions">Account acties</string>
     <string name="device_id">Toestel ID</string>
     <string name="device_info">Toestel Info</string>
     <string name="website">Website</string>
     <string name="access_messages_from_any_device">Krijg toegang en verzend berichten vanop elk toestel!</string>
     <string name="beta_disclaimer">Dit project is nog in ontwikkeling, gelieve eventuele fouten te rapporteren!</string>
+    <string name="app_info">App info</string>
+    <string name="platform_info">Platform info</string>
+    <string name="troubleshooting">Probleemoplossing</string>
+    <string name="get_in_touch">Blijf op de hoogte</string>
     <string name="faqs">Veelgestelde vragen</string>
     <string name="features">Functies</string>
     <string name="issues">Issue Tracker</string>
@@ -289,8 +297,9 @@
     <string name="delete_account_confirmation">Ben je echt zeker dat je jouw account wilt verwijderen en alles wat zich in jouw account bevindt? Je kan later altijd opnieuw registreren!</string>
     <string name="change_subscription">Verander abonnement</string>
     <string name="cancel_on_the_play_store">Annuleer en bekijk jouw abonnement in de Play Store</string>
-    <string name="resync_account">Synchroniseer jouw account</string>
+    <string name="resync_account">Synchroniseer berichten</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
+    <string name="resync_account_summary_phone">Dit wist je hele account en laadt de gegevens in van jouw huidige interne sms database.</string>
     <string name="resync_account_confirmation">Dit zal alle berichten verwijderen van dit toestel en zal alle berichten van jouw hoofdtoestel overbrengen naar hier. Zeker dat je dit wil?</string>
     <string name="normalize_color_scheme">Of, je kan een kleur kiezen om jouw contact te tonen:</string>
     <string name="no_apps_found">Geen apps gevonden om deze actie mee uit te voeren</string>
@@ -303,6 +312,10 @@
     <string name="font_size_extra_large">Extra groot</string>
     <string name="advanced">Geavanceerd</string>
     <string name="send_as_mms">Omzetten naar MMS</string>
+    <string name="after_one_message">Na één bericht</string>
+    <string name="after_two_messages">Na twee berichten</string>
+    <string name="after_three_messages">Na drie berichten</string>
+    <string name="after_four_messages">Na vier berichten</string>
     <string name="send_as_mms_summary">Lange berichten verzenden als MMS i.p.v. SMS</string>
     <string name="alert_types">Types notificaties</string>
     <string name="alert_types_summary">Vele aanpassingen voor notificaties</string>
@@ -312,9 +325,13 @@
     <string name="notification_actions">Notificatieacties</string>
     <string name="notification_actions_summary">Je kan maximum 3 acties toevoegen aan een notificatie</string>
     <string name="mms_download_directory">Media Download Map</string>
-    <string name="refresh_firebase">Ververs push notificaties</string>
-    <string name="refresh_firebase_summary">Berichten die dit toestel niet vinden? Probeer opnieuw na het gebruiken van deze optie.</string>
+    <string name="refresh_firebase">Account hernieuwen</string>
+    <string name="refresh_firebase_summary">Problemen met je account, de synchronisatie of kan je niet inloggen? Gebruik deze optie.</string>
     <string name="refreshing_notifications">Nieuw notificatie token aanmaken...</string>
+    <string name="refresh_firebase_warning">Als je dit proces opstart, moet je dit doorlopen tot het einde.
+Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</string>
+    <string name="show_conversation_history">Toon conversatie geschiedenis</string>
+    <string name="show_conversation_history_summary">Notificaties zullen vorige berichten uit de conversatie weergeven</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="use_group_mms">Gebruik groep MMS</string>
@@ -432,7 +449,7 @@ Indien je geen nieuw abonnement hebt voor 2 dagen, zal je automatisch worden uit
     <string name="purchase_error_cancelled">Je annuleerde de betaling :\'(</string>
     <string name="purchase_error_bad_google_play">Oeps! Google Play heeft precies enkele problemen.</string>
     <string name="purchase_error_bad_sku">Hmmm&#8230; Deze betaling kon niet worden goedgekeurd.</string>
-    <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden:</string>
+    <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden.</string>
     <string name="billed_immediately">Dit wordt direct afgerekend.</string>
     <string name="lifetime_purchase">$10.99 - Levenslang abonnement</string>
     <string name="lifetime_purchase_summary">Betaal eenmalig, geniet voor altijd!</string>
@@ -443,4 +460,18 @@ Indien je geen nieuw abonnement hebt voor 2 dagen, zal je automatisch worden uit
     <string name="monthly_purchase">$0.99 elke maand</string>
     <string name="monthly_purchase_summary">Wil je juist proberen? Geen probleem.</string>
     <string name="change_subscription_message">Wil je upgraden? Super! Nadat je je selectie hebt aangepast in het volgende scherm, dien je naar de Play Store te gaan en annuleer je het oude abonnement manueel.</string>
+    <string name="beautiful_powerful_instant">Mooi, krachtig, snel.</string>
+    <string name="optimized_for_all_your_devices">Pulse is geoptimaliseerd voor <b>al</b> jouw toestellen.
+Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je televisie.</string>
+    <string name="true_imessage_competitor">Het eerste <b>echte</b> iMessage alternatief voor Android.</string>
+    <string name="try_it">Probeer het nu!</string>
+    <string name="seven_days_free">7 dagen gratis!</string>
+    <string name="competition_cant_beat">De concurrentie kan niet op tegen onze prijzen, snelheid, service - je krijgt van ons <b>7 dagen gratis</b> en test het zelf uit!</string>
+    <string name="select_a_trial_below">Selecteer een van de opties om je <b>gratis trial</b> te starten.</string>
+    <string name="charged_after_trial">Aangerekend na de trial:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nmaand</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 maand</string>
+    <string name="yearly_purchase_improved">$5.99 /\njaar</string>
+    <string name="subscription_toast">Er zal <b>niets</b> worden aangerekend voordat de 7 dagen trial is afgelopen.
+Je kan elk moment annuleren.</string>
 </resources>

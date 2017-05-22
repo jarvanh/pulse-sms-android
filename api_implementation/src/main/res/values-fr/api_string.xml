@@ -45,10 +45,13 @@
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Rediriger vers</string>
     <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activity_1_21">wear.klinkerapps.com</string>
     <string name="api_activate_1_3">sur un appareil mobile ou sur un ordinateur.</string>
+    <string name="api_activate_1_4">sur un ordinateur.</string>
     <string name="api_activate_2_1">Sur le site web</string>
     <string name="api_activate_2_2">Entrer le code à droite</string>
     <string name="api_activate_2_3">pour connecter votre compte</string>
+    <string name="api_activate_3_1">Saisir le code :</string>
     <string name="api_confirm_password">S\'il vous plaît, veuillez confirmer votre mot de passe :</string>
     <string name="api_wrong_password">Confirmation échouée. Votre mot de passe est correct?</string>
     <string name="api_email_taken">Erreur de connexion, avez-vous déjà un compte associé à cette adresse mail ?</string>

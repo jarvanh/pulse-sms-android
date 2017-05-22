@@ -109,6 +109,8 @@
     <string name="record_video">Enregistrer une vidéo</string>
     <string name="record_audio">Enregistrer un son</string>
     <string name="attach_location">Partager votre localisation</string>
+    <string name="attach_contact">Joindre un contact</string>
+    <string name="attach_contact_summary">Sélectionner ou entrer un contact à joindre au message!</string>
     <string name="no_location_found">Impossible de vous localiser.</string>
     <string name="camera_permission_needed">L\'autorisation de caméra doit être accordée pour prendre
 des photos !</string>
@@ -204,12 +206,18 @@ Commencez !
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Voir les informations de la licence open source</string>
     <string name="app_version">Version de l\'application</string>
+    <string name="account_information">Informations du compte</string>
+    <string name="account_actions">Interventions sur le compte</string>
     <string name="device_id">Identifiant du terminal</string>
     <string name="device_info">Informations du terminal</string>
     <string name="website">Site Internet</string>
     <string name="access_messages_from_any_device">Accédez et envoyez des messages depuis n\'importe quel appareil !</string>
     <string name="beta_disclaimer">Ce projet est toujours en version bêta, veuillez signaler les problèmes que vous
 pourriez rencontrer !</string>
+    <string name="app_info">Infos de l\'application</string>
+    <string name="platform_info">Infos sur la plateforme</string>
+    <string name="troubleshooting">Support technique</string>
+    <string name="get_in_touch">Entrer en contact</string>
     <string name="faqs">Questions Fréquemment Posées</string>
     <string name="features">Fonctionnalités</string>
     <string name="issues">Report des problèmes</string>
@@ -299,6 +307,7 @@ pourriez rencontrer !</string>
     <string name="resync_account">Resynchroniser le compte</string>
     <string name="resync_account_summary">Des messages manquants ?
 A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
+    <string name="resync_account_summary_phone">Cette action effacera votre compte et l\'actualisera avec les messages présents actuellement dans votre base de données SMS interne.</string>
     <string name="resync_account_confirmation">Cela va supprimer tous les messages de cet appareil, et démarrer avec une copie propre de ce qui est actuellement sur votre appareil principal. Etes-vous sûr de vouloir faire ça ?</string>
     <string name="normalize_color_scheme">Ou, vous pouvez choisir une couleur unique basée sur le contact :</string>
     <string name="no_apps_found">Aucune application trouvée pour exécuter cette action</string>
@@ -311,6 +320,10 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="font_size_extra_large">Très grande</string>
     <string name="advanced">Avancé</string>
     <string name="send_as_mms">Convertir en MMS</string>
+    <string name="after_one_message">Après un message</string>
+    <string name="after_two_messages">Après deux messages</string>
+    <string name="after_three_messages">Après trois messages</string>
+    <string name="after_four_messages">Après quatre messages</string>
     <string name="send_as_mms_summary">Envoyer les longs messages par MMS plutôt que par SMS individuels</string>
     <string name="alert_types">Types d\'alertes</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
@@ -320,9 +333,13 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="notification_actions">Actions depuis les notifications</string>
     <string name="notification_actions_summary">Trois actions maximales par notification.</string>
     <string name="mms_download_directory">Dossier de téléchargement des médias</string>
-    <string name="refresh_firebase">Actualiser les notifications push</string>
-    <string name="refresh_firebase_summary">Les messages ne s\'affichent pas sur cet appareil ? Réessayez après avoir utilisé cette option.</string>
+    <string name="refresh_firebase">Actualiser le compte</string>
+    <string name="refresh_firebase_summary">Des problèmes de synchronisation ou de connexion à votre compte ? Utiliser cette option.</string>
     <string name="refreshing_notifications">Rafraîchissement du jeton de notification...</string>
+    <string name="refresh_firebase_warning">Si vous commencez cette action, vous <b>devez</b> la mener à son terme.
+Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres appareils. Voulez-vous continuer ?</string>
+    <string name="show_conversation_history">Afficher l\'historique de la conversation</string>
+    <string name="show_conversation_history_summary">Les notifications afficheront les précédents messages de la conversation</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
     <string name="use_group_mms">Utiliser les MMS groupés</string>
@@ -442,7 +459,7 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="purchase_error_cancelled">Achat annulé :(</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play semble rencontrer quelques problèmes.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Cet achat ne correspond pas à nos registres.</string>
-    <string name="subscriptions">Les abonnements sont facturés après le septième jour d\'essai et peuvent être changés/annulés à tout moment :</string>
+    <string name="subscriptions">Les abonnements sont facturés après le septième jour d\'essai et peuvent être modifiés/annulés à tout moment :</string>
     <string name="billed_immediately">Ceci est facturé immédiatement.</string>
     <string name="lifetime_purchase">$10.99 - Souscription à vie</string>
     <string name="lifetime_purchase_summary">Payez une fois, et c\'est tout!</string>
@@ -453,4 +470,19 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="monthly_purchase">$0,99 par mois</string>
     <string name="monthly_purchase_summary">Vous voulez juste essayer ? Aucun problème.</string>
     <string name="change_subscription_message">Vous voulez améliorer ? Super ! Après avoir fait votre choix sur l\'écran suivant, rendez vous sur le Play Store, et stoppez l\'ancien abonnement manuellement.</string>
+    <string name="beautiful_powerful_instant">Beau, puissant, instantané.</string>
+    <string name="optimized_for_all_your_devices">Pulse est optimisé pour <b>tous</b> vos appareils.
+Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>
+    <string name="true_imessage_competitor">Le premier <b>vrai</b> concurrent de iMessage pour Android.</string>
+    <string name="try_it">Essayez-le maintenant!</string>
+    <string name="seven_days_free">Gratuit pendant 7 jours!</string>
+    <string name="competition_cant_beat">La concurrence ne peut rivaliser avec nos prix, notre vitesse ou notre service -
+<b>Prenez 7 jours</b> pour le constater par vous-même!</string>
+    <string name="select_a_trial_below">Sélectionnez une des options ci-dessous pour commencer votre <b>essai gratuit</b>.</string>
+    <string name="charged_after_trial">Facturé après l\'essai :</string>
+    <string name="monthly_purchase_improved">$0.99 /\nmois</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 mois</string>
+    <string name="yearly_purchase_improved">$5.99 /\nan</string>
+    <string name="subscription_toast">Vous <b>ne serez pas</b> facturé avant la fin de la période d\'essai de 7 jours.
+Annulez à tout moment.</string>
 </resources>

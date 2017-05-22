@@ -183,7 +183,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
         <item quantity="one">%1$d nuovo messaggio</item>
         <item quantity="other">%1$d nuovi messaggi</item>
     </plurals>
-    <string name="read">Leggi</string>
+    <string name="read">Letto</string>
     <string name="reply">Rispondi</string>
     <string name="reply_to">Rispondi a  %1$s</string>
     <string name="call">Chiama</string>
@@ -300,6 +300,7 @@ con ciò che è sul dispositivo principale.</string>
     <string name="send_as_mms_summary">I messaggi lunghi saranno inviati come MMS invece che singoli SMS</string>
     <string name="alert_types">Tipo di Avviso</string>
     <string name="alert_types_summary">Personalizzazioni per le notifiche</string>
+    <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="signature">Firma</string>
     <string name="signature_summary">NOTA: le firme verranno mostrate solo al destinatario del messaggio e non nella lista conversazioni.</string>
