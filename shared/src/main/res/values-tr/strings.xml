@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Nabız</string>
+    <string name="app_name_long">Darbe (SMS / Tablet Messenger)</string>
+    <string name="app_title">Nabız</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Yeni Mesaj</string>
+    <string name="shortcut_compose_long">Yeni bir konuşma başlat!</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Sohbet listesi</string>
+    <string name="menu_archived_conversations">Arşivlenmiş sohbetler</string>
+    <string name="menu_schedule">Zamanlanmış mesajlar</string>
+    <string name="menu_mute_contacts">kara liste</string>
+    <string name="menu_invite">Arkadaşları davet etmek</string>
+    <string name="menu_feature_settings">Gelişmiş özellikler</string>
+    <string name="menu_settings">Genel Ayarlar</string>
+    <string name="menu_mms_configuration">MMS Yapılandırması</string>
+    <string name="menu_account">Hesabım</string>
+    <string name="menu_device_texting">Herhangi bir cihazdan metin</string>
+    <string name="menu_help">Yardım ve geribildirim</string>
+    <string name="menu_about">hakkında</string>
+    <string name="menu_search">Arama</string>
+    <string name="menu_mobile_only">Yalnızca Mobil</string>
+    <string name="menu_snooze">Bildirimleri ertele</string>
+    <string name="menu_call">Iletişim kişisi</string>
+    <string name="menu_view_contact">Kişiyi göster</string>
+    <string name="menu_view_contacts">Kişileri göster</string>
+    <string name="menu_view_media">Medyayı görüntüle</string>
+    <string name="menu_delete_conversation">Konuşmayı sil</string>
+    <string name="menu_archive_conversation">Arşiv Konuşma</string>
+    <string name="menu_move_to_inbox">Gelen kutusuna gonder</string>
+    <string name="menu_conversation_information">Sohbet bilgileri</string>
+    <string name="menu_conversation_blacklist">Kara listeye kişi</string>
+    <string name="menu_conversation_schedule">Mesaj planla</string>
+    <string name="menu_contact_settings">Konuşma ayarları</string>
+    <string name="menu_group_settings">Grup ayarları</string>
+    <string name="menu_snooze_off">kapalı</string>
+    <string name="menu_snooze_1">1 saat</string>
+    <string name="menu_snooze_2">2 saat</string>
+    <string name="menu_snooze_4">4 saat</string>
+    <string name="menu_snooze_8">8 saat</string>
+    <string name="menu_snooze_24">24 saat</string>
+    <string name="menu_snooze_72">72 saat</string>
+    <string name="menu_snooze_custom">Bir zaman seç</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Mesaj yok</string>
+    <string name="no_messages_summary">Yeni bir konuşma başlatın veya sadece gününüzün tadını çıkarın!</string>
+    <string name="close">Kapat</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">pinned</string>
+    <string name="today">Bugün</string>
+    <string name="yesterday">Dün</string>
+    <string name="last_week">Bu hafta</string>
+    <string name="last_month">Bu ay</string>
+    <string name="older">Daha eski</string>
+    <string name="mark_section_as_read">% 1 $ s tümünü okundu olarak işaretle</string>
+    <string name="marking_section_as_read">% 1 $ s tümünün okundu olarak işaretlenmesi</string>
+    <string name="undo">Geri alma</string>
+    <string name="enter_search">Aramak…</string>
+    <!-- Search Screen -->
+    <string name="conversations">Konuşmalar</string>
+    <string name="messages">Mesajlar</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">Pulseyi sevdin ?</string>
+    <string name="invite_friends_summary">Böylece başkalarını da biz yaparız! Almaya çalışıyoruz
+Elimizden gelen en iyi ürün haline getirmeye devam edebilmek için yapabileceğimiz kadar çok el gibi
+Arkadaşlarınızı denemeye davet ederseniz, buna yardımcı oluyorsunuz!
+
+Aşağıdaki arkadaşları seçin
+Uygulamayı göndermek istiyor ve kısa bir açıklama içeren bir SMS gönderecek ve
+Indirmek için bir bağlantı!</string>
+    <string name="invite_friends_sms">Yeni bir mesajlaşma uygulaması kullanmaya başladım ve sanırım
+Beğeneceksin! Ayrıca ücretsiz, dolayısıyla indirebilirsiniz:
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Mesaj yazın</string>
+    <string name="type_message_to">% 1 $ s adlı üyeye ileti yaz</string>
+    <string name="attach">iliştirmek</string>
+    <string name="select_sim">SIM\'i seçin</string>
+    <string name="message_from">% 1 $ s</string>
+    <string name="message_from_bullet">% 1 $ s •</string>
+    <string name="mms_image">MMS Resmi</string>
+    <string name="now">şimdi</string>
+    <string name="sending">Gönderiliyor ...</string>
+    <string name="failed">Başarısız oldu</string>
+    <string name="delivered">Mesaj gönderildi</string>
+    <string name="attach_image">Resmi Ekle</string>
+    <string name="capture_image">Resim Yakalama</string>
+    <string name="attach_gif">GIF\'yi ekle</string>
+    <string name="record_video">Video kaydetmek</string>
+    <string name="record_audio">Ses kaydı</string>
+    <string name="attach_location">Yer Ekle</string>
+    <string name="attach_contact">İrtibat Ekle</string>
+    <string name="attach_contact_summary">Mesaja eklemek için bir kişi seçin veya girin!</string>
+    <string name="no_location_found">Konumunuzu bulamadık.</string>
+    <string name="camera_permission_needed">Kamera izninin alınması için izin verilmesi gerekir.
+resimleri!</string>
+    <string name="take_picture">Resim Ekleme</string>
+    <string name="flip_picture">Flip Kamera</string>
+    <string name="fullscreen">Tam ekran</string>
+    <string name="attached_image">Ekli Resim</string>
+    <string name="remove_image">Ekli Resmi Kaldır</string>
+    <string name="edit_image">Eklenmiş Resmi Düzenle</string>
+    <string name="permission_needed_for_action">Bu eylem için gerekli izinler.</string>
+    <string name="request_permission">İzin İste</string>
+    <string name="no_messages_with_contact">Bu görüşmede henüz mesajınız yok,
+Onu başlatmanın zamanı!</string>
+    <string name="save">Kayıt etmek</string>
+    <string name="share">Paylaş</string>
+    <string name="share_content">Içerik paylaş ...</string>
+    <string name="saved">İndirilenler klasörüne kaydedildi!</string>
+    <string name="failed_to_save">Kaydedilemedi</string>
+    <string name="start_recording_audio">Ses kaydetmeye başlamak için düğmesine basın!</string>
+    <string name="audio_recording_error">Kayıt hatası :(</string>
+    <string name="message_copied_to_clipboard">Panoya kopyalandı</string>
+    <string name="view_details">Detayları göster</string>
+    <string name="delete">silmek</string>
+    <string name="copy_message">Metni kopyala</string>
+    <string name="resend">Yeniden Gönder</string>
+    <string name="no_media">Bu konuşmada hiçbir medya yok!</string>
+    <string name="error_decrypting">Şifre çözme işlemi sırasında hata oluştu! Lütfen bu mesajı telefonunuzda görüntüleyin.</string>
+    <string name="message_sending_failed">Mesaj gönderilemedi!</string>
+    <string name="preparing_video">Video hazırlanıyor ...</string>
+    <string name="delete_message">Bu mesajı silinsin mi?</string>
+    <string name="forward_message">Mesajı iletmek</string>
+    <string name="share_message">İletiyi Paylaş</string>
+    <string name="copy_message_text">Mesaj Metnini Kopyala</string>
+    <string name="open_link_to_browser">Tarayıcıya Bağlantı Aç</string>
+    <string name="open_link_internal">Bağlantıyı Dahili Olarak Aç</string>
+    <string name="copy_link">Linki kopyala</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Yeni mesaj oluştur</string>
+    <string name="send_message">Mesaj gönder</string>
+    <string name="enter_contact_name">Kişi adını girin</string>
+    <string name="error_processing_vcard">Vcard işlenirken hata oluştu</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">Uygulama, bu izinler olmadan çalışamaz! Gerek
+Devam etmeden önce onları kabul et.</string>
+    <string name="loading_messages">Optimize ...</string>
+    <string name="loading_messages_summary">İletilerinizi uygulamaya sokmaya çalışıyordum.
+Uzun sürmeyecek!</string>
+    <string name="tooltip_got_it">Anladım!</string>
+    <string name="navigation_drawer_conversation_hint">Bu konuşma için daha fazla seçenek gezinme çekmecesinde saklanır.</string>
+    <string name="onboarding_title_1">Yeniden hayal edilen mesajlaşma</string>
+    <string name="onboarding_title_2">Her Yerde Mevcut</string>
+    <string name="onboarding_title_3">Güçlü Özelleştirme</string>
+    <string name="onboarding_content_1">"Güçlü bir tasarım ve kesintisiz entegrasyona sahip pürüzsüz, akışkan düzenleri.
+Nabız konuşmalarınızı öne ve ortama koyar."</string>
+    <string name="onboarding_content_2">Tabletiniz, bilgisayarınız, saatiniz veya bağlı diğer cihazlarınızdan gelen mesajlar.</string>
+    <string name="onboarding_content_3">Sohbet ettiğiniz tüm kişiler için uyarı işaretleri, sessiz, tema ve özelleştirin. Darbe sizinkini yapın.</string>
+    <string name="message_anywhere_onboarding_title_1">Masaj Her Yerde</string>
+    <string name="message_anywhere_onboarding_title_2">Abonelik veya Tek Ödeme</string>
+    <string name="message_anywhere_onboarding_title_3">Hafta Uzun Deneme</string>
+    <string name="message_anywhere_onboarding_content_1">SMS ve MMS\'yi her yerden desteklemek için herhangi bir cihazla (tablet, saat, TV, web, yerli Google Chrome ve Firefox uygulamaları) sorunsuz bir şekilde entegre olun!</string>
+    <string name="message_anywhere_onboarding_content_2">İhtiyacınız olduğunda ödemek zorunda olduğunuz düşük fiyat seçenekleri: hayat için 10.99 dolar, yılda 5.99 dolar, 3 ay için 1.99 dolar veya ayda 0.99 dolar. Bir fincan daha kahve.</string>
+    <string name="message_anywhere_onboarding_content_3">Android uygulamasını, telefonunuzda ÜCRETSİZ (sonsuza dek ÜCRETSİZ!) Kullanın veya bir WEEK ücretsiz deneme süresince tüm cihazlarınızdan mesaj göndermeye başlayın.</string>
+    <string name="start_trial">Başlama\nDeneme</string>
+    <string name="not_now">Değil\nşimdi</string>
+    <string name="onboarding_done">tamam</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">% 1 $ s gelen yeni ileti</string>
+    <string name="read">okumak</string>
+    <string name="reply">cevap</string>
+    <string name="reply_to">% 1 $ s yanıtladı</string>
+    <string name="call">Aramak</string>
+    <string-array name="reply_choices">
+        <item>Evet</item>
+        <item>Hayır</item>
+        <item>Olabilir</item>
+        <item>tamam</item>
+        <item>Teşekkürler</item>
+    </string-array>
+    <string name="new_mms_message">Yeni MMS mesajı</string>
+    <string name="you">Sen</string>
+    <string name="new_message">Yeni Mesaj</string>
+    <string name="received_new_message">Yeni bir metin aldınız!</string>
+    <string name="media">medya</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Değişiklikler</string>
+    <string name="copyright">© 2016 Jake Klinker ve Luke Klinker</string>
+    <string name="copyright_summary">Açık kaynak lisans bilgilerini görüntüle</string>
+    <string name="app_version">Uygulama Sürümü</string>
+    <string name="account_information">Hesap Bilgileri</string>
+    <string name="account_actions">Hesap İşlemleri</string>
+    <string name="device_id">Cihaz Kimliği</string>
+    <string name="device_info">Cihaz bilgisi</string>
+    <string name="website">Web sitesi</string>
+    <string name="access_messages_from_any_device">Herhangi bir cihazdan mesajlara erişin ve mesaj gönderin!</string>
+    <string name="beta_disclaimer">Bu proje hala beta aşamasında. Lütfen,
+Bulabilirsiniz!</string>
+    <string name="app_info">Uygulama Bilgisi</string>
+    <string name="platform_info">Platform Bilgisi</string>
+    <string name="troubleshooting">Sorun giderme</string>
+    <string name="get_in_touch">Temasta olmak</string>
+    <string name="faqs">sık sorulan Sorular</string>
+    <string name="features">Özellikler</string>
+    <string name="issues">Sayı Tracker</string>
+    <string name="issues_summary">Ayrıca bir özellik haritası olarak da hizmet ediyor</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse Beta Topluluğu</string>
+    <string name="email">E-posta</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Destek</string>
+    <string name="pin_conversation">Pin Konuşma</string>
+    <string name="pin_conversation_summary">Bu sohbeti listenin başında tutar</string>
+    <string name="mute_conversation">Dilsiz konuşma</string>
+    <string name="mute_conversation_summary">Bu konuşma için bildirimleri gizle</string>
+    <string name="private_conversation">Özel konuşma</string>
+    <string name="private_conversation_summary">Bildirimlerdeki konuşma içeriğini gizle</string>
+    <string name="primary_color">Ana renk</string>
+    <string name="primary_dark_color">Birincil Renk Karanlık</string>
+    <string name="accent_color">Vurgun Renk</string>
+    <string name="led_color">LED Renk</string>
+    <string name="ringtone">Zil</string>
+    <string name="group_name">Grup ismi</string>
+    <string name="notification_settings">Bildirimler</string>
+    <string name="repeat_interval">Tekrar Uyarısı</string>
+    <string name="heads_up">Dikkat et</string>
+    <string name="repeat_never">Asla</string>
+    <string name="repeat_one_min">Her dakika</string>
+    <string name="repeat_five_mins">Her beş dakika</string>
+    <string name="repeat_ten_mins">Her on dakika</string>
+    <string name="repeat_half_hour">Her yarım saatt</string>
+    <string name="repeat_hour">Her saat</string>
+    <string name="wake_screen">Ekran uyanmak</string>
+    <string name="vibrate">Titreşim Deseni</string>
+    <string name="vibrate_off">Titreşim yok</string>
+    <string name="vibrate_default">Varsayılan titreşim</string>
+    <string name="vibrate_two_long">İki uzun titreşim</string>
+    <string name="vibrate_two_short">İki kısa titreşim</string>
+    <string name="vibrate_three_short">Üç kısa titreşim</string>
+    <string name="vibrate_one_short_one_long">Bir kısa, bir uzun titreşim</string>
+    <string name="vibrate_one_long_one_short">Bir uzun, bir kısa titreşim</string>
+    <string name="vibrate_one_short">Bir kısa titreşim</string>
+    <string name="vibrate_one_long">Bir uzun titreşim</string>
+    <string name="keyboard_layout">Klavye düzeni</string>
+    <string name="keyboard_default">Varsayılan Klavye</string>
+    <string name="keyboard_send_key">Anahtar Gönder</string>
+    <string name="keyboard_enter_key">Giriş anahtarı</string>
+    <string name="sound_effects">Ses efektleri</string>
+    <string name="delivery_reports">Teslim raporları</string>
+    <string name="theme_settings">Özelleştirme</string>
+    <string name="base_theme">Tema Teması</string>
+    <string name="global_theme_color">Tema rengi</string>
+    <string name="font_size">Yazı Boyutu</string>
+    <string name="rounder_bubbles">Yuvarlak Mesaj Kabarcıklar</string>
+    <string name="swipe_delete">Silme için hızlıca kaydır</string>
+    <string name="blacklist_hint">Kara listeye alınacak numarayı yazın ...</string>
+    <string name="add_blacklist">% 1 $ s
+
+Bu kara listeyi eklemek istediğinizden emin misiniz? Mesajlar
+Artık bu numaradan geldiğinde artık kaydedilmez ve haberdar edilemezsiniz!</string>
+    <string name="remove_blacklist">% 1 $ s\n\nBu kara listeyi silmek istiyor musun?</string>
+    <string name="blacklist_need_number">Kara listeye alınacak bir telefon numarası girmeniz gerekiyor!</string>
+    <string name="no_blacklists">Kara listeleri yok</string>
+    <string name="no_blacklists_summary">Aşağıda artı düğmesini ekleyebilirsiniz!</string>
+    <string name="add">Eklemek</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="privacy_policy_summary">Web\'deki gizlilik politikamızı görüntüleyin</string>
+    <string name="account_expiring">Hesap Sona Ermesi!</string>
+    <string name="signout_time">Oturum açma tarihi:% 1 $ s</string>
+    <string name="lifetime_subscriber">Ömür Boyu Abone</string>
+    <string name="trial_period">Deneme süresi</string>
+    <string name="setup_my_account">Hesap Kur</string>
+    <string name="setup_my_account_summary">Başlamak için kaydolun veya hesabınıza giriş yapın.
+Tabletinizden veya bilgisayarınızdaki mesajlaşma gibi daha fazla özellik</string>
+    <string name="preparing_new_account">Hesap hazırlanıyor ...</string>
+    <string name="delete_account">Hesabı sil</string>
+    <string name="delete_account_summary">Hesabı bu cihazdan, diğer oturum açmış olarak kaldırır.
+Cihazlar ve sunucu. Bu tersine çevrilebilir değil!</string>
+    <string name="delete_account_confirmation">Hesabınızı silmek istediğinizden emin misiniz?
+Onunla birlikte başka her şey var mı? Daha sonra her zaman tekrar kayıt olabilirsiniz!</string>
+    <string name="change_subscription">Aboneliği Değiştir</string>
+    <string name="cancel_on_the_play_store">Aboneliğinizi iptal edin ve Play Store\'da görüntüleyin</string>
+    <string name="resync_account">İletileri Yeniden Eşitleme</string>
+    <string name="resync_account_summary">Eksik mesajlar Bu cihazı güncellemek için kullanın
+Birincil cihazınızdaki ile.</string>
+    <string name="resync_account_summary_phone">Bu, hesabınızı temizleyecek ve hesabınızı yenileyecektir.
+Şu anda dahili SMS veritabanınızda ne var.</string>
+    <string name="resync_account_confirmation">Bu, bu cihazdan gelen tüm mesajları silecek ve
+Şu anda birincil cihazınızda olanın temiz bir kopyasıyla başlayın. Bunun istediğin olduğundan emin misin?</string>
+    <string name="normalize_color_scheme">Veya istediğiniz tek bir rengi seçebilirsiniz.
+Temasın temeli:</string>
+    <string name="no_apps_found">Bu işlemi gerçekleştiren hiçbir uygulama bulunamadı</string>
+    <string name="you_denied_permission">Bu izni inkar ettiniz</string>
+    <string name="supported_platforms">Desteklenen Platformlar</string>
+    <string name="supported_platforms_summary">Uygulamaya erişebileceğiniz tüm resmi yerler</string>
+    <string name="font_size_small">Küçük</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Geniş</string>
+    <string name="font_size_extra_large">Ekstra büyük</string>
+    <string name="advanced">ileri</string>
+    <string name="send_as_mms">MMS\'ye dönüştürün</string>
+    <string name="after_one_message">Bir mesajın ardından</string>
+    <string name="after_two_messages">İki mesajın ardından</string>
+    <string name="after_three_messages">Üç mesajın ardından</string>
+    <string name="after_four_messages">Dört mesajın ardından</string>
+    <string name="send_as_mms_summary">Uzun mesajlar tek tek SMS yerine MMS olarak gönderilecek</string>
+    <string name="alert_types">Uyarı Türleri</string>
+    <string name="alert_types_summary">Bildirimler için çeşitli özelleştirmeler</string>
+    <string name="strip_unicode">Unicode Şeridi</string>
+    <string name="strip_unicode_summary">Bu karakterler giden iletilerden kaldırılacaktır.</string>
+    <string name="giffgaff_delivery">Görev Geleceği Teslim Raporları</string>
+    <string name="notification_actions">Bildirim Eylemleri</string>
+    <string name="notification_actions_summary">Bir bildirime maksimum üç işlem uygulanabilir</string>
+    <string name="mms_download_directory">Medya İndirme Rehberi</string>
+    <string name="refresh_firebase">Hesabı Yenile</string>
+    <string name="refresh_firebase_summary">Hesabınızla senkronize edilemeyen veya oturum açmanıza izin vermeyen sorunlar var mı? Bu seçeneği kullanın.</string>
+    <string name="refreshing_notifications">Bildirim tırmazı yenileniyor ...</string>
+    <string name="refresh_firebase_warning">Bu işlemi başlatırsanız, her şeyden önce <b> gerekir </b>.
+İşlem tamamlandıktan sonra tekrar, diğer tüm cihazlarınızda oturum açmanız gerekecek. Devam etmek istiyor musunuz?</string>
+    <string name="show_conversation_history">Konuşma Geçmişini Göster</string>
+    <string name="show_conversation_history_summary">Bildirimler, konuşmadaki önceki iletileri görüntüler</string>
+    <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Maksimum görüntü boyutu</string>
+    <string name="use_group_mms">MMS grubu kullan</string>
+    <string name="auto_save_media">Ortamı otomatik olarak kaydet</string>
+    <string name="auto_save_media_summary">Herhangi bir MMS ortamını / Dosyalar klasörüne otomatik olarak kaydetmek için
+Alınır.</string>
+    <string name="apn_configuration">APN Yapılandırması</string>
+    <string name="override_system_apn">Sistem APN\'lerini geçersiz kıl</string>
+    <string name="mmsc_url">MMSC URL\'si</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS bağlantı noktası</string>
+    <string name="user_agent">Kullanıcı aracı</string>
+    <string name="user_agent_profile_url">Kullanıcı aracı profili URL\'si</string>
+    <string name="user_agent_profile_tag">Kullanıcı aracı profili etiket adı</string>
+    <!-- Advanced Features Settings -->
+    <string name="signature">İmza</string>
+    <string name="signature_summary">İmzalar Pulse\'un ileti listesinde gösterilmeyecek,
+Mesajın alıcısına gösterilir.</string>
+    <string name="cleanup_old_messages">Eski Mesajları Temizle</string>
+    <string name="delayed_sending">Gecikmeli Gönderim</string>
+    <string name="quick_compose">Hızlı Oluştur</string>
+    <string name="quick_compose_summary">Yeni mesaj oluşturma işlemine en hızlı şekilde erişebilmeniz için daima aktif olan bildirim.</string>
+    <string name="secure_private_conversations">Gizli Sohbetleri Güvenle</string>
+    <string name="secure_private_conversations_summary">Özel görüşmelerin kilidini açmak için PIN isteyin.</string>
+    <!-- Theming Options -->
+    <string name="day_night">Varsayılan (Gündüz / Gece)</string>
+    <string name="always_light">Daima Işık</string>
+    <string name="always_dark">Daima Koyu</string>
+    <string name="always_black">Daima Siyah</string>
+    <string name="set_color_per_conversation">Konuşma başına renk ayarla</string>
+    <string name="material_color_red">Kırmızı</string>
+    <string name="material_color_pink">Pembe</string>
+    <string name="material_color_purple">Mor</string>
+    <string name="material_color_deep_purple">Koyu mor</string>
+    <string name="material_color_indigo">çivit</string>
+    <string name="material_color_blue">Mavi</string>
+    <string name="material_color_light_blue">Açık mavi</string>
+    <string name="material_color_cyan">Mavi</string>
+    <string name="material_color_teal">çamurcun</string>
+    <string name="material_color_green">Yeşil</string>
+    <string name="material_color_light_green">Açık yeşil</string>
+    <string name="material_color_lime">Misket Limonu</string>
+    <string name="material_color_yellow">Sarı</string>
+    <string name="material_color_amber">kehribar</string>
+    <string name="material_color_orange">Portakal</string>
+    <string name="material_color_deep_orange">Derin portakal</string>
+    <string name="material_color_brown">Kahverengi</string>
+    <string name="material_color_gray">Gri</string>
+    <string name="material_color_blue_gray">Mavi gri</string>
+    <string name="material_color_black">Siyah</string>
+    <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Bu planlanmış mesajı silmek istediğinizden emin misiniz?
+% 1 $ s mi?</string>
+    <string name="scheduled_message_hint">Gönderilecek ileti ...</string>
+    <string name="scheduled_to_hint">Göndermek için irtibat ...</string>
+    <string name="scheduled_message_sent">Zamanlanmış mesaj başarıyla gönderildi</string>
+    <string name="no_scheduled_messages">Planlanmış mesaj yok</string>
+    <string name="no_scheduled_messages_summary">Artı düğmesiyle yeni bir tane oluşturabilirsiniz
+altında!</string>
+    <string name="scheduled_message_in_future">Zaman gelecekte olmalı!</string>
+    <!-- Encryption -->
+    <string name="encrypting_and_uploading">Şifreleme ve yükleme ...</string>
+    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak ...</string>
+    <string name="encrypting_and_uploading_count">Medya mesajlarını şifrelemek ve sıkıştırmak ...
+(% 1 $ d /% 2 $ d)</string>
+    <string name="downloading_and_decrypting">İndirme ve şifre çözme ...</string>
+    <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor ...</string>
+    <!-- Quick Reply -->
+    <string name="audio_message">Sesli Mesaj</string>
+    <string name="video_message">Video Mesajı</string>
+    <string name="picture_message">Resimli Mesaj</string>
+    <string name="gif_message">GIF İletisi</string>
+    <string name="contact_card">İletişim Kartı</string>
+    <string name="conversation_with">% 1 $ s ile görüşme</string>
+    <string name="send">göndermek</string>
+    <!-- Other -->
+    <string name="updating_database">En yeni mesajları bulma ...</string>
+    <string name="dashclock_description">Okunmamış SMS / MMS bilgisi</string>
+    <string name="default_text">Varsayılan</string>
+    <string name="did_you_know">Biliyor musun?</string>
+    <string name="use_from_anywhere">Pulse internet\'e bağlı herhangi bir cihazdan kullanılabilir -
+Bugün deneyin!</string>
+    <string name="use_from_anywhere_short">Pulse, cihazlarınızdan herhangi birinde kullanılabilir!</string>
+    <string name="learn_more">Daha fazla bilgi edin</string>
+    <string name="dismiss">azletme</string>
+    <string name="renew">yenilemek</string>
+    <string name="no">Hayır</string>
+    <string name="cancel">İptal etmek</string>
+    <string name="hours">Saatler</string>
+    <string name="minutes">Dakika</string>
+    <string name="test">Ölçek</string>
+    <string name="off">kapalı</string>
+    <string name="on">üzerinde</string>
+    <string name="rate_it">Oyla!</string>
+    <string name="love_pulse_question">Polseyi sevdinme ?</string>
+    <string name="give_a_rating">Bir derece vermeyi veya arkadaşlarınızla paylaşmayı düşünün!
+
+
+5 yıldızlı değerlendirmeler kalbimi ısıttı :)</string>
+    <string name="share_promo">Hey, mesaj için Pulse\'a bayılıyorum! Bir şans ver:
+https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <!-- Times -->
+    <string name="one_second">Bir saniye</string>
+    <string name="three_seconds">Üç saniye</string>
+    <string name="five_seconds">Beş saniye</string>
+    <string name="ten_seconds">On saniye</string>
+    <string name="fifteen_seconds">On beş saniye</string>
+    <string name="thirty_seconds">Otuz saniye</string>
+    <string name="one_minute">Bir dakika</string>
+    <string name="one_week">Bir hafta</string>
+    <string name="two_weeks">İki hafta</string>
+    <string name="one_month">Bir ay</string>
+    <string name="three_months">Üç ay</string>
+    <string name="six_months">Altı ay</string>
+    <string name="one_year">Bir yıl</string>
+    <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Abonelik Bulunamadı!</string>
+    <string name="cancelled_subscription_error">Aboneliğinizi iptal etmişsiniz gibi görünüyor.
+Bu süre içinde yeni bir abonelik oluşturmazsanız uygulama otomatik olarak oturum açar
+2 gün içinde hesabınızdan çıkar. Bu bir hata ise, lütfen bana e-posta ile ulaşın.</string>
+    <string name="subscription_found">Abone bulunamadı - hoş geldiniz!</string>
+    <string name="subscription_not_found">Abonelik bulunamadı, denemeye başlayalım!</string>
+    <string name="checking_for_active_subscriptions">Abonelikleri kontrol ediyor &#8230;</string>
+    <string name="purchase_error_cancelled">Satın alma işlemini iptal ettiniz :(</string>
+    <string name="purchase_error_bad_google_play">Uh oh, Google Play\'in sorunları olabilir, bize kötü bir sonuç verdi.</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; Bu satın alma işlemimiz rekoruzda değil.</string>
+    <string name="subscriptions">Abonelik, yedi günlük denemeden sonra faturalandırılır ve istediği zaman değiştirilebilir / iptal edilebilir</string>
+    <string name="billed_immediately">Bu hemen fatura edilir.</string>
+    <string name="lifetime_purchase">10.99 $ - Ömür boyu üyelik</string>
+    <string name="lifetime_purchase_summary">Bir kez ödeyin, bir daha asla!</string>
+    <string name="yearly_purchase">Her yıl 5.99 dolar</string>
+    <string name="yearly_purchase_summary">En iyi anlaşma.</string>
+    <string name="three_month_purchase">Üç ayda bir 1,99 dolar</string>
+    <string name="three_month_purchase_summary">Bu bir yanlış gidemem.</string>
+    <string name="monthly_purchase">Her ay 0,99 dolar</string>
+    <string name="monthly_purchase_summary">Sadece denemek ister misin? Sorun değil.</string>
+    <string name="change_subscription_message">Yeni sürüme geçirmek ister misiniz? Harika! Yaptıktan sonra
+Sonraki ekranda seçim yapın, Play Store uygulamasına gidin ve eski aboneliği manuel olarak iptal etmeniz gerekir.</string>
+    <string name="beautiful_powerful_instant">Güzel, güçlü, anında.</string>
+    <string name="optimized_for_all_your_devices">Darbeler, cihazlarınızın <b> tümü </b> için optimize edilmiştir.
+Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizden metin gönderin.</string>
+    <string name="true_imessage_competitor">Android için ilk <b> gerçek </b> iMessage rakibi.</string>
+    <string name="try_it">Şimdi dene</string>
+    <string name="seven_days_free">7 gün ücretsiz!</string>
+    <string name="competition_cant_beat">Rekabet fiyatlarımıza, hızlarımıza veya hizmetimize dokunamaz -
+Kendinizle ilgili bilgi edinmek için <b>7 gün sürebilir </b>!</string>
+    <string name="select_a_trial_below"><b>Ücretsiz deneme sürümünü</b> başlatmak için aşağıdaki seçeneklerden birini seçin.</string>
+    <string name="charged_after_trial">Duruşmadan sonra ücretlendirildi:</string>
+    <string name="monthly_purchase_improved">0,99 ABD doları /\nay</string>
+    <string name="three_month_purchase_improved">1,99 ABD doları /\n3 ay</string>
+    <string name="yearly_purchase_improved">5,99 ABD doları /\nyıl</string>
+    <string name="subscription_toast">7 günlük denemenin tamamlanıncaya kadar sizden <b> ödenecek </b> olmazsınız.
+İstediğiniz zaman iptal etme.</string>
+</resources>
