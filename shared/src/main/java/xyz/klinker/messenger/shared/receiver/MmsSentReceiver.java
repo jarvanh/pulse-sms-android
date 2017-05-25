@@ -39,6 +39,12 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
+        new Thread(() -> {
+            handle(context, intent);
+        }).start();
+    }
+
+    private void handle(Context context, Intent intent) {
         Uri uri = Uri.parse(intent.getStringExtra(EXTRA_CONTENT_URI).replace("/outbox", ""));
         Cursor message = SmsMmsUtils.getMmsMessage(context, uri, null);
 

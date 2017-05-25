@@ -43,11 +43,13 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        try {
-            handleReceiver(context, intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            try {
+                handleReceiver(context, intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void handleReceiver(Context context, Intent intent) throws Exception {

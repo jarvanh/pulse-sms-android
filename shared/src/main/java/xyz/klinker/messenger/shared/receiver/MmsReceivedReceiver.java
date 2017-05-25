@@ -55,18 +55,20 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        String nullableOrBlankBodyText = insertMms(context);
+        new Thread(() -> {
+            String nullableOrBlankBodyText = insertMms(context);
 
-        if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
-            Intent mediaParser = new Intent(context, MediaParserService.class);
-            mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
-            mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
-            new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
-        }
+            if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
+                Intent mediaParser = new Intent(context, MediaParserService.class);
+                mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+                mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
+                new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
+            }
 
-        if (!ignoreNotification) {
-            context.startService(new Intent(context, NotificationService.class));
-        }
+            if (!ignoreNotification) {
+                context.startService(new Intent(context, NotificationService.class));
+            }
+        }).start();
     }
 
     private String insertMms(Context context) {
