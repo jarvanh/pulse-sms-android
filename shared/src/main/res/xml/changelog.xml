@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.3.2"
+        description="May 25th, 2017">
+        <text>Bug fixes and slight UI tweaks</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="2.3.1"
         description="May 18th, 2017">
         <text>UI performance optimizations around sending and receiving messages while in a conversation thread</text>
