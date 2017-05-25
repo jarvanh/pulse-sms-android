@@ -68,8 +68,20 @@
     <string name="last_week">Bu hafta</string>
     <string name="last_month">Bu ay</string>
     <string name="older">Daha eski</string>
-    <string name="mark_section_as_read">% 1 $ s tümünü okundu olarak işaretle</string>
-    <string name="marking_section_as_read">% 1 $ s tümünün okundu olarak işaretlenmesi</string>
+    <string name="mark_section_as_read">%1$s tümünü okundu olarak işaretle</string>
+    <string name="marking_section_as_read">%1$s tümünün okundu olarak işaretlenmesi</string>
+    <plurals name="conversations_deleted">
+        <item quantity="one">%1$d görüşme silinmiş</item>
+        <item quantity="other">%1$d görüşme silinmiş</item>
+    </plurals>
+    <plurals name="conversations_archived">
+        <item quantity="one">Arşivlenen %1$d görüşme</item>
+        <item quantity="other">Arşivlenen %1$d görüşme</item>
+    </plurals>
+    <plurals name="conversations_unarchived">
+        <item quantity="one">%1$d görüşme gelen kutusu taşındı</item>
+        <item quantity="other">%1$d görüşme gelen kutusu taşındı</item>
+    </plurals>
     <string name="undo">Geri alma</string>
     <string name="enter_search">Aramak…</string>
     <!-- Search Screen -->
@@ -89,11 +101,11 @@ Beğeneceksin! Ayrıca ücretsiz, dolayısıyla indirebilirsiniz:
 http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Mesaj yazın</string>
-    <string name="type_message_to">% 1 $ s adlı üyeye ileti yaz</string>
+    <string name="type_message_to">%1$s adlı üyeye ileti yaz</string>
     <string name="attach">iliştirmek</string>
     <string name="select_sim">SIM\'i seçin</string>
-    <string name="message_from">% 1 $ s</string>
-    <string name="message_from_bullet">% 1 $ s •</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">MMS Resmi</string>
     <string name="now">şimdi</string>
     <string name="sending">Gönderiliyor ...</string>
@@ -173,10 +185,18 @@ Nabız konuşmalarınızı öne ve ortama koyar."</string>
     <string name="not_now">Değil\nşimdi</string>
     <string name="onboarding_done">tamam</string>
     <!-- Notifications -->
-    <string name="notification_ticker">% 1 $ s gelen yeni ileti</string>
+    <string name="notification_ticker">%1$s gelen yeni ileti</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d yeni görüşmeler</item>
+        <item quantity="other">%1$d yeni görüşmeler</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d yeni mesaj var</item>
+        <item quantity="other">%1$d yeni mesaj var</item>
+    </plurals>
     <string name="read">okumak</string>
     <string name="reply">cevap</string>
-    <string name="reply_to">% 1 $ s yanıtladı</string>
+    <string name="reply_to">%1$s yanıtladı</string>
     <string name="call">Aramak</string>
     <string-array name="reply_choices">
         <item>Evet</item>
@@ -218,6 +238,14 @@ Bulabilirsiniz!</string>
     <string name="twitter">Twitter</string>
     <string name="twitter_summary">\@KlinkerApps</string>
     <string name="support">Destek</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d mesaj</item>
+        <item quantity="other">%1$d mesaj</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">%1$d görüşmeden</item>
+        <item quantity="other">%1$d görüşmeden</item>
+    </plurals>
     <string name="pin_conversation">Pin Konuşma</string>
     <string name="pin_conversation_summary">Bu sohbeti listenin başında tutar</string>
     <string name="mute_conversation">Dilsiz konuşma</string>
@@ -263,11 +291,11 @@ Bulabilirsiniz!</string>
     <string name="rounder_bubbles">Yuvarlak Mesaj Kabarcıklar</string>
     <string name="swipe_delete">Silme için hızlıca kaydır</string>
     <string name="blacklist_hint">Kara listeye alınacak numarayı yazın ...</string>
-    <string name="add_blacklist">% 1 $ s
+    <string name="add_blacklist">%1$s
 
 Bu kara listeyi eklemek istediğinizden emin misiniz? Mesajlar
 Artık bu numaradan geldiğinde artık kaydedilmez ve haberdar edilemezsiniz!</string>
-    <string name="remove_blacklist">% 1 $ s\n\nBu kara listeyi silmek istiyor musun?</string>
+    <string name="remove_blacklist">%1$s\n\nBu kara listeyi silmek istiyor musun?</string>
     <string name="blacklist_need_number">Kara listeye alınacak bir telefon numarası girmeniz gerekiyor!</string>
     <string name="no_blacklists">Kara listeleri yok</string>
     <string name="no_blacklists_summary">Aşağıda artı düğmesini ekleyebilirsiniz!</string>
@@ -275,7 +303,7 @@ Artık bu numaradan geldiğinde artık kaydedilmez ve haberdar edilemezsiniz!</s
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="privacy_policy_summary">Web\'deki gizlilik politikamızı görüntüleyin</string>
     <string name="account_expiring">Hesap Sona Ermesi!</string>
-    <string name="signout_time">Oturum açma tarihi:% 1 $ s</string>
+    <string name="signout_time">Oturum açma tarihi: %1$s</string>
     <string name="lifetime_subscriber">Ömür Boyu Abone</string>
     <string name="trial_period">Deneme süresi</string>
     <string name="setup_my_account">Hesap Kur</string>
@@ -380,7 +408,7 @@ Mesajın alıcısına gösterilir.</string>
     <string name="material_color_black">Siyah</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Bu planlanmış mesajı silmek istediğinizden emin misiniz?
-% 1 $ s mi?</string>
+%1$s mi?</string>
     <string name="scheduled_message_hint">Gönderilecek ileti ...</string>
     <string name="scheduled_to_hint">Göndermek için irtibat ...</string>
     <string name="scheduled_message_sent">Zamanlanmış mesaj başarıyla gönderildi</string>
@@ -389,18 +417,18 @@ Mesajın alıcısına gösterilir.</string>
 altında!</string>
     <string name="scheduled_message_in_future">Zaman gelecekte olmalı!</string>
     <!-- Encryption -->
-    <string name="encrypting_and_uploading">Şifreleme ve yükleme …</string>
-    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak …</string>
-    <string name="encrypting_and_uploading_count">Medya mesajlarını şifrelemek ve sıkıştırmak … (%1$d/%2$d)</string>
-    <string name="downloading_and_decrypting">İndirme ve şifre çözme …</string>
-    <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor …</string>
+    <string name="encrypting_and_uploading">Şifreleme ve yükleme ...</string>
+    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak ...</string>
+    <string name="encrypting_and_uploading_count">Medya mesajlarını şifrelemek ve sıkıştırmak ... (%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">İndirme ve şifre çözme ...</string>
+    <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor ...</string>
     <!-- Quick Reply -->
     <string name="audio_message">Sesli Mesaj</string>
     <string name="video_message">Video Mesajı</string>
     <string name="picture_message">Resimli Mesaj</string>
     <string name="gif_message">GIF İletisi</string>
     <string name="contact_card">İletişim Kartı</string>
-    <string name="conversation_with">% 1 $ s ile görüşme</string>
+    <string name="conversation_with">%1$s ile görüşme</string>
     <string name="send">göndermek</string>
     <!-- Other -->
     <string name="updating_database">En yeni mesajları bulma ...</string>

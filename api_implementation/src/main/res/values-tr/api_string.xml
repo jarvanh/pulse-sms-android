@@ -32,7 +32,7 @@ Bir tabletten veya bilgisayardan mesaj gönderme gibi özellikler, bu adımı at
     <string name="api_error">İşlem sırasında bir hata oluştu</string>
     <string name="api_device_error">Bu cihaz eklenirken bir hata oluştu. Tekrar deneyelim!</string>
     <string name="api_add_second_primary_device">Zaten birincil cihazınız varmış gibi görünüyor
-(% 1 $ s) ve yalnızca birine izin verilir! Şu anki kaldırmak istiyor musunuz
+(%1$s) ve yalnızca birine izin verilir! Şu anki kaldırmak istiyor musunuz
 Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
     <string name="api_yes">Evet</string>
     <string name="api_no">Hayır</string>
