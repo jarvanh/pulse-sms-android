@@ -389,12 +389,11 @@ Mesajın alıcısına gösterilir.</string>
 altında!</string>
     <string name="scheduled_message_in_future">Zaman gelecekte olmalı!</string>
     <!-- Encryption -->
-    <string name="encrypting_and_uploading">Şifreleme ve yükleme ...</string>
-    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak ...</string>
-    <string name="encrypting_and_uploading_count">Medya mesajlarını şifrelemek ve sıkıştırmak ...
-(% 1 $ d /% 2 $ d)</string>
-    <string name="downloading_and_decrypting">İndirme ve şifre çözme ...</string>
-    <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor ...</string>
+    <string name="encrypting_and_uploading">Şifreleme ve yükleme …</string>
+    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak …</string>
+    <string name="encrypting_and_uploading_count">Medya mesajlarını şifrelemek ve sıkıştırmak … (%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">İndirme ve şifre çözme …</string>
+    <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor …</string>
     <!-- Quick Reply -->
     <string name="audio_message">Sesli Mesaj</string>
     <string name="video_message">Video Mesajı</string>
