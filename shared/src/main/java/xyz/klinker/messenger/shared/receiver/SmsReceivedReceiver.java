@@ -43,16 +43,17 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        final Handler handler = new Handler();
         new Thread(() -> {
             try {
-                handleReceiver(context, intent);
+                handleReceiver(context, intent, handler);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
-    private void handleReceiver(Context context, Intent intent) throws Exception {
+    private void handleReceiver(Context context, Intent intent, Handler handler) throws Exception {
         Bundle extras = intent.getExtras();
 
         int simSlot = extras.getInt("slot", -1);
@@ -92,7 +93,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
 
             context.startService(new Intent(context, NotificationService.class));
-            new Handler().postDelayed(() -> context.startService(mediaParser), 2000);
+            handler.postDelayed(() -> context.startService(mediaParser), 2000);
         }
     }
 
