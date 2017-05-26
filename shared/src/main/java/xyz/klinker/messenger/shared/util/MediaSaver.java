@@ -105,7 +105,11 @@ public class MediaSaver {
                 Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                } catch(Exception x) {
+                    // background thread
+                }
             }
         } else {
             try {
@@ -114,7 +118,11 @@ public class MediaSaver {
                 Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
+                } catch(Exception x) {
+                    // background thread
+                }
             }
         }
         
