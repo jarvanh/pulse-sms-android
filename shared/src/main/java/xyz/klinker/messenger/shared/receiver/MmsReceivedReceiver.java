@@ -59,15 +59,20 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         new Thread(() -> {
             String nullableOrBlankBodyText = insertMms(context);
 
+            if (!ignoreNotification) {
+                context.startService(new Intent(context, NotificationService.class));
+            }
+
             if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
                 Intent mediaParser = new Intent(context, MediaParserService.class);
                 mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
                 mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
-                handler.postDelayed(() -> context.startService(mediaParser), 2000);
-            }
 
-            if (!ignoreNotification) {
-                context.startService(new Intent(context, NotificationService.class));
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) { }
+
+                context.startService(mediaParser);
             }
         }).start();
     }
