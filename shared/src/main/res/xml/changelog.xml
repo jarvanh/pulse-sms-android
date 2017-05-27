@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.3.3"
+        description="May 27th, 2017">
+        <text>Performance improvements</text>
+        <text>Translation fixes</text>
+    </version>
+
+    <version
         name="2.3.2"
         description="May 25th, 2017">
         <text>Bug fixes and slight UI tweaks</text>
