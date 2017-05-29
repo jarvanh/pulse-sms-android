@@ -18,8 +18,11 @@ package xyz.klinker.messenger.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -76,6 +79,13 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     private FloatingActionButton fab;
     private View emptyView;
 
+    private BroadcastReceiver scheduledMessageSent = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadMessages();
+        }
+    };
+
     public static ScheduledMessagesFragment newInstance() {
         return new ScheduledMessagesFragment();
     }
@@ -100,12 +110,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         emptyView = view.findViewById(R.id.empty_view);
 
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startSchedulingMessage();
-            }
-        });
+        fab.setOnClickListener(view1 -> startSchedulingMessage());
 
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
@@ -132,8 +137,21 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().registerReceiver(scheduledMessageSent,
+                new IntentFilter(ScheduledMessageJob.BROADCAST_SCHEDULED_SENT));
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
+
+        try {
+            getActivity().unregisterReceiver(scheduledMessageSent);
+        } catch (Exception e) {
+
+        }
 
         ScheduledMessageJob.scheduleNextRun(getActivity());
     }

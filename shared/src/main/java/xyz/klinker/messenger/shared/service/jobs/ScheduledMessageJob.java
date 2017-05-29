@@ -52,6 +52,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
  */
 public class ScheduledMessageJob extends BackgroundJob {
 
+    public static final String BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE";
     private static final int JOB_ID = 5424;
 
     @Override
@@ -109,6 +110,7 @@ public class ScheduledMessageJob extends BackgroundJob {
             source.close();
         } catch (Exception e) { }
 
+        sendBroadcast(new Intent(BROADCAST_SCHEDULED_SENT));
         scheduleNextRun(this);
     }
 
