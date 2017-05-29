@@ -284,8 +284,7 @@ public class ContactUtils {
         Cursor cursor = context.getContentResolver().query(
                 uri,
                 projection,
-                ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
-                new String[] { Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) },
+                null, null,
                 null
         );
 
