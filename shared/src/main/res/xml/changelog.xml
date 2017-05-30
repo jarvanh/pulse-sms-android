@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.3.4"
+        description="June 1st, 2017">
+        <text>Fixes for marking messages as sent when using the strip unicode option</text>
+        <text>Added "extra long" vibration pattern</text>
+    </version>
+
+    <version
         name="2.3.3"
         description="May 27th, 2017">
         <text>Performance improvements</text>
