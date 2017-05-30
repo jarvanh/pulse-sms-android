@@ -1615,6 +1615,28 @@ public class DataSource {
     }
 
     /**
+     * Get the specified number of messages.
+     */
+    public List<Message> getMessages(int count) {
+        Cursor cursor = getMessages();
+        List<Message> messages = new ArrayList<>();
+
+        if (cursor.moveToLast()) {
+            do {
+                Message message = new Message();
+                message.fillFromCursor(cursor);
+                messages.add(message);
+            } while (cursor.moveToPrevious() && messages.size() < count);
+        }
+
+        try {
+            cursor.close();
+        } catch (Exception e) { }
+
+        return messages;
+    }
+
+    /**
      * Gets all messages that contain the query text.
      *
      * @param query the text to look for.
