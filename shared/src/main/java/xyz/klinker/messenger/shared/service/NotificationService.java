@@ -272,9 +272,10 @@ public class NotificationService extends IntentService {
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
                 .setWhen(conversation.timestamp);
 
-//        if (numConversations == 1) {
-//            builder.setGroupSummary(true);
-//        }
+        if (numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto")) {
+            // this is necessary for moto's active display, for some reason
+            builder.setGroupSummary(true);
+        }
 
         if (conversation.ledColor != Color.WHITE) {
             builder.setLights(conversation.ledColor, 1000, 500);
