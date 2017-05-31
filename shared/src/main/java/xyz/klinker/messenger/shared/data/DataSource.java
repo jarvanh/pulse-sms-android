@@ -1617,7 +1617,7 @@ public class DataSource {
     /**
      * Get the specified number of messages.
      */
-    public List<Message> getMessages(int count) {
+    public List<Message> getNumberOfMessages(int count) {
         Cursor cursor = getMessages();
         List<Message> messages = new ArrayList<>();
 
