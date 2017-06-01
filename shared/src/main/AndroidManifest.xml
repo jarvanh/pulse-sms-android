@@ -94,10 +94,10 @@
             android:permission="android.permission.BROADCAST_SMS"
             android:exported="true">
 
-            <intent-filter
+            <!--<intent-filter
                 android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
+            </intent-filter>-->
 
             <intent-filter
                 android:priority="2147483647">
