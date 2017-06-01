@@ -91,28 +91,39 @@
 
         <receiver
             android:name=".receiver.SmsReceivedReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter>
+            android:permission="android.permission.BROADCAST_SMS"
+            android:exported="true">
+
+            <intent-filter
+                android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+
+            <intent-filter
+                android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
 
         <receiver
             android:name=".receiver.SmsSentReceiver"
-            android:exported="false"
+            android:exported="true"
             android:taskAffinity="${applicationId}.SMS_SENT" />
 
         <receiver
             android:name=".receiver.SmsDeliveredReceiver"
-            android:exported="false"
+            android:exported="true"
             android:taskAffinity="${applicationId}.SMS_DELIVERED" />
 
         <receiver
             android:name="com.android.mms.transaction.PushReceiver"
-            android:permission="android.permission.BROADCAST_WAP_PUSH">
-            <intent-filter>
+            android:permission="android.permission.BROADCAST_WAP_PUSH"
+            android:exported="true">
+            <intent-filter
+                android:priority="2147483647" >
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
                 <data android:mimeType="application/vnd.wap.mms-message" />
+                <data android:mimeType="application/vnd.wap.sic" />
             </intent-filter>
         </receiver>
 
@@ -124,7 +135,14 @@
         <receiver
             android:name=".receiver.MmsReceivedReceiver"
             android:exported="true"
-            android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
+            android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" >
+
+            <intent-filter
+                android:priority="2147483647">
+                <action android:name="android.provider.Telephony.MMS_DOWNLOADED" />
+            </intent-filter>
+
+        </receiver>
 
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>

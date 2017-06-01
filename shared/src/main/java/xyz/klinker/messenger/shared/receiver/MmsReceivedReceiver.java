@@ -55,7 +55,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        final Handler handler = new Handler();
         new Thread(() -> {
             String nullableOrBlankBodyText = insertMms(context);
 
