@@ -110,7 +110,7 @@ public class SmsSentReceiver extends SentReceiver {
                 // if the message was unicode, then it won't match here and would never get marked as sent or error
                 List<Message> messageList = source.getNumberOfMessages(5);
                 for (Message m : messageList) {
-                    if (StripAccents.stripAccents(m.data).equals(body)) {
+                    if (StripAccents.stripAccents(m.data).equals(body) && m.type == Message.TYPE_SENDING) {
                         markMessage(source, context, error, m.id, m.conversationId, m.data);
                         break;
                     }

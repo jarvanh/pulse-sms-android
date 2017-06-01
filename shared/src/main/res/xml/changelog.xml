@@ -21,6 +21,7 @@
         description="June 1st, 2017">
         <text>Fixes for marking messages as sent when using the strip unicode option</text>
         <text>Added "extra long" vibration pattern</text>
+        <text>Bug fixes and stability improvements</text>
     </version>
 
     <version
