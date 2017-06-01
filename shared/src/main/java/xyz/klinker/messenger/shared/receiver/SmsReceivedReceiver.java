@@ -42,9 +42,17 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 public class SmsReceivedReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, final Intent intent) {
         final Handler handler = new Handler();
         new Thread(() -> {
+            if (intent.getAction() != null && intent.getAction().equals("android.provider.Telephony.SMS_DELIVER")) {
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) { 
+                
+                }  
+            }
+            
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
