@@ -94,16 +94,22 @@
             android:permission="android.permission.BROADCAST_SMS"
             android:exported="true">
 
-            <intent-filter
-                android:priority="2147483647">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-
             <!--<intent-filter-->
                 <!--android:priority="2147483647">-->
-                <!--<action android:name="android.provider.Telephony.SMS_DELIVER" />-->
+                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
             <!--</intent-filter>-->
+
+            <intent-filter
+                android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
         </receiver>
+
+        <!--<receiver android:name=".receiver.SmsDeliverReceiver"-->
+            <!--android:permission="android.permission.BROADCAST_SMS"-->
+            <!--android:exported="true">-->
+
+        <!--</receiver>-->
 
         <receiver
             android:name=".receiver.SmsSentReceiver"
