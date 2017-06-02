@@ -323,7 +323,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         when(database.query("message", null, "conversation_id=?", new String[]{"1"}, null, null,
                 "timestamp asc")).thenReturn(cursor);
 
-        assertEquals(cursor, source.getMessages(1));
+        assertEquals(cursor, source.getMessages(1L));
     }
 
     @Test

@@ -344,11 +344,11 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void deleteConversation() {
-        assertNotSame(0, source.getMessages(1).getCount());
+        assertNotSame(0, source.getMessages(1L).getCount());
         int initialConversationSize = source.getUnarchivedConversations().getCount();
         source.deleteConversation(1);
         int newConversationSize = source.getUnarchivedConversations().getCount();
-        int newMessageSize = source.getMessages(1).getCount();
+        int newMessageSize = source.getMessages(1L).getCount();
 
         assertEquals(-1, newConversationSize - initialConversationSize);
         assertEquals(0, newMessageSize);
@@ -400,9 +400,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getMessages() {
-        assertNotSame(0, source.getMessages(1).getCount());
-        assertNotSame(0, source.getMessages(2).getCount());
-        assertNotSame(0, source.getMessages(3).getCount());
+        assertNotSame(0, source.getMessages(1L).getCount());
+        assertNotSame(0, source.getMessages(2L).getCount());
+        assertNotSame(0, source.getMessages(3L).getCount());
     }
 
     @Test
@@ -457,26 +457,26 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void updateMessageType() {
         source.updateMessageType(1, Message.TYPE_SENT);
-        Cursor messages = source.getMessages(1);
+        Cursor messages = source.getMessages(1L);
         messages.moveToLast();
         assertEquals(Message.TYPE_SENT, messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE)));
     }
 
     @Test
     public void insertSentMessage() {
-        int initialMessageSize = source.getMessages(1).getCount();
+        int initialMessageSize = source.getMessages(1L).getCount();
         source.insertSentMessage("1111111", "test", MimeType.TEXT_PLAIN, RuntimeEnvironment.application);
-        int newMessageSize = source.getMessages(1).getCount();
+        int newMessageSize = source.getMessages(1L).getCount();
 
         assertEquals(1, newMessageSize - initialMessageSize);
     }
 
     @Test
     public void insertMessageExistingConversation() {
-        int initialMessageSize = source.getMessages(1).getCount();
+        int initialMessageSize = source.getMessages(1L).getCount();
         int initialConversationSize = source.getUnarchivedConversations().getCount();
         source.insertMessage(getFakeMessage(), "1111111", RuntimeEnvironment.application);
-        int newMessageSize = source.getMessages(1).getCount();
+        int newMessageSize = source.getMessages(1L).getCount();
         int newConversationSize = source.getUnarchivedConversations().getCount();
 
         assertEquals(initialConversationSize, newConversationSize);
@@ -485,10 +485,10 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void insertMessageExistingGroupConversation() {
-        int initialMessageSize = source.getMessages(4).getCount();
+        int initialMessageSize = source.getMessages(4L).getCount();
         int initialConversationSize = source.getUnarchivedConversations().getCount();
         source.insertMessage(getFakeMessage(), "1111111, 3333333", RuntimeEnvironment.application);
-        int newMessageSize = source.getMessages(4).getCount();
+        int newMessageSize = source.getMessages(4L).getCount();
         int newConversationSize = source.getUnarchivedConversations().getCount();
 
         assertEquals(initialConversationSize, newConversationSize);
@@ -515,9 +515,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void insertMessage() {
-        int initialSize = source.getMessages(2).getCount();
+        int initialSize = source.getMessages(2L).getCount();
         source.insertMessage(RuntimeEnvironment.application, getFakeMessage(), 2);
-        int newSize = source.getMessages(2).getCount();
+        int newSize = source.getMessages(2L).getCount();
 
         assertEquals(1, newSize - initialSize);
 
@@ -529,9 +529,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void deleteMessage() {
-        int initialSize = source.getMessages(2).getCount();
+        int initialSize = source.getMessages(2L).getCount();
         source.deleteMessage(3);
-        int newSize = source.getMessages(2).getCount();
+        int newSize = source.getMessages(2L).getCount();
 
         assertEquals(1, initialSize - newSize);
     }

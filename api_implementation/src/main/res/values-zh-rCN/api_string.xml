@@ -29,7 +29,6 @@
     <string name="api_connecting">正在连接服务器…</string>
     <string name="api_error">操作失败(¯―¯٥)</string>
     <string name="api_device_error">添加设备出错啦！重试看看(・∀・)</string>
-    <string name="api_add_second_primary_device">似乎你的账号已经有了一台主设备了哦，但是只允许一台主设备。你想要移除已有的设备，并且将此设为主设备吗？</string>
     <string name="api_yes">是</string>
     <string name="api_no">不</string>
     <string name="api_no_email">你还没输入邮箱呢</string>

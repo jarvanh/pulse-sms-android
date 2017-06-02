@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Oturum aç</string>
+    <string name="api_signup">Kaydol</string>
+    <string name="api_signup_failed">Bu cihaza kaydolamazsınız, birincil kayıt yaptırmanız gerekir
+Önce bir telefon numarası olan cihaz!</string>
+    <string name="api_skip_signup">Veya yalnızca bu cihazda ve ağda uygulamayı kullanmak istemiyorsanız
+Bir tabletten veya bilgisayardan mesaj gönderme gibi özellikler, bu adımı atlayabilirsiniz:</string>
+    <string name="api_skip">atlamak</string>
+    <string name="api_email">Emailin Address</string>
+    <string name="api_password">Parola</string>
+    <string name="api_forgot_password">Şifremi unuttum SSS</string>
+    <string name="api_password_confirmation">Şifre onayı</string>
+    <string name="api_name">isim</string>
+    <string name="api_phone_number">Telefon numarası</string>
+    <string name="api_connecting">Sunucuya baglanıyor…</string>
+    <string name="api_error">İşlem sırasında bir hata oluştu</string>
+    <string name="api_device_error">Bu cihaz eklenirken bir hata oluştu. Tekrar deneyelim!</string>
+    <string name="api_add_second_primary_device">Zaten birincil cihazınız varmış gibi görünüyor
+(%1$s) ve yalnızca birine izin verilir! Şu anki kaldırmak istiyor musunuz
+Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
+    <string name="api_yes">Evet</string>
+    <string name="api_no">Hayır</string>
+    <string name="api_no_email">Hiçbir e-posta adresi girilmedi</string>
+    <string name="api_email_invalid">Geçersiz e-posta adresi</string>
+    <string name="api_no_password">Şifre girilmedi</string>
+    <string name="api_no_password_confirmation">Şifre onayı girilmedi</string>
+    <string name="api_password_mismatch">Parolalar uyuşmuyor</string>
+    <string name="api_no_name">Ad girilmedi</string>
+    <string name="api_no_phone_number">Telefon numarası girilmedi</string>
+    <string name="api_login_error">Oturum açma, yanlış e-posta veya şifre hatası oluştu mu?</string>
+    <string name="api_activate_summary">Bu cihazdaki tüm mesajlarınızı almak için giriş yapın!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">Başkan</string>
+    <string name="api_activate_1_2">tv.klinkerapps.com</string>
+    <string name="api_activity_1_21">wear.klinkerapps.com</string>
+    <string name="api_activate_1_3">Bir mobil cihazda veya bilgisayarda</string>
+    <string name="api_activate_1_4">Bir bilgisayarda.</string>
+    <string name="api_activate_2_1">İnternet sitesinde</string>
+    <string name="api_activate_2_2">Kodu sağa yaz</string>
+    <string name="api_activate_2_3">Hesabınızı bağlamak için!</string>
+    <string name="api_activate_3_1">Kodu giriniz:</string>
+    <string name="api_confirm_password">Lütfen şifrenizi onaylayın:</string>
+    <string name="api_wrong_password">Onay başarısız oldu. Şifreniz doğru mu?</string>
+    <string name="api_email_taken">Oturum açarken bir hata oluştu; bu e-postayla zaten bir hesabınız var mı?</string>
+    <string name="api_confirm">Onaylamak</string>
+    <string name="api_continue">Devam et</string>
+</resources>

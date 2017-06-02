@@ -30,9 +30,6 @@
     <string name="api_connecting">מתחבר לשרת...</string>
     <string name="api_error">אירעה שגיאה במהלך הפעולה</string>
     <string name="api_device_error">אירעה שגיאה בעת הוספת המכשיר. בואו ננסה שוב!</string>
-    <string name="api_add_second_primary_device">נראה שיש לך מכשיר ראשי
-(% 1 $ s) עבור החשבון שלך ורק אחד מותר! האם ברצונך להסיר את
-המכשיר הראשי ולהגדיר את זה כמו הראשי החדש?</string>
     <string name="api_yes">כן</string>
     <string name="api_no">לא</string>
     <string name="api_no_email">לא הוזנה כתובת דוא\"ל</string>

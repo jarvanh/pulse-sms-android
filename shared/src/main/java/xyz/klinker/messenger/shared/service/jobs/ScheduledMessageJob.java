@@ -52,6 +52,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
  */
 public class ScheduledMessageJob extends BackgroundJob {
 
+    public static final String BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE";
     private static final int JOB_ID = 5424;
 
     @Override
@@ -66,8 +67,10 @@ public class ScheduledMessageJob extends BackgroundJob {
                 long timestamp = messages.getLong(
                         messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP));
 
-                // if message scheduled to be sent in less than 5 mins
-                if (timestamp < System.currentTimeMillis() + (1000 * 60 * 5)) {
+                // if message scheduled to be sent in less than 5 mins in the future,
+                // or more than 60 in the past
+                if (timestamp > System.currentTimeMillis() - (1000 * 60 * 60) &&
+                        timestamp < System.currentTimeMillis() + (1000 * 60 * 5)) {
                     ScheduledMessage message = new ScheduledMessage();
                     message.fillFromCursor(messages);
 
@@ -107,6 +110,7 @@ public class ScheduledMessageJob extends BackgroundJob {
             source.close();
         } catch (Exception e) { }
 
+        sendBroadcast(new Intent(BROADCAST_SCHEDULED_SENT));
         scheduleNextRun(this);
     }
 

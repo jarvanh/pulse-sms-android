@@ -38,12 +38,15 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        try {
-            super.onReceive(context, intent);
-            handleReceiver(context, intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        super.onReceive(context, intent);
+
+        new Thread(() -> {
+            try {
+                handleReceiver(context, intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void handleReceiver(Context context, Intent intent) throws Exception {

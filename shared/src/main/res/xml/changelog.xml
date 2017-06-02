@@ -17,6 +17,28 @@
 <changelog>
 
     <version
+        name="2.3.4"
+        description="June 1st, 2017">
+        <text>Fixes for marking messages as sent when using the strip unicode option</text>
+        <text>Added "extra long" vibration pattern</text>
+        <text>Bug fixes and stability improvements</text>
+    </version>
+
+    <version
+        name="2.3.3"
+        description="May 27th, 2017">
+        <text>Performance improvements</text>
+        <text>Translation fixes</text>
+    </version>
+
+    <version
+        name="2.3.2"
+        description="May 25th, 2017">
+        <text>Bug fixes and slight UI tweaks</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="2.3.1"
         description="May 18th, 2017">
         <text>UI performance optimizations around sending and receiving messages while in a conversation thread</text>

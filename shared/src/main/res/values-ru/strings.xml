@@ -47,7 +47,7 @@
     <string name="menu_conversation_information">Информация о диалоге</string>
     <string name="menu_conversation_blacklist">Добавить в чёрный список</string>
     <string name="menu_conversation_schedule">Отложить сообщение</string>
-    <string name="menu_contact_settings">Персонализация</string>
+    <string name="menu_contact_settings">Настройки беседы</string>
     <string name="menu_group_settings">Настройки группы</string>
     <string name="menu_snooze_off">Выкл</string>
     <string name="menu_snooze_1">1 час</string>
@@ -115,6 +115,8 @@
     <string name="record_video">Записать видео</string>
     <string name="record_audio">Записать аудио</string>
     <string name="attach_location">Добавить местоположение</string>
+    <string name="attach_contact">Прикрепить контакт</string>
+    <string name="attach_contact_summary">Выберите или введите контакт, чтобы прикрепить к сообщению!</string>
     <string name="no_location_found">Не могу определить ваше местоположение.</string>
     <string name="camera_permission_needed">Необходимо разрешение на использование камеры, чтобы делать фотографии!</string>
     <string name="take_picture">Быстрый снимок</string>
@@ -210,11 +212,17 @@
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Просмотр лицензий открытых источников</string>
     <string name="app_version">Версия приложения</string>
+    <string name="account_information">Об учётной записи</string>
+    <string name="account_actions">Действия с учётной записью</string>
     <string name="device_id">ID устройства</string>
     <string name="device_info">Об устройстве</string>
     <string name="website">Сайт</string>
     <string name="access_messages_from_any_device">Перейти и обмениваться сообщениями с любого устройства!</string>
     <string name="beta_disclaimer">Проект находится в состоянии бета-теста, пожалуйста, сообщайте о любых неисправностях.</string>
+    <string name="app_info">О приложении</string>
+    <string name="platform_info">О платформе</string>
+    <string name="troubleshooting">Решение проблем</string>
+    <string name="get_in_touch">Связаться с нами</string>
     <string name="faqs">Часто задаваемые вопросы</string>
     <string name="features">Особенности</string>
     <string name="issues">Трекер задач</string>
@@ -305,6 +313,7 @@
     <string name="cancel_on_the_play_store">Отменить и посмотреть вашу подписку в Play Store</string>
     <string name="resync_account">Повторная синхронизация</string>
     <string name="resync_account_summary">Отсутствуют сообщения? Используйте это, чтобы синхронизировать данные с основным устройством.</string>
+    <string name="resync_account_summary_phone">Сообщения на сервере будут стёрты и заменены актуальными, хранящимися непосредственно в памяти устройства.</string>
     <string name="resync_account_confirmation">Все сообщения будут удалены с этого устройства и загрузятся актуальные данные с основного. Вы уверены, что хотите этого?</string>
     <string name="normalize_color_scheme">Или, можете выбрать единственный общий цвет для контакта:</string>
     <string name="no_apps_found">Не найдено приложений для выполнения этого действие</string>
@@ -317,6 +326,10 @@
     <string name="font_size_extra_large">Очень большой</string>
     <string name="advanced">Дополнительно</string>
     <string name="send_as_mms">Преобразовать в MMS</string>
+    <string name="after_one_message">После 1 сообщения</string>
+    <string name="after_two_messages">После 2 сообщений</string>
+    <string name="after_three_messages">После 3 сообщений</string>
+    <string name="after_four_messages">После 4 сообщений</string>
     <string name="send_as_mms_summary">Длинные сообщения будут отправлены как MMS, вместо нескольких SMS</string>
     <string name="alert_types">Виды уведомлений</string>
     <string name="alert_types_summary">Различные настройки уведомлений</string>
@@ -326,9 +339,12 @@
     <string name="notification_actions">Быстрые действия в уведомлениях</string>
     <string name="notification_actions_summary">Можно включить не более трёх быстрых действий в уведомлениях</string>
     <string name="mms_download_directory">Папка загрузки медиафайлов</string>
-    <string name="refresh_firebase">Обновить пуш-уведомления</string>
-    <string name="refresh_firebase_summary">Сообщения не отправляются на это устройство? Повторите после использования этой опции.</string>
+    <string name="refresh_firebase">Обновить учётную запись</string>
+    <string name="refresh_firebase_summary">Сообщения не синхронизируются или не получается авторизоваться? Воспользуйтесь этим.</string>
     <string name="refreshing_notifications">Обновляем уведомления...</string>
+    <string name="refresh_firebase_warning">Если вы запустите этот процесс, учтите, что по его завершении вы <b>должны</b> заново авторизоваться со всех ваших устройств. Продолжить?</string>
+    <string name="show_conversation_history">Показывать предыдущие сообщения</string>
+    <string name="show_conversation_history_summary">В уведомлениях будут отображаться предыдущие сообщения</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Максимальный размер изображения</string>
     <string name="use_group_mms">Использовать групповые MMS</string>
@@ -444,7 +460,7 @@
     <string name="purchase_error_cancelled">Вы отменили покупку :(</string>
     <string name="purchase_error_bad_google_play">Ой-ой, похожу возникли проблемы с Google Play.</string>
     <string name="purchase_error_bad_sku">Хмм&#8230; Данная покупка не соответствует ни одной в наших записях.</string>
-    <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена или отменена в любое время:</string>
+    <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена или отменена в любое время</string>
     <string name="billed_immediately">Оплата происходит сразу.</string>
     <string name="lifetime_purchase">$10.99 - Пожизненная лицензия</string>
     <string name="lifetime_purchase_summary">Один платёж - пользуешься всегда!</string>
@@ -455,4 +471,19 @@
     <string name="monthly_purchase">$0.99 каждый месяц</string>
     <string name="monthly_purchase_summary">Просто попробовать? Нет проблем.</string>
     <string name="change_subscription_message">Хотите улучшить? Отлично! После того как вы сделает свой выбор на следующей странице, перейдите в Play Store  и отмените старую подписку.</string>
+    <string name="beautiful_powerful_instant">Красивый, мощный, мгновенный.</string>
+    <string name="optimized_for_all_your_devices">Pulse оптимизирован под <b>любые</b> ваши устройства.
+Отправляйте текстовые сообщения через: web-приложение, ПК, планшет, умные часы и даже ТВ.</string>
+    <string name="true_imessage_competitor">Первый <b>настоящий</b> конкурент iMessage на Android.</string>
+    <string name="try_it">Попробуйте!</string>
+    <string name="seven_days_free">Неделя бесплатно!</string>
+    <string name="competition_cant_beat">Конкуренция не может повлиять на наши цены, скорость или обслуживание
+-
+<b>у вас есть 7 дней</b>, чтобы убедиться в этом!</string>
+    <string name="select_a_trial_below">Выберите один из следующих вариантов для активации <b>пробного периода</b>.</string>
+    <string name="charged_after_trial">Будут списаны после пробного периода:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nв месяц</string>
+    <string name="three_month_purchase_improved">$1.99 /\nза 3 месяца</string>
+    <string name="yearly_purchase_improved">$5.99 /\nв год</string>
+    <string name="subscription_toast">Денежные средства <b>не</b> будут списаны до истечения пробного периода. Вы можете отменить подписку в любой момент.</string>
 </resources>
