@@ -68,14 +68,12 @@ public class MediaSaver {
     private void saveMessage(Message message) {
         final String directory = MmsSettings.get(context).saveDirectory;
         final String extension = MimeType.getExtension(message.mimeType);
-        File dst = new File(directory,
-                SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) + extension);
+        final String fileName = "media-" + message.timestamp;
+        File dst = new File(directory, fileName + extension);
 
         int count = 1;
         while (dst.exists()) {
-            dst = new File(directory,
-                    SimpleDateFormat.getDateTimeInstance().format(new Date(message.timestamp)) +
-                            "-" + Integer.toString(count) + extension);
+            dst = new File(directory, fileName + "-" + Integer.toString(count) + extension);
             count++;
         }
 
