@@ -55,7 +55,7 @@
     <uses-feature android:name="android.hardware.screen.landscape" android:required="false"/>
 
     <application
-        android:appCategory="messaging">
+        android:appCategory="social">
 
         <provider
             android:name="android.support.v4.content.FileProvider"
