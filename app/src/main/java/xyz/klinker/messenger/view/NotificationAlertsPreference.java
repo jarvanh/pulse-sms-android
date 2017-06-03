@@ -216,6 +216,8 @@ public class NotificationAlertsPreference extends Preference implements
         Settings settings = Settings.get(getContext());
         VibratePattern vibratePattern = settings.vibrate;
 
+        NotificationUtils.createTestChannel(getContext());
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle("Test Notification")
