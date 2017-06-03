@@ -78,14 +78,9 @@ public class NotificationUtils {
             return;
         }
 
-        final String notificationChannelId = conversation.id + "";
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationChannel existingChannel = manager.getNotificationChannel(notificationChannelId);
-        if (existingChannel == null) {
-            NotificationChannel channel = createChannel(context, conversation);
-            manager.createNotificationChannel(channel);
-        }
+        final NotificationChannel channel = createChannel(context, conversation);
+        manager.createNotificationChannel(channel);
     }
 
     public static void createNotificationChannels(Context context, DataSource source) {
@@ -107,13 +102,8 @@ public class NotificationUtils {
 
         for (int i = 0; i < conversations.size(); i++) {
             final Conversation conversation = conversations.get(i);
-            final String notificationChannelId = conversation.id + "";
-
-            NotificationChannel existingChannel = manager.getNotificationChannel(notificationChannelId);
-            if (existingChannel == null) {
-                NotificationChannel channel = createChannel(context, conversation);
-                channels.add(channel);
-            }
+            final NotificationChannel channel = createChannel(context, conversation);
+            channels.add(channel);
         }
 
         manager.createNotificationChannels(channels);
