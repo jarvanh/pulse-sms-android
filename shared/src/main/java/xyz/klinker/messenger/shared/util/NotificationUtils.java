@@ -24,6 +24,8 @@ import xyz.klinker.messenger.shared.service.NotificationService;
 
 public class NotificationUtils {
 
+    public static final String MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary";
+
     public static void cancelGroupedNotificationWithNoContent(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Map<String, Integer> map = new HashMap();
@@ -95,6 +97,10 @@ public class NotificationUtils {
         NotificationChannelGroup conversationsGroup = new NotificationChannelGroup("conversations",
                 context.getString(R.string.conversations));
         manager.createNotificationChannelGroup(conversationsGroup);
+
+        final NotificationChannel messageGroupChannel = new NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
+                "Message Group Summary Notifications", NotificationManager.IMPORTANCE_MAX);
+        manager.createNotificationChannel(messageGroupChannel);
 
         List<Conversation> conversations = source.getAllConversationsAsList();
         List<NotificationChannel> channels = new ArrayList<>();
