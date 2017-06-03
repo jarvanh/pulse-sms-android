@@ -219,6 +219,9 @@
     <string name="new_message">New Message</string>
     <string name="received_new_message">You received a new text!</string>
     <string name="media">Media</string>
+    <string name="test_notifications_channel">Test notifications</string>
+    <string name="group_summary_notifications">Message Group Summary Notifications</string>
+    <string name="failed_messages_channel">Failed messages</string>
 
 
     <!-- About, Help and Feedback and Settings -->

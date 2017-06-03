@@ -21,6 +21,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 
 public class NotificationAlertsPreference extends Preference implements
         Preference.OnPreferenceClickListener {
@@ -215,7 +216,7 @@ public class NotificationAlertsPreference extends Preference implements
         Settings settings = Settings.get(getContext());
         VibratePattern vibratePattern = settings.vibrate;
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")

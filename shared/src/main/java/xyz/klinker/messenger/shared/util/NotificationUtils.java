@@ -25,6 +25,8 @@ import xyz.klinker.messenger.shared.service.NotificationService;
 public class NotificationUtils {
 
     public static final String MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary";
+    public static final String FAILED_MESSAGES_CHANNEL_ID = "failed-messages";
+    public static final String TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications";
 
     public static void cancelGroupedNotificationWithNoContent(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -73,7 +75,7 @@ public class NotificationUtils {
         }
     }
 
-    public static void createNotificationChannelIfNonExistant(Context context, Conversation conversation) {
+    public static void createNotificationChannelIfNonExistent(Context context, Conversation conversation) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -83,19 +85,58 @@ public class NotificationUtils {
         manager.createNotificationChannel(channel);
     }
 
+    public static void createTestChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel testChannel = new NotificationChannel(TEST_NOTIFICATIONS_CHANNEL_ID,
+                context.getString(R.string.test_notifications_channel),
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(testChannel);
+    }
+
+    public static void createFailedMessageChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel testChannel = new NotificationChannel(FAILED_MESSAGES_CHANNEL_ID,
+                context.getString(R.string.failed_messages_channel),
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(testChannel);
+    }
+
+    public static void createMessageGroupChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationChannel messageGroupChannel = new NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
+                context.getString(R.string.group_summary_notifications),
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(messageGroupChannel);
+    }
+
     public static void createNotificationChannels(Context context, DataSource source) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // notification channel group for conversations
         NotificationChannelGroup conversationsGroup = new NotificationChannelGroup("conversations",
                 context.getString(R.string.conversations));
         manager.createNotificationChannelGroup(conversationsGroup);
 
-        final NotificationChannel messageGroupChannel = new NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
-                "Message Group Summary Notifications", NotificationManager.IMPORTANCE_MAX);
-        manager.createNotificationChannel(messageGroupChannel);
+        // channels to place the notifications in
+        createTestChannel(context);
+        createFailedMessageChannel(context);
+        createMessageGroupChannel(context);
 
         List<Conversation> conversations = source.getAllConversationsAsList();
         List<NotificationChannel> channels = new ArrayList<>();
@@ -110,7 +151,10 @@ public class NotificationUtils {
     }
 
     private static NotificationChannel createChannel(Context context, Conversation conversation) {
-        NotificationChannel channel = new NotificationChannel(conversation.id + "", conversation.title, NotificationManager.IMPORTANCE_MAX);
+        Settings settings = Settings.get(context);
+
+        NotificationChannel channel = new NotificationChannel(conversation.id + "", conversation.title,
+                settings.headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
         channel.setGroup("conversations");
         channel.enableLights(true);
         channel.setLightColor(conversation.ledColor);
@@ -118,7 +162,6 @@ public class NotificationUtils {
         channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
         channel.setSound(NotificationService.getRingtone(context, conversation.ringtoneUri),
                 new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
-
 
         return channel;
     }

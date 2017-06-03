@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.shared.service;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -198,7 +197,7 @@ public class NotificationService extends IntentService {
                             conversations.add(conversation);
                             keys.add(conversationId);
 
-                            NotificationUtils.createNotificationChannelIfNonExistant(this, c);
+                            NotificationUtils.createNotificationChannelIfNonExistent(this, c);
                         }
                     } else {
                         conversation = conversations.get(conversationIndex);

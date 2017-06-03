@@ -40,6 +40,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.ResendFailedMessage;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
 /**
@@ -157,7 +158,7 @@ public class SmsSentReceiver extends SentReceiver {
             PendingIntent pendingOpen = PendingIntent.getActivity(context,
                     (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder notification = new NotificationCompat.Builder(context)
+            NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setContentTitle(context.getString(R.string.message_sending_failed))
                     .setContentText(data)
