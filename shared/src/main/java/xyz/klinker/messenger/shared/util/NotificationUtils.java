@@ -72,7 +72,7 @@ public class NotificationUtils {
     }
 
     public static void createNotificationChannelIfNonExistant(Context context, Conversation conversation) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
 
@@ -87,7 +87,7 @@ public class NotificationUtils {
     }
 
     public static void createNotificationChannels(Context context, DataSource source) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
 

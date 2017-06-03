@@ -65,8 +65,6 @@ public class MessengerApplication extends FirebaseApplication {
         } else if (theme.isDark || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-
-        // TODO: create notification channels
     }
 
     /**
