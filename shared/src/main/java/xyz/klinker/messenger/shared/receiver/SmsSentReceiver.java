@@ -29,7 +29,9 @@ import android.telephony.SmsManager;
 import com.klinker.android.send_message.SentReceiver;
 import com.klinker.android.send_message.StripAccents;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.R;
@@ -106,13 +108,30 @@ public class SmsSentReceiver extends SentReceiver {
                 String data = messages.getString(messages.getColumnIndex(Message.COLUMN_DATA));
 
                 markMessage(source, context, error, id, conversationId, data);
-            } else if (Settings.get(context).stripUnicode) {
+            } else {
                 // if the message was unicode, then it won't match here and would never get marked as sent or error
-                List<Message> messageList = source.getNumberOfMessages(5);
+                List<Message> messageList = source.getNumberOfMessages(10);
+                boolean markedAsSent = false;
                 for (Message m : messageList) {
                     if (StripAccents.stripAccents(m.data).equals(body) && m.type == Message.TYPE_SENDING) {
                         markMessage(source, context, error, m.id, m.conversationId, m.data);
+                        markedAsSent = true;
                         break;
+                    }
+                }
+
+                if (!markedAsSent) {
+                    Set<Long> conversationIds = new HashSet<>();
+
+                    for (Message m : messageList) {
+                        if (m.type == Message.TYPE_SENDING) {
+                            source.updateMessageType(m.id, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
+                            conversationIds.add(m.conversationId);
+                        }
+                    }
+
+                    for (Long id : conversationIds) {
+                        MessageListUpdatedReceiver.sendBroadcast(context, id);
                     }
                 }
             }
