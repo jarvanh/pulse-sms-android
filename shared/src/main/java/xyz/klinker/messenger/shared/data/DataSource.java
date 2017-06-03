@@ -857,6 +857,14 @@ public class DataSource {
     }
 
     /**
+     * Get a list of all the conversations.
+     * @return a list of the conversations in the cursor
+     */
+    public List<Conversation> getAllConversationsAsList() {
+        return convertConversationCursorToList(getAllConversations());
+    }
+
+    /**
      * Gets all conversations in the database.
      *
      * @return a list of conversations.

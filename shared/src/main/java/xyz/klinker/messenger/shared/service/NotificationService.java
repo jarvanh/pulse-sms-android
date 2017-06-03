@@ -60,6 +60,7 @@ import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.NotificationWindowManager;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.TvUtils;
@@ -212,6 +213,7 @@ public class NotificationService extends IntentService {
             unseenMessages.close();
         } catch (Exception e) { }
 
+        NotificationUtils.createNotificationChannels(this, source);
         source.close();
 
         Collections.sort(conversations, (result1, result2) ->
