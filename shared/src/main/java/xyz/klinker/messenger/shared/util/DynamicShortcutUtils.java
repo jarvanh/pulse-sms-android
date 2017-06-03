@@ -81,7 +81,7 @@ public class DynamicShortcutUtils {
     }
 
     private Icon createIcon(Bitmap bitmap) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (AndroidVersionUtil.isAndroidO()) {
             return Icon.createWithAdaptiveBitmap(bitmap);
         } else {
             return Icon.createWithBitmap(bitmap);
