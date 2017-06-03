@@ -71,12 +71,27 @@ public class NotificationUtils {
         }
     }
 
+    public static void createNotificationChannelIfNonExistant(Context context, Conversation conversation) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return;
+        }
+
+        final String notificationChannelId = conversation.id + "";
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel existingChannel = manager.getNotificationChannel(notificationChannelId);
+        if (existingChannel == null) {
+            NotificationChannel channel = createChannel(context, conversation);
+            manager.createNotificationChannel(channel);
+        }
+    }
+
     public static void createNotificationChannels(Context context, DataSource source) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return;
         }
 
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannelGroup conversationsGroup = new NotificationChannelGroup("conversations",
                 context.getString(R.string.conversations));
         manager.createNotificationChannelGroup(conversationsGroup);
@@ -85,26 +100,31 @@ public class NotificationUtils {
         List<NotificationChannel> channels = new ArrayList<>();
 
         for (int i = 0; i < conversations.size(); i++) {
-            Conversation conversation = conversations.get(i);
-            String notificationChannelId = conversation.id + "";
+            final Conversation conversation = conversations.get(i);
+            final String notificationChannelId = conversation.id + "";
 
             NotificationChannel existingChannel = manager.getNotificationChannel(notificationChannelId);
-
             if (existingChannel == null) {
-                NotificationChannel channel = new NotificationChannel(notificationChannelId, conversation.title, NotificationManager.IMPORTANCE_MAX);
-                channel.setGroup("conversations");
-                channel.enableLights(true);
-                channel.setLightColor(conversation.ledColor);
-                channel.setShowBadge(true);
-                channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
-                channel.setSound(NotificationService.getRingtone(context, conversation.ringtoneUri),
-                        new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
-
+                NotificationChannel channel = createChannel(context, conversation);
                 channels.add(channel);
             }
         }
 
         manager.createNotificationChannels(channels);
+    }
+
+    private static NotificationChannel createChannel(Context context, Conversation conversation) {
+        NotificationChannel channel = new NotificationChannel(conversation.id + "", conversation.title, NotificationManager.IMPORTANCE_MAX);
+        channel.setGroup("conversations");
+        channel.enableLights(true);
+        channel.setLightColor(conversation.ledColor);
+        channel.setShowBadge(true);
+        channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
+        channel.setSound(NotificationService.getRingtone(context, conversation.ringtoneUri),
+                new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
+
+
+        return channel;
     }
 
 }

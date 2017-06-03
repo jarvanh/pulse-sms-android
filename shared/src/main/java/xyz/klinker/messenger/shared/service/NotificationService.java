@@ -197,6 +197,8 @@ public class NotificationService extends IntentService {
 
                             conversations.add(conversation);
                             keys.add(conversationId);
+
+                            NotificationUtils.createNotificationChannelIfNonExistant(this, c);
                         }
                     } else {
                         conversation = conversations.get(conversationIndex);
@@ -213,7 +215,6 @@ public class NotificationService extends IntentService {
             unseenMessages.close();
         } catch (Exception e) { }
 
-        NotificationUtils.createNotificationChannels(this, source);
         source.close();
 
         Collections.sort(conversations, (result1, result2) ->

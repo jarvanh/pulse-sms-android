@@ -76,6 +76,8 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         startService(new Intent(this, ContentObserverService.class));
+
+        // TODO: create notification channels
     }
 
     public void refreshDynamicShortcuts() {
