@@ -169,4 +169,13 @@ public class NotificationUtils {
         return channel;
     }
 
+    public static void deleteChannel(Context context, long conversationId) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.deleteNotificationChannel(conversationId + "");
+    }
+
 }
