@@ -76,6 +76,7 @@ public class NotificationService extends IntentService {
     protected static final boolean AUTO_CANCEL = true;
     
     public static Long CONVERSATION_ID_OPEN = 0L;
+    public static Long LAST_RUN_TIME = 0L;
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
@@ -96,6 +97,17 @@ public class NotificationService extends IntentService {
                 return;
             }
 
+            if (LAST_RUN_TIME - System.currentTimeMillis() < 1000) {
+                // When switching the SMS received receiver to run in a background thread, messages
+                // started coming in immediately after each other. This seemed to cause a race condition
+                // somewhere in here, where it would automatically dismiss if multiple messages came in
+                // at the same time. Let's delay things a bit here, that may work.
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) { }
+            }
+
+            LAST_RUN_TIME = System.currentTimeMillis();
             skipSummaryNotification = false;
 
             List<NotificationConversation> conversations = getUnseenConversations();
@@ -119,16 +131,13 @@ public class NotificationService extends IntentService {
                 }
 
                 if (Settings.get(this).wakeScreen) {
-                    new Thread(() -> {
-                        try {
-                            Thread.sleep(600);
-                        } catch (Exception e) {
-                        }
+                    try {
+                        Thread.sleep(600);
+                    } catch (Exception e) { }
 
-                        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
-                        wl.acquire(5000);
-                    }).start();
+                    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION");
+                    wl.acquire(5000);
                 }
             }
 
