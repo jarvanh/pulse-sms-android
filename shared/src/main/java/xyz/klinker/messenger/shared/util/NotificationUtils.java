@@ -158,8 +158,11 @@ public class NotificationUtils {
         channel.setGroup("conversations");
         channel.enableLights(true);
         channel.setLightColor(conversation.ledColor);
+        channel.setBypassDnd(false);
         channel.setShowBadge(true);
         channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
+        channel.setLockscreenVisibility(conversation.privateNotifications ?
+                Notification.VISIBILITY_PRIVATE : Notification.VISIBILITY_PUBLIC);
         channel.setSound(NotificationService.getRingtone(context, conversation.ringtoneUri),
                 new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
 
