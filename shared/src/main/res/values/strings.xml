@@ -469,6 +469,7 @@
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Notification Channel Settings</string>
     <string name="channels">Channels</string>
     <string name="channels_global_warning">With Notification Channels, global notification customization
         for LED, vibrate, heads up, and ringtone are no longer possible. Access customization options

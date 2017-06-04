@@ -163,6 +163,7 @@
         android:id="@+id/channels_disclaimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/channels_global_warning" />
+        android:text="@string/channels_global_warning"
+        android:textColor="@color/subscriptionPrimaryText" />
 
 </LinearLayout>

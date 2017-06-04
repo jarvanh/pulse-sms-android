@@ -55,7 +55,9 @@
     <string name="pref_contact_ringtone" translatable="false">contact_ringtone</string>
     <string name="pref_contact_group_name" translatable="false">contact_group_name</string>
     <string name="pref_contact_global_colors_set" translatable="false">global_colors_set</string>
+    <string name="pref_contact_notification_channel" translatable="false">notification_channel_settings</string>
     <string name="pref_contact_customization_group" translatable="false">customization_group</string>
+    <string name="pref_contact_notification_group" translatable="false">notification_group</string>
 
     <string name="pref_customization_category" translatable="false">customization_category</string>
     <string name="pref_notification_category" translatable="false">notification_category</string>
