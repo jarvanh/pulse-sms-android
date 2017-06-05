@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'me.tatarka.retrolambda'
 
 def propsFile = rootProject.file('keystore.properties')

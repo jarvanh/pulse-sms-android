@@ -88,6 +88,7 @@ dependencies {
     compile "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:exifinterface:${ANDROID_SUPPORT_VERSION}"
 
+    compile "com.google.firebase:firebase-perf:${FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-crash:${FIREBASE_VERSION}"
     compile "com.google.android.gms:play-services-maps:${GOOGLE_PLAY_SERVICES_VERSION}"
 
