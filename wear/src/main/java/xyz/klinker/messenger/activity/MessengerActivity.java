@@ -72,9 +72,9 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        long convoId = intent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+        long convoId = intent.getLongExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         if (convoId != -1L) {
-            getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, convoId);
+            getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), convoId);
             displayConversations();
         }
     }
@@ -111,7 +111,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
     }
 
     public void displayConversations() {
-        long convoId = getIntent().getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+        long convoId = getIntent().getLongExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (convoId != -1L) {
             ConversationListUpdatedReceiver.sendBroadcast(this, convoId, null, true);

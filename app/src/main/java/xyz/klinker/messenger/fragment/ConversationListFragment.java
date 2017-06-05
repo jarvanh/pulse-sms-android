@@ -159,7 +159,7 @@ public class ConversationListFragment extends Fragment
 
         if (messageListFragment != null && !messageListFragment.isAdded()) {
             Intent main = new Intent(getActivity(), MessengerActivity.class);
-            main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
+            main.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(),
                     messageListFragment.getConversationId());
 
             getActivity().overridePendingTransition(0,0);
@@ -543,7 +543,7 @@ public class ConversationListFragment extends Fragment
         layoutManager.setCanScroll(false);
 
         if (getActivity() != null)
-            getActivity().getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+            getActivity().getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         if (getArguments() != null)
             getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
         

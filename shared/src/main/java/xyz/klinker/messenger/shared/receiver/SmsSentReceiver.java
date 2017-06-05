@@ -151,8 +151,8 @@ public class SmsSentReceiver extends SentReceiver {
 
         if (error) {
             Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
-            open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId);
-            open.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, true);
+            open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversationId);
+            open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_FROM_NOTIFICATION(), true);
             open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingOpen = PendingIntent.getActivity(context,
                     (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);

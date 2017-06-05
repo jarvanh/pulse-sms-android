@@ -51,7 +51,7 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
         if (action != null && action.equals(OPEN_ACTION)) {
             long itemId = intent.getLongExtra(EXTRA_ITEM_ID, 0);
             Intent openConversation = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
-            openConversation.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, itemId);
+            openConversation.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), itemId);
             openConversation.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(openConversation);
             return;

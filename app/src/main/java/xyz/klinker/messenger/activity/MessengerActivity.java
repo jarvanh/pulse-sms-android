@@ -158,7 +158,7 @@ public class  MessengerActivity extends AppCompatActivity
             if (hasPhoneFeature ) {
                 startActivityForResult(
                         new Intent(this, OnboardingActivity.class),
-                        REQUEST_ONBOARDING
+                        INSTANCE.getREQUEST_ONBOARDING()
                 );
             } else {
                 // if it isn't a phone, then we want to go straight to the login
@@ -213,7 +213,7 @@ public class  MessengerActivity extends AppCompatActivity
             }).start();
         }, 1000);
 
-        if (getIntent().getBooleanExtra(EXTRA_START_MY_ACCOUNT, false)) {
+        if (getIntent().getBooleanExtra(INSTANCE.getEXTRA_START_MY_ACCOUNT(), false)) {
             NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckJob.NOTIFICATION_ID);
             menuItemClicked(R.id.drawer_account);
         }
@@ -234,10 +234,10 @@ public class  MessengerActivity extends AppCompatActivity
         super.onNewIntent(intent);
 
         boolean handled = handleShortcutIntent(intent);
-        long convoId = intent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L);
+        long convoId = intent.getLongExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (!handled && convoId != -1L) {
-            getIntent().putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, convoId);
+            getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), convoId);
             displayConversations();
         }
     }
@@ -284,7 +284,7 @@ public class  MessengerActivity extends AppCompatActivity
             PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            if (requestCode == REQUEST_CALL_PERMISSION) {
+            if (requestCode == INSTANCE.getREQUEST_CALL_PERMISSION()) {
                 callContact();
             }
         } catch (Exception e) {
@@ -547,7 +547,7 @@ public class  MessengerActivity extends AppCompatActivity
                     return callContact();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
+                        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, INSTANCE.getREQUEST_CALL_PERMISSION());
                         return false;
                     } else {
                         return callContact();
@@ -612,7 +612,7 @@ public class  MessengerActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
 
         try {
-            getIntent().putExtra(EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+            getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), conversationListFragment.getExpandedId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -649,13 +649,13 @@ public class  MessengerActivity extends AppCompatActivity
         invalidateOptionsMenu();
         inSettings = false;
 
-        long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
-        long messageId = getIntent().getLongExtra(EXTRA_MESSAGE_ID, -1L);
+        long convoId = getIntent().getLongExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+        long messageId = getIntent().getLongExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
 
         if (messageId != -1L && convoId != -1L) {
             conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
-            getIntent().putExtra(EXTRA_CONVERSATION_ID, -1L);
-            getIntent().putExtra(EXTRA_MESSAGE_ID, -1L);
+            getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+            getIntent().putExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
         } else if (convoId != -1L && convoId != 0) {
             conversationListFragment = ConversationListFragment.newInstance(convoId);
         } else {
@@ -1059,7 +1059,7 @@ public class  MessengerActivity extends AppCompatActivity
                 }
             }
 
-            if (requestCode == REQUEST_ONBOARDING) {
+            if (requestCode == INSTANCE.getREQUEST_ONBOARDING()) {
                 boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
 
                 // if it isn't a phone, then we want to force the login.
@@ -1133,8 +1133,8 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void dismissIfFromNotification() {
-        boolean fromNotification = getIntent().getBooleanExtra(EXTRA_FROM_NOTIFICATION, false);
-        long convoId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1L);
+        boolean fromNotification = getIntent().getBooleanExtra(INSTANCE.getEXTRA_FROM_NOTIFICATION(), false);
+        long convoId = getIntent().getLongExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (fromNotification && convoId != -1) {
             new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
