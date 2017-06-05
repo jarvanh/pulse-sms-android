@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.encryption;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.crypto.SecretKey;
@@ -43,7 +44,7 @@ public class EncryptionTest extends MessengerRobolectricSuite {
         encryptionUtils = new EncryptionUtils(key);
     }
 
-    @Test
+    @Test @Ignore
     public void encryptAndDecrypt() {
         String text = "hey, what's up? Just testing encryption and decryption using " +
                 "strong-encryption techniques :)";

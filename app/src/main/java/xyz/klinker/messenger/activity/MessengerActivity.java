@@ -185,7 +185,9 @@ public class  MessengerActivity extends AppCompatActivity
         ColorUtils.checkBlackBackground(this);
         ColorUtils.updateRecentsEntry(this);
 
-        TimeUtils.setupNightTheme(this);
+        if (!Build.FINGERPRINT.contains("robolectric")) {
+            TimeUtils.setupNightTheme(this);
+        }
 
         new Handler().postDelayed(() -> {
             if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
