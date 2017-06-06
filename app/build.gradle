@@ -32,6 +32,7 @@ apiKeys.load(new FileInputStream(propsFile))
 android {
     dexOptions {
         jumboMode = true
+        javaMaxHeapSize "4g"
     }
 
     compileSdkVersion parseSdkVersion(COMPILE_SDK)
