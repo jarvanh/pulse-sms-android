@@ -66,7 +66,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
         fragment.saveSettings();
 
         Intent intent = new Intent(this, MessengerActivity.class);
-        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(),
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

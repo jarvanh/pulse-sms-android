@@ -121,8 +121,8 @@ public class SearchFragment extends Fragment implements SearchListener {
         source.close();
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
-        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, message.conversationId);
-        intent.putExtra(MessengerActivityExtras.EXTRA_MESSAGE_ID, message.id);
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), message.conversationId);
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_MESSAGE_ID(), message.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getActivity().startActivity(intent);
     }
@@ -139,7 +139,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         }
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
-        intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id);
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getActivity().startActivity(intent);
     }

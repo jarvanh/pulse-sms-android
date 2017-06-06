@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -57,6 +58,7 @@ android {
 dependencies {
     compile project(":api")
     compile project(":encryption")
+
     compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
     compile "com.google.firebase:firebase-core:${FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-messaging:${FIREBASE_VERSION}"
