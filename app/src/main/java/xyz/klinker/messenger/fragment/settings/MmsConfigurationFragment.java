@@ -140,18 +140,15 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.System.canWrite(getActivity())) {
                             new AlertDialog.Builder(getActivity())
                                     .setMessage(com.klinker.android.send_message.R.string.write_settings_permission)
-                                    .setPositiveButton(com.klinker.android.send_message.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                                            intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    .setPositiveButton(com.klinker.android.send_message.R.string.ok, (dialog, which) -> {
+                                        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                                        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                                            try {
-                                                startActivity(intent);
-                                            } catch (Exception e) {
-                                                Log.e("MainActivity", "error starting permission intent", e);
-                                            }
+                                        try {
+                                            startActivity(intent);
+                                        } catch (Exception e) {
+                                            Log.e("MainActivity", "error starting permission intent", e);
                                         }
                                     })
                                     .show();

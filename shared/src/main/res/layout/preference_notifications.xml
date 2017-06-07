@@ -1,158 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:id="@+id/ringtone"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center">
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/ringtone"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless" >
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_ringtone"
+                android:tint="@color/subscriptionPrimaryText" />
 
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_ringtone"
-                    android:tint="@color/subscriptionPrimaryText"
-                    android:layout_marginBottom="8dp"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/subscriptionPrimaryText"
-                    android:text="@string/ringtone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/vibrate"
-                android:layout_width="100dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless" >
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_vibrate"
-                    android:tint="@color/subscriptionPrimaryText"
-                    android:layout_marginBottom="8dp"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/subscriptionPrimaryText"
-                    android:text="@string/vibrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
+                android:layout_gravity="center"
+                android:text="@string/ringtone"
+                android:textColor="@color/subscriptionPrimaryText" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:id="@+id/vibrate"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center">
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/repeat"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless" >
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_vibrate"
+                android:tint="@color/subscriptionPrimaryText" />
 
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_timer"
-                    android:tint="@color/subscriptionPrimaryText"
-                    android:layout_marginBottom="8dp"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/subscriptionPrimaryText"
-                    android:text="@string/repeat_interval"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/wake_screen"
-                android:layout_width="100dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless" >
+                android:layout_gravity="center"
+                android:text="@string/vibrate"
+                android:textColor="@color/subscriptionPrimaryText" />
 
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_wake_screen"
-                    android:tint="@color/subscriptionPrimaryText"
-                    android:layout_marginBottom="8dp"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/subscriptionPrimaryText"
-                    android:text="@string/wake_screen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-            </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/repeat"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_timer"
+                android:tint="@color/subscriptionPrimaryText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/repeat_interval"
+                android:textColor="@color/subscriptionPrimaryText" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:id="@+id/wake_screen"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center">
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/heads_up"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless" >
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_wake_screen"
+                android:tint="@color/subscriptionPrimaryText" />
 
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_heads_up"
-                    android:tint="@color/subscriptionPrimaryText"
-                    android:layout_marginBottom="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/wake_screen"
+                android:textColor="@color/subscriptionPrimaryText" />
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/subscriptionPrimaryText"
-                    android:text="@string/heads_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-            </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/heads_up"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_heads_up"
+                android:tint="@color/subscriptionPrimaryText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/heads_up"
+                android:textColor="@color/subscriptionPrimaryText" />
 
         </LinearLayout>
 

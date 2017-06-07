@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.shared.util;
 
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +14,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.view.ViewBadger;
 
+@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 public class DualSimApplication {
 
     private Context context;
@@ -66,7 +66,6 @@ public class DualSimApplication {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private void showSimSelection(final List<SubscriptionInfo> subscriptions, final Conversation conversation, final ViewBadger badger) {
         final CharSequence[] active = new CharSequence[1 + subscriptions.size()];
         int selected = 0;
@@ -91,7 +90,7 @@ public class DualSimApplication {
                     } else {
                         conversation.simSubscriptionId =
                                 subscriptions.get(i - 1).getSubscriptionId();
-                        badger.setText("" + i);
+                        badger.setText(String.valueOf(i));
                     }
 
                     DataSource source = DataSource.getInstance(context);
@@ -103,7 +102,6 @@ public class DualSimApplication {
                 }).show();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private String formatSimString(SubscriptionInfo info) {
         return info.getNumber() + " (SIM " + (info.getSimSlotIndex() + 1) + ")";
     }

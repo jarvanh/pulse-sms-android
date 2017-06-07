@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pulse</string>
+    <string name="api_activate_1_4">on a computer.</string>
+    <string name="api_activate_3_1">Enter the code:</string>
 </resources>

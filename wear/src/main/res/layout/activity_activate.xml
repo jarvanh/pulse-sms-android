@@ -1,161 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="xyz.klinker.messenger.activity.MessengerActivity"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="xyz.klinker.messenger.activity.MessengerActivity"
     tools:deviceIds="wear_round">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/waiting_to_activate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:id="@+id/waiting_to_activate"
-            android:layout_gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
-                        android:id="@+id/number_1_1"
-                        android:text="@string/api_activate_1_1"
-                        android:textColor="@android:color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/number_1_1"
-                        android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
-                        android:id="@+id/number_1_2"
-                        android:text="@string/api_activate_1_2"
-                        android:textColor="@color/api_text_accent"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/number_1_2"
-                        android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
-                        android:id="@+id/number_1_3"
-                        android:text="@string/api_activate_1_4"
-                        android:textColor="@android:color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/api_activate_1"
-                        android:textColor="@color/api_login_background"
-                        android:gravity="center"
-                        android:background="@drawable/api_circle"
-                        android:id="@+id/number_1"
-                        android:layout_marginRight="12dp"
-                        android:layout_alignBaseline="@+id/number_1_2"
-                        android:layout_alignBottom="@+id/number_1_2"
-                        android:layout_alignParentStart="true" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/api_activate_2"
-                        android:textColor="@color/api_login_background"
-                        android:gravity="center"
-                        android:background="@drawable/api_circle"
-                        android:id="@+id/number_2"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/number_2"
-                        android:layout_toRightOf="@+id/number_2"
-                        android:id="@+id/number_2_1"
-                        android:text="@string/api_activate_3_1"
-                        android:textColor="@android:color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/number_2_1"
-                        android:layout_toEndOf="@+id/number_2"
-                        android:layout_toRightOf="@+id/number_2"
-                        android:id="@+id/code"
-                        android:text=""
-                        android:textSize="16sp"
-                        android:textColor="@color/api_text_accent"/>
-
-                </RelativeLayout>
-
-                <ProgressBar
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:layout_marginTop="12dp"
-                    android:id="@+id/progress_bar" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:id="@+id/password_confirmation"
-            android:layout_gravity="center">
+            android:layout_marginBottom="12dp">
 
             <TextView
+                android:id="@+id/number_1_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/api_confirm_password"
-                android:textColor="@android:color/white"
-                android:layout_marginStart="4dp"
-                android:id="@+id/confirmation_summary"/>
-
-            <EditText
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/api_password"
-                android:id="@+id/password"
-                android:inputType="textPassword"/>
+                android:layout_toEndOf="@+id/number_1"
+                android:text="@string/api_activate_1_1"
+                android:textColor="@android:color/white" />
 
             <TextView
+                android:id="@+id/number_1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/api_login_background"
+                android:layout_below="@+id/number_1_1"
+                android:layout_toEndOf="@+id/number_1"
+                android:text="@string/api_activate_1_2"
+                android:textColor="@color/api_text_accent" />
+
+            <TextView
+                android:id="@+id/number_1_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/number_1_2"
+                android:layout_toEndOf="@+id/number_1"
+                android:text="@string/api_activate_1_4"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/number_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/number_1_2"
+                android:layout_alignBottom="@+id/number_1_2"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/api_circle"
                 android:gravity="center"
-                android:drawableStart="@drawable/api_forward"
-                android:layout_marginTop="12dp"
-                android:id="@+id/confirm"
-                android:background="?android:selectableItemBackgroundBorderless"/>
+                android:text="@string/api_activate_1"
+                android:textColor="@color/api_login_background" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </FrameLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/number_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/api_circle"
+                android:gravity="center"
+                android:text="@string/api_activate_2"
+                android:textColor="@color/api_login_background" />
+
+            <TextView
+                android:id="@+id/number_2_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/number_2"
+                android:text="@string/api_activate_3_1"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/number_2_1"
+                android:layout_toEndOf="@+id/number_2"
+                android:text=""
+                android:textColor="@color/api_text_accent"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:indeterminate="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/password_confirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/confirmation_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/api_confirm_password"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/api_password"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:drawableStart="@drawable/api_forward"
+            android:gravity="center"
+            android:textColor="@color/api_login_background" />
+
+    </LinearLayout>
+
+</FrameLayout>

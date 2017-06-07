@@ -22,7 +22,6 @@ public abstract class MediaParser {
         this.context = context;
     }
 
-    @VisibleForTesting
     public boolean canParse(String text) {
         Matcher matcher = getPatternMatcher().matcher(text);
         if (matcher.find()) {

@@ -15,6 +15,8 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingLeanbackLauncher"
     package="xyz.klinker.messenger.shared">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -113,12 +115,10 @@
 
         <receiver
             android:name=".receiver.SmsSentReceiver"
-            android:exported="true"
             android:taskAffinity="${applicationId}.SMS_SENT" />
 
         <receiver
             android:name=".receiver.SmsDeliveredReceiver"
-            android:exported="true"
             android:taskAffinity="${applicationId}.SMS_DELIVERED" />
 
         <receiver
@@ -135,12 +135,10 @@
 
         <receiver
             android:name=".receiver.MmsSentReceiver"
-            android:exported="true"
             android:taskAffinity="com.klinker.android.messaging.MMS_SENT" />
 
         <receiver
             android:name=".receiver.MmsReceivedReceiver"
-            android:exported="true"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" >
 
             <!--<intent-filter-->

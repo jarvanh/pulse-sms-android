@@ -78,7 +78,8 @@ android {
         abortOnError true
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
                 'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
-                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams', 'MissingTranslation'
+                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams',
+                'MissingTranslation'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

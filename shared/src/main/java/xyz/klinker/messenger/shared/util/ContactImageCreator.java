@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.TypedValue;
 
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -49,7 +48,7 @@ public class ContactImageCreator {
                     textPaint);
 
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
 
         return ImageUtils.clipToCircle(image);
