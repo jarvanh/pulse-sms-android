@@ -26,8 +26,6 @@
     <string name="api_password_confirmation">密码确认</string>
     <string name="api_name">名字</string>
     <string name="api_phone_number">电话号码</string>
-    <string name="api_connecting">正在连接服务器…</string>
-    <string name="api_error">操作失败(¯―¯٥)</string>
     <string name="api_device_error">添加设备出错啦！重试看看(・∀・)</string>
     <string name="api_yes">是</string>
     <string name="api_no">不</string>
@@ -43,7 +41,6 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">指向</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">在一个移动设备或计算机上</string>
     <string name="api_activate_2_1">在网页上</string>
     <string name="api_activate_2_2">请在右边输入</string>

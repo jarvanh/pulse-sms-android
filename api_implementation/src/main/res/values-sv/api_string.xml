@@ -26,8 +26,6 @@
     <string name="api_password_confirmation">Bekräfta lösenord</string>
     <string name="api_name">Namn</string>
     <string name="api_phone_number">Telefonnummer</string>
-    <string name="api_connecting">Ansluter till server...</string>
-    <string name="api_error">Ett fel uppstod under operationen</string>
     <string name="api_device_error">"Ett fel uppstod när enheten lades till. Försök igen! "</string>
     <string name="api_add_second_primary_device">Ser ut som du redan har en primär enhet
 
@@ -47,7 +45,6 @@ primära enheten och ställa in denna som den nya primära?</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Bege dig till</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">på en mobilenhet eller dator.</string>
     <string name="api_activate_2_1">På webbsidan</string>
     <string name="api_activate_2_2">Ange koden till höger</string>

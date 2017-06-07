@@ -28,8 +28,6 @@ Bir tabletten veya bilgisayardan mesaj gönderme gibi özellikler, bu adımı at
     <string name="api_password_confirmation">Şifre onayı</string>
     <string name="api_name">isim</string>
     <string name="api_phone_number">Telefon numarası</string>
-    <string name="api_connecting">Sunucuya baglanıyor…</string>
-    <string name="api_error">İşlem sırasında bir hata oluştu</string>
     <string name="api_device_error">Bu cihaz eklenirken bir hata oluştu. Tekrar deneyelim!</string>
     <string name="api_add_second_primary_device">Zaten birincil cihazınız varmış gibi görünüyor
 (%1$s) ve yalnızca birine izin verilir! Şu anki kaldırmak istiyor musunuz
@@ -48,14 +46,10 @@ Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Başkan</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
-    <string name="api_activity_1_21">wear.klinkerapps.com</string>
     <string name="api_activate_1_3">Bir mobil cihazda veya bilgisayarda</string>
-    <string name="api_activate_1_4">Bir bilgisayarda.</string>
     <string name="api_activate_2_1">İnternet sitesinde</string>
     <string name="api_activate_2_2">Kodu sağa yaz</string>
     <string name="api_activate_2_3">Hesabınızı bağlamak için!</string>
-    <string name="api_activate_3_1">Kodu giriniz:</string>
     <string name="api_confirm_password">Lütfen şifrenizi onaylayın:</string>
     <string name="api_wrong_password">Onay başarısız oldu. Şifreniz doğru mu?</string>
     <string name="api_email_taken">Oturum açarken bir hata oluştu; bu e-postayla zaten bir hesabınız var mı?</string>

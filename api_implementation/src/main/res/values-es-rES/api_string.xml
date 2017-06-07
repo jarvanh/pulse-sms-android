@@ -28,8 +28,6 @@ funciones como mensajes de texto desde una tablet u ordenador, puede omitir este
     <string name="api_password_confirmation">Confirmar contraseña</string>
     <string name="api_name">Nombre</string>
     <string name="api_phone_number">Número de teléfono</string>
-    <string name="api_connecting">Conectando con el servidor</string>
-    <string name="api_error">Ha sucedido un error durante la operación</string>
     <string name="api_device_error">Ha sucedido un error mientras añandiamos este dispositivo, ¡ Vamos a intentarlo otra vez!</string>
     <string name="api_add_second_primary_device">Parece que ya tienes registrado un dispositivo principal (%1$s)  para tu cuenta, pero solo uno esta permitido. ¿Quieres eliminar el actual dispositivo principal, y asignar este como el nuevo principal?</string>
     <string name="api_yes">Sí</string>
@@ -44,7 +42,6 @@ funciones como mensajes de texto desde una tablet u ordenador, puede omitir este
     <string name="api_login_error">Ha sucedido un error al iniciar sesión.¿ Dirección de correo o contraseña inválidos?</string>
     <string name="api_activate_summary">¡Inicia sesión para obtener todos tus mensajes en este dispositivo!</string>
     <string name="api_activate_1_1">Dirigirse a</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">en un dispositivo móvil u ordenador</string>
     <string name="api_activate_2_1">En el sitio web</string>
     <string name="api_activate_2_2">Introduce el código en la derecha</string>

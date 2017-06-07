@@ -26,8 +26,6 @@
     <string name="api_password_confirmation">Confirme a senha</string>
     <string name="api_name">Nome</string>
     <string name="api_phone_number">Número de telefone</string>
-    <string name="api_connecting">Conectando ao servidor...</string>
-    <string name="api_error">Um erro ocorreu durante a operação</string>
     <string name="api_device_error">Um erro ocorreu ao adicionar este dispositivo. Vamos tentar novamente!</string>
     <string name="api_add_second_primary_device">Parece que você já tem um dispositivo primário (%1$s) para sua conta e apenas um é permitido! Você quer remover o dispositivo primário atual e configurar este como o novo primário??</string>
     <string name="api_yes">Sim</string>
@@ -42,7 +40,6 @@
     <string name="api_login_error">Um erro ocorreu durante o login, senha ou e-mail estão errados?</string>
     <string name="api_activate_summary">Entre para pegar todas as suas mensagens neste dispositivo!</string>
     <string name="api_activate_1_1">Siga para</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">em um dispositivo móvel ou computador.</string>
     <string name="api_activate_2_1">No site</string>
     <string name="api_activate_2_2">Digite o código à direita</string>

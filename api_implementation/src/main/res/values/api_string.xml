@@ -30,7 +30,6 @@
     <string name="api_name">Name</string>
     <string name="api_phone_number">Phone Number</string>
     <string name="api_connecting">Connecting to server…</string>
-    <string name="api_error">An error occurred during the operation</string>
     <string name="api_device_error">An error occurred while adding this device. Let\'s retry!</string>
     <string name="api_add_second_primary_device">Looks like you already have a primary device
         (%1$s) for your account and only one is permitted! Do you want to remove the current
@@ -49,14 +48,11 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Head to</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
-    <string name="api_activity_1_21">wear.klinkerapps.com</string>
+    <string name="api_activate_1_2">wear.klinkerapps.com</string>
     <string name="api_activate_1_3">on a mobile device or computer.</string>
-    <string name="api_activate_1_4">on a computer.</string>
     <string name="api_activate_2_1">On the website</string>
     <string name="api_activate_2_2">enter the code to the right</string>
     <string name="api_activate_2_3">to connect your account!</string>
-    <string name="api_activate_3_1">Enter the code:</string>
     <string name="api_confirm_password">Please confirm your password:</string>
     <string name="api_wrong_password">Confirmation failed. Is your password correct?</string>
     <string name="api_email_taken">An error occurred logging in, do you already have an account with this email?</string>

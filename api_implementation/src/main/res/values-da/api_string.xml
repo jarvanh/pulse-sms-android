@@ -27,8 +27,6 @@
     <string name="api_password_confirmation">Bekræft kodeord</string>
     <string name="api_name">Navn</string>
     <string name="api_phone_number">Mobilnummer</string>
-    <string name="api_connecting">Forbinder til server…</string>
-    <string name="api_error">Der opstod en fejl under handlingen</string>
     <string name="api_device_error">Der er opstået en fejl under tilføjelse af denne enhed. Lad os prøve igen!</string>
     <string name="api_yes">Ja</string>
     <string name="api_no">Nej</string>

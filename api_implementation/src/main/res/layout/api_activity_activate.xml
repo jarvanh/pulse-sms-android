@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:visibility="visible"
             android:id="@+id/waiting_to_activate">
 
@@ -64,14 +63,12 @@
                         android:background="@drawable/api_circle"
                         android:id="@+id/number_1"
                         android:layout_marginEnd="32dp"
-                        android:layout_marginRight="32dp"
                         android:layout_centerVertical="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
                         android:id="@+id/number_1_1"
                         android:text="@string/api_activate_1_1"
                         android:textColor="@android:color/white"/>
@@ -81,7 +78,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_1_1"
                         android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
                         android:id="@+id/number_1_2"
                         android:text="@string/api_activate_1_2"
                         android:textColor="@color/api_text_accent"/>
@@ -91,7 +87,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_1_2"
                         android:layout_toEndOf="@+id/number_1"
-                        android:layout_toRightOf="@+id/number_1"
                         android:id="@+id/number_1_3"
                         android:text="@string/api_activate_1_3"
                         android:textColor="@android:color/white"/>
@@ -111,14 +106,12 @@
                         android:background="@drawable/api_circle"
                         android:id="@+id/number_2"
                         android:layout_marginEnd="32dp"
-                        android:layout_marginRight="32dp"
                         android:layout_centerVertical="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/number_2"
-                        android:layout_toRightOf="@+id/number_2"
                         android:id="@+id/number_2_1"
                         android:text="@string/api_activate_2_1"
                         android:textColor="@android:color/white"/>
@@ -128,7 +121,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_2_1"
                         android:layout_toEndOf="@+id/number_2"
-                        android:layout_toRightOf="@+id/number_2"
                         android:id="@+id/number_2_2"
                         android:text="@string/api_activate_2_2"
                         android:textColor="@color/api_text_accent"/>
@@ -138,7 +130,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_2_2"
                         android:layout_toEndOf="@+id/number_2"
-                        android:layout_toRightOf="@+id/number_2"
                         android:id="@+id/number_2_3"
                         android:text="@string/api_activate_2_3"
                         android:textColor="@android:color/white"/>
@@ -200,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/api_confirm_password"
                 android:textColor="@android:color/white"
-                android:layout_marginLeft="4dp"
                 android:layout_marginStart="4dp"
                 android:id="@+id/confirmation_summary"/>
 
@@ -218,7 +208,6 @@
                 android:text="@string/api_confirm"
                 android:id="@+id/confirm"
                 android:src="@drawable/api_forward"
-                android:layout_toRightOf="@+id/password"
                 android:layout_toEndOf="@+id/password"
                 android:layout_alignTop="@+id/password"
                 android:layout_alignBottom="@+id/password"
