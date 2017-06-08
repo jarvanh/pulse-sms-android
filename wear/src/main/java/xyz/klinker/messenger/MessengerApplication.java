@@ -18,25 +18,18 @@ package xyz.klinker.messenger;
 
 import android.app.Application;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.os.BuildCompat;
 import android.support.v7.app.AppCompatDelegate;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler;
 import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
-import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
-import xyz.klinker.messenger.shared.service.ContentObserverService;
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
-import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;

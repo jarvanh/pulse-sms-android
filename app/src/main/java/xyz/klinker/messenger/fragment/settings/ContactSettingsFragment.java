@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -40,6 +41,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
@@ -79,6 +81,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         setUpPrivate();
         setUpGroupName();
         setUpRingtone();
+        setUpNotificationChannels();
         setUpColors();
 
         if (Settings.get(getActivity()).useGlobalThemeColor) {
@@ -86,6 +89,16 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
             PreferenceCategory customizationCategory = (PreferenceCategory)
                     findPreference(getString(R.string.pref_contact_customization_group));
             getPreferenceScreen().removePreference(customizationCategory);
+        }
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            // remove the LED customizations since the user won't be able to configure this here, they will
+            // have to go through channels instead.
+            // The ringtone pref has been converted to push them to notification channel settings
+            PreferenceCategory notificationCategory = (PreferenceCategory)
+                    findPreference(getString(R.string.pref_contact_notification_group));
+            notificationCategory.removePreference(findPreference(getString(R.string.pref_contact_led_color)));
+            notificationCategory.removePreference(findPreference(getString(R.string.pref_contact_ringtone)));
         }
     }
 
@@ -138,12 +151,9 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_contact_pin_conversation));
         preference.setChecked(conversation.pinned);
 
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.pinned = (boolean) o;
-                return true;
-            }
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            conversation.pinned = (boolean) o;
+            return true;
         });
     }
 
@@ -153,14 +163,11 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         preference.setChecked(conversation.mute);
         enableNotificationBasedOnMute(conversation.mute);
 
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.mute = (boolean) o;
-                enableNotificationBasedOnMute(conversation.mute);
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            conversation.mute = (boolean) o;
+            enableNotificationBasedOnMute(conversation.mute);
 
-                return true;
-            }
+            return true;
         });
     }
 
@@ -185,12 +192,9 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_contact_private_conversation));
         preference.setChecked(conversation.privateNotifications);
 
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.privateNotifications = (boolean) o;
-                return true;
-            }
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            conversation.privateNotifications = (boolean) o;
+            return true;
         });
     }
 
@@ -205,13 +209,10 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
         preference.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         preference.setSummary(conversation.title);
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.title = (String) o;
-                preference.setSummary(conversation.title);
-                return true;
-            }
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            conversation.title = (String) o;
+            preference1.setSummary(conversation.title);
+            return true;
         });
     }
 
@@ -219,13 +220,29 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         RingtonePreference preference = (RingtonePreference)
                 findPreference(getString(R.string.pref_contact_ringtone));
 
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.ringtoneUri = (String) o;
-                return true;
-            }
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            conversation.ringtoneUri = (String) o;
+            return true;
         });
+    }
+
+    private void setUpNotificationChannels() {
+        Preference preference = findPreference(getString(R.string.pref_contact_notification_channel));
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            preference.setOnPreferenceClickListener(preference12 -> {
+                Intent intent = new Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, conversation.id + "");
+                intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                startActivity(intent);
+
+                return true;
+            });
+        } else {
+            PreferenceCategory notificationCategory = (PreferenceCategory)
+                    findPreference(getString(R.string.pref_contact_notification_group));
+            notificationCategory.removePreference(preference);
+        }
     }
 
     private void setUpColors() {
@@ -238,46 +255,31 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         final ColorPreference ledColorPreference = (ColorPreference)
                 findPreference(getString(R.string.pref_contact_led_color));
 
-        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                ColorUtils.animateToolbarColor(getActivity(), conversation.colors.color, (int) o);
-                conversation.colors.color = (int) o;
-                return true;
-            }
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            ColorUtils.animateToolbarColor(getActivity(), conversation.colors.color, (int) o);
+            conversation.colors.color = (int) o;
+            return true;
         });
 
-        preference.setColorSelectedListener(new ColorSelectedListener() {
-            @Override
-            public void onColorSelected(ColorSet colors) {
-                darkColorPreference.setColor(colors.colorDark);
-                accentColorPreference.setColor(colors.colorAccent);
-            }
+        preference.setColorSelectedListener(colors -> {
+            darkColorPreference.setColor(colors.colorDark);
+            accentColorPreference.setColor(colors.colorAccent);
         });
 
-        darkColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                ColorUtils.animateStatusBarColor(getActivity(), conversation.colors.colorDark, (int) o);
-                conversation.colors.colorDark = (int) o;
-                return true;
-            }
+        darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
+            ColorUtils.animateStatusBarColor(getActivity(), conversation.colors.colorDark, (int) o);
+            conversation.colors.colorDark = (int) o;
+            return true;
         });
 
-        accentColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                conversation.colors.colorAccent = (int) o;
-                return true;
-            }
+        accentColorPreference.setOnPreferenceChangeListener((preference13, o) -> {
+            conversation.colors.colorAccent = (int) o;
+            return true;
         });
 
-        ledColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                conversation.ledColor = (int) newValue;
-                return true;
-            }
+        ledColorPreference.setOnPreferenceChangeListener((preference14, newValue) -> {
+            conversation.ledColor = (int) newValue;
+            return true;
         });
     }
 

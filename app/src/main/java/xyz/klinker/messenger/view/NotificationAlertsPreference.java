@@ -21,6 +21,8 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 
 public class NotificationAlertsPreference extends Preference implements
         Preference.OnPreferenceClickListener {
@@ -61,14 +63,26 @@ public class NotificationAlertsPreference extends Preference implements
         layout.findViewById(R.id.wake_screen).setOnClickListener(view -> wakeClicked());
         layout.findViewById(R.id.heads_up).setOnClickListener(view -> headsUpClicked());
 
-        new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.SubscriptionPicker)
                 .setView(layout)
-                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                })
-                .setNegativeButton(R.string.test, (dialogInterface, i) -> {
-                    makeTestNotification();
-                }).show();
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                .setNegativeButton(R.string.test, (dialogInterface, i) -> makeTestNotification());
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            layout.findViewById(R.id.vibrate).setVisibility(View.GONE);
+            layout.findViewById(R.id.ringtone).setVisibility(View.GONE);
+            layout.findViewById(R.id.heads_up).setVisibility(View.GONE);
+
+            builder.setNeutralButton(R.string.channels, ((dialogInterface, i) -> {
+                Intent intent = new Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getContext().getPackageName());
+                getContext().startActivity(intent);
+            }));
+        } else {
+            layout.findViewById(R.id.channels_disclaimer).setVisibility(View.GONE);
+        }
+
+        builder.show();
 
         return false;
     }
@@ -215,7 +229,9 @@ public class NotificationAlertsPreference extends Preference implements
         Settings settings = Settings.get(getContext());
         VibratePattern vibratePattern = settings.vibrate;
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+        NotificationUtils.createTestChannel(getContext());
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")

@@ -70,13 +70,21 @@ public class DynamicShortcutUtils {
                     .getBitmap(context, conversation.imageUri));
 
             if (image != null) {
-                return Icon.createWithBitmap(image);
+                return createIcon(image);
             } else {
                 Bitmap color = ContactImageCreator.getLetterPicture(context, conversation);
-                return Icon.createWithBitmap(color);
+                return createIcon(color);
             }
         } else {
             return null;
+        }
+    }
+
+    private Icon createIcon(Bitmap bitmap) {
+        if (AndroidVersionUtil.isAndroidO()) {
+            return Icon.createWithAdaptiveBitmap(bitmap);
+        } else {
+            return Icon.createWithBitmap(bitmap);
         }
     }
 }

@@ -80,9 +80,9 @@
     <application
         android:name=".MessengerApplication"
         android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
         android:banner="@mipmap/ic_banner"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
@@ -97,7 +97,9 @@
             android:name=".activity.MessengerActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTop"
-            android:theme="@style/PulseTheme.MessengerActivity">
+            android:theme="@style/PulseTheme.MessengerActivity"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

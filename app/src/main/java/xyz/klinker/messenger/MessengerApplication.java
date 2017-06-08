@@ -35,6 +35,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ContentObserverService;
+import xyz.klinker.messenger.shared.service.CreateNotificationChannelService;
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
@@ -76,6 +77,9 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         startService(new Intent(this, ContentObserverService.class));
+
+        // the documentation said that this was fine to do on every startup of the app.
+        startService(new Intent(this, CreateNotificationChannelService.class));
     }
 
     public void refreshDynamicShortcuts() {

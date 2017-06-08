@@ -48,6 +48,7 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
@@ -857,6 +858,14 @@ public class DataSource {
     }
 
     /**
+     * Get a list of all the conversations.
+     * @return a list of the conversations in the cursor
+     */
+    public List<Conversation> getAllConversationsAsList() {
+        return convertConversationCursorToList(getAllConversations());
+    }
+
+    /**
      * Gets all conversations in the database.
      *
      * @return a list of conversations.
@@ -1080,6 +1089,7 @@ public class DataSource {
         }
 
         apiUtils.deleteConversation(accountId, conversationId);
+        NotificationUtils.deleteChannel(context, conversationId);
 
         writeUnreadCount();
     }

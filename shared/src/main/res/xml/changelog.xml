@@ -19,9 +19,13 @@
     <version
         name="2.4.0"
         description="June 1st, 2017">
+        <text>Android O: Adaptive icons for launcher icon and shortcuts</text>
+        <text>Android O: Notification Channels</text>
+        <text>NEW: Quick scroll to dates by dragging the scrollbar on the message list</text>
         <text>NEW: "Keyboard Layout" option to send messages when you press the "Return" key</text>
         <text>NEW: Automatically archive conversations that you blacklist</text>
         <text>NEW: Enlarge font sizes when the messages are only emojis</text>
+        <text>Android O: PIP support, app category support</text>
     </version>
 
     <version
