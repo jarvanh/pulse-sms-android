@@ -17,7 +17,7 @@ public class KeyboardLayoutHelper {
     }
 
     @VisibleForTesting
-    protected KeyboardLayoutHelper(Settings settings) {
+    KeyboardLayoutHelper(Settings settings) {
         this.layout = settings.keyboardLayout;
     }
 
@@ -28,6 +28,7 @@ public class KeyboardLayoutHelper {
             case DEFAULT:
                 inputType |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
                 break;
+            case SEND:
             case ENTER:
                 break;
         }

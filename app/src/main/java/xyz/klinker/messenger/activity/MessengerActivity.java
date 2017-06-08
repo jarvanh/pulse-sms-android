@@ -1006,6 +1006,7 @@ public class  MessengerActivity extends AppCompatActivity
             final ConversationListFragment fragment = getShownConversationList();
             Conversation conversation = fragment.getExpandedItem().conversation;
             fragment.getExpandedItem().itemView.performClick();
+            fragment.onSwipeToArchive(conversation);
             clickNavigationItem(R.id.drawer_mute_contacts);
             return displayFragmentWithBackStack(
                     BlacklistFragment.newInstance(conversation.phoneNumbers));

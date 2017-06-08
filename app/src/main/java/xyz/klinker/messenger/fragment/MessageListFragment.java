@@ -79,6 +79,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 import com.sgottard.sofa.ContentFragment;
+import com.turingtechnologies.materialscrollbar.DateAndTimeIndicator;
+import com.turingtechnologies.materialscrollbar.DragScrollBar;
+import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
+import com.turingtechnologies.materialscrollbar.TouchScrollBar;
 import com.yalantis.ucrop.UCrop;
 
 import net.ypresto.androidtranscoder.MediaTranscoder;
@@ -102,6 +106,7 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -118,6 +123,7 @@ import xyz.klinker.messenger.shared.util.AnimationUtils;
 import xyz.klinker.messenger.shared.util.AudioWrapper;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.DualSimApplication;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
@@ -172,13 +178,14 @@ public class MessageListFragment extends Fragment implements
     private static final int RESULT_GIPHY_REQUEST = 4;
     private static final int PERMISSION_LOCATION_REQUEST = 5;
     private static final int RESULT_GALLERY_PICKER_REQUEST = 6;
-    public  static final int RESULT_CAPTURE_IMAGE_REQUEST = 7;
+    public static final int RESULT_CAPTURE_IMAGE_REQUEST = 7;
 
     private DataSource source;
     private View appBarLayout;
     private Toolbar toolbar;
     private View sendBar;
     private ImageKeyboardEditText messageEntry;
+    private MaterialScrollBar<TouchScrollBar> dragScrollBar;
     private View selectSim;
     private ImageButton attach;
     private FloatingActionButton send;
@@ -270,6 +277,8 @@ public class MessageListFragment extends Fragment implements
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         sendBar = view.findViewById(R.id.send_bar);
         messageEntry = (ImageKeyboardEditText) view.findViewById(R.id.message_entry);
+        messageList = (RecyclerView) view.findViewById(R.id.message_list);
+        dragScrollBar = (MaterialScrollBar) view.findViewById(R.id.drag_scrollbar);
         send = (FloatingActionButton) view.findViewById(R.id.send);
         sendProgress = (ProgressBar) view.findViewById(R.id.send_progress);
 
@@ -277,7 +286,7 @@ public class MessageListFragment extends Fragment implements
             return view;
         }
 
-        initNonDeferredComponents();
+        initNonDeferredComponents(bundle);
 
         AnimationUtils.animateConversationPeripheralIn(appBarLayout);
         AnimationUtils.animateConversationPeripheralIn(sendBar);
@@ -290,7 +299,6 @@ public class MessageListFragment extends Fragment implements
             selectSim = view.findViewById(R.id.select_sim);
             attach = (ImageButton) view.findViewById(R.id.attach);
             counter = (TextView) view.findViewById(R.id.text_counter);
-            messageList = (RecyclerView) view.findViewById(R.id.message_list);
             attachLayoutStub = (ViewStub) view.findViewById(R.id.attach_stub);
             attachedImageHolder = view.findViewById(R.id.attached_image_holder);
             attachedImage = (ImageView) view.findViewById(R.id.attached_image);
@@ -331,10 +339,7 @@ public class MessageListFragment extends Fragment implements
 
             initSendbar();
             initAttachHolder();
-
-            if (bundle == null) {
-                initRecycler();
-            }
+            loadMessages();
 
             dismissNotification = true;
             dismissNotification();
@@ -383,10 +388,12 @@ public class MessageListFragment extends Fragment implements
         }
 
         new Thread(() -> {
-                try { Thread.sleep(1000); } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                source.readConversation(getActivity(), getConversationId());
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            source.readConversation(getActivity(), getConversationId());
         }).start();
     }
 
@@ -457,7 +464,7 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
-    private void initNonDeferredComponents() {
+    private void initNonDeferredComponents(final Bundle bundle) {
         initToolbar();
 
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
@@ -486,6 +493,10 @@ public class MessageListFragment extends Fragment implements
             sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
             messageEntry.setHighlightColor(settings.globalColorSet.colorAccent);
         }
+
+        if (bundle == null) {
+            initRecycler();
+        }
     }
 
     private void initToolbar() {
@@ -502,10 +513,20 @@ public class MessageListFragment extends Fragment implements
             DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
             if (drawerLayout != null) {
                 drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-                    @Override public void onDrawerSlide(View drawerView, float slideOffset) {}
-                    @Override public void onDrawerClosed(View drawerView) {}
-                    @Override public void onDrawerStateChanged(int newState) {}
-                    @Override public void onDrawerOpened(View drawerView) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
                         dismissKeyboard();
                     }
                 });
@@ -633,21 +654,27 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
+        final boolean sendOnEnter = Settings.get(getActivity()).keyboardLayout == KeyboardLayout.SEND;
         messageEntry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 changeCounterText();
+                if (sendOnEnter && charSequence.length() > 0) {
+                    char lastKey = charSequence.charAt(charSequence.length() - 1);
+                    if (lastKey == '\n') {
+                        requestPermissionThenSend();
+                    }
+                }
             }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
         });
 
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
@@ -793,7 +820,13 @@ public class MessageListFragment extends Fragment implements
         messageList.setLayoutManager(manager);
         adapter = null;
 
-        loadMessages();
+        final Settings settings = Settings.get(getActivity());
+        dragScrollBar.setIndicator(new DateAndTimeIndicator(
+                                getActivity(), true, true, true, false),
+                        true)
+                .setHandleColour(settings.useGlobalThemeColor ?
+                        settings.globalColorSet.color : getArguments().getInt(ARG_COLOR))
+                .setFastScrollSnapPercent(.05f);
     }
 
     private void dismissNotification() {
@@ -993,6 +1026,11 @@ public class MessageListFragment extends Fragment implements
                 messageList.animate().withLayer()
                         .alpha(1f).setDuration(100).setStartDelay(0).setListener(null);
             }
+
+            if (!FeatureFlags.get(getActivity()).QUICK_SCROLL) {
+                dragScrollBar.setVisibility(View.GONE);
+            }
+
         }
     }
 
@@ -1076,10 +1114,14 @@ public class MessageListFragment extends Fragment implements
 
             final Settings settings = Settings.get(getActivity());
             sendProgress.setMax((int) settings.delayedSendingTimeout / 10);
-            
+
             delayedTimer = new CountDownTimer(settings.delayedSendingTimeout, 10) {
-                @Override public void onFinish() { }
-                @Override public void onTick(long millisUntilFinished) {
+                @Override
+                public void onFinish() {
+                }
+
+                @Override
+                public void onTick(long millisUntilFinished) {
                     sendProgress.setProgress((int) (settings.delayedSendingTimeout - millisUntilFinished) / 10);
                 }
             }.start();
@@ -1552,7 +1594,7 @@ public class MessageListFragment extends Fragment implements
 
     private void attachImage(Uri uri) {
         editImage.setVisibility(View.VISIBLE);
-        
+
         clearAttachedData();
         attachedUri = uri;
         attachedMimeType = MimeType.IMAGE_JPG;
@@ -1759,9 +1801,16 @@ public class MessageListFragment extends Fragment implements
 
             final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
-                @Override public void onTranscodeCanceled() { }
-                @Override public void onTranscodeProgress(double progress) { }
-                @Override public void onTranscodeFailed(Exception exception) {
+                @Override
+                public void onTranscodeCanceled() {
+                }
+
+                @Override
+                public void onTranscodeProgress(double progress) {
+                }
+
+                @Override
+                public void onTranscodeFailed(Exception exception) {
                     exception.printStackTrace();
                     Toast.makeText(getActivity(),
                             "Failed to process video for sending: " + exception.getMessage(),
@@ -1773,7 +1822,9 @@ public class MessageListFragment extends Fragment implements
                         e.printStackTrace();
                     }
                 }
-                @Override public void onTranscodeCompleted() {
+
+                @Override
+                public void onTranscodeCompleted() {
                     attachImage(ImageUtils.createContentUri(getActivity(), file));
                     attachedMimeType = MimeType.VIDEO_MP4;
                     editImage.setVisibility(View.GONE);

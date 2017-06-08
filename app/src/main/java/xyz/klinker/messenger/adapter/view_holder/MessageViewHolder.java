@@ -223,7 +223,8 @@ public class MessageViewHolder extends SwappingHolder {
 
         Settings settings = Settings.get(itemView.getContext());
 
-        message.setTextSize(settings.largeFont);
+        // done from the adapter, since we have the ability to change emoji sizes
+        // message.setTextSize(settings.largeFont);
 
         if (type != Message.TYPE_MEDIA) {
             timestamp.setTextSize(settings.smallFont);

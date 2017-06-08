@@ -120,11 +120,13 @@ dependencies {
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.github.codekidX:storage-chooser:1.0.30'
+//    compile 'com.github.turing-tech:MaterialScrollBar:12.3.5'
 
     compile project(":api_implementation")
     compile project(":encryption")
 
     compile(name: 'sofa', ext: 'aar')
+    compile(name: 'material-scrollbar', ext: 'aar')
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.3.2"

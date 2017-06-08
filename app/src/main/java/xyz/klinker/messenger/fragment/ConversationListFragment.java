@@ -333,6 +333,11 @@ public class ConversationListFragment extends Fragment
         pendingDelete.add(conversation);
         final int currentSize = pendingDelete.size();
 
+        if (isDetached()) {
+            dismissDeleteSnackbar(getActivity(), currentSize);
+            return;
+        }
+
         String plural = getResources().getQuantityString(R.plurals.conversations_deleted,
                 pendingDelete.size(), pendingDelete.size());
 
@@ -345,7 +350,7 @@ public class ConversationListFragment extends Fragment
                     pendingDelete = new ArrayList<>();
                     loadConversations();
                 })
-                .setCallback(new Snackbar.Callback() {
+                .addCallback(new Snackbar.Callback() {
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
@@ -399,6 +404,11 @@ public class ConversationListFragment extends Fragment
         pendingArchive.add(conversation);
         final int currentSize = pendingArchive.size();
 
+        if (!isAdded()) {
+            dismissArchiveSnackbar(getActivity(), currentSize);
+            return;
+        }
+
         if (deleteSnackbar != null && deleteSnackbar.isShown()) {
             deleteSnackbar.dismiss();
         }
@@ -410,7 +420,7 @@ public class ConversationListFragment extends Fragment
                     pendingArchive = new ArrayList<>();
                     loadConversations();
                 })
-                .setCallback(new Snackbar.Callback() {
+                .addCallback(new Snackbar.Callback() {
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
@@ -423,7 +433,7 @@ public class ConversationListFragment extends Fragment
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
-        new Handler().postDelayed(() -> checkEmptyViewDisplay(), 500);
+        new Handler().postDelayed(this::checkEmptyViewDisplay, 500);
     }
 
     private void dismissArchiveSnackbar(final Activity activity, final int currentSize) {

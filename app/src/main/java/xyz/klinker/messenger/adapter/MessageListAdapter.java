@@ -40,7 +40,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
+import com.turingtechnologies.materialscrollbar.IDateableAdapter;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,10 +76,11 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
  * Adapter for displaying messages in a conversation.
  */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
-        implements MessageDeletedListener {
+        implements MessageDeletedListener, IDateableAdapter {
 
     private static final String TAG = "MessageListAdapter";
 
+    private float largeFont;
     private Cursor messages;
     private Map<String, Contact> fromColorMapper;
     private Map<String, Contact> fromColorMapperByName;
@@ -121,6 +124,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         if (fragment.getMultiSelect() != null)
             fragment.getMultiSelect().setAdapter(this);
+
+        largeFont = Settings.get(fragment.getActivity()).largeFont;
     }
 
     @Override
@@ -188,6 +193,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
+
+            if (!message.data.isEmpty() && message.data.replaceAll(Regex.EMOJI, "").isEmpty()) {
+                // enlarge emojis
+                holder.message.setTextSize(35);
+            } else {
+                holder.message.setTextSize(largeFont);
+            }
 
             Link urls = new Link(Regex.WEB_URL);
             urls.setTextColor(accentColor);
@@ -469,6 +481,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         return type;
     }
 
+    @Override
+    public Date getDateForElement(int position) {
+        messages.moveToPosition(position);
+        long millis = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
+        return new Date(millis);
+    }
+
     private void setVisible(View v) {
         if (v != null && v.getVisibility() != View.VISIBLE) {
             v.setVisibility(View.VISIBLE);
@@ -616,5 +635,4 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
         }
     }
-
 }

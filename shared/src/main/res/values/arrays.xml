@@ -197,14 +197,14 @@
 
     <string-array name="keyboard_layout">
         <item>@string/keyboard_default</item>
-        <!--<item>@string/keyboard_send_key</item>-->
         <item>@string/keyboard_enter_key</item>
+        <item>@string/keyboard_send_key</item>
     </string-array>
 
     <string-array name="keyboard_layout_values">
         <item>default</item>
-        <!--<item>send</item>-->
         <item>enter</item>
+        <item>send</item>
     </string-array>
 
     <string-array name="notification_actions">
