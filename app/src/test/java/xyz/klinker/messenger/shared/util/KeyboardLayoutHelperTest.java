@@ -49,12 +49,12 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
     }
 
-//    @Test
-//    public void shouldNotChangeForSendKeyboard() {
-//        settings.keyboardLayout = Settings.KeyboardLayout.SEND;
-//        helper = new KeyboardLayoutHelper(settings);
-//
-//        helper.applyLayout(editText);
-//        verify(editText).setInputType(DEFAULT_INPUT_TYPE & InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//    }
+    @Test
+    public void shouldNotChangeForSendKeyboard() {
+        settings.keyboardLayout = KeyboardLayout.SEND;
+        helper = new KeyboardLayoutHelper(settings);
+
+        helper.applyLayout(editText);
+        verify(editText).setInputType(DEFAULT_INPUT_TYPE);
+    }
 }

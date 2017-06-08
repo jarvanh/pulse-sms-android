@@ -633,21 +633,20 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
+        final boolean sendOnEnter = Settings.get(getActivity()).keyboardLayout == KeyboardLayout.SEND;
         messageEntry.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override public void afterTextChanged(Editable editable) { }
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 changeCounterText();
+                if (sendOnEnter && charSequence.length() > 0) {
+                    char lastKey = charSequence.charAt(charSequence.length() - 1);
+                    if (lastKey == '\n') {
+                        requestPermissionThenSend();
+                    }
+                }
             }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
         });
 
         int accent = getArguments().getInt(ARG_COLOR_ACCENT);
