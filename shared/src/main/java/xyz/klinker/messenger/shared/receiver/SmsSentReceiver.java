@@ -25,6 +25,7 @@ import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.klinker.android.send_message.SentReceiver;
 import com.klinker.android.send_message.StripAccents;
@@ -52,7 +53,6 @@ public class SmsSentReceiver extends SentReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-
         new Thread(() -> {
             try {
                 handleReceiver(context, intent);
