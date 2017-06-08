@@ -1026,11 +1026,6 @@ public class MessageListFragment extends Fragment implements
                 messageList.animate().withLayer()
                         .alpha(1f).setDuration(100).setStartDelay(0).setListener(null);
             }
-
-            if (!FeatureFlags.get(getActivity()).QUICK_SCROLL) {
-                dragScrollBar.setVisibility(View.GONE);
-            }
-
         }
     }
 
