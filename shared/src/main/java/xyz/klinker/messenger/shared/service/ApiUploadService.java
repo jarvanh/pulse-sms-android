@@ -18,8 +18,10 @@ package xyz.klinker.messenger.shared.service;
 
 import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -67,6 +69,14 @@ import xyz.klinker.messenger.shared.util.listener.DirectExecutor;
 
 public class ApiUploadService extends Service {
 
+    public static void start(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(new Intent(context, ApiUploadService.class));
+        } else {
+            context.startService(new Intent(context, ApiUploadService.class));
+        }
+    }
+
     private static final String TAG = "ApiUploadService";
     private static final int MESSAGE_UPLOAD_ID = 7235;
     private static final int MEDIA_UPLOAD_ID = 7236;
@@ -100,7 +110,7 @@ public class ApiUploadService extends Service {
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setOngoing(true)
                 .build();
-        NotificationManagerCompat.from(this).notify(MESSAGE_UPLOAD_ID, notification);
+        startForeground(MESSAGE_UPLOAD_ID, notification);
 
         new Thread(() -> {
             account = Account.get(getApplicationContext());
@@ -118,7 +128,6 @@ public class ApiUploadService extends Service {
             uploadDrafts();
             Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms");
 
-            NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_UPLOAD_ID);
             uploadMedia();
         }).start();
     }
@@ -364,7 +373,7 @@ public class ApiUploadService extends Service {
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
-        manager.notify(MEDIA_UPLOAD_ID, builder.build());
+        startForeground(MESSAGE_UPLOAD_ID, builder.build());
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         Executor executor = new DirectExecutor();
@@ -402,7 +411,7 @@ public class ApiUploadService extends Service {
                 builder.setProgress(media.getCount(), media.getPosition(), false);
                 builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,
                         media.getPosition() + 1, media.getCount()));
-                manager.notify(MEDIA_UPLOAD_ID, builder.build());
+                startForeground(MESSAGE_UPLOAD_ID, builder.build());
             } while (media.moveToNext());
         }
 
@@ -411,7 +420,7 @@ public class ApiUploadService extends Service {
     }
 
     private void finishMediaUpload(NotificationManagerCompat manager) {
-        manager.cancel(MEDIA_UPLOAD_ID);
+        stopForeground(true);
         source.close();
         stopSelf();
     }

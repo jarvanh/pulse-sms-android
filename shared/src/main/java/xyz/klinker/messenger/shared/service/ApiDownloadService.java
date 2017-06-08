@@ -18,10 +18,12 @@ package xyz.klinker.messenger.shared.service;
 
 import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -59,6 +61,14 @@ import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.listener.DirectExecutor;
 
 public class ApiDownloadService extends Service {
+
+    public static void start(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(new Intent(context, ApiUploadService.class));
+        } else {
+            context.startService(new Intent(context, ApiUploadService.class));
+        }
+    }
 
     private static final String TAG = "ApiDownloadService";
     private static final int MESSAGE_DOWNLOAD_ID = 7237;
@@ -108,7 +118,7 @@ public class ApiDownloadService extends Service {
                 .build();
 
         if (showNotification) {
-            NotificationManagerCompat.from(this).notify(MESSAGE_DOWNLOAD_ID, notification);
+            startForeground(MESSAGE_DOWNLOAD_ID, notification);
         }
 
         new Thread(() -> {
@@ -351,7 +361,8 @@ public class ApiDownloadService extends Service {
     }
 
     private void downloadMedia() {
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
                 .setContentTitle(getString(R.string.decrypting_and_downloading_media))
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
@@ -361,7 +372,7 @@ public class ApiDownloadService extends Service {
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
 
         if (showNotification) {
-            manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+            startForeground(MESSAGE_DOWNLOAD_ID, builder.build());
         }
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -404,7 +415,7 @@ public class ApiDownloadService extends Service {
                 builder.setProgress(media.getCount(), media.getPosition(), false);
 
                 if (showNotification) {
-                    manager.notify(MEDIA_DOWNLOAD_ID, builder.build());
+                    startForeground(MESSAGE_DOWNLOAD_ID, builder.build());
                 }
             } while (media.moveToNext());
         }
@@ -414,7 +425,7 @@ public class ApiDownloadService extends Service {
     }
 
     private void finishMediaDownload(NotificationManagerCompat manager) {
-        manager.cancel(MEDIA_DOWNLOAD_ID);
+        stopForeground(true);
         source.close();
         stopSelf();
     }

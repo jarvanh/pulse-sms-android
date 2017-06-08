@@ -109,8 +109,7 @@ public class NotificationUtils {
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel statusChannel = new NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel),
-                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_MIN);
         manager.createNotificationChannel(statusChannel);
     }
 
