@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.4.0"
+        description="June 1st, 2017">
+        <text>NEW: "Keyboard Layout" option to send messages when you press the "Return" key</text>
+        <text>NEW: Automatically archive conversations that you blacklist</text>
+    </version>
+
+    <version
         name="2.3.4"
         description="June 1st, 2017">
         <text>Fixes for marking messages as sent when using the strip unicode option</text>
