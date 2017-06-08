@@ -6,24 +6,24 @@
         android:id="@+id/menu_delete_messages"
         android:title="@string/delete"
         android:icon="@drawable/ic_delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_share_message"
         android:title="@string/share"
         android:icon="@drawable/ic_share"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_copy_message"
         android:title="@string/copy_message"
         android:icon="@drawable/ic_copy"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_message_details"
         android:title="@string/view_details"
         android:icon="@drawable/ic_info"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

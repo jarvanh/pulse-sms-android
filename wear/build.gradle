@@ -79,7 +79,8 @@ android {
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
                 'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
                 'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams',
-                'MissingTranslation'
+                'MissingTranslation', 'ContentDescription', 'GradleCompatible', 'Assert',
+                'MergeRootFrame', 'IconDensities', 'ObsoleteSdkInt', 'IconDuplicates'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

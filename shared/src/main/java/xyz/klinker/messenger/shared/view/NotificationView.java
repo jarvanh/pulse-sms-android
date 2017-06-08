@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.shared.view;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spanned;
@@ -59,6 +60,7 @@ public class NotificationView {
     /**
      * Initializes the icon with relevant information.
      */
+    @SuppressLint("InflateParams")
     private void init(NotificationWindowManager manager) {
         this.manager = manager;
 

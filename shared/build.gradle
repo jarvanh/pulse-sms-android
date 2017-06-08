@@ -64,7 +64,11 @@ android {
 
     lintOptions {
         abortOnError true
-        disable 'InvalidPackage', 'UnusedAttribute', 'CommitPrefEdits', 'HardwareIds', 'MissingTranslation'
+        disable 'InvalidPackage', 'UnusedAttribute', 'CommitPrefEdits', 'HardwareIds',
+                'MissingTranslation', 'ContentDescription', 'GradleCompatible', 'InconsistentArrays',
+                'ApplySharedPref', 'Assert', 'DefaultLocale', 'LocaleFolder', 'Typos', 'UnusedQuantity',
+                'StaticFieldLeak', 'UnusedResources', 'TypographyEllipsis', 'TrustAllX509TrustManager',
+                'IconDensities'
         textOutput 'stdout'
         xmlReport false
         htmlReport true
@@ -79,6 +83,7 @@ android {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${KOTLIN_VERSION}"
 
+    //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"

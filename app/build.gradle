@@ -100,7 +100,7 @@ android {
                 'MissingTranslation', 'GradleCompatible', 'ApplySharedPref', 'Assert',
                 'LocaleFolder', 'TypographyEllipsis', 'InconsistentArrays', 'DefaultLocale',
                 'AppCompatCustomView', 'UnusedQuantity', 'MergeRootFrame', 'NewApi', 'Typos',
-                'IconDensities', 'IconDuplicates'
+                'IconDensities', 'IconDuplicates', 'ContentDescription', 'LabelFor'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

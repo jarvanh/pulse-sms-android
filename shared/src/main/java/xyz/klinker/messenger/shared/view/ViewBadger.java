@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.ShapeDrawable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 
+@SuppressLint({"AppCompatCustomView", "ViewConstructor"})
 public class ViewBadger extends TextView {
 
     private static final int CORNER_RADIUS = 2;
