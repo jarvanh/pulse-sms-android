@@ -471,9 +471,7 @@
     <string name="test">Test</string>
     <string name="channel_settings">Notification Channel Settings</string>
     <string name="channels">Channels</string>
-    <string name="channels_global_warning">With Notification Channels, global notification customization
-        for LED, vibrate, heads up, and ringtone are no longer possible. Access customization options
-        from within each channel instead.</string>
+    <string name="channels_global_warning">Many global customizations are now only possible per-channel.</string>
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="rate_it">Rate It!</string>
