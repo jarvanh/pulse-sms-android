@@ -49,9 +49,9 @@ public class MessageListFragmentTest extends MessengerRobolectricSuite {
         assertNotNull(fragment);
     }
 
-    /*@Test
+    @Test @Ignore
     public void isAdded() {
         assertTrue(fragment.isAdded());
-    }*/
+    }
 
 }
