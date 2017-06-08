@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.util;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
@@ -27,6 +28,7 @@ public class NotificationUtils {
     public static final String MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary";
     public static final String FAILED_MESSAGES_CHANNEL_ID = "failed-messages";
     public static final String TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications";
+    public static final String STATUS_NOTIFICATIONS_CHANNEL_ID = "status-notifications";
 
     public static void cancelGroupedNotificationWithNoContent(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -75,6 +77,7 @@ public class NotificationUtils {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void createNotificationChannelIfNonExistent(Context context, Conversation conversation) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
@@ -85,6 +88,7 @@ public class NotificationUtils {
         manager.createNotificationChannel(channel);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void createTestChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
@@ -97,6 +101,20 @@ public class NotificationUtils {
         manager.createNotificationChannel(testChannel);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
+    public static void createStatusChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel statusChannel = new NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
+                context.getString(R.string.status_notifications_channel),
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(statusChannel);
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
     public static void createFailedMessageChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
@@ -109,6 +127,7 @@ public class NotificationUtils {
         manager.createNotificationChannel(testChannel);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void createMessageGroupChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
@@ -121,6 +140,7 @@ public class NotificationUtils {
         manager.createNotificationChannel(messageGroupChannel);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void createNotificationChannels(Context context, DataSource source) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
@@ -135,6 +155,7 @@ public class NotificationUtils {
 
         // channels to place the notifications in
         createTestChannel(context);
+        createStatusChannel(context);
         createFailedMessageChannel(context);
         createMessageGroupChannel(context);
 
@@ -150,6 +171,7 @@ public class NotificationUtils {
         manager.createNotificationChannels(channels);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     private static NotificationChannel createChannel(Context context, Conversation conversation) {
         Settings settings = Settings.get(context);
 
@@ -169,6 +191,7 @@ public class NotificationUtils {
         return channel;
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void deleteChannel(Context context, long conversationId) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;

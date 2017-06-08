@@ -61,6 +61,7 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.PaginationUtils;
 import xyz.klinker.messenger.shared.util.listener.DirectExecutor;
 
@@ -91,7 +92,7 @@ public class ApiUploadService extends Service {
     }
 
     private void uploadData() {
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
                 .setContentTitle(getString(R.string.encrypting_and_uploading))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)

@@ -76,10 +76,12 @@ public class MessengerApplication extends FirebaseApplication {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        startService(new Intent(this, ContentObserverService.class));
-
-        // the documentation said that this was fine to do on every startup of the app.
-        startService(new Intent(this, CreateNotificationChannelService.class));
+        try {
+            startService(new Intent(this, ContentObserverService.class));
+            startService(new Intent(this, CreateNotificationChannelService.class));
+        } catch (Exception e) {
+            // fails in the background for android O
+        }
     }
 
     public void refreshDynamicShortcuts() {

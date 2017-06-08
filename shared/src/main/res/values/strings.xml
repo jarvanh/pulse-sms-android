@@ -179,8 +179,7 @@
     <string name="onboarding_title_1">Messaging Re-imagined</string>
     <string name="onboarding_title_2">Available Everywhere</string>
     <string name="onboarding_title_3">Powerful Customization</string>
-    <string name="onboarding_content_1">"Smooth, fluid layouts with a powerful design and seamless integration.
-        Pulse puts your conversations front and center."</string>
+    <string name="onboarding_content_1">Smooth, fluid layouts with a powerful design and seamless integration.</string>
     <string name="onboarding_content_2">Message from your tablet, computer, watch, or any other connected devices.</string>
     <string name="onboarding_content_3">Pin, mute, theme, and customize notifications for any contacts you are chatting with. Make Pulse yours.</string>
     <string name="message_anywhere_onboarding_title_1">Message Anywhere</string>
@@ -220,7 +219,8 @@
     <string name="received_new_message">You received a new text!</string>
     <string name="media">Media</string>
     <string name="test_notifications_channel">Test notifications</string>
-    <string name="group_summary_notifications">Message Group Summary Notifications</string>
+    <string name="status_notifications_channel">Status notifications</string>
+    <string name="group_summary_notifications">Message group summaries</string>
     <string name="failed_messages_channel">Failed messages</string>
 
 
