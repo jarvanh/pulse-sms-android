@@ -27,8 +27,6 @@
     <string name="api_password_confirmation">تأكيد كلمة المرور</string>
     <string name="api_name">الإسم</string>
     <string name="api_phone_number">رقم الهاتف</string>
-    <string name="api_connecting">الاتصال بالخادم…</string>
-    <string name="api_error">حدث خطأ أثناء العملية</string>
     <string name="api_device_error">حدث خطأ اثناء اضافة هذا الجهاز.إعادة المحاولة مرةً اخرى.</string>
     <string name="api_add_second_primary_device">"يبدو أن لديك جهاز أساسي لتشغيل هذا الحساب عليه،
 (%1$s) مع العلم إنه لا يسمح سوى بجهاز أساسي واحد لكل حساب..
@@ -48,7 +46,6 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">في المقدمه</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">على جهاز محمول أو جهاز الكمبيوتر.</string>
     <string name="api_activate_2_1">على الموقع</string>
     <string name="api_activate_2_2">أدخل رمز التحقق</string>

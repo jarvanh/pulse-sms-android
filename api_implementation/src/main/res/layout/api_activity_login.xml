@@ -142,10 +142,8 @@
             android:id="@+id/login_fab"
             android:layout_below="@id/login_dialog"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="-36dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/api_continue"
             app:fabSize="normal"
@@ -214,7 +212,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_error_hint"
-                android:layout_marginLeft="2dp"
                 android:layout_marginStart="2dp"/>
 
         </LinearLayout>
@@ -226,10 +223,8 @@
             android:id="@+id/signup_fab"
             android:layout_below="@id/signup_dialog"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="-36dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
             app:fabSize="normal"
             app:borderWidth="0dp"

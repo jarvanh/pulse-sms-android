@@ -27,12 +27,7 @@
     <string name="api_password_confirmation">אימות סיסמה</string>
     <string name="api_name">שם</string>
     <string name="api_phone_number">מספר טלפון</string>
-    <string name="api_connecting">מתחבר לשרת...</string>
-    <string name="api_error">אירעה שגיאה במהלך הפעולה</string>
     <string name="api_device_error">אירעה שגיאה בעת הוספת המכשיר. בואו ננסה שוב!</string>
-    <string name="api_add_second_primary_device">נראה שיש לך מכשיר ראשי
-(% 1 $ s) עבור החשבון שלך ורק אחד מותר! האם ברצונך להסיר את
-המכשיר הראשי ולהגדיר את זה כמו הראשי החדש?</string>
     <string name="api_yes">כן</string>
     <string name="api_no">לא</string>
     <string name="api_no_email">לא הוזנה כתובת דוא\"ל</string>
@@ -47,7 +42,6 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">גש אל</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">במכשיר נייד או במחשב.</string>
     <string name="api_activate_2_1">באתר</string>
     <string name="api_activate_2_2">הזן את הקוד ימינה</string>

@@ -43,7 +43,8 @@ android {
 
     lintOptions {
         abortOnError true
-        disable 'InvalidPackage', 'UnusedAttribute', 'CommitPrefEdits', 'HardwareIds', 'MissingTranslation'
+        disable 'InvalidPackage', 'UnusedAttribute', 'CommitPrefEdits', 'HardwareIds', 'MissingTranslation',
+                'StaticFieldLeak', 'Assert', 'ApplySharedPref', 'LocaleFolder'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

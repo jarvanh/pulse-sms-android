@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -32,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -48,7 +50,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +89,6 @@ import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
-import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -98,7 +98,6 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.UpdateUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
-import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
 import static xyz.klinker.messenger.shared.MessengerActivityExtras.*;
@@ -151,8 +150,8 @@ public class  MessengerActivity extends AppCompatActivity
 
         if (checkInitialStart() && savedInstanceState == null) {
             boolean hasTelephone = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
-            boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
-                    DualSimUtils.get(this).getDefaultPhoneNumber() != null;
+//            boolean hasSim = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 ||
+//                    DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
             boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);
             if (hasPhoneFeature ) {
@@ -204,7 +203,9 @@ public class  MessengerActivity extends AppCompatActivity
                 int count = c.getCount();
                 try {
                     c.close();
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 source.close();
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && count > 1) {
@@ -226,9 +227,8 @@ public class  MessengerActivity extends AppCompatActivity
         registerReceiver(refreshAllReceiver,
                 new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
 
-        new Handler().postDelayed(() -> {
-            startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class));
-        }, 3000);
+        new Handler().postDelayed(() ->
+                startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class)), 3000);
     }
 
     @Override
@@ -253,7 +253,9 @@ public class  MessengerActivity extends AppCompatActivity
 
         try {
             unregisterReceiver(refreshAllReceiver);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -262,7 +264,9 @@ public class  MessengerActivity extends AppCompatActivity
 
         try {
             dataSource.close();
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);
@@ -280,8 +284,8 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         try {
             PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -450,6 +454,7 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     @Override
+    @SuppressLint("RestrictedApi")
     public void onBackPressed() {
         if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -487,10 +492,10 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         closeDrawer();
         
-        if (item == null || item.isChecked() || ApiDownloadService.IS_RUNNING) {
+        if (item.isChecked() || ApiDownloadService.IS_RUNNING) {
             return true;
         }
 
@@ -707,12 +712,11 @@ public class  MessengerActivity extends AppCompatActivity
         return displayFragmentWithBackStack(new ArchivedConversationListFragment());
     }
 
-    private boolean displaySearchFragment() {
+    private void displaySearchFragment() {
         otherFragment = null;
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.conversation_list_container, searchFragment)
                 .commit();
-        return true;
     }
 
     private boolean displayScheduledMessages() {
@@ -852,30 +856,27 @@ public class  MessengerActivity extends AppCompatActivity
                 conversations.add(c);
             }
 
-            ContactAdapter adapter = new ContactAdapter(conversations, new ContactClickedListener() {
-                @Override
-                public void onClicked(String title, String phoneNumber, String imageUri) {
-                    Intent intent;
+            ContactAdapter adapter = new ContactAdapter(conversations, (title, phoneNumber, imageUri) -> {
+                Intent intent;
 
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                            String.valueOf(ContactUtils.findContactId(phoneNumber,
+                                    MessengerActivity.this)));
+                    intent.setData(uri);
+                } catch (NoSuchElementException e) {
+                    e.printStackTrace();
                     try {
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                                String.valueOf(ContactUtils.findContactId(phoneNumber,
-                                        MessengerActivity.this)));
-                        intent.setData(uri);
-                    } catch (NoSuchElementException e) {
-                        e.printStackTrace();
-                        try {
-                            intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
-                            intent.setData(Uri.parse("tel:" + phoneNumber));
-                        } catch (ActivityNotFoundException ex) {
-                            intent = null;
-                        }
+                        intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
+                        intent.setData(Uri.parse("tel:" + phoneNumber));
+                    } catch (ActivityNotFoundException ex) {
+                        intent = null;
                     }
+                }
 
-                    if (intent != null) {
-                        startActivity(intent);
-                    }
+                if (intent != null) {
+                    startActivity(intent);
                 }
             });
 
@@ -904,7 +905,9 @@ public class  MessengerActivity extends AppCompatActivity
 
                 try {
                     startActivity(intent);
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)
@@ -945,14 +948,11 @@ public class  MessengerActivity extends AppCompatActivity
             final long conversationId = fragment.getExpandedId();
             fragment.onBackPressed();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ConversationListAdapter adapter = fragment.getAdapter();
-                    int position = adapter.findPositionForConversationId(conversationId);
-                    if (position != -1) {
-                        adapter.deleteItem(position);
-                    }
+            new Handler().postDelayed(() -> {
+                ConversationListAdapter adapter = fragment.getAdapter();
+                int position = adapter.findPositionForConversationId(conversationId);
+                if (position != -1) {
+                    adapter.deleteItem(position);
                 }
             }, 250);
 
@@ -968,14 +968,11 @@ public class  MessengerActivity extends AppCompatActivity
             final long conversationId = fragment.getExpandedId();
             fragment.onBackPressed();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ConversationListAdapter adapter = fragment.getAdapter();
-                    int position = adapter.findPositionForConversationId(conversationId);
-                    if (position != -1) {
-                        adapter.archiveItem(position);
-                    }
+            new Handler().postDelayed(() -> {
+                ConversationListAdapter adapter = fragment.getAdapter();
+                int position = adapter.findPositionForConversationId(conversationId);
+                if (position != -1) {
+                    adapter.archiveItem(position);
                 }
             }, 250);
 
@@ -1075,7 +1072,7 @@ public class  MessengerActivity extends AppCompatActivity
 
             super.onActivityResult(requestCode, resultCode, data);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -1154,7 +1151,9 @@ public class  MessengerActivity extends AppCompatActivity
             } else {
                 snooze.setImageResource(R.drawable.ic_snooze);
             }
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void startDataDownload() {

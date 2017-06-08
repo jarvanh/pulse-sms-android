@@ -27,8 +27,6 @@
     <string name="api_password_confirmation">Підтвердження паролю</string>
     <string name="api_name">Ім\'я</string>
     <string name="api_phone_number">Номер телефону</string>
-    <string name="api_connecting">Підключення до сервера ...</string>
-    <string name="api_error">Сталася помилка під час операції</string>
     <string name="api_device_error">При додаванні цього пристрою сталася помилка. Повторіть!</string>
     <string name="api_add_second_primary_device">Схоже у Вас вже є основний пристрій 
 (%1$s) для вашого облікового запису, і лише один дозволяється! 
@@ -47,7 +45,6 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Важливе до</string>
-    <string name="api_activate_1_2">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">на мобільному пристрої або комп\'ютері.</string>
     <string name="api_activate_2_1">На веб-сайті</string>
     <string name="api_activate_2_2">Введіть код праворуч</string>

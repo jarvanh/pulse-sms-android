@@ -96,7 +96,11 @@ android {
         abortOnError true
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
                 'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
-                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams', 'MissingTranslation'
+                'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams',
+                'MissingTranslation', 'GradleCompatible', 'ApplySharedPref', 'Assert',
+                'LocaleFolder', 'TypographyEllipsis', 'InconsistentArrays', 'DefaultLocale',
+                'AppCompatCustomView', 'UnusedQuantity', 'MergeRootFrame', 'NewApi', 'Typos',
+                'IconDensities', 'IconDuplicates'
         textOutput 'stdout'
         xmlReport false
         htmlReport true
