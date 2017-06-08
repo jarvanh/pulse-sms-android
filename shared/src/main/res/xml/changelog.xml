@@ -21,6 +21,7 @@
         description="June 1st, 2017">
         <text>NEW: "Keyboard Layout" option to send messages when you press the "Return" key</text>
         <text>NEW: Automatically archive conversations that you blacklist</text>
+        <text>NEW: Enlarge font sizes when the messages are only emojis</text>
     </version>
 
     <version

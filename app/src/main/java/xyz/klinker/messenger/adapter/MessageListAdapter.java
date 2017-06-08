@@ -78,6 +78,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     private static final String TAG = "MessageListAdapter";
 
+    private float largeFont;
     private Cursor messages;
     private Map<String, Contact> fromColorMapper;
     private Map<String, Contact> fromColorMapperByName;
@@ -121,6 +122,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         if (fragment.getMultiSelect() != null)
             fragment.getMultiSelect().setAdapter(this);
+
+        largeFont = Settings.get(fragment.getActivity()).largeFont;
     }
 
     @Override
@@ -188,6 +191,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
+
+            if (!message.data.isEmpty() && message.data.replaceAll(Regex.EMOJI, "").isEmpty()) {
+                // enlarge emojis
+                holder.message.setTextSize(35);
+            } else {
+                holder.message.setTextSize(largeFont);
+            }
 
             Link urls = new Link(Regex.WEB_URL);
             urls.setTextColor(accentColor);
