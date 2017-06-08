@@ -1,1 +1,9 @@
-This release allows you to attach contacts to your messages! Open up the attach menu on any conversation and search for contacts from the "person" icon. If you are a Nougat user, this new version also gives you the option to disable the "Messaging Style" notifications that provide conversation history within the notification. Enjoy the update!
+This update adds full support for the latest Android O features, as well as some new goodies for those of you not on O!<br><br>
+For Android O:<br>
+- Adaptive icon<br>
+- Notification channels<br><br>
+
+For everyone:<br>
+- Quick scroll to dates on the message list<br>
+- Option to send messages with "Enter" key<br>
+- Enlarge font for all emoji messages<br>

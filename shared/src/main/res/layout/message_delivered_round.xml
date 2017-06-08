@@ -67,7 +67,7 @@
         android:tint="@color/primaryText"
         android:layout_marginEnd="12dp"
         android:contentDescription="@string/delivered" />
-    
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/timestamp_height"
