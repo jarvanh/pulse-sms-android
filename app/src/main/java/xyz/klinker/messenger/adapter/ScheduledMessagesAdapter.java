@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
     }
 
     @Override
+    @SuppressLint("SetTextI18n")
     public void onBindViewHolder(ScheduledMessageViewHolder holder, int position) {
         final ScheduledMessage message = getItem(position);
 

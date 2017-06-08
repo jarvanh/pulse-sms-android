@@ -6,12 +6,12 @@
         android:id="@+id/menu_reply"
         android:title="@string/reply"
         android:icon="@drawable/ic_reply_white"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_close"
         android:title="@string/close"
         android:icon="@drawable/ic_close"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

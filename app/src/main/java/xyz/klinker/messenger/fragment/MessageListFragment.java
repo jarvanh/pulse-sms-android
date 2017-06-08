@@ -54,7 +54,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsMessage;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -64,7 +63,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -80,7 +78,6 @@ import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
-import com.klinker.android.send_message.StripAccents;
 import com.sgottard.sofa.ContentFragment;
 import com.yalantis.ucrop.UCrop;
 
@@ -105,7 +102,6 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -115,7 +111,6 @@ import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
-import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
@@ -146,7 +141,6 @@ import xyz.klinker.messenger.view.AttachLocationView;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout;
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout.ElasticDragDismissCallback;
 import xyz.klinker.messenger.view.ImageKeyboardEditText;
-import xyz.klinker.messenger.view.MaterialTooltip;
 import xyz.klinker.messenger.view.RecordAudioView;
 
 import static android.app.Activity.RESULT_OK;
@@ -198,13 +192,6 @@ public class MessageListFragment extends Fragment implements
     private View attachLayout;
     private FrameLayout attachHolder;
     private LinearLayout attachButtonHolder;
-    private ImageButton attachImage;
-    private ImageButton captureImage;
-    private ImageButton attachGif;
-    private ImageButton recordVideo;
-    private ImageButton recordAudio;
-    private ImageButton attachLocation;
-    private ImageButton attachContact;
     private View attachedImageHolder;
     private ImageView attachedImage;
     private TextView selectedImageCount;
@@ -339,11 +326,7 @@ public class MessageListFragment extends Fragment implements
                 int screenHeight = dragDismissFrameLayout.getRootView().getHeight();
                 int keypadHeight = screenHeight - r.bottom;
 
-                if (keypadHeight > screenHeight * 0.15) {
-                    keyboardOpen = true;
-                } else {
-                    keyboardOpen = false;
-                }
+                keyboardOpen = keypadHeight > screenHeight * 0.15;
             });
 
             initSendbar();
@@ -398,12 +381,11 @@ public class MessageListFragment extends Fragment implements
             //new Thread(() -> source.readConversation(getActivity(), getConversationId())).start();
             dismissOnStartup = false;
         }
-        
-        // TODO: evaluate if this needs to be here or if it can go in the if block above
-        // It is probably safer here... It will mark messages as read with more frequency then,
-        // and that action isn't a huge strain on the backend
+
         new Thread(() -> {
-                try { Thread.sleep(1000); } catch (Exception e) { }
+                try { Thread.sleep(1000); } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 source.readConversation(getActivity(), getConversationId());
         }).start();
     }
@@ -483,10 +465,9 @@ public class MessageListFragment extends Fragment implements
         messageEntry.setHighlightColor(accent);
 
         String firstName;
-        try {
+        if (getArguments() != null && getArguments().getString(ARG_TITLE) != null) {
             firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
-        } catch (Exception e) {
-            // no title
+        } else {
             firstName = "";
         }
 
@@ -590,7 +571,7 @@ public class MessageListFragment extends Fragment implements
         ImageView image = (ImageView) activity.findViewById(R.id.drawer_header_reveal_image);
 
         // could be null when rotating the device
-        if (nameView != null) {
+        if (nameView != null && name != null) {
             if (!name.equals(phoneNumber)) {
                 nameView.setText(name);
             } else {
@@ -731,16 +712,20 @@ public class MessageListFragment extends Fragment implements
         attachLayoutStub.inflate();
         View root = getView();
 
+        if (root == null) {
+            return;
+        }
+
         attachLayout = root.findViewById(R.id.attach_layout);
         attachHolder = (FrameLayout) root.findViewById(R.id.attach_holder);
         attachButtonHolder = (LinearLayout) root.findViewById(R.id.attach_button_holder);
-        attachImage = (ImageButton) root.findViewById(R.id.attach_image);
-        captureImage = (ImageButton) root.findViewById(R.id.capture_image);
-        attachGif = (ImageButton) root.findViewById(R.id.attach_gif);
-        recordVideo = (ImageButton) root.findViewById(R.id.record_video);
-        recordAudio = (ImageButton) root.findViewById(R.id.record_audio);
-        attachLocation = (ImageButton) root.findViewById(R.id.attach_location);
-        attachContact = (ImageButton) root.findViewById(R.id.attach_contact);
+        ImageButton attachImage = (ImageButton) root.findViewById(R.id.attach_image);
+        ImageButton captureImage = (ImageButton) root.findViewById(R.id.capture_image);
+        ImageButton attachGif = (ImageButton) root.findViewById(R.id.attach_gif);
+        ImageButton recordVideo = (ImageButton) root.findViewById(R.id.record_video);
+        ImageButton recordAudio = (ImageButton) root.findViewById(R.id.record_audio);
+        ImageButton attachLocation = (ImageButton) root.findViewById(R.id.attach_location);
+        ImageButton attachContact = (ImageButton) root.findViewById(R.id.attach_contact);
 
         attachImage.setOnClickListener(view -> attachImage());
         captureImage.setOnClickListener(view -> captureImage());
@@ -789,12 +774,9 @@ public class MessageListFragment extends Fragment implements
                 final ViewGroup.MarginLayoutParams params =
                         (ViewGroup.MarginLayoutParams) attachLayout.getLayoutParams();
 
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        params.height = (Integer) valueAnimator.getAnimatedValue();
-                        attachLayout.requestLayout();
-                    }
+                animator.addUpdateListener(valueAnimator -> {
+                    params.height = (Integer) valueAnimator.getAnimatedValue();
+                    attachLayout.requestLayout();
                 });
 
                 animator.setDuration(200);
@@ -827,7 +809,7 @@ public class MessageListFragment extends Fragment implements
                 NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -954,7 +936,7 @@ public class MessageListFragment extends Fragment implements
                     dismissOnStartup = false;
                 }
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }).start();
     }
@@ -1475,7 +1457,7 @@ public class MessageListFragment extends Fragment implements
                     getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -1510,7 +1492,7 @@ public class MessageListFragment extends Fragment implements
                 editImage.setVisibility(View.VISIBLE);
             } else if (selectedImageUris.size() > 1) {
                 selectedImageCount.setVisibility(View.VISIBLE);
-                selectedImageCount.setText(selectedImageUris.size() + "");
+                selectedImageCount.setText(String.valueOf(selectedImageUris.size()));
                 editImage.setVisibility(View.GONE);
             } else {
                 selectedImageCount.setVisibility(View.GONE);
@@ -1750,7 +1732,7 @@ public class MessageListFragment extends Fragment implements
             final File file;
             try {
                 File outputDir = new File(getActivity().getExternalFilesDir(null), "outputs");
-                outputDir.mkdir();
+                boolean mkdir = outputDir.mkdir();
                 file = File.createTempFile("transcode_video", ".mp4", outputDir);
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "Failed to create temporary file.", Toast.LENGTH_LONG).show();
@@ -1771,6 +1753,10 @@ public class MessageListFragment extends Fragment implements
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage(getActivity().getString(R.string.preparing_video));
 
+            if (parcelFileDescriptor == null) {
+                return;
+            }
+
             final FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
                 @Override public void onTranscodeCanceled() { }
@@ -1784,7 +1770,7 @@ public class MessageListFragment extends Fragment implements
                     try {
                         progressDialog.dismiss();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
                 @Override public void onTranscodeCompleted() {
@@ -1795,7 +1781,7 @@ public class MessageListFragment extends Fragment implements
                     try {
                         progressDialog.cancel();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
             };

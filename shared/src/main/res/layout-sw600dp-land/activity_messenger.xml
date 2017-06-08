@@ -29,7 +29,8 @@
         android:id="@+id/status_bar"
         android:orientation="horizontal"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:backgroundTintMode="multiply" />
+        android:backgroundTintMode="multiply"
+        tools:ignore="InconsistentLayout" />
 
     <LinearLayout
         android:layout_width="match_parent"

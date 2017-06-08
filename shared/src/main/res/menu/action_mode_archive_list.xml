@@ -6,12 +6,12 @@
         android:id="@+id/menu_delete_conversation"
         android:title="@string/menu_delete_conversation"
         android:icon="@drawable/ic_delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_archive_conversation"
         android:title="@string/menu_move_to_inbox"
         android:icon="@drawable/ic_unarchive"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>
