@@ -40,7 +40,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
+import com.turingtechnologies.materialscrollbar.IDateableAdapter;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +76,7 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
  * Adapter for displaying messages in a conversation.
  */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
-        implements MessageDeletedListener {
+        implements MessageDeletedListener, IDateableAdapter {
 
     private static final String TAG = "MessageListAdapter";
 
@@ -479,6 +481,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         return type;
     }
 
+    @Override
+    public Date getDateForElement(int position) {
+        messages.moveToPosition(position);
+        long millis = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
+        return new Date(millis);
+    }
+
     private void setVisible(View v) {
         if (v != null && v.getVisibility() != View.VISIBLE) {
             v.setVisibility(View.VISIBLE);
@@ -626,5 +635,4 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
         }
     }
-
 }
