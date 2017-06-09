@@ -7,3 +7,4 @@ For everyone:<br>
 - Quick scroll to dates on the message list<br>
 - Option to send messages with "Enter" key<br>
 - Enlarge font for all emoji messages<br>
++ The usual bug fixes and performance improvements!
