@@ -7,6 +7,7 @@ import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.media.AudioAttributes;
+import android.net.Uri;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationManagerCompat;
@@ -159,15 +160,16 @@ public class NotificationUtils {
         createMessageGroupChannel(context);
 
         List<Conversation> conversations = source.getAllConversationsAsList();
-        List<NotificationChannel> channels = new ArrayList<>();
-
         for (int i = 0; i < conversations.size(); i++) {
             final Conversation conversation = conversations.get(i);
             final NotificationChannel channel = createChannel(context, conversation);
-            channels.add(channel);
-        }
 
-        manager.createNotificationChannels(channels);
+            try {
+                manager.createNotificationChannel(channel);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -184,8 +186,12 @@ public class NotificationUtils {
         channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
         channel.setLockscreenVisibility(conversation.privateNotifications ?
                 Notification.VISIBILITY_PRIVATE : Notification.VISIBILITY_PUBLIC);
-        channel.setSound(NotificationService.getRingtone(context, conversation.ringtoneUri),
-                new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
+
+        Uri ringtone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+        if (ringtone != null) {
+            channel.setSound(ringtone, new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION).build());
+        }
 
         return channel;
     }

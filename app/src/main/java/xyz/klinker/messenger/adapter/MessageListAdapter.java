@@ -483,6 +483,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public Date getDateForElement(int position) {
+        if (position < 0) {
+            return new Date();
+        }
+
         messages.moveToPosition(position);
         long millis = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
         return new Date(millis);

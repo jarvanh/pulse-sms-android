@@ -127,7 +127,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     conversationId = source.insertMessage(message, phoneNumbers, context);
 
                     Conversation conversation = source.getConversation(conversationId);
-                    if (conversation.mute) {
+                    if (conversation != null && conversation.mute) {
                         source.seenConversation(conversationId);
                         ignoreNotification = true;
                     }
