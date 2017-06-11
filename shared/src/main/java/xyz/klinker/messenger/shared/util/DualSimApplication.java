@@ -103,7 +103,13 @@ public class DualSimApplication {
     }
 
     private String formatSimString(SubscriptionInfo info) {
-        return info.getNumber() + " (SIM " + (info.getSimSlotIndex() + 1) + ")";
+        if (info.getDisplayName() != null) {
+            return "SIM " + (info.getSimSlotIndex() + 1) + ": " + info.getDisplayName();
+        } else if (info.getNumber() != null) {
+            return "SIM " + (info.getSimSlotIndex() + 1) + ": " + info.getNumber();
+        } else {
+            return "SIM Slot " + (info.getSimSlotIndex() + 1);
+        }
     }
 
 }
