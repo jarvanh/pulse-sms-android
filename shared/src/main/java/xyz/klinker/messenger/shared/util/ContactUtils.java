@@ -115,7 +115,7 @@ public class ContactUtils {
             try {
                 String origin = number[i];
 
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                         Uri.encode(origin));
 
                 Cursor phonesCursor = null;
@@ -125,12 +125,12 @@ public class ContactUtils {
                             .query(
                                     phoneUri,
                                     new String[]{
-                                            ContactsContract.PhoneLookup.DISPLAY_NAME,
-                                            ContactsContract.Contacts._ID
+                                            ContactsContract.Contacts.DISPLAY_NAME,
+                                            ContactsContract.CommonDataKinds.Phone._ID
                                     },
                                     null,
                                     null,
-                                    ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
+                                    ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
 
                 } catch (Exception e) {
                     // funky placeholder number coming from an mms message, dont do anything with it
@@ -179,11 +179,11 @@ public class ContactUtils {
             throws NoSuchElementException {
 
         try {
-            Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                     Uri.encode(number));
 
             Cursor phonesCursor = context.getContentResolver()
-                    .query(phoneUri, new String[]{ContactsContract.PhoneLookup._ID},
+                    .query(phoneUri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID},
                             null, null, null);
 
             if (phonesCursor != null && phonesCursor.moveToFirst()) {
@@ -214,7 +214,7 @@ public class ContactUtils {
             return null;
         } else {
             try {
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
                 Cursor phonesCursor = context.getContentResolver()
