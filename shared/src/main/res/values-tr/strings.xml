@@ -194,10 +194,10 @@ Nabız konuşmalarınızı öne ve ortama koyar."</string>
         <item quantity="one">%1$d yeni mesaj var</item>
         <item quantity="other">%1$d yeni mesaj var</item>
     </plurals>
-    <string name="read">okumak</string>
-    <string name="reply">cevap</string>
+    <string name="read">Okundu</string>
+    <string name="reply">Cevapla</string>
     <string name="reply_to">%1$s yanıtladı</string>
-    <string name="call">Aramak</string>
+    <string name="call">Ara</string>
     <string-array name="reply_choices">
         <item>Evet</item>
         <item>Hayır</item>
