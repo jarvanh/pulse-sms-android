@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static boolean hasTelephony(Activity activity) {
-        return activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+        return false;//activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
     protected void login() {
@@ -271,6 +271,11 @@ public class LoginActivity extends AppCompatActivity {
         Integer deviceId = utils.registerDevice(accountId,
                 Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                 primary, getFirebaseId());
+
+        runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), getFirebaseId(),
+                    Toast.LENGTH_SHORT).show();
+        });
 
         if (deviceId != null) {
             Account account = Account.get(this);
