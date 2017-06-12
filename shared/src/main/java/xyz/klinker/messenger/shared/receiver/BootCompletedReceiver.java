@@ -29,6 +29,7 @@ import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -39,8 +40,10 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            context.startService(new Intent(context, ContentObserverService.class));
-            context.startService(new Intent(context, ForceTokenRefreshService.class));
+            if (!AndroidVersionUtil.isAndroidO()) {
+                context.startService(new Intent(context, ContentObserverService.class));
+                context.startService(new Intent(context, ForceTokenRefreshService.class));
+            }
 
             ScheduledMessageJob.scheduleNextRun(context);
             ContentObserverRunCheckJob.scheduleNextRun(context);
