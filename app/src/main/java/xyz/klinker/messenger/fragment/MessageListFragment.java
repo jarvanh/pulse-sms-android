@@ -666,7 +666,7 @@ public class MessageListFragment extends Fragment implements
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                changeCounterText();
+                //changeCounterText();
                 if (sendOnEnter && charSequence.length() > 0) {
                     char lastKey = charSequence.charAt(charSequence.length() - 1);
                     if (lastKey == '\n') {
