@@ -724,7 +724,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void changeCounterText() {
-        if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP)) {
+        if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
             Settings settings = Settings.get(getActivity());
             MmsSettings mmsSettings = MmsSettings.get(getActivity());
             String text = messageEntry.getText().toString();
@@ -733,6 +733,11 @@ public class MessageListFragment extends Fragment implements
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }
+    }
+
+    private boolean ignoreCounterText() {
+        // they seem to have issues, where some dialog pops up, asking which SIM to send from
+        return Build.MODEL.equals("Nexus 9");
     }
 
     private void initAttachStub() {
