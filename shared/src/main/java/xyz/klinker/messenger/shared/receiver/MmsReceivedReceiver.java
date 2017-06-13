@@ -78,18 +78,16 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             }
 
             if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
-                Intent mediaParser = new Intent(context, MediaParserService.class);
-                mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
-                mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
+                if (MediaParserService.createParser(context, nullableOrBlankBodyText.trim()) != null) {
+                    Intent mediaParser = new Intent(context, MediaParserService.class);
+                    mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+                    mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, nullableOrBlankBodyText.trim());
 
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) { }
-
-                if (AndroidVersionUtil.isAndroidO()) {
-                    context.startForegroundService(mediaParser);
-                } else {
-                    context.startService(mediaParser);
+                    if (AndroidVersionUtil.isAndroidO()) {
+                        context.startForegroundService(mediaParser);
+                    } else {
+                        context.startService(mediaParser);
+                    }
                 }
             }
         }).start();

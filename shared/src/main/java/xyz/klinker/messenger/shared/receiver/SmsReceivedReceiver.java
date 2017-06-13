@@ -35,10 +35,12 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
 import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.BlacklistUtils;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.shared.util.media.MediaParser;
 
 public class SmsReceivedReceiver extends BroadcastReceiver {
 
@@ -87,12 +89,19 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         long conversationId = insertSms(context, address, body, simSlot);
 
         if (conversationId != -1L) {
-            Intent mediaParser = new Intent(context, MediaParserService.class);
-            mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
-            mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
-
             context.startService(new Intent(context, NotificationService.class));
-            handler.postDelayed(() -> context.startService(mediaParser), 2000);
+
+            if (MediaParserService.createParser(context, body.trim()) != null) {
+                Intent mediaParser = new Intent(context, MediaParserService.class);
+                mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+                mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
+
+                if (AndroidVersionUtil.isAndroidO()) {
+                    handler.postDelayed(() -> context.startForegroundService(mediaParser), 2000);
+                } else {
+                    handler.postDelayed(() -> context.startService(mediaParser), 2000);
+                }
+            }
         }
     }
 

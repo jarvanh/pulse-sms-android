@@ -2,6 +2,7 @@ package xyz.klinker.messenger.shared.service;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
@@ -52,8 +53,7 @@ public class MediaParserService extends IntentService {
             return;
         }
 
-        MediaParser parser = new MediaMessageParserFactory().getInstance(this, text);
-
+        MediaParser parser = createParser(this, text);
         if (parser == null) {
             return;
         }
@@ -71,5 +71,9 @@ public class MediaParserService extends IntentService {
         if (AndroidVersionUtil.isAndroidO()) {
             stopForeground(true);
         }
+    }
+
+    public static MediaParser createParser(Context context, String text) {
+        return new MediaMessageParserFactory().getInstance(context, text);
     }
 }
