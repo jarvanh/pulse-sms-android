@@ -37,6 +37,11 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void clearFormattingLeavePlusAndRemovesSpaces() {
+        assertEquals("+33619943924", PhoneNumberUtils.clearFormatting("+33 6 19 94 39 24"));
+    }
+
+    @Test
     public void clearFormatting() {
         assertEquals("5154224558", PhoneNumberUtils.clearFormatting("(515) 422-4558"));
     }
