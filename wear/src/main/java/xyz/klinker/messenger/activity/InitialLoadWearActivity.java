@@ -88,7 +88,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
                 startDatabaseSync();
                 startUploadAfterSync = true;
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                startService(new Intent(this, ApiDownloadService.class));
+                ApiDownloadService.start(this);
                 downloadReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -173,7 +173,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
         startActivity(new Intent(this, MessengerActivity.class));
 
         if (startUploadAfterSync) {
-            startService(new Intent(this, ApiUploadService.class));
+            ApiUploadService.start(this);
         }
 
         finish();

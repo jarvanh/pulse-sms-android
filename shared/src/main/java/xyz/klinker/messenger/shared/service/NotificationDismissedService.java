@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.shared.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -37,11 +38,15 @@ public class NotificationDismissedService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        NotificationService.cancelRepeats(this);
+        handle(intent, this);
+    }
+
+    public static void handle(Intent intent, Context context) {
+        NotificationService.cancelRepeats(context);
 
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, 0);
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.getInstance(context);
         source.open();
 
         if (conversationId == 0) {
@@ -54,7 +59,6 @@ public class NotificationDismissedService extends IntentService {
 
         Log.v("dismissed_notification", "id: " + conversationId);
 
-        new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, conversationId);
+        new ApiUtils().dismissNotification(Account.get(context).accountId, Account.get(context).deviceId, conversationId);
     }
-
 }

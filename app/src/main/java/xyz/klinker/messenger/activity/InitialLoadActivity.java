@@ -44,6 +44,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.service.ApiDownloadService;
 import xyz.klinker.messenger.shared.service.ApiUploadService;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -119,7 +120,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 startDatabaseSync();
                 startUploadAfterSync = true;
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                startService(new Intent(this, ApiDownloadService.class));
+                ApiDownloadService.start(this);
                 downloadReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -196,7 +197,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
         }
 
         if (startUploadAfterSync) {
-            startService(new Intent(this, ApiUploadService.class));
+            ApiUploadService.start(this);
         }
 
         finish();

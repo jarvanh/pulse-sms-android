@@ -69,11 +69,12 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             String nullableOrBlankBodyText = insertMms(context);
 
             if (!ignoreNotification) {
-                if (AndroidVersionUtil.isAndroidO()) {
-                    context.startForegroundService(new Intent(context, NotificationService.class));
-                } else {
-                    context.startService(new Intent(context, NotificationService.class));
-                }
+//                if (AndroidVersionUtil.isAndroidO()) {
+//                    context.startForegroundService(new Intent(context, NotificationService.class));
+//                } else {
+//                    context.startService(new Intent(context, NotificationService.class));
+//                }
+                context.startService(new Intent(context, NotificationService.class));
             }
 
             if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {

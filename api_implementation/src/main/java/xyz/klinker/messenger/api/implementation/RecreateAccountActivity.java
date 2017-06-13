@@ -2,6 +2,7 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 public class RecreateAccountActivity extends LoginActivity {
@@ -22,6 +23,11 @@ public class RecreateAccountActivity extends LoginActivity {
         final Intent uploadService = new Intent();
         uploadService.setComponent(new ComponentName("xyz.klinker.messenger",
                 "xyz.klinker.messenger.shared" + ".service.ApiUploadService"));
-        startService(uploadService);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(uploadService);
+        } else {
+            startService(uploadService);
+        }
     }
 }

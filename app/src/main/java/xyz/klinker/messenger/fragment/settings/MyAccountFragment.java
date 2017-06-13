@@ -313,7 +313,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         } else if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
                 if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                    getActivity().startService(new Intent(getActivity(), ApiUploadService.class));
+                    ApiUploadService.start(getActivity());
                     returnToConversationsAfterLogin();
 
                     NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);

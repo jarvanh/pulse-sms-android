@@ -1169,7 +1169,7 @@ public class  MessengerActivity extends AppCompatActivity
             registerReceiver(downloadReceiver,
                     new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
 
-            startService(new Intent(MessengerActivity.this, ApiDownloadService.class));
+            ApiDownloadService.start(this);
 
             showSnackbar(getString(R.string.downloading_and_decrypting), Snackbar.LENGTH_LONG, null, null);
         }, 1000);

@@ -14,6 +14,7 @@ public class NotificationDismissedReceiver extends BroadcastReceiver {
         Intent serviceIntent = new Intent(context, NotificationDismissedService.class);
         serviceIntent.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversationId);
 
-        context.startService(serviceIntent);
+        //context.startService(serviceIntent);
+        new Thread(() -> NotificationDismissedService.handle(serviceIntent, context)).start();
     }
 }

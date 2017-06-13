@@ -31,18 +31,17 @@ public class MediaParserService extends IntentService {
             return;
         }
 
-        Notification notification = new NotificationCompat.Builder(this,
-                    NotificationUtils.MEDIA_PARSE_CHANNEL_ID)
-                .setContentTitle(getString(R.string.media_parse_text))
-                .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setProgress(0, 0, true)
-                .setLocalOnly(true)
-                .setColor(getResources().getColor(R.color.colorPrimary))
-                .setOngoing(true)
-                .setPriority(NotificationCompat.PRIORITY_MIN)
-                .build();
-
         if (AndroidVersionUtil.isAndroidO()) {
+            Notification notification = new NotificationCompat.Builder(this,
+                    NotificationUtils.MEDIA_PARSE_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.media_parse_text))
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setProgress(0, 0, true)
+                    .setLocalOnly(true)
+                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setOngoing(true)
+                    .setPriority(NotificationCompat.PRIORITY_MIN)
+                    .build();
             startForeground(MEDIA_PARSE_FOREGROUND_ID, notification);
         }
 
