@@ -17,8 +17,14 @@
 <changelog>
 
     <version
-        name="2.4.0"
-        description="June 1st, 2017">
+        name="2.4.1 BETA"
+        description="June 13th, 2017">
+        <text>Bug fixes for first beta</text>
+    </version>
+
+    <version
+        name="2.4.0 BETA"
+        description="June 9th, 2017">
         <text>Android O: Adaptive icons for launcher icon and shortcuts</text>
         <text>Android O: Notification Channels</text>
         <text>NEW: Quick scroll to dates by dragging the scrollbar on the message list</text>
