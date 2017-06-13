@@ -26,7 +26,7 @@ public class FirebaseResetService extends IntentService {
         if (Account.get(this).primary) {
             return;
         }
-        
+
         if (AndroidVersionUtil.isAndroidO()) {
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.GENERAL_CHANNEL_ID)

@@ -122,14 +122,10 @@ public class ContactUtils {
 
                 try {
                     phonesCursor = context.getContentResolver()
-                            .query(
-                                    phoneUri,
-                                    new String[]{
+                            .query(phoneUri, new String[]{
                                             ContactsContract.Contacts.DISPLAY_NAME,
                                             ContactsContract.CommonDataKinds.Phone._ID
-                                    },
-                                    null,
-                                    null,
+                                        }, null, null,
                                     ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
 
                 } catch (Exception e) {
@@ -145,10 +141,32 @@ public class ContactUtils {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0);
                     } else {
+                        phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
-                            names += ", " + PhoneNumberUtils.format(number[i]);
+                            phonesCursor = context.getContentResolver()
+                                    .query(phoneUri, new String[]{
+                                                    ContactsContract.PhoneLookup.DISPLAY_NAME,
+                                                    ContactsContract.Contacts._ID
+                                            }, null, null,
+                                            ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
+
                         } catch (Exception e) {
-                            names += ", " + number;
+                            // funky placeholder number coming from an mms message, dont do anything with it
+                            if (phonesCursor != null) {
+                                phonesCursor.close();
+                            }
+
+                            return numbers;
+                        }
+
+                        if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                            names += ", " + phonesCursor.getString(0);
+                        } else {
+                            try {
+                                names += ", " + PhoneNumberUtils.format(number[i]);
+                            } catch (Exception e) {
+                                names += ", " + number;
+                            }
                         }
                     }
                 } finally {
@@ -190,8 +208,21 @@ public class ContactUtils {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (phonesCursor != null) {
-                phonesCursor.close();
+            } else {
+                phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                        Uri.encode(number));
+
+                phonesCursor = context.getContentResolver()
+                        .query(phoneUri, new String[]{ContactsContract.PhoneLookup._ID},
+                                null, null, null);
+
+                if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                    int id = phonesCursor.getInt(0);
+                    phonesCursor.close();
+                    return id;
+                } else if (phonesCursor != null) {
+                    phonesCursor.close();
+                }
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -225,6 +256,20 @@ public class ContactUtils {
                     uri = phonesCursor.getString(0);
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
+                    }
+                } else {
+                    phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                            Uri.encode(number));
+
+                    phonesCursor = context.getContentResolver()
+                            .query(phoneUri, new String[]{ContactsContract.Contacts.PHOTO_THUMBNAIL_URI},
+                                    null, null, null);
+
+                    if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                        uri = phonesCursor.getString(0);
+                        if (uri != null) {
+                            uri = uri.replace("/photo", "");
+                        }
                     }
                 }
 
