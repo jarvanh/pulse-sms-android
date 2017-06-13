@@ -172,18 +172,27 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     private void enableNotificationBasedOnMute(boolean mute) {
-        if (mute) {
-            SwitchPreference privateNotifications = (SwitchPreference)
-                    findPreference(getString(R.string.pref_contact_private_conversation));
+        SwitchPreference privateNotifications = (SwitchPreference)
+                findPreference(getString(R.string.pref_contact_private_conversation));
+        Preference ringtone = findPreference(getString(R.string.pref_contact_ringtone));
 
+        if (mute) {
             privateNotifications.setChecked(false);
             privateNotifications.setEnabled(false);
-            findPreference(getString(R.string.pref_contact_ringtone)).setEnabled(false);
+
+            if (ringtone != null) {
+                ringtone.setEnabled(false);
+            }
 
             conversation.privateNotifications = false;
         } else {
-            findPreference(getString(R.string.pref_contact_private_conversation)).setEnabled(true);
-            findPreference(getString(R.string.pref_contact_ringtone)).setEnabled(true);
+            if (privateNotifications != null) {
+                privateNotifications.setEnabled(true);
+            }
+
+            if (ringtone != null) {
+                ringtone.setEnabled(true);
+            }
         }
     }
 

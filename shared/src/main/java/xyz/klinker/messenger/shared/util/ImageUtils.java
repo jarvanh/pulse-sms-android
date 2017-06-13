@@ -447,8 +447,12 @@ public class ImageUtils {
      * @return sharable content:// uri to the file
      */
     public static Uri createContentUri(Context context, File file) {
-        return  FileProvider.getUriForFile(context,
-                context.getPackageName() + ".provider", file);
+        if (context == null) {
+            return Uri.EMPTY;
+        } else {
+            return FileProvider.getUriForFile(context,
+                    context.getPackageName() + ".provider", file);
+        }
     }
 
     public static Uri getUriForPhotoCaptureIntent(Context context) {

@@ -38,6 +38,7 @@ import xyz.klinker.messenger.shared.service.ContentObserverService;
 import xyz.klinker.messenger.shared.service.CreateNotificationChannelService;
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -76,11 +77,10 @@ public class MessengerApplication extends FirebaseApplication {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        try {
+        if (AndroidVersionUtil.isAndroidO()) {
+            startForegroundService(new Intent(this, CreateNotificationChannelService.class));
+        } else {
             startService(new Intent(this, ContentObserverService.class));
-            startService(new Intent(this, CreateNotificationChannelService.class));
-        } catch (Exception e) {
-            // fails in the background for android O
         }
     }
 
@@ -134,7 +134,11 @@ public class MessengerApplication extends FirebaseApplication {
             @Override
             public void handleDelete(Application application) {
                 final Intent handleMessage = new Intent(application, FirebaseResetService.class);
-                startService(handleMessage);
+                if (AndroidVersionUtil.isAndroidO()) {
+                    startForegroundService(handleMessage);
+                } else {
+                    startService(handleMessage);
+                }
             }
         };
     }

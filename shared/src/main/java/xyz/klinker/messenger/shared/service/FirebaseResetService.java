@@ -2,8 +2,11 @@ package xyz.klinker.messenger.shared.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 
 public class FirebaseResetService extends IntentService {
 
@@ -21,6 +24,11 @@ public class FirebaseResetService extends IntentService {
 
         Intent download = new Intent(this, ApiDownloadService.class);
         download.putExtra(ApiDownloadService.ARG_SHOW_NOTIFICATION, true);
-        startService(download);
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            startForegroundService(download);
+        } else {
+            startService(download);
+        }
     }
 }

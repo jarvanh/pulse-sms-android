@@ -220,8 +220,10 @@
     <string name="media">Media</string>
     <string name="test_notifications_channel">Test notifications</string>
     <string name="status_notifications_channel">Status notifications</string>
+    <string name="media_parse_channel">Media parser</string>
     <string name="group_summary_notifications">Message group summaries</string>
     <string name="failed_messages_channel">Failed messages</string>
+    <string name="media_parse_text">Parsing media from previous text message…</string>
 
 
     <!-- About, Help and Feedback and Settings -->

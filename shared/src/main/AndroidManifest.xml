@@ -16,8 +16,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingLeanbackLauncher"
-    package="xyz.klinker.messenger.shared">
+    package="xyz.klinker.messenger.shared"
+    tools:ignore="MissingLeanbackLauncher">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -102,6 +102,13 @@
             android:name="com.google.android.wearable.notificationBridgeMode"
             android:value="NO_BRIDGING" />
 
+        <activity
+            android:name="com.afollestad.materialcamera.CaptureActivity"
+            android:theme="@style/MaterialCamera.CaptureActivity" />
+        <activity
+            android:name="com.afollestad.materialcamera.CaptureActivity2"
+            android:theme="@style/MaterialCamera.CaptureActivity" />
+
         <service android:name="com.android.mms.transaction.TransactionService" />
 
         <service
@@ -120,7 +127,7 @@
 
             <!--<intent-filter-->
             <!--android:priority="2147483647">-->
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+            <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
             <!--</intent-filter>-->
 
             <intent-filter android:priority="2147483647">

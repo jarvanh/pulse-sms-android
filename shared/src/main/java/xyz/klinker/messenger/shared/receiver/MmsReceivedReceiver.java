@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
 
@@ -34,6 +35,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
 import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.BlacklistUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
@@ -67,7 +69,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             String nullableOrBlankBodyText = insertMms(context);
 
             if (!ignoreNotification) {
-                context.startService(new Intent(context, NotificationService.class));
+                if (AndroidVersionUtil.isAndroidO()) {
+                    context.startForegroundService(new Intent(context, NotificationService.class));
+                } else {
+                    context.startService(new Intent(context, NotificationService.class));
+                }
             }
 
             if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
@@ -79,7 +85,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     Thread.sleep(2000);
                 } catch (Exception e) { }
 
-                context.startService(mediaParser);
+                if (AndroidVersionUtil.isAndroidO()) {
+                    context.startForegroundService(mediaParser);
+                } else {
+                    context.startService(mediaParser);
+                }
             }
         }).start();
     }

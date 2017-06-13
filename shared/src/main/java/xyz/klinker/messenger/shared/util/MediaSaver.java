@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -100,14 +101,10 @@ public class MediaSaver {
 
                 context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-                Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
+                makeToast(R.string.saved);
             } catch (Exception e) {
                 e.printStackTrace();
-                try {
-                    Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
-                } catch(Exception x) {
-                    // background thread
-                }
+                makeToast(R.string.failed_to_save);
             }
         } else {
             try {
@@ -132,5 +129,13 @@ public class MediaSaver {
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
+    }
+
+    private void makeToast(@StringRes int resource) {
+        if (context instanceof Activity) {
+            ((Activity) context).runOnUiThread(() -> {
+                Toast.makeText(context, resource, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 }

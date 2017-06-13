@@ -38,7 +38,7 @@ allprojects {
         maven { url "https://dl.bintray.com/drummer-aidan/maven" }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "https://jitpack.io" }
-        flatDir { dirs 'libs' }
+        flatDir { dirs "$rootProject.projectDir/shared/libs" }
     }
 }
 

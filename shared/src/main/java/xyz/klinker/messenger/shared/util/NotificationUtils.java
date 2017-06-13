@@ -30,6 +30,7 @@ public class NotificationUtils {
     public static final String FAILED_MESSAGES_CHANNEL_ID = "failed-messages";
     public static final String TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications";
     public static final String STATUS_NOTIFICATIONS_CHANNEL_ID = "status-notifications";
+    public static final String MEDIA_PARSE_CHANNEL_ID = "media-parsing";
 
     public static void cancelGroupedNotificationWithNoContent(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -110,6 +111,18 @@ public class NotificationUtils {
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel statusChannel = new NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
+                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(statusChannel);
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public static void createMediaParseChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel statusChannel = new NotificationChannel(MEDIA_PARSE_CHANNEL_ID,
                 context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_MIN);
         manager.createNotificationChannel(statusChannel);
     }
@@ -158,6 +171,7 @@ public class NotificationUtils {
         createStatusChannel(context);
         createFailedMessageChannel(context);
         createMessageGroupChannel(context);
+        createMediaParseChannel(context);
 
         List<Conversation> conversations = source.getAllConversationsAsList();
         for (int i = 0; i < conversations.size(); i++) {

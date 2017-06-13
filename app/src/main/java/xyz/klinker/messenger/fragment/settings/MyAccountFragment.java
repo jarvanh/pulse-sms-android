@@ -124,11 +124,13 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             final boolean hasSubs = billing.hasPurchasedProduct();
             dialog.dismiss();
 
+            if (getActivity() == null) {
+                return;
+            }
+
             getActivity().runOnUiThread(() -> {
                 if (!getResources().getBoolean(R.bool.check_subscription) || hasSubs) {
-                    try {
-                        Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
-                    } catch (Exception e) { }
+                    Toast.makeText(getActivity(), R.string.subscription_found, Toast.LENGTH_LONG).show();
                     startLoginActivity();
                 } else {
                     pickSubscription();
@@ -139,7 +141,6 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     private void removeAccountOptions() {
         try {
-
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_subscriber_status)));
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
@@ -147,12 +148,6 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(findPreference(getString(R.string.pref_about_device_id)));
             getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_category_account_actions)));
-//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-//                    .removePreference(findPreference(getString(R.string.pref_delete_account)));
-//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-//                    .removePreference(findPreference(getString(R.string.pref_resync_account)));
-//            ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_actions)))
-//                    .removePreference(findPreference(getString(R.string.pref_refresh_firebase)));
         } catch (Exception e) {
 
         }
