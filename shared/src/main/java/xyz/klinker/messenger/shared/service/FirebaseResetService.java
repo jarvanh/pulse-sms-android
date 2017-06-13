@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
@@ -22,6 +23,10 @@ public class FirebaseResetService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (Account.get(this).primary) {
+            return;
+        }
+        
         if (AndroidVersionUtil.isAndroidO()) {
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.GENERAL_CHANNEL_ID)
