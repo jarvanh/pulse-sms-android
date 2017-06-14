@@ -100,6 +100,11 @@ public class ActivateWearActivity extends Activity {
     }
 
     private void checkPassword(final LoginResponse response, final String password) {
+        if (password == null || password.isEmpty()) {
+            Toast.makeText(this, R.string.api_no_password, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         new Thread(() -> {
 
             AccountEncryptionCreator encryptionCreator =
