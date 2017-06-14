@@ -134,6 +134,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
             message.title = getArguments().getString(ARG_TITLE);
             displayDateDialog(message);
         }
+
+        fab.setOnClickListener(view1 -> startSchedulingMessage());
     }
 
     @Override
