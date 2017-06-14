@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.shared.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
 import android.telephony.TelephonyManager;
@@ -36,6 +37,9 @@ import java.util.List;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
+import xyz.klinker.messenger.shared.receiver.MmsSentReceiver;
+import xyz.klinker.messenger.shared.receiver.SmsDeliveredReceiver;
+import xyz.klinker.messenger.shared.receiver.SmsSentReceiver;
 
 /**
  * Utility for helping to send messages.
@@ -102,6 +106,10 @@ public class SendUtils {
         }
 
         Transaction transaction = new Transaction(context, settings);
+        transaction.setExplicitBroadcastForDeliveredSms(new Intent(context, SmsDeliveredReceiver.class));
+        transaction.setExplicitBroadcastForSentSms(new Intent(context, SmsSentReceiver.class));
+        transaction.setExplicitBroadcastForSentMms(new Intent(context, MmsSentReceiver.class));
+
         Message message = new Message(text, addresses);
 
         if (data != null) {
