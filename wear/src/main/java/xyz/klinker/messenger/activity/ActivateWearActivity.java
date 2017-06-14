@@ -104,7 +104,7 @@ public class ActivateWearActivity extends Activity {
             Toast.makeText(this, R.string.api_no_password, Toast.LENGTH_SHORT).show();
             return;
         }
-        
+
         new Thread(() -> {
 
             AccountEncryptionCreator encryptionCreator =

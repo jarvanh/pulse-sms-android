@@ -139,7 +139,7 @@ public class ContactUtils {
 
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                        names += ", " + phonesCursor.getString(0);
+                        names += ", " + phonesCursor.getString(0).replaceAll(",", "");
                     } else {
                         phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
@@ -160,7 +160,7 @@ public class ContactUtils {
                         }
 
                         if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                            names += ", " + phonesCursor.getString(0);
+                            names += ", " + phonesCursor.getString(0).replaceAll(",", "");
                         } else {
                             try {
                                 names += ", " + PhoneNumberUtils.format(number[i]);
