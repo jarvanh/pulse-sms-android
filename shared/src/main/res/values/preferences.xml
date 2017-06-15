@@ -19,6 +19,7 @@
     <string name="pref_category_account_information" translatable="false">account_info_category</string>
     <string name="pref_category_account_actions" translatable="false">account_actions_category</string>
     <string name="pref_first_start" translatable="false">first_start</string>
+    <string name="pref_install_time" translatable="false">install_time</string>
     <string name="pref_my_account_setup" translatable="false">my_account_setup</string>
     <string name="pref_delete_account" translatable="false">delete_account</string>
     <string name="pref_resync_account" translatable="false">resync_account</string>

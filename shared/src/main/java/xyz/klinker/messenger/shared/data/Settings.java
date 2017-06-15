@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,6 +44,7 @@ public class Settings {
 
     // initializers
     public boolean firstStart;
+    public long installTime;
     public boolean seenConvoNavToolTip;
     public boolean showTextOnlineOnConversationList;
 
@@ -109,9 +111,15 @@ public class Settings {
 
         // initializers
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
+        this.installTime = sharedPrefs.getLong(context.getString(R.string.pref_install_time), 0);
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
         this.showTextOnlineOnConversationList = sharedPrefs.getBoolean(
                 context.getString(R.string.pref_show_text_online_on_conversation_list), true);
+
+        if (installTime == 0L) {
+            installTime = new Date().getTime();
+            sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), installTime).apply();
+        }
 
         // settings_global
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);

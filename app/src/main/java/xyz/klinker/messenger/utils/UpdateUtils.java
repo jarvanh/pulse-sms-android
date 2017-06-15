@@ -41,8 +41,6 @@ public class UpdateUtils {
     public boolean checkForUpdate() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        alertToTextFromAnywhere(sharedPreferences);
-
         Account account = Account.get(context);
         Settings settings = Settings.get(context);
         MmsSettings mmsSettings = MmsSettings.get(context);
@@ -91,28 +89,6 @@ public class UpdateUtils {
         } catch (PackageManager.NameNotFoundException e) {
             // should never happen
             return -1;
-        }
-    }
-
-    private void alertToTextFromAnywhere(final SharedPreferences sharedPrefs) {
-        final Account account = Account.get(context);
-
-        if (account.accountId == null && !sharedPrefs.getBoolean("seen_use_anywhere", false) && context instanceof MessengerActivity) {
-            new Handler().postDelayed(() -> {
-                long installTime = sharedPrefs.getLong("install_time", 0);
-                if (installTime != 0 && installTime - new Date().getTime() > TimeUtils.TWO_WEEKS / 2) {
-//                    ((MessengerActivity)context).showSnackbar(context.getString(R.string.use_from_anywhere_short), Snackbar.LENGTH_INDEFINITE, context.getString(R.string.learn_more), new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ((MessengerActivity) context).menuItemClicked(R.id.drawer_account);
-//                        }
-//                    });
-//
-//                    sharedPrefs.edit().putBoolean("seen_use_anywhere", true).commit();
-                } else if (installTime == 0) {
-                    sharedPrefs.edit().putLong("install_time", new Date().getTime()).commit();
-                }
-            }, 2000);
         }
     }
 }

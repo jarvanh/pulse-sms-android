@@ -51,6 +51,7 @@ public class FeatureFlags {
     private static final String FLAG_MESSAGE_REFRESH_ON_START = "flag_refresh_messages_on_start";
     private static final String FLAG_NOUGAT_NOTIFICATION_HISTORY = "flag_nougat_notifications";
     private static final String FLAG_ATTACH_CONTACT = "flag_attach_contact";
+    private static final String FLAG_CONVO_LIST_CARD_ABOUT_TEXT_ANYWHERE = "flag_text_anywhere_convo_list";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -67,6 +68,7 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
+    public boolean TEXT_ANYWHERE_CONVO_LIST;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -77,6 +79,7 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        TEXT_ANYWHERE_CONVO_LIST = getValue(sharedPrefs, FLAG_CONVO_LIST_CARD_ABOUT_TEXT_ANYWHERE);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -94,6 +97,9 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
+                break;
+            case FLAG_CONVO_LIST_CARD_ABOUT_TEXT_ANYWHERE:
+                TEXT_ANYWHERE_CONVO_LIST = flag;
                 break;
         }
     }

@@ -38,6 +38,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -448,7 +449,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         if (Build.FINGERPRINT.equals("robolectric")) {
             return false;
         } else {
-            return !Account.get(activity).exists() &&
+            return true || FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
+                    !Account.get(activity).exists() &&
                     Settings.get(activity).showTextOnlineOnConversationList;
         }
     }
