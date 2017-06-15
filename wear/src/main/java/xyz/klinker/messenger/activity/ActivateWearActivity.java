@@ -73,6 +73,7 @@ public class ActivateWearActivity extends Activity {
             final LoginResponse response = api.activate().check(code);
 
             if (response == null) {
+                Log.v(TAG, "not activated");
                 if (attempts < RETRY_ATTEMPTS) {
                     attempts++;
                     queryEndpoint();
@@ -83,6 +84,7 @@ public class ActivateWearActivity extends Activity {
                     });
                 }
             } else {
+                Log.v(TAG, "activated");
                 runOnUiThread(() -> activated(response));
             }
         }).start(), RETRY_INTERVAL);

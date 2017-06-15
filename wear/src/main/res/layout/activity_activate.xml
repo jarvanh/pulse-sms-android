@@ -53,6 +53,7 @@
                 android:layout_alignBottom="@+id/number_1_2"
                 android:layout_alignParentStart="true"
                 android:background="@drawable/api_circle"
+                android:layout_marginEnd="6dp"
                 android:gravity="center"
                 android:text="@string/api_activate_1"
                 android:textColor="@color/api_login_background" />
@@ -68,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/api_circle"
                 android:gravity="center"
                 android:text="@string/api_activate_2"
