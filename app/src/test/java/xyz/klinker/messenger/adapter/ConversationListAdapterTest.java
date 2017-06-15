@@ -47,6 +47,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,6 +56,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     private ConversationListAdapter adapter;
 
+    @Mock
+    private Context context;
     @Mock
     private SwipeToDeleteListener swipeToDeleteListener;
     @Mock
@@ -78,10 +81,13 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        adapter = new ConversationListAdapter(getFakeConversations(RuntimeEnvironment.application),
-                null, swipeToDeleteListener, conversationExpandedListener);
+        adapter = spy(new ConversationListAdapter(context, new ArrayList<>(),
+                null, swipeToDeleteListener, conversationExpandedListener));
 
+        when(adapter.showHeaderAboutTextingOnline(context)).thenReturn(false);
         when(header.getContext()).thenReturn(RuntimeEnvironment.application);
+
+        adapter.setConversations(getFakeConversations(RuntimeEnvironment.application));
     }
 
     @Test

@@ -22,6 +22,7 @@ package xyz.klinker.messenger.shared.data;
  */
 public class SectionType {
 
+    public static final int CARD_ABOUT_ONLINE = -1;
     public static final int PINNED = 0;
     public static final int TODAY = 1;
     public static final int YESTERDAY = 2;

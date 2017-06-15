@@ -44,6 +44,7 @@ public class Settings {
     // initializers
     public boolean firstStart;
     public boolean seenConvoNavToolTip;
+    public boolean showTextOnlineOnConversationList;
 
     // settings_global
     public VibratePattern vibrate;
@@ -109,6 +110,8 @@ public class Settings {
         // initializers
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
+        this.showTextOnlineOnConversationList = sharedPrefs.getBoolean(
+                context.getString(R.string.pref_show_text_online_on_conversation_list), true);
 
         // settings_global
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false);

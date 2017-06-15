@@ -16,8 +16,11 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -52,13 +56,15 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     private long time;
 
+    private Context context;
+
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
     private ConversationExpandedListener conversationExpandedListener;
     private List<SectionType> sectionCounts;
     private ConversationsMultiSelectDelegate multiSelector;
 
-    public ConversationListAdapter(List<Conversation> conversations, ConversationsMultiSelectDelegate multiSelector,
+    public ConversationListAdapter(Context context, List<Conversation> conversations, ConversationsMultiSelectDelegate multiSelector,
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.swipeToDeleteListener = swipeToDeleteListener;
@@ -70,11 +76,17 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         this.multiSelector = multiSelector;
         if (this.multiSelector != null)
             this.multiSelector.setAdapter(this);
+
+        shouldShowHeadersForEmptySections(showHeaderAboutTextingOnline(context));
     }
 
     public void setConversations(List<Conversation> convos) {
         this.conversations = new ArrayList<>();
         this.sectionCounts = new ArrayList<>();
+
+        if (showHeaderAboutTextingOnline(context)) {
+            sectionCounts.add(new SectionType(SectionType.CARD_ABOUT_ONLINE, 0));
+        }
 
         int currentSection = 0;
         int currentCount = 0;
@@ -121,36 +133,51 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
-        String text = null;
-
-        if (sectionCounts.get(section).type == SectionType.PINNED) {
-            text = holder.header.getContext().getString(R.string.pinned);
-        } else if (sectionCounts.get(section).type == SectionType.TODAY) {
-            text = holder.header.getContext().getString(R.string.today);
-        } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
-            text = holder.header.getContext().getString(R.string.yesterday);
-        } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
-            text = holder.header.getContext().getString(R.string.last_week);
-        } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
-            text = holder.header.getContext().getString(R.string.last_month);
+        if (sectionCounts.get(section).type == SectionType.CARD_ABOUT_ONLINE) {
+            if (holder.header.getVisibility() != View.GONE)
+                holder.header.setVisibility(View.GONE);
+            if (holder.headerDone.getVisibility() != View.GONE)
+                holder.headerDone.setVisibility(View.GONE);
+            if (holder.headerCardForTextOnline.getVisibility() != View.VISIBLE)
+                holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
         } else {
-            text = holder.header.getContext().getString(R.string.older);
-        }
+            if (holder.header.getVisibility() != View.VISIBLE)
+                holder.header.setVisibility(View.VISIBLE);
+            if (holder.headerDone.getVisibility() != View.VISIBLE)
+                holder.headerDone.setVisibility(View.VISIBLE);
+            if (holder.headerCardForTextOnline.getVisibility() != View.GONE)
+                holder.headerCardForTextOnline.setVisibility(View.GONE);
 
-        holder.header.setText(text);
+            String text;
+            if (sectionCounts.get(section).type == SectionType.PINNED) {
+                text = holder.header.getContext().getString(R.string.pinned);
+            } else if (sectionCounts.get(section).type == SectionType.TODAY) {
+                text = holder.header.getContext().getString(R.string.today);
+            } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
+                text = holder.header.getContext().getString(R.string.yesterday);
+            } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
+                text = holder.header.getContext().getString(R.string.last_week);
+            } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
+                text = holder.header.getContext().getString(R.string.last_month);
+            } else {
+                text = holder.header.getContext().getString(R.string.older);
+            }
 
-        if (holder.headerDone != null) {
-            holder.headerDone.setOnClickListener(
-                    getHeaderDoneClickListener(text, sectionCounts.get(section).type)
-            );
-            holder.headerDone.setOnLongClickListener(
-                    getHeaderDoneLongClickListener(text)
-            );
+            holder.header.setText(text);
+
+            if (holder.headerDone != null) {
+                holder.headerDone.setOnClickListener(
+                        getHeaderDoneClickListener(text, sectionCounts.get(section).type)
+                );
+                holder.headerDone.setOnLongClickListener(
+                        getHeaderDoneLongClickListener(text)
+                );
+            }
         }
     }
 
     @Override
-    public void onViewRecycled(ConversationViewHolder holder){
+    public void onViewRecycled(ConversationViewHolder holder) {
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
@@ -395,4 +422,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         return multiSelector;
     }
 
+    @VisibleForTesting
+    protected boolean showHeaderAboutTextingOnline(Context context) {
+        return true;
+//        return !Account.get(context).exists() &&
+//                Settings.get(context).showTextOnlineOnConversationList;
+    }
 }

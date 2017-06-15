@@ -51,10 +51,14 @@ public class ColorSet {
             return Color.WHITE;
         }
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getColor(color);
-        } else {
-            return context.getResources().getColor(color);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return context.getColor(color);
+            } else {
+                return context.getResources().getColor(color);
+            }
+        } catch (Exception e) {
+            return Color.WHITE;
         }
     }
 

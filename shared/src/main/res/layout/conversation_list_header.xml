@@ -15,6 +15,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -47,5 +48,30 @@
         android:layout_marginEnd="@dimen/conversation_list_header_padding"
         android:paddingStart="@dimen/conversation_list_padding"
         android:paddingEnd="@dimen/conversation_list_padding"/>
+
+    <FrameLayout
+        android:id="@+id/header_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/conversation_list_header_padding"
+        android:layout_marginEnd="@dimen/conversation_list_header_padding"
+        android:paddingStart="@dimen/conversation_list_padding"
+        android:paddingEnd="@dimen/conversation_list_padding"
+        android:visibility="gone">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/drawerBackground">
+
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
 
 </FrameLayout>

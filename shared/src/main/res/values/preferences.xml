@@ -74,6 +74,7 @@
     <string name="pref_mobile_only" translatable="false">mobile_only</string>
     <string name="pref_sound_effects" translatable="false">sound_effects</string>
     <string name="pref_seen_convo_nav_tooltip" translatable="false">seen_convo_nav_tooltip</string>
+    <string name="pref_show_text_online_on_conversation_list" translatable="false">show_text_online_on_conversation_list</string>
     <string name="pref_snooze" translatable="false">snooze</string>
     <string name="pref_alert_types" translatable="false">alert_types</string>
     <string name="pref_wake_screen" translatable="false">wake_screen</string>

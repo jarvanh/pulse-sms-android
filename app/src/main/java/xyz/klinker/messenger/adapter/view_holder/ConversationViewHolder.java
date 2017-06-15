@@ -49,6 +49,7 @@ public class ConversationViewHolder extends SwappingHolder {
     public View headerBackground;
     public TextView header;
     public ImageButton headerDone;
+    public View headerCardForTextOnline;
     public CircleImageView image;
     public TextView name;
     public TextView summary;
@@ -74,6 +75,7 @@ public class ConversationViewHolder extends SwappingHolder {
         headerBackground = itemView.findViewById(R.id.header_background);
         header = (TextView) itemView.findViewById(R.id.header);
         headerDone = (ImageButton) itemView.findViewById(R.id.section_done);
+        headerCardForTextOnline = itemView.findViewById(R.id.header_card);
         image = (CircleImageView) itemView.findViewById(R.id.image);
         name = (TextView) itemView.findViewById(R.id.name);
         summary = (TextView) itemView.findViewById(R.id.summary);
