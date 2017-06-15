@@ -450,7 +450,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             return false;
         } else {
             Settings settings = Settings.get(activity);
-            return true|| FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
+            return FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
                     !Account.get(activity).exists() &&
                     settings.showTextOnlineOnConversationList &&
                     Math.abs(settings.installTime - new Date().getTime()) > TimeUtils.HOUR * 2;
