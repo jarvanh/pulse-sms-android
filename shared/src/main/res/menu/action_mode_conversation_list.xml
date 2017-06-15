@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="AlwaysShowAction">
 
     <item
         android:id="@+id/menu_delete_conversation"
         android:title="@string/menu_delete_conversation"
         android:icon="@drawable/ic_delete"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_archive_conversation"
         android:title="@string/menu_archive_conversation"
         android:icon="@drawable/ic_archive"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_pin_conversation"
         android:title="@string/pin_conversation"
         android:icon="@drawable/ic_pin"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_mute_conversation"
         android:title="@string/mute_conversation"
         android:icon="@drawable/ic_mute"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>
