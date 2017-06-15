@@ -98,7 +98,10 @@ public class ActivateWearActivity extends Activity {
         password.setText(null);
         password.requestFocus();
 
-        findViewById(R.id.confirm).setOnClickListener(v -> checkPassword(response, password.getText().toString()));
+        findViewById(R.id.confirm).setOnClickListener(v -> {
+            Toast.makeText(this, R.string.verifying_password, Toast.LENGTH_SHORT).show();
+            checkPassword(response, password.getText().toString());
+        });
     }
 
     private void checkPassword(final LoginResponse response, final String password) {
@@ -108,7 +111,6 @@ public class ActivateWearActivity extends Activity {
         }
 
         new Thread(() -> {
-
             AccountEncryptionCreator encryptionCreator =
                     new AccountEncryptionCreator(ActivateWearActivity.this, password);
             EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);

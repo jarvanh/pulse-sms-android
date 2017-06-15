@@ -64,9 +64,9 @@ public class ApiDownloadService extends Service {
 
     public static void start(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(new Intent(context, ApiUploadService.class));
+            context.startForegroundService(new Intent(context, ApiDownloadService.class));
         } else {
-            context.startService(new Intent(context, ApiUploadService.class));
+            context.startService(new Intent(context, ApiDownloadService.class));
         }
     }
 
