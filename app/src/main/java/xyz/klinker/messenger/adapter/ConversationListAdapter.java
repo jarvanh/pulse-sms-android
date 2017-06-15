@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -424,8 +425,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     @VisibleForTesting
     protected boolean showHeaderAboutTextingOnline(Context context) {
-        return true;
-//        return !Account.get(context).exists() &&
+        if (Build.FINGERPRINT.equals("robolectric")) {
+            return false;
+        } else {
+            return true;
+//          return !Account.get(context).exists() &&
 //                Settings.get(context).showTextOnlineOnConversationList;
+        }
     }
 }

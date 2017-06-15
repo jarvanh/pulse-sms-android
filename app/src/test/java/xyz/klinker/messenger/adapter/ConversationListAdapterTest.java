@@ -67,6 +67,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     @Mock
     private ImageButton headerDoneButton;
     @Mock
+    private View headerDialog;
+    @Mock
     private CircleImageView image;
     @Mock
     private TextView name;
@@ -309,6 +311,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         ConversationViewHolder holder = new ConversationViewHolder(
                 new View(RuntimeEnvironment.application), conversationExpandedListener, adapter);
         holder.header = header;
+        holder.headerCardForTextOnline = headerDialog;
+        holder.headerDone = headerDoneButton;
         holder.image = image;
         holder.name = name;
         holder.summary = summary;
