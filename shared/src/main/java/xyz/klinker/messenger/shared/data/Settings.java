@@ -116,9 +116,10 @@ public class Settings {
         this.showTextOnlineOnConversationList = sharedPrefs.getBoolean(
                 context.getString(R.string.pref_show_text_online_on_conversation_list), true);
 
+        long now = new Date().getTime();
         if (installTime == 0L) {
-            installTime = new Date().getTime();
-            sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), installTime).apply();
+            installTime = now;
+            sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), now).apply();
         }
 
         // settings_global

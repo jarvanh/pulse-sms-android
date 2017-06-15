@@ -449,9 +449,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         if (Build.FINGERPRINT.equals("robolectric")) {
             return false;
         } else {
-            return true || FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
+            Settings settings = Settings.get(activity);
+            return true|| FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
                     !Account.get(activity).exists() &&
-                    Settings.get(activity).showTextOnlineOnConversationList;
+                    settings.showTextOnlineOnConversationList &&
+                    Math.abs(settings.installTime - new Date().getTime()) > TimeUtils.HOUR * 2;
         }
     }
 }

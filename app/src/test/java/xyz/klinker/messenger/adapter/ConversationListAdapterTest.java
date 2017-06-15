@@ -36,6 +36,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.SectionType;
@@ -57,7 +58,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private ConversationListAdapter adapter;
 
     @Mock
-    private Context context;
+    private MessengerActivity context;
     @Mock
     private SwipeToDeleteListener swipeToDeleteListener;
     @Mock
@@ -86,7 +87,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter = spy(new ConversationListAdapter(context, new ArrayList<>(),
                 null, swipeToDeleteListener, conversationExpandedListener));
 
-        when(adapter.showHeaderAboutTextingOnline(context)).thenReturn(false);
+        when(adapter.showHeaderAboutTextingOnline()).thenReturn(false);
         when(header.getContext()).thenReturn(RuntimeEnvironment.application);
 
         adapter.setConversations(getFakeConversations(RuntimeEnvironment.application));
