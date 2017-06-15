@@ -89,6 +89,10 @@
     </plurals>
     <string name="undo">Undo</string>
     <string name="enter_search">Search for…</string>
+    <string name="text_anywhere_description">Did you know: Pulse is way more than just a phone app.
+        You can use Pulse to text from <b>any</b> device!</string>
+    <string name="convo_list_try_it">Try it!</string>
+    <string name="convo_list_not_now">Not now</string>
 
     <!-- Search Screen -->
     <string name="conversations">Conversations</string>

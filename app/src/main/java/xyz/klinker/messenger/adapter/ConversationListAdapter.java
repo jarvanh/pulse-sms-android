@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +24,7 @@ import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.SectionType;
@@ -42,7 +43,6 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.ReorderType;
 import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter;
-import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
@@ -57,7 +57,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     private long time;
 
-    private Context context;
+    private MessengerActivity activity;
 
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
@@ -65,9 +65,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     private List<SectionType> sectionCounts;
     private ConversationsMultiSelectDelegate multiSelector;
 
-    public ConversationListAdapter(Context context, List<Conversation> conversations, ConversationsMultiSelectDelegate multiSelector,
+    public ConversationListAdapter(MessengerActivity context, List<Conversation> conversations, ConversationsMultiSelectDelegate multiSelector,
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
+        this.activity = context;
+
         this.swipeToDeleteListener = swipeToDeleteListener;
         this.conversationExpandedListener = conversationExpandedListener;
         setConversations(conversations);
@@ -78,14 +80,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         if (this.multiSelector != null)
             this.multiSelector.setAdapter(this);
 
-        shouldShowHeadersForEmptySections(showHeaderAboutTextingOnline(context));
+        shouldShowHeadersForEmptySections(showHeaderAboutTextingOnline());
     }
 
     public void setConversations(List<Conversation> convos) {
         this.conversations = new ArrayList<>();
         this.sectionCounts = new ArrayList<>();
 
-        if (showHeaderAboutTextingOnline(context)) {
+        if (showHeaderAboutTextingOnline()) {
             sectionCounts.add(new SectionType(SectionType.CARD_ABOUT_ONLINE, 0));
         }
 
@@ -141,6 +143,24 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerDone.setVisibility(View.GONE);
             if (holder.headerCardForTextOnline.getVisibility() != View.VISIBLE)
                 holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
+
+            TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
+            tryIt.setTextColor(Settings.get(activity).globalColorSet.color);
+            tryIt.setOnClickListener(v -> {
+                sectionCounts.remove(0);
+                Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                notifyItemRemoved(0);
+
+                tryIt.postDelayed(() -> {
+                    activity.menuItemClicked(R.id.drawer_account);
+                    activity.clickNavigationItem(R.id.drawer_account);
+                }, 500);
+            });
+            holder.headerCardForTextOnline.findViewById(R.id.not_now).setOnClickListener(v -> {
+                sectionCounts.remove(0);
+                Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                notifyItemRemoved(0);
+            });
         } else {
             if (holder.header.getVisibility() != View.VISIBLE)
                 holder.header.setVisibility(View.VISIBLE);
@@ -424,13 +444,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     @VisibleForTesting
-    protected boolean showHeaderAboutTextingOnline(Context context) {
+    boolean showHeaderAboutTextingOnline() {
         if (Build.FINGERPRINT.equals("robolectric")) {
             return false;
         } else {
-            return true;
-//          return !Account.get(context).exists() &&
-//                Settings.get(context).showTextOnlineOnConversationList;
+            return !Account.get(activity).exists() &&
+                    Settings.get(activity).showTextOnlineOnConversationList;
         }
     }
 }

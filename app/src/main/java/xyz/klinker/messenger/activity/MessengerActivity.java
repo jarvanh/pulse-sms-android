@@ -629,7 +629,7 @@ public class  MessengerActivity extends AppCompatActivity
         clickNavigationItem(R.id.drawer_conversation);
     }
 
-    private void clickNavigationItem(int itemId) {
+    public void clickNavigationItem(int itemId) {
         onNavigationItemSelected(navigationView.getMenu().findItem(itemId));
     }
 

@@ -261,7 +261,8 @@ public class ConversationListFragment extends Fragment
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
         } else {
-            adapter = new ConversationListAdapter(getActivity(), conversations, multiSelector, this, this);
+            adapter = new ConversationListAdapter((MessengerActivity) getActivity(),
+                    conversations, multiSelector, this, this);
 
             layoutManager = new FixedScrollLinearLayoutManager(getActivity());
             layoutManager.setCanScroll(true);
