@@ -38,6 +38,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -90,6 +91,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
         if (showHeaderAboutTextingOnline()) {
             sectionCounts.add(new SectionType(SectionType.CARD_ABOUT_ONLINE, 0));
+            AnalyticsHelper.convoListCardShown(activity);
         }
 
         int currentSection = 0;
@@ -155,12 +157,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 tryIt.postDelayed(() -> {
                     activity.menuItemClicked(R.id.drawer_account);
                     activity.clickNavigationItem(R.id.drawer_account);
+                    AnalyticsHelper.convoListTryIt(activity);
                 }, 500);
             });
             holder.headerCardForTextOnline.findViewById(R.id.not_now).setOnClickListener(v -> {
                 sectionCounts.remove(0);
                 Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
+                AnalyticsHelper.convoListNotNow(activity);
             });
         } else {
             if (holder.header.getVisibility() != View.VISIBLE)

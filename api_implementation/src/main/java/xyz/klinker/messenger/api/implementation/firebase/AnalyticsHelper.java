@@ -89,4 +89,22 @@ public class AnalyticsHelper {
     public static void accountLoggedIn(Context context) {
         logEvent(context, ACCOUNT_LOGGED_IN);
     }
+
+
+    // Track events from clicks on the card that is a header in the conversation list
+    private static final String CONVO_LIST_CARD_SHOWN = "CONVO_LIST_CARD_SHOWN";
+    private static final String CONVO_LIST_CARD_TRY_IT = "CONVO_LIST_TRY_IT";
+    private static final String CONVO_LIST_CARD_NOT_NOW = "CONVO_LIST_NOT_NOW";
+
+    public static void convoListCardShown(Context context) {
+        logEvent(context, CONVO_LIST_CARD_SHOWN);
+    }
+
+    public static void convoListTryIt(Context context) {
+        logEvent(context, CONVO_LIST_CARD_TRY_IT);
+    }
+
+    public static void convoListNotNow(Context context) {
+        logEvent(context, CONVO_LIST_CARD_NOT_NOW);
+    }
 }
