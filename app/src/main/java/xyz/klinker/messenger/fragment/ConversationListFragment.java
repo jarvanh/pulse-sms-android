@@ -670,6 +670,10 @@ public class ConversationListFragment extends Fragment
         return adapter;
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
     public void setConversationUpdateInfo(ConversationUpdateInfo info) {
         this.updateInfo = info;
     }

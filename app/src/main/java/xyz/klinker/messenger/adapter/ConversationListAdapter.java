@@ -448,16 +448,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         return multiSelector;
     }
 
-    @VisibleForTesting
-    boolean showHeaderAboutTextingOnline() {
+    public boolean showHeaderAboutTextingOnline() {
         if (Build.FINGERPRINT.equals("robolectric")) {
             return false;
         } else {
             Settings settings = Settings.get(activity);
-            return FeatureFlags.get(activity).TEXT_ANYWHERE_CONVO_LIST &&
-                    !Account.get(activity).exists() &&
+            return !Account.get(activity).exists() &&
                     settings.showTextOnlineOnConversationList &&
-                    Math.abs(settings.installTime - new Date().getTime()) > TimeUtils.HOUR * 2;
+                    Math.abs(settings.installTime - new Date().getTime()) > TimeUtils.MINUTE * 15;
         }
     }
 }

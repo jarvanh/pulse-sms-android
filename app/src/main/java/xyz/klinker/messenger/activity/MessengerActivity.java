@@ -95,6 +95,7 @@ import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.PromotionUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.utils.TextAnywhereConversationCardApplier;
 import xyz.klinker.messenger.utils.UpdateUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
@@ -189,9 +190,26 @@ public class  MessengerActivity extends AppCompatActivity
         }
 
         new Handler().postDelayed(() -> {
-            if (conversationListFragment != null && !conversationListFragment.isExpanded() && !fab.isShown() &&
-                    otherFragment == null) {
-                fab.show();
+            if (conversationListFragment != null && !conversationListFragment.isExpanded()) {
+                if (!fab.isShown() && otherFragment == null) {
+                    fab.show();
+                }
+
+                TextAnywhereConversationCardApplier applier = new TextAnywhereConversationCardApplier(conversationListFragment);
+                RecyclerView recycler = conversationListFragment.getRecyclerView();
+                if (applier.shouldAddCardToList()) {
+                    boolean scrollToTop = false;
+                    if (recycler.getLayoutManager() instanceof LinearLayoutManager &&
+                            ((LinearLayoutManager) recycler.getLayoutManager()).findFirstVisibleItemPosition() == 0) {
+                        scrollToTop = true;
+                    }
+
+                    applier.addCardToConversationList();
+
+                    if (scrollToTop) {
+                        conversationListFragment.getRecyclerView().smoothScrollToPosition(0);
+                    }
+                }
             }
 
             snoozeIcon();
