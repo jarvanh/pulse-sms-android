@@ -90,6 +90,10 @@
     </plurals>
     <string name="undo">Cofnij</string>
     <string name="enter_search">Wyszukaj...</string>
+    <string name="text_anywhere_description">Czy wiesz, że Pulse jest czymś więcej niż aplikacją mobilną?
+Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!</string>
+    <string name="convo_list_try_it">Wypróbuj!</string>
+    <string name="convo_list_not_now">Nie teraz</string>
     <!-- Search Screen -->
     <string name="conversations">Konwersacje</string>
     <string name="messages">Wiadomości</string>
@@ -115,6 +119,8 @@
     <string name="record_video">Nagraj film</string>
     <string name="record_audio">Nagraj dźwięk</string>
     <string name="attach_location">Załącz lokalizację</string>
+    <string name="attach_contact">Załącz kontakt</string>
+    <string name="attach_contact_summary">Wybierz lub wpisz kontakt aby załączyć go do wiadomości!</string>
     <string name="no_location_found">Nie znaleźliśmy Twojej lokalizacji.</string>
     <string name="camera_permission_needed">Musisz zezwolić aplikacji na dostęp do aparatu aby móc robić zdjęcia!</string>
     <string name="take_picture">Pstryknij zdjęcie</string>
@@ -164,8 +170,8 @@ czas ją rozpocząć!</string>
     <string name="onboarding_title_1">Wiadomości wymyślone od nowa</string>
     <string name="onboarding_title_2">Dostępne w każdym miejscu</string>
     <string name="onboarding_title_3">Potężne możliwości personalizacji</string>
-    <string name="onboarding_content_1">"Bezproblemowy, płynny layout, mocny design i nieskazitelna integracja.
-Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
+    <string name="onboarding_content_1">Bezproblemowy, płynny layout, mocny design i nieskazitelna integracja.
+Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="onboarding_content_2">Wysyłaj wiadomości z tabletu, komputera, smart zegarka lub każdego innego urządzenia podłączonego do Twojego konta.</string>
     <string name="onboarding_content_3">Przypinaj, wyciszaj, dostosuj wygląd i powiadomienia każdej konwersacji. Zrób Pulse takim, jaki Ci się podoba.</string>
     <string name="message_anywhere_onboarding_title_1">Wysyłaj wiadomości gdziekolwiek jesteś</string>
@@ -207,16 +213,30 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="new_message">Nowa wiadomość</string>
     <string name="received_new_message">Otrzymałeś nową wiadomość SMS!</string>
     <string name="media">Multimedia</string>
+    <string name="test_notifications_channel">Powiadomienia testowe</string>
+    <string name="status_notifications_channel">Powiadomienia o statusie</string>
+    <string name="general_notifications_channel">Powiadomienia ogólne</string>
+    <string name="media_parse_channel">Kompresor multimediów</string>
+    <string name="group_summary_notifications">Podsumowanie rozmów grupowych</string>
+    <string name="failed_messages_channel">Nie wysłane wiadomości</string>
+    <string name="media_parse_text">Kompresuję multimedia z poprzedniej wiadomości...</string>
+    <string name="creating_channels_text">Tworzenie kanałów powiadomień...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Lista zmian</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Wyświetl informacje o licencji open source</string>
     <string name="app_version">Wersja aplikacji</string>
+    <string name="account_information">Informacje o koncie</string>
+    <string name="account_actions">Ustawienia konta</string>
     <string name="device_id">ID urządzenia</string>
     <string name="device_info">Informacje o urządzeniu</string>
     <string name="website">Strona internetowa</string>
     <string name="access_messages_from_any_device">Korzystaj i wysyłaj wiadomości z każdego urządzenia!</string>
     <string name="beta_disclaimer">Ten projekt jest nadal w fazie testowej. Jeśli znajdziesz jakikolwiek błąd proszę o informację!</string>
+    <string name="app_info">Informacje o aplikacji</string>
+    <string name="platform_info">Informacje o platformie</string>
+    <string name="troubleshooting">Rozwiązywanie problemów</string>
+    <string name="get_in_touch">Bądź w kontakcie</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
     <string name="features">Możliwości aplikacji</string>
     <string name="issues">Śledzenie błędów</string>
@@ -272,6 +292,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="vibrate_one_long_one_short">Długa i krótka wibracja</string>
     <string name="vibrate_one_short">Jedna krótka wibracja</string>
     <string name="vibrate_one_long">Jedna długa wibracja</string>
+    <string name="vibrate_one_extra_long">Jedna bardzo długa wibracja</string>
     <string name="keyboard_layout">Układ klawiatury</string>
     <string name="keyboard_default">Standardowa klawiatura</string>
     <string name="keyboard_send_key">Przycisk \"Wyślij\"</string>
@@ -307,6 +328,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="cancel_on_the_play_store">Anuluj i sprawdź swoją subskrypcję w Sklepie Google Play</string>
     <string name="resync_account">Ponów synchronizację konta</string>
     <string name="resync_account_summary">Brakujące wiadomości? Użyj tego aby zaktualizować Pulse do stanu ze swojego podstawowego urządzenia.</string>
+    <string name="resync_account_summary_phone">Kontynuując wyczyścisz swoje konto na tym urządzeniu i przywrócisz historię wiadomości przechowywaną w pamięci Twojego urządzenia.</string>
     <string name="resync_account_confirmation">W ten sposób usuniesz wszystkie wiadomości z tego urządzenia i przywrócisz aktualną zawartość ze swojego podstawowego urządzenia. Jesteś pewien, że chcesz to zrobić?</string>
     <string name="normalize_color_scheme">Lub wybierz kolor bazowy:</string>
     <string name="no_apps_found">Nie znaleziono aplikacji mogących wykonać tę czynność</string>
@@ -319,6 +341,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="font_size_extra_large">Bardzo duża</string>
     <string name="advanced">Zaawansowane</string>
     <string name="send_as_mms">Konwertuj na MMS</string>
+    <string name="after_one_message">Po jednej wiadomości</string>
+    <string name="after_two_messages">Po dwóch wiadomościach</string>
+    <string name="after_three_messages">Po trzech wiadomościach</string>
+    <string name="after_four_messages">Po czterech wiadomościach</string>
     <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS</string>
     <string name="alert_types">Typy ostrzeżeń</string>
     <string name="alert_types_summary">Personalizacja powiadomień</string>
@@ -331,6 +357,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="refresh_firebase">Odśwież powiadomienia push</string>
     <string name="refresh_firebase_summary">Wiadomości nie docierają na to urządzenie? Spróbuj ponownie po użyciu tej opcji.</string>
     <string name="refreshing_notifications">Odświeżanie tokena powiadomień...</string>
+    <string name="refresh_firebase_warning">Jeżeli będziesz kontynuować, <b>musisz</b> przejść przez cały ten proces. Po zakończeniu należy zalogować się ponownie na wszystkich swoich urządzeniach. Czy chcesz kontynuować?</string>
+    <string name="show_conversation_history">Pokaż historię wiadomości</string>
+    <string name="show_conversation_history_summary">Powiadomienie wyświetli poprzednie wiadomości tej konwersacji</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="use_group_mms">Grupowe wiadomości MMS</string>
@@ -417,6 +446,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="hours">Godziny</string>
     <string name="minutes">Minuty</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Ustawienia Kanałów Powiadomień</string>
+    <string name="channels">Kanały</string>
+    <string name="channels_global_warning">Wiele ustawień globalnych możesz teraz zmienić dla konkretnego kanału.</string>
     <string name="off">Wyłącz</string>
     <string name="on">Włączony</string>
     <string name="rate_it">Oceń aplikacje!</string>
@@ -424,6 +456,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa."</string>
     <string name="give_a_rating">Rozważ ocenienie aplikacji lub podziel się nią ze znajomymi!/n/n
 Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
     <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
+    <string name="verifying_password">Weryfikacja hasła...</string>
     <!-- Times -->
     <string name="one_second">1 sekunda</string>
     <string name="three_seconds">Trzy sekundy</string>
@@ -459,4 +492,17 @@ Jeżeli nie odnowisz subksrypcji przed upływem daty aktualnej subskrypcji, apli
     <string name="monthly_purchase">$0.99 - co miesiąc</string>
     <string name="monthly_purchase_summary">Chcesz tylko wypróbować? Nie ma problemu.</string>
     <string name="change_subscription_message">Czy chcesz zmienić subskrypcję? Świetnie! Po wybraniu interesującej Cię opcji przejdź do aplikacji Sklep Google Play i ręcznie usuń poprzednią subskrypcję.</string>
+    <string name="beautiful_powerful_instant">Piękny, potężny, błyskawiczny.</string>
+    <string name="optimized_for_all_your_devices">Pulse jest zoptymalizowany do działania <b>ze wszystkimi</b> Twoimi urządzeniami.
+Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zegarka, lub nawet ze smart tv.</string>
+    <string name="true_imessage_competitor">Pierwszy, <b>prawdziwy</b> konkurent iMessage dla systemu Android.</string>
+    <string name="try_it">Wypróbuj teraz!</string>
+    <string name="seven_days_free">7 dni za darmo!</string>
+    <string name="competition_cant_beat">Konkurencja nie może się równać z naszymi usługami, ich responsywnością i oferowanymi cenami - <b>wypróbuj przez 7 dni</b> aby się przekonać!</string>
+    <string name="select_a_trial_below">Wybierz odpowiadającą Ci opcję aby rozpocząć Twój <b>darmowy okres próbny</b>.</string>
+    <string name="charged_after_trial">Płatności po zakończeniu okresu próbnego:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nmiesiąc</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 miesiące</string>
+    <string name="yearly_purchase_improved">$5.99 /\nrok</string>
+    <string name="subscription_toast"><b>Nie poniesiesz żadnych kosztów</b> przed zakończeniem 7-dniowego okresu próbnego. Możesz zrezygnować w każdej chwili.</string>
 </resources>

@@ -19,25 +19,25 @@
     <string name="app_name_long">برنامج نبض الرسائل (لرسائل القصيرة/ وبرامج المحادثة للأجهزة اللوحية)</string>
     <string name="app_title">نبض الرسائل</string>
     <!-- Launcher Shortcuts -->
-    <string name="shortcut_compose_short">رسالة جديده</string>
-    <string name="shortcut_compose_long">بدأ محادثه جديده</string>
+    <string name="shortcut_compose_short">رسالة جديدة</string>
+    <string name="shortcut_compose_long">بدء محادثة جديدة!</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">قائمة المحادثاث</string>
     <string name="menu_archived_conversations">المحادثات المحفوظة</string>
-    <string name="menu_schedule">الرسائل المجدوله</string>
-    <string name="menu_mute_contacts">القائمة السوداء</string>
+    <string name="menu_schedule">الرسائل المجدولة</string>
+    <string name="menu_mute_contacts">القائمة الحظر السوداء</string>
     <string name="menu_invite">دعوة الأصدقاء</string>
-    <string name="menu_feature_settings">خيارات متقدمه</string>
-    <string name="menu_settings">الاعدادات العامة</string>
+    <string name="menu_feature_settings">الخيارات المتقدمة</string>
+    <string name="menu_settings">الإعدادات العامة</string>
     <string name="menu_mms_configuration">MMS تهيئة ضبط</string>
-    <string name="menu_account">حسابي</string>
+    <string name="menu_account">حسابـي الخـاص</string>
     <string name="menu_device_texting">أرسل رسالتك عن طريق أي جهاز</string>
-    <string name="menu_help">مساعدة وتعليقات</string>
-    <string name="menu_about">حول</string>
-    <string name="menu_search">بحث</string>
-    <string name="menu_mobile_only">الجوال فقط</string>
+    <string name="menu_help">المساعدة والتعليقات</string>
+    <string name="menu_about">حـول التطبيق</string>
+    <string name="menu_search">البحث عن</string>
+    <string name="menu_mobile_only">للجوال فقط</string>
     <string name="menu_snooze">الإشعارات</string>
-    <string name="menu_call">اتصال</string>
+    <string name="menu_call">اتصل بجهة الاتصال</string>
     <string name="menu_view_contact">عرض الاتصال</string>
     <string name="menu_view_contacts">عرض الاتصالات</string>
     <string name="menu_view_media">عرض الوسائط</string>
@@ -45,22 +45,22 @@
     <string name="menu_archive_conversation">أرشيف المحادثة</string>
     <string name="menu_move_to_inbox">الانتقال إلى البريد الوارد</string>
     <string name="menu_conversation_information">معلومات المحادثه</string>
-    <string name="menu_conversation_blacklist">قائمة الاتصال السوداء</string>
-    <string name="menu_conversation_schedule">جدولة الرساله</string>
-    <string name="menu_contact_settings">إعدادات الإتصال</string>
-    <string name="menu_group_settings">ضبط المجموعه</string>
+    <string name="menu_conversation_blacklist">قائمة الاتصال السوداء المحظورة</string>
+    <string name="menu_conversation_schedule">جدولة الرسالة</string>
+    <string name="menu_contact_settings">إعدادات المحادثة</string>
+    <string name="menu_group_settings">ضبط المجموعة</string>
     <string name="menu_snooze_off">إيقاف</string>
-    <string name="menu_snooze_1">ساعه</string>
-    <string name="menu_snooze_2">ساعتين</string>
-    <string name="menu_snooze_4">اربع ساعات</string>
-    <string name="menu_snooze_8">ثمان ساعات</string>
-    <string name="menu_snooze_24">24 ساعه</string>
-    <string name="menu_snooze_72">72 ساعه</string>
+    <string name="menu_snooze_1">1 ساعة</string>
+    <string name="menu_snooze_2">ساعاتين</string>
+    <string name="menu_snooze_4">4 ساعات</string>
+    <string name="menu_snooze_8">8 ساعات</string>
+    <string name="menu_snooze_24">24 ساعة</string>
+    <string name="menu_snooze_72">72 ساعة</string>
     <string name="menu_snooze_custom">قم باختيار الوقت</string>
     <!-- Empty Screen -->
     <string name="no_messages">لا توجد رسائل</string>
-    <string name="no_messages_summary">قم ببدء محادثة جديدة، أو فقط استمتع بيومك</string>
-    <string name="close">اغلق</string>
+    <string name="no_messages_summary">قم ببدء محادثة جديدة، و استمتع بيومك!</string>
+    <string name="close">إنهاء</string>
     <!-- Conversation List Screen -->
     <string name="pinned">تثبيت</string>
     <string name="today">اليوم</string>
@@ -96,35 +96,41 @@
     </plurals>
     <string name="undo">فك</string>
     <string name="enter_search">البحث عن...</string>
+    <string name="text_anywhere_description">هل تعلم: أن نبض الرسائل هو أكثر من مجرد تطبيق في الهاتف.
+يمكنك استخدام نبض الرسائل للنص من <b>any</b> الهاتف!</string>
+    <string name="convo_list_try_it">قم بتجربتها الأن!</string>
+    <string name="convo_list_not_now">ليس الأن</string>
     <!-- Search Screen -->
     <string name="conversations">المحادثات</string>
-    <string name="messages">رسائل</string>
+    <string name="messages">الرسائل</string>
     <!-- Invite Friends Screen -->
-    <string name="invite_friends_title">هل تحب Pulse?</string>
+    <string name="invite_friends_title">هل تحب’ نبض الرسائل?</string>
     <string name="invite_friends_summary">سينجح التطبيق بجهودك وجهود الأخريين
 فكلما كان هناك الكثير من المتحمسين للمساعدة كلما استطعنا أن نقوم بتطوير منتجنا ليكون الأفضل، لذا قم بدعوة أصدقائك لتجربة التطبيق.
 ما عليك إلا اختيار الأصدقاء الذين تريد إرسال التطبيق لهم من القائمة السفلية وسيتم إرسال رسالة قصيرة لهم تحوي وصف للبرنامج وكذلك رابط لتحميله.</string>
     <string name="invite_friends_sms">لقد بدأت في استخدام تطبيق جديد لإرسال الرسائل النصية وأعتقد إنك ستعجب بأدائه.
-عليك أن تعرف أن تطبيق pulse مجاني كذلك، لذا يمكنك تحميله عبر الرابط التالي
+عليك أن تعرف أن تطبيق نبض الرسائل المجاني كذلك، لذا يمكنك تحميله عبر الرابط التالي
 http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
-    <string name="type_message">كتابة رساله</string>
-    <string name="type_message_to">كتابة رساله إلى %1$s</string>
+    <string name="type_message">كتابة رسالة</string>
+    <string name="type_message_to">كتابة رسالة إلى %1$s</string>
     <string name="attach">إرفاق</string>
     <string name="select_sim">تحديد SIM</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">صورة MMS</string>
     <string name="now">الآن</string>
-    <string name="sending">إرسال…</string>
+    <string name="sending">جاري الإرسال…</string>
     <string name="failed">فشل</string>
-    <string name="delivered">وصلت الرساله</string>
+    <string name="delivered">تم استلام الرسالة</string>
     <string name="attach_image">إرفاق صورة</string>
     <string name="capture_image">التقاط صورة</string>
     <string name="attach_gif">إرفاق GIF</string>
     <string name="record_video">تسجيل فيديو</string>
     <string name="record_audio">تسجيل صوتي</string>
-    <string name="attach_location">ارفاق الموقع</string>
+    <string name="attach_location">ارفاق موقعك</string>
+    <string name="attach_contact">إرفاق جهة الاتصال</string>
+    <string name="attach_contact_summary">حدد أو أدخل جهة اتصال لكي يتم الإرفاق في الرسالة!</string>
     <string name="no_location_found">لا يمكن العثور على موقعك.</string>
     <string name="camera_permission_needed">نحتاج منح إذن للكاميرا لاخذ الصور</string>
     <string name="take_picture">إلتقاط صوره</string>
@@ -176,8 +182,8 @@ http://messenger.klinkerapps.com</string>
     <string name="onboarding_title_1">إعادة الصور/الرسائل</string>
     <string name="onboarding_title_2">متوفر في كل مكان</string>
     <string name="onboarding_title_3">تخصيص متقدم</string>
-    <string name="onboarding_content_1">"برنامج pluse يتميز بتصميم قوي وسلس بتنسيقات مرنة، مع اندماج كامل بشكل سلس وبلا مشاكل.
-مع pluse أنت تضع محادثاتك في قلب المقدمة"</string>
+    <string name="onboarding_content_1">تطبيق نبض الرسائل يتميز بتصميم قوي وسلس بتنسيقات مرنة، مع اندماج كامل بشكل سلس وبلا مشاكل.
+أجعل من محدثاتك نبض للرسائل المتقدمة</string>
     <string name="onboarding_content_2">يمكنك إرسال الرسائل من جهازك اللوحي، جهاز الكمبيوتر، ساعتك، أي أجهزة أخرى متصلة.</string>
     <string name="onboarding_content_3">قم بتثبيت الإشعارات أو كتم صوتها، أو اختيار نغمة ملائمة لها أو حتى تخصيص نغمة إشعارات خاصة لأي جهة اتصال تقوم بالتواصل معها.
 لا تتردد واختار برنامج pulse.</string>
@@ -224,17 +230,31 @@ http://messenger.klinkerapps.com</string>
     <string name="new_message">رسالة جديده</string>
     <string name="received_new_message">لقد تسلمت رسالة نصية جديدة</string>
     <string name="media">الوسائط</string>
+    <string name="test_notifications_channel">تجربة الإشعارات</string>
+    <string name="status_notifications_channel">إشعارات الحالة</string>
+    <string name="general_notifications_channel">الإشعارات العامة</string>
+    <string name="media_parse_channel">المحلل اللغوي للوسائل</string>
+    <string name="group_summary_notifications">ملخصات مجموعة الرسائل</string>
+    <string name="failed_messages_channel">فشل في الرسائل</string>
+    <string name="media_parse_text">جار تحليل الوسائط من رسالة نصية سابقة ...</string>
+    <string name="creating_channels_text">جاري إنشاء إشعار للقنوات...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">تغير</string>
     <string name="copyright">الحقوق محفوظه © 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">شاهد معلومات الرخصة مفتوحة المصدر</string>
     <string name="app_version">صفحة التطبيق</string>
+    <string name="account_information">معلومات الحساب</string>
+    <string name="account_actions">إجراءات الحساب</string>
     <string name="device_id">معرّف الجهاز</string>
     <string name="device_info">معلومات الجهاز</string>
     <string name="website">عنوان موقع الويب</string>
     <string name="access_messages_from_any_device">الوصول وارسال الرسائل من اي جهاز</string>
     <string name="beta_disclaimer">هذا المشروع لا يزال في مرحلته التجريبيه
 الرجاء الابلاغ عن اية مشاكل قد تواجهك</string>
+    <string name="app_info">معلومات التطبيق</string>
+    <string name="platform_info">معلومات المنصة</string>
+    <string name="troubleshooting">استكشاف الأخطاء وإصلاحها</string>
+    <string name="get_in_touch">ابقى على تواصل</string>
     <string name="faqs">اسئلة متكرره</string>
     <string name="features">الميزات</string>
     <string name="issues">متتبع المشاكل</string>
@@ -294,6 +314,7 @@ http://messenger.klinkerapps.com</string>
     <string name="vibrate_one_long_one_short">اهتزاز طويل لمرة واحده،واهتزاز قصير لمره واحده</string>
     <string name="vibrate_one_short">إهتزاز واحد قصير</string>
     <string name="vibrate_one_long">إهتزاز واحد طويل</string>
+    <string name="vibrate_one_extra_long">إهتزاز واحد طويل اضافي</string>
     <string name="keyboard_layout">تخطيط لوحة المفاتيح</string>
     <string name="keyboard_default">لوحة المفاتيح الافتراضية</string>
     <string name="keyboard_send_key">مفتاح الإرسال</string>
@@ -330,9 +351,11 @@ http://messenger.klinkerapps.com</string>
 يمكنك دائما الاشتراك مره أخرى لاحقًا</string>
     <string name="change_subscription">تغير الاإشتراك</string>
     <string name="cancel_on_the_play_store">إلغاء وعرض اشتراكك في متجر Play</string>
-    <string name="resync_account">إعادة مزامنة الحساب</string>
+    <string name="resync_account">إعادة مزامنة الرسائل</string>
     <string name="resync_account_summary">لديك رسائل مفقودة؟ استخدم هذا لجعل هذا الجهاز محدث لحظيًا
 بكل المعلومات المتواجدة على جهازك الأساسي.</string>
+    <string name="resync_account_summary_phone">سيؤدي هذا إلى حذف حسابك وإعادة تحديثه
+الموجود حاليا في قاعدة بيانات إس إم إس الداخلية الخاصة بك.</string>
     <string name="resync_account_confirmation">هذه العملية ستقوم بحذف كافة الرسائل المتواجدة على هذا الجهاز، 
 وسوف تعود النسخة الحالية خالية تمامًا من كل المواد التي يحتويها الجهاز الأساسي، 
 هل أنت واثق من رغبتك في اتخاذ هذه الخطوة</string>
@@ -347,6 +370,10 @@ http://messenger.klinkerapps.com</string>
     <string name="font_size_extra_large">كبير جدا</string>
     <string name="advanced">متقدم</string>
     <string name="send_as_mms">تحويل إلى MMS</string>
+    <string name="after_one_message">بعد رسالة واحدة</string>
+    <string name="after_two_messages">بعد رسالتين</string>
+    <string name="after_three_messages">بعد ثلاث رسائل</string>
+    <string name="after_four_messages">بعد أربع رسائل</string>
     <string name="send_as_mms_summary">سيتم إرسال رسالة MMS طويل بدلاً من رسالة SMS قصيره</string>
     <string name="alert_types">أنواع التنبيه</string>
     <string name="alert_types_summary">الخيارات المختلفه للاخطارات.</string>
@@ -356,9 +383,13 @@ http://messenger.klinkerapps.com</string>
     <string name="notification_actions">إجراءات التنبيه</string>
     <string name="notification_actions_summary">يمكن تطبيق ثلاثة إجراءات كحد أقصى على إشعار</string>
     <string name="mms_download_directory">تنزيل دليل الوسائط</string>
-    <string name="refresh_firebase">تحديث إشعارات الدفع</string>
-    <string name="refresh_firebase_summary">هل لا يتم إرسال الرسائل إلى هذا الجهاز؟ أعد المحاولة بعد استخدام هذا الخيار.</string>
+    <string name="refresh_firebase">تحديث الحساب</string>
+    <string name="refresh_firebase_summary">هل لم يتم إرسال الرسائل إلى هذا الجهاز؟ أعد المحاولة بعد استخدام هذا الخيار.</string>
     <string name="refreshing_notifications">جار تحديث رمز الإشعار ...</string>
+    <string name="refresh_firebase_warning">إذا كنت تبدأ هذه العملية، يمكنك <b>يجب أن</b> تذهب من خلال كل شيء.
+بعد أن يتم ذلك، سوف تحتاج إلى تسجيل الدخول مرة أخرى، على جميع الأجهزة الأخرى الخاصة بك. هل ترغب في الاستمرار?</string>
+    <string name="show_conversation_history">عرض سجل المحادثات</string>
+    <string name="show_conversation_history_summary">ستعرض الإشعارات الرسائل السابقة في المحادثة</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">الحد الأقصى لحجم الصورة</string>
     <string name="use_group_mms">استخدام المجموعة MMS</string>
@@ -448,6 +479,9 @@ http://messenger.klinkerapps.com</string>
     <string name="hours">ساعات</string>
     <string name="minutes">دقيقه</string>
     <string name="test">اختبار</string>
+    <string name="channel_settings">إعدادات إشعار القناة</string>
+    <string name="channels">القنوات</string>
+    <string name="channels_global_warning">العديد من التخصيصات العالمية ليست ممكنة فقط لكل قناة.</string>
     <string name="off">إيقاف</string>
     <string name="on">تشغيل</string>
     <string name="rate_it">تقييم الأن!</string>
@@ -456,6 +490,7 @@ http://messenger.klinkerapps.com</string>
 قم بتقيمنا بـ 5 نجوم لكي تجعلنا نستمر في التطوير :)</string>
     <string name="share_promo">مرحبا، أنا يعجبني تطبيق نبض للرسائل النصية! جربه الأن:
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">جار التحقق من كلمة المرور ...</string>
     <!-- Times -->
     <string name="one_second">ثانية واحدة</string>
     <string name="three_seconds">التوقيت
@@ -482,7 +517,7 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="purchase_error_cancelled">لقد قمت بإلغاء عملية الشراء :(</string>
     <string name="purchase_error_bad_google_play">للأسف يبدو أن \"جوجل بلاي\" يعاني من بعض المشاكل فقد حصلنا على نتائج سيئة عن طريقة.</string>
     <string name="purchase_error_bad_sku">للأسف&#8230; عملية الشراء لا تتطابق مع أي عمليات مسجلة لدينا</string>
-    <string name="subscriptions">سيتم تفعيل الاشتراك بعد فترة التجربة التي تستغرق 7 أيام، ويمكنك تغير الاشتراك أو إلغاءه في أي وقت.</string>
+    <string name="subscriptions">سيتم تفعيل الإشتراك بعد فترة التجربة التي قد تستغرق 7 أيام، ويمكنك تغير الإشتراك أو إلغاءه في أي وقت.</string>
     <string name="billed_immediately">تم الإعلان عنها على الفور</string>
     <string name="lifetime_purchase">$ 10،99 - عضوية مدى الحياة</string>
     <string name="lifetime_purchase_summary">يتم الدفع لمرة واحدة فقط لا غير.</string>
@@ -492,5 +527,20 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="three_month_purchase_summary">لا يمكن أن يسوء الأمر مع هذا الاختيار</string>
     <string name="monthly_purchase">0.99 $ شهريا</string>
     <string name="monthly_purchase_summary">فقط أريد أن أجرب؟ ليس هناك أى مشكلة.</string>
-    <string name="change_subscription_message">هل ترغب بالقيام بترقية البرنامج؟ رائع، عليك الذهاب إلى متجر التطبيقات والقيام بإلغاء الاشتراك القديم بشكل يدوي، وذلك بعد قيامك باختيار أحد الخيارات التي ستظهر لك في الشاشة القادمة.</string>
+    <string name="change_subscription_message">هل ترغب القيام بترقية البرنامج؟ رائع، عليك الذهاب إلى متجر التطبيقات والقيام بإلغاء الاشتراك القديم بشكل يدوي، وبعد ذالك قم باختيار أحد الخيارات التي ستظهر لك في الشاشة التالية.</string>
+    <string name="beautiful_powerful_instant">جميل وقوي، على الفور.</string>
+    <string name="optimized_for_all_your_devices">نبض الرسائل هو الأمثل لـ <b>all</b> للجهاز الخاص بك.
+إرسال نصوص من الويب، وجهاز كمبيوتر سطح المكتب، والكمبيوتر اللوحي، ومشاهدة، وحتى التلفزيون الخاص بك.</string>
+    <string name="true_imessage_competitor">الأول <b>true</b> تطبيق رسائلي المنافس لأجهزة الأندرويد.</string>
+    <string name="try_it">قم بتجربته الآن!</string>
+    <string name="seven_days_free">7 أيام مجانا!</string>
+    <string name="competition_cant_beat">خدماتنا المنافسة لا يمكن أن تمس أسعارنا، والسرعة، أو خدمة -
+<b>قد يستغرق 7 أيام</b> يمكنك التعرف عليه بنفسك!</string>
+    <string name="select_a_trial_below">حدد أحد الخيارات التالية لبدء <b>تجربة مجانية</b>.</string>
+    <string name="charged_after_trial">الشحن بعد التجربة:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nلمدة شهر</string>
+    <string name="three_month_purchase_improved">$1.99 /\nلمدة 3 أشهر</string>
+    <string name="yearly_purchase_improved">$5.99 /\nلمدة سنة</string>
+    <string name="subscription_toast">أنت <b>سوف لايمكنك</b> إستخدام حتى يتم تجربة 7 أيام لحين يتم الانتهاء من.
+إلغاء في أي وقت.</string>
 </resources>

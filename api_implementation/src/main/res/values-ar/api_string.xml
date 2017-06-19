@@ -17,8 +17,8 @@
 <resources>
     <string name="api_login">تسجيل الدخول</string>
     <string name="api_signup">تسجيل جديد</string>
-    <string name="api_signup_failed">لا يمكن التسجيل عبر هذا الجهاز،
- ولكن يجب عليك الاشتراك عن طريق الجهاز الأساسي المسجل عليه رقم الهاتف أولا.</string>
+    <string name="api_signup_failed">لا يمكنك التسجيل عبر هذا الجهاز،
+ولكن يجب عليك الاشتراك عن طريق الجهاز الأساسي المسجل عليه رقم الهاتف أولا.</string>
     <string name="api_skip_signup">أو، في حالة رغبتك في استخدام التطبيق على هذا الجهاز فقط ولا تريد استخدام خصائص الشبكة مثل إرسال الرسائل النصية من الكمبيوتر اللوحي أو جهاز الكمبيوتر، يمكنك تخطي هذه الخطوة:</string>
     <string name="api_skip">تخطي</string>
     <string name="api_email">عنوان البريد الإلكتروني</string>
@@ -27,31 +27,33 @@
     <string name="api_password_confirmation">تأكيد كلمة المرور</string>
     <string name="api_name">الإسم</string>
     <string name="api_phone_number">رقم الهاتف</string>
-    <string name="api_device_error">حدث خطأ اثناء اضافة هذا الجهاز.إعادة المحاولة مرةً اخرى.</string>
-    <string name="api_add_second_primary_device">"يبدو أن لديك جهاز أساسي لتشغيل هذا الحساب عليه،
-(%1$s) مع العلم إنه لا يسمح سوى بجهاز أساسي واحد لكل حساب..
-لذا هل تريد إلغاء الجهاز الأساسي المسجل مسبقًا وتقوم بتسجيل هذا الجهاز كجهاز أساسي؟
+    <string name="api_connecting">جار الاتصال بالخادم ...</string>
+    <string name="api_device_error">حدث خطأ اثناء اضافة هذا الجهاز. يرجى إعادة المحاولة مرةً اخرى.</string>
+    <string name="api_add_second_primary_device">"يبدو أن لديك جهاز أساسي قديم تم تشغيل هذا الحساب عليه،
+(%1$s) مع العلم إنه لا يسمح بتسجيل على جهاز أساسي واحد لكل حساب..
+لذاك هل تريد إلغاء الجهاز الأساسي المسجل مسبقًا وتقوم بتسجيل هذا الجهاز كـ جهاز أساسي؟
 "</string>
     <string name="api_yes">نعم</string>
     <string name="api_no">لا</string>
     <string name="api_no_email">لم يتم إدخال عنوان البريد الإلكتروني</string>
-    <string name="api_email_invalid">عنوان البريد الإلكتروني غير صالح</string>
+    <string name="api_email_invalid">عنوان البريد الإلكتروني غير صحيح</string>
     <string name="api_no_password">لا توجد كلمة مرور</string>
     <string name="api_no_password_confirmation">لا يوجد ادخال لكلمة المرور</string>
     <string name="api_password_mismatch">كلمات المرور غير متطابقه</string>
     <string name="api_no_name">لا يوجد ادخال للإسم</string>
-    <string name="api_no_phone_number">رقم الهاتف الذي ادخلته غير موجود</string>
-    <string name="api_login_error">حدث خطأ أثناء تسجيل الدخول، البريد الإلكتروني غير صحيح أو كلمة المرور؟</string>
-    <string name="api_activate_summary">الدخول للحصول على كل رسائلك على هذا الجهاز!</string>
+    <string name="api_no_phone_number">رقم الهاتف الذي ادخلته غير موجود!!</string>
+    <string name="api_login_error">حدث خطأ أثناء تسجيل الدخول، يرجى التحقق من البريد الإلكتروني أو كلمة المرور؟</string>
+    <string name="api_activate_summary">تسجيل الدخول للحصول على كل من الرسائل الخاصة بك على هذا الجهاز!</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">في المقدمه</string>
-    <string name="api_activate_1_3">على جهاز محمول أو جهاز الكمبيوتر.</string>
-    <string name="api_activate_2_1">على الموقع</string>
-    <string name="api_activate_2_2">أدخل رمز التحقق</string>
-    <string name="api_activate_2_3">متابعه إلى حسابك</string>
+    <string name="api_activate_1_2">wear.klinkerapps.com</string>
+    <string name="api_activate_1_3">على جهاز الهاتف أو جهاز الكمبيوتر.</string>
+    <string name="api_activate_2_1">على الموقع الإلكتروني</string>
+    <string name="api_activate_2_2">أدخل رمز التحقق من اليمين</string>
+    <string name="api_activate_2_3">لربط حسابك</string>
     <string name="api_confirm_password">الرجاء تأكيد كلمة المرور:</string>
-    <string name="api_wrong_password">فشل التأكيد. هل كلمة السر الخاصة بك صحيحه؟</string>
+    <string name="api_wrong_password">فشل التأكيد. هل كلمة المرور صحيحة؟</string>
     <string name="api_email_taken">للأسف لقد حدث خطأ أثناء تسجيل الدخول، هل لديك بالفعل حساب قديم بهذا البريد الإلكتروني؟</string>
     <string name="api_confirm">تاكيد</string>
     <string name="api_continue">استمرار</string>

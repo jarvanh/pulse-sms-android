@@ -26,6 +26,7 @@
     <string name="api_password_confirmation">Подтверждение пароля</string>
     <string name="api_name">Имя</string>
     <string name="api_phone_number">Номер телефона</string>
+    <string name="api_connecting">Подключение к серверу...</string>
     <string name="api_device_error">Произошла ошибка во время добавления нового устройства. Давайте повторим!</string>
     <string name="api_add_second_primary_device">Похоже, что Вы уже установили основное устройство (%1$s) для этого аккаунта (разрешается только одно!). Хотите удалить текущее основное устройство и выбрать это, как основное?</string>
     <string name="api_yes">Да</string>
@@ -42,6 +43,7 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Отправить</string>
+    <string name="api_activate_1_2">wear.klinkerapps.com</string>
     <string name="api_activate_1_3">на мобильном устройстве или ПК.</string>
     <string name="api_activate_2_1">На сайт</string>
     <string name="api_activate_2_2">Введите код справа</string>

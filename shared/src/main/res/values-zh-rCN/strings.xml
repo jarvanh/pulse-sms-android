@@ -106,6 +106,8 @@
     <string name="record_video">录制视频</string>
     <string name="record_audio">录制音频</string>
     <string name="attach_location">插入位置</string>
+    <string name="attach_contact">附上联系人</string>
+    <string name="attach_contact_summary">为此消息选择或输入一个联系人</string>
     <string name="no_location_found">找不到你的位置</string>
     <string name="camera_permission_needed">相机权限需要更新来拍摄照片</string>
     <string name="take_picture">快照</string>
@@ -154,7 +156,7 @@
     <string name="onboarding_title_1">全新的消息体验</string>
     <string name="onboarding_title_2">随时随地获取</string>
     <string name="onboarding_title_3">强大的定制服务</string>
-    <string name="onboarding_content_1">"流畅、强大的UI设计、平台无缝连接。Pulse将你的消息置于首位。"</string>
+    <string name="onboarding_content_1">流畅、强大的UI设计、平台无缝连接。Pulse将你的消息置于首位。</string>
     <string name="onboarding_content_2">从你的平板电脑、PC、手表、甚至任何连接的设备获取信息</string>
     <string name="onboarding_content_3">对于任何你正在聊的会话，支持固定联系人、过滤通知、主题、自定义通知。你可以打造自己的Pulse！</string>
     <string name="message_anywhere_onboarding_title_1">随时随地收信</string>
@@ -195,11 +197,17 @@
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">查看开源许可</string>
     <string name="app_version">应用版本</string>
+    <string name="account_information">账户信息</string>
+    <string name="account_actions">账户操作</string>
     <string name="device_id">设备ID</string>
     <string name="device_info">设备信息</string>
     <string name="website">我们的网站</string>
     <string name="access_messages_from_any_device">在任何设备上收发信息！</string>
     <string name="beta_disclaimer">这个项目还处于测试阶段，请报告你发现的问题！</string>
+    <string name="app_info">关于应用</string>
+    <string name="platform_info">关于平台</string>
+    <string name="troubleshooting">反馈故障</string>
+    <string name="get_in_touch">联系我们</string>
     <string name="faqs">常见问题</string>
     <string name="features">特性介绍</string>
     <string name="issues">故障跟进</string>
@@ -284,6 +292,7 @@
     <string name="cancel_on_the_play_store">取消并在Play商店上查看你的订阅</string>
     <string name="resync_account">重新同步账户</string>
     <string name="resync_account_summary">消息丢失？使用这个找回你主设备上的消息。</string>
+    <string name="resync_account_summary_phone">将会清除你的账户，并重新同步您本机中的信息</string>
     <string name="resync_account_confirmation">这会删除此设备上所有的消息，并且复制你主设备上的消息。你确定要这么做吗？</string>
     <string name="normalize_color_scheme">或者，你可以为此会话选择一种单色：</string>
     <string name="no_apps_found">没有找到可执行的应用</string>
@@ -436,4 +445,11 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="monthly_purchase">$0.99 每月</string>
     <string name="monthly_purchase_summary">只是想试试？没问题，这个方案可以满足你。</string>
     <string name="change_subscription_message">想要升级订阅吗？那么，在下个页面进行选择之后，请您手动前往Play商店取消旧的订阅。</string>
+    <string name="beautiful_powerful_instant">美观，强大，便捷</string>
+    <string name="try_it">现在试用！</string>
+    <string name="seven_days_free">7天免费试用！</string>
+    <string name="charged_after_trial">试用后成为正版用户</string>
+    <string name="monthly_purchase_improved">0.99美刀/月</string>
+    <string name="three_month_purchase_improved">1.99美刀/3月</string>
+    <string name="yearly_purchase_improved">5.99美刀/年</string>
 </resources>

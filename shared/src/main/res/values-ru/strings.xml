@@ -90,6 +90,9 @@
     </plurals>
     <string name="undo">Отменить</string>
     <string name="enter_search">Найти...</string>
+    <string name="text_anywhere_description">Знаете ли Вы:  Pulse - это больше, чем просто мобильное приложение. Вы можете пользоваться Pulse на <b>любом</b> устройстве!</string>
+    <string name="convo_list_try_it">Попробуйте!</string>
+    <string name="convo_list_not_now">Позже</string>
     <!-- Search Screen -->
     <string name="conversations">Диалоги</string>
     <string name="messages">Сообщения</string>
@@ -165,7 +168,7 @@
     <string name="onboarding_title_1">Переосмысленное общение</string>
     <string name="onboarding_title_2">Доступно где угодно!</string>
     <string name="onboarding_title_3">Продвинутая персонализация</string>
-    <string name="onboarding_content_1">"Плавные переходы, продуманный дизайн и интеграция между множеством устройств. Pulse ставит ваше общение во главу угла!"</string>
+    <string name="onboarding_content_1">Плавные переходы, продуманный дизайн и интеграция между множеством устройств.</string>
     <string name="onboarding_content_2">Переписывайтесь на своём планшете, умных часах или любом другом устройстве.</string>
     <string name="onboarding_content_3">Закрепляйте, приглушайте, раскрашивайте и настраивайте уведомления для любого диалога. Сделайте Pulse своим.</string>
     <string name="message_anywhere_onboarding_title_1">Переписывайте где угодно</string>
@@ -207,6 +210,12 @@
     <string name="new_message">Новое сообщение</string>
     <string name="received_new_message">Получено новое сообщение!</string>
     <string name="media">Медиа</string>
+    <string name="test_notifications_channel">Тестовое уведомление</string>
+    <string name="general_notifications_channel">Основные</string>
+    <string name="media_parse_channel">Медиа анализатор</string>
+    <string name="failed_messages_channel">Неотправленные сообщения</string>
+    <string name="media_parse_text">Анализируем медиафайлы в предыдущих сообщениях...</string>
+    <string name="creating_channels_text">Создаём каналы уведомлений...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Список изменений</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -274,10 +283,11 @@
     <string name="vibrate_two_long">Две долгих</string>
     <string name="vibrate_two_short">Две коротких</string>
     <string name="vibrate_three_short">Три коротких</string>
-    <string name="vibrate_one_short_one_long">Одна короткая и одна длинная</string>
-    <string name="vibrate_one_long_one_short">Одна длинная и одна короткая</string>
+    <string name="vibrate_one_short_one_long">Короткая и длинная</string>
+    <string name="vibrate_one_long_one_short">Длинная и короткая</string>
     <string name="vibrate_one_short">Короткая</string>
     <string name="vibrate_one_long">Длинная</string>
+    <string name="vibrate_one_extra_long">Очень длинная</string>
     <string name="keyboard_layout">Настройка клавиши Enter</string>
     <string name="keyboard_default">По умолчанию</string>
     <string name="keyboard_send_key">Отправить сообщение</string>
@@ -431,12 +441,15 @@
     <string name="hours">Часы</string>
     <string name="minutes">Минуты</string>
     <string name="test">Тест</string>
+    <string name="channel_settings">Настройки каналов уведомлений</string>
+    <string name="channels">Каналы</string>
     <string name="off">Не включать</string>
     <string name="on">Включать</string>
     <string name="rate_it">Оценить!</string>
     <string name="love_pulse_question">Понравился Pulse?</string>
     <string name="give_a_rating">Оцените приложение или поделитесь им с вашими друзьями!\n\nВаша оценка на 5 звезд согреет моё сердце :)</string>
     <string name="share_promo">Привет! Мне очень понравилось переписываться через Pulse! Попробуй и ты, по это ссылке: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Проверяем пароль...</string>
     <!-- Times -->
     <string name="one_second">1 секунда</string>
     <string name="three_seconds">3 секунды</string>
@@ -470,7 +483,7 @@
     <string name="three_month_purchase_summary">С этим точно не ошибёшься.</string>
     <string name="monthly_purchase">$0.99 каждый месяц</string>
     <string name="monthly_purchase_summary">Просто попробовать? Нет проблем.</string>
-    <string name="change_subscription_message">Хотите улучшить? Отлично! После того как вы сделает свой выбор на следующей странице, перейдите в Play Store  и отмените старую подписку.</string>
+    <string name="change_subscription_message">Хотите улучшить? Отлично! После того как вы сделаете свой выбор на следующей странице, перейдите в Play Store  и отмените старую подписку.</string>
     <string name="beautiful_powerful_instant">Красивый, мощный, мгновенный.</string>
     <string name="optimized_for_all_your_devices">Pulse оптимизирован под <b>любые</b> ваши устройства.
 Отправляйте текстовые сообщения через: web-приложение, ПК, планшет, умные часы и даже ТВ.</string>
