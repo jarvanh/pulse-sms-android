@@ -673,6 +673,9 @@ public class ApiUtils {
         if (folderRef == null) {
             saveFirebaseFolderRef(accountId);
             //throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+            if (folderRef == null) {
+                return;
+            }
         }
 
         final AtomicBoolean firebaseFinished = new AtomicBoolean(false);

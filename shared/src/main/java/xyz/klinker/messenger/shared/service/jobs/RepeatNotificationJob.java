@@ -7,11 +7,13 @@ import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import java.util.Date;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class RepeatNotificationJob extends JobService {
@@ -20,7 +22,8 @@ public class RepeatNotificationJob extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        startService(new Intent(this, NotificationService.class));
+        if (!AndroidVersionUtil.isAndroidO())
+            startService(new Intent(this, NotificationService.class));
         return true;
     }
 

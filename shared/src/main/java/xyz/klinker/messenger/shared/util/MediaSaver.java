@@ -104,7 +104,11 @@ public class MediaSaver {
                 makeToast(R.string.saved);
             } catch (Exception e) {
                 e.printStackTrace();
-                makeToast(R.string.failed_to_save);
+                try {
+                    makeToast(R.string.failed_to_save);
+                } catch (Exception x) {
+                    // background thread
+                }
             }
         } else {
             try {

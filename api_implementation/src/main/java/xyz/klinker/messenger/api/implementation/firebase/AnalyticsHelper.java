@@ -12,7 +12,9 @@ public class AnalyticsHelper {
     }
 
     private static void logEvent(Context context, String event, Bundle bundle) {
-        FirebaseAnalytics.getInstance(context).logEvent(event, bundle);
+        if (context != null) {
+            FirebaseAnalytics.getInstance(context).logEvent(event, bundle);
+        }
     }
 
 
