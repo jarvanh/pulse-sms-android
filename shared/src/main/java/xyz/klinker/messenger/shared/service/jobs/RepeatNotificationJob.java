@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.service.jobs;
 
+import android.annotation.SuppressLint;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
@@ -16,20 +17,20 @@ import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
-public class RepeatNotificationJob extends JobService {
+public class RepeatNotificationJob extends BackgroundJob {
 
     public static final int JOB_ID = 1224;
 
     @Override
-    public boolean onStartJob(JobParameters params) {
-        if (!AndroidVersionUtil.isAndroidO())
-            startService(new Intent(this, NotificationService.class));
-        return true;
-    }
-
-    @Override
-    public boolean onStopJob(JobParameters params) {
-        return false;
+    @SuppressLint("NewApi")
+    void onRunJob(JobParameters parameters) {
+        Intent intent = new Intent(this, NotificationService.class);
+        if (!AndroidVersionUtil.isAndroidO()) {
+            startService(intent);
+        } else {
+            intent.putExtra(NotificationService.EXTRA_FOREGROUND, true);
+            startForegroundService(intent);
+        }
     }
 
     public static void scheduleNextRun(Context context, long nextRun) {
@@ -45,7 +46,6 @@ public class RepeatNotificationJob extends JobService {
                     .setRequiresCharging(false)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setRequiresDeviceIdle(false);
-
             if (currentTime < nextRun) {
                 jobScheduler.schedule(builder.build());
             } else {

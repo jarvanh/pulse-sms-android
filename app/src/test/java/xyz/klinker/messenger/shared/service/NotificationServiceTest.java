@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.shared.service;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.util.LongSparseArray;
@@ -41,6 +42,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -70,13 +72,12 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void getUnseenConversations() {
         service = spy(service);
-        doReturn(source).when(service).getDataSource();
         when(source.getUnseenMessages()).thenReturn(getUnseenCursor());
         when(source.getConversation(1)).thenReturn(getConversation1());
         when(source.getConversation(2)).thenReturn(getConversation2());
         when(source.getConversation(3)).thenReturn(getConversation3());
 
-        List<NotificationConversation> conversations = service.getUnseenConversations();
+        List<NotificationConversation> conversations = NotificationService.getUnseenConversations(service, source);
 
         assertEquals(3, conversations.size());
         assertEquals("Luke Klinker", conversations.get(2).title);

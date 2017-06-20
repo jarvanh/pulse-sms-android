@@ -59,6 +59,7 @@ import xyz.klinker.messenger.shared.receiver.CarReplyReceiver;
 import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.NotificationWindowManager;
@@ -74,6 +75,9 @@ import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
  * I used pseudocode here: http://blog.danlew.net/2017/02/07/correctly-handling-bundled-android-notifications/
  */
 public class NotificationService extends IntentService {
+
+    public static final String EXTRA_FOREGROUND = "extra_foreground";
+    private static final int FOREGROUND_NOTIFICATION_ID = 9934;
 
     protected static final boolean DEBUG_QUICK_REPLY = false;
     protected static final boolean AUTO_CANCEL = true;
@@ -93,6 +97,20 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        boolean foreground = false;
+        if (intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.isAndroidO()) {
+            foreground = true;
+            Notification notification = new NotificationCompat.Builder(this,
+                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.repeat_interval))
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setLocalOnly(true)
+                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setOngoing(false)
+                    .build();
+            startForeground(FOREGROUND_NOTIFICATION_ID, notification);
+        }
+
         try {
             long snoozeTil = Settings.get(this).snooze;
             if (snoozeTil > System.currentTimeMillis()) {
@@ -100,7 +118,7 @@ public class NotificationService extends IntentService {
             }
 
             skipSummaryNotification = false;
-            List<NotificationConversation> conversations = getUnseenConversations();
+            List<NotificationConversation> conversations = getUnseenConversations(this, getDataSource(this));
 
             if (conversations != null && conversations.size() > 0) {
                 if (conversations.size() > 1) {
@@ -147,15 +165,16 @@ public class NotificationService extends IntentService {
 
             MessengerAppWidgetProvider.refreshWidget(this);
 
-            stopForeground(false);
+            if (foreground) {
+                stopForeground(true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @VisibleForTesting
-    List<NotificationConversation> getUnseenConversations() {
-        DataSource source = getDataSource();
+    public static List<NotificationConversation> getUnseenConversations(Context context, DataSource source) {
         source.open();
 
         // timestamps are ASC, so it will start with the oldest message, and move to the newest.
@@ -200,10 +219,10 @@ public class NotificationService extends IntentService {
                             conversation.groupConversation = c.phoneNumbers.contains(",");
 
                             if (c.privateNotifications) {
-                                conversation.title = getString(R.string.new_message);
+                                conversation.title = context.getString(R.string.new_message);
                                 conversation.imageUri = null;
                                 conversation.ringtoneUri = null;
-                                conversation.color = Settings.get(this).globalColorSet.color;
+                                conversation.color = Settings.get(context).globalColorSet.color;
                                 conversation.privateNotification = true;
                                 conversation.ledColor = Color.WHITE;
                             } else {
@@ -213,7 +232,7 @@ public class NotificationService extends IntentService {
                             conversations.add(conversation);
                             keys.add(conversationId);
 
-                            NotificationUtils.createNotificationChannelIfNonExistent(this, c);
+                            NotificationUtils.createNotificationChannelIfNonExistent(context, c);
                         }
                     } else {
                         conversation = conversations.get(conversationIndex);
@@ -234,18 +253,6 @@ public class NotificationService extends IntentService {
 
         Collections.sort(conversations, (result1, result2) ->
                 new Date(result2.timestamp).compareTo(new Date(result1.timestamp)));
-
-        // remove the mutes.
-        // If the newest conversation is muted, then we don't want to notify again.
-//        for (int i = 0; i < conversations.size(); i++) {
-//            boolean muted = conversations.get(i).mute;
-//            if (muted && i == conversations.size() - 1) {
-//                return null;
-//            } else if (muted) {
-//                conversations.remove(i);
-//                i--;
-//            }
-//        }
 
         return conversations;
     }
@@ -333,7 +340,7 @@ public class NotificationService extends IntentService {
                         .setConversationTitle(conversation.title);
             }
 
-            DataSource source = getDataSource();
+            DataSource source = getDataSource(this);
             source.open();
             List<Message> messages = source.getMessages(conversation.id, 10);
             source.close();
@@ -804,7 +811,7 @@ public class NotificationService extends IntentService {
     }
 
     private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {
-        DataSource source = getDataSource();
+        DataSource source = getDataSource(this);
         source.open();
         List<Message> messages = source.getMessages(conversation.id, 10);
         source.close();
@@ -892,8 +899,8 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    DataSource getDataSource() {
-        return DataSource.getInstance(this);
+    DataSource getDataSource(Context context) {
+        return DataSource.getInstance(context);
     }
 
     public static void cancelRepeats(Context context) {

@@ -9,7 +9,7 @@ public abstract class BackgroundJob extends JobService {
     abstract void onRunJob(JobParameters parameters);
 
     @Override
-    public boolean onStartJob(final JobParameters params) {
+    public final boolean onStartJob(final JobParameters params) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... args) {
@@ -22,7 +22,7 @@ public abstract class BackgroundJob extends JobService {
     }
 
     @Override
-    public boolean onStopJob(JobParameters params) {
+    public final boolean onStopJob(JobParameters params) {
         return false;
     }
 }
