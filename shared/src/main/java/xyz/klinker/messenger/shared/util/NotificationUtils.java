@@ -105,7 +105,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createStatusChannel(Context context) {
+    private static void createStatusChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -117,7 +117,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createMediaParseChannel(Context context) {
+    private static void createMediaParseChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -129,7 +129,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createGeneralChannel(Context context) {
+    private static void createGeneralChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -141,7 +141,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createFailedMessageChannel(Context context) {
+    private static void createFailedMessageChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -154,15 +154,14 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createMessageGroupChannel(Context context) {
+    private static void createMessageGroupChannel(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final NotificationChannel messageGroupChannel = new NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
-                context.getString(R.string.group_summary_notifications),
-                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                context.getString(R.string.group_summary_notifications), NotificationManager.IMPORTANCE_MIN);
         manager.createNotificationChannel(messageGroupChannel);
     }
 
