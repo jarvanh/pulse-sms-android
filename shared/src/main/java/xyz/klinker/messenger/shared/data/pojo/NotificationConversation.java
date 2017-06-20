@@ -9,6 +9,7 @@ public class NotificationConversation {
     public long id;
     public long unseenMessageId;
     public String title;
+    public String snippet;
     public String imageUri;
     public int color;
     public String ringtoneUri;

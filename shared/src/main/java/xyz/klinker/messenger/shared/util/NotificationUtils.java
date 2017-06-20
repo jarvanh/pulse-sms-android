@@ -161,7 +161,7 @@ public class NotificationUtils {
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final NotificationChannel messageGroupChannel = new NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
-                context.getString(R.string.group_summary_notifications), NotificationManager.IMPORTANCE_MIN);
+                context.getString(R.string.group_summary_notifications), NotificationManager.IMPORTANCE_LOW);
         manager.createNotificationChannel(messageGroupChannel);
     }
 

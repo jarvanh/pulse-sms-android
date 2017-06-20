@@ -46,6 +46,7 @@ import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -69,6 +70,8 @@ import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 /**
  * Service for displaying notifications to the user based on which conversations have not been
  * seen yet.
+ * <p/>
+ * I used pseudocode here: http://blog.danlew.net/2017/02/07/correctly-handling-bundled-android-notifications/
  */
 public class NotificationService extends IntentService {
 
@@ -76,7 +79,6 @@ public class NotificationService extends IntentService {
     protected static final boolean AUTO_CANCEL = true;
     
     public static Long CONVERSATION_ID_OPEN = 0L;
-    public static Long LAST_RUN_TIME = 0L;
 
     private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
@@ -97,32 +99,34 @@ public class NotificationService extends IntentService {
                 return;
             }
 
-            if (LAST_RUN_TIME - System.currentTimeMillis() < 1000) {
-                // When switching the SMS received receiver to run in a background thread, messages
-                // started coming in immediately after each other. This seemed to cause a race condition
-                // somewhere in here, where it would automatically dismiss if multiple messages came in
-                // at the same time. Let's delay things a bit here, that may work.
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) { }
-            }
-
-            LAST_RUN_TIME = System.currentTimeMillis();
             skipSummaryNotification = false;
-
             List<NotificationConversation> conversations = getUnseenConversations();
-            List<String> rows = new ArrayList<>();
 
             if (conversations != null && conversations.size() > 0) {
-                NotificationManagerCompat.from(this).cancelAll();
+                if (conversations.size() > 1) {
+                    List<String> rows = new ArrayList<>();
+                    for (NotificationConversation conversation : conversations) {
+                        rows.add("<b>" + conversation.title + "</b>  " + conversation.snippet);
+                    }
 
-                for (int i = 0; i < conversations.size(); i++) {
-                    NotificationConversation conversation = conversations.get(i);
-                    rows.add(giveConversationNotification(conversation, i, conversations.size()));
+                    giveSummaryNotification(conversations, rows);
                 }
 
-                if (conversations.size() > 1) {
-                    giveSummaryNotification(conversations, rows);
+                if (FeatureFlags.get(this).ONLY_NOFIY_NEW) {
+                    NotificationConversation conversation = conversations.get(0);
+                    giveConversationNotification(conversation, 0, conversations.size());
+                } else {
+                    // we no longer re-notify/update everything.. on Android O, this has some very adverse affects,
+                    // with spamming the notifications.
+                    // We do want to update the group summary every time, though.
+                    for (int i = 0; i < conversations.size(); i++) {
+                        NotificationConversation conversation = conversations.get(i);
+                        giveConversationNotification(conversation, i, conversations.size());
+                    }
+                }
+
+                if (conversations.size() == 1) {
+                    NotificationManagerCompat.from(this).cancel(SUMMARY_ID);
                 }
 
                 Settings settings = Settings.get(this);
@@ -142,6 +146,8 @@ public class NotificationService extends IntentService {
             }
 
             MessengerAppWidgetProvider.refreshWidget(this);
+
+            stopForeground(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,6 +189,7 @@ public class NotificationService extends IntentService {
                             conversation.id = c.id;
                             conversation.unseenMessageId = id;
                             conversation.title = c.title;
+                            conversation.snippet = c.snippet;
                             conversation.imageUri = c.imageUri;
                             conversation.color = c.colors.color;
                             conversation.ringtoneUri = c.ringtoneUri;
@@ -246,7 +253,7 @@ public class NotificationService extends IntentService {
     /**
      * Displays a notification for a single conversation.
      */
-    private String giveConversationNotification(NotificationConversation conversation, int conversationIndex, int numConversations) {
+    private void giveConversationNotification(NotificationConversation conversation, int conversationIndex, int numConversations) {
         Bitmap contactImage = ImageUtils.clipToCircle(
                 ImageUtils.getBitmap(this, conversation.imageUri));
 
@@ -275,7 +282,7 @@ public class NotificationService extends IntentService {
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setDefaults(defaults)
-                .setGroup(GROUP_KEY_MESSAGES)
+                .setGroup(numConversations > 1 ? GROUP_KEY_MESSAGES : null)
                 .setLargeIcon(contactImage)
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
@@ -286,6 +293,8 @@ public class NotificationService extends IntentService {
         if (numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto")) {
             // this is necessary for moto's active display, for some reason
             builder.setGroupSummary(true);
+        } else {
+            builder.setGroupSummary(false);
         }
 
         if (conversation.ledColor != Color.WHITE) {
@@ -314,43 +323,6 @@ public class NotificationService extends IntentService {
         NotificationCompat.BigPictureStyle pictureStyle = null;
         NotificationCompat.InboxStyle inboxStyle = null;
         NotificationCompat.Style messagingStyle = null;
-
-        StringBuilder text = new StringBuilder();
-        if (conversation.messages.size() > 1 && conversation.messages.get(0).from != null) {
-            inboxStyle = new NotificationCompat.InboxStyle();
-
-            for (NotificationMessage message : conversation.messages) {
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    String line = "<b>" + message.from + ":</b>  " + message.data;
-                    text.append(line);
-                    text.append("\n");
-                    inboxStyle.addLine(Html.fromHtml(line));
-                } else {
-                    pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.data));
-                }
-            }
-        } else {
-            for (int i = 0; i < conversation.messages.size(); i++) {
-                NotificationMessage message = conversation.messages.get(i);
-
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    if (message.from != null) {
-                        text.append("<b>");
-                        text.append(message.from);
-                        text.append(":</b>  ");
-                        text.append(conversation.messages.get(i).data);
-                        text.append("\n");
-                    } else {
-                        text.append(conversation.messages.get(i).data);
-                        text.append(" | ");
-                    }
-                } else if (MimeType.isStaticImage(message.mimeType)) {
-                    pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.data));
-                }
-            }
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && settings.historyInNotifications) {
             // build a messaging style notification for Android Nougat
@@ -404,6 +376,43 @@ public class NotificationService extends IntentService {
             }
         }
 
+        StringBuilder text = new StringBuilder();
+        if (conversation.messages.size() > 1 && conversation.messages.get(0).from != null) {
+            inboxStyle = new NotificationCompat.InboxStyle();
+
+            for (NotificationMessage message : conversation.messages) {
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    String line = "<b>" + message.from + ":</b>  " + message.data;
+                    text.append(line);
+                    text.append("\n");
+                    inboxStyle.addLine(Html.fromHtml(line));
+                } else {
+                    pictureStyle = new NotificationCompat.BigPictureStyle()
+                            .bigPicture(ImageUtils.getBitmap(this, message.data));
+                }
+            }
+        } else {
+            for (int i = 0; i < conversation.messages.size(); i++) {
+                NotificationMessage message = conversation.messages.get(i);
+
+                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                    if (message.from != null) {
+                        text.append("<b>");
+                        text.append(message.from);
+                        text.append(":</b>  ");
+                        text.append(conversation.messages.get(i).data);
+                        text.append("\n");
+                    } else {
+                        text.append(conversation.messages.get(i).data);
+                        text.append(" | ");
+                    }
+                } else if (MimeType.isStaticImage(message.mimeType)) {
+                    pictureStyle = new NotificationCompat.BigPictureStyle()
+                            .bigPicture(ImageUtils.getBitmap(this, message.data));
+                }
+            }
+        }
+
         String content = text.toString().trim();
         if (content.endsWith(" |")) {
             content = content.substring(0, content.length() - 2);
@@ -439,7 +448,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
-                .setGroup(GROUP_KEY_MESSAGES)
+                .setGroup(numConversations > 1 ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
         if (conversation.ledColor != Color.WHITE) {
@@ -458,8 +467,11 @@ public class NotificationService extends IntentService {
             }
         }
 
-        if (numConversations == 1) {
+        if (numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto")) {
+            // this is necessary for moto's active display, for some reason
             publicVersion.setGroupSummary(true);
+        } else {
+            publicVersion.setGroupSummary(false);
         }
 
         try {
@@ -662,8 +674,6 @@ public class NotificationService extends IntentService {
         } catch (WindowManager.BadTokenException e) {
             e.printStackTrace();
         }
-
-        return "<b>" + conversation.title + "</b>  " + content;
     }
 
     /**
