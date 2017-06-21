@@ -239,6 +239,8 @@
     <string name="app_version">App Version</string>
     <string name="account_information">Account Information</string>
     <string name="account_actions">Account Actions</string>
+    <string name="danger_zone">Danger Zone</string>
+    <string name="be_careful_using_these_settings">Follow the instructions and be careful when using these actions.</string>
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>
@@ -365,7 +367,7 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
-    <string name="strip_unicode_summary">These characters will be removed from outgoing messages.</string>
+    <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
     <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
@@ -384,7 +386,7 @@
     <string name="use_group_mms">Use group MMS</string>
     <string name="auto_save_media">Auto-save media</string>
     <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
-        it is received.</string>
+        it is received</string>
     <string name="apn_configuration">APN Configuration</string>
     <string name="override_system_apn">Override system APNs</string>
     <string name="mmsc_url">MMSC URL</string>

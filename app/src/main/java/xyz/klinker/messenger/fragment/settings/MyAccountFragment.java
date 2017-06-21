@@ -266,7 +266,9 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     private void initFirebaseRefreshPreference() {
         Preference preference = findPreference(getString(R.string.pref_refresh_firebase));
         if (!Account.get(getActivity()).primary) {
-            getPreferenceScreen().removePreference(preference);
+            ((PreferenceCategory) getPreferenceScreen()
+                    .findPreference(getString(R.string.pref_category_account_actions)))
+                    .removePreference(preference);
             return;
         }
 

@@ -24,6 +24,7 @@
     <string name="pref_delete_account" translatable="false">delete_account</string>
     <string name="pref_resync_account" translatable="false">resync_account</string>
     <string name="pref_refresh_firebase" translatable="false">refresh_firebase</string>
+    <string name="pref_enable_danger_zone" translatable="false">enable_danger_zone</string>
 
     <string name="pref_about_changelog" translatable="false">changelog</string>
     <string name="pref_about_copyright" translatable="false">copyright</string>
@@ -92,6 +93,7 @@
     <string name="pref_signature" translatable="false">signature</string>
     <string name="pref_keyboard_layout" translatable="false">keyboard_layout</string>
 
+    <string name="pref_mms_configuration" translatable="false">mms_configuration</string>
     <string name="pref_mms_size" translatable="false">mms_size_limit</string>
     <string name="pref_convert_to_mms" translatable="false">sms_to_mms_message_conversion_count</string>
     <string name="pref_group_mms" translatable="false">group_mms</string>

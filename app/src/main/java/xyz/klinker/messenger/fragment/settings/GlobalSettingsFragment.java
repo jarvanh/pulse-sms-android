@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.SettingsActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.ColorSet;
@@ -66,6 +67,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
+        initMmsConfiguration();
         initNotificationHistory();
     }
 
@@ -201,6 +203,14 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                     new ApiUtils().updateStripUnicode(Account.get(getActivity()).accountId,
                             strip);
                     return true;
+                });
+    }
+
+    private void initMmsConfiguration() {
+        findPreference(getString(R.string.pref_mms_configuration))
+                .setOnPreferenceClickListener(preference -> {
+                    SettingsActivity.startMMSSettings(getActivity());
+                    return false;
                 });
     }
 

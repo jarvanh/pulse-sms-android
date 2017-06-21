@@ -38,23 +38,31 @@
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
-        android:title="@string/account_actions"
+        android:title="@string/danger_zone"
         android:key="@string/pref_category_account_actions">
+
+        <xyz.klinker.messenger.shared.view.AlwaysOffSwitchPreference
+            android:key="@string/pref_enable_danger_zone"
+            android:summary="@string/be_careful_using_these_settings"
+            android:defaultValue="false" />
 
         <Preference
             android:key="@string/pref_refresh_firebase"
             android:title="@string/refresh_firebase"
-            android:summary="@string/refresh_firebase_summary" />
+            android:summary="@string/refresh_firebase_summary"
+            android:dependency="@string/pref_enable_danger_zone"/>
 
         <Preference
             android:key="@string/pref_resync_account"
             android:title="@string/resync_account"
-            android:summary="@string/resync_account_summary"/>
+            android:summary="@string/resync_account_summary"
+            android:dependency="@string/pref_enable_danger_zone"/>
 
         <Preference
             android:key="@string/pref_delete_account"
             android:title="@string/delete_account"
-            android:summary="@string/delete_account_summary"/>
+            android:summary="@string/delete_account_summary"
+            android:dependency="@string/pref_enable_danger_zone"/>
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 

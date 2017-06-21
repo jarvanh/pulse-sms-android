@@ -110,6 +110,10 @@
             android:summary="@string/strip_unicode_summary"
             android:defaultValue="false" />
 
+        <Preference
+            android:key="@string/pref_mms_configuration"
+            android:title="@string/menu_mms_configuration" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>
