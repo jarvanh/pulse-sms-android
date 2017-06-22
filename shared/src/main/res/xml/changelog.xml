@@ -18,9 +18,10 @@
 
     <version
         name="2.4.2"
-        description="June 21st, 2017">
+        description="June 22nd, 2017">
         <text>Improvements to how notifications are handled</text>
         <text>Improvements to settings layout</text>
+        <text>Bug fixes around contacts getting matched incorrectly</text>
     </version>
 
     <version
