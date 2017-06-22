@@ -45,7 +45,8 @@ public class ContactUtils {
     // invalid contact. For example, 456 for a bank number or something, would match contact number 5154569911
     // since 456 is in the contacts number. This isn't really what we want.
     // TODO: find a good way to stop shorter numbers from matching incorrectly, then re-enable this
-    private static final boolean MATCH_NUMBERS_IF_LOOKUP_FAILS = false;
+    private static final boolean MATCH_NUMBERS_IF_LOOKUP_FAILS = true;
+    private static final int MATCH_NUMBERS_WITH_SIZE_GREATER_THAN = 6;
 
     /**
      * Gets a space separated list of phone numbers.
@@ -149,7 +150,7 @@ public class ContactUtils {
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS) {
+                    } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
                             phonesCursor = context.getContentResolver()
@@ -223,7 +224,7 @@ public class ContactUtils {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS) {
+            } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                 phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
@@ -274,7 +275,7 @@ public class ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
                     }
-                } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS) {
+                } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                             Uri.encode(number));
 
