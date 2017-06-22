@@ -53,6 +53,7 @@ public class FeatureFlags {
     private static final String FLAG_ATTACH_CONTACT = "flag_attach_contact";
     private static final String FLAG_CONVO_LIST_CARD_ABOUT_TEXT_ANYWHERE = "flag_text_anywhere_convo_list";
     private static final String FLAG_ONLY_NOTIFY_NEW = "flag_only_notify_new";
+    private static final String FLAG_IMPROVE_CONTACT_MATCH = "flag_improve_contact_match";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -70,6 +71,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean ONLY_NOFIY_NEW;
+    public boolean IMPROVE_CONTACT_MATCH;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -81,6 +83,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         ONLY_NOFIY_NEW = getValue(sharedPrefs, FLAG_ONLY_NOTIFY_NEW);
+        IMPROVE_CONTACT_MATCH = getValue(sharedPrefs, FLAG_IMPROVE_CONTACT_MATCH);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -101,6 +104,9 @@ public class FeatureFlags {
                 break;
             case FLAG_ONLY_NOTIFY_NEW:
                 ONLY_NOFIY_NEW = flag;
+                break;
+            case FLAG_IMPROVE_CONTACT_MATCH:
+                IMPROVE_CONTACT_MATCH = flag;
                 break;
         }
     }

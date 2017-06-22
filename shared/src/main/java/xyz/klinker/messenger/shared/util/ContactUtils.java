@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 
@@ -40,12 +41,12 @@ public class ContactUtils {
 
     // For the first lookup, we are matching on the content providers lookup method. This seems to match
     // the entire phone number.
-    // This flag will make it so, if that lookup fails, it will try to match part of the number, like
+    // The IMPROVE_CONTACT_MATCH feature flag will make it so, if that lookup fails, it will try to match part of the number, like
     // is done in the contact chips library. The issue with this is that shorter numbers will match and create an
     // invalid contact. For example, 456 for a bank number or something, would match contact number 5154569911
     // since 456 is in the contacts number. This isn't really what we want.
-    // TODO: find a good way to stop shorter numbers from matching incorrectly, then re-enable this
-    private static final boolean MATCH_NUMBERS_IF_LOOKUP_FAILS = true;
+    // This field represents the minimum number of digits that the number needs to be, before it does the
+    // advanced number lookup. That feature flag must also be on.
     private static final int MATCH_NUMBERS_WITH_SIZE_GREATER_THAN = 6;
 
     /**
@@ -150,7 +151,7 @@ public class ContactUtils {
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                    } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
                             phonesCursor = context.getContentResolver()
@@ -224,7 +225,7 @@ public class ContactUtils {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+            } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                 phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
@@ -275,7 +276,7 @@ public class ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
                     }
-                } else if (MATCH_NUMBERS_IF_LOOKUP_FAILS && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                             Uri.encode(number));
 
