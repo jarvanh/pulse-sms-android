@@ -81,6 +81,7 @@ public class NotificationService extends IntentService {
 
     protected static final boolean DEBUG_QUICK_REPLY = false;
     protected static final boolean AUTO_CANCEL = true;
+    protected static final boolean ALWAYS_SET_GROUP_KEY = false;
     
     public static Long CONVERSATION_ID_OPEN = 0L;
 
@@ -289,7 +290,7 @@ public class NotificationService extends IntentService {
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
                 .setDefaults(defaults)
-                .setGroup(numConversations > 1 ? GROUP_KEY_MESSAGES : null)
+                .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setLargeIcon(contactImage)
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
@@ -455,7 +456,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
-                .setGroup(numConversations > 1 ? GROUP_KEY_MESSAGES : null)
+                .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
         if (conversation.ledColor != Color.WHITE) {
