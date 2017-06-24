@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.4.3"
+        description="June 24th, 2017">
+        <text>Bug fixes around contacts getting matched incorrectly</text>
+    </version>
+
+    <version
         name="2.4.2"
         description="June 22nd, 2017">
         <text>Improvements to how notifications are handled</text>

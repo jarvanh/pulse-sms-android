@@ -57,7 +57,7 @@ public class FeatureFlags {
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
-            // none yet
+            FLAG_IMPROVE_CONTACT_MATCH
     };
 
     // ADDING FEATURE FLAGS:
