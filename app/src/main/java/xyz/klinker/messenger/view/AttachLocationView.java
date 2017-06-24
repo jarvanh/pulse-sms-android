@@ -203,29 +203,32 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
     }
 
     private void attachAddress() {
-        new Thread(() -> {
-            Log.v(TAG, "getting addresses");
-
-            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-            List<Address> addresses = null;
-
-            try {
-                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                Log.v(TAG, "got " + addresses.size() + " addresses");
-            } catch (IOException exception) {
-                Log.e(TAG, "service not available", exception);
-            } catch (IllegalArgumentException exception) {
-                Log.e(TAG, "invalid lat long", exception);
-            }
-
-            if (getHandler() != null) {
-                getHandler().post(() -> textListener.onTextSelected(
-                        "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
-                ));
-            }
-
-            // always attach the link above, instead of trying to find an address, which
-            // didn't seem to work great
+        textListener.onTextSelected(
+                "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+        );
+//        new Thread(() -> {
+//            Log.v(TAG, "getting addresses");
+//
+//            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+//            List<Address> addresses = null;
+//
+//            try {
+//                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+//                Log.v(TAG, "got " + addresses.size() + " addresses");
+//            } catch (IOException exception) {
+//                Log.e(TAG, "service not available", exception);
+//            } catch (IllegalArgumentException exception) {
+//                Log.e(TAG, "invalid lat long", exception);
+//            }
+//
+//            if (getHandler() != null) {
+//                getHandler().post(() -> textListener.onTextSelected(
+//                        "https://maps.google.com/maps/@" + latitude + "," + longitude + ",16z"
+//                ));
+//            }
+//
+//            // always attach the link above, instead of trying to find an address, which
+//            // didn't seem to work great
 //            if (addresses != null && addresses.size() > 0) {
 //                Address address = addresses.get(0);
 //                ArrayList<String> addressFragments = new ArrayList<>();
@@ -253,7 +256,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
 //                    ));
 //                }
 //            }
-        }).start();
+//        }).start();
     }
 
     @Override

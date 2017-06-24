@@ -130,7 +130,7 @@ public class NotificationService extends IntentService {
 
                     giveSummaryNotification(conversations, rows);
                 }
-
+                
                 if (FeatureFlags.get(this).ONLY_NOFIY_NEW) {
                     NotificationConversation conversation = conversations.get(0);
                     giveConversationNotification(conversation, 0, conversations.size());
