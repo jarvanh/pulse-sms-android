@@ -61,6 +61,7 @@ import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.NotificationServiceHelper;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.NotificationWindowManager;
 import xyz.klinker.messenger.shared.util.TimeUtils;
@@ -85,7 +86,7 @@ public class NotificationService extends IntentService {
     
     public static Long CONVERSATION_ID_OPEN = 0L;
 
-    private static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
+    public static final String GROUP_KEY_MESSAGES = "messenger_notification_group";
     public static final int SUMMARY_ID = 0;
 
     private NotificationWindowManager notificationWindowManager;
@@ -132,8 +133,14 @@ public class NotificationService extends IntentService {
                 }
                 
                 if (FeatureFlags.get(this).ONLY_NOFIY_NEW) {
-                    NotificationConversation conversation = conversations.get(0);
-                    giveConversationNotification(conversation, 0, conversations.size());
+//                    NotificationConversation conversation = conversations.get(0);
+//                    giveConversationNotification(conversation, 0, conversations.size());
+                    NotificationServiceHelper helper = NotificationServiceHelper.INSTANCE;
+                    int numberToNotify = helper.calculateNumberOfNotificationsToProvide(this, conversations);
+                    for (int i = 0; i < numberToNotify; i++) {
+                        NotificationConversation conversation = conversations.get(i);
+                        giveConversationNotification(conversation, i, conversations.size());
+                    }
                 } else {
                     // we no longer re-notify/update everything.. on Android O, this has some very adverse affects,
                     // with spamming the notifications.
