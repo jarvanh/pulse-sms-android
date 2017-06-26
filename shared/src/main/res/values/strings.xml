@@ -407,7 +407,6 @@
     <string name="secure_private_conversations">Secure Private Conversations</string>
     <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
 
-
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>
     <string name="always_light">Always Light</string>

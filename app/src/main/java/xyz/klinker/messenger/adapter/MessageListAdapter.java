@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -513,12 +514,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
     }
 
-    public void addMessage(Cursor newMessages) {
+    public void addMessage(RecyclerView recycler, Cursor newMessages) {
         int initialCount = getItemCount();
 
         try {
             messages.close();
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
 
         messages = newMessages;
 
@@ -540,6 +542,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 if (Math.abs(manager.findLastVisibleItemPosition() - initialCount) < 4) {
                     // near the bottom, scroll to the new item
                     manager.scrollToPosition(finalCount - 1);
+                } else if (recycler != null) {
+                    Snackbar.make(recycler,
+                            recycler.getContext().getResources().getQuantityString(R.plurals.new_messages, finalCount - initialCount),
+                            Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         }

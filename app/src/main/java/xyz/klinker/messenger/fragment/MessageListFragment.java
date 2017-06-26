@@ -1017,7 +1017,7 @@ public class MessageListFragment extends Fragment implements
 
     private void setMessages(Cursor messages, Map<String, Contact> contactMap, Map<String, Contact> contactMapByName) {
         if (adapter != null) {
-            adapter.addMessage(messages);
+            adapter.addMessage(messageList, messages);
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
                     Settings.get(getActivity()).useGlobalThemeColor ?

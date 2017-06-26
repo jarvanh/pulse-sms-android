@@ -82,13 +82,13 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountNullCursor() {
-        adapter.addMessage(null);
+        adapter.addMessage(null, null);
         assertEquals(0, adapter.getItemCount());
     }
 
     @Test
     public void getItemCountZeroCursor() {
-        adapter.addMessage(new MatrixCursor(new String[]{}));
+        adapter.addMessage(null, new MatrixCursor(new String[]{}));
         assertEquals(0, adapter.getItemCount());
     }
 
@@ -108,7 +108,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         when(cursor.moveToFirst()).thenReturn(true);
         when(manager.findLastVisibleItemPosition()).thenReturn(15);
         adapter = spy(adapter);
-        adapter.addMessage(cursor);
+        adapter.addMessage(null, cursor);
         verify(adapter).notifyItemInserted(19);
         verify(manager).scrollToPosition(19);
     }
@@ -118,7 +118,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         when(cursor.getCount()).thenReturn(12);
         when(cursor.moveToFirst()).thenReturn(true);
         adapter = spy(adapter);
-        adapter.addMessage(cursor);
+        adapter.addMessage(null, cursor);
         verify(adapter).notifyItemChanged(11);
     }
 
@@ -127,13 +127,13 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         when(cursor.getCount()).thenReturn(11);
         when(cursor.moveToFirst()).thenReturn(true);
         adapter = spy(adapter);
-        adapter.addMessage(cursor);
+        adapter.addMessage(null, cursor);
         verify(adapter).notifyDataSetChanged();
     }
 
     @Test
     public void addMessageNullCursor() {
-        adapter.addMessage(null);
+        adapter.addMessage(null, null);
         verify(manager, times(0)).scrollToPosition(anyInt());
     }
 
