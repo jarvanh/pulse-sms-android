@@ -180,26 +180,27 @@ public class ImageUtils {
      * palette).
      */
     public static ColorSet extractColorSet(Context context, Bitmap bitmap) {
-        try {
-            Palette p = Palette.from(bitmap).generate();
-
-            ColorSet colors = new ColorSet();
-            colors.color = p.getVibrantColor(Color.BLACK);
-            colors.colorDark = p.getDarkVibrantColor(Color.BLACK);
-            colors.colorLight = p.getLightVibrantColor(Color.BLACK);
-            colors.colorAccent = p.getMutedColor(Color.BLACK);
-
-            // if any of them get the default, then throw out the batch because it won't look
-            // good and a random material scheme will be better.
-            if (colors.color == Color.BLACK || colors.colorDark == Color.BLACK ||
-                    colors.colorLight == Color.BLACK || colors.colorAccent == Color.BLACK) {
-                return ColorUtils.getRandomMaterialColor(context);
-            } else {
-                return colors;
-            }
-        } catch (Exception e) {
-            return null;
-        }
+        return ColorUtils.getRandomMaterialColor(context);
+//        try {
+//            Palette p = Palette.from(bitmap).generate();
+//
+//            ColorSet colors = new ColorSet();
+//            colors.color = p.getVibrantColor(Color.BLACK);
+//            colors.colorDark = p.getDarkVibrantColor(Color.BLACK);
+//            colors.colorLight = p.getLightVibrantColor(Color.BLACK);
+//            colors.colorAccent = p.getMutedColor(Color.BLACK);
+//
+//            // if any of them get the default, then throw out the batch because it won't look
+//            // good and a random material scheme will be better.
+//            if (colors.color == Color.BLACK || colors.colorDark == Color.BLACK ||
+//                    colors.colorLight == Color.BLACK || colors.colorAccent == Color.BLACK) {
+//                return ColorUtils.getRandomMaterialColor(context);
+//            } else {
+//                return colors;
+//            }
+//        } catch (Exception e) {
+//            return null;
+//        }
     }
 
     /**

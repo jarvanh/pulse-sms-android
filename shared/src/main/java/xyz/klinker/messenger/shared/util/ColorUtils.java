@@ -81,7 +81,7 @@ public class ColorUtils {
             case 9:
                 return ColorSet.LIGHT_GREEN(context);
             case 10:
-                return ColorSet.LIME(context);
+                //return ColorSet.LIME(context);
             case 11:
                 return ColorSet.YELLOW(context);
             case 12:
