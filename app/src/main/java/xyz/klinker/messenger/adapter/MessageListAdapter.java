@@ -104,6 +104,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private int imageHeight;
     private int imageWidth;
 
+    public Snackbar snackbar;
+
     public MessageListAdapter(Cursor messages, int receivedColor, int accentColor, boolean isGroup,
                               LinearLayoutManager manager, MessageListFragment fragment) {
         this.messages = messages;
@@ -549,16 +551,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     // near the bottom, scroll to the new item
                     manager.scrollToPosition(finalCount - 1);
                 } else if (recycler != null && FeatureFlags.get(recycler.getContext()).RECEIVED_MESSAGE_SNACKBAR && messages.moveToLast()) {
-                    // TODO: we don't want to notify if the last message was sent, and we need to track
-                    // this snackbar somewhere, so that it can be auto dismissed when we reach the bottom
-                    // of the list when scrolling.
                     Message message = new Message();
                     message.fillFromCursor(messages);
                     if (message.type == Message.TYPE_RECEIVED) {
                         String text = recycler.getContext().getString(R.string.new_message);
-                        Snackbar snackbar = Snackbar
+                        snackbar = Snackbar
                                 .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
                                 .setAction(R.string.read, view -> manager.scrollToPosition(finalCount - 1));
+
                         ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
                                 .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
 

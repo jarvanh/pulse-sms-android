@@ -737,7 +737,8 @@ public class MessageListFragment extends Fragment implements
 
     private boolean ignoreCounterText() {
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
-        return Build.MODEL.equals("Nexus 9");
+        return !Account.get(getActivity()).primary &&
+                (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus"));
     }
 
     private void initAttachStub() {
@@ -832,6 +833,20 @@ public class MessageListFragment extends Fragment implements
                 .setHandleColour(settings.useGlobalThemeColor ?
                         settings.globalColorSet.color : getArguments().getInt(ARG_COLOR))
                 .setFastScrollSnapPercent(.05f);
+
+        messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int visibleItemCount = manager.getChildCount();
+                int totalItemCount = manager.getItemCount();
+                int pastVisibleItems = manager.findFirstVisibleItemPosition();
+                if (pastVisibleItems + visibleItemCount >= totalItemCount && adapter != null && adapter.snackbar != null) {
+                    adapter.snackbar.dismiss();
+                }
+            }
+        });
     }
 
     private void dismissNotification() {
