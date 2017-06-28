@@ -126,19 +126,17 @@ public class ContactUtils {
             try {
                 String origin = number[i];
 
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
-                        Uri.encode(origin));
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
 
                 Cursor phonesCursor = null;
 
                 try {
                     phonesCursor = context.getContentResolver()
                             .query(phoneUri, new String[]{
-                                            ContactsContract.Contacts.DISPLAY_NAME,
-                                            ContactsContract.CommonDataKinds.Phone._ID
-                                        }, null, null,
-                                    ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
-
+                                            ContactsContract.PhoneLookup.DISPLAY_NAME,
+                                            ContactsContract.Contacts._ID
+                                    }, null, null,
+                                    ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
                 } catch (Exception e) {
                     // funky placeholder number coming from an mms message, dont do anything with it
                     if (phonesCursor != null) {
@@ -151,16 +149,16 @@ public class ContactUtils {
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(origin)) {
-                        phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
+                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                        phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+                                Uri.encode(origin));
                         try {
                             phonesCursor = context.getContentResolver()
                                     .query(phoneUri, new String[]{
-                                                    ContactsContract.PhoneLookup.DISPLAY_NAME,
-                                                    ContactsContract.Contacts._ID
+                                                    ContactsContract.Contacts.DISPLAY_NAME,
+                                                    ContactsContract.CommonDataKinds.Phone._ID
                                             }, null, null,
                                             ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
-
                         } catch (Exception e) {
                             // funky placeholder number coming from an mms message, dont do anything with it
                             if (phonesCursor != null) {
@@ -214,23 +212,23 @@ public class ContactUtils {
             throws NoSuchElementException {
 
         try {
-            Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+            Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                     Uri.encode(number));
 
             Cursor phonesCursor = context.getContentResolver()
-                    .query(phoneUri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID},
-                            null, null, null);
+                            .query(phoneUri, new String[]{ContactsContract.PhoneLookup._ID},
+                                    null, null, null);
 
             if (phonesCursor != null && phonesCursor.moveToFirst()) {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(number)) {
-                phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
                 phonesCursor = context.getContentResolver()
-                        .query(phoneUri, new String[]{ContactsContract.PhoneLookup._ID},
+                        .query(phoneUri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID},
                                 null, null, null);
 
                 if (phonesCursor != null && phonesCursor.moveToFirst()) {
@@ -264,7 +262,7 @@ public class ContactUtils {
             return null;
         } else {
             try {
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
                 Cursor phonesCursor = context.getContentResolver()
@@ -276,8 +274,8 @@ public class ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
                     }
-                } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(number)) {
-                    phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                    phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                             Uri.encode(number));
 
                     phonesCursor = context.getContentResolver()
@@ -549,17 +547,5 @@ public class ContactUtils {
         } else {
             return number;
         }
-    }
-
-    private static boolean hasLetter(String name) {
-        char[] chars = name.toCharArray();
-
-        for (char c : chars) {
-            if(!Character.isLetter(c)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
