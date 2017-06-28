@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="2.4.4"
+        description="June 28th, 2017">
+        <text>Notification improvements</text>
+        <text>New message indicator when not at the bottom of a conversation and a message comes in</text>
+        <text>Improvements to the default color schemes on conversations</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.4.3"
         description="June 24th, 2017">
         <text>Bug fixes around contacts getting matched incorrectly</text>

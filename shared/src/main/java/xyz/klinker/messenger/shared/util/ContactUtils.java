@@ -151,7 +151,7 @@ public class ContactUtils {
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
                             phonesCursor = context.getContentResolver()
@@ -225,7 +225,7 @@ public class ContactUtils {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+            } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                 phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
@@ -276,7 +276,7 @@ public class ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
                     }
-                } else if (FeatureFlags.get(context).IMPROVE_CONTACT_MATCH && number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                             Uri.encode(number));
 

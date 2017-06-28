@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +35,8 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -43,6 +47,7 @@ import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
 import com.turingtechnologies.materialscrollbar.IDateableAdapter;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +74,7 @@ import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.MessageListStylingHelper;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.Regex;
+import xyz.klinker.messenger.shared.util.SnackbarAnimationFix;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener;
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
@@ -542,10 +548,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 if (Math.abs(manager.findLastVisibleItemPosition() - initialCount) < 4) {
                     // near the bottom, scroll to the new item
                     manager.scrollToPosition(finalCount - 1);
-                } else if (recycler != null) {
-                    Snackbar.make(recycler,
-                            recycler.getContext().getResources().getQuantityString(R.plurals.new_messages, finalCount - initialCount),
-                            Snackbar.LENGTH_INDEFINITE).show();
+                } else if (recycler != null && FeatureFlags.get(recycler.getContext()).RECEIVED_MESSAGE_SNACKBAR) {
+                    // TODO: we don't want to notify if the last message was sent, and we need to track
+                    // this snackbar somewhere, so that it can be auto dismissed when we reach the bottom
+                    // of the list when scrolling.
+                    
+                    String text = recycler.getContext().getString(R.string.new_message);
+                    Snackbar snackbar = Snackbar
+                            .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.read, view -> manager.scrollToPosition(finalCount - 1));
+                    ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
+                            .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
+
+                    SnackbarAnimationFix.apply(snackbar);
+                    snackbar.show();
                 }
             }
         }

@@ -56,6 +56,7 @@ import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.SnackbarAnimationFix;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
@@ -194,6 +195,7 @@ public class ConversationListFragment extends Fragment
             s.setAction(actionLabel, listener);
         }
 
+        SnackbarAnimationFix.apply(s);
         s.show();
     }
 
@@ -358,6 +360,7 @@ public class ConversationListFragment extends Fragment
                         dismissDeleteSnackbar(getActivity(), currentSize);
                     }
                 });
+        SnackbarAnimationFix.apply(deleteSnackbar);
         deleteSnackbar.show();
 
         NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
@@ -428,6 +431,7 @@ public class ConversationListFragment extends Fragment
                         dismissArchiveSnackbar(getActivity(), currentSize);
                     }
                 });
+        SnackbarAnimationFix.apply(archiveSnackbar);
         archiveSnackbar.show();
 
         NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
@@ -466,7 +470,9 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public void onMarkSectionAsRead(String text, final int sectionType) {
-        Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, text.toLowerCase(Locale.US)), Snackbar.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, text.toLowerCase(Locale.US)), Snackbar.LENGTH_LONG);
+        SnackbarAnimationFix.apply(snackbar);
+        snackbar.show();
 
         final List<Conversation> allConversations = adapter.getConversations();
         final List<Conversation> markAsRead = new ArrayList<>();
