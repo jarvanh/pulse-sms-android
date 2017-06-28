@@ -280,16 +280,20 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         // not read, not muted
         // muted not read
         // read and muted
-        if (conversation.read && conversation.mute && (holder.isBold() || !holder.isItalic())) {
+//        if (conversation.read && conversation.mute && (holder.isBold() || !holder.isItalic())) {
+        if (conversation.read && conversation.mute) {
             // should be italic
             holder.setTypeface(false, true);
-        } else if (conversation.mute && !conversation.read && (!holder.isItalic() || !holder.isBold())) {
+//        } else if (conversation.mute && !conversation.read && (!holder.isItalic() || !holder.isBold())) {
+        } else if (conversation.mute && !conversation.read) {
             // should be just italic
             holder.setTypeface(true, true);
-        } else if (!conversation.mute && conversation.read && (holder.isItalic() || holder.isBold())) {
+//        } else if (!conversation.mute && conversation.read && (holder.isItalic() || holder.isBold())) {
+        } else if (!conversation.mute && conversation.read) {
             // should be not italic and not bold
             holder.setTypeface(false, false);
-        } else if (!conversation.mute && !conversation.read && (holder.isItalic() || !holder.isBold())) {
+//        } else if (!conversation.mute && !conversation.read && (holder.isItalic() || !holder.isBold())) {
+        } else if (!conversation.mute && !conversation.read) {
             // should be bold, not italic
             holder.setTypeface(true, false);
         }
