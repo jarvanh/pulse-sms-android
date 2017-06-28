@@ -47,7 +47,7 @@ public class ContactUtils {
     // since 456 is in the contacts number. This isn't really what we want.
     // This field represents the minimum number of digits that the number needs to be, before it does the
     // advanced number lookup. That feature flag must also be on.
-    private static final int MATCH_NUMBERS_WITH_SIZE_GREATER_THAN = 6;
+    private static final int MATCH_NUMBERS_WITH_SIZE_GREATER_THAN = 7;
 
     /**
      * Gets a space separated list of phone numbers.
@@ -151,7 +151,7 @@ public class ContactUtils {
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(origin)) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
                         try {
                             phonesCursor = context.getContentResolver()
@@ -225,7 +225,7 @@ public class ContactUtils {
                 int id = phonesCursor.getInt(0);
                 phonesCursor.close();
                 return id;
-            } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+            } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(number)) {
                 phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number));
 
@@ -276,7 +276,7 @@ public class ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "");
                     }
-                } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                } else if (number.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && !hasLetter(number)) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                             Uri.encode(number));
 
@@ -549,5 +549,17 @@ public class ContactUtils {
         } else {
             return number;
         }
+    }
+
+    private static boolean hasLetter(String name) {
+        char[] chars = name.toCharArray();
+
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
