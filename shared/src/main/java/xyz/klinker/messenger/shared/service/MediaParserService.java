@@ -8,14 +8,28 @@ import android.support.v4.app.NotificationCompat;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.media.MediaMessageParserFactory;
 import xyz.klinker.messenger.shared.util.media.MediaParser;
+import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
 
 public class MediaParserService extends IntentService {
+
+    public static void start(Context context, long conversationId, String text) {
+        Intent mediaParser = new Intent(context, MediaParserService.class);
+        mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
+        mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, text.trim());
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            context.startForegroundService(mediaParser);
+        } else {
+            context.startService(mediaParser);
+        }
+    }
 
     private static final int MEDIA_PARSE_FOREGROUND_ID = 1334;
 
@@ -28,10 +42,6 @@ public class MediaParserService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
         if (AndroidVersionUtil.isAndroidO()) {
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.MEDIA_PARSE_CHANNEL_ID)
@@ -46,15 +56,22 @@ public class MediaParserService extends IntentService {
             startForeground(MEDIA_PARSE_FOREGROUND_ID, notification);
         }
 
+        if (intent == null) {
+            stopForeground(true);
+            return;
+        }
+
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1L);
         String text = intent.getStringExtra(EXTRA_BODY_TEXT);
 
         if (conversationId == -1L || text == null) {
+            stopForeground(true);
             return;
         }
 
         MediaParser parser = createParser(this, text);
-        if (parser == null) {
+        if (parser == null || (!Settings.get(this).internalBrowser && parser instanceof ArticleParser)) {
+            stopForeground(true);
             return;
         }
 

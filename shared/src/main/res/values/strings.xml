@@ -367,6 +367,7 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
+    <string name="use_internal_browser">Use Internal Browser</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>

@@ -235,7 +235,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                if (clickedText.contains("youtube")) {
+                if (clickedText.contains("youtube") || !Settings.get(holder.itemView.getContext()).internalBrowser) {
                     Intent url = new Intent(Intent.ACTION_VIEW);
                     url.setData(Uri.parse(clickedText));
                     holder.itemView.getContext().startActivity(url);

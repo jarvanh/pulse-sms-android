@@ -105,6 +105,11 @@
         android:title="@string/advanced">
 
         <SwitchPreference
+            android:key="@string/pref_internal_browser"
+            android:title="@string/use_internal_browser"
+            android:defaultValue="true" />
+
+        <SwitchPreference
             android:key="@string/pref_strip_unicode"
             android:title="@string/strip_unicode"
             android:summary="@string/strip_unicode_summary"

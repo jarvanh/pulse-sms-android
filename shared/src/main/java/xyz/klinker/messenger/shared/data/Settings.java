@@ -64,6 +64,7 @@ public class Settings {
     public boolean swipeDelete;
     public boolean stripUnicode;
     public boolean historyInNotifications;
+    public boolean internalBrowser;
     public long snooze;
     public long repeatNotifications;
     public long delayedSendingTimeout;
@@ -141,6 +142,7 @@ public class Settings {
         this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false);
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false);
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true);
+        this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true);
 
         // configuration
         if (this.ringtone == null) {

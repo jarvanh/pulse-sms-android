@@ -92,15 +92,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             context.startService(new Intent(context, NotificationService.class));
 
             if (MediaParserService.createParser(context, body.trim()) != null) {
-                Intent mediaParser = new Intent(context, MediaParserService.class);
-                mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
-                mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, body.trim());
-
-                if (AndroidVersionUtil.isAndroidO()) {
-                    handler.postDelayed(() -> context.startForegroundService(mediaParser), 2000);
-                } else {
-                    handler.postDelayed(() -> context.startService(mediaParser), 2000);
-                }
+                MediaParserService.start(context, conversationId, body);
             }
         }
     }

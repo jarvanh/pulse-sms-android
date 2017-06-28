@@ -106,12 +106,9 @@ public class MessageViewHolder extends SwappingHolder {
             }
 
             final ViewGroup.LayoutParams params = timestamp.getLayoutParams();
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    params.height = (Integer) animation.getAnimatedValue();
-                    timestamp.requestLayout();
-                }
+            animator.addUpdateListener(animation -> {
+                params.height = (Integer) animation.getAnimatedValue();
+                timestamp.requestLayout();
             });
             animator.setDuration(100);
             animator.start();
@@ -166,24 +163,21 @@ public class MessageViewHolder extends SwappingHolder {
 
             if (fragment == null || !fragment.isDragging()) {
                 AlertDialog dialog = new AlertDialog.Builder(view.getContext())
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                if (which == 0) {
-                                    showMessageDetails();
-                                } else if (which == 1) {
-                                    deleteMessage();
-                                } else if (which == 2 && image.getVisibility() == View.VISIBLE) {
-                                    shareImage(messageId);
-                                }else if (which == 2) {
-                                    copyMessageText();
-                                } else if (which == 3 && image.getVisibility() == View.VISIBLE) {
-                                    new MediaSaver(fragment.getActivity()).saveMedia(messageId);
-                                } else if (which == 3) {
-                                    shareText(messageId);
-                                } else if (which == 4) {
-                                    resendMessage();
-                                }
+                        .setItems(items, (dialogInterface, which) -> {
+                            if (which == 0) {
+                                showMessageDetails();
+                            } else if (which == 1) {
+                                deleteMessage();
+                            } else if (which == 2 && image.getVisibility() == View.VISIBLE) {
+                                shareImage(messageId);
+                            }else if (which == 2) {
+                                copyMessageText();
+                            } else if (which == 3 && image.getVisibility() == View.VISIBLE) {
+                                new MediaSaver(fragment.getActivity()).saveMedia(messageId);
+                            } else if (which == 3) {
+                                shareText(messageId);
+                            } else if (which == 4) {
+                                resendMessage();
                             }
                         })
                         .show();
@@ -425,7 +419,13 @@ public class MessageViewHolder extends SwappingHolder {
 
         ArticlePreview preview = ArticlePreview.build(data);
         if (preview != null) {
-            intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+            if (Settings.get(itemView.getContext()).internalBrowser) {
+                intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+            } else {
+                Intent url = new Intent(Intent.ACTION_VIEW);
+                url.setData(Uri.parse(preview.webUrl));
+                itemView.getContext().startActivity(url);
+            }
         }
     }
 }

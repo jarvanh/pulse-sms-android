@@ -20,6 +20,7 @@
         name="2.4.4"
         description="June 28th, 2017">
         <text>Notification improvements</text>
+        <text>Option to disable the internal browser</text>
         <text>New message indicator when not at the bottom of a conversation and a message comes in</text>
         <text>Improvements to the default color schemes on conversations</text>
         <text>Bug fixes</text>
