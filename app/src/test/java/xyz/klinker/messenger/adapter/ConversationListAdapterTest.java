@@ -181,8 +181,8 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Luke Klinker");
         verify(summary).setText("So maybe not going to be able to get platinum huh?");
-        verify(name, times(0)).setTypeface(any(Typeface.class), anyInt());
-        verify(summary, times(0)).setTypeface(any(Typeface.class), anyInt());
+        verify(name, times(1)).setTypeface(any(Typeface.class), anyInt());
+        verify(summary, times(1)).setTypeface(any(Typeface.class), anyInt());
         verify(imageLetter).setText("L");
     }
 
