@@ -548,20 +548,23 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 if (Math.abs(manager.findLastVisibleItemPosition() - initialCount) < 4) {
                     // near the bottom, scroll to the new item
                     manager.scrollToPosition(finalCount - 1);
-                } else if (recycler != null && FeatureFlags.get(recycler.getContext()).RECEIVED_MESSAGE_SNACKBAR) {
+                } else if (recycler != null && FeatureFlags.get(recycler.getContext()).RECEIVED_MESSAGE_SNACKBAR && messages.moveToLast()) {
                     // TODO: we don't want to notify if the last message was sent, and we need to track
                     // this snackbar somewhere, so that it can be auto dismissed when we reach the bottom
                     // of the list when scrolling.
-                    
-                    String text = recycler.getContext().getString(R.string.new_message);
-                    Snackbar snackbar = Snackbar
-                            .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
-                            .setAction(R.string.read, view -> manager.scrollToPosition(finalCount - 1));
-                    ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
-                            .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
+                    Message message = new Message();
+                    message.fillFromCursor(messages);
+                    if (message.type == Message.TYPE_RECEIVED) {
+                        String text = recycler.getContext().getString(R.string.new_message);
+                        Snackbar snackbar = Snackbar
+                                .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
+                                .setAction(R.string.read, view -> manager.scrollToPosition(finalCount - 1));
+                        ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
+                                .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
 
-                    SnackbarAnimationFix.apply(snackbar);
-                    snackbar.show();
+                        SnackbarAnimationFix.apply(snackbar);
+                        snackbar.show();
+                    }
                 }
             }
         }
