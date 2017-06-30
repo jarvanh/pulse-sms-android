@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/number_1_1"
                 android:layout_toEndOf="@+id/number_1"
-                android:text="@string/api_activate_1_2"
+                android:text="@string/api_activate_wear"
                 android:textColor="@color/api_text_accent" />
 
             <TextView

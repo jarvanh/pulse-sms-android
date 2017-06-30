@@ -79,7 +79,7 @@
                         android:layout_below="@+id/number_1_1"
                         android:layout_toEndOf="@+id/number_1"
                         android:id="@+id/number_1_2"
-                        android:text="@string/api_activate_1_2"
+                        android:text="@string/api_activate_tv"
                         android:textColor="@color/api_text_accent"/>
 
                     <TextView
