@@ -84,6 +84,10 @@
     </plurals>
     <string name="undo">Ongedaan maken</string>
     <string name="enter_search">Zoeken naar...</string>
+    <string name="text_anywhere_description">Wist je dat: Pulse is een veel meer dan een app. 
+Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
+    <string name="convo_list_try_it">Probeer het!</string>
+    <string name="convo_list_not_now">Niet nu</string>
     <!-- Search Screen -->
     <string name="conversations">Conversaties</string>
     <string name="messages">Berichten</string>
@@ -159,7 +163,7 @@
     <string name="onboarding_title_1">Berichten anders ingedeeld</string>
     <string name="onboarding_title_2">Overal toegankelijk</string>
     <string name="onboarding_title_3">Enorme aanpassingsmogelijkheden</string>
-    <string name="onboarding_content_1">"Snel, eenvoudig, modern design en naadloze integratie. Pulse plaatst jouw conversaties in de spotlight. "</string>
+    <string name="onboarding_content_1">Snel, eenvoudig, modern design en naadloze integratie. Pulse plaatst jouw conversaties in de spotlight.</string>
     <string name="onboarding_content_2">SMS vanaf jouw tablet, computer, smartwatch, of elk ander verbonden toestel.</string>
     <string name="onboarding_content_3">Prik berichten vast, jouw eigen thema en pas notificaties aan voor elk contact. Maak Pulse van jou!</string>
     <string name="message_anywhere_onboarding_title_1">SMS overal</string>
@@ -197,6 +201,14 @@
     <string name="new_message">Nieuw bericht</string>
     <string name="received_new_message">Je hebt een nieuw bericht ontvangen!</string>
     <string name="media">Media</string>
+    <string name="test_notifications_channel">Test notificaties</string>
+    <string name="status_notifications_channel">Status notificaties</string>
+    <string name="general_notifications_channel">Algemene notificaties</string>
+    <string name="media_parse_channel">Media parser</string>
+    <string name="group_summary_notifications">Overzicht van de berichtengroep</string>
+    <string name="failed_messages_channel">Mislukte berichten</string>
+    <string name="media_parse_text">Media samenstellen van vorige bericht...</string>
+    <string name="creating_channels_text">Bezig met het aanmaken van notificatiekanalen...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -264,6 +276,7 @@
     <string name="vibrate_one_long_one_short">Een lange, een korte vibratie</string>
     <string name="vibrate_one_short">Een korte vibratie</string>
     <string name="vibrate_one_long">Een lange vibratie</string>
+    <string name="vibrate_one_extra_long">Eén extra lange trilling</string>
     <string name="keyboard_layout">Keyboard Layout</string>
     <string name="keyboard_default">Standaard Keyboard</string>
     <string name="keyboard_send_key">Verstuur sleutel</string>
@@ -418,6 +431,9 @@ it is received.</string>
     <string name="hours">Uren</string>
     <string name="minutes">Minuten</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Instellingen notificatiekanaal</string>
+    <string name="channels">Kanalen</string>
+    <string name="channels_global_warning">Veel globale aanpassingen zijn nu enkel per kanaal beschikbaar.</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
     <string name="rate_it">Rate it!</string>
@@ -425,6 +441,7 @@ it is received.</string>
     <string name="give_a_rating">Overweeg om een waardering te plaatsen of te delen met vrienden!\n\nJouw 5-sterren reviews verwarmen mijn hart.</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Wachtwoord verifiëren...</string>
     <!-- Times -->
     <string name="one_second">Eén second</string>
     <string name="three_seconds">Drie seconden</string>

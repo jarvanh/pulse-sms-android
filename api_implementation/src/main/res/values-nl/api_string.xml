@@ -26,6 +26,7 @@
     <string name="api_password_confirmation">Wachtwoord bevestigen</string>
     <string name="api_name">Naam</string>
     <string name="api_phone_number">Telefoonnummer</string>
+    <string name="api_connecting">Verbinding maken met server...</string>
     <string name="api_device_error">Er ging iets mis tijdens het opslaan. Probeer opnieuw!</string>
     <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor jouw account en er is slechts 1 toegestaan. Wil je jouw huidige hoofdtoestel verwijderen en deze als het nieuwe hoofdtoestel instellen?</string>
     <string name="api_yes">Ja</string>

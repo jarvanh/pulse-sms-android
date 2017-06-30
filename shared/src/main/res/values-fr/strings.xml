@@ -441,6 +441,7 @@ Essayez aujourd\'hui !</string>
     <string name="test">Test</string>
     <string name="channel_settings">Paramètres du canal de notification</string>
     <string name="channels">Canaux</string>
+    <string name="channels_global_warning">De nombreuses personnalisations sont désormais uniquement disponibles par canal.</string>
     <string name="off">Inactif</string>
     <string name="on">Actif</string>
     <string name="rate_it">Noter l\'application !</string>
