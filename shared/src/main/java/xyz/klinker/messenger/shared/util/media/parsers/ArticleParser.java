@@ -43,7 +43,9 @@ public class ArticleParser extends MediaParser {
         ArticlePreview preview = ArticlePreview.build(article);
         return preview != null && article != null && article.isArticle && article.image != null &&
                 article.title != null && !article.title.isEmpty() &&
-                article.description != null && !article.description.isEmpty() ?
+                article.description != null && !article.description.isEmpty() &&
+                preview.title != null && !preview.title.isEmpty() &&
+                preview.description != null && !preview.description.isEmpty() ?
 
                 preview.toString() : null;
     }
