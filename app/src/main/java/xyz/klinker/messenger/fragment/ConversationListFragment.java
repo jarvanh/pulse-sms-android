@@ -172,12 +172,6 @@ public class ConversationListFragment extends Fragment
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        dismissSnackbars(getActivity());
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 

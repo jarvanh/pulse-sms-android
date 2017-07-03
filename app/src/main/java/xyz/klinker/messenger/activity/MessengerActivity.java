@@ -174,6 +174,15 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        if (conversationListFragment != null) {
+            conversationListFragment.dismissSnackbars(this);
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         requestPermissions();
