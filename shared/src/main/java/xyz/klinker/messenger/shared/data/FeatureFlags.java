@@ -71,8 +71,6 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean ONLY_NOFIY_NEW;
-    public boolean RECEIVED_MESSAGE_SNACKBAR;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -83,8 +81,6 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        ONLY_NOFIY_NEW = getValue(sharedPrefs, FLAG_ONLY_NOTIFY_NEW);
-        RECEIVED_MESSAGE_SNACKBAR = getValue(sharedPrefs, FLAG_SNACKBAR_RECEIVED_MESSAGES);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -102,12 +98,6 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
-                break;
-            case FLAG_ONLY_NOTIFY_NEW:
-                ONLY_NOFIY_NEW = flag;
-                break;
-            case FLAG_SNACKBAR_RECEIVED_MESSAGES:
-                RECEIVED_MESSAGE_SNACKBAR = flag;
                 break;
         }
     }

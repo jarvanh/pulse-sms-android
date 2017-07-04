@@ -131,24 +131,12 @@ public class NotificationService extends IntentService {
 
                     giveSummaryNotification(conversations, rows);
                 }
-                
-                if (FeatureFlags.get(this).ONLY_NOFIY_NEW) {
-//                    NotificationConversation conversation = conversations.get(0);
-//                    giveConversationNotification(conversation, 0, conversations.size());
-                    NotificationServiceHelper helper = NotificationServiceHelper.INSTANCE;
-                    int numberToNotify = helper.calculateNumberOfNotificationsToProvide(this, conversations);
-                    for (int i = 0; i < numberToNotify; i++) {
-                        NotificationConversation conversation = conversations.get(i);
-                        giveConversationNotification(conversation, i, conversations.size());
-                    }
-                } else {
-                    // we no longer re-notify/update everything.. on Android O, this has some very adverse affects,
-                    // with spamming the notifications.
-                    // We do want to update the group summary every time, though.
-                    for (int i = 0; i < conversations.size(); i++) {
-                        NotificationConversation conversation = conversations.get(i);
-                        giveConversationNotification(conversation, i, conversations.size());
-                    }
+
+                NotificationServiceHelper helper = NotificationServiceHelper.INSTANCE;
+                int numberToNotify = helper.calculateNumberOfNotificationsToProvide(this, conversations);
+                for (int i = 0; i < numberToNotify; i++) {
+                    NotificationConversation conversation = conversations.get(i);
+                    giveConversationNotification(conversation, i, conversations.size());
                 }
 
                 if (conversations.size() == 1) {

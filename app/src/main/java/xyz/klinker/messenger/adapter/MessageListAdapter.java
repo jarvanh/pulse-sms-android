@@ -550,7 +550,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 if (Math.abs(manager.findLastVisibleItemPosition() - initialCount) < 4) {
                     // near the bottom, scroll to the new item
                     manager.scrollToPosition(finalCount - 1);
-                } else if (recycler != null && FeatureFlags.get(recycler.getContext()).RECEIVED_MESSAGE_SNACKBAR && messages.moveToLast()) {
+                } else if (recycler != null && messages.moveToLast()) {
                     Message message = new Message();
                     message.fillFromCursor(messages);
                     if (message.type == Message.TYPE_RECEIVED) {
