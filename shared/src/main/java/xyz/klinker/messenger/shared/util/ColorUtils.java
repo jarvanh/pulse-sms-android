@@ -331,25 +331,40 @@ public class ColorUtils {
                     invoked = true;
                 }
 
-                try {
-                    final Class<?> clazz = RecyclerView.class;
+                final Class<?> clazz = RecyclerView.class;
 
+                try {
                     for (final String name : new String[]{"ensureTopGlow", "ensureBottomGlow", "ensureLeftGlow", "ensureRightGlow"}) {
                         Method method = clazz.getDeclaredMethod(name);
                         method.setAccessible(true);
                         method.invoke(recyclerView);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+                try {
                     for (final String name : new String[]{"mTopGlow", "mBottomGlow", "mLeftGlow", "mRightGlow"}) {
                         final Field field = clazz.getDeclaredField(name);
                         field.setAccessible(true);
                         final Object edge = field.get(recyclerView);
-                        final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
-                        fEdgeEffect.setAccessible(true);
-                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(colorWithGlobalCalculated);
+                        ((EdgeEffect) edge).setColor(colorWithGlobalCalculated);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+
+                    try {
+                        for (final String name : new String[]{"mTopGlow", "mBottomGlow", "mLeftGlow", "mRightGlow"}) {
+                            final Field field = clazz.getDeclaredField(name);
+                            field.setAccessible(true);
+                            final Object edge = field.get(recyclerView);
+                            final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
+                            fEdgeEffect.setAccessible(true);
+                            ((EdgeEffect) edge).setColor(colorWithGlobalCalculated);
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
