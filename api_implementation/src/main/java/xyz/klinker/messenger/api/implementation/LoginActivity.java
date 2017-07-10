@@ -270,7 +270,7 @@ public class LoginActivity extends AppCompatActivity {
                            final boolean deviceSync) {
         Integer deviceId = utils.registerDevice(accountId,
                 Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
-                false, getFirebaseId());
+                primary, getFirebaseId());
 
         if (deviceId != null) {
             Account account = Account.get(this);
