@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
@@ -83,6 +84,8 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             initResyncAccountPreference();
             initFirebaseRefreshPreference();
         }
+
+        initWebsitePreference();
     }
 
     @Override
@@ -111,6 +114,17 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         } else {
             return true;
         }
+    }
+
+    private void initWebsitePreference() {
+        Preference preference = findPreference(getString(R.string.pref_go_to_web));
+        preference.setOnPreferenceClickListener(preference1 -> {
+            Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse("https://messenger.klinkerapps.com"));
+            web.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(web);
+
+            return false;
+        });
     }
 
     private void checkSubscriptions() {

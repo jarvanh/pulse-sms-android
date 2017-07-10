@@ -35,6 +35,10 @@
             android:key="@string/pref_about_device_id"
             android:title="@string/device_id" />
 
+        <Preference
+            android:key="@string/pref_go_to_web"
+            android:title="@string/website" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
