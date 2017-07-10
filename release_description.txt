@@ -5,8 +5,6 @@ For Android O:<br>
 
 For everyone:<br>
 - Quick scroll to dates on the message list<br>
-- Option to send messages with "Enter" key<br>
 - Enlarge font for all emoji messages<br>
 - Notification improvements<br>
-- Option to disable the internal browser<br>
 + Bug fixes/performance improvements
