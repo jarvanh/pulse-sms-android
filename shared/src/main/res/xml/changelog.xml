@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.4.5"
+        description="July 10th, 2017">
+        <text>New web app!</text>
+        <text>Bug fixes around receiving push notifications</text>
+    </version>
+
+    <version
         name="2.4.4"
         description="June 28th, 2017">
         <text>Notification improvements</text>
