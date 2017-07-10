@@ -24,6 +24,10 @@ public class ContentObserverJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return;
+        }
+        
         ComponentName component = new ComponentName(context, ContentObserverJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
                 .addTriggerContentUri(new JobInfo.TriggerContentUri(Telephony.MmsSms.CONTENT_URI, 0));
