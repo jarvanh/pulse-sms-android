@@ -9,4 +9,4 @@ For everyone:<br>
 - Enlarge font for all emoji messages<br>
 - Notification improvements<br>
 - Option to disable the internal browser<br>
-+ The usual bug fixes and performance improvements!
++ Bug fixes/performance improvements
