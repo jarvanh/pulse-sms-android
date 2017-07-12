@@ -738,7 +738,8 @@ public class MessageListFragment extends Fragment implements
     private boolean ignoreCounterText() {
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
         return !Account.get(getActivity()).primary &&
-                (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus"));
+                (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
+                        Build.MANUFACTURER.toLowerCase().equals("sony"));
     }
 
     private void initAttachStub() {
