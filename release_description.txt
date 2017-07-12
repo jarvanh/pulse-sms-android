@@ -1,10 +1,3 @@
-This update adds full support for the latest Android O features, as well as some new goodies for those of you not on O!<br><br>
-For Android O:<br>
-- Adaptive icon<br>
-- Notification channels<br><br>
+With the latest version, Pulse got a brand new web app!<br/><br/>
 
-For everyone:<br>
-- Quick scroll to dates on the message list<br>
-- Enlarge font for all emoji messages<br>
-- Notification improvements<br>
-+ Bug fixes/performance improvements
+If you haven't had the chance to try it out out, head to https://messenger.klinkerapps.com to learn more about texting from your computer!
