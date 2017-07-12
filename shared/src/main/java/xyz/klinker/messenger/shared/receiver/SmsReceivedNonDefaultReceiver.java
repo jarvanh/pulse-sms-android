@@ -35,19 +35,28 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
 import xyz.klinker.messenger.shared.service.NotificationService;
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.BlacklistUtils;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
+import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
-import xyz.klinker.messenger.shared.util.media.MediaParser;
 
-public class SmsReceivedReceiver extends BroadcastReceiver {
+public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
         final Handler handler = new Handler();
+
         new Thread(() -> {
+            if (PermissionsUtils.isDefaultSmsApp(context)) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
@@ -59,10 +68,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     private void handleReceiver(Context context, Intent intent, Handler handler) throws Exception {
         Bundle extras = intent.getExtras();
 
-        int simSlot = extras.getInt("slot", -1);
         String body = "";
         String address = "";
-        long date = System.currentTimeMillis();
         Object[] smsExtra = (Object[]) extras.get("pdus");
 
         if (smsExtra == null) {
@@ -80,41 +87,20 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
             body += sms.getMessageBody();
             address = sms.getOriginatingAddress();
-            date = sms.getTimestampMillis();
         }
 
         if (BlacklistUtils.isBlacklisted(context, address)) {
             return;
         }
 
-        insertInternalSms(context, address, body, date);
-        long conversationId = insertSms(context, handler, address, body, simSlot);
+        long conversationId = insertSms(context, handler, address, body);
 
-        if (conversationId != -1L) {
+        if (conversationId != -1L && PermissionsUtils.isDefaultSmsApp(context)) {
             context.startService(new Intent(context, NotificationService.class));
-
-            if (MediaParserService.createParser(context, body.trim()) != null) {
-                MediaParserService.start(context, conversationId, body);
-            }
         }
     }
 
-    private void insertInternalSms(Context context, String address, String body, long dateSent) {
-        ContentValues values = new ContentValues(5);
-        values.put(Telephony.Sms.ADDRESS, address);
-        values.put(Telephony.Sms.BODY, body);
-        values.put(Telephony.Sms.DATE, System.currentTimeMillis());
-        values.put(Telephony.Sms.READ, "0");
-        values.put(Telephony.Sms.DATE_SENT, dateSent);
-
-        try {
-            context.getContentResolver().insert(Telephony.Sms.Inbox.CONTENT_URI, values);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private long insertSms(Context context, Handler handler, String address, String body, int simSlot) {
+    private long insertSms(Context context, Handler handler, String address, String body) {
         Message message = new Message();
         message.type = Message.TYPE_RECEIVED;
         message.data = body.trim();
@@ -122,7 +108,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.mimeType = MimeType.TEXT_PLAIN;
         message.read = false;
         message.seen = false;
-        message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
+        message.simPhoneNumber = null;
 
         DataSource source = DataSource.getInstance(context);
         source.open();
@@ -159,8 +145,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             List<Message> search = source.searchMessagesAsList(message.data, 1);
             if (!search.isEmpty()) {
                 Message inDatabase = search.get(0);
-                if (inDatabase.data.equals(message.data) && inDatabase.type == Message.TYPE_RECEIVED &&
-                        (message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE * 3)) {
+                if ((message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE)) {
                     return false;
                 }
             }

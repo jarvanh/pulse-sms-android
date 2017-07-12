@@ -111,9 +111,7 @@ public class ContentObserverService extends Service {
 
         @Override
         public void onChange(boolean selfChange) {
-            new Thread(() -> {
-                processLastMessage(context);
-            }).start();
+            new Thread(() -> processLastMessage(context)).start();
         }
 
         public static void processLastMessage(Context context) {
