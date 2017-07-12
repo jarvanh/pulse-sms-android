@@ -137,6 +137,8 @@ public class  MessengerActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Toast.makeText(this, Build.MANUFACTURER + ": " + Build.MODEL, Toast.LENGTH_LONG).show();
+
         dataSource = DataSource.getInstance(this);
         dataSource.open();
 
