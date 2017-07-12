@@ -184,6 +184,19 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
      */
     public static void sendBroadcast(Context context, long conversationId, String snippet,
                                      boolean read) {
+        try {
+            if (snippet == null) {
+                DataSource source = DataSource.getInstance(context);
+                Conversation conversation = source.getConversation(conversationId);
+                if (conversation != null) {
+                    snippet = conversation.snippet;
+                }
+                source.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Intent intent = new Intent(ACTION_UPDATED);
         intent.putExtra(EXTRA_CONVERSATION_ID, conversationId);
         intent.putExtra(EXTRA_SNIPPET, snippet);
