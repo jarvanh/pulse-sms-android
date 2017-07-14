@@ -43,7 +43,7 @@ public class DraftTest extends ApiTest {
         DraftBody[] drafts = api.draft().list(accountId);
         assertEquals(1, drafts.length - originalSize);
 
-        api.draft().remove(1, accountId);
+        api.draft().remove(1, null, accountId);
 
         drafts = api.draft().list(accountId);
         assertEquals(drafts.length, originalSize);

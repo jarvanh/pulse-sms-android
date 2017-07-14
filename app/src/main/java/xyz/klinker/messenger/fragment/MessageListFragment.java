@@ -911,6 +911,7 @@ public class MessageListFragment extends Fragment implements
 
                     handler.post(() -> {
                         setMessages(cursor, contactMap, contactByNameMap);
+                        textChanged = false;
 
                         if (pullDrafts) {
                             setDrafts(drafts);
@@ -922,7 +923,6 @@ public class MessageListFragment extends Fragment implements
                             messageList.scrollToPosition(position);
                         }
 
-                        textChanged = false;
                         messageEntry.addTextChangedListener(new TextWatcher() {
                             @Override
                             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1043,6 +1043,7 @@ public class MessageListFragment extends Fragment implements
     private void setDrafts(List<Draft> drafts) {
         for (Draft draft : drafts) {
             if (draft.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                textChanged = true;
                 messageEntry.setText(draft.data);
                 messageEntry.setSelection(messageEntry.getText().length());
             } else if (MimeType.isStaticImage(draft.mimeType)) {

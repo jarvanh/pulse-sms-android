@@ -192,7 +192,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     addDraft(json, source);
                     break;
                 case "removed_drafts":
-                    removeDrafts(json, source);
+                    removeDrafts(json, source, context);
                     break;
                 case "added_blacklist":
                     addBlacklist(json, source);
@@ -692,10 +692,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
         Log.v(TAG, "added draft");
     }
 
-    private void removeDrafts(JSONObject json, DataSource source) throws JSONException {
+    private void removeDrafts(JSONObject json, DataSource source, Context context) throws JSONException {
         long id = getLong(json, "id");
-        source.deleteDrafts(id);
-        Log.v(TAG, "removed drafts");
+        String deviceId = json.getString("android_device");
+
+        if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+            source.deleteDrafts(id);
+            Log.v(TAG, "removed drafts");
+        }
     }
 
     private void addBlacklist(JSONObject json, DataSource source) throws JSONException {
@@ -756,8 +760,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long conversationId = getLong(json, "id");
         String deviceId = json.getString("device_id");
 
-        Conversation conversation = source.getConversation(conversationId);
         if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+            Conversation conversation = source.getConversation(conversationId);
+
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
             source.readConversation(context, conversationId);
             if (conversation != null && !conversation.read) {

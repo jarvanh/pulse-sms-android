@@ -35,7 +35,7 @@ public interface DraftService {
                   @Body UpdateDraftRequest request);
 
     @POST("drafts/remove/{device_conversation_id}")
-    Object remove(@Path("device_conversation_id") long deviceConversationId,
+    Object remove(@Path("device_conversation_id") long deviceConversationId, @Query("android_device") String androidDevice,
                   @Query("account_id") String accountId);
 
     @GET("drafts")

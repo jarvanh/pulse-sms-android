@@ -2420,7 +2420,7 @@ public class DataSource {
                     new String[]{Long.toString(conversationId)});
         }
 
-        apiUtils.deleteDrafts(accountId, conversationId);
+        apiUtils.deleteDrafts(accountId, androidDeviceId, conversationId);
     }
 
     /**

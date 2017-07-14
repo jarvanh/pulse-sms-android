@@ -540,12 +540,12 @@ public class ApiUtils {
     /**
      * Deletes the given drafts.
      */
-    public void deleteDrafts(final String accountId, final long deviceConversationId) {
+    public void deleteDrafts(final String accountId, final String androidDeviceId, final long deviceConversationId) {
         if (!active || accountId == null) {
             return;
         }
 
-        executeWithRetry(() -> api.draft().remove(deviceConversationId, accountId),
+        executeWithRetry(() -> api.draft().remove(deviceConversationId, androidDeviceId, accountId),
                 "delete drafts");
     }
 
