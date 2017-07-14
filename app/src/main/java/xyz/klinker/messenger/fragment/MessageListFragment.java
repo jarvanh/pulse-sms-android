@@ -383,18 +383,8 @@ public class MessageListFragment extends Fragment implements
 
         if (dismissOnStartup) {
             dismissNotification();
-            //new Thread(() -> source.readConversation(getActivity(), getConversationId())).start();
             dismissOnStartup = false;
         }
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            source.readConversation(getActivity(), getConversationId());
-        }).start();
     }
 
     @Override

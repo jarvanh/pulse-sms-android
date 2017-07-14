@@ -49,7 +49,7 @@ public interface ConversationService {
     ConversationBody[] list(@Query("account_id") String accountId);
 
     @POST("conversations/read/{device_id}")
-    Object read(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Object read(@Path("device_id") long deviceId, @Query("android_device") String androidDeviceId, @Query("account_id") String accountId);
 
     @POST("conversations/seen/{device_id}")
     Object seen(@Path("device_id") long deviceId, @Query("account_id") String accountId);

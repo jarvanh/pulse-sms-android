@@ -368,12 +368,12 @@ public class ApiUtils {
     /**
      * Marks all messages in conversation as read.
      */
-    public void readConversation(final String accountId, final long deviceId) {
+    public void readConversation(final String accountId, final String androidDevice, final long deviceId) {
         if (!active || accountId == null) {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().read(deviceId, accountId),
+        executeWithRetry(() -> api.conversation().read(deviceId, androidDevice, accountId),
                 "read conversation");
     }
 

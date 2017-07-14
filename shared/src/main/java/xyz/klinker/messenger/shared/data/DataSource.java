@@ -76,6 +76,7 @@ public class DataSource {
     private DatabaseSQLiteHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
     private String accountId = null;
+    private String androidDeviceId = null;
     private ApiUtils apiUtils;
     private UnreadBadger unreadBadger;
 
@@ -91,6 +92,7 @@ public class DataSource {
         }
 
         instance.accountId = Account.get(context).accountId;
+        instance.androidDeviceId = Account.get(context).deviceId;
         return instance;
     }
 
@@ -2157,7 +2159,7 @@ public class DataSource {
         }
 
         if (updated > 0) {
-            apiUtils.readConversation(accountId, conversationId);
+            apiUtils.readConversation(accountId, androidDeviceId, conversationId);
         }
 
         writeUnreadCount();
@@ -2210,7 +2212,7 @@ public class DataSource {
         Log.v("Data Source", "updated: " + updated);
         if (updated > 0) {
             for (Long id : conversationIds) {
-                apiUtils.readConversation(accountId, id);
+                apiUtils.readConversation(accountId, androidDeviceId, id);
             }
 
             writeUnreadCount();

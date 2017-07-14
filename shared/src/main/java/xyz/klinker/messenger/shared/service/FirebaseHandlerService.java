@@ -648,13 +648,19 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void readConversation(JSONObject json, DataSource source, Context context) throws JSONException {
         long id = getLong(json, "id");
-        source.readConversation(context, id);
-        Conversation conversation = source.getConversation(id);
-        if (conversation != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.snippet, true);
-        }
+        String deviceId = json.getString("android_device");
 
-        Log.v(TAG, "read conversation");
+        if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+            Conversation conversation = source.getConversation(id);
+            source.setUpload(false);
+            source.readConversation(context, id);
+
+            if (conversation != null && !conversation.read) {
+                ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.snippet, true);
+            }
+
+            Log.v(TAG, "read conversation");
+        }
     }
 
     private void seenConversation(JSONObject json, DataSource source) throws JSONException {
@@ -750,11 +756,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long conversationId = getLong(json, "id");
         String deviceId = json.getString("device_id");
 
+        Conversation conversation = source.getConversation(conversationId);
         if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
             source.readConversation(context, conversationId);
-            Conversation conversation = source.getConversation(conversationId);
-            if (conversation != null) {
+            if (conversation != null && !conversation.read) {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.snippet, true);
             }
 

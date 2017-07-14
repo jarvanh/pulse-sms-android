@@ -33,7 +33,7 @@ public class TokenUtil {
 
                 Integer deviceId = api.registerDevice(account.accountId,Build.MANUFACTURER + ", " + Build.MODEL,
                         Build.MODEL, account.primary, FirebaseInstanceId.getInstance().getToken());
-                
+
                 if (deviceId != null) {
                     account.setDeviceId(deviceId.toString());
                 }

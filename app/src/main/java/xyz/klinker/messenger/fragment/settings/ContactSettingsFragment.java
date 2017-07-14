@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -30,6 +31,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -231,6 +233,8 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
             conversation.ringtoneUri = (String) o;
+            Log.v("conversation_ringtone", "new ringtone: " + o);
+
             return true;
         });
     }
@@ -312,5 +316,4 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
         source.close();
     }
-
 }

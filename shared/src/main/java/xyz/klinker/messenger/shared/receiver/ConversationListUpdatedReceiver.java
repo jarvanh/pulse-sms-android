@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import java.util.List;
 
@@ -202,6 +203,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_SNIPPET, snippet);
         intent.putExtra(EXTRA_READ, read);
         context.sendBroadcast(intent);
+        Log.v("conversation_broadcast", "broadcasting conversation changes");
     }
 
     /**
@@ -212,6 +214,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_CONVERSATION_ID, conversationId);
         intent.putExtra(EXTRA_TITLE, title);
         context.sendBroadcast(intent);
+        Log.v("conversation_broadcast", "broadcasting new title: " + title);
     }
 
     /**
@@ -219,6 +222,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
      */
     public static void sendBroadcast(Context context, ConversationUpdateInfo updateInfo) {
         sendBroadcast(context, updateInfo.conversationId, updateInfo.snippet, updateInfo.read);
+        Log.v("conversation_broadcast", "broadcasting new update info: " + updateInfo.snippet);
     }
 
     /**
