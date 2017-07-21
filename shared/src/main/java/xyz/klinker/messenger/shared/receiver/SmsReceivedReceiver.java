@@ -47,13 +47,13 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, final Intent intent) {
         final Handler handler = new Handler();
-        new Thread(() -> {
+        //new Thread(() -> {
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+        //}).start();
     }
 
     private void handleReceiver(Context context, Intent intent, Handler handler) throws Exception {
