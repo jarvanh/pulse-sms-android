@@ -195,6 +195,7 @@
     <string name="start_trial">Start\nTrial</string>
     <string name="not_now">Not\nNow</string>
     <string name="onboarding_done">Done</string>
+    <string name="play_store_subscription_warning">You will be redirected to the Play Store\'s subscription purchase system. You <b>will not</b> be charged until the end of the seven days and you can cancel any time from the Play Store page.</string>
 
     <!-- Notifications -->
     <string name="notification_ticker">New message from %1$s</string>

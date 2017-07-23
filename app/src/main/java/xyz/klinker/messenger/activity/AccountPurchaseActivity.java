@@ -3,6 +3,8 @@ package xyz.klinker.messenger.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -80,9 +82,9 @@ public class AccountPurchaseActivity extends AppCompatActivity {
             revealedPurchaseOptions = true;
         }
 
-        monthly.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createMonthly()));
-        threeMonth.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createThreeMonth()));
-        yearly.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createYearly()));
+        monthly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthly()));
+        threeMonth.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()));
+        yearly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()));
         lifetime.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createLifetime()));
     }
 
@@ -97,6 +99,13 @@ public class AccountPurchaseActivity extends AppCompatActivity {
 
         AnalyticsHelper.accountSelectedPurchase(this);
         finish();
+    }
+
+    private void warnOfPlayStoreSubscriptionProcess(ProductAvailable product) {
+        new AlertDialog.Builder(this, R.style.SubscriptionPicker)
+                .setMessage(R.string.play_store_subscription_warning)
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> finishWithPurchaseResult(product))
+                .show();
     }
 
     private void circularRevealIn() {
