@@ -134,6 +134,7 @@ public class ContactUtils {
                     phonesCursor = context.getContentResolver()
                             .query(phoneUri, new String[]{
                                             ContactsContract.PhoneLookup.DISPLAY_NAME,
+                                            ContactsContract.Contacts.DISPLAY_NAME,
                                             ContactsContract.Contacts._ID
                                     }, null, null,
                                     ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
@@ -148,7 +149,10 @@ public class ContactUtils {
 
                 try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                        names += ", " + phonesCursor.getString(0).replaceAll(",", "");
+                        String name = phonesCursor.getString(0);
+                        if (name.isEmpty()) name = phonesCursor.getString(1);
+
+                        names += ", " + name.replaceAll(",", "");
                     } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                                 Uri.encode(origin));
