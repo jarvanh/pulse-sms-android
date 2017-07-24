@@ -139,7 +139,7 @@ public class ContactUtils {
                                     }, null, null,
                                     ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
                 } catch (Exception e) {
-                    // funky placeholder number coming from an mms message, dont do anything with it
+                    // funky placeholder number coming from an mms message, don't do anything with it
                     if (phonesCursor != null) {
                         phonesCursor.close();
                     }
@@ -148,11 +148,8 @@ public class ContactUtils {
                 }
 
                 try {
-                    if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                        String name = phonesCursor.getString(0);
-                        if (name.isEmpty()) name = phonesCursor.getString(1);
-
-                        names += ", " + name.replaceAll(",", "");
+                    if (phonesCursor != null && phonesCursor.moveToFirst() && !phonesCursor.getString(0).isEmpty()) {
+                        names += ", " + phonesCursor.getString(0).replaceAll(",", "");
                     } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                                 Uri.encode(origin));
