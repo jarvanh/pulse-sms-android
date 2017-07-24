@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.4.7"
+        description="July 24th, 2017">
+        <text>Bug fixes</text>
+        <text>MMS Improvements</text>
+    </version>
+
+    <version
         name="2.4.6"
         description="July 17th, 2017">
         <text>Bug fixes</text>
