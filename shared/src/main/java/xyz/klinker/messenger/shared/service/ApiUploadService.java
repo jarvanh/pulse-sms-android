@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import retrofit2.Response;
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
 import xyz.klinker.messenger.api.entity.AddContactRequest;
@@ -81,10 +82,9 @@ public class ApiUploadService extends Service {
 
     private static final String TAG = "ApiUploadService";
     private static final int MESSAGE_UPLOAD_ID = 7235;
-    private static final int MEDIA_UPLOAD_ID = 7236;
     public static final int NUM_MEDIA_TO_UPLOAD = 20;
 
-    public static final int MESSAGE_UPLOAD_PAGE_SIZE = 500;
+    public static final int MESSAGE_UPLOAD_PAGE_SIZE = 300;
 
     private Account account;
     private ApiUtils apiUtils;
@@ -429,12 +429,14 @@ public class ApiUploadService extends Service {
                 });
     }
 
+    private int completedMediaUploads = 0;
     private void processMediaUpload(NotificationManagerCompat manager,
-                                    NotificationCompat.Builder builder) {
+                                    final NotificationCompat.Builder builder) {
         apiUtils.saveFirebaseFolderRef(account.accountId);
 
         Cursor media = source.getAllMediaMessages(NUM_MEDIA_TO_UPLOAD);
         if (media.moveToFirst()) {
+            int mediaCount = media.getCount();
             do {
                 Message message = new Message();
                 message.fillFromCursor(media);
@@ -442,17 +444,23 @@ public class ApiUploadService extends Service {
                 Log.v(TAG, "started uploading " + message.id);
 
                 byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
-                apiUtils.uploadBytesToFirebaseSynchronously(account.accountId, bytes, message.id, encryptionUtils);
+                apiUtils.uploadBytesToFirebase(bytes, message.id, encryptionUtils, () -> {
+                    completedMediaUploads++;
 
-                builder.setProgress(media.getCount(), media.getPosition(), false);
-                builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,
-                        media.getPosition() + 1, media.getCount()));
-                startForeground(MESSAGE_UPLOAD_ID, builder.build());
+                    builder.setProgress(mediaCount, completedMediaUploads, false);
+                    builder.setContentTitle(getString(R.string.encrypting_and_uploading_count,
+                            completedMediaUploads + 1, media.getCount()));
+
+                    if (completedMediaUploads >= mediaCount) {
+                        finishMediaUpload(manager);
+                    } else {
+                        startForeground(MESSAGE_UPLOAD_ID, builder.build());
+                    }
+                }, 0);
             } while (media.moveToNext());
         }
 
         media.close();
-        finishMediaUpload(manager);
     }
 
     private void finishMediaUpload(NotificationManagerCompat manager) {

@@ -100,29 +100,6 @@ public class ApiUtils {
         return active;
     }
 
-    private void executeWithRetry(final RetrofitCall retrofit, final String callType) {
-        executeWithRetry(retrofit, callType, RETRY_COUNT);
-    }
-
-    private void executeWithRetry(final RetrofitCall retrofit, final String callType, final int times) {
-        new Thread(() -> {
-            Object response = retrofit.run();
-
-            int attempt = 0;
-            while (response == null && attempt < times) {
-                attempt++;
-                try { Thread.sleep(RETRY_TIMEOUT); } catch (Exception e) { }
-                response = retrofit.run();
-            }
-
-            if (response == null) {
-                Log.e(TAG, callType + ": FAILED");
-            } else {
-                Log.v(TAG, callType + ": SUCCESS");
-            }
-        }).start();
-    }
-
     public static boolean isCallSuccessful(Response response) {
         int code = response.code();
         return (code >= 200 && code < 400);
@@ -505,7 +482,7 @@ public class ApiUtils {
                 Call<Void> call = api.message().add(request);
 
                 call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
-            });
+            }, 0);
         }
     }
 
@@ -700,9 +677,10 @@ public class ApiUtils {
      * @param messageId the message id that the data belongs to.
      * @param encryptionUtils the utils to encrypt the byte array with.
      */
-    public void uploadBytesToFirebase(byte[] bytes, final long messageId, EncryptionUtils encryptionUtils,
-                                      final FirebaseUploadCallback callback) {
-        if (!active || encryptionUtils == null) {
+    public void uploadBytesToFirebase(final byte[] bytes, final long messageId, final EncryptionUtils encryptionUtils,
+                                      final FirebaseUploadCallback callback, int retryCount) {
+        if (!active || encryptionUtils == null || retryCount > RETRY_COUNT) {
+            callback.onUploadFinished();
             return;
         }
 
@@ -718,51 +696,8 @@ public class ApiUtils {
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "failed to upload file", e);
-                    callback.onUploadFinished();
+                    uploadBytesToFirebase(bytes, messageId, encryptionUtils, callback, retryCount + 1);
                 });
-    }
-
-    /**
-     * Uploads a byte array of encrypted data to firebase.
-     *
-     * @param bytes the byte array to upload.
-     * @param messageId the message id that the data belongs to.
-     * @param encryptionUtils the utils to encrypt the byte array with.
-     */
-    public void uploadBytesToFirebaseSynchronously(String accountId, byte[] bytes, final long messageId,
-                                                   EncryptionUtils encryptionUtils) {
-        if (!active || encryptionUtils == null) {
-            return;
-        }
-
-        if (folderRef == null) {
-            saveFirebaseFolderRef(accountId);
-            if (folderRef == null) {
-                return;
-            }
-        }
-
-        final AtomicBoolean firebaseFinished = new AtomicBoolean(false);
-        StorageReference fileRef = folderRef.child(messageId + "");
-
-        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes())
-                .addOnSuccessListener(taskSnapshot -> {
-                    Log.v(TAG, "finished uploading " + messageId);
-                    firebaseFinished.set(true);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "failed to upload file", e);
-                    firebaseFinished.set(true);
-                });
-
-        // wait for the upload to finish. Firebase only support async requests, which
-        // I do not want here.
-        while (!firebaseFinished.get()) {
-            Log.v(TAG, "waiting for upload to finish for " + messageId);
-            try { Thread.sleep(1000); } catch (Exception e) { }
-        }
-
-        Log.v(TAG, "finished uploading and exiting for " + messageId);
     }
 
     /**
