@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void login() {
         slideLoginIn();
+        isSignUp = false;
 
         fab = (FloatingActionButton) findViewById(R.id.login_fab);
         email = (EditText) findViewById(R.id.login_email);
@@ -182,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void signup() {
         slideSignUpIn();
+        isSignUp = true;
 
         fab = (FloatingActionButton) findViewById(R.id.signup_fab);
         email = (EditText) findViewById(R.id.signup_email);
@@ -336,9 +338,12 @@ public class LoginActivity extends AppCompatActivity {
         return deviceId;
     }
 
+    private boolean isSignUp = true;
     private void failAddDevice(ApiUtils apiUtils, String accountId) {
         Log.v("LoginActivity", "failed and closing");
-        apiUtils.deleteAccount(accountId);
+        if (isSignUp) {
+            apiUtils.deleteAccount(accountId);
+        }
 
         Account account = Account.get(this);
         account.setDeviceId(null);

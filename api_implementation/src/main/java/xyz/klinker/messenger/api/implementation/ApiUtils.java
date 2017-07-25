@@ -734,7 +734,11 @@ public class ApiUtils {
                 })
                 .addOnFailureListener(e -> {
                     Log.v(TAG, "failed to download file", e);
-                    downloadFileFromFirebase(file, messageId, encryptionUtils, callback, retryCount + 1);
+                    if (!e.getMessage().contains("does not exist")) {
+                        downloadFileFromFirebase(file, messageId, encryptionUtils, callback, retryCount + 1);
+                    } else {
+                        callback.onDownloadComplete();
+                    }
                 });
     }
 

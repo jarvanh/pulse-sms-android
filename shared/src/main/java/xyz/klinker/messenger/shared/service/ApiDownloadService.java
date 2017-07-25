@@ -78,6 +78,7 @@ public class ApiDownloadService extends Service {
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
     public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 300;
+    public static final int MAX_MEDIA_DOWNLOADS = 75;
     public static final String ARG_SHOW_NOTIFICATION = "show_notification";
 
     public static boolean IS_RUNNING = false;
@@ -431,18 +432,13 @@ public class ApiDownloadService extends Service {
 
         Cursor media = source.getFirebaseMediaMessages();
         if (media.moveToFirst()) {
-            final int mediaCount = media.getCount();
+            final int mediaCount = media.getCount() > MAX_MEDIA_DOWNLOADS ?
+                    MAX_MEDIA_DOWNLOADS : media.getCount();
+            int processing = 0;
             do {
                 final Message message = new Message();
                 message.fillFromCursor(media);
-
-                // each firebase message is formatted as "firebase [num]" and we want to get the
-                // num and process the message only if that num is actually stored on firebase
-                int number = Integer.parseInt(message.data.split(" ")[1]) + 1;
-                if (number < media.getCount() - ApiUploadService.NUM_MEDIA_TO_UPLOAD &&
-                        number != 0) {
-                    continue;
-                }
+                processing++;
 
                 final File file = new File(getFilesDir(),
                         message.id + MimeType.getExtension(message.mimeType));
@@ -461,7 +457,7 @@ public class ApiDownloadService extends Service {
                         startForeground(MESSAGE_DOWNLOAD_ID, builder.build());
                     }
                 }, 0);
-            } while (media.moveToNext());
+            } while (media.moveToNext() && processing < MAX_MEDIA_DOWNLOADS);
         }
 
         media.close();
