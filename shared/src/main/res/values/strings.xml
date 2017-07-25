@@ -48,6 +48,7 @@
     <string name="menu_archive_conversation">Archive Conversation</string>
     <string name="menu_move_to_inbox">Move to Inbox</string>
     <string name="menu_conversation_information">Conversation information</string>
+    <string name="menu_copy_phone_number">Copy number</string>
     <string name="menu_conversation_blacklist">Blacklist contact</string>
     <string name="menu_conversation_schedule">Schedule a message</string>
     <string name="menu_contact_settings">Conversation settings</string>

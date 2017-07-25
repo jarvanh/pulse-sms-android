@@ -20,7 +20,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -1019,6 +1022,11 @@ public class  MessengerActivity extends AppCompatActivity
             new AlertDialog.Builder(this)
                     .setMessage(source.getConversationDetails(conversation))
                     .setPositiveButton(android.R.string.ok, null)
+                    .setNegativeButton(R.string.menu_copy_phone_number, (dialogInterface, i) -> {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("phone_number", conversation.phoneNumbers);
+                        clipboard.setPrimaryClip(clip);
+                    })
                     .show();
 
             source.close();
