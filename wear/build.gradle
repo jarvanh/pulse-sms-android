@@ -95,7 +95,7 @@ android {
 dependencies {
     compile project(":shared")
 
-    compile 'com.klinkerapps:wearable-reply:1.0.0'
+    compile 'com.klinkerapps:wearable-reply:1.0.1'
     compile "com.google.android.gms:play-services-wearable:${GOOGLE_PLAY_SERVICES_VERSION}"
 
     compile "com.google.android.support:wearable:${WEARABLE_SUPPORT_VERSION}"
