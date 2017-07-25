@@ -49,15 +49,8 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
         final Handler handler = new Handler();
 
         new Thread(() -> {
-            if (PermissionsUtils.isDefaultSmsApp(context)) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
             try {
+                Thread.sleep(4000);
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -143,15 +136,12 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
     public static boolean shouldSaveMessages(DataSource source, Message message) {
         try {
             List<Message> search = source.searchMessagesAsList(message.data, 1);
-            if (!search.isEmpty()) {
-                Message inDatabase = search.get(0);
-                if ((message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE)) {
-                    return false;
-                }
+            if (search.isEmpty()) {
+                return true;
             }
         } catch (Exception e) { }
 
-        return true;
+        return false;
     }
 
 }
