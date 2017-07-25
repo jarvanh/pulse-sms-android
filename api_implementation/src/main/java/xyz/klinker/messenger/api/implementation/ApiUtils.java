@@ -64,12 +64,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils;
  */
 public class ApiUtils {
 
-    private interface RetrofitCall {
-        Object run();
-    }
-
-    private static final int RETRY_COUNT = 3;
-    private static final int RETRY_TIMEOUT = 5000;
+    public static final int RETRY_COUNT = 3;
 
     private static final String TAG = "ApiUtils";
     private static final long MAX_SIZE = 1024 * 1024 * 5;
@@ -709,8 +704,13 @@ public class ApiUtils {
      */
     public void downloadFileFromFirebase(final File file, final long messageId,
                                          final EncryptionUtils encryptionUtils,
-                                         final FirebaseDownloadCallback callback) {
-        if (folderRef == null || encryptionUtils == null) {
+                                         final FirebaseDownloadCallback callback, int retryCount) {
+        if (encryptionUtils == null || retryCount > RETRY_COUNT) {
+            callback.onDownloadComplete();
+            return;
+        }
+
+        if (folderRef == null) {
             throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
         }
 
@@ -734,52 +734,8 @@ public class ApiUtils {
                 })
                 .addOnFailureListener(e -> {
                     Log.v(TAG, "failed to download file", e);
-                    callback.onDownloadComplete();
+                    downloadFileFromFirebase(file, messageId, encryptionUtils, callback, retryCount + 1);
                 });
-    }
-
-    /**
-     * Downloads and decrypts a file from firebase.
-     *
-     * @param file the location on your device to save to.
-     * @param messageId the id of the message to grab so we can create a firebase storage ref.
-     * @param encryptionUtils the utils to use to decrypt the message.
-     */
-    public void downloadFileFromFirebaseSynchronously(final File file, final long messageId,
-                                         final EncryptionUtils encryptionUtils) {
-        if (folderRef == null || encryptionUtils == null) {
-            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
-        }
-
-        final AtomicBoolean firebaseFinished = new AtomicBoolean(false);
-        StorageReference fileRef = folderRef.child(messageId + "");
-
-        fileRef.getBytes(MAX_SIZE)
-                .addOnSuccessListener(bytes -> {
-                    bytes = encryptionUtils.decryptData(new String(bytes));
-
-                    try {
-                        BufferedOutputStream bos =
-                                new BufferedOutputStream(new FileOutputStream(file));
-                        bos.write(bytes);
-                        bos.flush();
-                        bos.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    firebaseFinished.set(true);
-                    Log.v(TAG, "finished downloading " + messageId);
-                })
-                .addOnFailureListener(e -> {
-                    firebaseFinished.set(true);
-                    Log.v(TAG, "failed to download file", e);
-                });
-
-        while (!firebaseFinished.get()) {
-            Log.v(TAG, "waiting for download " + messageId);
-            try { Thread.sleep(500); } catch (Exception e) { }
-        }
     }
 
     /**

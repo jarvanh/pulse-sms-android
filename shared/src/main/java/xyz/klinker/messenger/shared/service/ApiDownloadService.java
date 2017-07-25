@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
 import xyz.klinker.messenger.api.entity.ContactBody;
@@ -73,11 +74,10 @@ public class ApiDownloadService extends Service {
 
     private static final String TAG = "ApiDownloadService";
     private static final int MESSAGE_DOWNLOAD_ID = 7237;
-    private static final int MEDIA_DOWNLOAD_ID = 7238;
     public static final String ACTION_DOWNLOAD_FINISHED =
             "xyz.klinker.messenger.API_DOWNLOAD_FINISHED";
 
-    public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 500;
+    public static final int MESSAGE_DOWNLOAD_PAGE_SIZE = 300;
     public static final String ARG_SHOW_NOTIFICATION = "show_notification";
 
     public static boolean IS_RUNNING = false;
@@ -424,14 +424,16 @@ public class ApiDownloadService extends Service {
                 });
     }
 
+    private int completedMediaDownloads = 0;
     private void processMediaDownload(NotificationManagerCompat manager,
                                       NotificationCompat.Builder builder) {
         apiUtils.saveFirebaseFolderRef(account.accountId);
 
         Cursor media = source.getFirebaseMediaMessages();
         if (media.moveToFirst()) {
+            final int mediaCount = media.getCount();
             do {
-                Message message = new Message();
+                final Message message = new Message();
                 message.fillFromCursor(media);
 
                 // each firebase message is formatted as "firebase [num]" and we want to get the
@@ -447,18 +449,22 @@ public class ApiDownloadService extends Service {
 
                 Log.v(TAG, "started downloading " + message.id);
 
-                apiUtils.downloadFileFromFirebaseSynchronously(file, message.id, encryptionUtils);
-                source.updateMessageData(message.id, Uri.fromFile(file).toString());
-                builder.setProgress(media.getCount(), media.getPosition(), false);
+                apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, () -> {
+                    completedMediaDownloads++;
 
-                if (showNotification) {
-                    startForeground(MESSAGE_DOWNLOAD_ID, builder.build());
-                }
+                    source.updateMessageData(message.id, Uri.fromFile(file).toString());
+                    builder.setProgress(mediaCount, completedMediaDownloads, false);
+
+                    if (completedMediaDownloads >= mediaCount) {
+                        finishMediaDownload(manager);
+                    } else if (showNotification) {
+                        startForeground(MESSAGE_DOWNLOAD_ID, builder.build());
+                    }
+                }, 0);
             } while (media.moveToNext());
         }
 
         media.close();
-        finishMediaDownload(manager);
     }
 
     private void finishMediaDownload(NotificationManagerCompat manager) {

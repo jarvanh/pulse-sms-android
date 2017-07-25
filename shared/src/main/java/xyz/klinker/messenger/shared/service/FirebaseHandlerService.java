@@ -395,55 +395,52 @@ public class FirebaseHandlerService extends WakefulIntentService {
             message.type = Message.TYPE_SENT;
         }
 
-        FirebaseDownloadCallback callback = new FirebaseDownloadCallback() {
-            @Override
-            public void onDownloadComplete() {
-                message.data = Uri.fromFile(file).toString();
-                DataSource source = DataSource.getInstance(context);
-                source.open();
-                source.updateMessageData(message.id, message.data);
-                MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+        FirebaseDownloadCallback callback = () -> {
+            message.data = Uri.fromFile(file).toString();
+            DataSource source1 = DataSource.getInstance(context);
+            source1.open();
+            source1.updateMessageData(message.id, message.data);
+            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
 
-                if (Account.get(context).primary && isSending) {
-                    Conversation conversation = source.getConversation(message.conversationId);
+            if (Account.get(context).primary && isSending) {
+                Conversation conversation = source1.getConversation(message.conversationId);
 
-                    if (conversation != null) {
-                        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                            new SendUtils(conversation.simSubscriptionId)
-                                    .send(context, message.data, conversation.phoneNumbers);
-                        } else {
-                            new SendUtils(conversation.simSubscriptionId)
-                                    .send(context, "", conversation.phoneNumbers,
-                                        Uri.parse(message.data), message.mimeType);
-                        }
+                if (conversation != null) {
+                    if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+                        new SendUtils(conversation.simSubscriptionId)
+                                .send(context, message.data, conversation.phoneNumbers);
                     } else {
-                        Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
+                        new SendUtils(conversation.simSubscriptionId)
+                                .send(context, "", conversation.phoneNumbers,
+                                    Uri.parse(message.data), message.mimeType);
                     }
-
-                    Log.v(TAG, "sent message");
+                } else {
+                    Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
                 }
 
-                if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
-                    source.updateMessageType(message.id, Message.TYPE_SENT);
-                }
-
-                MessageListUpdatedReceiver.sendBroadcast(context, message);
-                ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
-                        message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
-                        message.type != Message.TYPE_RECEIVED);
-
-                if (message.type == Message.TYPE_RECEIVED) {
-                    context.startService(new Intent(context, NotificationService.class));
-                } else if (isSending) {
-                    source.readConversation(context, message.conversationId);
-                    NotificationManagerCompat.from(context).cancel((int) message.conversationId);
-                }
-
-                source.close();
+                Log.v(TAG, "sent message");
             }
+
+            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                source1.updateMessageType(message.id, Message.TYPE_SENT);
+            }
+
+            MessageListUpdatedReceiver.sendBroadcast(context, message);
+            ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
+                    message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
+                    message.type != Message.TYPE_RECEIVED);
+
+            if (message.type == Message.TYPE_RECEIVED) {
+                context.startService(new Intent(context, NotificationService.class));
+            } else if (isSending) {
+                source1.readConversation(context, message.conversationId);
+                NotificationManagerCompat.from(context).cancel((int) message.conversationId);
+            }
+
+            source1.close();
         };
 
-        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, callback);
+        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, callback, 0);
 
     }
 
