@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -15,15 +16,15 @@ import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 public interface ContactService {
 
     @POST("contacts/add")
-    Object add(@Body AddContactRequest request);
+    Call<Void> add(@Body AddContactRequest request);
 
     @POST("contacts/update/{phone_number}")
-    Object update(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId,
+    Call<Void> update(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId,
                   @Body UpdateContactRequest request);
 
     @POST("contacts/remove/{phone_number}")
-    Object remove(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId);
 
     @GET("contacts")
-    ContactBody[] list(@Query("account_id") String accountId);
+    Call<ContactBody[]> list(@Query("account_id") String accountId);
 }

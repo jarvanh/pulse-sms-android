@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,24 +29,24 @@ import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
 public interface MessageService {
 
     @POST("messages/add")
-    Object add(@Body AddMessagesRequest request);
+    Call<Void> add(@Body AddMessagesRequest request);
 
     @POST("messages/update/{device_id}")
-    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateMessageRequest request);
 
     @POST("messages/update_type/{device_id}")
-    Object updateType(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> updateType(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Query("message_type") int messageType);
 
     @POST("messages/remove/{device_id}")
-    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @POST("messages/cleanup")
-    Object cleanup(@Query("account_id") String accountId, @Query("timestamp") long timestamp);
+    Call<Void> cleanup(@Query("account_id") String accountId, @Query("timestamp") long timestamp);
 
     @GET("messages")
-    MessageBody[] list(@Query("account_id") String accountId,
+    Call<MessageBody[]> list(@Query("account_id") String accountId,
                        @Query("conversation_id") Integer conversationId,
                        @Query("limit") Integer limit,
                        @Query("offset") Integer offset);

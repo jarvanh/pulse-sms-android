@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
 import xyz.klinker.messenger.api.entity.BlacklistBody;
 
@@ -27,22 +29,22 @@ import static org.junit.Assert.assertNotNull;
 public class BlacklistTest extends ApiTest {
 
     @Test
-    public void addAndRemove() {
+    public void addAndRemove() throws IOException {
         String accountId = getAccountId();
 
-        int originalSize = api.blacklist().list(accountId).length;
+        int originalSize = api.blacklist().list(accountId).execute().body().length;
 
         BlacklistBody blacklist = new BlacklistBody(1, "5154224558");
         AddBlacklistRequest request = new AddBlacklistRequest(accountId, blacklist);
-        Object response = api.blacklist().add(request);
+        Object response = api.blacklist().add(request).execute().body();
         assertNotNull(response);
 
-        int newSize = api.blacklist().list(accountId).length;
+        int newSize = api.blacklist().list(accountId).execute().body().length;
         assertEquals(1, newSize - originalSize);
 
-        api.blacklist().remove(1, accountId);
+        api.blacklist().remove(1, accountId).execute();
 
-        newSize = api.blacklist().list(accountId).length;
+        newSize = api.blacklist().list(accountId).execute().body().length;
         assertEquals(newSize, originalSize);
     }
 

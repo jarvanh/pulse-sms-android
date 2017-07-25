@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import xyz.klinker.messenger.api.entity.LoginResponse;
@@ -23,6 +24,6 @@ import xyz.klinker.messenger.api.entity.LoginResponse;
 public interface ActivateService {
 
     @GET("activate")
-    LoginResponse check(@Query("activation_code") String activationCode);
+    Call<LoginResponse> check(@Query("activation_code") String activationCode);
 
 }

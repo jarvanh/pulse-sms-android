@@ -17,20 +17,19 @@
 package xyz.klinker.messenger.api.implementation;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import retrofit2.Call;
+import retrofit2.Response;
 import xyz.klinker.messenger.api.Api;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
 import xyz.klinker.messenger.api.entity.AddContactRequest;
@@ -57,6 +56,7 @@ import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
 import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback;
+import xyz.klinker.messenger.api.implementation.retrofit.LoggingRetryableCallback;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
@@ -68,7 +68,7 @@ public class ApiUtils {
         Object run();
     }
 
-    private static final int RETRY_COUNT = 2;
+    private static final int RETRY_COUNT = 3;
     private static final int RETRY_TIMEOUT = 5000;
 
     private static final String TAG = "ApiUtils";
@@ -123,34 +123,53 @@ public class ApiUtils {
         }).start();
     }
 
+    public static boolean isCallSuccessful(Response response) {
+        int code = response.code();
+        return (code >= 200 && code < 400);
+    }
+
     /**
      * Logs into the server.
      */
     public LoginResponse login(String email, String password) {
-        LoginRequest request = new LoginRequest(email, password);
-        return api.account().login(request);
+        try {
+            LoginRequest request = new LoginRequest(email, password);
+            return api.account().login(request).execute().body();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
      * Signs up for the service.
      */
     public SignupResponse signup(String email, String password, String name, String phoneNumber) {
-        SignupRequest request = new SignupRequest(email, name, password, phoneNumber);
-        return api.account().signup(request);
+        try {
+            SignupRequest request = new SignupRequest(email, name, password, phoneNumber);
+            return api.account().signup(request).execute().body();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
      * Removes the account from the server.
      */
     public void deleteAccount(final String accountId) {
-        executeWithRetry(() -> api.account().remove(accountId), "remove account");
+        String message = "removed account";
+        Call<Void> call = api.account().remove(accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
      * Cleans all the database tables, for the account, on the server
      */
     public void cleanAccount(final String accountId) {
-        executeWithRetry(() -> api.account().clean(accountId), "cleaned account");
+        String message = "cleaned account";
+        Call<Void> call = api.account().clean(accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -160,20 +179,27 @@ public class ApiUtils {
                                   boolean primary, String fcmToken) {
         final DeviceBody deviceBody = new DeviceBody(info, name, primary, fcmToken);
         final AddDeviceRequest request = new AddDeviceRequest(accountId, deviceBody);
-        AddDeviceResponse response = api.device().add(request);
 
-        if (response != null) {
-            return response.id;
-        } else {
-            return null;
+        try {
+            AddDeviceResponse response = api.device().add(request).execute().body();
+            if (response != null) {
+                return response.id;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     /**
      * Removes a device from the server.
      */
     public void removeDevice(String accountId, int deviceId) {
-        api.device().remove(deviceId, accountId);
+        String message = "remove device";
+        Call<Void> call = api.device().remove(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     public void updatePrimaryDevice(final String accountId, final String newPrimaryDeviceId) {
@@ -181,22 +207,31 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.device().updatePrimary(newPrimaryDeviceId, accountId),
-                "update primary device");
+        String message = "update primary device";
+        Call<Void> call = api.device().updatePrimary(newPrimaryDeviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
      * Gets a list of all devices on the server.
      */
     public DeviceBody[] getDevices(String accountId) {
-        return api.device().list(accountId);
+        try {
+            return api.device().list(accountId).execute().body();
+        } catch (IOException e) {
+            return new DeviceBody[0];
+        }
     }
 
     /**
      * Updates device info on the server.
      */
     public void updateDevice(String accountId, long deviceId, String name, String fcmToken) {
-        api.device().update(deviceId, accountId, name, fcmToken);
+        String message = "update device";
+        Call<Void> call = api.device().update(deviceId, accountId, name, fcmToken);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -214,7 +249,16 @@ public class ApiUtils {
                 color, colorDark, colorLight, colorAccent);
         final AddContactRequest request = new AddContactRequest(accountId, body);
 
-        executeWithRetry(() -> api.contact().add(request), "adding contact");
+        addContact(request);
+    }
+    /**
+     * Adds a new contact.
+     */
+    public void addContact(final AddContactRequest request) {
+        String message = "add contact";
+        Call<Void> call = api.contact().add(request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -226,8 +270,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId),
-                "delete contact");
+        String message = "delete contact";
+        Call<Void> call = api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -245,8 +291,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
                 color, colorDark, colorLight, colorAccent);
 
-        executeWithRetry(() -> api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request),
-                "update contact");
+        String message = "update contact";
+        Call<Void> call = api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -271,7 +319,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications);
         final AddConversationRequest request = new AddConversationRequest(accountId, body);
 
-        executeWithRetry(() -> api.conversation().add(request), "add conversation");
+        String message = "add conversation";
+        Call<Void> call = api.conversation().add(request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -282,8 +333,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().remove(deviceId, accountId),
-                "delete conversation");
+        String message = "delete conversation";
+        Call<Void> call = api.conversation().remove(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -294,8 +347,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().archive(deviceId, accountId),
-                "archive conversation");
+        String message = "archive conversation";
+        Call<Void> call = api.conversation().archive(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -306,8 +361,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().unarchive(deviceId, accountId),
-                "unarchive conversation");
+        String message = "unarchive conversation";
+        Call<Void> call = api.conversation().unarchive(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -329,8 +386,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(title), encryptionUtils.encrypt(snippet),
                 encryptionUtils.encrypt(ringtone), mute, archive, privateNotifications);
 
-        executeWithRetry(() -> api.conversation().update(deviceId, accountId, request),
-                "update conversation");
+        String message = "update conversation";
+        Call<Void> call = api.conversation().update(deviceId, accountId, request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -348,8 +407,10 @@ public class ApiUtils {
                 null, null, null, read, timestamp, null, encryptionUtils.encrypt(snippet),
                 null, null, archive, null);
 
-        executeWithRetry(() -> api.conversation().updateSnippet(deviceId, accountId, request),
-                "update conversation snippet");
+        String message = "update conversation snippet";
+        Call<Void> call = api.conversation().updateSnippet(deviceId, accountId, request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -361,8 +422,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().updateTitle(deviceId, accountId, encryptionUtils.encrypt(title)),
-                "update conversation title");
+        String message = "update conversation title";
+        Call<Void> call = api.conversation().updateTitle(deviceId, accountId, encryptionUtils.encrypt(title));
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -373,8 +436,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.conversation().read(deviceId, androidDevice, accountId),
-                "read conversation");
+        String message = "read conversation";
+        Call<Void> call = api.conversation().read(deviceId, androidDevice, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -385,8 +450,10 @@ public class ApiUtils {
             return;
         }
 
-//        executeWithRetry(() -> api.conversation().seen(deviceId, accountId),
-//                "seen conversation");
+        String message = "seen conversation";
+        Call<Void> call = api.conversation().seen(deviceId, accountId);
+
+        //call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -397,8 +464,10 @@ public class ApiUtils {
             return;
         }
 
-//        executeWithRetry(() -> api.conversation().seen(accountId),
-//                "seen all conversations");
+        String message = "seen all conversation";
+        Call<Void> call = api.conversation().seen(accountId);
+
+        //call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -413,60 +482,31 @@ public class ApiUtils {
             return;
         }
 
-        new Thread(() -> {
-            String messageData;
-            int type;
+        if (mimeType.equals("text/plain") || messageType == 6) {
+            final MessageBody body = new MessageBody(deviceId,
+                    deviceConversationId, messageType, encryptionUtils.encrypt(data),
+                    timestamp, encryptionUtils.encrypt(mimeType), read, seen,
+                    encryptionUtils.encrypt(messageFrom), color);
+            final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+            String message = "add message";
+            Call<Void> call = api.message().add(request);
 
-            // media or plain text. media doesn't need to be encrypted as an image
-            if (mimeType.equals("text/plain") || messageType == 6) {
-                messageData = data;
-                type = messageType;
-
-                final MessageBody body = new MessageBody(deviceId,
-                        deviceConversationId,
-                        type,
-                        encryptionUtils.encrypt(messageData),
-                        timestamp,
-                        encryptionUtils.encrypt(mimeType),
-                        read,
-                        seen,
-                        encryptionUtils.encrypt(messageFrom),
-                        color);
+            call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
+        } else {
+            saveFirebaseFolderRef(accountId);
+            byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
+            uploadBytesToFirebase(bytes, deviceId, encryptionUtils, () -> {
+                final MessageBody body = new MessageBody(deviceId, deviceConversationId,
+                        messageType, encryptionUtils.encrypt("firebase -1"),
+                        timestamp, encryptionUtils.encrypt(mimeType), read, seen,
+                        encryptionUtils.encrypt(messageFrom), color);
                 final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
+                String message = "add media message";
+                Call<Void> call = api.message().add(request);
 
-                executeWithRetry(() -> api.message().add(request), "add message");
-            } else {
-                messageData = "firebase -1";
-                // if type is received, then received else sent. don't save sending status here
-                type = messageType/* == 0 ? 0 : 1*/;
-
-                final String fData = messageData;
-                final int fType = type;
-
-                saveFirebaseFolderRef(accountId);
-                byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
-                uploadBytesToFirebase(bytes, deviceId, encryptionUtils, new FirebaseUploadCallback() {
-                    @Override
-                    public void onUploadFinished() {
-                        new Thread(() -> {
-                            final MessageBody body = new MessageBody(deviceId,
-                                    deviceConversationId,
-                                    fType,
-                                    encryptionUtils.encrypt(fData),
-                                    timestamp,
-                                    encryptionUtils.encrypt(mimeType),
-                                    read,
-                                    seen,
-                                    encryptionUtils.encrypt(messageFrom),
-                                    color);
-                            final AddMessagesRequest request = new AddMessagesRequest(accountId, body);
-
-                            executeWithRetry(() -> api.message().add(request), "add message");
-                        }).start();
-                    }
-                });
-            }
-        }).start();
+                call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
+            });
+        }
     }
 
     /**
@@ -479,9 +519,10 @@ public class ApiUtils {
         }
 
         final UpdateMessageRequest request = new UpdateMessageRequest(type, read, seen);
+        String message = "update message";
+        Call<Void> call = api.message().update(deviceId, accountId, request);
 
-        executeWithRetry(() -> api.message().update(deviceId, accountId, request),
-                "update message", 6);
+        call.enqueue(new LoggingRetryableCallback<>(call, 6, message));
     }
 
     /**
@@ -492,8 +533,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.message().updateType(deviceId, accountId, type),
-                "update message type");
+        String message = "update message type";
+        Call<Void> call = api.message().updateType(deviceId, accountId, type);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -504,8 +547,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.message().remove(deviceId, accountId),
-                "delete message");
+        String message = "delete message";
+        Call<Void> call = api.message().remove(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -516,8 +561,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.message().cleanup(accountId, timestamp),
-                "clean up messages");
+        String message = "clean up messages";
+        Call<Void> call = api.message().cleanup(accountId, timestamp);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -534,7 +581,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(data), encryptionUtils.encrypt(mimeType));
         final AddDraftRequest request = new AddDraftRequest(accountId, body);
 
-        executeWithRetry(() -> api.draft().add(request), "add draft");
+        String message = "add draft";
+        Call<Void> call = api.draft().add(request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -545,8 +595,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.draft().remove(deviceConversationId, androidDeviceId, accountId),
-                "delete drafts");
+        String message = "delete drafts";
+        Call<Void> call = api.draft().remove(deviceConversationId, androidDeviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -562,7 +614,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(phoneNumber));
         final AddBlacklistRequest request = new AddBlacklistRequest(accountId, body);
 
-        executeWithRetry(() -> api.blacklist().add(request), "add blacklist");
+        String message = "add blacklist";
+        Call<Void> call = api.blacklist().add(request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -573,7 +628,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.blacklist().remove(deviceId, accountId), "delete blacklist");
+        String message = "delete blacklist";
+        Call<Void> call = api.blacklist().remove(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -597,7 +655,10 @@ public class ApiUtils {
         final AddScheduledMessageRequest request =
                 new AddScheduledMessageRequest(accountId, body);
 
-        executeWithRetry(() -> api.scheduled().add(request), "add scheduled message");
+        String message = "add scheduled message";
+        Call<Void> call = api.scheduled().add(request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     public void updateScheduledMessage(final String accountId, final long deviceId, final String title,
@@ -612,8 +673,10 @@ public class ApiUtils {
                 encryptionUtils.encrypt(mimeType), timestamp,
                 encryptionUtils.encrypt(title));
 
-        executeWithRetry(() -> api.scheduled().update(deviceId, accountId, request),
-                "update scheduled message");
+        String message = "update scheduled message";
+        Call<Void> call = api.scheduled().update(deviceId, accountId, request);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -624,8 +687,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.scheduled().remove(deviceId, accountId),
-                "delete scheduled message");
+        String message = "delete scheduled message";
+        Call<Void> call = api.scheduled().remove(deviceId, accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -635,8 +700,8 @@ public class ApiUtils {
      * @param messageId the message id that the data belongs to.
      * @param encryptionUtils the utils to encrypt the byte array with.
      */
-    public void uploadBytesToFirebase(byte[] bytes, final long messageId,
-                                      EncryptionUtils encryptionUtils, final FirebaseUploadCallback callback) {
+    public void uploadBytesToFirebase(byte[] bytes, final long messageId, EncryptionUtils encryptionUtils,
+                                      final FirebaseUploadCallback callback) {
         if (!active || encryptionUtils == null) {
             return;
         }
@@ -646,8 +711,8 @@ public class ApiUtils {
         }
 
         StorageReference fileRef = folderRef.child(messageId + "");
-        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
-                addOnSuccessListener(taskSnapshot -> {
+        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes())
+                .addOnSuccessListener(taskSnapshot -> {
                     Log.v(TAG, "finished uploading and exiting for " + messageId);
                     callback.onUploadFinished();
                 })
@@ -672,7 +737,6 @@ public class ApiUtils {
 
         if (folderRef == null) {
             saveFirebaseFolderRef(accountId);
-            //throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
             if (folderRef == null) {
                 return;
             }
@@ -681,8 +745,8 @@ public class ApiUtils {
         final AtomicBoolean firebaseFinished = new AtomicBoolean(false);
         StorageReference fileRef = folderRef.child(messageId + "");
 
-        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes()).
-                addOnSuccessListener(taskSnapshot -> {
+        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes())
+                .addOnSuccessListener(taskSnapshot -> {
                     Log.v(TAG, "finished uploading " + messageId);
                     firebaseFinished.set(true);
                 })
@@ -788,12 +852,16 @@ public class ApiUtils {
      */
     public void saveFirebaseFolderRef(String accountId) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage
-                .getReferenceFromUrl(FIREBASE_STORAGE_URL);
+        StorageReference storageRef = storage.getReferenceFromUrl(FIREBASE_STORAGE_URL);
         try {
             folderRef = storageRef.child(accountId);
         } catch (Exception e) {
-            folderRef = null;
+            e.printStackTrace();
+            try {
+                folderRef = storageRef.child(accountId);
+            } catch (Exception ex) {
+                folderRef = null;
+            }
         }
     }
 
@@ -805,8 +873,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.account().dismissedNotification(accountId, deviceId, conversationId),
-                "dismiss notification");
+        String message = "dismiss notification";
+        Call<Void> call = api.account().dismissedNotification(accountId, deviceId, conversationId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -817,8 +887,10 @@ public class ApiUtils {
             return;
         }
 
-        executeWithRetry(() -> api.account().updateSubscription(accountId, subscriptionType, expirationDate),
-                "update subscription");
+        String message = "update subscription";
+        Call<Void> call = api.account().updateSubscription(accountId, subscriptionType, expirationDate);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**
@@ -1133,8 +1205,10 @@ public class ApiUtils {
      * Dismiss a notification across all devices.
      */
     private void updateSetting(final String accountId, final String pref, final String type, final Object value) {
-        executeWithRetry(() -> api.account().updateSetting(accountId, pref, type, value),
-                "update " + pref + " setting");
+        String message = "update " + pref + " setting";
+        Call<Void> call = api.account().updateSetting(accountId, pref, type, value);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }
 
     /**

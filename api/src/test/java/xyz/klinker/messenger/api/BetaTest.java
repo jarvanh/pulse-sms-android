@@ -18,17 +18,19 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertNotNull;
 
 public class BetaTest extends ApiTest {
 
     @Test
-    public void registerAndRemove() {
+    public void registerAndRemove() throws IOException {
         String accountId = getAccountId();
-        Object response = api.beta().register(accountId);
+        Object response = api.beta().register(accountId).execute().body();
         assertNotNull(response);
 
-        response = api.beta().remove(accountId);
+        response = api.beta().remove(accountId).execute().body();
         assertNotNull(response);
     }
 

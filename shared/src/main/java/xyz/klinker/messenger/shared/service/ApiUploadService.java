@@ -34,10 +34,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import retrofit2.Response;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
 import xyz.klinker.messenger.api.entity.AddContactRequest;
@@ -157,17 +159,26 @@ public class ApiUploadService extends Service {
                 messages.add(message);
             } while (cursor.moveToNext());
 
-            List<Object> results = new ArrayList<>();
+            int successPages = 0;
+            int expectedPages = 0;
             List<List<MessageBody>> pages = PaginationUtils.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<MessageBody> page : pages) {
                 AddMessagesRequest request = new AddMessagesRequest(account.accountId, page.toArray(new MessageBody[0]));
-                results.add(apiUtils.getApi().message().add(request));
+                try {
+                    Response response = apiUtils.getApi().message().add(request).execute();
+                    expectedPages++;
+                    if (ApiUtils.isCallSuccessful(response)) {
+                        successPages++;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
+                Log.v(TAG, "uploaded " + page.size() + " messages for page " + expectedPages);
             }
 
-            if (results.size() != pages.size() || !noNull(results)) {
+            if (successPages != expectedPages) {
                 Log.v(TAG, "failed to upload messages in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -202,9 +213,16 @@ public class ApiUploadService extends Service {
 
             AddConversationRequest request =
                     new AddConversationRequest(account.accountId, conversations);
-            Object result = apiUtils.getApi().conversation().add(request);
+            Response result;
 
-            if (result == null) {
+            try {
+                result = apiUtils.getApi().conversation().add(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                result = null;
+            }
+
+            if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload conversations in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -235,17 +253,26 @@ public class ApiUploadService extends Service {
                 contacts.add(contact);
             } while (cursor.moveToNext());
 
-            List<Object> results = new ArrayList<>();
+            int successPages = 0;
+            int expectedPages = 0;
             List<List<ContactBody>> pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<ContactBody> page : pages) {
                 AddContactRequest request = new AddContactRequest(account.accountId, page.toArray(new ContactBody[0]));
-                results.add(apiUtils.getApi().contact().add(request));
+                try {
+                    Response response = apiUtils.getApi().contact().add(request).execute();
+                    expectedPages++;
+                    if (ApiUtils.isCallSuccessful(response)) {
+                        successPages++;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Log.v(TAG, "uploaded " + page.size() + " contacts for page " + results.size());
+                Log.v(TAG, "uploaded " + page.size() + " contacts for page " + expectedPages);
             }
 
-            if (results.size() != pages.size() || !noNull(results)) {
+            if (successPages != expectedPages) {
                 Log.v(TAG, "failed to upload contacts in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -277,9 +304,14 @@ public class ApiUploadService extends Service {
 
             AddBlacklistRequest request =
                     new AddBlacklistRequest(account.accountId, blacklists);
-            Object result = apiUtils.getApi().blacklist().add(request);
+            Response result;
+            try {
+                result = apiUtils.getApi().blacklist().add(request).execute();
+            } catch (IOException e) {
+                result = null;
+            }
 
-            if (result == null) {
+            if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload blacklists in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -312,9 +344,15 @@ public class ApiUploadService extends Service {
 
             AddScheduledMessageRequest request =
                     new AddScheduledMessageRequest(account.accountId, messages);
-            Object result = apiUtils.getApi().scheduled().add(request);
+            Response result;
 
-            if (result == null) {
+            try {
+                result = apiUtils.getApi().scheduled().add(request).execute();
+            } catch (IOException e) {
+                result = null;
+            }
+
+            if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload scheduled messages in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -345,7 +383,13 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddDraftRequest request = new AddDraftRequest(account.accountId, drafts);
-            Object result = apiUtils.getApi().draft().add(request);
+            Object result;
+
+            try {
+                result = apiUtils.getApi().draft().add(request).execute().body();
+            } catch (IOException e) {
+                result = null;
+            }
 
             if (result == null) {
                 Log.v(TAG, "failed to upload drafts in " +
@@ -365,7 +409,7 @@ public class ApiUploadService extends Service {
      * Media will be uploaded after the messages finish uploading
      */
     private void uploadMedia() {
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
                 .setContentTitle(getString(R.string.encrypting_and_uploading_media))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)
@@ -378,18 +422,10 @@ public class ApiUploadService extends Service {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         Executor executor = new DirectExecutor();
         auth.signInAnonymously()
-                .addOnSuccessListener(executor, new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        processMediaUpload(manager, builder);
-                    }
-                })
-                .addOnFailureListener(executor, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "failed to sign in to firebase", e);
-                        finishMediaUpload(manager);
-                    }
+                .addOnSuccessListener(executor, authResult -> processMediaUpload(manager, builder))
+                .addOnFailureListener(executor, e -> {
+                    Log.e(TAG, "failed to sign in to firebase", e);
+                    finishMediaUpload(manager);
                 });
     }
 

@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AccountCountResponse;
 import xyz.klinker.messenger.api.entity.AccountListResponse;
 import xyz.klinker.messenger.api.entity.LoginRequest;
@@ -26,6 +28,7 @@ import xyz.klinker.messenger.api.entity.SignupResponse;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 public class AccountTest extends ApiTest {
 
@@ -40,6 +43,7 @@ public class AccountTest extends ApiTest {
             assertNotNull(response.salt2);
         } else {
             System.out.println("signup failed");
+            fail();
         }
     }
 
@@ -57,54 +61,54 @@ public class AccountTest extends ApiTest {
     }
 
     @Test
-    public void loginFailed() {
+    public void loginFailed() throws IOException {
         LoginRequest request = new LoginRequest(USERNAME, "wrong " + PASSWORD);
-        LoginResponse response = api.account().login(request);
+        LoginResponse response = api.account().login(request).execute().body();
 
         assertNull(response);
     }
 
     @Test
-    public void count() {
-        AccountCountResponse response = api.account().count(getAccountId());
+    public void count() throws IOException {
+        AccountCountResponse response = api.account().count(getAccountId()).execute().body();
         System.out.println(response);
         assertNotNull(response);
     }
 
     @Test
-    public void list() {
-        AccountListResponse response = api.account().list(getAccountId());
+    public void list() throws IOException {
+        AccountListResponse response = api.account().list(getAccountId()).execute().body();
         System.out.println(response);
         assertNotNull(response);
     }
 
     @Test
-    public void remove() {
+    public void remove() throws IOException {
         String accountId = getAccountId();
-        Object response = api.account().remove(accountId);
+        Object response = api.account().remove(accountId).execute().body();
 
         assertNotNull(response);
         assertNull(getLoginResponse());
     }
 
     @Test
-    public void updateSettings() {
+    public void updateSettings() throws IOException {
         String accountId = getAccountId();
-        assertNotNull(api.account().updateSetting(accountId, "test", "boolean", true));
+        assertNotNull(api.account().updateSetting(accountId, "test", "boolean", true).execute().body());
     }
 
     @Test
-    public void dismissNotification() {
-        assertNotNull(api.account().dismissedNotification(getAccountId(), "1", 1));
+    public void dismissNotification() throws IOException {
+        assertNotNull(api.account().dismissedNotification(getAccountId(), "1", 1).execute().body());
     }
 
     @Test
-    public void viewSubscription() {
-        assertNotNull(api.account().viewSubscription(getAccountId()));
+    public void viewSubscription() throws IOException {
+        assertNotNull(api.account().viewSubscription(getAccountId()).execute().body());
     }
 
     @Test
-    public void updateSubscription() {
-        assertNotNull(api.account().updateSubscription(getAccountId(), 1, 1000));
+    public void updateSubscription() throws IOException {
+        assertNotNull(api.account().updateSubscription(getAccountId(), 1, 1000).execute().body());
     }
 }

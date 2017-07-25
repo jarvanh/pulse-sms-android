@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,12 +28,12 @@ import xyz.klinker.messenger.api.entity.BlacklistBody;
 public interface BlacklistService {
 
     @POST("blacklists/add")
-    Object add(@Body AddBlacklistRequest request);
+    Call<Void> add(@Body AddBlacklistRequest request);
 
     @POST("blacklists/remove/{device_id}")
-    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("blacklists")
-    BlacklistBody[] list(@Query("account_id") String accountId);
+    Call<BlacklistBody[]> list(@Query("account_id") String accountId);
 
 }

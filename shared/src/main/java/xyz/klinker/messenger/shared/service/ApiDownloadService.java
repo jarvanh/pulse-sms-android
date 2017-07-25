@@ -33,6 +33,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -167,8 +168,15 @@ public class ApiDownloadService extends Service {
         boolean noMessages = false;
 
         do {
-            MessageBody[] messages = apiUtils.getApi().message()
-                    .list(account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size());
+            MessageBody[] messages;
+
+            try {
+                messages = apiUtils.getApi().message()
+                        .list(account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size())
+                        .execute().body();
+            } catch (IOException e) {
+                messages = new MessageBody[0];
+            }
 
             if (messages != null) {
                 if (messages.length == 0) {
@@ -181,13 +189,6 @@ public class ApiDownloadService extends Service {
                     try {
                         message.decrypt(encryptionUtils);
                     } catch (Exception e) {
-                        // cover up the force close here.
-                        // probably was happening because of huge downloads and something was getting corrupted.
-                        // even a single bit off could probably wreck the decryption.
-                        // hopefully this issue would be solved with the pagination, but I don't want to
-                        // risk that. If the decryption goes wrong, then just put in the encrypted message
-                        // chances are, the user will never see it anyways.
-
                         e.printStackTrace();
                     }
 
@@ -213,8 +214,14 @@ public class ApiDownloadService extends Service {
 
     private void downloadConversations() {
         long startTime = System.currentTimeMillis();
-        ConversationBody[] conversations = apiUtils.getApi().conversation()
-                .list(account.accountId);
+        ConversationBody[] conversations;
+
+        try {
+            conversations = apiUtils.getApi().conversation()
+                    .list(account.accountId).execute().body();
+        } catch (IOException e) {
+            conversations = new ConversationBody[0];
+        }
 
         if (conversations != null) {
             for (ConversationBody body : conversations) {
@@ -257,8 +264,14 @@ public class ApiDownloadService extends Service {
     // that conversation
     private void retryConversationDownloadFromBadDecryption() {
         long startTime = System.currentTimeMillis();
-        ConversationBody[] conversations = apiUtils.getApi().conversation()
-                .list(account.accountId);
+        ConversationBody[] conversations;
+
+        try {
+            conversations = apiUtils.getApi().conversation()
+                    .list(account.accountId).execute().body();
+        } catch (IOException e) {
+            conversations = new ConversationBody[0];
+        }
 
         if (conversations != null) {
             for (ConversationBody body : conversations) {
@@ -290,7 +303,13 @@ public class ApiDownloadService extends Service {
 
     private void downloadBlacklists() {
         long startTime = System.currentTimeMillis();
-        BlacklistBody[] blacklists = apiUtils.getApi().blacklist().list(account.accountId);
+        BlacklistBody[] blacklists;
+
+        try {
+            blacklists = apiUtils.getApi().blacklist().list(account.accountId).execute().body();
+        } catch (Exception e) {
+            blacklists = new BlacklistBody[0];
+        }
 
         if (blacklists != null) {
             for (BlacklistBody body : blacklists) {
@@ -307,7 +326,13 @@ public class ApiDownloadService extends Service {
 
     private void downloadScheduledMessages() {
         long startTime = System.currentTimeMillis();
-        ScheduledMessageBody[] messages = apiUtils.getApi().scheduled().list(account.accountId);
+        ScheduledMessageBody[] messages;
+
+        try {
+            messages = apiUtils.getApi().scheduled().list(account.accountId).execute().body();
+        } catch (IOException e) {
+            messages = new ScheduledMessageBody[0];
+        }
 
         if (messages != null) {
             for (ScheduledMessageBody body : messages) {
@@ -324,7 +349,13 @@ public class ApiDownloadService extends Service {
 
     private void downloadDrafts() {
         long startTime = System.currentTimeMillis();
-        DraftBody[] drafts = apiUtils.getApi().draft().list(account.accountId);
+        DraftBody[] drafts;
+
+        try {
+            drafts = apiUtils.getApi().draft().list(account.accountId).execute().body();
+        } catch (IOException e) {
+            drafts = new DraftBody[0];
+        }
 
         if (drafts != null) {
             for (DraftBody body : drafts) {
@@ -341,7 +372,13 @@ public class ApiDownloadService extends Service {
 
     private void downloadContacts() {
         long startTime = System.currentTimeMillis();
-        ContactBody[] contacts = apiUtils.getApi().contact().list(account.accountId);
+        ContactBody[] contacts;
+
+        try {
+            contacts = apiUtils.getApi().contact().list(account.accountId).execute().body();
+        } catch (IOException e) {
+            contacts = new ContactBody[0];
+        }
 
         if (contacts != null) {
             List<Contact> contactList = new ArrayList<>();

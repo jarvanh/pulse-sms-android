@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,20 +29,20 @@ import xyz.klinker.messenger.api.entity.DeviceBody;
 public interface DeviceService {
 
     @POST("devices/add")
-    AddDeviceResponse add(@Body AddDeviceRequest request);
+    Call<AddDeviceResponse> add(@Body AddDeviceRequest request);
 
     @POST("devices/update/{id}")
-    Object update(@Path("id") long id, @Query("account_id") String accountId,
+    Call<Void> update(@Path("id") long id, @Query("account_id") String accountId,
                   @Query("name") String name, @Query("fcm_token") String fcmToken);
 
     @POST("devices/remove/{id}")
-    Object remove(@Path("id") int id, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("id") int id, @Query("account_id") String accountId);
 
     @POST("devices/update_primary")
-    Object updatePrimary(@Query("new_primary_device_id") String newPrimaryDeviceId,
+    Call<Void> updatePrimary(@Query("new_primary_device_id") String newPrimaryDeviceId,
                          @Query("account_id") String accountId);
 
     @GET("devices")
-    DeviceBody[] list(@Query("account_id") String accountId);
+    Call<DeviceBody[]> list(@Query("account_id") String accountId);
 
 }

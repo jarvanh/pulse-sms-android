@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,17 +29,17 @@ import xyz.klinker.messenger.api.entity.UpdateDraftRequest;
 public interface DraftService {
 
     @POST("drafts/add")
-    Object add(@Body AddDraftRequest request);
+    Call<Void> add(@Body AddDraftRequest request);
 
     @POST("drafts/update/{device_id}")
-    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateDraftRequest request);
 
     @POST("drafts/remove/{device_conversation_id}")
-    Object remove(@Path("device_conversation_id") long deviceConversationId, @Query("android_device") String androidDevice,
+    Call<Void> remove(@Path("device_conversation_id") long deviceConversationId, @Query("android_device") String androidDevice,
                   @Query("account_id") String accountId);
 
     @GET("drafts")
-    DraftBody[] list(@Query("account_id") String accountId);
+    Call<DraftBody[]> list(@Query("account_id") String accountId);
 
 }

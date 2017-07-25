@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Random;
 
@@ -70,7 +71,12 @@ public class ActivateWearActivity extends Activity {
         handler.removeCallbacksAndMessages(null);
         handler.postDelayed(() -> new Thread(() -> {
             Log.v(TAG, "checking activate response");
-            final LoginResponse response = api.activate().check(code);
+            LoginResponse response;
+            try {
+                response = api.activate().check(code).execute().body();
+            } catch (IOException e) {
+                response = null;
+            }
 
             if (response == null) {
                 Log.v(TAG, "not activated");
@@ -85,7 +91,8 @@ public class ActivateWearActivity extends Activity {
                 }
             } else {
                 Log.v(TAG, "activated");
-                runOnUiThread(() -> activated(response));
+                final LoginResponse finalResponse = response;
+                runOnUiThread(() -> activated(finalResponse));
             }
         }).start(), RETRY_INTERVAL);
     }
@@ -116,11 +123,11 @@ public class ActivateWearActivity extends Activity {
             EncryptionUtils utils = encryptionCreator.createAccountEncryptionFromLogin(response);
 
             try {
-                ConversationBody[] bodies = api.conversation().list(response.accountId);
+                ConversationBody[] bodies = api.conversation().list(response.accountId).execute().body();
                 if (bodies.length > 0) {
                     utils.decrypt(bodies[0].title);
                 } else {
-                    ContactBody[] contacts = api.contact().list(response.accountId);
+                    ContactBody[] contacts = api.contact().list(response.accountId).execute().body();
                     if (contacts.length > 0) {
                         utils.decrypt(contacts[0].name);
                     }

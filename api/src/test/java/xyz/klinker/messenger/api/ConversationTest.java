@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddConversationRequest;
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
@@ -28,32 +30,32 @@ import static org.junit.Assert.assertNotNull;
 public class ConversationTest extends ApiTest {
 
     @Test
-    public void addAndUpdateAndRemove() {
+    public void addAndUpdateAndRemove() throws IOException {
         String accountId = getAccountId();
-        int originalSize = api.conversation().list(accountId).length;
+        int originalSize = api.conversation().list(accountId).execute().body().length;
 
         ConversationBody draft = new ConversationBody(1, 1, 1, 1, 1, 1, true, false,
                 System.currentTimeMillis(), "test", "5154224558", "hey!", null, null,
                 "24558", false, false, false);
         AddConversationRequest request = new AddConversationRequest(accountId, draft);
-        Object response = api.conversation().add(request);
+        Object response = api.conversation().add(request).execute().body();
         assertNotNull(response);
 
         UpdateConversationRequest update = new UpdateConversationRequest(null, null, null, null, null,
                 false, true, null, null, null, null, null, null, null);
-        api.conversation().update(1, accountId, update);
+        api.conversation().update(1, accountId, update).execute();
 
-        ConversationBody[] conversations = api.conversation().list(accountId);
+        ConversationBody[] conversations = api.conversation().list(accountId).execute().body();
         assertEquals(1, conversations.length - originalSize);
 
-        api.conversation().remove(1, accountId);
+        api.conversation().remove(1, accountId).execute();
 
-        conversations = api.conversation().list(accountId);
+        conversations = api.conversation().list(accountId).execute().body();
         assertEquals(conversations.length, originalSize);
 
-        assertNotNull(api.conversation().read(1, null, accountId));
-        assertNotNull(api.conversation().seen(1, accountId));
-        assertNotNull(api.conversation().seen(accountId));
+        assertNotNull(api.conversation().read(1, null, accountId).execute().body());
+        assertNotNull(api.conversation().seen(1, accountId).execute().body());
+        assertNotNull(api.conversation().seen(accountId).execute().body());
     }
 
 }

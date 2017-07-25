@@ -16,15 +16,16 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface BetaService {
 
     @POST("beta/register")
-    Object register(@Query("account_id") String accountId);
+    Call<Void> register(@Query("account_id") String accountId);
 
     @POST("beta/remove")
-    Object remove(@Query("account_id") String accountId);
+    Call<Void> remove(@Query("account_id") String accountId);
 
 }

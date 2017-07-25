@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddScheduledMessageRequest;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest;
@@ -28,26 +30,26 @@ import static org.junit.Assert.assertNotNull;
 public class ScheduledMessageTest extends ApiTest {
 
     @Test
-    public void addAndUpdateAndRemove() {
+    public void addAndUpdateAndRemove() throws IOException {
         String accountId = getAccountId();
-        int originalSize = api.scheduled().list(accountId).length;
+        int originalSize = api.scheduled().list(accountId).execute().body().length;
 
         ScheduledMessageBody message = new ScheduledMessageBody(1, "5159911493", "test",
                 "text/plain", System.currentTimeMillis(), "test");
         AddScheduledMessageRequest request = new AddScheduledMessageRequest(accountId, message);
-        Object response = api.scheduled().add(request);
+        Object response = api.scheduled().add(request).execute().body();
         assertNotNull(response);
 
         UpdateScheduledMessageRequest update = new UpdateScheduledMessageRequest("5154224558",
                 null, null, null, null);
-        api.scheduled().update(1, accountId, update);
+        api.scheduled().update(1, accountId, update).execute();
 
-        ScheduledMessageBody[] messages = api.scheduled().list(accountId);
+        ScheduledMessageBody[] messages = api.scheduled().list(accountId).execute().body();
         assertEquals(1, messages.length - originalSize);
 
-        api.scheduled().remove(1, accountId);
+        api.scheduled().remove(1, accountId).execute();
 
-        messages = api.scheduled().list(accountId);
+        messages = api.scheduled().list(accountId).execute().body();
         assertEquals(messages.length, originalSize);
     }
 

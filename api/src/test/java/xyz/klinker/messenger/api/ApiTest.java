@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Before;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.LoginRequest;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupRequest;
@@ -36,14 +38,22 @@ public class ApiTest {
     }
 
     public SignupResponse getSignupResponse() {
-        SignupRequest request = new SignupRequest(USERNAME, "test user",
-                PASSWORD, "test");
-        return api.account().signup(request);
+        try {
+            SignupRequest request = new SignupRequest(USERNAME, "test user",
+                    PASSWORD, "test");
+            return api.account().signup(request).execute().body();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public LoginResponse getLoginResponse() {
-        LoginRequest request = new LoginRequest(USERNAME, PASSWORD);
-        return api.account().login(request);
+        try {
+            LoginRequest request = new LoginRequest(USERNAME, PASSWORD);
+            return api.account().login(request).execute().body();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public String getAccountId() {

@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddDeviceRequest;
 import xyz.klinker.messenger.api.entity.AddDeviceResponse;
 import xyz.klinker.messenger.api.entity.DeviceBody;
@@ -28,28 +30,28 @@ import static org.junit.Assert.assertNotNull;
 public class DeviceTest extends ApiTest {
 
     @Test
-    public void addAndUpdateAndRemoveDevice() {
+    public void addAndUpdateAndRemoveDevice() throws IOException {
         String accountId = getAccountId();
 
         DeviceBody device = new DeviceBody("test", "test device", true, "1");
         AddDeviceRequest request = new AddDeviceRequest(accountId, device);
-        AddDeviceResponse response = api.device().add(request);
+        AddDeviceResponse response = api.device().add(request).execute().body();
         assertNotNull(response);
 
-        DeviceBody[] devices = api.device().list(accountId);
+        DeviceBody[] devices = api.device().list(accountId).execute().body();
         assertEquals(1, devices.length);
         assertEquals("test device", devices[0].name);
 
-        api.device().update(response.id, accountId, "test device 2", null);
-        api.device().update(response.id, accountId, null, "3");
+        api.device().update(response.id, accountId, "test device 2", null).execute();
+        api.device().update(response.id, accountId, null, "3").execute();
 
-        devices = api.device().list(accountId);
+        devices = api.device().list(accountId).execute().body();
         assertEquals(1, devices.length);
         assertEquals("test device 2", devices[0].name);
 
-        api.device().remove(response.id, accountId);
+        api.device().remove(response.id, accountId).execute();
 
-        devices = api.device().list(accountId);
+        devices = api.device().list(accountId).execute().body();
         assertEquals(0, devices.length);
     }
 

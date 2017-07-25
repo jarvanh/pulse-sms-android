@@ -7,6 +7,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +154,9 @@ public class NewMessagesCheckService extends IntentService {
 
             for (List<MessageBody> page : pages) {
                 AddMessagesRequest request = new AddMessagesRequest(account.accountId, page.toArray(new MessageBody[0]));
-                results.add(apiUtils.getApi().message().add(request));
+                try {
+                    results.add(apiUtils.getApi().message().add(request).execute().body());
+                } catch (IOException e) { }
 
                 Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
             }

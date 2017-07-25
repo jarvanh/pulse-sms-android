@@ -167,8 +167,8 @@ public class Api {
         Retrofit.Builder builder =
                 new Retrofit.Builder()
                         .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .addCallAdapterFactory(callAdapterFactory);
+                        .addConverterFactory(GsonConverterFactory.create(gson));
+                        //.addCallAdapterFactory(callAdapterFactory);
 
         this.retrofit = builder.client(httpClient.build()).build();
         this.baseUrl = baseUrl;

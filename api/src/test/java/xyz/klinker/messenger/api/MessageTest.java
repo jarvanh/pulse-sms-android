@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddMessagesRequest;
 import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.UpdateMessageRequest;
@@ -28,25 +30,25 @@ import static org.junit.Assert.assertNotNull;
 public class MessageTest extends ApiTest {
 
     @Test
-    public void addAndUpdateMessages() {
+    public void addAndUpdateMessages() throws IOException {
         String accountId = getAccountId();
-        int originalSize = api.message().list(accountId, null, null, null).length;
+        int originalSize = api.message().list(accountId, null, null, null).execute().body().length;
 
         MessageBody message = new MessageBody(1, 1, 1, "test", System.currentTimeMillis(),
                 "text/plain", true, true, null, null);
         AddMessagesRequest request = new AddMessagesRequest(accountId, message);
-        Object response = api.message().add(request);
+        Object response = api.message().add(request).execute().body();
         assertNotNull(response);
 
         UpdateMessageRequest update = new UpdateMessageRequest(2, null, null);
-        api.message().update(1, accountId, update);
+        api.message().update(1, accountId, update).execute();
 
-        MessageBody[] messages = api.message().list(accountId, null, null, null);
+        MessageBody[] messages = api.message().list(accountId, null, null, null).execute().body();
         assertEquals(1, messages.length - originalSize);
 
-        api.message().remove(1, accountId);
+        api.message().remove(1, accountId).execute();
 
-        messages = api.message().list(accountId, null, null, null);
+        messages = api.message().list(accountId, null, null, null).execute().body();
         assertEquals(messages.length, originalSize);
     }
 

@@ -18,6 +18,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddDraftRequest;
 import xyz.klinker.messenger.api.entity.DraftBody;
 import xyz.klinker.messenger.api.entity.UpdateDraftRequest;
@@ -28,24 +30,24 @@ import static org.junit.Assert.assertNotNull;
 public class DraftTest extends ApiTest {
 
     @Test
-    public void addAndUpdateAndRemove() {
+    public void addAndUpdateAndRemove() throws IOException {
         String accountId = getAccountId();
-        int originalSize = api.draft().list(accountId).length;
+        int originalSize = api.draft().list(accountId).execute().body().length;
 
         DraftBody draft = new DraftBody(1, 1, "test draft", "text/plain");
         AddDraftRequest request = new AddDraftRequest(accountId, draft);
-        Object response = api.draft().add(request);
+        Object response = api.draft().add(request).execute().body();
         assertNotNull(response);
 
         UpdateDraftRequest update = new UpdateDraftRequest("new test draft", null);
-        api.draft().update(1, accountId, update);
+        api.draft().update(1, accountId, update).execute().body();
 
-        DraftBody[] drafts = api.draft().list(accountId);
+        DraftBody[] drafts = api.draft().list(accountId).execute().body();
         assertEquals(1, drafts.length - originalSize);
 
-        api.draft().remove(1, null, accountId);
+        api.draft().remove(1, null, accountId).execute();
 
-        drafts = api.draft().list(accountId);
+        drafts = api.draft().list(accountId).execute().body();
         assertEquals(drafts.length, originalSize);
     }
 

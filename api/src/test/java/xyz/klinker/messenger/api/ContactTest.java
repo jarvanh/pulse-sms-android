@@ -2,6 +2,8 @@ package xyz.klinker.messenger.api;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import xyz.klinker.messenger.api.entity.AddContactRequest;
 import xyz.klinker.messenger.api.entity.AddConversationRequest;
 import xyz.klinker.messenger.api.entity.ContactBody;
@@ -14,24 +16,24 @@ import static org.junit.Assert.assertNotNull;
 
 public class ContactTest extends ApiTest {
     @Test
-    public void addAndUpdateAndRemove() {
+    public void addAndUpdateAndRemove() throws IOException {
         String accountId = getAccountId();
-        int originalSize = api.contact().list(accountId).length;
+        int originalSize = api.contact().list(accountId).execute().body().length;
 
         ContactBody contact = new ContactBody("515", "Luke", 1, 1, 1, 1);
         AddContactRequest request = new AddContactRequest(accountId, contact);
-        Object response = api.contact().add(request);
+        Object response = api.contact().add(request).execute().body();
         assertNotNull(response);
 
         UpdateContactRequest update = new UpdateContactRequest(null, "jake", null, null, null, null);
-        api.contact().update("515", accountId, update);
+        api.contact().update("515", accountId, update).execute().body();
 
-        ContactBody[] contacts = api.contact().list(accountId);
+        ContactBody[] contacts = api.contact().list(accountId).execute().body();
         assertEquals(1, contacts.length - originalSize);
 
-        api.contact().remove("515", accountId);
+        api.contact().remove("515", accountId).execute();
 
-        contacts = api.contact().list(accountId);
+        contacts = api.contact().list(accountId).execute().body();
         assertEquals(contacts.length, originalSize);
     }
 

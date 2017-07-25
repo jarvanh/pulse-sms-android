@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,39 +29,39 @@ import xyz.klinker.messenger.api.entity.UpdateConversationRequest;
 public interface ConversationService {
 
     @POST("conversations/add")
-    Object add(@Body AddConversationRequest request);
+    Call<Void> add(@Body AddConversationRequest request);
 
     @POST("conversations/update/{device_id}")
-    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateConversationRequest request);
 
     @POST("conversations/update_snippet/{device_id}")
-    Object updateSnippet(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> updateSnippet(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                          @Body UpdateConversationRequest request);
 
     @POST("conversations/update_title/{device_id}")
-    Object updateTitle(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> updateTitle(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                        @Query("title") String title);
 
     @POST("conversations/remove/{device_id}")
-    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("conversations")
-    ConversationBody[] list(@Query("account_id") String accountId);
+    Call<ConversationBody[]> list(@Query("account_id") String accountId);
 
     @POST("conversations/read/{device_id}")
-    Object read(@Path("device_id") long deviceId, @Query("android_device") String androidDeviceId, @Query("account_id") String accountId);
+    Call<Void> read(@Path("device_id") long deviceId, @Query("android_device") String androidDeviceId, @Query("account_id") String accountId);
 
     @POST("conversations/seen/{device_id}")
-    Object seen(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> seen(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @POST("conversations/seen")
-    Object seen(@Query("account_id") String accountId);
+    Call<Void> seen(@Query("account_id") String accountId);
 
     @POST("conversations/archive/{device_id}")
-    Object archive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> archive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @POST("conversations/unarchive/{device_id}")
-    Object unarchive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> unarchive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
 }

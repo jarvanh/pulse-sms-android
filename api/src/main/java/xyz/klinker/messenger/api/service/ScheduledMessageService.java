@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.api.service;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,16 +29,16 @@ import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest;
 public interface ScheduledMessageService {
 
     @POST("scheduled_messages/add")
-    Object add(@Body AddScheduledMessageRequest request);
+    Call<Void> add(@Body AddScheduledMessageRequest request);
 
     @POST("scheduled_messages/update/{device_id}")
-    Object update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
+    Call<Void> update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
                   @Body UpdateScheduledMessageRequest request);
 
     @POST("scheduled_messages/remove/{device_id}")
-    Object remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+    Call<Void> remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
     @GET("scheduled_messages")
-    ScheduledMessageBody[] list(@Query("account_id") String accountId);
+    Call<ScheduledMessageBody[]> list(@Query("account_id") String accountId);
 
 }
