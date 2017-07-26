@@ -148,8 +148,8 @@ public class ContactUtils {
                 }
 
                 try {
-                    if (phonesCursor != null && phonesCursor.moveToFirst() && !phonesCursor.getString(0).isEmpty()) {
-                        names += ", " + phonesCursor.getString(0).replaceAll(",", "");
+                    if (phonesCursor != null && phonesCursor.moveToFirst() && !phonesCursor.getString(1).isEmpty()) {
+                        names += ", " + phonesCursor.getString(1).replaceAll(",", "");
                     } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                                 Uri.encode(origin));
