@@ -126,7 +126,7 @@ public class ContactUtils {
             try {
                 String origin = number[i];
 
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(origin));
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
 
                 Cursor phonesCursor = null;
 
