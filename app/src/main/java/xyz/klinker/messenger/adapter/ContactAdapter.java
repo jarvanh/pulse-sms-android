@@ -103,6 +103,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
             }
 
             holder.imageLetter.setText(null);
+            if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
+                holder.groupIcon.setVisibility(View.GONE);
+            }
 
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
