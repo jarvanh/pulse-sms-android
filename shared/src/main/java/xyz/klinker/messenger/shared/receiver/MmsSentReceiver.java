@@ -38,10 +38,7 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-
-        new Thread(() -> {
-            handle(context, intent);
-        }).start();
+        new Thread(() -> handle(context, intent)).start();
     }
 
     private void handle(Context context, Intent intent) {
@@ -63,7 +60,7 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
                         Message m = new Message();
                         m.fillFromCursor(messages);
 
-                        if (m.type == Message.TYPE_SENT) {
+                        if (m.type == Message.TYPE_SENDING) {
                             source.updateMessageType(m.id, Message.TYPE_SENT);
                             MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
                         }
