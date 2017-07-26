@@ -126,7 +126,7 @@ public class ContactUtils {
             try {
                 String origin = number[i];
 
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(origin));
 
                 Cursor phonesCursor = null;
 
@@ -134,7 +134,6 @@ public class ContactUtils {
                     phonesCursor = context.getContentResolver()
                             .query(phoneUri, new String[]{
                                             ContactsContract.PhoneLookup.DISPLAY_NAME,
-                                            ContactsContract.Contacts.DISPLAY_NAME,
                                             ContactsContract.Contacts._ID
                                     }, null, null,
                                     ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
@@ -148,8 +147,8 @@ public class ContactUtils {
                 }
 
                 try {
-                    if (phonesCursor != null && phonesCursor.moveToFirst() && !phonesCursor.getString(1).isEmpty()) {
-                        names += ", " + phonesCursor.getString(1).replaceAll(",", "");
+                    if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                        names += ", " + phonesCursor.getString(0).replaceAll(",", "");
                     } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
                         phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                                 Uri.encode(origin));
