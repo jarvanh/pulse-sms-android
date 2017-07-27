@@ -50,6 +50,7 @@ import com.turingtechnologies.materialscrollbar.IDateableAdapter;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import xyz.klinker.android.article.ArticleIntent;
@@ -576,14 +577,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public void onMessageDeleted(Context context, long conversationId, int position) {
-        if (position == getItemCount() - 1 && position != 0) {
-            Log.v(TAG, "deleted last item, updating conversation");
-            DataSource source = DataSource.getInstance(context);
-            source.open();
+        DataSource source = DataSource.getInstance(context);
+        source.open();
 
-            Message message = new Message();
-            messages.moveToPosition(position - 1);
-            message.fillFromCursor(messages);
+        List<Message> messageList = source.getMessages(conversationId, 1);
+        if (messageList.size() == 0) {
+            ((MessengerActivity) fragment.getActivity()).menuItemClicked(R.id.menu_delete_conversation);
+        } else {
+            Message message = messageList.get(0);
 
             Conversation conversation = source.getConversation(conversationId);
             source.updateConversation(conversationId, conversation.read, message.timestamp,
@@ -593,13 +594,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             fragment.setConversationUpdateInfo(message.type == Message.TYPE_SENDING ?
                     context.getString(R.string.you) + ": " + message.data : message.data);
-
-            source.close();
-        } else if (position == 0 && (getItemCount() == 1 || getItemCount() == 0)) {
-            ((MessengerActivity) fragment.getActivity()).menuItemClicked(R.id.menu_delete_conversation);
-        } else {
-            Log.v(TAG, "position not last, so leaving conversation");
         }
+
+        source.close();
     }
 
     public void setFromColorMapper(Map<String, Contact> colorMapper, Map<String, Contact> colorMapperByName) {

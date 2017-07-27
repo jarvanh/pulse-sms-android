@@ -20,10 +20,11 @@
         name="2.4.7"
         description="July 24th, 2017">
         <text>Copy phone numbers from the "Conversation information" option</text>
-        <text>Bug fixes</text>
+        <text>Improvements around deleting messages from conversations</text>
         <text>MMS Improvements</text>
         <text>Sync improvements</text>
         <text>Image upload improvements</text>
+        <text>Bug fixes</text>
     </version>
 
     <version
