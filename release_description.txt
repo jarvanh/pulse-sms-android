@@ -1,3 +1,5 @@
-With the latest version, Pulse got a brand new web app!<br/><br/>
+The latest version of Pulse is a big update for syncing between your phone and the web. It comes packed with reliability and consistency improvements, on top of the already rock-solid system.<br/><br/>
 
-If you haven't had the chance to try it out out, head to https://messenger.klinkerapps.com to learn more about texting from your computer.
+This update also makes improvements around deleting individual messages from conversations and allows you to copy a contacts phone number from the "Conversation information" option.<br/><br/>
+
+Enjoy the update!

@@ -18,7 +18,7 @@
 
     <version
         name="2.4.7"
-        description="July 24th, 2017">
+        description="July 28th, 2017">
         <text>Copy phone numbers from the "Conversation information" option</text>
         <text>Improvements around deleting messages from conversations</text>
         <text>MMS Improvements</text>
