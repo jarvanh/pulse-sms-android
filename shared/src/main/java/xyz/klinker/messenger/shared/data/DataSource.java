@@ -2067,9 +2067,9 @@ public class DataSource {
                 id = database.insert(Message.TABLE, null, values);
             }
 
-            apiUtils.addMessage(context, accountId, message.id, message.conversationId, message.type, message.data,
-                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                    message.color, getEncryptionUtils(context));
+//            apiUtils.addMessage(context, accountId, message.id, message.conversationId, message.type, message.data,
+//                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
+//                    message.color, getEncryptionUtils(context));
 
             updateConversation(message.conversationId, message.read, message.timestamp,
                     message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?

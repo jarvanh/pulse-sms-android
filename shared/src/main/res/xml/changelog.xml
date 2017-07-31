@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.4.8"
+        description="July 31st, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.4.7"
         description="July 28th, 2017">
         <text>Copy phone numbers from the "Conversation information" option</text>
