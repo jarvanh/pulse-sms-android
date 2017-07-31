@@ -18,7 +18,7 @@ public class SnackbarAnimationFix {
             mIsEnabledField.setAccessible(true);
             mIsEnabledField.setBoolean(accessibilityManager, false);
             mAccessibilityManagerField.set(snackbar, accessibilityManager);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             Log.d("Snackbar", "Reflection error: " + e.toString());
         }
     }

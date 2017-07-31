@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -434,9 +435,14 @@ public class ApiUploadService extends Service {
                                     final NotificationCompat.Builder builder) {
         apiUtils.saveFirebaseFolderRef(account.accountId);
 
+        new Thread(() -> {
+            try { Thread.sleep(1000 * 60 * 5); } catch (InterruptedException e) { }
+            finishMediaUpload(manager);
+        }).start();
+
         Cursor media = source.getAllMediaMessages(NUM_MEDIA_TO_UPLOAD);
         if (media.moveToFirst()) {
-            int mediaCount = media.getCount();
+            int mediaCount = media.getCount() < NUM_MEDIA_TO_UPLOAD ? media.getCount() : NUM_MEDIA_TO_UPLOAD;
             do {
                 Message message = new Message();
                 message.fillFromCursor(media);
@@ -453,7 +459,7 @@ public class ApiUploadService extends Service {
 
                     if (completedMediaUploads >= mediaCount) {
                         finishMediaUpload(manager);
-                    } else {
+                    } else if (!finished) {
                         startForeground(MESSAGE_UPLOAD_ID, builder.build());
                     }
                 }, 0);
@@ -463,10 +469,12 @@ public class ApiUploadService extends Service {
         media.close();
     }
 
+    private boolean finished = false;
     private void finishMediaUpload(NotificationManagerCompat manager) {
         stopForeground(true);
         source.close();
         stopSelf();
+        finished = true;
     }
 
     public static boolean noNull(List list) {
