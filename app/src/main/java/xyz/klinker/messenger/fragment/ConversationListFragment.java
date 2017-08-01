@@ -619,6 +619,7 @@ public class ConversationListFragment extends Fragment
             newConversationTitle = null;
         }
 
+        checkUnreadCount();
         layoutManager.setCanScroll(true);
     }
 
