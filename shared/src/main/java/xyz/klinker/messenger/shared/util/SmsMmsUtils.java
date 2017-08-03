@@ -672,7 +672,7 @@ public class SmsMmsUtils {
             boolean needUpdate = true;
 
             Cursor c = context.getContentResolver().query(threadUri,
-                    new String[]{"_id", "read"}, "(read=0 OR seen=0)", null, null);
+                    new String[]{"_id", "read", "seen"}, "(read=0 OR seen=0)", null, null);
             if (c != null) {
                 try {
                     needUpdate = c.getCount() > 0;
@@ -686,10 +686,11 @@ public class SmsMmsUtils {
                 values.put("read", 1);
                 values.put("seen", 1);
 
-                sendReadReport(context, threadId, PduHeaders.READ_STATUS_READ);
                 context.getContentResolver().update(threadUri, values,
                         "(read=0 OR seen=0)", null);
             }
+
+            sendReadReport(context, threadId, PduHeaders.READ_STATUS_READ);
         }
     }
 

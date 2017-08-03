@@ -73,7 +73,11 @@ public class SmsSentReceiver extends SentReceiver {
                 markMessageError(context, uri);
                 break;
             default:
-                markMessageSent(context, uri);
+                try {
+                    markMessageSent(context, uri);
+                } catch (Exception e) {
+                    fallbackToLatestMessages(context);
+                }
                 break;
         }
     }
@@ -142,6 +146,8 @@ public class SmsSentReceiver extends SentReceiver {
             } catch (Exception e) { }
 
             source.close();
+        } else {
+            throw new RuntimeException("no messages found");
         }
     }
 
@@ -180,4 +186,27 @@ public class SmsSentReceiver extends SentReceiver {
         }
     }
 
+    public void fallbackToLatestMessages(Context context) {
+        try {
+            DataSource source = DataSource.getInstance(context);
+            source.open();
+            List<Message> messageList = source.getNumberOfMessages(10);
+            source.close();
+
+            Set<Long> conversationIds = new HashSet<>();
+
+            for (Message m : messageList) {
+                if (m.type == Message.TYPE_SENDING) {
+                    source.updateMessageType(m.id, Message.TYPE_SENT);
+                    conversationIds.add(m.conversationId);
+                }
+            }
+
+            for (Long id : conversationIds) {
+                MessageListUpdatedReceiver.sendBroadcast(context, id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
