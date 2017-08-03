@@ -51,12 +51,12 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new IllegalStateException("error receiving SMS", e);
             }
         //}).start();
     }
 
-    private void handleReceiver(Context context, Intent intent, Handler handler) throws Exception {
+    private void handleReceiver(Context context, Intent intent, Handler handler) {
         Bundle extras = intent.getExtras();
 
         int simSlot = extras.getInt("slot", -1);
