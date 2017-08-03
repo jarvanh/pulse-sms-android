@@ -436,7 +436,7 @@ public class ApiUploadService extends Service {
         apiUtils.saveFirebaseFolderRef(account.accountId);
 
         new Thread(() -> {
-            try { Thread.sleep(1000 * 60 * 5); } catch (InterruptedException e) { }
+            try { Thread.sleep(1000 * 60 * 2); } catch (InterruptedException e) { }
             finishMediaUpload(manager);
         }).start();
 

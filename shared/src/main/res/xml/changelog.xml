@@ -19,7 +19,9 @@
     <version
         name="2.4.9"
         description="August 3rd, 2017">
-        <text>Bug fixes</text>
+        <text>Changes to launcher badge support</text>
+        <text>Improvements around receiving messages</text>
+        <text>Changes to initial media upload</text>
     </version>
 
     <version
