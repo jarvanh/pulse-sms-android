@@ -684,12 +684,13 @@ public class ConversationListFragment extends Fragment
     }
 
     private void checkUnreadCount() {
-        new Thread(() -> {
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) { }
-
-            new UnreadBadger(getActivity()).writeCountFromDatabase();
-        }).start();
+        // This should be managed by clearing the count when the is started instead.
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(1500);
+//            } catch (InterruptedException e) { }
+//
+//            new UnreadBadger(getActivity()).writeCountFromDatabase();
+//        }).start();
     }
 }

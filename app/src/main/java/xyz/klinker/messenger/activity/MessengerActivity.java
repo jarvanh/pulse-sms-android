@@ -98,6 +98,7 @@ import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.PromotionUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
+import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.utils.TextAnywhereConversationCardApplier;
 import xyz.klinker.messenger.utils.UpdateUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
@@ -189,6 +190,8 @@ public class  MessengerActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         requestPermissions();
+
+        new UnreadBadger(this).clearCount();
 
         if (conversationListFragment != null && conversationListFragment.isExpanded()) {
             NotificationService.CONVERSATION_ID_OPEN = conversationListFragment.getExpandedId();
