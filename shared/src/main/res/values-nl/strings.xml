@@ -44,7 +44,7 @@
     <string name="menu_delete_conversation">Conversatie verwijderen</string>
     <string name="menu_archive_conversation">Conversatie archiveren</string>
     <string name="menu_move_to_inbox">Verplaatsen naar Inbox</string>
-    <string name="menu_conversation_information">Conversatie informatie</string>
+    <string name="menu_conversation_information">Info over conversatie</string>
     <string name="menu_conversation_blacklist">Blokkeer contact</string>
     <string name="menu_conversation_schedule">Plan een bericht</string>
     <string name="menu_contact_settings">Instellingen conversaties</string>
@@ -59,7 +59,7 @@
     <string name="menu_snooze_custom">Kies een tijd</string>
     <!-- Empty Screen -->
     <string name="no_messages">Geen berichten</string>
-    <string name="no_messages_summary">Start een nieuwe conversatie of geniet van je dag!</string>
+    <string name="no_messages_summary">Het is hier nogal leeg. Waarom geen nieuwe conversatie starten?</string>
     <string name="close">Sluiten</string>
     <!-- Conversation List Screen -->
     <string name="pinned">Vastgezet</string>
@@ -96,8 +96,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="invite_friends_summary">Net zoals ons en vele andere! We proberen Pulse naar zoveel mogelijk gebruikers te krijgen als mogelijk zodat we kunnen blijven optimaliseren en functies kunnen blijven toevoegen. Nodig je vrienden uit en help ons bij het verspreiden!\n\nSelecteer vrienden die je wilt uitnodigen. Wij zenden hen een korte SMS met informatie en een link om Pulse te downloaden.</string>
     <string name="invite_friends_sms">Ik gebruik een nieuwe SMS app en ik denk dat je er ook zal van gaan houden! En het is gratis om te downloaden: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
-    <string name="type_message">Type bericht</string>
-    <string name="type_message_to">Typ bericht naar %1$s</string>
+    <string name="type_message">Jouw bericht</string>
+    <string name="type_message_to">Jouw bericht naar %1$s</string>
     <string name="attach">Bijvoegen</string>
     <string name="select_sim">Selecteer SIM</string>
     <string name="message_from">%1$s</string>
@@ -116,7 +116,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="attach_contact">Voeg contact toe</string>
     <string name="attach_contact_summary">Selecteer of vul een contact in om toe te voegen aan het bericht!</string>
     <string name="no_location_found">We kunnen je locatie nu niet vinden.</string>
-    <string name="camera_permission_needed">We hebben jammer genoeg geen toegang tot jouw camera dus kunnen geen foto maken</string>
+    <string name="camera_permission_needed">We hebben jammer genoeg geen toegang tot jouw camera dus kunnen we geen foto maken.</string>
     <string name="take_picture">Snap afbeelding</string>
     <string name="flip_picture">Flip camera</string>
     <string name="fullscreen">Volledig scherm</string>
@@ -137,7 +137,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="view_details">Bekijk details</string>
     <string name="delete">Verwijderen</string>
     <string name="copy_message">Kopieer tekst</string>
-    <string name="resend">Herzenden</string>
+    <string name="resend">Opnieuw versturen</string>
     <string name="no_media">Geen media in deze conversatie</string>
     <string name="error_decrypting">Fout bij decrypteren! Bekijk dit bericht op je smartphone.</string>
     <string name="message_sending_failed">Kon bericht niet verzenden!</string>
@@ -145,7 +145,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="delete_message">Deze conversatie verwijderen?</string>
     <string name="forward_message">Bericht doorsturen</string>
     <string name="share_message">Bericht delen</string>
-    <string name="copy_message_text">Kopieer inhoud bericht</string>
+    <string name="copy_message_text">Kopieer berichtinhoud</string>
     <string name="open_link_to_browser">Open link in browser</string>
     <string name="open_link_internal">Open link intern</string>
     <string name="copy_link">Kopieer link</string>
@@ -159,7 +159,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="loading_messages">Optimaliseren...</string>
     <string name="loading_messages_summary">Jouw berichten aan het inladen in de app, dit duurt niet lang!</string>
     <string name="tooltip_got_it">Got it!</string>
-    <string name="navigation_drawer_conversation_hint">Meer opties voor deze conversatie vind je in de navigatiemenu.</string>
+    <string name="navigation_drawer_conversation_hint">Meer opties voor deze conversatie vind je in het navigatiemenu.</string>
     <string name="onboarding_title_1">Berichten anders ingedeeld</string>
     <string name="onboarding_title_2">Overal toegankelijk</string>
     <string name="onboarding_title_3">Enorme aanpassingsmogelijkheden</string>
@@ -241,8 +241,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
         <item quantity="other">%1$d berichten</item>
     </plurals>
     <plurals name="conversation_count">
-        <item quantity="one">in %1$d bericht</item>
-        <item quantity="other">in %1$d berichten</item>
+        <item quantity="one">in %1$d conversatie</item>
+        <item quantity="other">in %1$d conversaties</item>
     </plurals>
     <string name="pin_conversation">Zet conversatie vast</string>
     <string name="pin_conversation_summary">Hou deze conversatie bovenaan de lijst</string>
@@ -266,7 +266,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="repeat_half_hour">Elk half uur</string>
     <string name="repeat_hour">Elk uur</string>
     <string name="wake_screen">Scherm oplichten</string>
-    <string name="vibrate">Vibratie atroon</string>
+    <string name="vibrate">Vibratie patroon</string>
     <string name="vibrate_off">Geen vibratie</string>
     <string name="vibrate_default">Standaard vibratie</string>
     <string name="vibrate_two_long">Twee lange vibraties</string>
@@ -290,11 +290,11 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="rounder_bubbles">Ronde berichtenbubbels</string>
     <string name="swipe_delete">Swipe om te verwijderen</string>
     <string name="blacklist_hint">Type nummer om te blokkeren...</string>
-    <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
+    <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit nummer wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
     <string name="remove_blacklist">%1$s\n\nWil je deze blokkering verwijderen?</string>
     <string name="blacklist_need_number">Je dient een telefoonnummer in te geven om te blokkeren!</string>
-    <string name="no_blacklists">Geen blokkeringen</string>
-    <string name="no_blacklists_summary">Je kan eentje toevoegen met de plus knop onderaan!</string>
+    <string name="no_blacklists">Geen geblokkeerde nummers</string>
+    <string name="no_blacklists_summary">Blokkeer een nummer met de plus-knop onderaan.</string>
     <string name="add">Toevoegen</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_summary">Bekijk onze Privacy Policy op het web</string>
@@ -400,7 +400,7 @@ it is received.</string>
     <string name="scheduled_to_hint">Contact om naar te verzenden...</string>
     <string name="scheduled_message_sent">Gepland bericht met succes verstuurd</string>
     <string name="no_scheduled_messages">Geen geplande berichten</string>
-    <string name="no_scheduled_messages_summary">Je kan een nieuw creëren met de plus knop onderaan!</string>
+    <string name="no_scheduled_messages_summary">Plan een nieuw bericht door de plus-knop onderaan te gebruiken.</string>
     <string name="scheduled_message_in_future">De tijd moet in de toekomst zijn!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypteren en uploaden...</string>

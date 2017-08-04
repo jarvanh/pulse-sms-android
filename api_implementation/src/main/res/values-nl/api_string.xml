@@ -26,8 +26,8 @@
     <string name="api_password_confirmation">Wachtwoord bevestigen</string>
     <string name="api_name">Naam</string>
     <string name="api_phone_number">Telefoonnummer</string>
-    <string name="api_connecting">Verbinding maken met server...</string>
-    <string name="api_device_error">Er ging iets mis tijdens het opslaan. Probeer opnieuw!</string>
+    <string name="api_connecting">Verbinding maken met de server...</string>
+    <string name="api_device_error">Er ging iets mis tijdens het proces. Probeer opnieuw!</string>
     <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor jouw account en er is slechts 1 toegestaan. Wil je jouw huidige hoofdtoestel verwijderen en deze als het nieuwe hoofdtoestel instellen?</string>
     <string name="api_yes">Ja</string>
     <string name="api_no">Neen</string>
@@ -46,7 +46,7 @@
     <string name="api_activate_1_3">op een mobiel toestel of computer.</string>
     <string name="api_activate_2_1">Op de website</string>
     <string name="api_activate_2_2">vul de code rechts in</string>
-    <string name="api_activate_2_3">om te connectie te maken met je account!</string>
+    <string name="api_activate_2_3">om te connecteren met je account!</string>
     <string name="api_confirm_password">Gelieve jouw wachtwoord te bevestigen:</string>
     <string name="api_wrong_password">Hmmm. Is je wachtwoord juist?</string>
     <string name="api_email_taken">Fout bij inloggen, heb je al een account met dit e-mailadres?</string>
