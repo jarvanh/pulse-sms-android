@@ -8,8 +8,10 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.TooltipCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bignerdranch.android.multiselector.SelectableHolder;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
@@ -27,6 +30,7 @@ import xyz.klinker.messenger.shared.data.YouTubePreview;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment;
+import xyz.klinker.messenger.shared.util.DensityUtil;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -44,6 +48,17 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             setSelectable(true);
 
             activity.getMenuInflater().inflate(R.menu.action_mode_message_list, menu);
+
+            MenuItem delete = menu.findItem(R.id.menu_delete_messages);
+            MenuItem share = menu.findItem(R.id.menu_share_message);
+            MenuItem info = menu.findItem(R.id.menu_message_details);
+            MenuItem copy = menu.findItem(R.id.menu_copy_message);
+
+            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.delete);
+            fixMenuItemLongClickCrash(actionMode, share, R.drawable.ic_share, R.string.share);
+            fixMenuItemLongClickCrash(actionMode, copy, R.drawable.ic_copy, R.string.copy_message);
+            fixMenuItemLongClickCrash(actionMode, info, R.drawable.ic_info, R.string.view_details);
+
             return true;
         }
 
@@ -219,6 +234,27 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         }
 
         return result;
+    }
+
+    private void fixMenuItemLongClickCrash(ActionMode mode, MenuItem item, int icon, int text) {
+        try {
+            ImageView image = new ImageView(activity);
+            image.setImageResource(icon);
+            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0);
+            item.setActionView(image);
+            TooltipCompat.setTooltipText(item.getActionView(), activity.getString(text));
+
+            image.setOnClickListener(view -> {
+                actionMode.onActionItemClicked(mode, item);
+            });
+
+            image.setOnLongClickListener(view -> {
+                Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+                return true;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getMessageContent(Message message) {
