@@ -540,6 +540,10 @@ public class ContactUtils {
      * all we need to match in the database contact
      */
     public static String getPlainNumber(String number) {
+        if (number == null) {
+            return number;
+        }
+
         number = number.replace("+", "");
 
         if (number.length() > 10) {
