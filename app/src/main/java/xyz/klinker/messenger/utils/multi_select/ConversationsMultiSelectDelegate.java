@@ -78,7 +78,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                 if (isSelected(i, 0)) {
                     selectedPositions.add(i);
                     if (adapter.showHeaderAboutTextingOnline()) {
-                        selectedConversations.add(adapter.findConversationForPosition(i + 1));
+                        selectedConversations.add(adapter.findConversationForPosition(i - 1));
                     } else {
                         selectedConversations.add(adapter.findConversationForPosition(i));
                     }

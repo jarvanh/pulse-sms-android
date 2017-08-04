@@ -467,7 +467,7 @@ public class ApiUtils {
         } else {
             saveFirebaseFolderRef(accountId);
             byte[] bytes = BinaryUtils.getMediaBytes(context, data, mimeType);
-            uploadBytesToFirebase(bytes, deviceId, encryptionUtils, () -> {
+            uploadBytesToFirebase(accountId, bytes, deviceId, encryptionUtils, () -> {
                 final MessageBody body = new MessageBody(deviceId, deviceConversationId,
                         messageType, encryptionUtils.encrypt("firebase -1"),
                         timestamp, encryptionUtils.encrypt(mimeType), read, seen,
@@ -672,7 +672,7 @@ public class ApiUtils {
      * @param messageId the message id that the data belongs to.
      * @param encryptionUtils the utils to encrypt the byte array with.
      */
-    public void uploadBytesToFirebase(final byte[] bytes, final long messageId, final EncryptionUtils encryptionUtils,
+    public void uploadBytesToFirebase(final String accountId, final byte[] bytes, final long messageId, final EncryptionUtils encryptionUtils,
                                       final FirebaseUploadCallback callback, int retryCount) {
         if (!active || encryptionUtils == null || retryCount > RETRY_COUNT) {
             callback.onUploadFinished();
@@ -680,19 +680,28 @@ public class ApiUtils {
         }
 
         if (folderRef == null) {
-            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+            saveFirebaseFolderRef(accountId);
+            if (folderRef == null) {
+//                throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+                callback.onUploadFinished();
+                return;
+            }
         }
 
-        StorageReference fileRef = folderRef.child(messageId + "");
-        fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes())
-                .addOnSuccessListener(taskSnapshot -> {
-                    Log.v(TAG, "finished uploading and exiting for " + messageId);
-                    callback.onUploadFinished();
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "failed to upload file", e);
-                    uploadBytesToFirebase(bytes, messageId, encryptionUtils, callback, retryCount + 1);
-                });
+        try {
+            StorageReference fileRef = folderRef.child(messageId + "");
+            fileRef.putBytes(encryptionUtils.encrypt(bytes).getBytes())
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Log.v(TAG, "finished uploading and exiting for " + messageId);
+                        callback.onUploadFinished();
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "failed to upload file", e);
+                        uploadBytesToFirebase(accountId, bytes, messageId, encryptionUtils, callback, retryCount + 1);
+                    });
+        } catch (Exception e) {
+            callback.onUploadFinished();
+        }
     }
 
     /**
@@ -702,7 +711,7 @@ public class ApiUtils {
      * @param messageId the id of the message to grab so we can create a firebase storage ref.
      * @param encryptionUtils the utils to use to decrypt the message.
      */
-    public void downloadFileFromFirebase(final File file, final long messageId,
+    public void downloadFileFromFirebase(final String accountId, final File file, final long messageId,
                                          final EncryptionUtils encryptionUtils,
                                          final FirebaseDownloadCallback callback, int retryCount) {
         if (encryptionUtils == null || retryCount > RETRY_COUNT) {
@@ -711,35 +720,44 @@ public class ApiUtils {
         }
 
         if (folderRef == null) {
-            throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+            saveFirebaseFolderRef(accountId);
+            if (folderRef == null) {
+//                throw new RuntimeException("need to initialize folder ref first with saveFolderRef()");
+                callback.onDownloadComplete();
+                return;
+            }
         }
 
-        StorageReference fileRef = folderRef.child(messageId + "");
-        fileRef.getBytes(MAX_SIZE)
-                .addOnSuccessListener(bytes -> {
-                    bytes = encryptionUtils.decryptData(new String(bytes));
+        try {
+            StorageReference fileRef = folderRef.child(messageId + "");
+            fileRef.getBytes(MAX_SIZE)
+                    .addOnSuccessListener(bytes -> {
+                        bytes = encryptionUtils.decryptData(new String(bytes));
 
-                    try {
-                        BufferedOutputStream bos =
-                                new BufferedOutputStream(new FileOutputStream(file));
-                        bos.write(bytes);
-                        bos.flush();
-                        bos.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        try {
+                            BufferedOutputStream bos =
+                                    new BufferedOutputStream(new FileOutputStream(file));
+                            bos.write(bytes);
+                            bos.flush();
+                            bos.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                    Log.v(TAG, "finished downloading " + messageId);
-                    callback.onDownloadComplete();
-                })
-                .addOnFailureListener(e -> {
-                    Log.v(TAG, "failed to download file", e);
-                    if (!e.getMessage().contains("does not exist")) {
-                        downloadFileFromFirebase(file, messageId, encryptionUtils, callback, retryCount + 1);
-                    } else {
+                        Log.v(TAG, "finished downloading " + messageId);
                         callback.onDownloadComplete();
-                    }
-                });
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.v(TAG, "failed to download file", e);
+                        if (!e.getMessage().contains("does not exist")) {
+                            downloadFileFromFirebase(accountId, file, messageId, encryptionUtils, callback, retryCount + 1);
+                        } else {
+                            callback.onDownloadComplete();
+                        }
+                    });
+        } catch (Exception e) {
+            callback.onDownloadComplete();
+        }
     }
 
     /**

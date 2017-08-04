@@ -70,11 +70,19 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
             if (!ignoreNotification) {
 //                if (AndroidVersionUtil.isAndroidO()) {
-//                    context.startForegroundService(new Intent(context, NotificationService.class));
+//
 //                } else {
 //                    context.startService(new Intent(context, NotificationService.class));
 //                }
-                context.startService(new Intent(context, NotificationService.class));
+                try {
+                    context.startService(new Intent(context, NotificationService.class));
+                } catch (Exception e) {
+                    if (AndroidVersionUtil.isAndroidO()) {
+                        Intent foregroundNotificationService = new Intent(context, NotificationService.class);
+                        foregroundNotificationService.putExtra(NotificationService.EXTRA_FOREGROUND, true);
+                        context.startForegroundService(foregroundNotificationService);
+                    }
+                }
             }
 
             if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {

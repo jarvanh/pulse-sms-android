@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import retrofit2.Response;
+import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
@@ -119,6 +120,12 @@ public class ApiUploadService extends Service {
             account = Account.get(getApplicationContext());
             apiUtils = new ApiUtils();
             encryptionUtils = account.getEncryptor();
+
+            if (encryptionUtils == null) {
+                startActivity(new Intent(this, LoginActivity.class));
+                return;
+            }
+
             source = DataSource.getInstance(getApplicationContext());
             source.open();
 
@@ -450,7 +457,7 @@ public class ApiUploadService extends Service {
                 Log.v(TAG, "started uploading " + message.id);
 
                 byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
-                apiUtils.uploadBytesToFirebase(bytes, message.id, encryptionUtils, () -> {
+                apiUtils.uploadBytesToFirebase(account.accountId, bytes, message.id, encryptionUtils, () -> {
                     completedMediaUploads++;
 
                     builder.setProgress(mediaCount, completedMediaUploads, false);

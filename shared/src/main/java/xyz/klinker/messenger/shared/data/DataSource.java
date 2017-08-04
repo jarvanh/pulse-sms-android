@@ -2011,7 +2011,14 @@ public class DataSource {
             id = database.insert(Message.TABLE, null, values);
         } catch (Exception e) {
             ensureActionable();
-            id = database.insert(Message.TABLE, null, values);
+            try {
+                id = database.insert(Message.TABLE, null, values);
+            } catch (Exception x) {
+                try { Thread.sleep(2000); } catch (InterruptedException y) { }
+                ensureActionable();
+                id = database.insert(Message.TABLE, null, values);
+            }
+
         }
 
         apiUtils.addMessage(context, accountId, message.id, conversationId, message.type, message.data,

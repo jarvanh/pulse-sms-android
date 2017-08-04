@@ -430,6 +430,12 @@ public class ApiDownloadService extends Service {
                                       NotificationCompat.Builder builder) {
         apiUtils.saveFirebaseFolderRef(account.accountId);
 
+        new Thread(() -> {
+            try { Thread.sleep(1000 * 60 * 5); } catch (InterruptedException e) { }
+            finishMediaDownload(manager);
+        }).start();
+
+
         Cursor media = source.getFirebaseMediaMessages();
         if (media.moveToFirst()) {
             final int mediaCount = media.getCount() > MAX_MEDIA_DOWNLOADS ?
@@ -445,7 +451,7 @@ public class ApiDownloadService extends Service {
 
                 Log.v(TAG, "started downloading " + message.id);
 
-                apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, () -> {
+                apiUtils.downloadFileFromFirebase(account.accountId, file, message.id, encryptionUtils, () -> {
                     completedMediaDownloads++;
 
                     source.updateMessageData(message.id, Uri.fromFile(file).toString());

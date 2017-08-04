@@ -52,7 +52,12 @@ public class SmsSentReceiver extends SentReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
+        try {
+            super.onReceive(context, intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         new Thread(() -> {
             try {
                 handleReceiver(context, intent);

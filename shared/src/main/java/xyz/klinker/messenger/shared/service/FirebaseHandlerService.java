@@ -440,7 +440,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             source1.close();
         };
 
-        apiUtils.downloadFileFromFirebase(file, message.id, encryptionUtils, callback, 0);
+        apiUtils.downloadFileFromFirebase(Account.get(context).accountId, file, message.id, encryptionUtils, callback, 0);
 
     }
 

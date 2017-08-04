@@ -1769,11 +1769,11 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void setConversationUpdateInfo(String newMessage) {
-        ConversationListFragment fragment = (ConversationListFragment) getActivity()
-                .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
+        Fragment fragment = getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.conversation_list_container);
 
-        if (fragment != null && newMessage != null) {
-            fragment.setConversationUpdateInfo(new ConversationUpdateInfo(
+        if (fragment != null && newMessage != null && fragment instanceof ConversationListFragment) {
+            ((ConversationListFragment) fragment).setConversationUpdateInfo(new ConversationUpdateInfo(
                     getConversationId(), newMessage, true));
         }
     }

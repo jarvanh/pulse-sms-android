@@ -214,6 +214,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     @Override
     public void onBindViewHolder(ConversationViewHolder holder, int section, int relativePosition,
                                  int absolutePosition) {
+        if (absolutePosition >= conversations.size() || absolutePosition < 0) {
+            return;
+        }
+
         Conversation conversation = conversations.get(absolutePosition);
 
         // somehow a null conversation is being inserted in here sometimes after a new
