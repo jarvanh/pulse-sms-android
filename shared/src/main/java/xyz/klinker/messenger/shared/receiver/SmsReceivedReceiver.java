@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -51,7 +52,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
-                throw new IllegalStateException("error receiving SMS", e);
+                AnalyticsHelper.failedToSaveSms(context, e.getMessage());
+                e.printStackTrace();
             }
         //}).start();
     }

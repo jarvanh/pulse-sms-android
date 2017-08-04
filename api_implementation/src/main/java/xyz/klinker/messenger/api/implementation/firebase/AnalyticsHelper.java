@@ -109,4 +109,16 @@ public class AnalyticsHelper {
     public static void convoListNotNow(Context context) {
         logEvent(context, CONVO_LIST_CARD_NOT_NOW);
     }
+
+
+    // Bad Errors
+    private static final String FAILED_TO_SAVE_SMS = "FAILED_TO_SAVE_SMS";
+
+    public static void failedToSaveSms(Context context, String error) {
+        Bundle bundle = new Bundle();
+        bundle.putString("error", error);
+
+        logEvent(context, FAILED_TO_SAVE_SMS, bundle);
+    }
+
 }
