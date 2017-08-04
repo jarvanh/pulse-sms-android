@@ -171,7 +171,12 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             source.open();
 
             List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
-            source.insertConversations(conversations, context, InitialLoadActivity.this);
+            try {
+                source.insertConversations(conversations, context, InitialLoadActivity.this);
+            } catch (Exception e) {
+                source.ensureActionable();
+                source.insertConversations(conversations, context, InitialLoadActivity.this);
+            }
 
             handler.post(() -> progress.setIndeterminate(true));
 

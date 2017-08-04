@@ -151,7 +151,7 @@ public class DataSource {
         return database != null && database.isOpen();
     }
 
-    private void ensureActionable() {
+    public void ensureActionable() {
         try {
             Thread.sleep(100);
         } catch (Exception e) { }
@@ -307,7 +307,7 @@ public class DataSource {
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, generateId());
-            values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber);
+            values.put(Contact.COLUMN_PHONE_NUMBER, ContactUtils.getPlainNumber(contact.phoneNumber));
             values.put(Contact.COLUMN_NAME, contact.name);
             values.put(Contact.COLUMN_COLOR, contact.colors.color);
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark);
@@ -344,14 +344,14 @@ public class DataSource {
         }
 
         values.put(Contact.COLUMN_ID, contact.id);
-        values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber);
+        values.put(Contact.COLUMN_PHONE_NUMBER, ContactUtils.getPlainNumber(contact.phoneNumber));
         values.put(Contact.COLUMN_NAME, contact.name);
         values.put(Contact.COLUMN_COLOR, contact.colors.color);
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark);
         values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight);
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent);
 
-        apiUtils.addContact(accountId,contact.phoneNumber, contact.name, contact.colors.color,
+        apiUtils.addContact(accountId, contact.phoneNumber, contact.name, contact.colors.color,
                 contact.colors.colorDark, contact.colors.colorLight,
                 contact.colors.colorAccent, getEncryptionUtils(context));
 
