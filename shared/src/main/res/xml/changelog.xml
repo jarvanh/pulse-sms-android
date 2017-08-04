@@ -18,10 +18,13 @@
 
     <version
         name="2.4.9"
-        description="August 3rd, 2017">
+        description="August 4th, 2017">
         <text>Changes to launcher badge support</text>
         <text>Improvements around receiving messages</text>
         <text>Changes to initial media upload</text>
+        <text>Crash fixes</text>
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
     </version>
 
     <version
