@@ -114,12 +114,12 @@ public class MediaSaver {
             try {
                 InputStream in = context.getContentResolver().openInputStream(Uri.parse(message.data));
                 FileUtils.copy(in, dst);
-                Toast.makeText(context, R.string.saved, Toast.LENGTH_SHORT).show();
+                makeToast(R.string.saved);
             } catch (IOException e) {
                 e.printStackTrace();
                 try {
-                    Toast.makeText(context, R.string.failed_to_save, Toast.LENGTH_SHORT).show();
-                } catch(Exception x) {
+                    makeToast(R.string.failed_to_save);
+                } catch (Exception x) {
                     // background thread
                 }
             }

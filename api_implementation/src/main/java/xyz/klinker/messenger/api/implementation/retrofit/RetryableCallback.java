@@ -48,6 +48,14 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     }
 
     private void retry() {
-        call.clone().enqueue(this);
+        new Thread(() -> {
+            try {
+                Thread.sleep(4000 * retryCount);
+            } catch (InterruptedException e) {
+
+            } finally {
+                call.clone().enqueue(RetryableCallback.this);
+            }
+        }).start();
     }
 }

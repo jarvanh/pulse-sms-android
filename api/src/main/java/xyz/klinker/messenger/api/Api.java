@@ -151,18 +151,18 @@ public class Api {
      * requests.
      */
     private Api(String baseUrl) {
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                HttpUrl url = request.url().newBuilder().build();
-                request = request.newBuilder().url(url).build();
-                return chain.proceed(request);
-            }
-        });
+//        httpClient.addInterceptor(new Interceptor() {
+//            @Override
+//            public okhttp3.Response intercept(Chain chain) throws IOException {
+//                Request request = chain.request();
+//                HttpUrl url = request.url().newBuilder().build();
+//                request = request.newBuilder().url(url).build();
+//                return chain.proceed(request);
+//            }
+//        });
 
         // gzip all bodies, the server should automatically unzip them
-        //httpClient.addInterceptor(new GzipRequestInterceptor());
+//        httpClient.addInterceptor(new GzipRequestInterceptor());
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()

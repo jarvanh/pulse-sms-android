@@ -54,6 +54,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.TooltipCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -471,8 +472,10 @@ public class MessageListFragment extends Fragment implements
         if (!getArguments().getBoolean(ARG_IS_GROUP) && !firstName.isEmpty()) {
             String hint = getResources().getString(R.string.type_message_to, firstName);
             messageEntry.setHint(hint);
+            TooltipCompat.setTooltipText(send, hint);
         } else {
             messageEntry.setHint(R.string.type_message);
+            TooltipCompat.setTooltipText(send, getString(R.string.type_message));
         }
 
         Settings settings = Settings.get(getActivity());
@@ -541,6 +544,18 @@ public class MessageListFragment extends Fragment implements
         new Handler().postDelayed(() -> {
             toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
                     R.menu.fragment_messages_group : R.menu.fragment_messages);
+
+            try {
+                MenuItem callItem = toolbar.getMenu().findItem(R.id.menu_call);
+                ImageView image = new ImageView(getActivity());
+                image.setImageResource(R.drawable.ic_call);
+                image.setPaddingRelative(0, 0, DensityUtil.toDp(getActivity(), 12), 0);
+                callItem.setActionView(image);
+                TooltipCompat.setTooltipText(callItem.getActionView(), getString(R.string.menu_call));
+            } catch (Exception e) {
+                // rotation change probably
+            }
+
             toolbar.setOnMenuItemClickListener(item -> {
                 new Handler().postDelayed(() -> {
                     if (getActivity() != null) {

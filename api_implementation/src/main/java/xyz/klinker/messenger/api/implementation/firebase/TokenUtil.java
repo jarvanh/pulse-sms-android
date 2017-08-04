@@ -24,22 +24,8 @@ public class TokenUtil {
             Log.v(TAG, "refreshing on server");
             new Thread(() -> {
                 ApiUtils api = new ApiUtils();
-
-                api.removeDevice(account.accountId, Integer.parseInt(account.deviceId));
-
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) { }
-
-                Integer deviceId = api.registerDevice(account.accountId,Build.MANUFACTURER + ", " + Build.MODEL,
-                        Build.MODEL, account.primary, FirebaseInstanceId.getInstance().getToken());
-
-                if (deviceId != null) {
-                    account.setDeviceId(deviceId.toString());
-                }
-
-//                api.updateDevice(account.accountId, Integer.parseInt(account.deviceId), Build.MODEL,
-//                        FirebaseInstanceId.getInstance().getToken());
+                api.updateDevice(account.accountId, Integer.parseInt(account.deviceId), Build.MODEL,
+                        FirebaseInstanceId.getInstance().getToken());
             }).start();
         }
 
