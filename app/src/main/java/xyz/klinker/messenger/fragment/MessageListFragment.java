@@ -552,6 +552,21 @@ public class MessageListFragment extends Fragment implements
                 image.setPaddingRelative(0, 0, DensityUtil.toDp(getActivity(), 12), 0);
                 callItem.setActionView(image);
                 TooltipCompat.setTooltipText(callItem.getActionView(), getString(R.string.menu_call));
+
+                image.setOnClickListener(view -> {
+                    new Handler().postDelayed(() -> {
+                        if (getActivity() != null) {
+                            ((MessengerActivity) getActivity()).menuItemClicked(R.id.menu_call);
+                        }
+                    }, keyboardOpen ? 300 : 100);
+
+                    dismissKeyboard();
+                });
+
+                image.setOnLongClickListener(view -> {
+                    Toast.makeText(getActivity(), R.string.menu_call, Toast.LENGTH_SHORT).show();
+                    return true;
+                });
             } catch (Exception e) {
                 // rotation change probably
             }
