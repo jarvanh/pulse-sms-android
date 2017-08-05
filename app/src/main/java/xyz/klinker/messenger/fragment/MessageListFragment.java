@@ -759,7 +759,8 @@ public class MessageListFragment extends Fragment implements
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
         return !Account.get(getActivity()).primary &&
                 (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
-                        Build.MANUFACTURER.toLowerCase().equals("sony"));
+                        Build.MANUFACTURER.toLowerCase().equals("sony") ||
+                        Build.MODEL.toLowerCase().equals("sm-t800"));
     }
 
     private void initAttachStub() {
