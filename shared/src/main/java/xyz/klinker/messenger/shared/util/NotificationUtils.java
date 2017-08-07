@@ -26,6 +26,7 @@ import xyz.klinker.messenger.shared.service.NotificationService;
 
 public class NotificationUtils {
 
+    public static final String DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel";
     public static final String MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary";
     public static final String FAILED_MESSAGES_CHANNEL_ID = "failed-messages";
     public static final String TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications";
@@ -81,7 +82,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createNotificationChannelIfNonExistent(Context context, Conversation conversation) {
+    public static void createNotificationChannel(Context context, Conversation conversation) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -89,6 +90,21 @@ public class NotificationUtils {
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final NotificationChannel channel = createChannel(context, conversation);
         manager.createNotificationChannel(channel);
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public static void createDefaultChannel(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel defaultChannel = new NotificationChannel(DEFAULT_CONVERSATION_CHANNEL_ID,
+                context.getString(R.string.default_notifications_channel),
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+        defaultChannel.setDescription(context.getString(R.string.default_notifications_channel_description));
+        defaultChannel.setGroup("conversations");
+        manager.createNotificationChannel(defaultChannel);
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -166,7 +182,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public static void createNotificationChannels(Context context, DataSource source) {
+    public static void createNotificationChannels(Context context) {
         if (!AndroidVersionUtil.isAndroidO()) {
             return;
         }
@@ -179,24 +195,13 @@ public class NotificationUtils {
         manager.createNotificationChannelGroup(conversationsGroup);
 
         // channels to place the notifications in
+        createDefaultChannel(context);
         createTestChannel(context);
         createStatusChannel(context);
         createFailedMessageChannel(context);
         createMessageGroupChannel(context);
         createMediaParseChannel(context);
         createGeneralChannel(context);
-
-        List<Conversation> conversations = source.getAllConversationsAsList();
-        for (int i = 0; i < conversations.size(); i++) {
-            final Conversation conversation = conversations.get(i);
-            final NotificationChannel channel = createChannel(context, conversation);
-
-            try {
-                manager.createNotificationChannel(channel);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -231,6 +236,19 @@ public class NotificationUtils {
 
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.deleteNotificationChannel(conversationId + "");
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public static void deleteAllChannels(Context context) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return;
+        }
+
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        List<NotificationChannel> channels = manager.getNotificationChannels();
+        for (NotificationChannel channel : channels) {
+            manager.deleteNotificationChannel(channel.getId());
+        }
     }
 
 }

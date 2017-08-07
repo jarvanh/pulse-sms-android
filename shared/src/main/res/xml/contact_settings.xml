@@ -75,7 +75,12 @@
 
         <Preference
             android:key="@string/pref_contact_notification_channel"
-            android:title="@string/channel_settings" />
+            android:title="@string/channel_settings"
+            android:summary="@string/channel_settings_summary"/>
+
+        <Preference
+            android:key="@string/pref_contact_notification_channel_restore_default"
+            android:title="@string/restore_default_channel_settings" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 

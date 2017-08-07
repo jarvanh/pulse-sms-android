@@ -26,6 +26,7 @@ import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class UpdateUtils {
@@ -45,15 +46,13 @@ public class UpdateUtils {
         Settings settings = Settings.get(context);
         MmsSettings mmsSettings = MmsSettings.get(context);
 
-        if (sharedPreferences.getBoolean("v2.2.0", true)) {
-            SharedPreferences.Editor editor = sharedPreferences.edit()
-                    .putBoolean("v2.2.0", false);
+        if (sharedPreferences.getBoolean("v2.4.9", true)) {
+            sharedPreferences.edit()
+                    .putBoolean("v2.4.9", false)
+                    .apply();
 
-            if (!mmsSettings.convertLongMessagesToMMS) {
-                editor.putInt(context.getString(R.string.pref_convert_to_mms), 0);
-            }
-
-            editor.apply();
+            NotificationUtils.deleteAllChannels(context);
+            NotificationUtils.createNotificationChannels(context);
         }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);

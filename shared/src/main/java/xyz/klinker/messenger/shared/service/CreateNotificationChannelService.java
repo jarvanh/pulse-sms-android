@@ -37,12 +37,7 @@ public class CreateNotificationChannelService extends IntentService {
                 .build();
         startForeground(FOREGROUND_ID, notification);
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-
-        NotificationUtils.createNotificationChannels(this, source);
-
-        source.close();
+        NotificationUtils.createNotificationChannels(this);
 
         stopForeground(true);
     }

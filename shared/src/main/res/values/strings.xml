@@ -224,6 +224,9 @@
     <string name="new_message">New Message</string>
     <string name="received_new_message">You received a new text!</string>
     <string name="media">Media</string>
+    <string name="default_notifications_channel">Default conversation notifications</string>
+    <string name="default_notifications_channel_description">These settings will apply to any conversations
+        where you have not created an individual Notification Channel for per-conversation customization.</string>
     <string name="test_notifications_channel">Test notifications</string>
     <string name="status_notifications_channel">Status notifications</string>
     <string name="general_notifications_channel">General notifications</string>
@@ -482,8 +485,14 @@
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="channel_settings">Notification Channel Settings</string>
+    <string name="channel_settings_summary">Channels are required to customize notifications for Android 8.0 and above</string>
+    <string name="restore_default_channel_settings">Restore Default Notification Settings</string>
     <string name="channels">Channels</string>
+    <string name="default_channel">Default Channel</string>
     <string name="channels_global_warning">Many global customizations are now only possible per-channel.</string>
+    <string name="channels_global_warning_2">Android\'s <i>Notification Channels</i> are now required for most of this configuration.\n\n
+        You can customize any individual conversation alerts by creating a <i>Notification Channel</i> in that conversation\'s settings menu.
+        Use the default channel to customize any conversations that you have not created an individual channel for.</string>
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="rate_it">Rate It!</string>

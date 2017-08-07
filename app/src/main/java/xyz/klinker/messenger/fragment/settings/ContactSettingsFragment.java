@@ -46,6 +46,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
@@ -240,10 +241,13 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     private void setUpNotificationChannels() {
-        Preference preference = findPreference(getString(R.string.pref_contact_notification_channel));
+        Preference channelPref = findPreference(getString(R.string.pref_contact_notification_channel));
+        Preference restoreDefaultsPref = findPreference(getString(R.string.pref_contact_notification_channel_restore_default));
 
         if (AndroidVersionUtil.isAndroidO()) {
-            preference.setOnPreferenceClickListener(preference12 -> {
+            channelPref.setOnPreferenceClickListener(preference12 -> {
+                NotificationUtils.createNotificationChannel(getActivity(), conversation);
+
                 Intent intent = new Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                 intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, conversation.id + "");
                 intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
@@ -251,10 +255,16 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
                 return true;
             });
+
+            restoreDefaultsPref.setOnPreferenceClickListener(preference12 -> {
+                NotificationUtils.deleteChannel(getActivity(), conversation.id);
+                return true;
+            });
         } else {
             PreferenceCategory notificationCategory = (PreferenceCategory)
                     findPreference(getString(R.string.pref_contact_notification_group));
-            notificationCategory.removePreference(preference);
+            notificationCategory.removePreference(channelPref);
+            notificationCategory.removePreference(restoreDefaultsPref);
         }
     }
 

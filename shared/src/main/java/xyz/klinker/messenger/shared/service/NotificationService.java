@@ -16,8 +16,10 @@
 
 package xyz.klinker.messenger.shared.service;
 
+import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +37,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -227,8 +230,6 @@ public class NotificationService extends IntentService {
 
                             conversations.add(conversation);
                             keys.add(conversationId);
-
-                            NotificationUtils.createNotificationChannelIfNonExistent(context, c);
                         }
                     } else {
                         conversation = conversations.get(conversationIndex);
@@ -278,7 +279,8 @@ public class NotificationService extends IntentService {
         }
 
         Settings settings = Settings.get(this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, conversation.id + "")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                    getNotificationChannel(this, conversation.id))
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.title)
                 .setAutoCancel(AUTO_CANCEL)
@@ -441,7 +443,8 @@ public class NotificationService extends IntentService {
             }
         }
 
-        NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this, conversation.id + "")
+        NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this,
+                    getNotificationChannel(this, conversation.id))
                 .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(getResources().getQuantityString(R.plurals.new_conversations, 1, 1))
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
@@ -501,7 +504,7 @@ public class NotificationService extends IntentService {
         secondPageStyle.setBigContentTitle(conversation.title)
                 .bigText(getWearableSecondPageConversation(conversation));
         NotificationCompat.Builder wear =
-                new NotificationCompat.Builder(this, conversation.id + "")
+                new NotificationCompat.Builder(this, getNotificationChannel(this, conversation.id))
                         .setStyle(secondPageStyle);
 
         NotificationCompat.WearableExtender wearableExtender =
@@ -891,5 +894,19 @@ public class NotificationService extends IntentService {
 
     public static void cancelRepeats(Context context) {
         RepeatNotificationJob.scheduleNextRun(context, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private static String getNotificationChannel(Context context, long conversationId) {
+        if (!AndroidVersionUtil.isAndroidO()) {
+            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID;
+        }
+
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager.getNotificationChannel(conversationId + "") != null) {
+            return conversationId + "";
+        } else {
+            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID;
+        }
     }
 }

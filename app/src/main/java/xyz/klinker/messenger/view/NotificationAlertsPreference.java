@@ -75,9 +75,10 @@ public class NotificationAlertsPreference extends Preference implements
             layout.findViewById(R.id.ringtone).setVisibility(View.GONE);
             layout.findViewById(R.id.heads_up).setVisibility(View.GONE);
 
-            builder.setNeutralButton(R.string.channels, ((dialogInterface, i) -> {
+            builder.setNeutralButton(R.string.default_channel, ((dialogInterface, i) -> {
                 Intent intent = new Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                 intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getContext().getPackageName());
+                intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID);
                 getContext().startActivity(intent);
             }));
         } else {
