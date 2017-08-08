@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.4.10"
+        description="August 8th, 2017">
+        <text>Fixes for marking MMS as seen</text>
+    </version>
+
+    <version
         name="2.4.9"
         description="August 4th, 2017">
         <text>Android O Users: Notification channels have been reset. You can create an individual notification channel by going to that conversation's settings. Any conversation you haven't created a channel for will use the default notification channel. This will allow you to use some "Global" notification customization.</text>

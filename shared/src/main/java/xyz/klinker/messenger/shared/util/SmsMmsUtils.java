@@ -55,6 +55,8 @@ import xyz.klinker.messenger.shared.data.model.Message;
 
 public class SmsMmsUtils {
 
+    private static final String TAG = "SmsMmsUtils";
+
     public static final int INITIAL_CONVERSATION_LIMIT = 250;
     public static final int INITIAL_MESSAGE_LIMIT = 500;
 
@@ -651,17 +653,16 @@ public class SmsMmsUtils {
             long threadId = Utils.getOrCreateThreadId(context, recipients);
             markConversationRead(context,
                     ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | IllegalArgumentException | SQLException | SecurityException e) {
             // the conversation doesn't exist
-        } catch (IllegalArgumentException | SQLException e) {
             e.printStackTrace();
-        } catch (SecurityException e) {
-            // no permission
         }
     }
 
     private static void markConversationRead(final Context context, final Uri threadUri,
                                              long threadId) {
+        Log.v(TAG, "marking thread as read. Thread Id: " + threadId + ", Thread Uri: " + threadUri);
+
         // If we have no Uri to mark (as in the case of a conversation that
         // has not yet made its way to disk), there's nothing to do.
         if (threadUri != null) {
@@ -682,24 +683,23 @@ public class SmsMmsUtils {
             }
 
             if (needUpdate) {
+                Log.v(TAG, "MMS need to be marked as read");
+
                 ContentValues values = new ContentValues(2);
                 values.put("read", 1);
                 values.put("seen", 1);
 
+                sendReadReport(context, threadId, PduHeaders.READ_STATUS_READ);
                 context.getContentResolver().update(threadUri, values,
                         "(read=0 OR seen=0)", null);
             }
-
-            sendReadReport(context, threadId, PduHeaders.READ_STATUS_READ);
         }
     }
 
     private static void sendReadReport(final Context context,
                                        final long threadId,
                                        final int status) {
-        String selection = Telephony.Mms.MESSAGE_TYPE + " = " + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
-                + " AND " + Telephony.Mms.READ + " = 0"
-                + " AND " + Telephony.Mms.READ_REPORT + " = " + PduHeaders.VALUE_YES;
+        String selection = Telephony.Mms.READ + "=0";
 
         if (threadId != -1) {
             selection = selection + " AND " + Telephony.Mms.THREAD_ID + " = " + threadId;
@@ -710,12 +710,30 @@ public class SmsMmsUtils {
                 selection, null, null);
 
         try {
-            if (c != null && c.moveToFirst()) {
-                do {
-                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
-                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
-                            c.getString(1), status);
-                } while (c.moveToNext());
+            if (c == null) {
+                Log.v(TAG, "null cursor when marking read");
+                return;
+            } else if (c.getCount() == 0) {
+                Log.v(TAG, "no cursor content");
+                return;
+            } else if (c.getCount() > 0) {
+                Log.v(TAG, "cursor count: " + c.getCount());
+            }
+
+            while (c.moveToNext()) {
+//                if (c.getString(1) != null) {
+//                    Log.v("SmsMmsUtils", "marking MMS as seen. _id:" + c.getString(0) + ", message_id: " + c.getString(1));
+//                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
+//                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
+//                            c.getString(1), status);
+//                } else {
+//                    Log.v("SmsMmsUtils", "null message_id, _id: " + c.getString(0));
+//                }
+
+                Log.v("SmsMmsUtils", "marking MMS as seen. _id:" + c.getString(0) + ", message_id: " + c.getString(1));
+                Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
+                MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
+                        c.getString(0), status);
             }
         } finally {
             if (c != null) {
@@ -723,6 +741,38 @@ public class SmsMmsUtils {
             }
         }
     }
+
+//    private static void sendReadReport(final Context context,
+//                                       final long threadId,
+//                                       final int status) {
+////        String selection = Telephony.Mms.MESSAGE_TYPE + " = " + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
+////                + " AND " + Telephony.Mms.READ + " = 0"
+////                + " AND " + Telephony.Mms.READ_REPORT + " = " + PduHeaders.VALUE_YES;
+//        String selection = Telephony.Mms.READ + " = 0";
+//
+//        if (threadId != -1) {
+//            selection = selection + " AND " + Telephony.Mms.THREAD_ID + " = " + threadId;
+//        }
+//
+//        final Cursor c = com.google.android.mms.util_alt.SqliteWrapper.query(context, context.getContentResolver(),
+//                Telephony.Mms.Inbox.CONTENT_URI, new String[]{Telephony.Mms._ID, Telephony.Mms.MESSAGE_ID},
+//                selection, null, null);
+//
+//        try {
+//            if (c != null && c.moveToFirst()) {
+//                do {
+//                    Log.v("SmsMmsUtils", "marking MMS as seen. ID:" + c.getString(1));
+//                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
+//                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
+//                            c.getString(1), status);
+//                } while (c.moveToNext());
+//            }
+//        } finally {
+//            if (c != null) {
+//                c.close();
+//            }
+//        }
+//    }
 
     /**
      * Deletes a conversation from the internal sms database.
