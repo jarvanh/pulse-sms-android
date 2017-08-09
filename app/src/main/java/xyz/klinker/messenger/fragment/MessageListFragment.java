@@ -472,10 +472,8 @@ public class MessageListFragment extends Fragment implements
         if (!getArguments().getBoolean(ARG_IS_GROUP) && !firstName.isEmpty()) {
             String hint = getResources().getString(R.string.type_message_to, firstName);
             messageEntry.setHint(hint);
-            TooltipCompat.setTooltipText(send, hint);
         } else {
             messageEntry.setHint(R.string.type_message);
-            TooltipCompat.setTooltipText(send, getString(R.string.type_message));
         }
 
         Settings settings = Settings.get(getActivity());
