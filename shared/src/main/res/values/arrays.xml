@@ -29,6 +29,16 @@
         <item>extra_large</item>
     </string-array>
 
+    <string-array name="emoji_style">
+        <item>@string/emoji_style_default</item>
+        <item>@string/emoji_style_android_o</item>
+    </string-array>
+
+    <string-array name="emoji_style_values">
+        <item>default</item>
+        <item>android_o</item>
+    </string-array>
+
     <string-array name="global_color">
         <item>@string/set_color_per_conversation</item>
         <item>@string/material_color_red</item>

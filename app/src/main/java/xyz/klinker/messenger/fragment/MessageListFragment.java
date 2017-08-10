@@ -67,6 +67,7 @@ import android.view.ViewStub;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -185,7 +186,7 @@ public class MessageListFragment extends Fragment implements
     private View appBarLayout;
     private Toolbar toolbar;
     private View sendBar;
-    private ImageKeyboardEditText messageEntry;
+    private EditText messageEntry;
     private MaterialScrollBar<TouchScrollBar> dragScrollBar;
     private View selectSim;
     private ImageButton attach;
@@ -277,7 +278,7 @@ public class MessageListFragment extends Fragment implements
         appBarLayout = view.findViewById(R.id.app_bar_layout);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         sendBar = view.findViewById(R.id.send_bar);
-        messageEntry = (ImageKeyboardEditText) view.findViewById(R.id.message_entry);
+        messageEntry = (EditText) view.findViewById(R.id.message_entry);
         messageList = (RecyclerView) view.findViewById(R.id.message_list);
         dragScrollBar = (MaterialScrollBar) view.findViewById(R.id.drag_scrollbar);
         send = (FloatingActionButton) view.findViewById(R.id.send);
@@ -307,7 +308,9 @@ public class MessageListFragment extends Fragment implements
             removeImage = view.findViewById(R.id.remove_image);
             editImage = view.findViewById(R.id.edit_image);
 
-            messageEntry.setCommitContentListener(this);
+            if (messageEntry instanceof ImageKeyboardEditText) {
+                ((ImageKeyboardEditText) messageEntry).setCommitContentListener(this);
+            }
 
             dragDismissFrameLayout = (ElasticDragDismissFrameLayout) view;
             dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {

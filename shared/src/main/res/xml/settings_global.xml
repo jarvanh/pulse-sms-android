@@ -42,6 +42,13 @@
             android:defaultValue="normal" />
 
         <xyz.klinker.messenger.view.AutoSummaryListPreference
+            android:key="@string/pref_emoji_style"
+            android:title="@string/emoji_style"
+            android:entries="@array/emoji_style"
+            android:entryValues="@array/emoji_style_values"
+            android:defaultValue="default" />
+
+        <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_keyboard_layout"
             android:title="@string/keyboard_layout"
             android:entries="@array/keyboard_layout"

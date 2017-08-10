@@ -20,8 +20,12 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.FontRequestEmojiCompatConfig;
 import android.support.v4.os.BuildCompat;
+import android.support.v4.provider.FontRequest;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -40,6 +44,7 @@ import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
+import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;
@@ -69,6 +74,7 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         enableSecurity();
+        EmojiInitializer.INSTANCE.initializeEmojiCompat(getApplicationContext());
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {

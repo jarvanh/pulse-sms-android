@@ -879,7 +879,7 @@ public class ApiUtils {
     }
 
     /**
-     * Update the strip Unicode setting.
+     * Update the notification history option
      */
     public void updateShowHistoryInNotification(final String accountId, final boolean showHistory) {
         if (active && accountId != null) {
@@ -1084,6 +1084,15 @@ public class ApiUtils {
     public void updateFontSize(final String accountId, final String size) {
         if (active && accountId != null) {
             updateSetting(accountId, "font_size", "string", size);
+        }
+    }
+
+    /**
+     * Update the emoji style setting
+     */
+    public void updateEmojiStyle(final String accountId, final String style) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "emoji_style", "string", style);
         }
     }
 
