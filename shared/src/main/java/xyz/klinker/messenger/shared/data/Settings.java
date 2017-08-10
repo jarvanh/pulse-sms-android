@@ -18,6 +18,7 @@ package xyz.klinker.messenger.shared.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 
@@ -27,9 +28,11 @@ import java.util.Set;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
+import xyz.klinker.messenger.shared.data.pojo.EmojiStyle;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
@@ -82,6 +85,7 @@ public class Settings {
     public ColorSet globalColorSet;
     public BaseTheme baseTheme;
     public KeyboardLayout keyboardLayout;
+    public EmojiStyle emojiStyle;
 
     /**
      * Gets a new instance (singleton) of Settings.
@@ -167,6 +171,19 @@ public class Settings {
             this.smallFont = 16;
             this.mediumFont = 18;
             this.largeFont = 20;
+        }
+
+        if (AndroidVersionUtil.isAndroidO()) {
+            this.emojiStyle = EmojiStyle.ANDROID_O;
+        } else {
+            String emojiStyle = sharedPrefs.getString(context.getString(R.string.pref_emoji_style), "default");
+            switch (emojiStyle) {
+                case "android_o":
+                    this.emojiStyle = EmojiStyle.ANDROID_O;
+                    break;
+                default:
+                    this.emojiStyle = EmojiStyle.DEFAULT;
+            }
         }
 
         String vibrateString = sharedPrefs.getString(context.getString(R.string.pref_vibrate), "vibrate_default");

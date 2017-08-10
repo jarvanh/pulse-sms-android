@@ -42,6 +42,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.SetUtils;
@@ -69,6 +70,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         initStripUnicode();
         initMmsConfiguration();
         initNotificationHistory();
+        initEmojiStyle();
     }
 
     @Override
@@ -226,6 +228,22 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             ((PreferenceCategory) findPreference(getString(R.string.pref_notification_category)))
                     .removePreference(pref);
+        }
+    }
+
+    private void initEmojiStyle() {
+        Preference pref = findPreference(getString(R.string.pref_emoji_style));
+
+        if (AndroidVersionUtil.isAndroidO() || !FeatureFlags.get(getActivity()).EMOJI_STYLE_SELECTION) {
+            ((PreferenceCategory) findPreference(getString(R.string.pref_customization_category)))
+                    .removePreference(pref);
+        } else {
+            pref.setOnPreferenceChangeListener((preference, o) -> {
+                String value = (String) o;
+                new ApiUtils().updateEmojiStyle(Account.get(getActivity()).accountId, value);
+
+                return true;
+            });
         }
     }
 

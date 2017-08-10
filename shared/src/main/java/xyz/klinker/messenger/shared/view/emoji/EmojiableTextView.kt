@@ -5,9 +5,14 @@ import android.support.text.emoji.widget.EmojiTextViewHelper
 import android.support.v7.widget.AppCompatTextView
 import android.text.InputFilter
 import android.util.AttributeSet
+import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 
 class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : AppCompatTextView(context, attrs, defStyleAttr) {
+
+    private val useEmojiCompat: Boolean
+        get() = Settings.get(context).emojiStyle != EmojiStyle.DEFAULT
 
     private var helper: EmojiTextViewHelper? = null
     private val emojiHelper: EmojiTextViewHelper
@@ -19,11 +24,17 @@ class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: Attri
         }
 
     init {
-        emojiHelper.updateTransformationMethod()
+        if (useEmojiCompat) {
+            emojiHelper.updateTransformationMethod()
+        }
     }
 
     override fun setFilters(filters: Array<InputFilter>) {
-        super.setFilters(emojiHelper.getFilters(filters))
+        if (useEmojiCompat) {
+            super.setFilters(emojiHelper.getFilters(filters))
+        } else {
+            super.setFilters(filters)
+        }
     }
 
     override fun setAllCaps(allCaps: Boolean) {
