@@ -44,6 +44,7 @@ import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
+import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;
@@ -73,7 +74,7 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         enableSecurity();
-        initializeEmojiCompat();
+        EmojiInitializer.INSTANCE.initializeEmojiCompat(getApplicationContext());
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {
@@ -122,27 +123,6 @@ public class MessengerApplication extends FirebaseApplication {
         } catch (Exception e) {
 
         }
-    }
-
-    private void initializeEmojiCompat() {
-        final FontRequest fontRequest = new FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                "Noto Color Emoji Compat",
-                R.array.com_google_android_gms_fonts_certs);
-        EmojiCompat.init(new FontRequestEmojiCompatConfig(getApplicationContext(), fontRequest)
-                .setReplaceAll(true)
-                .registerInitCallback(new EmojiCompat.InitCallback() {
-                    @Override
-                    public void onInitialized() {
-                        Log.i("EmojiCompat", "EmojiCompat initialized");
-                    }
-
-                    @Override
-                    public void onFailed(Throwable throwable) {
-                        Log.e("EmojiCompat", "EmojiCompat initialization failed", throwable);
-                    }
-                }));
     }
 
     @Override
