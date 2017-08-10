@@ -20,8 +20,12 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.FontRequestEmojiCompatConfig;
 import android.support.v4.os.BuildCompat;
+import android.support.v4.provider.FontRequest;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -69,6 +73,7 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         enableSecurity();
+        initializeEmojiCompat();
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {
@@ -117,6 +122,27 @@ public class MessengerApplication extends FirebaseApplication {
         } catch (Exception e) {
 
         }
+    }
+
+    private void initializeEmojiCompat() {
+        final FontRequest fontRequest = new FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Noto Color Emoji Compat",
+                R.array.com_google_android_gms_fonts_certs);
+        EmojiCompat.init(new FontRequestEmojiCompatConfig(getApplicationContext(), fontRequest)
+                .setReplaceAll(true)
+                .registerInitCallback(new EmojiCompat.InitCallback() {
+                    @Override
+                    public void onInitialized() {
+                        Log.i("EmojiCompat", "EmojiCompat initialized");
+                    }
+
+                    @Override
+                    public void onFailed(Throwable throwable) {
+                        Log.e("EmojiCompat", "EmojiCompat initialization failed", throwable);
+                    }
+                }));
     }
 
     @Override

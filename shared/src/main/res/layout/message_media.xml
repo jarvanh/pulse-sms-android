@@ -51,7 +51,7 @@
             android:orientation="vertical"
             android:paddingBottom="12dp" >
 
-            <TextView
+            <android.support.text.emoji.widget.EmojiTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:maxLines="1"
                 android:ellipsize="end" />
 
-            <TextView
+            <android.support.text.emoji.widget.EmojiTextView
                 android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:fontFamily="sans-serif-light"
                 android:textColor="@color/primaryText"/>
 
-            <TextView
+            <android.support.text.emoji.widget.EmojiTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/max_message_width"

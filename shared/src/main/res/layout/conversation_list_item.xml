@@ -82,7 +82,7 @@
                 android:layout_marginEnd="8dp"
                 android:visibility="gone"/>
 
-            <TextView
+            <android.support.text.emoji.widget.EmojiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -93,7 +93,7 @@
             
         </LinearLayout>
 
-        <TextView
+        <android.support.text.emoji.widget.EmojiTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"

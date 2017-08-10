@@ -86,13 +86,14 @@ dependencies {
     //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:support-emoji:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:support-annotations:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-annotations:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:palette-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:percent:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:leanback-v17:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:percent:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
     compile "com.android.support:exifinterface:${ANDROID_SUPPORT_VERSION}"
 
@@ -129,7 +130,7 @@ dependencies {
     compile(name: 'material-camera', ext: 'aar')
 
     testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile "org.robolectric:robolectric:3.4.2"
     testCompile 'org.mockito:mockito-all:1.10.8'
     testCompile 'org.powermock:powermock-mockito-release-full:1.6.1'
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.0'
