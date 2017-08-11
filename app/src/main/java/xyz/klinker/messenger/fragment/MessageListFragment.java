@@ -366,8 +366,6 @@ public class MessageListFragment extends Fragment implements
         getActivity().registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
 
-        showTooltip();
-
         if (extraMarginLeft != 0 || extraMarginTop != 0) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
                     view.getLayoutParams();
@@ -738,9 +736,9 @@ public class MessageListFragment extends Fragment implements
         selectedImageCount.setBackgroundColor(accent);
 
         if (!TvUtils.hasTouchscreen(getActivity())) {
-            sendBar.setFocusable(false);
-            messageEntry.setFocusable(false);
-            sendBar.setVisibility(View.GONE);
+//            sendBar.setFocusable(false);
+//            messageEntry.setFocusable(false);
+//            sendBar.setVisibility(View.GONE);
         }
     }
 
@@ -800,6 +798,11 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initAttachHolder() {
+        if (!TvUtils.hasTouchscreen(getActivity())) {
+            attach.setVisibility(View.GONE);
+            send.setNextFocusDownId(R.id.message_entry);
+        }
+
         attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1735,34 +1738,6 @@ public class MessageListFragment extends Fragment implements
 
     public boolean isRecyclerScrolling() {
         return messageList != null && messageList.getScrollState() != RecyclerView.SCROLL_STATE_IDLE;
-    }
-
-    public void showTooltip() {
-        /*if (!getResources().getBoolean(R.bool.pin_drawer) &&
-                !Settings.get(getActivity()).seenConvoNavToolTip &&
-                TvUtils.hasTouchscreen(getActivity())) {
-            MaterialTooltip.Options options = new MaterialTooltip.Options(
-                    56 + 24 + 12,
-                    12, 275, Settings.get(getActivity()).useGlobalThemeColor ?
-                    Settings.get(getActivity()).globalColorSet.color :
-                    getArguments().getInt(ARG_COLOR))
-                    .setText(getString(R.string.navigation_drawer_conversation_hint));
-
-            navToolTip = new MaterialTooltip(getActivity(), options);
-            navToolTip.show(new MaterialTooltip.Callback() {
-                @Override
-                public void onGotIt() {
-                    try {
-                        Settings.get(getActivity())
-                                .setValue(getString(R.string.pref_seen_convo_nav_tooltip), true);
-
-                        new ApiUtils().updateSeenTooltip(Account.get(getActivity()).accountId, true);
-                    } catch (IllegalStateException e) {
-                        // not attached to activity
-                    }
-                }
-            });
-        }*/
     }
 
     @Override
