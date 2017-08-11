@@ -33,6 +33,7 @@ import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
+import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
@@ -173,7 +174,7 @@ public class Settings {
             this.largeFont = 20;
         }
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (EmojiInitializer.INSTANCE.isAlreadyUsingGoogleAndroidO()) {
             this.emojiStyle = EmojiStyle.ANDROID_O;
         } else {
             String emojiStyle = sharedPrefs.getString(context.getString(R.string.pref_emoji_style), "default");

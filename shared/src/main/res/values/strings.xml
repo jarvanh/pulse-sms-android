@@ -387,7 +387,7 @@
     <string name="show_conversation_history_summary">Notifications will display previous messages in the conversation</string>
     <string name="emoji_style">Emoji Style</string>
     <string name="emoji_style_default">System Default</string>
-    <string name="emoji_style_android_o">Android O</string>
+    <string name="emoji_style_android_o">Google\'s Android O</string>
 
 
     <!-- MMS Configuration Settings -->

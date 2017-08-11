@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
+import android.os.Build
 import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.FontRequestEmojiCompatConfig
 import android.support.v4.provider.FontRequest
@@ -41,5 +42,9 @@ object EmojiInitializer {
                         Log.e("EmojiCompat", "EmojiCompat initialization failed", throwable)
                     }
                 }))
+    }
+
+    fun isAlreadyUsingGoogleAndroidO(): Boolean {
+        return AndroidVersionUtil.isAndroidO() && Build.MANUFACTURER.toLowerCase() == "google"
     }
 }

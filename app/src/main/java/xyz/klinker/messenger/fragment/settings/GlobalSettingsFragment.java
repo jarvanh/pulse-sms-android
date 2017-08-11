@@ -45,6 +45,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
+import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
 
@@ -234,7 +235,8 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     private void initEmojiStyle() {
         Preference pref = findPreference(getString(R.string.pref_emoji_style));
 
-        if (AndroidVersionUtil.isAndroidO() || !FeatureFlags.get(getActivity()).EMOJI_STYLE_SELECTION) {
+        if (EmojiInitializer.INSTANCE.isAlreadyUsingGoogleAndroidO() ||
+                !FeatureFlags.get(getActivity()).EMOJI_STYLE_SELECTION) {
             ((PreferenceCategory) findPreference(getString(R.string.pref_customization_category)))
                     .removePreference(pref);
         } else {
