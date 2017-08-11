@@ -735,10 +735,10 @@ public class MessageListFragment extends Fragment implements
 
         selectedImageCount.setBackgroundColor(accent);
 
-        if (!TvUtils.hasTouchscreen(getActivity())) {
-//            sendBar.setFocusable(false);
-//            messageEntry.setFocusable(false);
-//            sendBar.setVisibility(View.GONE);
+        if (!TvUtils.hasTouchscreen(getActivity()) && !FeatureFlags.get(getActivity()).TV_MESSAGE_ENTRY) {
+            sendBar.setFocusable(false);
+            messageEntry.setFocusable(false);
+            sendBar.setVisibility(View.GONE);
         }
     }
 
@@ -798,7 +798,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initAttachHolder() {
-        if (!TvUtils.hasTouchscreen(getActivity())) {
+        if (!TvUtils.hasTouchscreen(getActivity()) && FeatureFlags.get(getActivity()).TV_MESSAGE_ENTRY) {
             attach.setVisibility(View.GONE);
             send.setNextFocusDownId(R.id.message_entry);
         }

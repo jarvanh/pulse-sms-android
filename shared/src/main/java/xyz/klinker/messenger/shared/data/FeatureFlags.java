@@ -56,6 +56,7 @@ public class FeatureFlags {
     private static final String FLAG_IMPROVE_CONTACT_MATCH = "flag_improve_contact_match";
     private static final String FLAG_SNACKBAR_RECEIVED_MESSAGES = "flag_received_message_snackbar";
     private static final String FLAG_EMOJI_STYLE = "flag_emoji_style";
+    private static final String FLAG_TV_MESSAGE_ENTRY = "flag_tv_message_entry";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -73,6 +74,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean EMOJI_STYLE_SELECTION;
+    public boolean TV_MESSAGE_ENTRY;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -84,6 +86,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         EMOJI_STYLE_SELECTION = getValue(sharedPrefs, FLAG_EMOJI_STYLE);
+        TV_MESSAGE_ENTRY = getValue(sharedPrefs, FLAG_TV_MESSAGE_ENTRY);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -102,8 +105,8 @@ public class FeatureFlags {
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
                 break;
-            case FLAG_EMOJI_STYLE:
-                EMOJI_STYLE_SELECTION = flag;
+            case FLAG_TV_MESSAGE_ENTRY:
+                TV_MESSAGE_ENTRY = flag;
                 break;
         }
     }

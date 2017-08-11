@@ -16,6 +16,13 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="2.5.0"-->
+        <!--description="August 14th, 2017">-->
+        <!--<text>Select between the system default and the Android O emojis</text>-->
+        <!--<text>Send messages from Android TV</text>-->
+    <!--</version>-->
+
     <version
         name="2.4.10"
         description="August 8th, 2017">
