@@ -18,6 +18,7 @@ package xyz.klinker.messenger.shared.util;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -59,7 +60,12 @@ public class AnimationUtils {
     public static void contractConversationListItem(View itemView) {
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
         if (recyclerView != null) {
-            AnimationUtils.animateConversationListItem(itemView, itemView.getRootView().getHeight(), 0,
+            final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+            final int recyclerHeight = itemView.getRootView().getHeight();
+            final double percentDifferent = (double) (realScreenHeight - recyclerHeight) / (double) realScreenHeight;
+            final int heightToUse = percentDifferent > .1 ? realScreenHeight : recyclerHeight;
+
+            AnimationUtils.animateConversationListItem(itemView, heightToUse, 0,
                     (int) recyclerView.getTranslationY(), 0,
                     new DecelerateInterpolator());
         }
