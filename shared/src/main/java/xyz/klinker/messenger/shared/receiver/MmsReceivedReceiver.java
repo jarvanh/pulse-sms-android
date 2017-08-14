@@ -178,7 +178,8 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             String myIdMatcher = SmsMmsUtils.createIdMatcher(myCleanNumber).sevenLetter;
             
             if (!cleanNumber.contains(myCleanNumber) && !myCleanNumber.contains(cleanNumber) && !contactName.equals(myName) &&
-                    !builder.toString().contains(cleanNumber) && !idMatcher.contains(myIdMatcher)) {
+                    !builder.toString().contains(cleanNumber) && !idMatcher.contains(myIdMatcher) &&
+                    !myIdMatcher.equals(idMatcher) && !contactName.toLowerCase().equals("me")) {
                 builder.append(number);
                 builder.append(", ");
             }
