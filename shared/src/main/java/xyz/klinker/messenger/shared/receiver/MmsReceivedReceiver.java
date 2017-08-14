@@ -55,8 +55,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-
         if (intent.getAction() != null && intent.getAction().equals("android.provider.Telephony.MMS_DOWNLOADED")) {
             // this seems to be an undocumented intent action, that I found in the Android Messages app...
             // it does seem to get called when the MMS are downloaded. Perhaps we can use this for something?
@@ -66,6 +64,12 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         }
 
         new Thread(() -> {
+            try {
+                super.onReceive(context, intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             String nullableOrBlankBodyText = insertMms(context);
 
             if (!ignoreNotification) {
