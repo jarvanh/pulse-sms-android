@@ -102,18 +102,20 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     }
 
     private void insertInternalSms(Context context, String address, String body, long dateSent) {
-        ContentValues values = new ContentValues(5);
+        final ContentValues values = new ContentValues(5);
         values.put(Telephony.Sms.ADDRESS, address);
         values.put(Telephony.Sms.BODY, body);
         values.put(Telephony.Sms.DATE, System.currentTimeMillis());
         values.put(Telephony.Sms.READ, "1");
         values.put(Telephony.Sms.DATE_SENT, dateSent);
 
-        try {
-            context.getContentResolver().insert(Telephony.Sms.Inbox.CONTENT_URI, values);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            try {
+                context.getContentResolver().insert(Telephony.Sms.Inbox.CONTENT_URI, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private long insertSms(Context context, Handler handler, String address, String body, int simSlot) {
@@ -130,14 +132,22 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         source.open();
 
         if (shouldSaveMessages(source, message)) {
-            long conversationId = source
-                    .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
+            long conversationId;
+
+            try {
+                conversationId = source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
+            } catch (Exception e) {
+                source.close();
+                source.open();
+
+                conversationId = source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
+            }
 
             Conversation conversation = source.getConversation(conversationId);
 
             handler.post(() -> {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId);
-                MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
+                ConversationListUpdatedReceiver.sendBroadcast(context, conversation.id, body, NotificationService.CONVERSATION_ID_OPEN == conversation.id);
+                MessageListUpdatedReceiver.sendBroadcast(context, conversation.id, message.data, message.type);
             });
 
             if (conversation.mute) {
