@@ -102,7 +102,7 @@ public class SendUtils {
         }
 
         if (subscriptionId != null && subscriptionId != 0 && subscriptionId != -1) {
-            //settings.setSubscriptionId(subscriptionId);
+            settings.setSubscriptionId(subscriptionId);
         }
 
         Transaction transaction = new Transaction(context, settings);
