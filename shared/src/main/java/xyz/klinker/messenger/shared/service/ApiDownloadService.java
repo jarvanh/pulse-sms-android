@@ -48,6 +48,7 @@ import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.entity.ScheduledMessageBody;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
@@ -115,7 +116,7 @@ public class ApiDownloadService extends Service {
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setColor(ColorSet.DEFAULT(this).color)
                 .setOngoing(true)
                 .build();
 
@@ -405,7 +406,7 @@ public class ApiDownloadService extends Service {
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(getResources().getColor(R.color.colorPrimary))
+                .setColor(ColorSet.DEFAULT(this).color)
                 .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
 

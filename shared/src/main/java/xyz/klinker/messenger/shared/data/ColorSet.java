@@ -62,104 +62,213 @@ public class ColorSet {
         }
     }
 
+    private static ColorSet defaultSet = null;
+    public static ColorSet DEFAULT(Context context) {
+        if (defaultSet == null) {
+            defaultSet = new ColorSet(context, R.color.colorPrimary, R.color.colorPrimaryDark,
+                    R.color.colorPrimaryLight, R.color.colorAccent);
+        }
+
+        return defaultSet;
+    }
+
+    private static ColorSet redSet = null;
     public static ColorSet RED(Context context) {
-        return new ColorSet(context, R.color.materialRed, R.color.materialRedDark,
-                R.color.materialRedLight, R.color.materialIndigoAccent);
+        if (redSet == null) {
+            redSet = new ColorSet(context, R.color.materialRed, R.color.materialRedDark,
+                    R.color.materialRedLight, R.color.materialIndigoAccent);
+        }
+
+        return redSet;
     }
 
+    private static ColorSet pinkSet = null;
     public static ColorSet PINK(Context context) {
-        return new ColorSet(context, R.color.materialPink, R.color.materialPinkDark,
-                R.color.materialPinkLight, R.color.materialLimeAccent);
+        if (pinkSet == null) {
+            pinkSet = new ColorSet(context, R.color.materialPink, R.color.materialPinkDark,
+                    R.color.materialPinkLight, R.color.materialLimeAccent);
+        }
+
+        return pinkSet;
     }
 
+    private static ColorSet purpleSet = null;
     public static ColorSet PURPLE(Context context) {
-        return new ColorSet(context, R.color.materialPurple, R.color.materialPurpleDark,
-                R.color.materialPurpleLight, R.color.materialTealAccent);
+        if (purpleSet == null) {
+            purpleSet = new ColorSet(context, R.color.materialPurple, R.color.materialPurpleDark,
+                    R.color.materialPurpleLight, R.color.materialTealAccent);
+        }
+
+        return purpleSet;
     }
 
+    private static ColorSet deepPurpleSet = null;
     public static ColorSet DEEP_PURPLE(Context context) {
-        return new ColorSet(context, R.color.materialDeepPurple, R.color.materialDeepPurpleDark,
-                R.color.materialDeepPurpleLight, R.color.materialPinkAccent);
+        if (deepPurpleSet == null) {
+            deepPurpleSet = new ColorSet(context, R.color.materialDeepPurple, R.color.materialDeepPurpleDark,
+                    R.color.materialDeepPurpleLight, R.color.materialPinkAccent);
+        }
+
+        return deepPurpleSet;
     }
 
+    private static ColorSet indigoSet = null;
     public static ColorSet INDIGO(Context context) {
-        return new ColorSet(context, R.color.materialIndigo, R.color.materialIndigoDark,
-                R.color.materialIndigoLight, R.color.materialYellowAccent);
+        if (indigoSet == null) {
+            indigoSet = new ColorSet(context, R.color.materialIndigo, R.color.materialIndigoDark,
+                    R.color.materialIndigoLight, R.color.materialYellowAccent);
+        }
+
+        return indigoSet;
     }
 
+    private static ColorSet blueSet = null;
     public static ColorSet BLUE(Context context) {
-        return new ColorSet(context, R.color.materialBlue, R.color.materialBlueDark,
-                R.color.materialBlueLight, R.color.materialDeepOrangeAccent);
+        if (blueSet == null) {
+            blueSet = new ColorSet(context, R.color.materialBlue, R.color.materialBlueDark,
+                    R.color.materialBlueLight, R.color.materialDeepOrangeAccent);
+        }
+
+        return blueSet;
     }
 
+    private static ColorSet lightBlueSet = null;
     public static ColorSet LIGHT_BLUE(Context context) {
-        return new ColorSet(context, R.color.materialLightBlue, R.color.materialLightBlueDark,
-                R.color.materialLightBlueLight, R.color.materialPurpleAccent);
+        if (lightBlueSet == null) {
+            lightBlueSet = new ColorSet(context, R.color.materialLightBlue, R.color.materialLightBlueDark,
+                    R.color.materialLightBlueLight, R.color.materialPurpleAccent);
+        }
+
+        return lightBlueSet;
     }
 
+    private static ColorSet cyanSet = null;
     public static ColorSet CYAN(Context context) {
-        return new ColorSet(context, R.color.materialCyan, R.color.materialCyanDark,
-                R.color.materialCyanLight, R.color.materialAmberAccent);
+        if (cyanSet == null) {
+            cyanSet = new ColorSet(context, R.color.materialCyan, R.color.materialCyanDark,
+                    R.color.materialCyanLight, R.color.materialAmberAccent);
+        }
+
+        return cyanSet;
     }
 
+    private static ColorSet tealSet = null;
     public static ColorSet TEAL(Context context) {
-        return new ColorSet(context, R.color.materialTeal, R.color.materialTealDark,
-                R.color.materialTealLight, R.color.materialPinkAccent);
+        if (tealSet == null) {
+            tealSet = new ColorSet(context, R.color.materialTeal, R.color.materialTealDark,
+                    R.color.materialTealLight, R.color.materialPinkAccent);
+        }
+
+        return tealSet;
     }
 
+    private static ColorSet greenSet = null;
     public static ColorSet GREEN(Context context) {
-        return new ColorSet(context, R.color.materialGreen, R.color.materialGreenDark,
-                R.color.materialGreenLight, R.color.materialLightBlueAccent);
+        if (greenSet == null) {
+            greenSet = new ColorSet(context, R.color.materialGreen, R.color.materialGreenDark,
+                    R.color.materialGreenLight, R.color.materialLightBlueAccent);
+        }
+
+        return greenSet;
     }
 
+    private static ColorSet lightGreenSet = null;
     public static ColorSet LIGHT_GREEN(Context context) {
-        return new ColorSet(context, R.color.materialLightGreen, R.color.materialLightGreenDark,
-                R.color.materialLightGreenLight, R.color.materialOrangeAccent);
+        if (lightGreenSet == null) {
+            lightGreenSet = new ColorSet(context, R.color.materialLightGreen, R.color.materialLightGreenDark,
+                    R.color.materialLightGreenLight, R.color.materialOrangeAccent);
+        }
+
+        return lightGreenSet;
     }
 
+    private static ColorSet limeSet = null;
     public static ColorSet LIME(Context context) {
-        return new ColorSet(context, R.color.materialLime, R.color.materialLimeDark,
-                R.color.materialLimeLight, R.color.materialBlueAccent);
+        if (limeSet == null) {
+            limeSet = new ColorSet(context, R.color.materialLime, R.color.materialLimeDark,
+                    R.color.materialLimeLight, R.color.materialBlueAccent);
+        }
+
+        return limeSet;
     }
 
+    private static ColorSet yellowSet = null;
     public static ColorSet YELLOW(Context context) {
-        return new ColorSet(context, R.color.materialYellow, R.color.materialYellowDark,
-                R.color.materialYellowLight, R.color.materialRedAccent);
+        if (yellowSet == null) {
+            yellowSet = new ColorSet(context, R.color.materialYellow, R.color.materialYellowDark,
+                    R.color.materialYellowLight, R.color.materialRedAccent);
+        }
+
+        return yellowSet;
     }
 
+    private static ColorSet amberSet = null;
     public static ColorSet AMBER(Context context) {
-        return new ColorSet(context, R.color.materialAmber, R.color.materialAmberDark,
-                R.color.materialAmberLight, R.color.materialCyanAccent);
+        if (amberSet == null) {
+            amberSet = new ColorSet(context, R.color.materialAmber, R.color.materialAmberDark,
+                    R.color.materialAmberLight, R.color.materialCyanAccent);
+        }
+
+        return amberSet;
     }
 
+    private static ColorSet orangeSet = null;
     public static ColorSet ORANGE(Context context) {
-        return new ColorSet(context, R.color.materialOrange, R.color.materialOrangeDark,
-                R.color.materialOrangeLight, R.color.materialDeepPurpleAccent);
+        if (orangeSet == null) {
+            orangeSet = new ColorSet(context, R.color.materialOrange, R.color.materialOrangeDark,
+                    R.color.materialOrangeLight, R.color.materialDeepPurpleAccent);
+        }
+
+        return orangeSet;
     }
 
+    private static ColorSet deepOrangeSet = null;
     public static ColorSet DEEP_ORANGE(Context context) {
-        return new ColorSet(context, R.color.materialDeepOrange, R.color.materialDeepOrangeDark,
-                R.color.materialDeepOrangeLight, R.color.materialLightGreenAccent);
+        if (deepOrangeSet == null) {
+            deepOrangeSet = new ColorSet(context, R.color.materialDeepOrange, R.color.materialDeepOrangeDark,
+                    R.color.materialDeepOrangeLight, R.color.materialLightGreenAccent);
+        }
+
+        return deepOrangeSet;
     }
 
+    private static ColorSet brownSet = null;
     public static ColorSet BROWN(Context context) {
-        return new ColorSet(context, R.color.materialBrown, R.color.materialBrownDark,
-                R.color.materialBrownLight, R.color.materialOrangeAccent);
+        if (brownSet == null) {
+            brownSet = new ColorSet(context, R.color.materialBrown, R.color.materialBrownDark,
+                    R.color.materialBrownLight, R.color.materialOrangeAccent);
+        }
+        return brownSet;
     }
 
+    private static ColorSet greySet = null;
     public static ColorSet GREY(Context context) {
-        return new ColorSet(context, R.color.materialGrey, R.color.materialGreyDark,
-                R.color.materialGreyLight, R.color.materialGreenAccent);
+        if (greySet == null) {
+            greySet = new ColorSet(context, R.color.materialGrey, R.color.materialGreyDark,
+                    R.color.materialGreyLight, R.color.materialGreenAccent);
+        }
+
+        return greySet;
     }
 
+    private static ColorSet blueGreySet = null;
     public static ColorSet BLUE_GREY(Context context) {
-        return new ColorSet(context, R.color.materialBlueGrey, R.color.materialBlueGreyDark,
-                R.color.materialBlueGreyLight, R.color.materialRedAccent);
+        if (blueGreySet == null) {
+            blueGreySet = new ColorSet(context, R.color.materialBlueGrey, R.color.materialBlueGreyDark,
+                    R.color.materialBlueGreyLight, R.color.materialRedAccent);
+        }
+
+        return blueGreySet;
     }
 
+    private static ColorSet blackSet = null;
     public static ColorSet BLACK(Context context) {
-        return new ColorSet(context, android.R.color.black, android.R.color.black,
-                android.R.color.black, R.color.materialTealAccent);
+        if (blackSet == null) {
+            blackSet = new ColorSet(context, android.R.color.black, android.R.color.black,
+                    android.R.color.black, R.color.materialTealAccent);
+        }
+
+        return blackSet;
     }
 
     public static ColorSet getFromString(Context context, String colorString) {

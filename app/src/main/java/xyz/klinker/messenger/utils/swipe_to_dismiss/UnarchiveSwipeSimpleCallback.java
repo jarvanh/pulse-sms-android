@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 
 public class UnarchiveSwipeSimpleCallback extends SwipeSimpleCallback {
@@ -26,8 +27,9 @@ public class UnarchiveSwipeSimpleCallback extends SwipeSimpleCallback {
         if (settings.useGlobalThemeColor) {
             endSwipeBackground = new ColorDrawable(settings.globalColorSet.colorAccent);
         } else {
-            endSwipeBackground = new ColorDrawable(context.getResources().getColor(R.color.colorAccent));
+            endSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorAccent);
         }
+
         endMark = context.getDrawable(R.drawable.ic_delete_sweep);
         endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
     }

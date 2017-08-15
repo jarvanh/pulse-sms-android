@@ -31,6 +31,7 @@ import com.bignerdranch.android.multiselector.SwappingHolder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
@@ -181,7 +182,14 @@ public class ConversationViewHolder extends SwappingHolder {
                 unreadIndicator.setVisibility(View.VISIBLE);
             }
 
-            ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
+            if (Settings.get(itemView.getContext()).useGlobalThemeColor) {
+                ((CircleImageView) unreadIndicator).setImageDrawable(
+                        new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
+            } else {
+                ((CircleImageView) unreadIndicator).setImageDrawable(
+                        new ColorDrawable(ColorSet.DEFAULT(itemView.getContext()).color));
+            }
+
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);

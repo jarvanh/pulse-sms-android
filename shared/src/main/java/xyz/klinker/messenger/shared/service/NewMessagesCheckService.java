@@ -16,6 +16,7 @@ import xyz.klinker.messenger.api.entity.AddMessagesRequest;
 import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -107,7 +108,8 @@ public class NewMessagesCheckService extends IntentService {
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(Settings.get(this).globalColorSet.color)
+                .setColor(Settings.get(this).useGlobalThemeColor ?
+                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
                 .setOngoing(true);
         NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, notification.build());
 

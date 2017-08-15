@@ -20,6 +20,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount;
 import xyz.klinker.messenger.shared.util.TimeUtils;
@@ -80,7 +81,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
                         .setBigContentTitle(getString(R.string.no_subscription_found))
                         .setSummaryText(getString(R.string.cancelled_subscription_error)))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setColor(getResources().getColor(R.color.colorPrimary));
+                .setColor(ColorSet.DEFAULT(this).color);
 
         Intent renew = new Intent(this, RedirectToMyAccount.class);
 

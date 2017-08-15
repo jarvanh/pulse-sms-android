@@ -36,6 +36,7 @@ import java.util.Set;
 
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.R;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
@@ -173,7 +174,7 @@ public class SmsSentReceiver extends SentReceiver {
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setContentTitle(context.getString(R.string.message_sending_failed))
                     .setContentText(data)
-                    .setColor(context.getResources().getColor(R.color.colorPrimary))
+                    .setColor(ColorSet.DEFAULT(context).color)
                     .setAutoCancel(true)
                     .setContentIntent(pendingOpen);
 

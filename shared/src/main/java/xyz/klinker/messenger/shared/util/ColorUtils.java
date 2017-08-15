@@ -376,14 +376,11 @@ public class ColorUtils {
     public static void updateRecentsEntry(final Activity activity) {
         final Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                        Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
-                        ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
+            new Thread(() -> {
+                    Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
+                    ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
 
-                        activity.setTaskDescription(td);
-                }
+                    activity.setTaskDescription(td);
             }).start();
         }
 

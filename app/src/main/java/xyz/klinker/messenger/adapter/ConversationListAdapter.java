@@ -39,6 +39,7 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -148,7 +149,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
 
             TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
-            tryIt.setTextColor(Settings.get(activity).globalColorSet.color);
+            if (Settings.get(activity).useGlobalThemeColor) {
+                tryIt.setTextColor(Settings.get(activity).globalColorSet.color);
+            } else {
+                tryIt.setTextColor(ColorSet.DEFAULT(activity).color);
+            }
+
             tryIt.setOnClickListener(v -> {
                 sectionCounts.remove(0);
                 Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);

@@ -20,6 +20,7 @@ import android.view.View;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
@@ -239,7 +240,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.globalColorSet.color)
+                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : ColorSet.DEFAULT(getContext()).color)
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());

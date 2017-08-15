@@ -42,6 +42,7 @@ import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
 import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -914,7 +915,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setColor(Settings.get(this).globalColorSet.color);
+                .setColor(Settings.get(this).useGlobalThemeColor ?
+                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color);
 
         NotificationManagerCompat.from(this).notify(INFORMATION_NOTIFICATION_ID, builder.build());
     }

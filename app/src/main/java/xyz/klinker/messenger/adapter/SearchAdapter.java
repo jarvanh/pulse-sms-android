@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -118,8 +119,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         }
 
         Link highlight = new Link(pattern)
-                .setTextColor(holder.itemView.getContext().getResources()
-                        .getColor(R.color.colorAccent))
+                .setTextColor(ColorSet.DEFAULT(holder.itemView.getContext()).colorAccent)
                 .setHighlightAlpha(0.4f)
                 .setUnderlined(false)
                 .setBold(true);
@@ -233,7 +233,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             if (viewType == Message.TYPE_RECEIVED) {
                 layoutId = settings.rounderBubbles ? R.layout.message_received_round : R.layout.message_received;
-                color = parent.getContext().getResources().getColor(R.color.colorPrimary);
+                color = ColorSet.DEFAULT(parent.getContext()).color;
             } else {
                 color = -1;
 

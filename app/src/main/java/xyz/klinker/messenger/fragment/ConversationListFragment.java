@@ -42,6 +42,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.FixedScrollLinearLayoutManager;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
@@ -592,7 +593,7 @@ public class ConversationListFragment extends Fragment
 
         }
 
-        int color = getResources().getColor(R.color.colorPrimaryDark);
+        int color = ColorSet.DEFAULT(getActivity()).colorDark;
         ColorUtils.adjustStatusBarColor(color, getActivity());
         ColorUtils.adjustDrawerColor(color, getActivity());
 

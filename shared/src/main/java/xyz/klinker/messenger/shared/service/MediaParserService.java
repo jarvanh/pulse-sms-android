@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import xyz.klinker.messenger.shared.R;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
@@ -49,7 +50,7 @@ public class MediaParserService extends IntentService {
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setProgress(0, 0, true)
                     .setLocalOnly(true)
-                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setColor(ColorSet.DEFAULT(this).color)
                     .setOngoing(true)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .build();

@@ -48,6 +48,7 @@ import java.util.List;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -110,7 +111,7 @@ public class NotificationService extends IntentService {
                     .setContentTitle(getString(R.string.repeat_interval))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setLocalOnly(true)
-                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setColor(ColorSet.DEFAULT(this).color)
                     .setOngoing(false)
                     .build();
             startForeground(FOREGROUND_NOTIFICATION_ID, notification);
@@ -221,7 +222,8 @@ public class NotificationService extends IntentService {
                                 conversation.title = context.getString(R.string.new_message);
                                 conversation.imageUri = null;
                                 conversation.ringtoneUri = null;
-                                conversation.color = Settings.get(context).globalColorSet.color;
+                                conversation.color = Settings.get(context).useGlobalThemeColor ?
+                                        Settings.get(context).globalColorSet.color : ColorSet.DEFAULT(context).color;
                                 conversation.privateNotification = true;
                                 conversation.ledColor = Color.WHITE;
                             } else {
@@ -759,7 +761,8 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).globalColorSet.color)
+                .setColor(Settings.get(this).useGlobalThemeColor ?
+                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
@@ -782,7 +785,8 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).globalColorSet.color)
+                .setColor(Settings.get(this).useGlobalThemeColor ?
+                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(title)

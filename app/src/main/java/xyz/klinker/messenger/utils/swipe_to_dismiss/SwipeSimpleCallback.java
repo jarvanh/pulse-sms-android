@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 
 /**
@@ -51,19 +52,33 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     protected void setupEndSwipe(Context context) {
-        endSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        if (Settings.get(context).useGlobalThemeColor) {
+            endSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        } else {
+            endSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorLight);
+        }
+
         endMark = context.getDrawable(R.drawable.ic_archive);
         endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+    }
+
+    protected void setupStartSwipe(Context context) {
+        if (Settings.get(context).useGlobalThemeColor) {
+            startSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
+        } else {
+            startSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorLight);
+        }
+
+        startMark = getArchiveItem(context);
+        startMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+
     }
 
     private void init(Context context) {
         // end swipe will be delete when on the archive list, but both will be archive on the normal
         // conversation list.
         setupEndSwipe(context);
-
-        startSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
-        startMark = getArchiveItem(context);
-        startMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+        setupStartSwipe(context);
 
         markMargin = (int) context.getResources().getDimension(R.dimen.delete_margin);
         initiated = true;

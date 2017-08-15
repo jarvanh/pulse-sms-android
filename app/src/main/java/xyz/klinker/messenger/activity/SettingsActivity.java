@@ -27,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
@@ -91,8 +92,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         // sets it to teal if there is no color selected
         Settings settings = Settings.get(this);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
-        getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+
+        if (settings.useGlobalThemeColor) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
+            getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+        } else {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ColorSet.DEFAULT(this).color));
+            getWindow().setStatusBarColor(ColorSet.DEFAULT(this).colorDark);
+        }
 
         ColorUtils.updateRecentsEntry(this);
         ColorUtils.checkBlackBackground(this);

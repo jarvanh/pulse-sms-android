@@ -39,6 +39,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
@@ -93,7 +94,7 @@ public class ScheduledMessageJob extends BackgroundJob {
                             .setSmallIcon(R.drawable.ic_stat_notify)
                             .setContentTitle(getString(R.string.scheduled_message_sent))
                             .setContentText(Html.fromHtml(body))
-                            .setColor(getResources().getColor(R.color.colorPrimary))
+                            .setColor(ColorSet.DEFAULT(this).color)
                             .setAutoCancel(true)
                             .setContentIntent(pendingOpen)
                             .build();
