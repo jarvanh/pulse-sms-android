@@ -356,7 +356,7 @@ public class ContactUtils {
                 Contact contact = new Contact();
 
                 contact.name = cursor.getString(0);
-                contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
+                contact.phoneNumber = cursor.getString(1);
 
                 ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
                 if (colorSet != null) {
