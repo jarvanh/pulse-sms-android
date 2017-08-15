@@ -172,7 +172,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             if (!search.isEmpty()) {
                 Message inDatabase = search.get(0);
                 if (inDatabase.data.equals(message.data) && inDatabase.type == Message.TYPE_RECEIVED &&
-                        (message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE * 3)) {
+                        (message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE * 10)) {
                     return false;
                 }
             }
