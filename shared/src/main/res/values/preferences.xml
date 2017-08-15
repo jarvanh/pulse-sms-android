@@ -66,6 +66,7 @@
     <string name="pref_customization_category" translatable="false">customization_category</string>
     <string name="pref_notification_category" translatable="false">notification_category</string>
     <string name="pref_advanced_category" translatable="false">advanced_settings_category</string>
+    <string name="pref_theme_settings" translatable="false">theme_settings</string>
     <string name="pref_ringtone" translatable="false">ringtone</string>
     <string name="pref_base_theme" translatable="false">base_theme</string>
     <string name="pref_rounder_bubbles" translatable="false">rounder_bubbles</string>

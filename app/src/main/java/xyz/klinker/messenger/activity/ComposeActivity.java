@@ -267,8 +267,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
                 item.setChecked(newValue);
 
-                settings.setValue(getString(R.string.pref_mobile_only), newValue);
-                settings.forceUpdate();
+                settings.setValue(this, getString(R.string.pref_mobile_only), newValue);
+                settings.forceUpdate(this);
 
                 contactEntry.getAdapter().setShowMobileOnly(item.isChecked());
                 contactEntry.getAdapter().notifyDataSetChanged();

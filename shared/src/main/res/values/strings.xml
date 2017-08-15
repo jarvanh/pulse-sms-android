@@ -315,6 +315,7 @@
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
+    <string name="theme_settings_redirect">Theme</string>
     <string name="base_theme">Base Theme</string>
     <string name="global_theme_color">Theme Color</string>
     <string name="font_size">Font Size</string>

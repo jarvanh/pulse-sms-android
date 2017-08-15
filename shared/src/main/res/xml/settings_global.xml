@@ -20,26 +20,9 @@
         android:key="@string/pref_customization_category"
         android:title="@string/theme_settings">
 
-        <xyz.klinker.messenger.view.AutoSummaryListPreference
-            android:key="@string/pref_base_theme"
-            android:title="@string/base_theme"
-            android:entries="@array/base_theme"
-            android:entryValues="@array/base_theme_values"
-            android:defaultValue="day_night" />
-
-        <xyz.klinker.messenger.view.AutoSummaryListPreference
-            android:key="@string/pref_global_color_theme"
-            android:title="@string/global_theme_color"
-            android:entries="@array/global_color"
-            android:entryValues="@array/global_color_values"
-            android:defaultValue="default" />
-
-        <xyz.klinker.messenger.view.AutoSummaryListPreference
-            android:key="@string/pref_font_size"
-            android:title="@string/font_size"
-            android:entries="@array/font_size"
-            android:entryValues="@array/font_size_values"
-            android:defaultValue="normal" />
+        <Preference
+            android:key="@string/pref_theme_settings"
+            android:title="@string/theme_settings_redirect" />
 
         <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_emoji_style"
@@ -56,14 +39,14 @@
             android:defaultValue="default" />
 
         <SwitchPreference
-            android:key="@string/pref_rounder_bubbles"
-            android:title="@string/rounder_bubbles"
-            android:defaultValue="false" />
-
-        <SwitchPreference
             android:key="@string/pref_swipe_delete"
             android:title="@string/swipe_delete"
             android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="@string/pref_sound_effects"
+            android:title="@string/sound_effects"
+            android:defaultValue="true" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
@@ -90,6 +73,13 @@
             android:summary="@string/show_conversation_history_summary"
             android:defaultValue="true" />
 
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_advanced_category"
+        android:title="@string/advanced">
+
         <SwitchPreference
             android:key="@string/pref_delivery_reports"
             android:title="@string/delivery_reports"
@@ -100,16 +90,6 @@
             android:title="@string/giffgaff_delivery"
             android:defaultValue="false" />
 
-        <SwitchPreference
-            android:key="@string/pref_sound_effects"
-            android:title="@string/sound_effects"
-            android:defaultValue="true" />
-
-    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
-
-    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
-        android:key="@string/pref_advanced_category"
-        android:title="@string/advanced">
 
         <SwitchPreference
             android:key="@string/pref_internal_browser"

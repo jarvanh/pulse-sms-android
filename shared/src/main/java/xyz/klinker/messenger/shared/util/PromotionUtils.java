@@ -20,7 +20,7 @@ public class PromotionUtils {
 
     public PromotionUtils(Context context) {
         this.context = context;
-        this.sharedPreferences = Settings.get(context).getSharedPrefs();
+        this.sharedPreferences = Settings.get(context).getSharedPrefs(context);
     }
 
     public void checkPromotions() {

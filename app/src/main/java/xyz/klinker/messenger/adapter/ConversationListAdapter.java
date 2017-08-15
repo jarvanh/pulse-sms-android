@@ -157,7 +157,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
             tryIt.setOnClickListener(v -> {
                 sectionCounts.remove(0);
-                Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
 
                 tryIt.postDelayed(() -> {
@@ -168,7 +168,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             });
             holder.headerCardForTextOnline.findViewById(R.id.not_now).setOnClickListener(v -> {
                 sectionCounts.remove(0);
-                Settings.get(activity).setValue(activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
                 AnalyticsHelper.convoListNotNow(activity);
             });

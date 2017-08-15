@@ -76,7 +76,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         if (requestCode == SETUP_REQUEST) {
-            Settings.get(this).forceUpdate();
+            Settings.get(this).forceUpdate(this);
 
             if (responseCode == RESULT_CANCELED) {
                 Account account = Account.get(this);
@@ -168,7 +168,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     }
 
     private void close() {
-        Settings.get(this).setValue(getString(R.string.pref_first_start), false);
+        Settings.get(this).setValue(this, getString(R.string.pref_first_start), false);
 
         startActivity(new Intent(this, MessengerActivity.class));
 

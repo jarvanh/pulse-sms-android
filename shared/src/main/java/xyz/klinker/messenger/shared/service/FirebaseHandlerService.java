@@ -780,19 +780,19 @@ public class FirebaseHandlerService extends WakefulIntentService {
         if (pref != null && type != null && json.has("value")) {
             switch (type.toLowerCase(Locale.getDefault())) {
                 case "boolean":
-                    Settings.get(context).setValue(pref, json.getBoolean("value"));
+                    Settings.get(context).setValue(context, pref, json.getBoolean("value"));
                     break;
                 case "long":
-                    Settings.get(context).setValue(pref, getLong(json, "value"));
+                    Settings.get(context).setValue(context, pref, getLong(json, "value"));
                     break;
                 case "int":
-                    Settings.get(context).setValue(pref, json.getInt("value"));
+                    Settings.get(context).setValue(context, pref, json.getInt("value"));
                     break;
                 case "string":
-                    Settings.get(context).setValue(pref, json.getString("value"));
+                    Settings.get(context).setValue(context, pref, json.getString("value"));
                     break;
                 case "set":
-                    Settings.get(context).setValue(pref, SetUtils.createSet(json.getString("value")));
+                    Settings.get(context).setValue(context, pref, SetUtils.createSet(json.getString("value")));
                     break;
             }
         }

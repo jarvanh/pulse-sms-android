@@ -35,6 +35,7 @@ import static org.mockito.Mockito.verify;
 public class SettingsTest extends MessengerRobolectricSuite {
 
     private Settings settings;
+    private Context context = RuntimeEnvironment.application;
 
     @Before
     public void setUp() {
@@ -43,49 +44,48 @@ public class SettingsTest extends MessengerRobolectricSuite {
 
     @Test
     public void create() {
-        assertNotNull(settings.getContext());
-        assertNotNull(settings.getSharedPrefs());
+        assertNotNull(settings.getSharedPrefs(context));
     }
 
     @Test
     public void forceUpdate() {
-        settings.forceUpdate();
+        settings.forceUpdate(context);
         verify(settings).init(any(Context.class));
     }
 
     @Test
     public void setBooleanValue() {
-        settings.setValue("test", true);
+        settings.setValue(context, "test", true);
         verify(settings).init(any(Context.class));
-        assertTrue(settings.getSharedPrefs().getBoolean("test", false));
+        assertTrue(settings.getSharedPrefs(context).getBoolean("test", false));
     }
 
     @Test
     public void setIntValue() {
-        settings.setValue("test", 1);
+        settings.setValue(context, "test", 1);
         verify(settings).init(any(Context.class));
-        assertTrue(settings.getSharedPrefs().getInt("test", 2) == 1);
+        assertTrue(settings.getSharedPrefs(context).getInt("test", 2) == 1);
     }
 
     @Test
     public void setStringValue() {
-        settings.setValue("test", "test string");
+        settings.setValue(context, "test", "test string");
         verify(settings, atLeastOnce()).init(any(Context.class));
-        assertTrue(settings.getSharedPrefs().getString("test", "not test string").equals("test string"));
+        assertTrue(settings.getSharedPrefs(context).getString("test", "not test string").equals("test string"));
     }
 
     @Test
     public void setLongValue() {
-        settings.setValue("test", 111L);
+        settings.setValue(context, "test", 111L);
         verify(settings).init(any(Context.class));
-        assertEquals(111L, settings.getSharedPrefs().getLong("test", -1));
+        assertEquals(111L, settings.getSharedPrefs(context).getLong("test", -1));
     }
 
     @Test
     public void removeKey() {
-        settings.setValue("test", "testvalue");
-        settings.removeValue("test");
-        assertEquals(null, settings.getSharedPrefs().getString("test", null));
+        settings.setValue(context, "test", "testvalue");
+        settings.removeValue(context, "test");
+        assertEquals(null, settings.getSharedPrefs(context).getString("test", null));
     }
 
     @Test(expected = RuntimeException.class)

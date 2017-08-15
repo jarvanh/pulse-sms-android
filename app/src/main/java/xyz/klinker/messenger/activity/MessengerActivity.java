@@ -431,7 +431,7 @@ public class  MessengerActivity extends AppCompatActivity
                         break;
                 }
 
-                Settings.get(getApplicationContext()).setValue(
+                Settings.get(getApplicationContext()).setValue(getApplicationContext(),
                         getString(R.string.pref_snooze), snoozeTil);
                 new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
                         snoozeTil);

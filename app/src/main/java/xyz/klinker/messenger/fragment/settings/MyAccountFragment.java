@@ -314,7 +314,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
-        Settings.get(getActivity()).forceUpdate();
+        Settings.get(getActivity()).forceUpdate(getActivity());
         if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
             if (productId.equals(ProductAvailable.createLifetime().getProductId())) {

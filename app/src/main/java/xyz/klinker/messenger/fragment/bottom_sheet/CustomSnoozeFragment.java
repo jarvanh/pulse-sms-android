@@ -32,7 +32,7 @@ public class CustomSnoozeFragment extends TabletOptimizedBottomSheetDialogFragme
     private void snooze() {
         long snoozeTil = System.currentTimeMillis() + getMinutesTime() + getHoursTime();
 
-        Settings.get(getActivity()).setValue(getString(R.string.pref_snooze), snoozeTil);
+        Settings.get(getActivity()).setValue(getActivity(), getString(R.string.pref_snooze), snoozeTil);
         new ApiUtils().updateSnooze(Account.get(getActivity()).accountId, snoozeTil);
 
         dismiss();

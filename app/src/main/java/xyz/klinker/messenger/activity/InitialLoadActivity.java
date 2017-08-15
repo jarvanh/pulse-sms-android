@@ -106,7 +106,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         if (requestCode == SETUP_REQUEST) {
-            Settings.get(this).forceUpdate();
+            Settings.get(this).forceUpdate(this);
 
             if (responseCode == RESULT_CANCELED) {
                 if (!startUploadAfterSync) {
@@ -193,7 +193,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void close() {
-        Settings.get(this).setValue(getString(R.string.pref_first_start), false);
+        Settings.get(this).setValue(this, getString(R.string.pref_first_start), false);
 
         if (TvUtils.hasTouchscreen(this)) {
             startActivity(new Intent(this, MessengerActivity.class));

@@ -44,8 +44,6 @@ public class Settings {
 
     private static volatile Settings settings;
 
-    private Context context;
-
     // initializers
     public boolean firstStart;
     public long installTime;
@@ -112,8 +110,7 @@ public class Settings {
 
     @VisibleForTesting
     protected void init(Context context) {
-        this.context = context;
-        SharedPreferences sharedPrefs = getSharedPrefs();
+        SharedPreferences sharedPrefs = getSharedPrefs(context);
 
         // initializers
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
@@ -152,7 +149,7 @@ public class Settings {
         // configuration
         if (this.ringtone == null) {
             String uri = android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString();
-            setValue(context.getString(R.string.pref_ringtone), uri, false);
+            setValue(context, context.getString(R.string.pref_ringtone), uri, false);
             this.ringtone = uri;
         }
 
@@ -342,7 +339,7 @@ public class Settings {
 
         notificationActions = new HashSet<>();
         Set<String> actions = sharedPrefs.getStringSet(context.getString(R.string.pref_notification_actions),
-                getDefaultNotificationActions());
+                getDefaultNotificationActions(context));
 
         if (actions.contains("reply")) {
             notificationActions.add(NotificationAction.REPLY);
@@ -363,7 +360,7 @@ public class Settings {
         this.globalColorSet = ColorSet.getFromString(context, themeColorString);
     }
 
-    private Set<String> getDefaultNotificationActions() {
+    private Set<String> getDefaultNotificationActions(Context context) {
         Set<String> set = new HashSet<>();
 
         for (String s : context.getResources().getStringArray(R.array.notification_actions_default)) {
@@ -373,78 +370,69 @@ public class Settings {
         return set;
     }
 
-    public SharedPreferences getSharedPrefs() {
+    public SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    /**
-     * Gets the current settings_global context.
-     *
-     * @return the context.
-     */
-    public Context getContext() {
-        return context;
     }
 
     /**
      * Forces a reload of all settings_global data.
      */
-    public void forceUpdate() {
+    public void forceUpdate(Context context) {
         init(context);
     }
 
     @VisibleForTesting
-    protected void setValue(String key, boolean value, boolean forceUpdate) {
-        getSharedPrefs().edit()
+    protected void setValue(Context context, String key, boolean value, boolean forceUpdate) {
+        getSharedPrefs(context).edit()
                 .putBoolean(key, value)
                 .apply();
 
         if (forceUpdate) {
-            forceUpdate();
+            forceUpdate(context);
         }
     }
 
     @VisibleForTesting
-    protected void setValue(String key, int value, boolean forceUpdate) {
-        getSharedPrefs().edit()
+    protected void setValue(Context context, String key, int value, boolean forceUpdate) {
+        getSharedPrefs(context).edit()
                 .putInt(key, value)
                 .apply();
 
         if (forceUpdate) {
-            forceUpdate();
+            forceUpdate(context);
         }
     }
 
     @VisibleForTesting
-    protected void setValue(String key, String value, boolean forceUpdate) {
-        getSharedPrefs().edit()
+    protected void setValue(Context context, String key, String value, boolean forceUpdate) {
+        getSharedPrefs(context).edit()
                 .putString(key, value)
                 .apply();
 
         if (forceUpdate) {
-            forceUpdate();
+            forceUpdate(context);
         }
     }
 
     @VisibleForTesting
-    protected void setValue(String key, long value, boolean forceUpdate) {
-        getSharedPrefs().edit()
+    protected void setValue(Context context, String key, long value, boolean forceUpdate) {
+        getSharedPrefs(context).edit()
                 .putLong(key, value)
                 .apply();
 
         if (forceUpdate) {
-            forceUpdate();
+            forceUpdate(context);
         }
     }
 
     @VisibleForTesting
-    protected void setValue(String key, Set<String> value, boolean forceUpdate) {
-        getSharedPrefs().edit()
+    protected void setValue(Context context, String key, Set<String> value, boolean forceUpdate) {
+        getSharedPrefs(context).edit()
                 .putStringSet(key, value)
                 .apply();
 
         if (forceUpdate) {
-            forceUpdate();
+            forceUpdate(context);
         }
     }
 
@@ -454,8 +442,8 @@ public class Settings {
      * @param key   the shared preferences key.
      * @param value the new value.
      */
-    public void setValue(String key, boolean value) {
-        setValue(key, value, true);
+    public void setValue(Context context, String key, boolean value) {
+        setValue(context, key, value, true);
     }
 
     /**
@@ -464,8 +452,8 @@ public class Settings {
      * @param key   the shared preferences key.
      * @param value the new value.
      */
-    public void setValue(String key, int value) {
-        setValue(key, value, true);
+    public void setValue(Context context, String key, int value) {
+        setValue(context, key, value, true);
     }
 
     /**
@@ -474,8 +462,8 @@ public class Settings {
      * @param key   the shared preferences key.
      * @param value the new value.
      */
-    public void setValue(String key, String value) {
-        setValue(key, value, true);
+    public void setValue(Context context, String key, String value) {
+        setValue(context, key, value, true);
     }
 
     /**
@@ -484,8 +472,8 @@ public class Settings {
      * @param key   the shared preferences key.
      * @param value the new value.
      */
-    public void setValue(String key, long value) {
-        setValue(key, value, true);
+    public void setValue(Context context, String key, long value) {
+        setValue(context, key, value, true);
     }
 
     /**
@@ -494,8 +482,8 @@ public class Settings {
      * @param key   the shared preferences key.
      * @param value the new value.
      */
-    public void setValue(String key, Set<String> value) {
-        setValue(key, value, true);
+    public void setValue(Context context, String key, Set<String> value) {
+        setValue(context, key, value, true);
     }
 
     /**
@@ -503,9 +491,9 @@ public class Settings {
      *
      * @param key the shared preferences key to remove.
      */
-    public void removeValue(String key) {
-        getSharedPrefs().edit().remove(key).apply();
-        forceUpdate();
+    public void removeValue(Context context, String key) {
+        getSharedPrefs(context).edit().remove(key).apply();
+        forceUpdate(context);
     }
 
     public boolean isCurrentlyDarkTheme() {

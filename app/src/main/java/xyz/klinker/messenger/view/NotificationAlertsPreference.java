@@ -99,10 +99,10 @@ public class NotificationAlertsPreference extends Preference implements
 
                 if (uri != null && callChangeListener(uri.toString())) {
                     Settings.get(getContext()).ringtone = uri.toString();
-                    Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), uri.toString());
+                    Settings.get(getContext()).setValue(getContext(), getContext().getString(R.string.pref_ringtone), uri.toString());
                 } else {
                     Settings.get(getContext()).ringtone = "";
-                    Settings.get(getContext()).setValue(getContext().getString(R.string.pref_ringtone), "");
+                    Settings.get(getContext()).setValue(getContext(), getContext().getString(R.string.pref_ringtone), "");
                 }
             }
 
@@ -114,7 +114,7 @@ public class NotificationAlertsPreference extends Preference implements
 
     private void repeatClicked() {
         final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs();
+        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
         final String currentPattern = prefs.getString(getContext().getString(R.string.pref_repeat_notifications), "never");
 
         int actual = 0;
@@ -130,7 +130,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.repeat, actual, (dialogInterface, i) -> {
                     String newRepeat = getContext().getResources().getStringArray(R.array.repeat_values)[i];
 
-                    settings.setValue(getContext().getString(R.string.pref_repeat_notifications), newRepeat);
+                    settings.setValue(getContext(), getContext().getString(R.string.pref_repeat_notifications), newRepeat);
                     new ApiUtils().updateRepeatNotifications(Account.get(getContext()).accountId, newRepeat);
 
                     dialogInterface.dismiss();
@@ -139,7 +139,7 @@ public class NotificationAlertsPreference extends Preference implements
 
     private void wakeClicked() {
         final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs();
+        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
         final String current = prefs.getString(getContext().getString(R.string.pref_wake_screen), "off");
 
         int actual = 0;
@@ -155,7 +155,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
-                    settings.setValue(getContext().getString(R.string.pref_wake_screen), newVal);
+                    settings.setValue(getContext(), getContext().getString(R.string.pref_wake_screen), newVal);
                     new ApiUtils().updateWakeScreen(Account.get(getContext()).accountId, newVal);
 
                     dialogInterface.dismiss();
@@ -164,7 +164,7 @@ public class NotificationAlertsPreference extends Preference implements
 
     private void headsUpClicked() {
         final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs();
+        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
         final String current = prefs.getString(getContext().getString(R.string.pref_heads_up), "on");
 
         int actual = 0;
@@ -180,7 +180,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
-                    settings.setValue(getContext().getString(R.string.pref_heads_up), newVal);
+                    settings.setValue(getContext(), getContext().getString(R.string.pref_heads_up), newVal);
                     new ApiUtils().updateHeadsUp(Account.get(getContext()).accountId, newVal);
 
                     dialogInterface.dismiss();
@@ -189,7 +189,7 @@ public class NotificationAlertsPreference extends Preference implements
 
     private void vibrateClicked() {
         final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs();
+        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
         final String currentPattern = prefs.getString(getContext().getString(R.string.pref_vibrate), "vibrate_default");
 
         int actual = 0;
@@ -205,7 +205,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.vibrate, actual, (dialogInterface, i) -> {
                     String newPattern = getContext().getResources().getStringArray(R.array.vibrate_values)[i];
 
-                    settings.setValue(getContext().getString(R.string.pref_vibrate), newPattern);
+                    settings.setValue(getContext(), getContext().getString(R.string.pref_vibrate), newPattern);
                     new ApiUtils().updateVibrate(Account.get(getContext()).accountId, newPattern);
 
                     dialogInterface.dismiss();

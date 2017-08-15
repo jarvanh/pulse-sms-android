@@ -18,21 +18,14 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.telephony.TelephonyManager;
-import android.view.View;
-import android.widget.ListView;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import xyz.klinker.messenger.R;
@@ -42,9 +35,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
-import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.SetUtils;
 import xyz.klinker.messenger.view.NotificationAlertsPreference;
@@ -59,17 +50,20 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings_global);
-        initBaseTheme();
-        initGlobalTheme();
-        initFontSize();
+
+        initThemeRedirect();
+        initMmsConfigurationRedirect();
+
+        //initBaseTheme();
+        //initGlobalTheme();
+        //initFontSize();
         initKeyboardLayout();
-        initRounderBubbles();
+        //initRounderBubbles();
         initSwipeDelete();
         initNotificationActions();
         initDeliveryReports();
         initSoundEffects();
         initStripUnicode();
-        initMmsConfiguration();
         initNotificationHistory();
         initEmojiStyle();
     }
@@ -77,7 +71,23 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
-        Settings.get(getActivity()).forceUpdate();
+        Settings.get(getActivity()).forceUpdate(getActivity());
+    }
+
+    private void initThemeRedirect() {
+        findPreference(getString(R.string.pref_theme_settings))
+                .setOnPreferenceClickListener(preference -> {
+                    SettingsActivity.startThemeSettings(getActivity());
+                    return false;
+                });
+    }
+
+    private void initMmsConfigurationRedirect() {
+        findPreference(getString(R.string.pref_mms_configuration))
+                .setOnPreferenceClickListener(preference -> {
+                    SettingsActivity.startMmsSettings(getActivity());
+                    return false;
+                });
     }
 
     private void initGlobalTheme() {
@@ -193,9 +203,9 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
 
         if (carrierName != null && !(carrierName.equalsIgnoreCase("giffgaff") ||
                 carrierName.replace(" ", "").equalsIgnoreCase("o2-uk"))) {
-            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(giffgaff);
+            ((PreferenceGroup) findPreference(getString(R.string.pref_advanced_category))).removePreference(giffgaff);
         } else {
-            ((PreferenceGroup) findPreference(getString(R.string.pref_notification_category))).removePreference(normal);
+            ((PreferenceGroup) findPreference(getString(R.string.pref_advanced_category))).removePreference(normal);
         }
     }
 
@@ -206,14 +216,6 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                     new ApiUtils().updateStripUnicode(Account.get(getActivity()).accountId,
                             strip);
                     return true;
-                });
-    }
-
-    private void initMmsConfiguration() {
-        findPreference(getString(R.string.pref_mms_configuration))
-                .setOnPreferenceClickListener(preference -> {
-                    SettingsActivity.startMMSSettings(getActivity());
-                    return false;
                 });
     }
 

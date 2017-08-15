@@ -36,7 +36,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
-        Settings.get(getActivity()).forceUpdate();
+        Settings.get(getActivity()).forceUpdate(getActivity());
     }
 
     private void initSecurePrivateConversations() {
@@ -101,8 +101,8 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
                     .setView(layout)
                     .setPositiveButton(R.string.save, (dialogInterface, i) -> {
                         String signature = editText.getText().toString();
-                        Settings.get(getActivity()).setValue(getActivity().getString(R.string.pref_signature),
-                                signature);
+                        Settings.get(getActivity()).setValue(getActivity(),
+                                getActivity().getString(R.string.pref_signature), signature);
                         if (editText.getText().length() > 0) {
                             new ApiUtils().updateSignature(Account.get(getActivity()).accountId,
                                     signature);

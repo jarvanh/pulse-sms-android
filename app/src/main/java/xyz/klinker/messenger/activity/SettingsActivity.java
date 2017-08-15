@@ -27,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.fragment.settings.ThemeSettingsFragment;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -42,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final int TYPE_GLOBAL = 1;
     private static final int TYPE_FEATURE = 2;
     private static final int TYPE_MMS = 3;
+    private static final int TYPE_THEME = 4;
 
     public static void startGlobalSettings(Context context) {
         startWithExtra(context, TYPE_GLOBAL);
@@ -51,8 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
         startWithExtra(context, TYPE_FEATURE);
     }
 
-    public static void startMMSSettings(Context context) {
+    public static void startMmsSettings(Context context) {
         startWithExtra(context, TYPE_MMS);
+    }
+
+    public static void startThemeSettings(Context context) {
+        startWithExtra(context, TYPE_THEME);
     }
 
     private static void startWithExtra(Context context, int type) {
@@ -64,6 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
     private GlobalSettingsFragment globalFragment;
     private FeatureSettingsFragment featureFragment;
     private MmsConfigurationFragment mmsFragment;
+    private ThemeSettingsFragment themeFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +92,11 @@ public class SettingsActivity extends AppCompatActivity {
                 mmsFragment = new MmsConfigurationFragment();
                 setTitle(R.string.menu_mms_configuration);
                 startFragment(mmsFragment);
+                break;
+            case TYPE_THEME:
+                themeFragment = new ThemeSettingsFragment();
+                setTitle(getString(R.string.theme_settings_redirect));
+                startFragment(themeFragment);
                 break;
         }
 
@@ -132,9 +144,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mmsFragment == null) {
-            Settings.get(this).forceUpdate();
+        Settings.get(this).forceUpdate(this);
 
+        if (mmsFragment == null && themeFragment == null) {
             Intent intent = new Intent(this, MessengerActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

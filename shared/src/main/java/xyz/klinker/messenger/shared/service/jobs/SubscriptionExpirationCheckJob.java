@@ -67,7 +67,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     }
 
     private void makeSignoutNotification() {
-        SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs();
+        SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs(this);
         if (sharedPreferences.getBoolean("seen_subscription_expired_notification", false)) {
             return;
         } else {
