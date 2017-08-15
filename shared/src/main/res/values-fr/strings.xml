@@ -379,27 +379,6 @@ seront uniquement affichées au destinataire du message.</string>
     <string name="always_light">Toujours clair</string>
     <string name="always_dark">Toujours sombre</string>
     <string name="always_black">Toujours noir</string>
-    <string name="set_color_per_conversation">Régler la couleur dans chaque conversation</string>
-    <string name="material_color_red">Rouge</string>
-    <string name="material_color_pink">Rose</string>
-    <string name="material_color_purple">Violet</string>
-    <string name="material_color_deep_purple">Violet foncé</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Bleu</string>
-    <string name="material_color_light_blue">Bleu clair</string>
-    <string name="material_color_cyan">Cyan</string>
-    <string name="material_color_teal">Turquoise</string>
-    <string name="material_color_green">Vert</string>
-    <string name="material_color_light_green">Vert clair</string>
-    <string name="material_color_lime">Vert citron</string>
-    <string name="material_color_yellow">Jaune</string>
-    <string name="material_color_amber">Ambre</string>
-    <string name="material_color_orange">Orange</string>
-    <string name="material_color_deep_orange">Orange foncé</string>
-    <string name="material_color_brown">Marron</string>
-    <string name="material_color_gray">Gris</string>
-    <string name="material_color_blue_gray">Bleu-gris</string>
-    <string name="material_color_black">Noir</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Voulez-vous vraiment annuler ce message programmé à %1$s ?</string>
     <string name="scheduled_message_hint">Message à envoyer...</string>

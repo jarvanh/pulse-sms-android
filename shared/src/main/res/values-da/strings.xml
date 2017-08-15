@@ -15,39 +15,44 @@
   ~ limitations under the License.
   -->
 <resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/tablet)</string>
+    <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">Ny besked</string>
     <string name="shortcut_compose_long">Start ny samtale!</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Samtaleliste</string>
-    <string name="menu_archived_conversations">Arkiveret samtaler</string>
+    <string name="menu_archived_conversations">Arkiverede samtaler</string>
     <string name="menu_schedule">Planlagte beskeder</string>
-    <string name="menu_mute_contacts">sortliste</string>
-    <string name="menu_invite">Inviter venner</string>
-    <string name="menu_feature_settings">Avanceret muligheder</string>
-    <string name="menu_settings">Globale indstillinger</string>
-    <string name="menu_mms_configuration">MMS Indstillinger</string>
+    <string name="menu_mute_contacts">Sortliste</string>
+    <string name="menu_invite">Invitér venner</string>
+    <string name="menu_feature_settings">Avancerede funktioner</string>
+    <string name="menu_settings">Indstillinger</string>
+    <string name="menu_mms_configuration">MMS indstillinger</string>
     <string name="menu_account">Min konto</string>
-    <string name="menu_device_texting">Skriv fra enhver af dine enheder</string>
+    <string name="menu_device_texting">Skriv fra alle dine enheder</string>
     <string name="menu_help">Hjælp &amp; feedback</string>
     <string name="menu_about">Om</string>
     <string name="menu_search">Søg</string>
-    <string name="menu_snooze">Snooze notifikationer</string>
+    <string name="menu_mobile_only">Kun mobiltelefon</string>
+    <string name="menu_snooze">Udsæt notifikationer</string>
     <string name="menu_call">Ring til kontakt</string>
     <string name="menu_view_contact">Se kontakt</string>
     <string name="menu_view_contacts">Se kontakter</string>
-    <string name="menu_view_media">Se medie</string>
+    <string name="menu_view_media">Se medier</string>
     <string name="menu_delete_conversation">Slet samtale</string>
-    <string name="menu_archive_conversation">Arkiver samtale</string>
+    <string name="menu_archive_conversation">Arkivér samtale</string>
     <string name="menu_move_to_inbox">Flyt til indbakke</string>
     <string name="menu_conversation_information">Samtaleinformation</string>
-    <string name="menu_conversation_blacklist">Bloker kontakt</string>
+    <string name="menu_conversation_blacklist">Blokér kontakt</string>
     <string name="menu_conversation_schedule">Planlæg en besked</string>
-    <string name="menu_contact_settings">Kontaktindstillinger</string>
+    <string name="menu_contact_settings">Samtaleindstillinger</string>
     <string name="menu_group_settings">Gruppeindstillinger</string>
     <string name="menu_snooze_off">Sluk</string>
     <string name="menu_snooze_1">1 time</string>
     <string name="menu_snooze_2">2 timer</string>
+    <string name="menu_snooze_4">4 timer</string>
     <string name="menu_snooze_8">8 timer</string>
     <string name="menu_snooze_24">24 timer</string>
     <string name="menu_snooze_72">72 timer</string>
@@ -63,7 +68,7 @@
     <string name="last_week">Denne uge</string>
     <string name="last_month">Denne måned</string>
     <string name="older">Ældre</string>
-    <string name="mark_section_as_read">Marker alle %1$s som læste</string>
+    <string name="mark_section_as_read">Markér alle %1$s som læste</string>
     <string name="marking_section_as_read">Markerer alle %1$s som læste</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d samtale er slettet</item>
@@ -79,6 +84,10 @@
     </plurals>
     <string name="undo">Fortryd</string>
     <string name="enter_search">Søg...</string>
+    <string name="text_anywhere_description">Vidste du: Pulse er mere end blot en app til din telefon.
+Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
+    <string name="convo_list_try_it">Prøv det!</string>
+    <string name="convo_list_not_now">Ikke nu</string>
     <!-- Search Screen -->
     <string name="conversations">Samtaler</string>
     <string name="messages">Beskeder</string>
@@ -86,36 +95,42 @@
     <string name="invite_friends_title">Elsker du Pulse?</string>
     <string name="invite_friends_summary">Det gør vi, og det vil andre også! Vi forsøger at få det ud til så mange som muligt, så vi kan forsætte med at skabe den bedste tjeneste muligt, og ved at invitere dine venner til at prøve Pulse hjælper du med dette! 
 \n\nSelect de venner forneden, som du vil invitere til app\'en, og de vil modtage en SMS med en kort beskrivelse og et downloadlink.</string>
-    <string name="invite_friends_sms">Jeg bruger en ny app til tekstbeskeder, og jeg er sikker på at du vil elske den! Den er oven i købet gratis, så du taber intet ved at prøve den: http://messenger.klinkerapps.com</string>
+    <string name="invite_friends_sms">Jeg bruger en ny app til tekstbeskeder, og jeg er sikker på, du vil elske den! Den er oven i købet gratis, så du taber intet ved at prøve den: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Skriv besked</string>
     <string name="type_message_to">Skriv besked til %1$s</string>
     <string name="attach">Vedhæft</string>
     <string name="select_sim">Vælg SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s</string>
     <string name="mms_image">MMS billede</string>
     <string name="now">Nu</string>
     <string name="sending">Sender...</string>
     <string name="failed">Mislykkedes</string>
     <string name="delivered">Besked leveret</string>
     <string name="attach_image">Vedhæft billede</string>
+    <string name="capture_image">Klip billede</string>
     <string name="attach_gif">Vedhæft GIF</string>
     <string name="record_video">Optag video</string>
     <string name="record_audio">Optag lyd</string>
-    <string name="attach_location">Indsæt lokation</string>
-    <string name="no_location_found">Kunne ikke finde din lokation</string>
+    <string name="attach_location">Vedhæft lokation</string>
+    <string name="attach_contact">Vedhæft kontakt</string>
+    <string name="attach_contact_summary">Vælg eller skriv en kontakt at vedhæfte beskeden!</string>
+    <string name="no_location_found">Kunne ikke finde din lokation.</string>
     <string name="camera_permission_needed">Adgang til kamera er nødvendig for at kunne tage billeder!</string>
+    <string name="take_picture">Tag billede</string>
     <string name="flip_picture">Vend kamera</string>
     <string name="fullscreen">Fuld skærm</string>
     <string name="attached_image">Vedhæftede billede</string>
     <string name="remove_image">Fjern vedhæftede billede</string>
-    <string name="edit_image">Rediger vedhæftede billede</string>
+    <string name="edit_image">Redigér vedhæftede billede</string>
     <string name="permission_needed_for_action">Tilladelse nødvendig for denne handling</string>
     <string name="request_permission">Spørg om tilladelse</string>
     <string name="no_messages_with_contact">Du har ingen beskeder i denne samtale endnu. Tid til at starte en!</string>
     <string name="save">Gem</string>
     <string name="share">Del</string>
-    <string name="share_content">Del indhold</string>
-    <string name="saved">Gem til / Hent mappe!</string>
+    <string name="share_content">Del indhold...</string>
+    <string name="saved">Gemt i download mappen!</string>
     <string name="failed_to_save">Blev ikke gemt</string>
     <string name="start_recording_audio">Klik på knappen for at begynde at optage lyd!</string>
     <string name="audio_recording_error">Fejl ved optagelse! :(</string>
@@ -141,32 +156,43 @@
     <string name="enter_contact_name">Indtast kontaktnavn</string>
     <string name="error_processing_vcard">Fejl ved behandling af vcard</string>
     <!-- Onboarding Screen -->
-    <string name="permissions_needed">App\'en kan ikke fungere uden disse tilladelser! Du skal acceptere dem før at vi kan forsætte.</string>
+    <string name="permissions_needed">App\'en kan ikke fungere uden disse tilladelser! Du skal acceptere dem, før at vi kan forsætte.</string>
     <string name="loading_messages">Optimerer...</string>
     <string name="loading_messages_summary">Arbejder på at hente dine beskeder ind i app\'en. Det vil ikke tage lang tid!</string>
     <string name="tooltip_got_it">Forstået!</string>
     <string name="navigation_drawer_conversation_hint">Flere muligheder for denne samtale er gemt i navigationsskuffen.</string>
     <string name="onboarding_title_1">Nytænkt måde at sende beskeder</string>
-    <string name="onboarding_title_2">Tilgængeligt overalt</string>
-    <string name="onboarding_title_3">Indflydelsesfuld customisering</string>
-    <string name="onboarding_content_1">"Glat, glidende layout med en virkningsrigt design og umiddelbar integration.
-Pulse sætter dine samtaler i centrum."</string>
-    <string name="onboarding_content_2">Skriv fra din tablet, cumputer, ur eller hvilken som helst tilkoblet enhed.</string>
+    <string name="onboarding_title_2">Tilgængelig overalt</string>
+    <string name="onboarding_title_3">Indflydelsesfuld tilpasning</string>
+    <string name="onboarding_content_1">Glat, glidende layout med en virkningsrigt design og umiddelbar integration.</string>
+    <string name="onboarding_content_2">Skriv fra din tablet, computer, ur eller hvilken som helst tilkoblet enhed.</string>
     <string name="onboarding_content_3">Markér, tematiser, customiser eller gør notifikationer lydløse for de kontakter, som du skriver med. Gør Pulse til dit eget.</string>
-    <string name="message_anywhere_onboarding_title_1">Skriv overalt.</string>
+    <string name="message_anywhere_onboarding_title_1">Skriv overalt</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement eller betal løbende.</string>
     <string name="message_anywhere_onboarding_title_3">Prøveperiode af en uges varighed.</string>
-    <string name="message_anywhere_onboarding_content_1">Umiddelbar integration af enhver enhed (tablet, ur, TV, web, original Google Chrome og Firefox apps) til understøttelse af SMS og MMS overalt.</string>
+    <string name="message_anywhere_onboarding_content_1">Umiddelbar integration af enhver enhed (tablet, ur, TV, web, original Google Chrome og Firefox apps) til understøttelse af SMS og MMS overalt!</string>
+    <string name="message_anywhere_onboarding_content_2">Vanvittige lave priser du kan betale, når du har brug for det: $10,99 for evighedslicens, $5,99 for et år, $1,99 for tre måneder eller $0,99 for en måned. Mindre end en kop kaffe.</string>
+    <string name="message_anywhere_onboarding_content_3">Brug app\'en til Android GRATIS (for altid!) på din telefon eller skriv fra alle dine enheder med EN UGES gratis prøveperiode.</string>
     <string name="start_trial">Start \nPrøveperiode</string>
     <string name="not_now">Ikke\nNu</string>
     <string name="onboarding_done">Fuldført</string>
     <!-- Notifications -->
     <string name="notification_ticker">Ny besked fra %1$s</string>
+    <plurals name="new_conversations">
+        <item quantity="one">%1$d ny samtale</item>
+        <item quantity="other">%1$d nye samtaler</item>
+    </plurals>
+    <plurals name="new_messages">
+        <item quantity="one">%1$d ny besked</item>
+        <item quantity="other">%1$d nye beskeder</item>
+    </plurals>
     <string name="read">Læs</string>
     <string name="reply">Svar</string>
+    <string name="reply_to">Svar til %1$s</string>
     <string name="call">Ring</string>
     <string-array name="reply_choices">
         <item>Ja</item>
+        <item>Nej</item>
         <item>Måske</item>
         <item>OK</item>
         <item>Tak</item>
@@ -175,25 +201,273 @@ Pulse sætter dine samtaler i centrum."</string>
     <string name="you">Dig</string>
     <string name="new_message">Ny besked</string>
     <string name="received_new_message">Du har modtaget en ny besked!</string>
+    <string name="media">Medie</string>
+    <string name="test_notifications_channel">Afprøv notifikationer</string>
+    <string name="status_notifications_channel">Status notifikationer</string>
+    <string name="general_notifications_channel">Generelle notifikationer</string>
+    <string name="media_parse_channel">Medie parser</string>
+    <string name="group_summary_notifications">Gruppebesked opsummering</string>
+    <string name="failed_messages_channel">Mislykkede beskeder</string>
+    <string name="media_parse_text">Analyserer medier fra tidligere beskeder...</string>
+    <string name="creating_channels_text">Genererer notifikationskanaler...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Ændringslog</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright_summary">Vis open source licens</string>
     <string name="app_version">App version</string>
+    <string name="account_information">Konto information</string>
+    <string name="account_actions">Konto handlinger</string>
     <string name="device_id">Enheds-ID</string>
     <string name="device_info">Endhedsinformation</string>
     <string name="website">Hjemmeside</string>
+    <string name="access_messages_from_any_device">Tilgå og send beskeder fra enhver enhed!</string>
+    <string name="beta_disclaimer">Dette projekt er stadig i beta. Rapportér venligst de fejl du måtte finde!</string>
+    <string name="app_info">Info om app</string>
+    <string name="platform_info">Platform info</string>
+    <string name="troubleshooting">Fejlfinding</string>
+    <string name="get_in_touch">Kontakt os</string>
+    <string name="faqs">Ofte stillede spørgsmål</string>
+    <string name="features">Funktioner</string>
+    <string name="issues">Sporing af problemer</string>
+    <string name="issues_summary">Bruges også til kommende funktioner</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse Beta fællesskab</string>
+    <string name="email">E-mail</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Support</string>
+    <plurals name="message_count">
+        <item quantity="one">%1$d besked</item>
+        <item quantity="other">%1$d beskeder</item>
+    </plurals>
+    <plurals name="conversation_count">
+        <item quantity="one">i %1$d samtale</item>
+        <item quantity="other">i %1$d samtaler</item>
+    </plurals>
+    <string name="pin_conversation">Fastgør samtale</string>
+    <string name="pin_conversation_summary">Fastgør denne samtale i toppen af listen</string>
+    <string name="mute_conversation">Gør samtale lydløs</string>
+    <string name="mute_conversation_summary">Skjul notifikationer for denne samtale</string>
+    <string name="private_conversation">Privat samtale</string>
+    <string name="private_conversation_summary">Skjul indhold af samtale i notifikationer</string>
+    <string name="primary_color">Primær farve</string>
+    <string name="primary_dark_color">Primær mørk farve</string>
+    <string name="accent_color">Sekundær farve</string>
+    <string name="led_color">LED farve</string>
+    <string name="ringtone">Ringetone</string>
+    <string name="group_name">Navn til gruppe</string>
+    <string name="notification_settings">Notifikationer</string>
+    <string name="repeat_interval">Gentag notifikation</string>
+    <string name="heads_up">Notifikationslys</string>
+    <string name="repeat_never">Aldrig</string>
+    <string name="repeat_one_min">Hvert minut</string>
+    <string name="repeat_five_mins">Hvert 5. minut</string>
+    <string name="repeat_ten_mins">Hvert 10. minut</string>
+    <string name="repeat_half_hour">Hver halve time</string>
+    <string name="repeat_hour">Hver time</string>
+    <string name="wake_screen">Tænd for skærm</string>
+    <string name="vibrate">Vibrationsmønster</string>
+    <string name="vibrate_off">Ingen vibration</string>
+    <string name="vibrate_default">Standard vibration</string>
+    <string name="vibrate_two_long">To lange vibrationer</string>
+    <string name="vibrate_two_short">To korte vibrationer</string>
+    <string name="vibrate_three_short">Tre korte vibrationer</string>
+    <string name="vibrate_one_short_one_long">En kort, en lang vibration</string>
+    <string name="vibrate_one_long_one_short">En lang, en kort vibration</string>
+    <string name="vibrate_one_short">En kort vibration</string>
+    <string name="vibrate_one_long">En lang vibration</string>
+    <string name="vibrate_one_extra_long">En ekstra lang vibration</string>
+    <string name="keyboard_layout">Tastatur udseende</string>
+    <string name="keyboard_default">Standard tastatur</string>
+    <string name="keyboard_send_key">Tast til send</string>
+    <string name="keyboard_enter_key">Tast til linjeskift</string>
+    <string name="sound_effects">Lydeffekter</string>
+    <string name="delivery_reports">Leveringsrapporter</string>
+    <string name="theme_settings">Tilpasning</string>
+    <string name="base_theme">Grundlæggende tema</string>
+    <string name="global_theme_color">Farve for tema</string>
+    <string name="font_size">Skriftstørrelse</string>
+    <string name="rounder_bubbles">Runde beskedbobler</string>
+    <string name="swipe_delete">Stryg for at slette</string>
+    <string name="blacklist_hint">Skriv nummer til at sortliste...</string>
+    <string name="add_blacklist">%1$s\n\nEr du sikker på, du vil tilføje dette til sortlisten? Beskeder fra dette nummer vil ikke blive gemt, og du får ingen notifikation!</string>
+    <string name="remove_blacklist">%1$s\n\nVil du slette denne sortliste?</string>
+    <string name="blacklist_need_number">Du skal skrive et telefonnummer til sortlisten!</string>
+    <string name="no_blacklists">Ingen sortlister</string>
+    <string name="no_blacklists_summary">Du kan tilføje et med plus-knappen for neden!</string>
+    <string name="add">Tilføj</string>
+    <string name="privacy_policy">Beskyttelse af personlige oplysninger</string>
+    <string name="privacy_policy_summary">Vis vores politik om fortrolige oplysninger på nettet</string>
+    <string name="account_expiring">Konto udløber!</string>
+    <string name="signout_time">Udløber: %1$s</string>
+    <string name="lifetime_subscriber">Livstids-abonnement</string>
+    <string name="trial_period">Prøveperiode</string>
+    <string name="setup_my_account">Opsætning af konto</string>
+    <string name="setup_my_account_summary">Tilmeld dig eller log ind på din konto for at anvende flere funktioner som at skrive beskeder fra din tabler eller computer</string>
+    <string name="preparing_new_account">Forbereder konto&#8230;</string>
+    <string name="delete_account">Slet konto</string>
+    <string name="delete_account_summary">Sletter kontoen fra denne enhed, andre enheder hvor du er logget ind samt fra serveren. Dette kan ikke fortrydes!</string>
+    <string name="delete_account_confirmation">Er du sikker på, du vil slette din konto og alt, der er gemt på den? Du kan altid tilmelde dig igen senere!</string>
+    <string name="change_subscription">Ændre abonnement</string>
+    <string name="cancel_on_the_play_store">Afbryd og vis dit abonnement på Google Play</string>
+    <string name="resync_account">Synkronisér beskeder igen</string>
+    <string name="resync_account_summary">Mangler du nogle beskeder? Brug denne funktion for at opdatere denne enhed fra din primære enhed.</string>
+    <string name="resync_account_summary_phone">Dette vil rydde din konto og gendanne fra telefonens SMS database.</string>
+    <string name="resync_account_confirmation">Dette vil slette alle beskeder fra denne enhed og begynde forfra med det, der er på din primære enhed. Er du sikker på, du vil gøre det?</string>
+    <string name="normalize_color_scheme">Eller du kan vælge en farve, du vil bruge til denne kontakt:</string>
+    <string name="no_apps_found">Ingen apps fundet til at fuldføre dette</string>
+    <string name="you_denied_permission">Du har ikke givet denne tilladelse</string>
+    <string name="supported_platforms">Understøttede platforme</string>
+    <string name="supported_platforms_summary">Alle de officielle platforme, hvorfra du kan tilgå denne app</string>
+    <string name="font_size_small">Lille</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Stor</string>
+    <string name="font_size_extra_large">Ekstra stor</string>
+    <string name="advanced">Avanceret</string>
+    <string name="send_as_mms">Konvertér til MMS</string>
+    <string name="after_one_message">Efter en besked</string>
+    <string name="after_two_messages">Efter to beskeder</string>
+    <string name="after_three_messages">Efter tre beskeder</string>
+    <string name="after_four_messages">Efter fire beskeder</string>
+    <string name="send_as_mms_summary">Lange beskeder sendes som MMS i stedet for individuelle SMS-beskeder</string>
+    <string name="alert_types">Indstillinger for notifikationer</string>
+    <string name="alert_types_summary">Forskellige valgmuligheder for notifikationer</string>
+    <string name="strip_unicode">Fjern unicode</string>
+    <string name="strip_unicode_summary">Disse tegn fjernes fra udgående beskeder</string>
+    <string name="giffgaff_delivery">Giffgaff leveringsrapporter</string>
+    <string name="notification_actions">Valgmuligheder i notifikationer</string>
+    <string name="notification_actions_summary">Tre valg kan tilføjes en notifikation</string>
+    <string name="mms_download_directory">Mappe til at gemme medier</string>
+    <string name="refresh_firebase">Opdatér konto</string>
+    <string name="refresh_firebase_summary">Har du problemer med, din konto ikke synkroniserer eller logger ind? Brug denne mulighed.</string>
+    <string name="refreshing_notifications">Opdaterer symbol for notifikation...</string>
+    <string name="refresh_firebase_warning">Hvis du begynder denne proces, <b>skal</b> den fuldføres. Bagefter skal du logge ind igen på alle dine enheder. Vil du fortsætte?</string>
+    <string name="show_conversation_history">Vis historik for samtale</string>
+    <string name="show_conversation_history_summary">Notifikationer vil vise tidligere beskeder i samtalen</string>
     <!-- MMS Configuration Settings -->
+    <string name="max_mms_size">Maksimal billedstørrelse</string>
+    <string name="use_group_mms">Benyt gruppe-MMS</string>
+    <string name="auto_save_media">Automatisk gem medier</string>
+    <string name="auto_save_media_summary">Gem automatisk alle MMS medier i Download-mappen, når de modtages.</string>
+    <string name="apn_configuration">APN konfiguration</string>
+    <string name="override_system_apn">Overskriv telefonens APN</string>
+    <string name="mmsc_url">MMSC URL</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS port</string>
+    <string name="user_agent">User agent</string>
+    <string name="user_agent_profile_url">User agent profil URL</string>
+    <string name="user_agent_profile_tag">User agent profil mærkat</string>
     <!-- Advanced Features Settings -->
+    <string name="signature">Signatur</string>
+    <string name="signature_summary">Signaturer vises ikke i Pulse\'s liste med beskeder. De vises kun for modtageren af en besked.</string>
+    <string name="cleanup_old_messages">Oprydning i gamle beskeder</string>
+    <string name="delayed_sending">Forsinket afsendelse</string>
+    <string name="quick_compose">Hurtig besked</string>
+    <string name="quick_compose_summary">Altid aktive notifikationer giver dig den hurtigste adgang til at skrive en ny besked.</string>
+    <string name="secure_private_conversations">Sikre private samtaler</string>
+    <string name="secure_private_conversations_summary">Kræv PIN-kode for at låse op for private samtaler.</string>
     <!-- Theming Options -->
+    <string name="day_night">Standard (dag/nat)</string>
+    <string name="always_light">Altid lys</string>
+    <string name="always_dark">Altid mørk</string>
+    <string name="always_black">Altid sort</string>
     <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Er du sikker på du vil slette denne planlagte besked til %1$s?</string>
+    <string name="scheduled_message_hint">Besked der skal sendes...</string>
+    <string name="scheduled_to_hint">Kontakt der skal sendes til...</string>
+    <string name="scheduled_message_sent">Planlagt besked afsendt</string>
+    <string name="no_scheduled_messages">Ingen planlagte beskeder</string>
+    <string name="no_scheduled_messages_summary">Du kan lave en ny med plus-knappen for neden!</string>
+    <string name="scheduled_message_in_future">Tidspunkt skal være i fremtiden!</string>
     <!-- Encryption -->
+    <string name="encrypting_and_uploading">Krypterer og uploader...</string>
+    <string name="encrypting_and_uploading_media">Krypterer og komprimerer medie beskeder...</string>
+    <string name="encrypting_and_uploading_count">Krypterer og komprimerer medie beskeder...
+(%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">Henter og dekrypterer...</string>
+    <string name="decrypting_and_downloading_media">Henter og dekrypterer medier...</string>
     <!-- Quick Reply -->
+    <string name="audio_message">Lyd besked</string>
+    <string name="video_message">Video besked</string>
+    <string name="picture_message">Billedbesked</string>
+    <string name="gif_message">GIF besked</string>
+    <string name="contact_card">Kontaktoplysninger</string>
+    <string name="conversation_with">Samtale med %1$s</string>
+    <string name="send">Send</string>
     <!-- Other -->
     <string name="updating_database">Finder seneste beskeder...</string>
+    <string name="dashclock_description">Ulæst SMS/MMS information</string>
+    <string name="default_text">Standard</string>
+    <string name="did_you_know">Vidste du?</string>
+    <string name="use_from_anywhere">Pulse kan benyttes fra enhver enhed forbundet til internettet -
+prøv det i dag!</string>
     <string name="use_from_anywhere_short">Pulse kan bruges på hvilken som helst enhed!</string>
+    <string name="learn_more">Lær mere</string>
+    <string name="dismiss">Afvis</string>
+    <string name="renew">Forny</string>
     <string name="no">Nej</string>
     <string name="cancel">Fortryd</string>
+    <string name="hours">Timer</string>
+    <string name="minutes">Minutter</string>
+    <string name="test">Test</string>
+    <string name="channel_settings">Indstillinger for notifikationskanal</string>
+    <string name="channels">Kanaler</string>
+    <string name="channels_global_warning">Mange tilpasninger er nu kun mulige pr. kanal.</string>
+    <string name="off">Fra</string>
+    <string name="on">Til</string>
+    <string name="rate_it">Bedøm!</string>
+    <string name="love_pulse_question">Elsker du Pulse?</string>
+    <string name="give_a_rating">Overvej at give en bedømmelse eller del med dine venner!\n\n
+Din 5-stjernede bedømmelse vil varme mit hjerte :)</string>
+    <string name="share_promo">Hej, jeg elsker at bruge Pulse til beskeder. Prøv det: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Bekræfter adgangskode...</string>
     <!-- Times -->
     <string name="one_second">et sekund</string>
+    <string name="three_seconds">Tre sekunder</string>
+    <string name="five_seconds">Fem sekunder</string>
+    <string name="ten_seconds">Ti sekunder</string>
+    <string name="fifteen_seconds">Femten sekunder</string>
+    <string name="thirty_seconds">Tredive sekunder</string>
+    <string name="one_minute">Et minut</string>
+    <string name="one_week">En uge</string>
+    <string name="two_weeks">To uger</string>
+    <string name="one_month">En måned</string>
+    <string name="three_months">Tre måneder</string>
+    <string name="six_months">Seks måneder</string>
+    <string name="one_year">Et år</string>
     <!-- Purchase/Subscriptions -->
+    <string name="no_subscription_found">Intet abonnement fundet!</string>
+    <string name="cancelled_subscription_error">Det ser ud til, du annullerede dit abonnement. Hvis ikke du tegner et nyt abonnement iden for den periode, logges du ud af din konto efter to dage. Hvis dette er en fejl, så kontakt mig venligst via mail.</string>
+    <string name="subscription_found">Abonnement fundet - velkommen tilbage!</string>
+    <string name="subscription_not_found">Intet abonnement fundet, lad os begynde din din prøveperiode!</string>
+    <string name="checking_for_active_subscriptions">Kontrollerer abonnementer&#8230;</string>
+    <string name="purchase_error_cancelled">Du har afbrudt dit abonnement :(</string>
+    <string name="purchase_error_bad_google_play">Åh nej, Google Play har vist problemer, de sendte et ubrugeligt resultat.</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; Det køb stemmer ikke med vores optegnelse.</string>
+    <string name="subscriptions">Abonnementet opkræves efter syv dages prøveperiode og kan ændres eller annulleres når som helst</string>
+    <string name="billed_immediately">Dette opkræves med det samme.</string>
+    <string name="lifetime_purchase">$10.99 - Livstidsabonnement</string>
+    <string name="lifetime_purchase_summary">Betal én gang og aldrig mere!</string>
+    <string name="yearly_purchase">$5.99 om året</string>
+    <string name="yearly_purchase_summary">Den bedste aftale.</string>
+    <string name="three_month_purchase">$1.99 hver tredje måned</string>
+    <string name="three_month_purchase_summary">Du kan ikke gå forkert med denne.</string>
+    <string name="monthly_purchase">$0.99 hver måned</string>
+    <string name="monthly_purchase_summary">Du vil bare prøve? Intet problem.</string>
+    <string name="change_subscription_message">Vil du opgradere? Dejligt! Efter du har foretaget dit valg på næste skærm, skal du gå i Google Play og manuelt annullere dit gamle abonnement.</string>
+    <string name="beautiful_powerful_instant">Smuk, kraftig, øjeblikkelig.</string>
+    <string name="optimized_for_all_your_devices">Pulse er optimere til <b>alle</b> dine enheder. Send beskeder fra en hjemmeside, en computer, din tablet, dit ur, ja selv dit tv.</string>
+    <string name="true_imessage_competitor">De første <b>reelle</b> iMessage konkurrent til Android.</string>
+    <string name="try_it">Prøv det nu!</string>
+    <string name="seven_days_free">7 dage gratis!</string>
+    <string name="competition_cant_beat">Konkurrencen kan ikke gøre noget ved vores priser, hastighed eller service -
+<b>prøv 7 dage</b> og prøv det selv!</string>
+    <string name="select_a_trial_below">Vælg en af mulighederne for at begynde din <b>gratis prøveperiode</b>.</string>
+    <string name="charged_after_trial">Opkræves efter prøveperioden:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nmåned</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 måneder</string>
+    <string name="yearly_purchase_improved">$5.99 /\n1 år</string>
+    <string name="subscription_toast">Du <b>bliver ikke</b> opkrævet noget, før din 7 dages prøveperiode er slut.
+Fortryd på ethvert tidspunkt.</string>
 </resources>

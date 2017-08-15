@@ -344,27 +344,6 @@
     <string name="always_light">总是日间</string>
     <string name="always_dark">总是夜间</string>
     <string name="always_black">总是纯黑</string>
-    <string name="set_color_per_conversation">每个对话分配各自颜色</string>
-    <string name="material_color_red">网易红</string>
-    <string name="material_color_pink">少女粉</string>
-    <string name="material_color_purple">基佬紫</string>
-    <string name="material_color_deep_purple">深紫</string>
-    <string name="material_color_indigo">深蓝</string>
-    <string name="material_color_blue">蓝色</string>
-    <string name="material_color_light_blue">天空蓝</string>
-    <string name="material_color_cyan">清新青</string>
-    <string name="material_color_teal">蓝绿色</string>
-    <string name="material_color_green">绿色</string>
-    <string name="material_color_light_green">亮绿色</string>
-    <string name="material_color_lime">柠檬黄</string>
-    <string name="material_color_yellow">黄色</string>
-    <string name="material_color_amber">琥珀黄</string>
-    <string name="material_color_orange">橙色</string>
-    <string name="material_color_deep_orange">深橙色</string>
-    <string name="material_color_brown">棕色</string>
-    <string name="material_color_gray">高级灰</string>
-    <string name="material_color_blue_gray">蓝灰色</string>
-    <string name="material_color_black">优雅黑</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">你确定要删除这个待发的消息到吗 %1$s ？</string>
     <string name="scheduled_message_hint">待发的消息</string>

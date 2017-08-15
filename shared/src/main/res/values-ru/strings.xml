@@ -382,27 +382,6 @@
     <string name="always_light">Всегда светлая</string>
     <string name="always_dark">Всегда тёмная</string>
     <string name="always_black">Всегда чёрная</string>
-    <string name="set_color_per_conversation">Автоматически</string>
-    <string name="material_color_red">Красный</string>
-    <string name="material_color_pink">Розовый</string>
-    <string name="material_color_purple">Фиолетовый</string>
-    <string name="material_color_deep_purple">Тёмно-фиолетовый</string>
-    <string name="material_color_indigo">Индиго</string>
-    <string name="material_color_blue">Синий</string>
-    <string name="material_color_light_blue">Голубой</string>
-    <string name="material_color_cyan">Бирюзовый</string>
-    <string name="material_color_teal">Зеленовато-синий</string>
-    <string name="material_color_green">Зелёный</string>
-    <string name="material_color_light_green">Салатный</string>
-    <string name="material_color_lime">Лаймовый</string>
-    <string name="material_color_yellow">Жёлтый</string>
-    <string name="material_color_amber">Янтарный</string>
-    <string name="material_color_orange">Оранжевый</string>
-    <string name="material_color_deep_orange">Тёмно-оранжевый</string>
-    <string name="material_color_brown">Коричневый</string>
-    <string name="material_color_gray">Серый</string>
-    <string name="material_color_blue_gray">Синевато-серый</string>
-    <string name="material_color_black">Чёрный</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Вы уверены, что хотите удалить запланированное сообщение для %1$s?</string>
     <string name="scheduled_message_hint">Сообщение для отправки...</string>

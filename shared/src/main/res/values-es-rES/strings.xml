@@ -158,8 +158,8 @@ No nos llevará mucho</string>
     <string name="onboarding_title_1">La mensajería reinventada</string>
     <string name="onboarding_title_2">Disponible en cualquier lugar</string>
     <string name="onboarding_title_3">Potente capacidad de personalización</string>
-    <string name="onboarding_content_1">"Diseños fluidos y suaves con un diseño potente y una integración perfecta.
-Pulse pone tus conversaciones en el centro de todo."</string>
+    <string name="onboarding_content_1">Diseños fluidos y suaves con un diseño potente y una integración perfecta.
+Pulse pone tus conversaciones en el centro de todo.</string>
     <string name="onboarding_content_2">Manda mensajes desde tu tablet, ordenador, reloj o cualquier otro dispositivo conectado.</string>
     <string name="onboarding_content_3">Fija, silencia, aplica temas y personaliza las notificaciones para cualquier contacto con el que estés chateando. Haz Pulse tuyo</string>
     <string name="message_anywhere_onboarding_title_1">Manda mensajes desde cualquier lugar</string>
@@ -303,6 +303,7 @@ que se base el contacto:</string>
     <string name="send_as_mms_summary">Los mensajes largos ser enviaran como MMS , en lugar de SMS individuales</string>
     <string name="alert_types">Tipos de alertas</string>
     <string name="alert_types_summary">Varias personalizaciones para las notificaciones</string>
+    <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="signature">Firma</string>
     <string name="signature_summary">NOTA: las firmas enviadas NO se mostrarán en la lista de mensajes de Pulse. Las firmas sólo se mostrarán al receptor del mensaje.</string>
@@ -317,27 +318,6 @@ que se base el contacto:</string>
     <string name="always_light">Siempre claro</string>
     <string name="always_dark">Siempre oscuro</string>
     <string name="always_black">Siempre Negro</string>
-    <string name="set_color_per_conversation">Asignar color por conversación</string>
-    <string name="material_color_red">Rojo</string>
-    <string name="material_color_pink">Rosa</string>
-    <string name="material_color_purple">Morado</string>
-    <string name="material_color_deep_purple">Morado oscuro</string>
-    <string name="material_color_indigo">Índifo</string>
-    <string name="material_color_blue">Azul</string>
-    <string name="material_color_light_blue">Azul claro</string>
-    <string name="material_color_cyan">Celeste</string>
-    <string name="material_color_teal">Verde Azulado</string>
-    <string name="material_color_green">Verde</string>
-    <string name="material_color_light_green">Verde claro</string>
-    <string name="material_color_lime">Verde Lima</string>
-    <string name="material_color_yellow">Amarillo</string>
-    <string name="material_color_amber">Ámbar</string>
-    <string name="material_color_orange">Naranja</string>
-    <string name="material_color_deep_orange">Naranja oscuro</string>
-    <string name="material_color_brown">Marrón</string>
-    <string name="material_color_gray">Gris</string>
-    <string name="material_color_blue_gray">Gris Azulado</string>
-    <string name="material_color_black">Negro</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">¿Estas seguro de que deseas eliminar este mensaje programado 
 para %1$s?</string>

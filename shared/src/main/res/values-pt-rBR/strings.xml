@@ -156,8 +156,8 @@
     <string name="onboarding_title_1">Mensagens reimaginadas</string>
     <string name="onboarding_title_2">Disponível em qualquer lugar</string>
     <string name="onboarding_title_3">Personalização poderosa</string>
-    <string name="onboarding_content_1">"Leve, leiaute fluído com um design poderoso e integração minimalista.
-Pulse coloca suas conversa em evidência."</string>
+    <string name="onboarding_content_1">Leve, leiaute fluído com um design poderoso e integração minimalista.
+Pulse coloca suas conversa em evidência.</string>
     <string name="onboarding_content_2">Converse a partir do tablet, computador, relógio, ou qualquer outro dispositivo conectado.</string>
     <string name="onboarding_content_3">Fixe, mute, aplique temas e personalize notificações para qualquer contato que esteja conversando. Faça Pulse seu.</string>
     <string name="message_anywhere_onboarding_title_1">Converse em qualquer lugar</string>
@@ -294,6 +294,7 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="send_as_mms_summary">Mensagens longas serão enviadas como MMS ao invés de SMS\'s individuais</string>
     <string name="alert_types">Tipos de alerta</string>
     <string name="alert_types_summary">Várias personalizações para notificações</string>
+    <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="signature">Assinatura</string>
     <string name="signature_summary">Nota: As assinaturas de envio NÃO serão exibidas na lista de mensagens do Pulse. As assinaturas só serão mostradas ao destinatário da mensagem.</string>
@@ -308,27 +309,6 @@ Pulse coloca suas conversa em evidência."</string>
     <string name="always_light">Sempre claro</string>
     <string name="always_dark">Sempre escuro</string>
     <string name="always_black">Sempre preto</string>
-    <string name="set_color_per_conversation">Configure cor por conversa</string>
-    <string name="material_color_red">Vermelho</string>
-    <string name="material_color_pink">Rosa</string>
-    <string name="material_color_purple">Roxo</string>
-    <string name="material_color_deep_purple">Roxo escuro</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Azul</string>
-    <string name="material_color_light_blue">Azul claro</string>
-    <string name="material_color_cyan">Ciano</string>
-    <string name="material_color_teal">Teal</string>
-    <string name="material_color_green">Verde</string>
-    <string name="material_color_light_green">Verde claro</string>
-    <string name="material_color_lime">Limão</string>
-    <string name="material_color_yellow">Amarelo</string>
-    <string name="material_color_amber">Ambar</string>
-    <string name="material_color_orange">Laranja</string>
-    <string name="material_color_deep_orange">Laranja escuro</string>
-    <string name="material_color_brown">Marrom</string>
-    <string name="material_color_gray">cinza</string>
-    <string name="material_color_blue_gray">Cinza escuro</string>
-    <string name="material_color_black">Preto</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Tem certeza que deseja apagar esta mensagem agendada para %1$s?</string>
     <string name="scheduled_message_hint">Mensagem para enviar...</string>

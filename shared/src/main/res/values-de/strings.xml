@@ -343,27 +343,6 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="always_light">Immer Hell</string>
     <string name="always_dark">Immer Dunkel</string>
     <string name="always_black">Immer Schwarz</string>
-    <string name="set_color_per_conversation">In jeder Unterhaltung anders</string>
-    <string name="material_color_red">Rot</string>
-    <string name="material_color_pink">Pink</string>
-    <string name="material_color_purple">Violett</string>
-    <string name="material_color_deep_purple">Purpur</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Blau</string>
-    <string name="material_color_light_blue">Hellblau</string>
-    <string name="material_color_cyan">Cyan</string>
-    <string name="material_color_teal">Petrol</string>
-    <string name="material_color_green">Grün</string>
-    <string name="material_color_light_green">Hellgrün</string>
-    <string name="material_color_lime">Neongrün</string>
-    <string name="material_color_yellow">Gelb</string>
-    <string name="material_color_amber">Bernstein</string>
-    <string name="material_color_orange">Orange</string>
-    <string name="material_color_deep_orange">Dunkelorange</string>
-    <string name="material_color_brown">Braun</string>
-    <string name="material_color_gray">Grau</string>
-    <string name="material_color_blue_gray">Blaugrau</string>
-    <string name="material_color_black">Schwarz</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Sind Sie sicher dass sie die geplante Nachricht an %1$s löschen möchten?</string>
     <string name="scheduled_message_hint">Nachricht...</string>

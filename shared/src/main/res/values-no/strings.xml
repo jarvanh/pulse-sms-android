@@ -275,25 +275,6 @@ vil ikke ta lang tid!</string>
     <string name="always_light">Alltid lys</string>
     <string name="always_dark">Alltid mørk</string>
     <string name="always_black">Alltid svart</string>
-    <string name="set_color_per_conversation">Sett farge pr samtale</string>
-    <string name="material_color_red">Rød</string>
-    <string name="material_color_pink">Rosa</string>
-    <string name="material_color_purple">Lilla</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Blå</string>
-    <string name="material_color_light_blue">Lys blå</string>
-    <string name="material_color_cyan">Cyan</string>
-    <string name="material_color_teal">Blågrønn</string>
-    <string name="material_color_green">Grønn</string>
-    <string name="material_color_light_green">Lys grønn</string>
-    <string name="material_color_lime">Lime</string>
-    <string name="material_color_yellow">Gul</string>
-    <string name="material_color_orange">Oransje</string>
-    <string name="material_color_deep_orange">Dyp oransje</string>
-    <string name="material_color_brown">Brun</string>
-    <string name="material_color_gray">Grå</string>
-    <string name="material_color_blue_gray">Blågrå</string>
-    <string name="material_color_black">Svart</string>
     <!-- Scheduled Messages Screen -->
     <string name="scheduled_message_hint">Melding for å sende ...</string>
     <string name="scheduled_to_hint">Kontakt for å sende til ...</string>

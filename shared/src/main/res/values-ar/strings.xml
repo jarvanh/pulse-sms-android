@@ -418,27 +418,6 @@ http://messenger.klinkerapps.com</string>
     <string name="always_light">ضوء مستمر</string>
     <string name="always_dark">مظلم دائماً</string>
     <string name="always_black">دائماً اسود</string>
-    <string name="set_color_per_conversation">تعين لون للمحادثه</string>
-    <string name="material_color_red">أحمر</string>
-    <string name="material_color_pink">وردي</string>
-    <string name="material_color_purple">ارجواني</string>
-    <string name="material_color_deep_purple">ارجواني غامق</string>
-    <string name="material_color_indigo">اللون النيلي</string>
-    <string name="material_color_blue">أزرق</string>
-    <string name="material_color_light_blue">الضوء الأزرق</string>
-    <string name="material_color_cyan">ازرق سماوي</string>
-    <string name="material_color_teal">نهري</string>
-    <string name="material_color_green">أخضر</string>
-    <string name="material_color_light_green">أخضر فاتح</string>
-    <string name="material_color_lime">كلس</string>
-    <string name="material_color_yellow">أصفر</string>
-    <string name="material_color_amber">كهرمان</string>
-    <string name="material_color_orange">برتقالي</string>
-    <string name="material_color_deep_orange">برتقالي عميق</string>
-    <string name="material_color_brown">بني</string>
-    <string name="material_color_gray">رمادي</string>
-    <string name="material_color_blue_gray">أزرق رمادي</string>
-    <string name="material_color_black">أسود</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">هل انت متاكد انك تريد حذف هذه الرسالة إلى %1$s?</string>
     <string name="scheduled_message_hint">إرسال الرساله ...</string>

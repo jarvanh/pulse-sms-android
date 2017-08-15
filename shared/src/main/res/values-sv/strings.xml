@@ -307,27 +307,6 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="always_light">Alltid Ljust</string>
     <string name="always_dark">Alltid Mörkt</string>
     <string name="always_black">Alltid Svart</string>
-    <string name="set_color_per_conversation">Ange färg på varje konversation</string>
-    <string name="material_color_red">Röd</string>
-    <string name="material_color_pink">Rosa</string>
-    <string name="material_color_purple">Lila</string>
-    <string name="material_color_deep_purple">Djup lila</string>
-    <string name="material_color_indigo">Indigoblått</string>
-    <string name="material_color_blue">Blått</string>
-    <string name="material_color_light_blue">Ljusblått</string>
-    <string name="material_color_cyan">Turkos</string>
-    <string name="material_color_teal">Blågrönt</string>
-    <string name="material_color_green">Grönt</string>
-    <string name="material_color_light_green">Ljusgrönt</string>
-    <string name="material_color_lime">Lime</string>
-    <string name="material_color_yellow">Gul</string>
-    <string name="material_color_amber">Bärnsten</string>
-    <string name="material_color_orange">Orange</string>
-    <string name="material_color_deep_orange">Djup orange</string>
-    <string name="material_color_brown">Brunt</string>
-    <string name="material_color_gray">Grått</string>
-    <string name="material_color_blue_gray">Blågrått</string>
-    <string name="material_color_black">Svart</string>
     <!-- Scheduled Messages Screen -->
     <string name="scheduled_message_hint">Meddelande att skicka...</string>
     <string name="scheduled_to_hint">Kontakt för att skicka till...</string>

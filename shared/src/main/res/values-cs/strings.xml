@@ -373,27 +373,6 @@ založit kontakt:</string>
     <string name="always_light">Vždy světlé</string>
     <string name="always_dark">Vždy tmavé</string>
     <string name="always_black">Vždy černé</string>
-    <string name="set_color_per_conversation">Nastavit barvu pro každou konverzaci zvlášť</string>
-    <string name="material_color_red">Červená</string>
-    <string name="material_color_pink">Růžová</string>
-    <string name="material_color_purple">Fialová</string>
-    <string name="material_color_deep_purple">Tmavě fialová</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Modrá</string>
-    <string name="material_color_light_blue">Světle modrá</string>
-    <string name="material_color_cyan">Tyrkysová</string>
-    <string name="material_color_teal">Modrozelená</string>
-    <string name="material_color_green">Zelená</string>
-    <string name="material_color_light_green">Světle zelená</string>
-    <string name="material_color_lime">Limetková</string>
-    <string name="material_color_yellow">Žlutá</string>
-    <string name="material_color_amber">Jantarová</string>
-    <string name="material_color_orange">Oranžová</string>
-    <string name="material_color_deep_orange">Tmavě oranžová</string>
-    <string name="material_color_brown">Hnědá</string>
-    <string name="material_color_gray">Šedá</string>
-    <string name="material_color_blue_gray">Modrošedá</string>
-    <string name="material_color_black">Černá</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Jste si jisti, že chcete smazat tuto naplánovanou zprávu
 pro %1$s?</string>

@@ -323,7 +323,7 @@
     <string name="font_size">Font Size</string>
     <string name="rounder_bubbles">Round Message Bubbles</string>
     <string name="apply_theme_globally">Apply to all Conversations</string>
-    <string name="apply_theme_globally_summary">This removes the per-conversation coloring, in favor
+    <string name="apply_theme_globally_summary">Remove the per-conversation themes, in favor
         of this global color set.</string>
     <string name="swipe_delete">Swipe to Delete</string>
     <string name="blacklist_hint">Type number to blacklist…</string>

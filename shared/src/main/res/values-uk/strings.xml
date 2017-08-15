@@ -167,8 +167,8 @@ http://messenger.klinkerapps.com</string>
     <string name="onboarding_title_1">Повторне представлення повідомлень</string>
     <string name="onboarding_title_2">Доступно скрізь</string>
     <string name="onboarding_title_3">Потужні персональні налаштування</string>
-    <string name="onboarding_content_1">"Згладжені та зручні макети представлення з потужним дизайном і бездоганною інтеграцією. 
-Pulse ставить ваші розмови на попередній план."</string>
+    <string name="onboarding_content_1">Згладжені та зручні макети представлення з потужним дизайном і бездоганною інтеграцією. 
+Pulse ставить ваші розмови на попередній план.</string>
     <string name="onboarding_content_2">Повідомлення з планшета, комп\'ютера, годинника або будь-яких інших підключених пристроїв.</string>
     <string name="onboarding_content_3">Прикріплення, вимкнення звуку, теми та інші налаштування сповіщень для будь-яких контактів, з якими Ви спілкуєтеся. Зробіть Pulse Вашим.</string>
     <string name="message_anywhere_onboarding_title_1">Спілкування будь-де</string>
@@ -354,27 +354,6 @@ Pulse ставить ваші розмови на попередній план.
     <string name="always_light">Завжди світла</string>
     <string name="always_dark">Завжди темна</string>
     <string name="always_black">Завжди чорна</string>
-    <string name="set_color_per_conversation">Встановити колір розмови</string>
-    <string name="material_color_red">Червоний</string>
-    <string name="material_color_pink">Рожевий</string>
-    <string name="material_color_purple">Фіолетовий</string>
-    <string name="material_color_deep_purple">Насичений фіолетовий</string>
-    <string name="material_color_indigo">Індиго</string>
-    <string name="material_color_blue">Синій</string>
-    <string name="material_color_light_blue">Блакитний</string>
-    <string name="material_color_cyan">Ціан</string>
-    <string name="material_color_teal">Зеленувато-блакитний</string>
-    <string name="material_color_green">Зелений</string>
-    <string name="material_color_light_green">Світло-зелений</string>
-    <string name="material_color_lime">Лайм</string>
-    <string name="material_color_yellow">Жовтий</string>
-    <string name="material_color_amber">Бурштиновий</string>
-    <string name="material_color_orange">Помаранчевий</string>
-    <string name="material_color_deep_orange">Насичений помаранчевий</string>
-    <string name="material_color_brown">Коричневий</string>
-    <string name="material_color_gray">Сірий</string>
-    <string name="material_color_blue_gray">Сіро-блакитний</string>
-    <string name="material_color_black">Чорний</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Ви впевнені, що хочете видалити заплановане надсилання повідомлення 
 для %1$s?</string>

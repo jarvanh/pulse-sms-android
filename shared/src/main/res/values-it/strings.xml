@@ -159,8 +159,8 @@ http://messenger.klinkerapps.com</string>
     <string name="onboarding_title_1">Messaggistica reinventata</string>
     <string name="onboarding_title_2">Disponibile ovunque</string>
     <string name="onboarding_title_3">Potente capacità di personalizzazione</string>
-    <string name="onboarding_content_1">"Interfaccia veloce e fluida con design perfetto e perfetta integrazione.
-Pulse mette al centro di tutto le tue conversazioni."</string>
+    <string name="onboarding_content_1">Interfaccia veloce e fluida con design perfetto e perfetta integrazione.
+Pulse mette al centro di tutto le tue conversazioni.</string>
     <string name="onboarding_content_2">Messaggia dal tuo tablet, computer, orologio, o qualsiasi altro dispositivo connesso.</string>
     <string name="onboarding_content_3">Fissa, silenzia, applica temi e personalizza  le notifiche
 per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
@@ -315,27 +315,6 @@ con ciò che è sul dispositivo principale.</string>
     <string name="always_light">Sempre Chiaro</string>
     <string name="always_dark">Sempre Scuro</string>
     <string name="always_black">Sempre Nero</string>
-    <string name="set_color_per_conversation">Imposta colore per conversazione</string>
-    <string name="material_color_red">Rosso</string>
-    <string name="material_color_pink">Rosa</string>
-    <string name="material_color_purple">Viola</string>
-    <string name="material_color_deep_purple">Viola scuro</string>
-    <string name="material_color_indigo">Indaco</string>
-    <string name="material_color_blue">Blu</string>
-    <string name="material_color_light_blue">Celeste</string>
-    <string name="material_color_cyan">Ciano</string>
-    <string name="material_color_teal">Verde acqua</string>
-    <string name="material_color_green">Verde prato</string>
-    <string name="material_color_light_green">Verde chiaro</string>
-    <string name="material_color_lime">Lime</string>
-    <string name="material_color_yellow">Giallo</string>
-    <string name="material_color_amber">Ambra</string>
-    <string name="material_color_orange">Arancione</string>
-    <string name="material_color_deep_orange">Arancio scuro</string>
-    <string name="material_color_brown">Marrone</string>
-    <string name="material_color_gray">Grigio</string>
-    <string name="material_color_blue_gray">Blu grigio</string>
-    <string name="material_color_black">Nero</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Sei sicuro di voler cancellare questo messaggio programmato
 a %1$s?</string>

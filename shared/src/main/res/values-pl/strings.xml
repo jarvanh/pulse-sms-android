@@ -387,27 +387,6 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="always_light">Jasny</string>
     <string name="always_dark">Ciemny</string>
     <string name="always_black">Czarny</string>
-    <string name="set_color_per_conversation">Osobny kolor dla każdej konwersacji</string>
-    <string name="material_color_red">Czerwony</string>
-    <string name="material_color_pink">Różowy</string>
-    <string name="material_color_purple">Fioletowy</string>
-    <string name="material_color_deep_purple">Ciemnofioletowy</string>
-    <string name="material_color_indigo">Indygo</string>
-    <string name="material_color_blue">Niebieski</string>
-    <string name="material_color_light_blue">Jasnoniebieski</string>
-    <string name="material_color_cyan">Turkusowy</string>
-    <string name="material_color_teal">Morski</string>
-    <string name="material_color_green">Zielony</string>
-    <string name="material_color_light_green">Jasnozielony</string>
-    <string name="material_color_lime">Limonkowy</string>
-    <string name="material_color_yellow">Żółty</string>
-    <string name="material_color_amber">Bursztynowy</string>
-    <string name="material_color_orange">Pomarańczowy</string>
-    <string name="material_color_deep_orange">Ciemnopomarańczowy</string>
-    <string name="material_color_brown">Brązowy</string>
-    <string name="material_color_gray">Szary</string>
-    <string name="material_color_blue_gray">Błękitny</string>
-    <string name="material_color_black">Czarny</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Czy jesteś pewien, że chcesz usunąć zaplanowaną wiadomość do %1$s?</string>
     <string name="scheduled_message_hint">Wiadomość do wysłania...</string>

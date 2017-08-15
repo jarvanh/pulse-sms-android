@@ -385,27 +385,6 @@ Mesajın alıcısına gösterilir.</string>
     <string name="always_light">Daima Işık</string>
     <string name="always_dark">Daima Koyu</string>
     <string name="always_black">Daima Siyah</string>
-    <string name="set_color_per_conversation">Konuşma başına renk ayarla</string>
-    <string name="material_color_red">Kırmızı</string>
-    <string name="material_color_pink">Pembe</string>
-    <string name="material_color_purple">Mor</string>
-    <string name="material_color_deep_purple">Koyu mor</string>
-    <string name="material_color_indigo">çivit</string>
-    <string name="material_color_blue">Mavi</string>
-    <string name="material_color_light_blue">Açık mavi</string>
-    <string name="material_color_cyan">Mavi</string>
-    <string name="material_color_teal">çamurcun</string>
-    <string name="material_color_green">Yeşil</string>
-    <string name="material_color_light_green">Açık yeşil</string>
-    <string name="material_color_lime">Misket Limonu</string>
-    <string name="material_color_yellow">Sarı</string>
-    <string name="material_color_amber">kehribar</string>
-    <string name="material_color_orange">Portakal</string>
-    <string name="material_color_deep_orange">Derin portakal</string>
-    <string name="material_color_brown">Kahverengi</string>
-    <string name="material_color_gray">Gri</string>
-    <string name="material_color_blue_gray">Mavi gri</string>
-    <string name="material_color_black">Siyah</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Bu planlanmış mesajı silmek istediğinizden emin misiniz?
 %1$s mi?</string>
