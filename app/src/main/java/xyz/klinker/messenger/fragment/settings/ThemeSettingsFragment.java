@@ -21,7 +21,10 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         initBaseTheme();
         initFontSize();
         initRounderBubbles();
+
+        initUseGlobalTheme();
         setUpColors();
+
     }
 
     @Override
@@ -70,6 +73,16 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
                 });
     }
 
+    private void initUseGlobalTheme() {
+        findPreference(getString(R.string.pref_apply_theme_globally))
+                .setOnPreferenceChangeListener((preference, o) -> {
+                    boolean global = (boolean) o;
+                    new ApiUtils().updateUseGlobalTheme(Account.get(getActivity()).accountId,
+                            global);
+                    return true;
+                });
+    }
+
     private void setUpColors() {
         final ColorPreference preference = (ColorPreference)
                 findPreference(getString(R.string.pref_global_primary_color));
@@ -84,6 +97,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             ColorUtils.animateToolbarColor(getActivity(), settings.mainColorSet.color, (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
             settings.mainColorSet.color = (int) o;
+
+            new ApiUtils().updatePrimaryThemeColor(Account.get(getActivity()).accountId, (int) o);
+
             return true;
         });
 
@@ -98,6 +114,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             ColorUtils.animateStatusBarColor(getActivity(), settings.mainColorSet.colorDark, (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
             settings.mainColorSet.colorDark = (int) o;
+
+            new ApiUtils().updatePrimaryDarkThemeColor(Account.get(getActivity()).accountId, (int) o);
+
             return true;
         });
 
@@ -106,6 +125,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
 
             settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
             settings.mainColorSet.colorAccent = (int) o;
+
+            new ApiUtils().updateAccentThemeColor(Account.get(getActivity()).accountId, (int) o);
+
             return true;
         });
     }

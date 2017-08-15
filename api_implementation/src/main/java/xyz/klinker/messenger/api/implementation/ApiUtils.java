@@ -1108,9 +1108,36 @@ public class ApiUtils {
     /**
      * Update the global theme color setting
      */
-    public void updateGlobalThemeColor(final String accountId, final String color) {
+    public void updatePrimaryThemeColor(final String accountId, final int color) {
         if (active && accountId != null) {
-            updateSetting(accountId, "global_color_theme", "string", color);
+            updateSetting(accountId, "global_primary_color", "int", color);
+        }
+    }
+
+    /**
+     * Update the global theme color setting
+     */
+    public void updatePrimaryDarkThemeColor(final String accountId, final int color) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "global_primary_dark_color", "int", color);
+        }
+    }
+
+    /**
+     * Update the global theme color setting
+     */
+    public void updateAccentThemeColor(final String accountId, final int color) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "global_accent_color", "int", color);
+        }
+    }
+
+    /**
+     * Update the mobile only setting
+     */
+    public void updateUseGlobalTheme(final String accountId, final boolean useGlobal) {
+        if (active && accountId != null) {
+            updateSetting(accountId, "apply_theme_globally", "boolean", useGlobal);
         }
     }
 
