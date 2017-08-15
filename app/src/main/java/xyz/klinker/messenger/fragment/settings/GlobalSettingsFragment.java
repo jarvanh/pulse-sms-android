@@ -174,8 +174,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     private void initEmojiStyle() {
         Preference pref = findPreference(getString(R.string.pref_emoji_style));
 
-        if (EmojiInitializer.INSTANCE.isAlreadyUsingGoogleAndroidO() ||
-                !FeatureFlags.get(getActivity()).EMOJI_STYLE_SELECTION) {
+        if (EmojiInitializer.INSTANCE.isAlreadyUsingGoogleAndroidO()) {
             ((PreferenceCategory) findPreference(getString(R.string.pref_customization_category)))
                     .removePreference(pref);
         } else {

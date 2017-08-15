@@ -73,8 +73,6 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean EMOJI_STYLE_SELECTION;
-    public boolean TV_MESSAGE_ENTRY;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -85,8 +83,6 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        EMOJI_STYLE_SELECTION = getValue(sharedPrefs, FLAG_EMOJI_STYLE);
-        TV_MESSAGE_ENTRY = getValue(sharedPrefs, FLAG_TV_MESSAGE_ENTRY);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -104,9 +100,6 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
-                break;
-            case FLAG_TV_MESSAGE_ENTRY:
-                TV_MESSAGE_ENTRY = flag;
                 break;
         }
     }

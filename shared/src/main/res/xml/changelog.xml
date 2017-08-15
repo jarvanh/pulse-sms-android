@@ -16,18 +16,18 @@
 
 <changelog>
 
-    <!--<version-->
-        <!--name="2.5.0"-->
-        <!--description="August 14th, 2017">-->
-        <!--<text>Select between the system default and the Android O emojis</text>-->
-        <!--<text>Send messages from Android TV</text>-->
-        <!--<text>Bug fixes</text>-->
-    <!--</version>-->
-
     <version
-        name="2.4.10"
-        description="August 8th, 2017">
+        name="2.5.0"
+        description="August 16th, 2017">
+        <text>[Global Themes] Add the ability to apply a theme to the conversation list while still using the per-conversation themes</text>
+        <text>[Global Themes] Add way more color choices</text>
+        <text>[Global Themes] Set the accent color separately from the primary color</text>
+        <text>Select between the system default and the Android O emojis</text>
+        <text>Send messages from the Android TV app</text>
+        <text>Cleanup the settings menu</text>
         <text>Fixes for marking MMS as seen</text>
+        <text>Improved memory management</text>
+        <text>Bug and crash fixes</text>
     </version>
 
     <version
