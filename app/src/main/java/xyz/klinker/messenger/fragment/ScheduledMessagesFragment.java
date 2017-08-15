@@ -113,11 +113,9 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         fab.setOnClickListener(view1 -> startSchedulingMessage());
 
         Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
-            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            ColorUtils.changeRecyclerOverscrollColors(list, settings.globalColorSet.color);
-        }
+        emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
 
         return view;
     }

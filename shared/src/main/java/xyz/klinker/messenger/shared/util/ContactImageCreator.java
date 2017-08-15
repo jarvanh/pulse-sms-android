@@ -13,7 +13,7 @@ public class ContactImageCreator {
     public static Bitmap getLetterPicture(Context context, Conversation conversation) {
         int backgroundColor = conversation.colors.color;
         if (Settings.get(context).useGlobalThemeColor) {
-            backgroundColor = Settings.get(context).globalColorSet.color;
+            backgroundColor = Settings.get(context).mainColorSet.color;
         }
 
         if (conversation.title.length() == 0 || conversation.title.contains(", ")) {

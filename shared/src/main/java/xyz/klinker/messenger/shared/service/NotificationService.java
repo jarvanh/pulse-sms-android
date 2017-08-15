@@ -37,7 +37,6 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -50,7 +49,6 @@ import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -222,8 +220,7 @@ public class NotificationService extends IntentService {
                                 conversation.title = context.getString(R.string.new_message);
                                 conversation.imageUri = null;
                                 conversation.ringtoneUri = null;
-                                conversation.color = Settings.get(context).useGlobalThemeColor ?
-                                        Settings.get(context).globalColorSet.color : ColorSet.DEFAULT(context).color;
+                                conversation.color = Settings.get(context).mainColorSet.color;
                                 conversation.privateNotification = true;
                                 conversation.ledColor = Color.WHITE;
                             } else {
@@ -287,7 +284,7 @@ public class NotificationService extends IntentService {
                 .setContentTitle(conversation.title)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.color)
                 .setDefaults(defaults)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setLargeIcon(contactImage)
@@ -452,7 +449,7 @@ public class NotificationService extends IntentService {
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.messages.size(), conversation.messages.size()))
                 .setLargeIcon(null)
-                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.color)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
@@ -761,8 +758,7 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).useGlobalThemeColor ?
-                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
+                .setColor(Settings.get(this).mainColorSet.color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
@@ -785,8 +781,7 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).useGlobalThemeColor ?
-                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
+                .setColor(Settings.get(this).mainColorSet.color)
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(title)

@@ -1,23 +1,14 @@
 package xyz.klinker.messenger.fragment.settings;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.codekidlabs.storagechooser.StorageChooser;
+import android.support.v7.app.AppCompatDelegate;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.view.ColorPreference;
 
 public class ThemeSettingsFragment extends MaterialPreferenceFragment {
 
@@ -26,20 +17,11 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings_theme);
-//        initConvertToMMS();
-//        initMaxImageSize();
-//        initGroupMMS();
-//        initAutoSaveMedia();
-//        initDownloadLocation();
-//
-//        // MMS APN settings
-//        initOverrideSystemSettings();
-//        initMmsc();
-//        initProxy();
-//        initPort();
-//        initUserAgent();
-//        initUserAgentProfileUrl();
-//        initUserAgentProfileTagName();
+
+        initBaseTheme();
+        initFontSize();
+        initRounderBubbles();
+        setUpColors();
     }
 
     @Override
@@ -48,167 +30,83 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         Settings.get(getActivity()).forceUpdate(getActivity());
     }
 
-
-    private void initConvertToMMS() {
-        findPreference(getString(R.string.pref_convert_to_mms))
+    private void initBaseTheme() {
+        findPreference(getString(R.string.pref_base_theme))
                 .setOnPreferenceChangeListener((preference, o) -> {
-                    String convert = (String) o;
-                    new ApiUtils().updateConvertToMMS(Account.get(getActivity()).accountId,
-                            convert);
+                    String newValue = (String) o;
+                    if (!newValue.equals("day_night") && !newValue.equals("light")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+
+                    new ApiUtils().updateBaseTheme(Account.get(getActivity()).accountId,
+                            newValue);
+
+                    getActivity().recreate();
+
                     return true;
                 });
     }
 
-    private void initMaxImageSize() {
-        findPreference(getString(R.string.pref_mms_size))
+    private void initFontSize() {
+        findPreference(getString(R.string.pref_font_size))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String size = (String) o;
-                    new ApiUtils().updateMmsSize(Account.get(getActivity()).accountId,
+                    new ApiUtils().updateFontSize(Account.get(getActivity()).accountId,
                             size);
+
                     return true;
                 });
     }
 
-    private void initGroupMMS() {
-        findPreference(getString(R.string.pref_group_mms))
+    private void initRounderBubbles() {
+        findPreference(getString(R.string.pref_rounder_bubbles))
                 .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean group = (boolean) o;
-                    new ApiUtils().updateGroupMMS(Account.get(getActivity()).accountId,
-                            group);
+                    boolean rounder = (boolean) o;
+                    new ApiUtils().updateRounderBubbles(Account.get(getActivity()).accountId,
+                            rounder);
                     return true;
                 });
     }
 
-    private void initAutoSaveMedia() {
-        findPreference(getString(R.string.pref_auto_save_media))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean save = (boolean) o;
-                    new ApiUtils().updateAutoSaveMedia(Account.get(getActivity()).accountId,
-                            save);
-                    return true;
-                });
-    }
+    private void setUpColors() {
+        final ColorPreference preference = (ColorPreference)
+                findPreference(getString(R.string.pref_global_primary_color));
+        final ColorPreference darkColorPreference = (ColorPreference)
+                findPreference(getString(R.string.pref_global_primary_dark_color));
+        final ColorPreference accentColorPreference = (ColorPreference)
+                findPreference(getString(R.string.pref_global_accent_color));
 
-    private void initDownloadLocation() {
-        findPreference(getString(R.string.pref_mms_save_location))
-                .setOnPreferenceClickListener(preference -> {
+        preference.setOnPreferenceChangeListener((preference1, o) -> {
+            Settings settings = Settings.get(getActivity());
 
-                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_GRANTED) {
-                        showStorageChooser();
-                    } else {
-                        if (getActivity() != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, -1);
-                        } else {
-                            showStorageChooser();
-                        }
-                    }
+            ColorUtils.animateToolbarColor(getActivity(), settings.mainColorSet.color, (int) o);
+            settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
+            settings.mainColorSet.color = (int) o;
+            return true;
+        });
 
-                    return false;
-                });
-    }
+        preference.setColorSelectedListener(colors -> {
+            darkColorPreference.setColor(colors.colorDark);
+            accentColorPreference.setColor(colors.colorAccent);
+        });
 
-    private void showStorageChooser() {
-        StorageChooser chooser = new StorageChooser.Builder()
-                .withActivity(getActivity())
-                .withFragmentManager(((AppCompatActivity) getActivity()).getSupportFragmentManager())
-                .allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER)
-                .actionSave(true)
-                .withPreference(MmsSettings.get(getActivity()).getSharedPrefs(getActivity()))
-                .build();
+        darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
+            Settings settings = Settings.get(getActivity());
 
-        chooser.show();
-        chooser.setOnSelectListener(s -> { });
-    }
+            ColorUtils.animateStatusBarColor(getActivity(), settings.mainColorSet.colorDark, (int) o);
+            settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
+            settings.mainColorSet.colorDark = (int) o;
+            return true;
+        });
 
-    private void initOverrideSystemSettings() {
-        findPreference(getString(R.string.pref_override_system_apn))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean override = (boolean) o;
-                    new ApiUtils().updateOverrideSystemApn(Account.get(getActivity()).accountId,
-                            override);
+        accentColorPreference.setOnPreferenceChangeListener((preference13, o) -> {
+            Settings settings = Settings.get(getActivity());
 
-                    if (override) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.System.canWrite(getActivity())) {
-                            new AlertDialog.Builder(getActivity())
-                                    .setMessage(com.klinker.android.send_message.R.string.write_settings_permission)
-                                    .setPositiveButton(com.klinker.android.send_message.R.string.ok, (dialog, which) -> {
-                                        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                                        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                                        try {
-                                            startActivity(intent);
-                                        } catch (Exception e) {
-                                            Log.e("MainActivity", "error starting permission intent", e);
-                                        }
-                                    })
-                                    .show();
-                        }
-                    }
-
-                    return true;
-                });
-    }
-
-    private void initMmsc() {
-        findPreference(getString(R.string.pref_mmsc_url))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String mmsc = (String) o;
-                    new ApiUtils().updateMmscUrl(Account.get(getActivity()).accountId,
-                            mmsc);
-                    return true;
-                });
-    }
-
-    private void initProxy() {
-        findPreference(getString(R.string.pref_mms_proxy))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String proxy = (String) o;
-                    new ApiUtils().updateMmsProxy(Account.get(getActivity()).accountId,
-                            proxy);
-                    return true;
-                });
-    }
-
-    private void initPort() {
-        findPreference(getString(R.string.pref_mms_port))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String port = (String) o;
-                    new ApiUtils().updateMmsPort(Account.get(getActivity()).accountId,
-                            port);
-                    return true;
-                });
-    }
-
-    private void initUserAgent() {
-        findPreference(getString(R.string.pref_user_agent))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String userAgent = (String) o;
-                    new ApiUtils().updateUserAgent(Account.get(getActivity()).accountId,
-                            userAgent);
-                    return true;
-                });
-    }
-
-    private void initUserAgentProfileUrl() {
-        findPreference(getString(R.string.pref_user_agent_profile_url))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String uaProfileUrl = (String) o;
-                    new ApiUtils().updateUserAgentProfileUrl(Account.get(getActivity()).accountId,
-                            uaProfileUrl);
-                    return true;
-                });
-    }
-
-    private void initUserAgentProfileTagName() {
-        findPreference(getString(R.string.pref_user_agent_profile_tag))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String uaProfileTagName = (String) o;
-                    new ApiUtils().updateUserAgentProfileTagName(Account.get(getActivity()).accountId,
-                            uaProfileTagName);
-                    return true;
-                });
+            settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
+            settings.mainColorSet.colorAccent = (int) o;
+            return true;
+        });
     }
 }

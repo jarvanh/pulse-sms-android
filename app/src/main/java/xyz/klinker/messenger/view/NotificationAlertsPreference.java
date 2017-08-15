@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.Preference;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.AttributeSet;
@@ -21,7 +19,6 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.ColorSet;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
@@ -240,7 +237,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.useGlobalThemeColor ? settings.globalColorSet.color : ColorSet.DEFAULT(getContext()).color)
+                .setColor(settings.mainColorSet.color)
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());

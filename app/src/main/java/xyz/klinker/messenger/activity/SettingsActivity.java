@@ -34,6 +34,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment;
 import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 
@@ -104,16 +105,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         // sets it to teal if there is no color selected
         Settings settings = Settings.get(this);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
+        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
 
-        if (settings.useGlobalThemeColor) {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
-            getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
-        } else {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ColorSet.DEFAULT(this).color));
-            getWindow().setStatusBarColor(ColorSet.DEFAULT(this).colorDark);
-        }
-
-        ColorUtils.updateRecentsEntry(this);
         ColorUtils.checkBlackBackground(this);
     }
 
@@ -121,6 +115,17 @@ public class SettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, fragment)
                 .commit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Settings settings = Settings.get(this);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
+        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
+
+        ActivityUtils.setTaskDescription(this);
     }
 
     @Override

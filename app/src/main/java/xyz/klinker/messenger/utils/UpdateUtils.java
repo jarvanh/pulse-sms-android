@@ -17,6 +17,7 @@ import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
@@ -46,13 +47,20 @@ public class UpdateUtils {
         Settings settings = Settings.get(context);
         MmsSettings mmsSettings = MmsSettings.get(context);
 
-        if (sharedPreferences.getBoolean("v2.4.9", true)) {
-            sharedPreferences.edit()
-                    .putBoolean("v2.4.9", false)
-                    .apply();
+        if (sharedPreferences.getBoolean("v2.5.0.1", true)) {
+            String colorSetName = sharedPreferences.getString(context.getString(R.string.pref_global_color_theme), "default");
+            ColorSet legacyGlobalTheme = ColorSet.getFromString(context, colorSetName);
 
-            NotificationUtils.deleteAllChannels(context);
-            NotificationUtils.createNotificationChannels(context);
+            sharedPreferences.edit()
+                    .putBoolean("v2.5.0.1", false)
+                    .putInt(context.getString(R.string.pref_global_primary_color), legacyGlobalTheme.color)
+                    .putInt(context.getString(R.string.pref_global_primary_dark_color), legacyGlobalTheme.colorDark)
+                    .putInt(context.getString(R.string.pref_global_primary_light_color), legacyGlobalTheme.colorLight)
+                    .putInt(context.getString(R.string.pref_global_accent_color), legacyGlobalTheme.colorAccent)
+                    .putBoolean(context.getString(R.string.pref_apply_theme_globally), !colorSetName.equals("default"))
+                    .commit();
+
+            settings.forceUpdate(context);
         }
 
         int storedAppVersion = sharedPreferences.getInt("app_version", 0);

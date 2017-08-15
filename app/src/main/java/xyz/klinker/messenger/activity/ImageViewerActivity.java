@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ import xyz.klinker.messenger.adapter.ImageViewerAdapter;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.FileUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
@@ -79,7 +81,7 @@ public class ImageViewerActivity extends AppCompatActivity {
         initViewPager();
         initToolbar();
 
-        ColorUtils.updateRecentsEntry(this);
+        ActivityUtils.setTaskDescription(this, "", Color.BLACK);
     }
 
     private void loadMessages() {

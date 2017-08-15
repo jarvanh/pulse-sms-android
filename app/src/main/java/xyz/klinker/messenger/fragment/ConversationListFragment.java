@@ -44,7 +44,6 @@ import xyz.klinker.messenger.adapter.FixedScrollLinearLayoutManager;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -59,7 +58,6 @@ import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 import xyz.klinker.messenger.shared.util.SnackbarAnimationFix;
 import xyz.klinker.messenger.shared.util.TimeUtils;
-import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener;
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate;
@@ -128,10 +126,8 @@ public class ConversationListFragment extends Fragment
         loadConversations();
 
         Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            empty.setBackgroundColor(settings.globalColorSet.colorLight);
-            ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.globalColorSet.color);
-        }
+        empty.setBackgroundColor(settings.mainColorSet.colorLight);
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.mainColorSet.color);
 
         multiSelector = new ConversationsMultiSelectDelegate(this);
 
@@ -593,18 +589,12 @@ public class ConversationListFragment extends Fragment
 
         }
 
-        int color = ColorSet.DEFAULT(getActivity()).colorDark;
-        ColorUtils.adjustStatusBarColor(color, getActivity());
-        ColorUtils.adjustDrawerColor(color, getActivity());
+        ColorSet color = Settings.get(getActivity()).mainColorSet;
+        ColorUtils.adjustStatusBarColor(color.colorDark, getActivity());
+        ColorUtils.adjustDrawerColor(color.colorDark, getActivity());
 
-        Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.globalColorSet.color);
-        }
-
-        if (!settings.useGlobalThemeColor) {
-            ActivityUtils.setTaskDescription(getActivity());
-        }
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.color);
+        ActivityUtils.setTaskDescription(getActivity());
 
         if (viewHolder.conversation != null) {
             NotificationService.CONVERSATION_ID_OPEN = 0L;

@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import xyz.klinker.messenger.fragment.MediaGridFragment;
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 
 public class MediaGridActivity extends AppCompatActivity {
@@ -26,8 +27,13 @@ public class MediaGridActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ColorUtils.updateRecentsEntry(this);
         ColorUtils.checkBlackBackground(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ActivityUtils.setTaskDescription(this, fragment.conversation.title, fragment.conversation.colors.color);
     }
 
     @Override

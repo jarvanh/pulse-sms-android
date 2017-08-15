@@ -915,8 +915,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setColor(Settings.get(this).useGlobalThemeColor ?
-                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color);
+                .setColor(Settings.get(this).mainColorSet.color);
 
         NotificationManagerCompat.from(this).notify(INFORMATION_NOTIFICATION_ID, builder.build());
     }

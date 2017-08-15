@@ -18,7 +18,6 @@ package xyz.klinker.messenger.shared.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 
@@ -32,7 +31,6 @@ import xyz.klinker.messenger.shared.data.pojo.EmojiStyle;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.EmojiInitializer;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -81,7 +79,7 @@ public class Settings {
     public int smallFont;
     public int mediumFont;
     public int largeFont;
-    public ColorSet globalColorSet;
+    public ColorSet mainColorSet;
     public BaseTheme baseTheme;
     public KeyboardLayout keyboardLayout;
     public EmojiStyle emojiStyle;
@@ -136,7 +134,7 @@ public class Settings {
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null);
         this.fontSize = sharedPrefs.getString(context.getString(R.string.pref_font_size), "normal");
         this.themeColorString = sharedPrefs.getString(context.getString(R.string.pref_global_color_theme), "default");
-        this.useGlobalThemeColor = !themeColorString.equals("default");
+        this.useGlobalThemeColor = sharedPrefs.getBoolean(context.getString(R.string.pref_apply_theme_globally), false);
         this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "");
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off").equals("on");
         this.headsUp = sharedPrefs.getString(context.getString(R.string.pref_heads_up), "on").equals("on");
@@ -357,7 +355,11 @@ public class Settings {
             notificationActions.add(NotificationAction.DELETE);
         }
 
-        this.globalColorSet = ColorSet.getFromString(context, themeColorString);
+        this.mainColorSet = ColorSet.create(
+                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_color), ColorSet.DEFAULT(context).color),
+                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_dark_color), ColorSet.DEFAULT(context).colorDark),
+                sharedPrefs.getInt(context.getString(R.string.pref_global_accent_color), ColorSet.DEFAULT(context).colorAccent)
+        );
     }
 
     private Set<String> getDefaultNotificationActions(Context context) {

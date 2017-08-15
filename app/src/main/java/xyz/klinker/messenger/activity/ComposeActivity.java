@@ -32,11 +32,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.TextView;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
@@ -60,6 +58,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -117,15 +116,13 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         displayRecents();
 
         Settings settings = Settings.get(this);
-        if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.globalColorSet.color);
-            getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
-            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            contactEntry.setHighlightColor(settings.globalColorSet.colorAccent);
-            ColorUtils.setCursorDrawableColor(contactEntry, settings.globalColorSet.colorAccent);
-            ColorUtils.updateRecentsEntry(this);
-        }
+        toolbar.setBackgroundColor(settings.mainColorSet.color);
+        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+        contactEntry.setHighlightColor(settings.mainColorSet.colorAccent);
+        ColorUtils.setCursorDrawableColor(contactEntry, settings.mainColorSet.colorAccent);
 
+        ActivityUtils.setTaskDescription(this);
         ColorUtils.checkBlackBackground(this);
     }
 

@@ -17,13 +17,11 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.data.YouTubePreview;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.listener.ForcedRippleTouchListener;
-import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener;
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser;
 import xyz.klinker.messenger.shared.util.media.parsers.YoutubeParser;
 
@@ -61,12 +59,9 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
             }
 
             final ViewGroup.LayoutParams params = timestamp.getLayoutParams();
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    params.height = (Integer) animation.getAnimatedValue();
-                    timestamp.requestLayout();
-                }
+            animator.addUpdateListener(animation -> {
+                params.height = (Integer) animation.getAnimatedValue();
+                timestamp.requestLayout();
             });
             animator.setDuration(100);
             animator.start();
@@ -107,7 +102,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         if ((color != -1 && messageHolder != null) ||
                 settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
             if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).globalColorSet.color;
+                color = Settings.get(itemView.getContext()).mainColorSet.color;
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -123,36 +118,33 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (image != null) {
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mimeType != null && MimeType.isVcard(mimeType)) {
-                        Uri uri = Uri.parse(message.getText().toString());
-                        if (message.getText().toString().contains("file://")) {
-                            uri = ImageUtils.createContentUri(itemView.getContext(), uri);
-                        }
+            image.setOnClickListener(v -> {
+                if (mimeType != null && MimeType.isVcard(mimeType)) {
+                    Uri uri = Uri.parse(message.getText().toString());
+                    if (message.getText().toString().contains("file://")) {
+                        uri = ImageUtils.createContentUri(itemView.getContext(), uri);
+                    }
 
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.setDataAndType(uri, MimeType.TEXT_VCARD);
-                        itemView.getContext().startActivity(intent);
-                    } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
-                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
-                                YoutubeParser.getVideoUriFromThumbnail(data)
-                        )));
-                    } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setDataAndType(uri, MimeType.TEXT_VCARD);
+                    itemView.getContext().startActivity(intent);
+                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
+                    itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+                            YoutubeParser.getVideoUriFromThumbnail(data)
+                    )));
+                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
 //                        YouTubePreview preview = YouTubePreview.build(data);
 //                        if (preview != null) {
 //                            itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
 //                        }
-                    } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
-                        startArticle();
-                    } else {
+                } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                    startArticle();
+                } else {
 //                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
 //                    intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
 //                    intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
 //                    itemView.getContext().startActivity(intent);
-                    }
                 }
             });
         }

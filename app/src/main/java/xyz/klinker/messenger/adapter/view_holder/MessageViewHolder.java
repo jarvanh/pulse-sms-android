@@ -17,7 +17,6 @@
 package xyz.klinker.messenger.adapter.view_holder;
 
 import android.animation.ValueAnimator;
-import android.app.ActivityOptions;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -233,7 +232,7 @@ public class MessageViewHolder extends SwappingHolder {
         if ((color != -1 && messageHolder != null) ||
                 settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
             if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).globalColorSet.color;
+                color = Settings.get(itemView.getContext()).mainColorSet.color;
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));

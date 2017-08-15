@@ -315,11 +315,16 @@
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
+    <string name="conversation_list_category">Conversation List</string>
+    <string name="general_category">General</string>
     <string name="theme_settings_redirect">Theme</string>
     <string name="base_theme">Base Theme</string>
     <string name="global_theme_color">Theme Color</string>
     <string name="font_size">Font Size</string>
     <string name="rounder_bubbles">Round Message Bubbles</string>
+    <string name="apply_theme_globally">Apply to all Conversations</string>
+    <string name="apply_theme_globally_summary">This removes the per-conversation coloring, in favor
+        of this global color set.</string>
     <string name="swipe_delete">Swipe to Delete</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
@@ -354,7 +359,7 @@
     <string name="resync_account_confirmation">This will delete all messages from this device, and
         start with a clean copy of what is currently on your primary device. Are you sure this is what you want?</string>
     <string name="normalize_color_scheme">Or, you can choose a single color that you want to
-        base the contact on:</string>
+        base the theme on:</string>
     <string name="no_apps_found">No apps found to handle this action</string>
     <string name="you_denied_permission">You have denied this permission</string>
     <string name="supported_platforms">Supported Platforms</string>
@@ -422,27 +427,6 @@
     <string name="always_light">Always Light</string>
     <string name="always_dark">Always Dark</string>
     <string name="always_black">Always Black</string>
-    <string name="set_color_per_conversation">Set color per conversation</string>
-    <string name="material_color_red">Red</string>
-    <string name="material_color_pink">Pink</string>
-    <string name="material_color_purple">Purple</string>
-    <string name="material_color_deep_purple">Deep purple</string>
-    <string name="material_color_indigo">Indigo</string>
-    <string name="material_color_blue">Blue</string>
-    <string name="material_color_light_blue">Light blue</string>
-    <string name="material_color_cyan">Cyan</string>
-    <string name="material_color_teal">Teal</string>
-    <string name="material_color_green">Green</string>
-    <string name="material_color_light_green">Light green</string>
-    <string name="material_color_lime">Lime</string>
-    <string name="material_color_yellow">Yellow</string>
-    <string name="material_color_amber">Amber</string>
-    <string name="material_color_orange">Orange</string>
-    <string name="material_color_deep_orange">Deep orange</string>
-    <string name="material_color_brown">Brown</string>
-    <string name="material_color_gray">Gray</string>
-    <string name="material_color_blue_gray">Blue gray</string>
-    <string name="material_color_black">Black</string>
 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Are you sure you want to delete this scheduled message

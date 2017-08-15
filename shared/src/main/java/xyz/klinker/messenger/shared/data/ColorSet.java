@@ -19,9 +19,11 @@ package xyz.klinker.messenger.shared.data;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
 import xyz.klinker.messenger.shared.R;
+import xyz.klinker.messenger.shared.util.ColorConverter;
 
 /**
  * Holds 4 different theme colors: the primary color, a darker and lighter version of the primary
@@ -271,6 +273,16 @@ public class ColorSet {
         return blackSet;
     }
 
+    public static ColorSet create(@ColorInt int primary, @ColorInt int primaryDark, @ColorInt int accentColor) {
+        ColorSet set = new ColorSet();
+        set.color = primary;
+        set.colorDark = primaryDark;
+        set.colorLight = ColorConverter.lightenPrimaryColor(primary);
+        set.colorAccent = accentColor;
+
+        return set;
+    }
+
     public static ColorSet getFromString(Context context, String colorString) {
         switch (colorString) {
             case "red":
@@ -314,7 +326,7 @@ public class ColorSet {
             case "black":
                 return BLACK(context);
             default:
-                return TEAL(context);
+                return DEFAULT(context);
         }
     }
 }

@@ -54,11 +54,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         initThemeRedirect();
         initMmsConfigurationRedirect();
 
-        //initBaseTheme();
-        //initGlobalTheme();
-        //initFontSize();
         initKeyboardLayout();
-        //initRounderBubbles();
         initSwipeDelete();
         initNotificationActions();
         initDeliveryReports();
@@ -90,55 +86,6 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                 });
     }
 
-    private void initGlobalTheme() {
-        findPreference(getString(R.string.pref_global_color_theme))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    ColorSet initialColors = ColorSet.getFromString(getActivity(),
-                            Settings.get(getActivity()).themeColorString);
-                    String colorString = (String) o;
-                    new ApiUtils().updateGlobalThemeColor(Account.get(getActivity()).accountId,
-                            colorString);
-
-                    ColorSet colors = ColorSet.getFromString(getActivity(), colorString);
-                    ColorUtils.animateToolbarColor(getActivity(),
-                            initialColors.color, colors.color);
-                    ColorUtils.animateStatusBarColor(getActivity(),
-                            initialColors.colorDark, colors.colorDark);
-
-                    return true;
-                });
-    }
-
-    private void initBaseTheme() {
-        findPreference(getString(R.string.pref_base_theme))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String newValue = (String) o;
-                    if (!newValue.equals("day_night") && !newValue.equals("light")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }
-
-                    new ApiUtils().updateBaseTheme(Account.get(getActivity()).accountId,
-                            newValue);
-
-                    getActivity().recreate();
-
-                    return true;
-                });
-    }
-
-    private void initFontSize() {
-        findPreference(getString(R.string.pref_font_size))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    String size = (String) o;
-                    new ApiUtils().updateFontSize(Account.get(getActivity()).accountId,
-                            size);
-
-                    return true;
-                });
-    }
-
     private void initKeyboardLayout() {
         findPreference(getString(R.string.pref_keyboard_layout))
                 .setOnPreferenceChangeListener((preference, o) -> {
@@ -146,16 +93,6 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                     new ApiUtils().updateKeyboardLayout(Account.get(getActivity()).accountId,
                             layout);
 
-                    return true;
-                });
-    }
-
-    private void initRounderBubbles() {
-        findPreference(getString(R.string.pref_rounder_bubbles))
-                .setOnPreferenceChangeListener((preference, o) -> {
-                    boolean rounder = (boolean) o;
-                    new ApiUtils().updateRounderBubbles(Account.get(getActivity()).accountId,
-                            rounder);
                     return true;
                 });
     }

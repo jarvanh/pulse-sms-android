@@ -23,13 +23,7 @@ public class UnarchiveSwipeSimpleCallback extends SwipeSimpleCallback {
 
     @Override
     protected void setupEndSwipe(Context context) {
-        Settings settings = Settings.get(context);
-        if (settings.useGlobalThemeColor) {
-            endSwipeBackground = new ColorDrawable(settings.globalColorSet.colorAccent);
-        } else {
-            endSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorAccent);
-        }
-
+        endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorAccent);
         endMark = context.getDrawable(R.drawable.ic_delete_sweep);
         endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
     }

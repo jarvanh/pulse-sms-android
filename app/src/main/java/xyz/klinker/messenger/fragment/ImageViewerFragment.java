@@ -77,9 +77,8 @@ public class ImageViewerFragment extends Fragment {
             player.setRightAction(EasyVideoPlayer.RIGHT_ACTION_NONE);
             player.setSource(Uri.parse(data));
 
-            if (Settings.get(getActivity()).useGlobalThemeColor) {
-                player.setThemeColor(Settings.get(getActivity()).globalColorSet.color);
-            }
+            // TODO: Let's use the conversation color here unless it is a global theme
+            player.setThemeColor(Settings.get(getActivity()).mainColorSet.color);
 
             if (MimeType.isAudio(mimeType)) {
                 view.findViewById(R.id.audio).setVisibility(View.VISIBLE);

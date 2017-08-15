@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,11 +77,8 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
                 unreadIndicator.setVisibility(View.VISIBLE);
             }
 
-            if (Settings.get(itemView.getContext()).useGlobalThemeColor) {
-                ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(Settings.get(itemView.getContext()).globalColorSet.color));
-            } else {
-                ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(ColorSet.DEFAULT(itemView.getContext()).color));
-            }
+            ((CircleImageView) unreadIndicator).setImageDrawable(
+                    new ColorDrawable(Settings.get(itemView.getContext()).mainColorSet.color));
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);

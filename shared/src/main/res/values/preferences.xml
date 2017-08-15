@@ -63,10 +63,18 @@
     <string name="pref_contact_customization_group" translatable="false">customization_group</string>
     <string name="pref_contact_notification_group" translatable="false">notification_group</string>
 
+    <string name="pref_general_category" translatable="false">general_settings_category</string>
+    <string name="pref_conversation_list" translatable="false">conversation_list_category</string>
+    <string name="pref_theme_settings" translatable="false">theme_settings</string>
+    <string name="pref_global_primary_color" translatable="false">global_primary_color</string>
+    <string name="pref_global_primary_dark_color" translatable="false">global_primary_dark_color</string>
+    <string name="pref_global_primary_light_color" translatable="false">global_primary_light_color</string>
+    <string name="pref_global_accent_color" translatable="false">global_accent_color</string>
+    <string name="pref_apply_theme_globally" translatable="false">apply_theme_globally</string>
+
     <string name="pref_customization_category" translatable="false">customization_category</string>
     <string name="pref_notification_category" translatable="false">notification_category</string>
     <string name="pref_advanced_category" translatable="false">advanced_settings_category</string>
-    <string name="pref_theme_settings" translatable="false">theme_settings</string>
     <string name="pref_ringtone" translatable="false">ringtone</string>
     <string name="pref_base_theme" translatable="false">base_theme</string>
     <string name="pref_rounder_bubbles" translatable="false">rounder_bubbles</string>

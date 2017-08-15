@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -41,12 +40,10 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         setUpInitialLayout();
 
         Settings settings = Settings.get(this);
-        if (settings.useGlobalThemeColor) {
-            findViewById(R.id.initial_layout).setBackgroundColor(settings.globalColorSet.color);
-            findViewById(R.id.purchase_layout).setBackgroundColor(settings.globalColorSet.color);
-            ((TextView)findViewById(R.id.try_it))
-                    .setTextColor(ColorStateList.valueOf(settings.globalColorSet.color));
-        }
+        findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.color);
+        findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.color);
+        ((TextView)findViewById(R.id.try_it))
+                .setTextColor(ColorStateList.valueOf(settings.mainColorSet.color));
 
         new Handler().postDelayed(this::circularRevealIn, 100);
     }

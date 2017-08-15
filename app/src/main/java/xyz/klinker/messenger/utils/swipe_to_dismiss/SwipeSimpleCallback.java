@@ -52,23 +52,13 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     protected void setupEndSwipe(Context context) {
-        if (Settings.get(context).useGlobalThemeColor) {
-            endSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
-        } else {
-            endSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorLight);
-        }
-
+        endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorLight);
         endMark = context.getDrawable(R.drawable.ic_archive);
         endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
     }
 
     protected void setupStartSwipe(Context context) {
-        if (Settings.get(context).useGlobalThemeColor) {
-            startSwipeBackground = new ColorDrawable(Settings.get(context).globalColorSet.colorLight);
-        } else {
-            startSwipeBackground = new ColorDrawable(ColorSet.DEFAULT(context).colorLight);
-        }
-
+        startSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorLight);
         startMark = getArchiveItem(context);
         startMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
 

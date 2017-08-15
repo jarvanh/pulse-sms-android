@@ -17,37 +17,29 @@
 package xyz.klinker.messenger.fragment.settings;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
-import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
 import java.util.List;
 
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
-import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
-import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener;
 import xyz.klinker.messenger.view.ColorPreference;
 
 /**
@@ -58,7 +50,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
     private static final String ARG_CONVERSATION_ID = "conversation_id";
 
-    private Conversation conversation;
+    public Conversation conversation;
 
     public static ContactSettingsFragment newInstance(long conversationId) {
         ContactSettingsFragment fragment = new ContactSettingsFragment();
@@ -76,7 +68,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         loadConversation();
         setUpDefaults();
 
-        addPreferencesFromResource(R.xml.contact_settings);
+        addPreferencesFromResource(R.xml.settings_contact);
 
         setUpToolbar();
         setUpPin();
@@ -140,8 +132,8 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
-            getActivity().getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+                    .setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
+            getActivity().getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar()
                     .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));

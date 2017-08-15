@@ -116,7 +116,7 @@ public class ColorUtils {
      */
     public static void adjustStatusBarColor(int color, final Activity activity) {
         if (Settings.get(activity).useGlobalThemeColor) {
-            color = Settings.get(activity).globalColorSet.colorDark;
+            color = Settings.get(activity).mainColorSet.colorDark;
         }
 
         if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
@@ -155,7 +155,7 @@ public class ColorUtils {
      */
     public static void adjustDrawerColor(int color, boolean isGroup, Activity activity) {
         if (Settings.get(activity).useGlobalThemeColor) {
-            color = Settings.get(activity).globalColorSet.colorDark;
+            color = Settings.get(activity).mainColorSet.colorDark;
         }
 
         final View revealView = activity.findViewById(R.id.navigation_view).findViewById(R.id.header_reveal);
@@ -228,7 +228,7 @@ public class ColorUtils {
      */
     public static void setCursorDrawableColor(EditText editText, int color) {
         if (Settings.get(editText.getContext()).useGlobalThemeColor) {
-            color = Settings.get(editText.getContext()).globalColorSet.colorAccent;
+            color = Settings.get(editText.getContext()).mainColorSet.colorAccent;
         }
 
         try {
@@ -263,7 +263,7 @@ public class ColorUtils {
      */
     public static void colorTextSelectionHandles(TextView view, int color) {
         if (Settings.get(view.getContext()).useGlobalThemeColor) {
-            color = Settings.get(view.getContext()).globalColorSet.colorAccent;
+            color = Settings.get(view.getContext()).mainColorSet.colorAccent;
         }
 
         try {
@@ -312,7 +312,7 @@ public class ColorUtils {
     public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, int color) {
         final int colorWithGlobalCalculated;
         if (Settings.get(recyclerView.getContext()).useGlobalThemeColor) {
-            colorWithGlobalCalculated = Settings.get(recyclerView.getContext()).globalColorSet.color;
+            colorWithGlobalCalculated = Settings.get(recyclerView.getContext()).mainColorSet.color;
         } else {
             colorWithGlobalCalculated = color;
         }
@@ -368,22 +368,6 @@ public class ColorUtils {
                 }
             }
         });
-    }
-
-    /**
-     * Changes the color of the app bar on the "recents screen", if it is not the default theme
-     */
-    public static void updateRecentsEntry(final Activity activity) {
-        final Settings settings = Settings.get(activity);
-        if (settings.useGlobalThemeColor) {
-            new Thread(() -> {
-                    Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
-                    ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(null, bm, settings.globalColorSet.color);
-
-                    activity.setTaskDescription(td);
-            }).start();
-        }
-
     }
 
     /**

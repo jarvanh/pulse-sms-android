@@ -18,7 +18,6 @@ package xyz.klinker.messenger.fragment;
 
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -33,7 +32,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.util.List;
-import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.BlacklistAdapter;
@@ -87,11 +85,9 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         emptyView = view.findViewById(R.id.empty_view);
 
         Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            emptyView.setBackgroundColor(settings.globalColorSet.colorLight);
-            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            ColorUtils.changeRecyclerOverscrollColors(list, settings.globalColorSet.color);
-        }
+        emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
 
         return view;
     }

@@ -16,11 +16,9 @@
 
 package xyz.klinker.messenger.adapter;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +38,6 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.data.ColorSet;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -149,11 +146,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
 
             TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
-            if (Settings.get(activity).useGlobalThemeColor) {
-                tryIt.setTextColor(Settings.get(activity).globalColorSet.color);
-            } else {
-                tryIt.setTextColor(ColorSet.DEFAULT(activity).color);
-            }
+            tryIt.setTextColor(Settings.get(activity).mainColorSet.color);
 
             tryIt.setOnClickListener(v -> {
                 sectionCounts.remove(0);
@@ -244,7 +237,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
-                        Settings.get(holder.itemView.getContext()).globalColorSet.colorLight));
+                        Settings.get(holder.itemView.getContext()).mainColorSet.colorLight));
             } else {
                 holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             }

@@ -82,7 +82,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 import com.sgottard.sofa.ContentFragment;
 import com.turingtechnologies.materialscrollbar.DateAndTimeIndicator;
-import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
 import com.turingtechnologies.materialscrollbar.TouchScrollBar;
 import com.yalantis.ucrop.UCrop;
@@ -479,11 +478,11 @@ public class MessageListFragment extends Fragment implements
 
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.globalColorSet.color);
-            send.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
-            messageEntry.setHighlightColor(settings.globalColorSet.colorAccent);
+            toolbar.setBackgroundColor(settings.mainColorSet.color);
+            send.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+            messageEntry.setHighlightColor(settings.mainColorSet.colorAccent);
         }
 
         if (bundle == null) {
@@ -791,7 +790,7 @@ public class MessageListFragment extends Fragment implements
 
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
-            attachButtonHolder.setBackgroundColor(settings.globalColorSet.color);
+            attachButtonHolder.setBackgroundColor(settings.mainColorSet.color);
         } else {
             attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
         }
@@ -857,7 +856,7 @@ public class MessageListFragment extends Fragment implements
                                 getActivity(), true, true, true, false),
                         true)
                 .setHandleColour(settings.useGlobalThemeColor ?
-                        settings.globalColorSet.color : getArguments().getInt(ARG_COLOR))
+                        settings.mainColorSet.color : getArguments().getInt(ARG_COLOR))
                 .setFastScrollSnapPercent(.05f);
 
         messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -1062,7 +1061,7 @@ public class MessageListFragment extends Fragment implements
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            Settings.get(getActivity()).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
@@ -1292,7 +1291,7 @@ public class MessageListFragment extends Fragment implements
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachImageView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.color :
+                            Settings.get(getActivity()).mainColorSet.color :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
@@ -1339,7 +1338,7 @@ public class MessageListFragment extends Fragment implements
                 .showPortraitWarning(false);
 
         if (Settings.get(getActivity()).useGlobalThemeColor) {
-            camera.primaryColor(Settings.get(getActivity()).globalColorSet.color);
+            camera.primaryColor(Settings.get(getActivity()).mainColorSet.color);
         } else {
             camera.primaryColor(getArguments().getInt(ARG_COLOR));
         }
@@ -1363,7 +1362,7 @@ public class MessageListFragment extends Fragment implements
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new RecordAudioView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            Settings.get(getActivity()).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1387,7 +1386,7 @@ public class MessageListFragment extends Fragment implements
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachLocationView(getActivity(), this, this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.colorAccent :
+                            Settings.get(getActivity()).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
@@ -1406,7 +1405,7 @@ public class MessageListFragment extends Fragment implements
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachContactView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).globalColorSet.color :
+                            Settings.get(getActivity()).mainColorSet.color :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,

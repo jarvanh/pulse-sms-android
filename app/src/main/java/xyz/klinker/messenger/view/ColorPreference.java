@@ -87,13 +87,9 @@ public class ColorPreference extends Preference {
         color = PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(getKey(), 0);
 
         setSummary(ColorUtils.convertToHex(color));
-
-        setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                displayPicker();
-                return true;
-            }
+        setOnPreferenceClickListener(preference -> {
+            displayPicker();
+            return true;
         });
     }
 
@@ -112,29 +108,21 @@ public class ColorPreference extends Preference {
 
         final List<ColorSet> colors = ColorUtils.getColors(getContext());
         ColorPickerAdapter adapter = new ColorPickerAdapter(getContext(),
-                colors, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ColorPreference.this.dialog.hide();
-                ColorSet color = colors.get((int) view.getTag());
-                setColor(color.color);
+                colors, view -> {
+                    ColorPreference.this.dialog.hide();
+                    ColorSet color = colors.get((int) view.getTag());
+                    setColor(color.color);
 
-                if (colorSelectedListener != null) {
-                    colorSelectedListener.onColorSelected(color);
-                }
-            }
-        });
+                    if (colorSelectedListener != null) {
+                        colorSelectedListener.onColorSelected(color);
+                    }
+                });
 
         grid.setAdapter(adapter);
 
         this.dialog = new AlertDialog.Builder(getContext())
                 .setView(dialog)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        setColor(picker.getColor());
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> setColor(picker.getColor()))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
 
@@ -144,12 +132,7 @@ public class ColorPreference extends Preference {
             dialog.findViewById(R.id.normalize).setVisibility(View.GONE);
         }
 
-        dialog.post(new Runnable() {
-            @Override
-            public void run() {
-                dialog.scrollTo(0, 0);
-            }
-        });
+        dialog.post(() -> dialog.scrollTo(0, 0));
     }
 
     public void setColorSelectedListener(ColorSelectedListener listener) {

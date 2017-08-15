@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +12,7 @@ import android.support.wearable.view.drawer.WearableActionDrawer;
 import android.support.wearable.view.drawer.WearableDrawerLayout;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.adapter.WearableConversationListAdapter;
 import xyz.klinker.messenger.adapter.WearableMessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -86,22 +81,19 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
                 MessageListUpdatedReceiver.getIntentFilter());
 
         actionDrawer.setBackgroundColor(conversation.colors.color);
-        actionDrawer.setOnMenuItemClickListener(new WearableActionDrawer.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                actionDrawer.closeDrawer();
+        actionDrawer.setOnMenuItemClickListener(menuItem -> {
+            actionDrawer.closeDrawer();
 
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_close:
-                        finish();
-                        return true;
-                    case R.id.menu_reply:
-                        WearableReplyActivity.start(MessageListActivity.this);
-                        return true;
-                }
-
-                return false;
+            switch (menuItem.getItemId()) {
+                case R.id.menu_close:
+                    finish();
+                    return true;
+                case R.id.menu_reply:
+                    WearableReplyActivity.start(MessageListActivity.this);
+                    return true;
             }
+
+            return false;
         });
     }
 
@@ -126,7 +118,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            adapter = new WearableMessageListAdapter(this, manager, null, settings.globalColorSet.color, settings.globalColorSet.colorAccent, conversation.phoneNumbers.contains(", "));
+            adapter = new WearableMessageListAdapter(this, manager, null, settings.mainColorSet.color, settings.mainColorSet.colorAccent, conversation.phoneNumbers.contains(", "));
         } else {
             adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent, conversation.phoneNumbers.contains(", "));
         }
@@ -138,21 +130,15 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
     @Override
     public void loadMessages() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Cursor cursor = source.getMessages(conversation.id);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getMessages() == null) {
-                            adapter.setMessages(cursor);
-                        } else {
-                            adapter.addMessage(cursor);
-                        }
-                    }
-                });
-            }
+        new Thread(() -> {
+            final Cursor cursor = source.getMessages(conversation.id);
+            runOnUiThread(() -> {
+                if (adapter.getMessages() == null) {
+                    adapter.setMessages(cursor);
+                } else {
+                    adapter.addMessage(cursor);
+                }
+            });
         }).start();
     }
 

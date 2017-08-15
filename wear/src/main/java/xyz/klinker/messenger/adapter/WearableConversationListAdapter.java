@@ -1,9 +1,7 @@
 package xyz.klinker.messenger.adapter;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.support.wearable.view.WearableRecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +133,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
-                        Settings.get(holder.itemView.getContext()).globalColorSet.colorLight));
+                        Settings.get(holder.itemView.getContext()).mainColorSet.colorLight));
             } else {
                 holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             }

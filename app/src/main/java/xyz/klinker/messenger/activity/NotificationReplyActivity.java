@@ -258,7 +258,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 image.setImageBitmap(ContactImageCreator.getLetterPicture(this, conversation));
             } else if (Settings.get(this).useGlobalThemeColor) {
-                image.setImageDrawable(new ColorDrawable(Settings.get(this).globalColorSet.color));
+                image.setImageDrawable(new ColorDrawable(Settings.get(this).mainColorSet.color));
             } else {
                 image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             }
@@ -274,10 +274,10 @@ public class NotificationReplyActivity extends AppCompatActivity {
     private void setupSendBar() {
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            sendBar.setBackgroundColor(settings.globalColorSet.color);
-            conversationIndicator.setTextColor(settings.globalColorSet.color);
+            sendBar.setBackgroundColor(settings.mainColorSet.color);
+            conversationIndicator.setTextColor(settings.mainColorSet.color);
             conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
-                    .setTintList(ColorStateList.valueOf(settings.globalColorSet.color));
+                    .setTintList(ColorStateList.valueOf(settings.mainColorSet.color));
         } else {
             sendBar.setBackgroundColor(conversation.colors.color);
             conversationIndicator.setTextColor(conversation.colors.color);

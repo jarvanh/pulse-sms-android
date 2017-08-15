@@ -108,8 +108,7 @@ public class NewMessagesCheckService extends IntentService {
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(Settings.get(this).useGlobalThemeColor ?
-                        Settings.get(this).globalColorSet.color : ColorSet.DEFAULT(this).color)
+                .setColor(Settings.get(this).mainColorSet.color)
                 .setOngoing(true);
         NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, notification.build());
 

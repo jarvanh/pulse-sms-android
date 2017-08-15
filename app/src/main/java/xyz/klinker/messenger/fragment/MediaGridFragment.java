@@ -27,7 +27,7 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
 
     private static final String ARG_CONVERSATION_ID = "conversation_id";
 
-    private Conversation conversation;
+    public Conversation conversation;
     private List<Message> messages;
 
     public static MediaGridFragment newInstance(long conversationId) {
@@ -78,8 +78,8 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(settings.globalColorSet.color));
-            getActivity().getWindow().setStatusBarColor(settings.globalColorSet.colorDark);
+                    .setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
+            getActivity().getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar()
                     .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));

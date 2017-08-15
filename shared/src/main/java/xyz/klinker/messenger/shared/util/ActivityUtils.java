@@ -25,6 +25,7 @@ import android.graphics.BitmapFactory;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.data.Settings;
 
 /**
  * Utils for helping with different activity tasks such as setting the task description.
@@ -47,7 +48,7 @@ public class ActivityUtils {
     public static void setTaskDescription(Activity activity) {
         Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
-                activity.getString(R.string.app_name), bm, ColorSet.DEFAULT(activity).color);
+                activity.getString(R.string.app_name), bm, Settings.get(activity).mainColorSet.color);
 
         activity.setTaskDescription(td);
     }

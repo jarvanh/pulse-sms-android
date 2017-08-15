@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -90,6 +89,7 @@ import xyz.klinker.messenger.shared.service.ApiDownloadService;
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
@@ -141,6 +141,9 @@ public class  MessengerActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        new UpdateUtils(this).checkForUpdate();
+        new PromotionUtils(this).checkPromotions();
+
         dataSource = DataSource.getInstance(this);
         dataSource.open();
 
@@ -172,9 +175,6 @@ public class  MessengerActivity extends AppCompatActivity
                 finish();
             }
         }
-
-        new UpdateUtils(this).checkForUpdate();
-        new PromotionUtils(this).checkPromotions();
     }
 
     @Override
@@ -198,7 +198,7 @@ public class  MessengerActivity extends AppCompatActivity
         }
 
         ColorUtils.checkBlackBackground(this);
-        ColorUtils.updateRecentsEntry(this);
+        ActivityUtils.setTaskDescription(this);
 
         if (!Build.FINGERPRINT.contains("robolectric")) {
             TimeUtils.setupNightTheme(this);
@@ -453,37 +453,36 @@ public class  MessengerActivity extends AppCompatActivity
 
     private void configureGlobalColors() {
         final Settings settings = Settings.get(this);
-        if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.globalColorSet.color);
-            fab.setBackgroundTintList(ColorStateList.valueOf(settings.globalColorSet.colorAccent));
 
-            int[][] states = new int[][] {
-                    new int[] {-android.R.attr.state_checked },
-                    new int[] { android.R.attr.state_checked }
-            };
+        toolbar.setBackgroundColor(settings.mainColorSet.color);
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
 
-            String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
-            int[] iconColors = new int[] {
-                    Color.parseColor("#77" + baseColor),
-                    settings.globalColorSet.colorAccent
-            };
+        int[][] states = new int[][] {
+                new int[] {-android.R.attr.state_checked },
+                new int[] { android.R.attr.state_checked }
+        };
 
-            int[] textColors = new int[] {
-                    Color.parseColor("#DD" + baseColor),
-                    settings.globalColorSet.colorAccent
-            };
+        String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
+        int[] iconColors = new int[] {
+                Color.parseColor("#77" + baseColor),
+                settings.mainColorSet.colorAccent
+        };
 
-            navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
-            navigationView.setItemTextColor(new ColorStateList(states, textColors));
-            navigationView.post(() -> {
-                ColorUtils.adjustStatusBarColor(settings.globalColorSet.colorDark, MessengerActivity.this);
+        int[] textColors = new int[] {
+                Color.parseColor("#DD" + baseColor),
+                settings.mainColorSet.colorAccent
+        };
 
-                View header = navigationView.findViewById(R.id.header);
-                if (header != null) {
-                    header.setBackgroundColor(settings.globalColorSet.colorDark);
-                }
-            });
-        }
+        navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
+        navigationView.setItemTextColor(new ColorStateList(states, textColors));
+        navigationView.post(() -> {
+            ColorUtils.adjustStatusBarColor(settings.mainColorSet.colorDark, MessengerActivity.this);
+
+            View header = navigationView.findViewById(R.id.header);
+            if (header != null) {
+                header.setBackgroundColor(settings.mainColorSet.colorDark);
+            }
+        });
     }
 
     @Override

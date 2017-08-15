@@ -95,11 +95,8 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty);
 
-            Settings settings = Settings.get(context);
-            if (settings.useGlobalThemeColor) {
-                Bitmap color = ImageUtils.createColoredBitmap(settings.globalColorSet.color);
-                rv.setImageViewBitmap(R.id.toolbar, color);
-            }
+            Bitmap color = ImageUtils.createColoredBitmap(Settings.get(context).mainColorSet.color);
+            rv.setImageViewBitmap(R.id.toolbar, color);
 
             Intent openIntent = new Intent(context, MessengerAppWidgetProvider.class);
             openIntent.setAction(MessengerAppWidgetProvider.OPEN_ACTION);
