@@ -47,6 +47,7 @@ import xyz.klinker.messenger.shared.receiver.SmsSentReceiver;
 public class SendUtils {
 
     private Integer subscriptionId;
+    private boolean forceNoSignature = false;
 
     public SendUtils() {
         this(null);
@@ -54,6 +55,11 @@ public class SendUtils {
 
     public SendUtils(Integer subscriptionId) {
         this.subscriptionId = subscriptionId;
+    }
+
+    public SendUtils(boolean forceNoSignature, Integer subscriptionId) {
+        this.subscriptionId = subscriptionId;
+        this.forceNoSignature = forceNoSignature;
     }
 
     public void send(Context context, String text, String address) {
@@ -72,7 +78,7 @@ public class SendUtils {
     public Uri send(Context context, String text, String[] addresses, Uri data,
                            String mimeType, Integer subscriptionId) {
         xyz.klinker.messenger.shared.data.Settings appSettings = xyz.klinker.messenger.shared.data.Settings.get(context);
-        if (!appSettings.signature.isEmpty()) {
+        if (!appSettings.signature.isEmpty() && !forceNoSignature) {
             text += "\n" + appSettings.signature;
         }
 

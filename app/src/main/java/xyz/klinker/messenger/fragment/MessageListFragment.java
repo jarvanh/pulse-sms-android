@@ -702,6 +702,14 @@ public class MessageListFragment extends Fragment implements
         sendProgress.setProgressTintMode(PorterDuff.Mode.SRC_IN);
         send.setOnClickListener(view -> requestPermissionThenSend());
 
+        String signature = Settings.get(getActivity()).signature;
+        if (signature != null && !signature.isEmpty()) {
+            send.setOnLongClickListener(view -> {
+                requestPermissionThenSend(true);
+                return false;
+            });
+        }
+
         editImage.setBackgroundColor(accent);
         editImage.setOnClickListener(view -> {
             try {
@@ -1103,6 +1111,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void requestPermissionThenSend() {
+        requestPermissionThenSend(false);
+    }
+
+    private void requestPermissionThenSend(final boolean forceNoSignature) {
         // finding the message and URIs is also done in the onBackPressed method.
         final String message = messageEntry.getText().toString().trim();
         final List<Uri> uris = new ArrayList<>();
@@ -1126,7 +1138,7 @@ public class MessageListFragment extends Fragment implements
                 changeDelayedSendingComponents(true);
             }
 
-            delayedSendingHandler.postDelayed(() -> sendMessage(uris), settings.delayedSendingTimeout);
+            delayedSendingHandler.postDelayed(() -> sendMessage(uris, forceNoSignature), settings.delayedSendingTimeout);
         }
     }
 
@@ -1163,7 +1175,11 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
-    private void sendMessage(List<Uri> uris) {
+    private void sendMessage(final List<Uri> uris) {
+        sendMessage(uris,false);
+    }
+
+    private void sendMessage(final List<Uri> uris, final boolean forceNoSignature) {
         changeDelayedSendingComponents(false);
 
         final String message = messageEntry.getText().toString().trim();
@@ -1225,7 +1241,7 @@ public class MessageListFragment extends Fragment implements
             }
 
             new Thread(() -> {
-                Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                Uri imageUri = new SendUtils(forceNoSignature, conversation != null ? conversation.simSubscriptionId : null)
                         .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
 
@@ -1244,7 +1260,7 @@ public class MessageListFragment extends Fragment implements
                     m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
 
                     new Thread(() -> {
-                        Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                        Uri imageUri = new SendUtils(forceNoSignature, conversation != null ? conversation.simSubscriptionId : null)
                                 .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
 
