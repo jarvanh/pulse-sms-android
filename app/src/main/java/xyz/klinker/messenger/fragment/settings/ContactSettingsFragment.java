@@ -237,6 +237,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
             editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title);
             editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers);
 
+            startActivity(editRecipients);
             return true;
         });
     }
