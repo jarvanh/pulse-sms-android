@@ -71,6 +71,9 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
 public class ComposeActivity extends AppCompatActivity implements ContactClickedListener {
 
     private static final String TAG = "ComposeActivity";
+    public static final String ACTION_EDIT_RECIPIENTS = "ACTION_EDIT_RECIPIENTS";
+    public static final String EXTRA_EDIT_RECIPIENTS_TITLE = "extra_edit_title";
+    public static final String EXTRA_EDIT_RECIPIENTS_NUMBERS = "extra_edit_numbers";
 
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
@@ -116,6 +119,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         displayRecents();
 
         Settings settings = Settings.get(this);
+        findViewById(R.id.toolbar_holder).setBackgroundColor(settings.mainColorSet.color);
         toolbar.setBackgroundColor(settings.mainColorSet.color);
         getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
         fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
@@ -284,7 +288,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         }
 
         Intent intent = getIntent();
-        if (intent.getAction().equals(Intent.ACTION_SENDTO)) {
+        if (intent.getAction().equals(ACTION_EDIT_RECIPIENTS)) {
+            String phoneNumbers = intent.getStringExtra(EXTRA_EDIT_RECIPIENTS_NUMBERS);
+            String title = intent.getStringExtra(EXTRA_EDIT_RECIPIENTS_TITLE);
+            contactEntry.post(() -> onClicked(title, phoneNumbers, null));
+        } else if (intent.getAction().equals(Intent.ACTION_SENDTO)) {
             String[] phoneNumbers = PhoneNumberUtils
                     .parseAddress(Uri.decode(getIntent().getDataString()));
 
@@ -498,9 +506,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 // case 2
                 for (int i = 0; i < numbers.length; i++) {
                     String number = numbers[i];
+                    String name = ContactUtils.findContactNames(number, this);
                     String image = ContactUtils.findImageUri(number, this) + "/photo";
 
-                    contactEntry.submitItem(names[0], number, Uri.parse(image));
+                    contactEntry.submitItem(name, number, Uri.parse(image));
                 }
             }
         }

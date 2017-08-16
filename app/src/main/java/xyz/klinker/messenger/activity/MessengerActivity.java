@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -941,9 +942,15 @@ public class  MessengerActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             } else {
+                final Intent editRecipients = new Intent(MessengerActivity.this, ComposeActivity.class);
+                editRecipients.setAction(ComposeActivity.ACTION_EDIT_RECIPIENTS);
+                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title);
+                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers);
+
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)
                         .setPositiveButton(android.R.string.ok, null)
+                        .setNeutralButton(R.string.edit_recipients, (dialogInterface, i) -> startActivity(editRecipients))
                         .show();
             }
 

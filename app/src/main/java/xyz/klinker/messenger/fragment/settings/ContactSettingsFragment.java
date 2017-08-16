@@ -33,6 +33,8 @@ import android.util.Log;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.ComposeActivity;
+import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
@@ -75,6 +77,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         setUpMute();
         setUpPrivate();
         setUpGroupName();
+        setUpEditRecipients();
         setUpRingtone();
         setUpNotificationChannels();
         setUpColors();
@@ -216,6 +219,24 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         preference.setOnPreferenceChangeListener((preference1, o) -> {
             conversation.title = (String) o;
             preference1.setSummary(conversation.title);
+            return true;
+        });
+    }
+
+    private void setUpEditRecipients() {
+        Preference preference = findPreference(getString(R.string.pref_contact_edit_recipients));
+
+        if (!conversation.isGroup()) {
+            getPreferenceScreen().removePreference(preference);
+            return;
+        }
+
+        preference.setOnPreferenceClickListener(preference1 -> {
+            final Intent editRecipients = new Intent(getActivity(), ComposeActivity.class);
+            editRecipients.setAction(ComposeActivity.ACTION_EDIT_RECIPIENTS);
+            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title);
+            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers);
+
             return true;
         });
     }

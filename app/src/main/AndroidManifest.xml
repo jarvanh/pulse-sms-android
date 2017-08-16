@@ -129,7 +129,8 @@
         <activity
             android:name=".activity.ComposeActivity"
             android:exported="true"
-            android:theme="@style/PulseTheme.NoActionBar">
+            android:theme="@style/PulseTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

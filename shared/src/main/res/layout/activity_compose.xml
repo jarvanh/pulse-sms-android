@@ -16,73 +16,72 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/searchBackground">
+    android:background="@color/searchBackground"
+    android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/toolbar_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="5dp"
         android:background="?attr/colorPrimary"
-        android:id="@+id/toolbar_holder">
+        android:elevation="5dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="128dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:navigationIcon="@drawable/ic_back" />
+            app:navigationIcon="@drawable/ic_back"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <xyz.klinker.messenger.shared.view.MaxHeightScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="24dp"
+            android:layout_gravity="bottom|start"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_gravity="bottom|start"
-            app:max_height="200dp">
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="24dp"
+            app:max_height="220dp" >
 
             <com.android.ex.chips.RecipientEditTextView
+                android:id="@+id/contact_entry"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="@string/enter_contact_name"
-                android:textColorHint="@color/toolbarEditTextHint"
-                android:textColor="@android:color/white"
                 android:gravity="start"
-                android:inputType="textNoSuggestions"
-                android:id="@+id/contact_entry" />
+                android:hint="@string/enter_contact_name"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/toolbarEditTextHint" />
 
         </xyz.klinker.messenger.shared.view.MaxHeightScrollView>
 
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_forward"
-        android:id="@+id/fab"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:fabSize="normal"
-        app:borderWidth="0dp"
-        app:rippleColor="@android:color/white"
-        android:contentDescription="@string/send_message"
-        android:layout_below="@+id/toolbar_holder"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/toolbar_holder"
         android:layout_marginEnd="@dimen/compose_forward_margin"
         android:layout_marginTop="-28dp"
-        android:clickable="true" />
+        android:clickable="true"
+        android:contentDescription="@string/send_message"
+        android:src="@drawable/ic_forward"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@android:color/white" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recent_contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_holder"
-        android:layout_marginStart="@dimen/conversation_list_padding"
         android:layout_marginEnd="@dimen/conversation_list_padding"
-        android:id="@+id/recent_contacts" />
+        android:layout_marginStart="@dimen/conversation_list_padding" />
 
 </RelativeLayout>

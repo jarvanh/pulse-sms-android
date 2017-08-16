@@ -26,6 +26,10 @@
         android:key="@string/pref_contact_group_name"
         android:title="@string/group_name" />
 
+    <Preference
+        android:key="@string/pref_contact_edit_recipients"
+        android:title="@string/edit_recipients" />
+
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">

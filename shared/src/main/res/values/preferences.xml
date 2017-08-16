@@ -57,6 +57,7 @@
     <string name="pref_contact_led_color" translatable="false">contact_led_color</string>
     <string name="pref_contact_ringtone" translatable="false">contact_ringtone</string>
     <string name="pref_contact_group_name" translatable="false">contact_group_name</string>
+    <string name="pref_contact_edit_recipients" translatable="false">contact_edit_recipients</string>
     <string name="pref_contact_global_colors_set" translatable="false">global_colors_set</string>
     <string name="pref_contact_notification_channel" translatable="false">notification_channel_settings</string>
     <string name="pref_contact_notification_channel_restore_default" translatable="false">notification_channel_restore_defaultsettings</string>
