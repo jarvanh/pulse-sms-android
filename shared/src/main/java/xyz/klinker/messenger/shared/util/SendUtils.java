@@ -87,7 +87,7 @@ public class SendUtils {
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .giffgaffDeliveryReports ? "*0#" : "");
-        settings.setSplit(shouldSplitMessages(context));
+        settings.setSplit(true);//shouldSplitMessages(context));
 
 
         if (mmsSettings.overrideSystemAPN) {
