@@ -1,5 +1,7 @@
-The latest version of Pulse is a big update for syncing between your phone and the web. It comes packed with reliability and consistency improvements, on top of the already rock-solid system.<br/><br/>
+v2.5.0 brings some awesome new features:<br/>
+- Enhancements to global themes (more colors, separate accent colors, and the ability to theme the conversation list while still using per-conversation colors)<br/>
+- Choose between your system and the Android O emojis<br/>
+- Edit the recipients in a group conversation<br/>
++ way more!<br/><br/>
 
-This update also makes improvements around deleting individual messages from conversations and allows you to copy a contacts phone number from the "Conversation information" option.<br/><br/>
-
-Enjoy the update!
+Check out the change log in the "About" section of the app for a full list!
