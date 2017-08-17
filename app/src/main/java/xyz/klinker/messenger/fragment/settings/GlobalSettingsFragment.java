@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
@@ -181,6 +182,11 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
             pref.setOnPreferenceChangeListener((preference, o) -> {
                 String value = (String) o;
                 new ApiUtils().updateEmojiStyle(Account.get(getActivity()).accountId, value);
+
+                new Handler().postDelayed(() -> {
+                    Settings.get(getActivity()).forceUpdate(getActivity());
+                    EmojiInitializer.INSTANCE.initializeEmojiCompat(getActivity());
+                }, 500);
 
                 return true;
             });
