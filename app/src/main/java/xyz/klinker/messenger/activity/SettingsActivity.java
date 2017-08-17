@@ -28,6 +28,7 @@ import android.view.MenuItem;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.fragment.settings.ThemeSettingsFragment;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -38,7 +39,7 @@ import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AbstractSettingsActivity {
 
     private static final String ARG_SETTINGS_TYPE = "arg_settings_type";
     private static final int TYPE_GLOBAL = 1;
@@ -105,15 +106,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         // sets it to teal if there is no color selected
         Settings settings = Settings.get(this);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
-        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
+        getToolbar().setBackgroundColor(settings.mainColorSet.color);
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
 
         ColorUtils.checkBlackBackground(this);
     }
 
     private void startFragment(Fragment fragment) {
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.settings_content, fragment)
                 .commit();
     }
 
@@ -123,7 +124,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Settings settings = Settings.get(this);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
-        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
 
         ActivityUtils.setTaskDescription(this);
     }

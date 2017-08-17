@@ -56,7 +56,7 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
-    <style name="PulseTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="PulseTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/materialGrey</item>
         <item name="colorPrimaryDark">@color/materialGreyDark</item>
         <item name="colorAccent">@color/primaryText</item>

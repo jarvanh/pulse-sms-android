@@ -35,7 +35,7 @@
             android:alpha="0"
             android:translationY="32dp">
 
-            <android.support.v7.widget.Toolbar
+            <xyz.klinker.messenger.shared.view.WhitableToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

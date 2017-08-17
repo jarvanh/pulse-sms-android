@@ -20,17 +20,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 
 /**
  * Activity for changing contact settings_global.
  */
-public class ContactSettingsActivity extends AppCompatActivity {
+public class ContactSettingsActivity extends AbstractSettingsActivity {
 
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
 
@@ -44,7 +48,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
 
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.settings_content, fragment)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -100,6 +100,7 @@ import xyz.klinker.messenger.shared.util.PromotionUtils;
 import xyz.klinker.messenger.shared.util.StringUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
+import xyz.klinker.messenger.shared.view.WhitableToolbar;
 import xyz.klinker.messenger.utils.TextAnywhereConversationCardApplier;
 import xyz.klinker.messenger.utils.UpdateUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
@@ -116,7 +117,7 @@ public class  MessengerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
 
-    private Toolbar toolbar;
+    private WhitableToolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConversationListFragment conversationListFragment;
@@ -150,7 +151,6 @@ public class  MessengerActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_messenger);
         initToolbar();
-        initDrawer();
         initFab();
         configureGlobalColors();
         displayConversations();
@@ -204,6 +204,8 @@ public class  MessengerActivity extends AppCompatActivity
         if (!Build.FINGERPRINT.contains("robolectric")) {
             TimeUtils.setupNightTheme(this);
         }
+
+        initDrawer();
 
         new Handler().postDelayed(() -> {
             if (conversationListFragment != null && !conversationListFragment.isExpanded()) {
@@ -351,10 +353,12 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        toolbar = (WhitableToolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (actionBar != null && drawerLayout != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -369,9 +373,7 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void initDrawer() {
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         navigationView.postDelayed(() -> {
             Account account = Account.get(getApplicationContext());
             try {
@@ -380,20 +382,31 @@ public class  MessengerActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                         .setText(PhoneNumberUtils.format(account.myPhoneNumber));
 
+                if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
+                    ((TextView) findViewById(R.id.drawer_header_my_name))
+                            .setTextColor(getResources().getColor(R.color.lightToolbarTextColor));
+                    ((TextView) findViewById(R.id.drawer_header_my_phone_number))
+                            .setTextColor(getResources().getColor(R.color.lightToolbarTextColor));
+                }
+
                 // change the text to
                 if (Account.get(MessengerActivity.this).accountId == null) {
                     navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
                 }
-
-                initSnooze();
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-        }, 250);
+
+            initSnooze();
+        }, 300);
     }
 
     private void initSnooze() {
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
+        if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
+            snooze.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
+        }
+
         snooze.setOnClickListener(view -> {
             PopupMenu menu = new PopupMenu(MessengerActivity.this, view);
             boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
@@ -628,6 +641,7 @@ public class  MessengerActivity extends AppCompatActivity
             getMenuInflater().inflate(R.menu.activity_messenger, menu);
 
             MenuItem item = menu.findItem(R.id.menu_search);
+            item.getIcon().setTintList(ColorStateList.valueOf(toolbar.getTextColor()));
             searchView.setMenuItem(item);
         }
 

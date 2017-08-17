@@ -28,7 +28,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="5dp">
 
-        <android.support.v7.widget.Toolbar
+        <xyz.klinker.messenger.shared.view.WhitableToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="128dp"

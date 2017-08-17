@@ -76,13 +76,13 @@ public class MessageViewHolder extends SwappingHolder {
     public long messageId;
     public String data;
     public String mimeType;
-    public int color = -1;
-    public int textColor = -1;
+    public int color = Integer.MIN_VALUE;
+    public int textColor = Integer.MIN_VALUE;
     private int type;
     private int timestampHeight;
 
-    private int primaryColor = -1;
-    private int accentColor = -1;
+    private int primaryColor = Integer.MIN_VALUE;
+    private int accentColor = Integer.MIN_VALUE;
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -229,7 +229,7 @@ public class MessageViewHolder extends SwappingHolder {
             }
         }
 
-        if ((color != -1 && messageHolder != null) ||
+        if ((color != Integer.MIN_VALUE && messageHolder != null) ||
                 settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
             if (settings.useGlobalThemeColor) {
                 color = Settings.get(itemView.getContext()).mainColorSet.color;

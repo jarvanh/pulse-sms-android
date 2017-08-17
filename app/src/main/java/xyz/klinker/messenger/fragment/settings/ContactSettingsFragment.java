@@ -27,6 +27,7 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 
@@ -35,10 +36,12 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ComposeActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
@@ -133,14 +136,16 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         getActivity().setTitle(conversation.title);
 
         Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
-            getActivity().getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
-        } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));
-            getActivity().getWindow().setStatusBarColor(conversation.colors.colorDark);
+        Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
+
+        if (toolbar != null) {
+            if (settings.useGlobalThemeColor) {
+                toolbar.setBackgroundColor(settings.mainColorSet.color);
+                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.colorDark);
+            } else {
+                toolbar.setBackgroundColor(conversation.colors.color);
+                ActivityUtils.setStatusBarColor(getActivity(), conversation.colors.colorDark);
+            }
         }
     }
 

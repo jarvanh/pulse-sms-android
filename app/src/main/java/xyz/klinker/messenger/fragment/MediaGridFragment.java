@@ -8,6 +8,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,12 @@ import java.util.List;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.ImageViewerActivity;
 import xyz.klinker.messenger.adapter.MediaGridAdapter;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener;
 
 public class MediaGridFragment extends Fragment implements MediaSelectedListener {
@@ -76,16 +79,19 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
         getActivity().setTitle(conversation.title);
 
         Settings settings = Settings.get(getActivity());
-        if (settings.useGlobalThemeColor) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
-            getActivity().getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
-        } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(conversation.colors.color));
-            getActivity().getWindow().setStatusBarColor(conversation.colors.colorDark);
+        Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
+
+        if (toolbar != null) {
+            if (settings.useGlobalThemeColor) {
+                toolbar.setBackgroundColor(settings.mainColorSet.color);
+                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.colorDark);
+            } else {
+                toolbar.setBackgroundColor(conversation.colors.color);
+                ActivityUtils.setStatusBarColor(getActivity(), conversation.colors.colorDark);
+            }
         }
     }
+
 
     @Override
     public void onSelected(List<Message> messageList, int selectedPosition) {

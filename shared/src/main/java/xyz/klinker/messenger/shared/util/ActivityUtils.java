@@ -22,6 +22,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.view.View;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
@@ -60,4 +62,34 @@ public class ActivityUtils {
         activity.setTaskDescription(td);
     }
 
+    public static void setStatusBarColor(Activity activity, int color) {
+        activity.getWindow().setStatusBarColor(color);
+        setUpLightStatusBar(activity, color);
+    }
+
+    public static void setUpLightStatusBar(Activity activity, int color) {
+        if (!ColorUtils.isColorDark(color)) {
+            activateLightStatusBar(activity, true);
+        } else {
+            activateLightStatusBar(activity, false);
+        }
+    }
+
+    private static void activateLightStatusBar(Activity activity, boolean activate) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
+        int oldSystemUiFlags = activity.getWindow().getDecorView().getSystemUiVisibility();
+        int newSystemUiFlags = oldSystemUiFlags;
+        if (activate) {
+            newSystemUiFlags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        } else {
+            newSystemUiFlags &= ~(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
+        if (newSystemUiFlags != oldSystemUiFlags) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(newSystemUiFlags);
+        }
+    }
 }

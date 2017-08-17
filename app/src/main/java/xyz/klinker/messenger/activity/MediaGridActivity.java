@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.fragment.MediaGridFragment;
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 
-public class MediaGridActivity extends AppCompatActivity {
+public class MediaGridActivity extends AbstractSettingsActivity {
     public static final String EXTRA_CONVERSATION_ID = "conversation_id";
 
     private MediaGridFragment fragment;
@@ -22,7 +24,7 @@ public class MediaGridActivity extends AppCompatActivity {
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
 
         getFragmentManager().beginTransaction()
-                .add(android.R.id.content, fragment)
+                .replace(R.id.settings_content, fragment)
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

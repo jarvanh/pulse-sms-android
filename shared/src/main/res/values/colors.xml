@@ -101,6 +101,7 @@
     <color name="statusBarDarker">#C5C5C5</color>
     <color name="toolbarEditTextHint">#88FFFFFF</color>
     <color name="tooltipBackground">#616161</color>
+    <color name="lightToolbarTextColor">#444444</color>
 
     <!-- Theme Specific Colors -->
     <color name="background">#EEEEEE</color>

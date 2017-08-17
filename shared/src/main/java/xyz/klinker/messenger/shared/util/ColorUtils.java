@@ -34,6 +34,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.EdgeEffect;
@@ -47,6 +48,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
@@ -133,6 +135,8 @@ public class ColorUtils {
                 status.setBackgroundTintList(ColorStateList.valueOf(color));
             }
         }
+
+        ActivityUtils.setUpLightStatusBar(activity, color);
     }
 
     /**
@@ -412,15 +416,26 @@ public class ColorUtils {
 
     public static void animateToolbarColor(Activity activity, int originalColor, int newColor) {
         final ColorDrawable drawable = new ColorDrawable(originalColor);
-        final ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
-        actionBar.setBackgroundDrawable(drawable);
+        final ActionBar actionBar;
+        final Toolbar toolbar;
+
+        if (activity instanceof AbstractSettingsActivity) {
+            toolbar = ((AbstractSettingsActivity) activity).getToolbar();
+            toolbar.setBackgroundColor(originalColor);
+            actionBar = null;
+        } else {
+            toolbar = null;
+            actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+            actionBar.setBackgroundDrawable(drawable);
+        }
 
         ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
         animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int color = (int) valueAnimator.getAnimatedValue();
+        animator.addUpdateListener(valueAnimator -> {
+            int color = (int) valueAnimator.getAnimatedValue();
+            if (toolbar != null) {
+                toolbar.setBackgroundColor(color);
+            } else {
                 drawable.setColor(color);
                 actionBar.setBackgroundDrawable(drawable);
             }
@@ -431,13 +446,10 @@ public class ColorUtils {
     public static void animateStatusBarColor(final Activity activity, int originalColor, int newColor) {
         ValueAnimator animator = ValueAnimator.ofArgb(originalColor, newColor);
         animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int color = (int) valueAnimator.getAnimatedValue();
-                if (activity.getWindow() != null) {
-                    activity.getWindow().setStatusBarColor(color);
-                }
+        animator.addUpdateListener(valueAnimator -> {
+            int color = (int) valueAnimator.getAnimatedValue();
+            if (activity.getWindow() != null) {
+                ActivityUtils.setStatusBarColor(activity, color);
             }
         });
         animator.start();

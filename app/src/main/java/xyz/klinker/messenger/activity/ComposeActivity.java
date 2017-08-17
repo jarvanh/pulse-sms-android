@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -121,13 +122,17 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         Settings settings = Settings.get(this);
         findViewById(R.id.toolbar_holder).setBackgroundColor(settings.mainColorSet.color);
         toolbar.setBackgroundColor(settings.mainColorSet.color);
-        getWindow().setStatusBarColor(settings.mainColorSet.colorDark);
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
         fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
         contactEntry.setHighlightColor(settings.mainColorSet.colorAccent);
         ColorUtils.setCursorDrawableColor(contactEntry, settings.mainColorSet.colorAccent);
 
         ActivityUtils.setTaskDescription(this);
         ColorUtils.checkBlackBackground(this);
+
+        if (!ColorUtils.isColorDark(settings.mainColorSet.color)) {
+            contactEntry.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
+        }
     }
 
     private void displayRecents() {

@@ -153,7 +153,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;
         } else {
-            color = -1;
+            color = Integer.MIN_VALUE;
 
             if (viewType == Message.TYPE_SENDING) {
                 layoutId = rounder ? R.layout.message_sending_round : R.layout.message_sending;
@@ -174,7 +174,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 .inflate(layoutId, parent, false);
 
         messages.moveToFirst();
-        MessageViewHolder holder = new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? -1 : color,
+        MessageViewHolder holder = new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? Integer.MIN_VALUE : color,
                 messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
                 viewType, timestampHeight, this);
 
