@@ -25,7 +25,11 @@ public class ColorConverter {
      * @return the darker version of the primary color.
      */
     public static int lightenPrimaryColor(int color) {
-        return lighten(color, 12);
+        if (color == Color.WHITE) {
+            return Color.WHITE;
+        } else {
+            return lighten(color, 12);
+        }
     }
 
     /**

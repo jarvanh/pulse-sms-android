@@ -96,12 +96,14 @@
     <color name="materialBlueGrey">#607D8B</color>
     <color name="materialBlueGreyDark">#37474F</color>
     <color name="materialBlueGreyLight">#B0BEC5</color>
+    <color name="materialWhiteDark">#F5F5F5</color>
 
     <!-- Other Global Colors (not day or night specific) -->
     <color name="statusBarDarker">#C5C5C5</color>
     <color name="toolbarEditTextHint">#88FFFFFF</color>
     <color name="tooltipBackground">#616161</color>
     <color name="lightToolbarTextColor">#444444</color>
+    <color name="colorToReplaceWhite">#F3F3F3</color>
 
     <!-- Theme Specific Colors -->
     <color name="background">#EEEEEE</color>

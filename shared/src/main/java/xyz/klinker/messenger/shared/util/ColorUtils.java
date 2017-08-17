@@ -411,6 +411,7 @@ public class ColorUtils {
         colors.add(ColorSet.BROWN(context));
         colors.add(ColorSet.GREY(context));
         colors.add(ColorSet.BLUE_GREY(context));
+        colors.add(ColorSet.WHITE(context));
         return colors;
     }
 

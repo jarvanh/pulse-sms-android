@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -43,6 +45,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.pojo.ReorderType;
 import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
@@ -58,6 +61,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     private long time;
 
     private MessengerActivity activity;
+    private int lightToolbarTextColor;
 
     private List<Conversation> conversations;
     private SwipeToDeleteListener swipeToDeleteListener;
@@ -69,6 +73,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.activity = context;
+        this.lightToolbarTextColor = context.getResources().getColor(R.color.lightToolbarTextColor);
 
         this.swipeToDeleteListener = swipeToDeleteListener;
         this.conversationExpandedListener = conversationExpandedListener;
@@ -238,6 +243,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
                         Settings.get(holder.itemView.getContext()).mainColorSet.colorLight));
+            } else if (conversation.colors.color == Color.WHITE) {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.colorDark));
             } else {
                 holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             }
@@ -246,6 +253,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
+                }
+
+                if (ColorUtils.isColorDark(conversation.colors.color)) {
+                    holder.imageLetter.setTextColor(Color.WHITE);
+                } else {
+                    holder.imageLetter.setTextColor(lightToolbarTextColor);
                 }
             } else {
                 holder.imageLetter.setText(null);
@@ -257,6 +270,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     holder.groupIcon.setImageResource(R.drawable.ic_group);
                 } else {
                     holder.groupIcon.setImageResource(R.drawable.ic_person);
+                }
+
+                if (ColorUtils.isColorDark(conversation.colors.color)) {
+                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                } else {
+                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
                 }
             }
         } else {

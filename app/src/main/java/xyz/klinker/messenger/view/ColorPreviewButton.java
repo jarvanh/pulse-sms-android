@@ -20,11 +20,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import xyz.klinker.messenger.R;
 
 /**
  * A button that can be used for previewing theme color changes. When pressed, the accent color
@@ -113,7 +116,11 @@ public class ColorPreviewButton extends View {
     }
 
     public void setInnerColor(int color) {
-        this.innerPaint.setColor(color);
+        if (color == Color.WHITE) {
+            this.innerPaint.setColor(getResources().getColor(R.color.colorToReplaceWhite));
+        } else {
+            this.innerPaint.setColor(color);
+        }
     }
 
     public void setOuterColor(int color) {

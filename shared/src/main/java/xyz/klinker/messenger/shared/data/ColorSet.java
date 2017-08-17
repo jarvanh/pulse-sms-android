@@ -273,6 +273,16 @@ public class ColorSet {
         return blackSet;
     }
 
+    private static ColorSet whiteSet = null;
+    public static ColorSet WHITE(Context context) {
+        if (whiteSet == null) {
+            whiteSet = new ColorSet(context, android.R.color.white, R.color.materialWhiteDark,
+                    android.R.color.white, R.color.materialOrangeAccent);
+        }
+
+        return whiteSet;
+    }
+
     public static ColorSet create(@ColorInt int primary, @ColorInt int primaryDark, @ColorInt int accentColor) {
         ColorSet set = new ColorSet();
         set.color = primary;

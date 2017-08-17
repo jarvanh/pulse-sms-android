@@ -50,12 +50,9 @@ public class ColorPickerAdapter extends ArrayAdapter<ColorSet> {
         button.setOuterColor(color.colorAccent);
         frame.addView(button);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                button.setTag(position);
-                itemClickedListener.onClick(button);
-            }
+        button.setOnClickListener(v -> {
+            button.setTag(position);
+            itemClickedListener.onClick(button);
         });
 
         return frame;
