@@ -10,16 +10,16 @@ import java.lang.reflect.Field;
 public class SnackbarAnimationFix {
 
     public static void apply(Snackbar snackbar) {
-        try {
-            Field mAccessibilityManagerField = BaseTransientBottomBar.class.getDeclaredField("mAccessibilityManager");
-            mAccessibilityManagerField.setAccessible(true);
-            AccessibilityManager accessibilityManager = (AccessibilityManager) mAccessibilityManagerField.get(snackbar);
-            Field mIsEnabledField = AccessibilityManager.class.getDeclaredField("mIsEnabled");
-            mIsEnabledField.setAccessible(true);
-            mIsEnabledField.setBoolean(accessibilityManager, false);
-            mAccessibilityManagerField.set(snackbar, accessibilityManager);
-        } catch (Throwable e) {
-            Log.d("Snackbar", "Reflection error: " + e.toString());
-        }
+//        try {
+//            Field mAccessibilityManagerField = BaseTransientBottomBar.class.getDeclaredField("mAccessibilityManager");
+//            mAccessibilityManagerField.setAccessible(true);
+//            AccessibilityManager accessibilityManager = (AccessibilityManager) mAccessibilityManagerField.get(snackbar);
+//            Field mIsEnabledField = AccessibilityManager.class.getDeclaredField("mIsEnabled");
+//            mIsEnabledField.setAccessible(true);
+//            mIsEnabledField.setBoolean(accessibilityManager, false);
+//            mAccessibilityManagerField.set(snackbar, accessibilityManager);
+//        } catch (Throwable e) {
+//            Log.d("Snackbar", "Reflection error: " + e.toString());
+//        }
     }
 }
