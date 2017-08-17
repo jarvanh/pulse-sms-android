@@ -17,7 +17,9 @@
 package xyz.klinker.messenger.utils.swipe_to_dismiss;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -30,6 +32,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 /**
  * A simple callback for a recyclerview that can act on swipe motions.
@@ -52,16 +55,37 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     protected void setupEndSwipe(Context context) {
-        endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorLight);
+        ColorSet set = Settings.get(context).mainColorSet;
         endMark = context.getDrawable(R.drawable.ic_archive);
-        endMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
+
+        if (set.colorLight == Color.WHITE) {
+            endSwipeBackground = new ColorDrawable(set.colorDark);
+        } else {
+            endSwipeBackground = new ColorDrawable(set.colorLight);
+        }
+
+        if (ColorUtils.isColorDark(set.colorLight)) {
+            endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
+        } else {
+            endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));
+        }
     }
 
     protected void setupStartSwipe(Context context) {
-        startSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorLight);
+        ColorSet set = Settings.get(context).mainColorSet;
         startMark = getArchiveItem(context);
-        startMark.setColorFilter(context.getResources().getColor(R.color.deleteIcon), PorterDuff.Mode.SRC_ATOP);
 
+        if (set.colorLight == Color.WHITE) {
+            startSwipeBackground = new ColorDrawable(set.colorDark);
+        } else {
+            startSwipeBackground = new ColorDrawable(set.colorLight);
+        }
+
+        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.colorLight)) {
+            startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
+        } else {
+            startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));
+        }
     }
 
     private void init(Context context) {

@@ -208,7 +208,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         if (isActivated) {
             states = ColorStateList.valueOf(activity.getResources().getColor(R.color.actionModeBackground));
             textColor = Color.WHITE;
-        } else if (message.color != -1) {
+        } else if (message.color != Integer.MIN_VALUE) {
             states = ColorStateList.valueOf(message.color);
             textColor = message.textColor;
         } else {

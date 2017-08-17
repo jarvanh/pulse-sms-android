@@ -123,7 +123,7 @@ public class SettingsActivity extends AbstractSettingsActivity {
         super.onStart();
 
         Settings settings = Settings.get(this);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(settings.mainColorSet.color));
+        getToolbar().setBackgroundColor(settings.mainColorSet.color);
         ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
 
         ActivityUtils.setTaskDescription(this);

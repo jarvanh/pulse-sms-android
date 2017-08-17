@@ -73,7 +73,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                                    SwipeToDeleteListener swipeToDeleteListener,
                                    ConversationExpandedListener conversationExpandedListener) {
         this.activity = context;
-        this.lightToolbarTextColor = context != null ? context.getResources().getColor(R.color.lightToolbarTextColor) :
+        this.lightToolbarTextColor = context != null && context.getResources() != null ? context.getResources().getColor(R.color.lightToolbarTextColor) :
                 Color.parseColor("#444444");
 
         this.swipeToDeleteListener = swipeToDeleteListener;
