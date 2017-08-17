@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">Arkivér samtale</string>
     <string name="menu_move_to_inbox">Flyt til indbakke</string>
     <string name="menu_conversation_information">Samtaleinformation</string>
+    <string name="menu_copy_phone_number">Kopier nummer</string>
     <string name="menu_conversation_blacklist">Blokér kontakt</string>
     <string name="menu_conversation_schedule">Planlæg en besked</string>
     <string name="menu_contact_settings">Samtaleindstillinger</string>
@@ -176,6 +177,7 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="start_trial">Start \nPrøveperiode</string>
     <string name="not_now">Ikke\nNu</string>
     <string name="onboarding_done">Fuldført</string>
+    <string name="play_store_subscription_warning">Du bliver sendt til Google Plays betaling for abonnementer. Du <b>bliver ikke</b> opkrævet betaling, før de syv dage er gået, og du kan et hver en tid annullere dit abonnement fra Google Play.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Ny besked fra %1$s</string>
     <plurals name="new_conversations">
@@ -202,6 +204,8 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="new_message">Ny besked</string>
     <string name="received_new_message">Du har modtaget en ny besked!</string>
     <string name="media">Medie</string>
+    <string name="default_notifications_channel">Standard notifikationer for samtale</string>
+    <string name="default_notifications_channel_description">Disse indstillinger gælder for enhver samtale, hvor du ikke har lavet individuelle indstillinger af notifikationer for den enkelte samtale.</string>
     <string name="test_notifications_channel">Afprøv notifikationer</string>
     <string name="status_notifications_channel">Status notifikationer</string>
     <string name="general_notifications_channel">Generelle notifikationer</string>
@@ -217,6 +221,8 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="app_version">App version</string>
     <string name="account_information">Konto information</string>
     <string name="account_actions">Konto handlinger</string>
+    <string name="danger_zone">Vær særlig opmærksom!</string>
+    <string name="be_careful_using_these_settings">Følg instruktionerne og vær forsigtig, når du bruger disse muligheder.</string>
     <string name="device_id">Enheds-ID</string>
     <string name="device_info">Endhedsinformation</string>
     <string name="website">Hjemmeside</string>
@@ -285,10 +291,15 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="sound_effects">Lydeffekter</string>
     <string name="delivery_reports">Leveringsrapporter</string>
     <string name="theme_settings">Tilpasning</string>
+    <string name="conversation_list_category">Samtaleliste</string>
+    <string name="general_category">Generelt</string>
+    <string name="theme_settings_redirect">Tema</string>
     <string name="base_theme">Grundlæggende tema</string>
     <string name="global_theme_color">Farve for tema</string>
     <string name="font_size">Skriftstørrelse</string>
     <string name="rounder_bubbles">Runde beskedbobler</string>
+    <string name="apply_theme_globally">Anvend på alle samtaler</string>
+    <string name="apply_theme_globally_summary">Fjern tema for hver enkelt samtale til fordel for dette standard-tema.</string>
     <string name="swipe_delete">Stryg for at slette</string>
     <string name="blacklist_hint">Skriv nummer til at sortliste...</string>
     <string name="add_blacklist">%1$s\n\nEr du sikker på, du vil tilføje dette til sortlisten? Beskeder fra dette nummer vil ikke blive gemt, og du får ingen notifikation!</string>
@@ -334,6 +345,7 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="alert_types">Indstillinger for notifikationer</string>
     <string name="alert_types_summary">Forskellige valgmuligheder for notifikationer</string>
     <string name="strip_unicode">Fjern unicode</string>
+    <string name="use_internal_browser">Benyt intern browser</string>
     <string name="strip_unicode_summary">Disse tegn fjernes fra udgående beskeder</string>
     <string name="giffgaff_delivery">Giffgaff leveringsrapporter</string>
     <string name="notification_actions">Valgmuligheder i notifikationer</string>
@@ -345,6 +357,9 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="refresh_firebase_warning">Hvis du begynder denne proces, <b>skal</b> den fuldføres. Bagefter skal du logge ind igen på alle dine enheder. Vil du fortsætte?</string>
     <string name="show_conversation_history">Vis historik for samtale</string>
     <string name="show_conversation_history_summary">Notifikationer vil vise tidligere beskeder i samtalen</string>
+    <string name="emoji_style">Type af emojis</string>
+    <string name="emoji_style_default">Standard</string>
+    <string name="emoji_style_android_o">Google Android O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksimal billedstørrelse</string>
     <string name="use_group_mms">Benyt gruppe-MMS</string>
@@ -412,8 +427,13 @@ prøv det i dag!</string>
     <string name="minutes">Minutter</string>
     <string name="test">Test</string>
     <string name="channel_settings">Indstillinger for notifikationskanal</string>
+    <string name="channel_settings_summary">Kanaler er nødvendige for at tilpasse notifikationer for Android 8.0 og nyere</string>
+    <string name="restore_default_channel_settings">Gendan standard indstillinger for notifikationer</string>
     <string name="channels">Kanaler</string>
+    <string name="default_channel">Standard kanal</string>
     <string name="channels_global_warning">Mange tilpasninger er nu kun mulige pr. kanal.</string>
+    <string name="channels_global_warning_2">Androids <i>notifikations kanaler</i> er nødvendige for disse indstillinger.\n\nDu kan tilpasse individuelle notifikationer for enhver samtale ved at opsætte en <i>notifikations kanal</i> i menuen for samtalen.
+Brug standard kanaler for at tilpasse de samtaler, du ikke har lavet individuelle kanaler til.</string>
     <string name="off">Fra</string>
     <string name="on">Til</string>
     <string name="rate_it">Bedøm!</string>

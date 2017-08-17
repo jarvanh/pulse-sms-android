@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">Conversatie archiveren</string>
     <string name="menu_move_to_inbox">Verplaatsen naar Inbox</string>
     <string name="menu_conversation_information">Info over conversatie</string>
+    <string name="menu_copy_phone_number">Kopieer nummer</string>
     <string name="menu_conversation_blacklist">Blokkeer contact</string>
     <string name="menu_conversation_schedule">Plan een bericht</string>
     <string name="menu_contact_settings">Instellingen conversaties</string>
@@ -175,6 +176,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="start_trial">Start\nTrial</string>
     <string name="not_now">Niet \nNu</string>
     <string name="onboarding_done">Klaar</string>
+    <string name="play_store_subscription_warning">Je zal worden omgeleid naar de Play Store abonnementen. Er <b>wordt niets</b> aangerekend tot het einde van de zeven dagen proefperiode en je kan je abonnement ten allen tijde annuleren via de Play Store.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nieuw bericht van %1$s</string>
     <plurals name="new_conversations">
@@ -201,6 +203,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="new_message">Nieuw bericht</string>
     <string name="received_new_message">Je hebt een nieuw bericht ontvangen!</string>
     <string name="media">Media</string>
+    <string name="default_notifications_channel">Standaard conversatie notificaties</string>
+    <string name="default_notifications_channel_description">Deze instellingen worden toegepast op alle conversaties waar je geen individueel notificatiekanaal hebt voor aangemaakt.</string>
     <string name="test_notifications_channel">Test notificaties</string>
     <string name="status_notifications_channel">Status notificaties</string>
     <string name="general_notifications_channel">Algemene notificaties</string>
@@ -216,6 +220,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="app_version">App Versie</string>
     <string name="account_information">Account informatie</string>
     <string name="account_actions">Account acties</string>
+    <string name="danger_zone">Gevaarlijke zone</string>
+    <string name="be_careful_using_these_settings">Volg de instructies en wees voorzichtig tijdens het gebruik van deze acties.</string>
     <string name="device_id">Toestel ID</string>
     <string name="device_info">Toestel Info</string>
     <string name="website">Website</string>
@@ -284,10 +290,15 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="sound_effects">Geluidseffecten</string>
     <string name="delivery_reports">Afleverrapporten</string>
     <string name="theme_settings">Aanpassingen</string>
+    <string name="conversation_list_category">Conversatielijst</string>
+    <string name="general_category">Algemeen</string>
+    <string name="theme_settings_redirect">Thema</string>
     <string name="base_theme">Standaard thema</string>
     <string name="global_theme_color">Thema kleur</string>
     <string name="font_size">Grootte lettertype</string>
     <string name="rounder_bubbles">Ronde berichtenbubbels</string>
+    <string name="apply_theme_globally">Toepassen op alle conversaties</string>
+    <string name="apply_theme_globally_summary">Verwijder de aangepaste conversatiethema\'s en vervang door deze algemene kleuren</string>
     <string name="swipe_delete">Swipe om te verwijderen</string>
     <string name="blacklist_hint">Type nummer om te blokkeren...</string>
     <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit nummer wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
@@ -314,7 +325,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
     <string name="resync_account_summary_phone">Dit wist je hele account en laadt de gegevens in van jouw huidige interne sms database.</string>
     <string name="resync_account_confirmation">Dit zal alle berichten verwijderen van dit toestel en zal alle berichten van jouw hoofdtoestel overbrengen naar hier. Zeker dat je dit wil?</string>
-    <string name="normalize_color_scheme">Of, je kan een kleur kiezen om jouw contact te tonen:</string>
+    <string name="normalize_color_scheme">Of, je kan een kleur kiezen om jouw thema op te baseren:</string>
     <string name="no_apps_found">Geen apps gevonden om deze actie mee uit te voeren</string>
     <string name="you_denied_permission">Je hebt de permissie geweigerd</string>
     <string name="supported_platforms">Supported Platforms</string>
@@ -333,6 +344,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="alert_types">Types notificaties</string>
     <string name="alert_types_summary">Vele aanpassingen voor notificaties</string>
     <string name="strip_unicode">Strip Unicode</string>
+    <string name="use_internal_browser">Gebruik interne browser</string>
     <string name="strip_unicode_summary">Deze karakters zullen verwijderd worden voor uitgaande berichten</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notificatieacties</string>
@@ -345,6 +357,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
 Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</string>
     <string name="show_conversation_history">Toon conversatie geschiedenis</string>
     <string name="show_conversation_history_summary">Notificaties zullen vorige berichten uit de conversatie weergeven</string>
+    <string name="emoji_style">Emoji stijl</string>
+    <string name="emoji_style_default">Standaard systeem</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="use_group_mms">Gebruik groep MMS</string>
@@ -411,8 +425,13 @@ it is received.</string>
     <string name="minutes">Minuten</string>
     <string name="test">Test</string>
     <string name="channel_settings">Instellingen notificatiekanaal</string>
+    <string name="channel_settings_summary">Kanalen zijn verplicht in Android 8.0 en hoger voor het aanpassen van notificaties</string>
+    <string name="restore_default_channel_settings">Herstel standaard instellingen voor notificaties</string>
     <string name="channels">Kanalen</string>
+    <string name="default_channel">Standaard kanaal</string>
     <string name="channels_global_warning">Veel globale aanpassingen zijn nu enkel per kanaal beschikbaar.</string>
+    <string name="channels_global_warning_2">Android\'s <i>notificatiekanalen</i>zijn nu verplicht voor het meeste van deze configuratie.\n\n Je kan elke melding van elke conversatie individueel aanpassen door het aanmaken van een <i>notificatiekanaal</i> in het conversatie instellingen menu.
+Gebruik het standaard kanaal om meldingen weer te geven voor conversaties die je niet aanpast.</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
     <string name="rate_it">Rate it!</string>

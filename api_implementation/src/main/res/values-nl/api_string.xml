@@ -43,6 +43,8 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Ga naar</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">op een mobiel toestel of computer.</string>
     <string name="api_activate_2_1">Op de website</string>
     <string name="api_activate_2_2">vul de code rechts in</string>

@@ -43,6 +43,8 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Gå til</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">på en mobil enhed eller en computer</string>
     <string name="api_activate_2_1">På hjemmesiden</string>
     <string name="api_activate_2_2">indtast koden til højre</string>
