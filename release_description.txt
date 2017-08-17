@@ -1,8 +1,8 @@
 v2.5.0 brings some awesome new features:<br/>
-- Enhancements to global themes (more colors, separate accent colors, and the ability to theme the conversation list while still using per-conversation colors)<br/>
-- Choose between your system and the Android O emojis<br/>
+- Enhancements to global themes (more colors, separate accent colors, theme the conversation list while using per-conversation colors)<br/>
+- Pick between your system and the Android O emojis<br/>
 - Edit the recipients in a group conversation<br/>
 - Send messages from Android TV<br/>
 + fixes, cleanup, and way more!<br/><br/>
 
-Check out the change log in the "About" section of the app for a full list.
+Check out the changelog in the "About" section of the app for a full list.
