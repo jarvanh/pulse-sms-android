@@ -448,7 +448,7 @@ public class ImageUtils {
      * @return sharable content:// uri to the file
      */
     public static Uri createContentUri(Context context, File file) {
-        if (context == null) {
+        if (context == null || file.getPath().contains("firebase -1")) {
             return Uri.EMPTY;
         } else {
             return FileProvider.getUriForFile(context,

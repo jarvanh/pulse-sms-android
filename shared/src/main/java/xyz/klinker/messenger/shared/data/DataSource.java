@@ -153,7 +153,7 @@ public class DataSource {
 
     public void ensureActionable() {
         try {
-            Thread.sleep(100);
+            Thread.sleep(500);
         } catch (Exception e) { }
 
         // ensure we are closing everything and getting a brand new database connection

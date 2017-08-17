@@ -63,7 +63,9 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        billing.destroy();
+        if (billing != null) {
+            billing.destroy();
+        }
     }
 
     private void makeSignoutNotification() {
