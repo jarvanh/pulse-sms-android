@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.LayoutRes;
@@ -30,6 +32,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
@@ -44,6 +47,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
 
     private List<Conversation> conversations;
     private ContactClickedListener listener;
+    private int lightToolbarTextColor = Integer.MIN_VALUE;
 
     public ContactAdapter(List<Conversation> conversations, ContactClickedListener listener) {
         this.conversations = conversations;
@@ -56,6 +60,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 .inflate(getLayoutId(), parent, false);
         ConversationViewHolder holder = new ConversationViewHolder(view, null, null);
         holder.setContactClickedListener(listener);
+
+        if (lightToolbarTextColor == Integer.MIN_VALUE) {
+            this.lightToolbarTextColor = parent.getContext().getResources().getColor(R.color.lightToolbarTextColor);
+        }
+
         return holder;
     }
 
@@ -70,31 +79,48 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
 
         holder.conversation = conversation;
 
-        if (conversation.imageUri == null) {
-            if (conversation.colors.color != 0) {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+        Settings settings = Settings.get(holder.itemView.getContext());
+        if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
+            if (settings.useGlobalThemeColor) {
+                if (settings.mainColorSet.colorLight == Color.WHITE) {
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorDark));
+                } else {
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorLight));
+                }
+            } else if (conversation.colors.color == Color.WHITE) {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.colorDark));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(
-                        ColorUtils.getRandomMaterialColor(holder.image.getContext()).color));
+                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
             }
 
+            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.colors.color;
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
-                if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
+                if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
+                }
+
+                if (ColorUtils.isColorDark(colorToInspect)) {
+                    holder.imageLetter.setTextColor(Color.WHITE);
+                } else {
+                    holder.imageLetter.setTextColor(lightToolbarTextColor);
                 }
             } else {
                 holder.imageLetter.setText(null);
-                if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.VISIBLE) {
+                if (holder.groupIcon.getVisibility() != View.VISIBLE) {
                     holder.groupIcon.setVisibility(View.VISIBLE);
                 }
 
-                if (holder.groupIcon != null) {
-                    if (conversation.phoneNumbers.contains(",")) {
-                        holder.groupIcon.setImageResource(R.drawable.ic_group);
-                    } else {
-                        holder.groupIcon.setImageResource(R.drawable.ic_person);
-                    }
+                if (conversation.phoneNumbers.contains(",")) {
+                    holder.groupIcon.setImageResource(R.drawable.ic_group);
+                } else {
+                    holder.groupIcon.setImageResource(R.drawable.ic_person);
+                }
+
+                if (ColorUtils.isColorDark(colorToInspect)) {
+                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                } else {
+                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
                 }
             }
         } else {

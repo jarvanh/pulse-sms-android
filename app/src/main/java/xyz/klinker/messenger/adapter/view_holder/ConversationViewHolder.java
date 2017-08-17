@@ -182,8 +182,12 @@ public class ConversationViewHolder extends SwappingHolder {
                 unreadIndicator.setVisibility(View.VISIBLE);
             }
 
-            ((CircleImageView) unreadIndicator).setImageDrawable(
-                    new ColorDrawable(Settings.get(itemView.getContext()).mainColorSet.color));
+            int color = Settings.get(itemView.getContext()).mainColorSet.color;
+            if (color == Color.WHITE) {
+                color = unreadIndicator.getContext().getResources().getColor(R.color.lightToolbarTextColor);
+            }
+            
+            ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(color));
 
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
