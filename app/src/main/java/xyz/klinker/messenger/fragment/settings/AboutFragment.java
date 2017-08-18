@@ -18,18 +18,24 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.ChangelogAdapter;
 import xyz.klinker.messenger.adapter.OpenSourceAdapter;
 import xyz.klinker.messenger.shared.util.xml.ChangelogParser;
 import xyz.klinker.messenger.shared.util.xml.OpenSourceParser;
+import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Fragment for displaying information about the app.
@@ -42,6 +48,12 @@ public class AboutFragment extends MaterialPreferenceFragmentCompat {
 
         findPreference(getString(R.string.pref_about_app_version)).setSummary(getVersionName());
         findPreference(getString(R.string.pref_about_device_info)).setSummary(getDeviceInfo());
+
+        findPreference(getString(R.string.pref_about_app_version))
+                .setOnPreferenceClickListener(preference -> {
+                    copyToClipboard(getVersionName());
+                    return true;
+                });
 
         findPreference(getString(R.string.pref_about_changelog))
                 .setOnPreferenceClickListener(preference -> {
@@ -104,6 +116,18 @@ public class AboutFragment extends MaterialPreferenceFragmentCompat {
      */
     public String getDeviceInfo() {
         return Build.MANUFACTURER + ", " + Build.MODEL;
+    }
+
+    /**
+     * Copy app version to clipboard
+     */
+    public void copyToClipboard(String text) {
+        ClipboardManager clipboard = (ClipboardManager)
+                getActivity().getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("app_version", text);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getActivity(), R.string.message_copied_to_clipboard,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**
