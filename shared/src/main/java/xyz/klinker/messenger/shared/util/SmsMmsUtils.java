@@ -102,7 +102,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).tenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -165,7 +165,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).tenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -208,6 +208,7 @@ public class SmsMmsUtils {
 
         List<String> fiveMatchers = new ArrayList<>();
         List<String> sevenMatchers = new ArrayList<>();
+        List<String> tenMatchers = new ArrayList<>();
 
         for (String n : numbers) {
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
@@ -231,8 +232,25 @@ public class SmsMmsUtils {
             }
         }
 
+        for (String n : numbers) {
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
+                tenMatchers.add(n);
+            } else if (n.length() >= 10) {
+                tenMatchers.add(n.substring(n.length() - 10));
+            } else {
+                tenMatchers.add(n);
+            }
+        }
+
         Collections.sort(sevenMatchers);
         Collections.sort(fiveMatchers);
+        Collections.sort(tenMatchers);
+
+        StringBuilder tenBuilder = new StringBuilder();
+        for (String m : tenMatchers) {
+            tenBuilder.append(m);
+        }
 
         StringBuilder sevenBuilder = new StringBuilder();
         for (String m : sevenMatchers) {
@@ -244,7 +262,7 @@ public class SmsMmsUtils {
             fiveBuilder.append(m);
         }
 
-        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString());
+        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), tenBuilder.toString());
     }
 
     /**

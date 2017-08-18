@@ -1810,14 +1810,14 @@ public class DataSource {
         try {
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter}, null, null, null);
         } catch (Exception e) {
             ensureActionable();
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter}, null, null, null);
         }
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -1877,14 +1877,14 @@ public class DataSource {
         try {
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter}, null, null, null);
         } catch (Exception e) {
             ensureActionable();
             cursor = database.query(Conversation.TABLE,
                     new String[]{Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER},
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    new String[]{matcher.fiveLetter, matcher.sevenLetter}, null, null, null);
+                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
+                    new String[]{matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter}, null, null, null);
         }
 
         long conversationId;
@@ -1918,7 +1918,7 @@ public class DataSource {
             conversation.phoneNumbers = phoneNumbers;
             conversation.title = ContactUtils.findContactNames(phoneNumbers, context);
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context);
-            conversation.idMatcher = matcher.sevenLetter;
+            conversation.idMatcher = matcher.tenLetter;
             conversation.mute = false;
             conversation.archive = false;
             conversation.ledColor = Color.WHITE;
