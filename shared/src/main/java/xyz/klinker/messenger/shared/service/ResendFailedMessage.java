@@ -3,6 +3,7 @@ package xyz.klinker.messenger.shared.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -20,6 +21,8 @@ public class ResendFailedMessage extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.v("ResendFailed", "attempting to resend");
+
         long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
         if (messageId == -1) {
             return;
@@ -54,6 +57,7 @@ public class ResendFailedMessage extends IntentService {
         source.insertMessage(this, m, m.conversationId);
 
         new SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
+                .setRetryFailedMessages(false)
                 .send(this, m.data, conversation.phoneNumbers);
 
         source.close();

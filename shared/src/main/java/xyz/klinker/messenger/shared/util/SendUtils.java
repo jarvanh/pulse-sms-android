@@ -40,6 +40,7 @@ import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.receiver.MmsSentReceiver;
 import xyz.klinker.messenger.shared.receiver.SmsDeliveredReceiver;
 import xyz.klinker.messenger.shared.receiver.SmsSentReceiver;
+import xyz.klinker.messenger.shared.receiver.SmsSentReceiverNoRetry;
 
 /**
  * Utility for helping to send messages.
@@ -49,6 +50,7 @@ public class SendUtils {
     private Integer subscriptionId;
     private boolean forceNoSignature = false;
     private boolean forceSplitMessage = false;
+    private boolean retryOnFailedMessages = true;
 
     public SendUtils() {
         this(null);
@@ -65,6 +67,11 @@ public class SendUtils {
 
     public SendUtils setForceSplitMessage(boolean splitMessage) {
         this.forceSplitMessage = splitMessage;
+        return this;
+    }
+
+    public SendUtils setRetryFailedMessages(boolean retry) {
+        this.retryOnFailedMessages = retry;
         return this;
     }
 
@@ -118,7 +125,7 @@ public class SendUtils {
 
         Transaction transaction = new Transaction(context, settings);
         transaction.setExplicitBroadcastForDeliveredSms(new Intent(context, SmsDeliveredReceiver.class));
-        transaction.setExplicitBroadcastForSentSms(new Intent(context, SmsSentReceiver.class));
+        transaction.setExplicitBroadcastForSentSms(new Intent(context, retryOnFailedMessages ? SmsSentReceiver.class : SmsSentReceiverNoRetry.class));
         transaction.setExplicitBroadcastForSentMms(new Intent(context, MmsSentReceiver.class));
 
         Message message = new Message(text, addresses);

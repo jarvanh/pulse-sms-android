@@ -51,6 +51,10 @@ import xyz.klinker.messenger.shared.util.SmsMmsUtils;
  */
 public class SmsSentReceiver extends SentReceiver {
 
+    protected boolean retryFailedMessages() {
+        return true;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
@@ -162,33 +166,38 @@ public class SmsSentReceiver extends SentReceiver {
 
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
 
+        Intent resend = new Intent(context, ResendFailedMessage.class);
+        resend.putExtra(ResendFailedMessage.EXTRA_MESSAGE_ID, messageId);
+        resend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         if (error) {
-            Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
-            open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversationId);
-            open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_FROM_NOTIFICATION(), true);
-            open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent pendingOpen = PendingIntent.getActivity(context,
-                    (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (retryFailedMessages()) {
+                context.startService(resend);
+            } else {
+                Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+                open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversationId);
+                open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_FROM_NOTIFICATION(), true);
+                open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingOpen = PendingIntent.getActivity(context,
+                        (int) conversationId, open, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setContentTitle(context.getString(R.string.message_sending_failed))
-                    .setContentText(data)
-                    .setColor(ColorSet.DEFAULT(context).color)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingOpen);
+                NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_stat_notify)
+                        .setContentTitle(context.getString(R.string.message_sending_failed))
+                        .setContentText(data)
+                        .setColor(ColorSet.DEFAULT(context).color)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingOpen);
 
-            Intent resend = new Intent(context, ResendFailedMessage.class);
-            resend.putExtra(ResendFailedMessage.EXTRA_MESSAGE_ID, messageId);
-            resend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent resendPending = PendingIntent.getService(context,
-                    (int) messageId, resend, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Action action = new NotificationCompat.Action(
-                    R.drawable.ic_reply_dark, context.getString(R.string.resend), resendPending);
+                PendingIntent resendPending = PendingIntent.getService(context,
+                        (int) messageId, resend, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Action action = new NotificationCompat.Action(
+                        R.drawable.ic_reply_dark, context.getString(R.string.resend), resendPending);
 
-            notification.addAction(action);
-            NotificationManagerCompat.from(context)
-                    .notify(6666 + (int) messageId, notification.build());
+                notification.addAction(action);
+                NotificationManagerCompat.from(context)
+                        .notify(6666 + (int) messageId, notification.build());
+            }
         }
     }
 
