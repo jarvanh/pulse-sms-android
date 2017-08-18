@@ -24,6 +24,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
+import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.YouTubePreview;
@@ -149,13 +150,8 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                 handled = true;
                 Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
 
-                ClipboardManager clipboard = (ClipboardManager)
-                        fragment.getActivity().getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("messenger",
-                        getMessageContent(message));
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(fragment.getActivity(), R.string.message_copied_to_clipboard,
-                        Toast.LENGTH_SHORT).show();
+                CopyMessageTextFragment fragment = new CopyMessageTextFragment(message);
+                fragment.show(activity.getSupportFragmentManager(), "");
             } else {
                 handled = true;
                 new AlertDialog.Builder(activity)

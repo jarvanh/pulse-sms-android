@@ -8,29 +8,20 @@
     android:padding="12dp">
 
     <TextView
-        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/primaryText"/>
+        android:textSize="12sp"
+        android:textColor="@color/secondaryText"
+        android:text="@string/select_text_to_copy"/>
 
     <TextView
-        android:id="@+id/send_time"
         android:layout_marginTop="6dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@color/secondaryText"
-        android:background="?selectableItemBackground"/>
-
-    <EditText
-        android:layout_marginTop="12dp"
         android:id="@+id/message"
-        android:hint="@string/type_message"
-        android:maxLines="6"
+        android:textSize="16sp"
+        android:textColor="@color/primaryText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <LinearLayout
         android:gravity="end"
@@ -40,20 +31,11 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/delete"
+            android:id="@+id/copy_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
-            android:text="@string/delete"
-            android:layout_marginEnd="12dp"
-            tools:ignore="ButtonStyle" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:text="@string/save"
+            android:text="@string/copy_all_text"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
