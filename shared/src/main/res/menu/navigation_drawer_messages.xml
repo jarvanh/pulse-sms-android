@@ -21,6 +21,11 @@
         android:checkableBehavior="none">
 
         <item
+            android:id="@+id/drawer_conversation_information"
+            android:icon="@drawable/ic_about"
+            android:title="@string/menu_conversation_information" />
+
+        <item
             android:id="@+id/drawer_view_contact"
             android:icon="@drawable/ic_contacts"
             android:title="@string/menu_view_contact" />
@@ -31,21 +36,6 @@
             android:title="@string/menu_view_media" />
 
         <item
-            android:id="@+id/drawer_delete_conversation"
-            android:icon="@drawable/ic_delete"
-            android:title="@string/menu_delete_conversation" />
-
-        <item
-            android:id="@+id/drawer_archive_conversation"
-            android:icon="@drawable/ic_archive"
-            android:title="@string/menu_archive_conversation" />
-
-        <item
-            android:id="@+id/drawer_conversation_information"
-            android:icon="@drawable/ic_about"
-            android:title="@string/menu_conversation_information" />
-
-        <item
             android:id="@+id/drawer_conversation_blacklist"
             android:icon="@drawable/ic_block"
             android:title="@string/menu_conversation_blacklist" />
@@ -54,6 +44,16 @@
             android:id="@+id/drawer_conversation_schedule"
             android:icon="@drawable/ic_schedule"
             android:title="@string/menu_conversation_schedule" />
+
+        <item
+            android:id="@+id/drawer_delete_conversation"
+            android:icon="@drawable/ic_delete"
+            android:title="@string/menu_delete_conversation" />
+
+        <item
+            android:id="@+id/drawer_archive_conversation"
+            android:icon="@drawable/ic_archive"
+            android:title="@string/menu_archive_conversation" />
 
     </group>
 
