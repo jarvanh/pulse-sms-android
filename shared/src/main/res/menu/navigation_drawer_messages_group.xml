@@ -49,7 +49,7 @@
             android:id="@+id/drawer_archive_conversation"
             android:icon="@drawable/ic_archive"
             android:title="@string/menu_archive_conversation" />
-        
+
     </group>
 
     <group android:id="@+id/other_section">
