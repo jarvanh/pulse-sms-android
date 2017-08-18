@@ -53,7 +53,7 @@ public class ResendFailedMessage extends IntentService {
         source.deleteMessage(messageId);
         source.insertMessage(this, m, m.conversationId);
 
-        new SendUtils(conversation.simSubscriptionId)
+        new SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
                 .send(this, m.data, conversation.phoneNumbers);
 
         source.close();

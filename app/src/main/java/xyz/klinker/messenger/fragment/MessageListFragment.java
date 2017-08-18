@@ -1241,7 +1241,8 @@ public class MessageListFragment extends Fragment implements
             }
 
             new Thread(() -> {
-                Uri imageUri = new SendUtils(forceNoSignature, conversation != null ? conversation.simSubscriptionId : null)
+                Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                        .setForceNoSignature(forceNoSignature)
                         .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
 
@@ -1260,7 +1261,8 @@ public class MessageListFragment extends Fragment implements
                     m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
 
                     new Thread(() -> {
-                        Uri imageUri = new SendUtils(forceNoSignature, conversation != null ? conversation.simSubscriptionId : null)
+                        Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                                .setForceNoSignature(forceNoSignature)
                                 .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
 

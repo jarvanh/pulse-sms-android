@@ -48,6 +48,7 @@ public class SendUtils {
 
     private Integer subscriptionId;
     private boolean forceNoSignature = false;
+    private boolean forceSplitMessage = false;
 
     public SendUtils() {
         this(null);
@@ -57,9 +58,14 @@ public class SendUtils {
         this.subscriptionId = subscriptionId;
     }
 
-    public SendUtils(boolean forceNoSignature, Integer subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public SendUtils setForceNoSignature(boolean forceNoSignature) {
         this.forceNoSignature = forceNoSignature;
+        return this;
+    }
+
+    public SendUtils setForceSplitMessage(boolean splitMessage) {
+        this.forceSplitMessage = splitMessage;
+        return this;
     }
 
     public void send(Context context, String text, String address) {
@@ -93,8 +99,7 @@ public class SendUtils {
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .giffgaffDeliveryReports ? "*0#" : "");
-        settings.setSplit(shouldSplitMessages(context));
-
+        settings.setSplit(forceSplitMessage || shouldSplitMessages(context));
 
         if (mmsSettings.overrideSystemAPN) {
             settings.setUseSystemSending(false);
