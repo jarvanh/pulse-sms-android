@@ -59,7 +59,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 public class ColorUtils {
 
     public static ColorSet getRandomMaterialColor(Context context) {
-        int num = (int) (Math.random() * (17 + 1));
+        int num = (int) (Math.random() * (16 + 1));
 
         switch (num) {
             case 0:
@@ -83,23 +83,27 @@ public class ColorUtils {
             case 9:
                 return ColorSet.LIGHT_GREEN(context);
             case 10:
-                //return ColorSet.LIME(context);
-            case 11:
-                return ColorSet.YELLOW(context);
-            case 12:
                 return ColorSet.AMBER(context);
-            case 13:
+            case 11:
                 return ColorSet.ORANGE(context);
-            case 14:
+            case 12:
                 return ColorSet.DEEP_ORANGE(context);
-            case 15:
+            case 13:
                 return ColorSet.BROWN(context);
-            case 16:
+            case 14:
                 return ColorSet.GREY(context);
-            case 17:
+            case 15:
                 return ColorSet.BLUE_GREY(context);
+            case 16:
+                return ColorSet.TEAL(context);
+            case 17:
+                //return ColorSet.LIME(context);
+            case 18:
+                //return ColorSet.YELLOW(context);
+            case 19:
+                //return ColorSet.WHITE(context);
             default:
-                throw new RuntimeException("Invalid random color: " + num);
+                return ColorSet.TEAL(context);
         }
     }
 

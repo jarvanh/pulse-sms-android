@@ -158,7 +158,7 @@ public class ColorSet {
     public static ColorSet TEAL(Context context) {
         if (tealSet == null) {
             tealSet = new ColorSet(context, R.color.materialTeal, R.color.materialTealDark,
-                    R.color.materialTealLight, R.color.materialPinkAccent);
+                    R.color.materialTealLight, R.color.materialOrangeAccent);
         }
 
         return tealSet;

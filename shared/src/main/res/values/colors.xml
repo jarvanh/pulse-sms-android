@@ -96,7 +96,7 @@
     <color name="materialBlueGrey">#607D8B</color>
     <color name="materialBlueGreyDark">#37474F</color>
     <color name="materialBlueGreyLight">#B0BEC5</color>
-    <color name="materialWhiteDark">#F5F5F5</color>
+    <color name="materialWhiteDark">#E0E0E0</color>
 
     <!-- Other Global Colors (not day or night specific) -->
     <color name="statusBarDarker">#C5C5C5</color>
