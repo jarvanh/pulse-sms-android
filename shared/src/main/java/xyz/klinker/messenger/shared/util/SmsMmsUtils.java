@@ -410,7 +410,7 @@ public class SmsMmsUtils {
      * @param message the message to inspect.
      * @return the Message.TYPE_ value.
      */
-    private static int getSmsMessageType(Cursor message) {
+    public static int getSmsMessageType(Cursor message) {
         int internalType = message.getInt(message.getColumnIndex(Telephony.Sms.TYPE));
         int status = message.getInt(message.getColumnIndex(Telephony.Sms.STATUS));
 
@@ -596,6 +596,18 @@ public class SmsMmsUtils {
     public static Cursor getLastSmsMessage(Context context) {
         Uri uri = Uri.parse("content://sms");
         String sortOrder = "date desc limit 1";
+        return getSmsMessage(context, uri, sortOrder);
+    }
+
+    /**
+     * Gets the last sms message that was inserted into the database.
+     *
+     * @param context the context to get the content provider with.
+     * @return the cursor for a single mms message.
+     */
+    public static Cursor getLatestSmsMessages(Context context, int limit) {
+        Uri uri = Uri.parse("content://sms");
+        String sortOrder = "date desc limit " + limit;
         return getSmsMessage(context, uri, sortOrder);
     }
 

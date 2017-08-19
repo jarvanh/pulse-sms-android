@@ -115,75 +115,75 @@ public class ContentObserverService extends Service {
         }
 
         public static void processLastMessage(Context context) {
-            Cursor cursor = SmsMmsUtils.getLastSmsMessage(context);
-            if (cursor != null && cursor.moveToFirst()) {
-                int type = cursor.getInt(cursor.getColumnIndex(Telephony.Sms.TYPE));
-                String body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY));
-                String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
-                cursor.close();
-
-                Settings settings = Settings.get(context);
-                if (settings.signature != null && !settings.signature.isEmpty()) {
-                    body = body.replace("\n" + settings.signature, "");
-                }
-
-                if (address == null || address.isEmpty()) {
-                    return;
-                }
-
-                DataSource source = DataSource.getInstance(context);
-                source.open();
-
-                Cursor search = source.searchMessages(body);
-                if (search != null && search.moveToFirst()) {
-                    Message message = new Message();
-                    message.fillFromCursor(search);
-                    Conversation conversation = source.getConversation(message.conversationId);
-                    
-                    search.close();
-
-                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
-                        // if a message with the same body was received from the same person in the
-                        // last minute and is the last message in that conversation, don't insert
-                        // this one into the database because we already have it. Otherwise, do.
-                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
-                                message.data.equals(body) && message.type == Message.TYPE_RECEIVED)) {
-                            insertReceivedMessage(context, source, body, address);
-                        }
-                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
-                        // if a message from the same person with the exact same body exists and the
-                        // type is not received, don't save the message. Otherwise, do.
-                        //
-                        // NOTE: we are just going to insert the message as sent here instead of
-                        //       sending like it should be... this is because we won't get a callback
-                        //       like we normally would for when the message has sent. This could be
-                        //       handled in this content observer however, so we'll save that for
-                        //       another time.
-                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
-                                message.data.equals(body) && message.type != Message.TYPE_RECEIVED)) {
-                            insertSentMessage(context, source, body, address);
-                        }
-                    }
-                } else {
-                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
-                        insertReceivedMessage(context, source, body, address);
-                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
-                        insertSentMessage(context, source, body, address);
-                    }
-                }
-                
-                try {
-                    search.close();
-                } catch (Exception e) { }
-
-                source.close();
-            }
-            
-            try {
-                cursor.close();
-            } catch (Exception e) {
-                
-            }
+//            Cursor cursor = SmsMmsUtils.getLastSmsMessage(context);
+//            if (cursor != null && cursor.moveToFirst()) {
+//                int type = cursor.getInt(cursor.getColumnIndex(Telephony.Sms.TYPE));
+//                String body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY));
+//                String address = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS));
+//                cursor.close();
+//
+//                Settings settings = Settings.get(context);
+//                if (settings.signature != null && !settings.signature.isEmpty()) {
+//                    body = body.replace("\n" + settings.signature, "");
+//                }
+//
+//                if (address == null || address.isEmpty()) {
+//                    return;
+//                }
+//
+//                DataSource source = DataSource.getInstance(context);
+//                source.open();
+//
+//                Cursor search = source.searchMessages(body);
+//                if (search != null && search.moveToFirst()) {
+//                    Message message = new Message();
+//                    message.fillFromCursor(search);
+//                    Conversation conversation = source.getConversation(message.conversationId);
+//
+//                    search.close();
+//
+//                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
+//                        // if a message with the same body was received from the same person in the
+//                        // last minute and is the last message in that conversation, don't insert
+//                        // this one into the database because we already have it. Otherwise, do.
+//                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+//                                message.data.equals(body) && message.type == Message.TYPE_RECEIVED)) {
+//                            insertReceivedMessage(context, source, body, address);
+//                        }
+//                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
+//                        // if a message from the same person with the exact same body exists and the
+//                        // type is not received, don't save the message. Otherwise, do.
+//                        //
+//                        // NOTE: we are just going to insert the message as sent here instead of
+//                        //       sending like it should be... this is because we won't get a callback
+//                        //       like we normally would for when the message has sent. This could be
+//                        //       handled in this content observer however, so we'll save that for
+//                        //       another time.
+//                        if (conversation != null && !(PhoneNumberUtils.checkEquality(conversation.phoneNumbers, address) &&
+//                                message.data.equals(body) && message.type != Message.TYPE_RECEIVED)) {
+//                            insertSentMessage(context, source, body, address);
+//                        }
+//                    }
+//                } else {
+//                    if (type == Telephony.Sms.MESSAGE_TYPE_INBOX && !Utils.isDefaultSmsApp(context)) {
+//                        insertReceivedMessage(context, source, body, address);
+//                    } else if (type != Telephony.Sms.MESSAGE_TYPE_INBOX) {
+//                        insertSentMessage(context, source, body, address);
+//                    }
+//                }
+//
+//                try {
+//                    search.close();
+//                } catch (Exception e) { }
+//
+//                source.close();
+//            }
+//
+//            try {
+//                cursor.close();
+//            } catch (Exception e) {
+//
+//            }
         }
 
         private static void insertReceivedMessage(Context context, DataSource source, String body, String address) {

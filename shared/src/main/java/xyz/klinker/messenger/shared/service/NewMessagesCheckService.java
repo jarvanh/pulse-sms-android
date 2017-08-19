@@ -1,8 +1,10 @@
 package xyz.klinker.messenger.shared.service;
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
 import android.database.Cursor;
+import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -22,7 +24,10 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.util.PaginationUtils;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
+import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
 /**
  * Check whether or not there are messages in the internal database, that are not in Pulse's
@@ -31,11 +36,13 @@ import xyz.klinker.messenger.shared.util.PaginationUtils;
  */
 public class NewMessagesCheckService extends IntentService {
 
-    private static final String TAG = "NewMessageCheck";
-    private static final long TIMESTAMP_BUFFER = 30000;
+    public static void startService(Activity activity) {
+        // only safe to start from the UI because it doesn't provide a foreground notification
+        // for Android O.
+        activity.startService(new Intent(activity, NewMessagesCheckService.class));
+    }
 
     public static final String REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST";
-    public static final int MESSAGE_CHECKING_ID = 6435;
 
     public NewMessagesCheckService() {
         super("NewMessageCheckService");
@@ -47,132 +54,69 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
-//        DataSource source = DataSource.getInstance(this);
-//        source.open();
-//
-//        Message lastMessage = source.getLatestMessage();
-//        SharedPreferences sharedPrefs = Settings.get(this).getSharedPrefs();
-//        long lastTimestamp = sharedPrefs.getLong("last_new_message_check", -1L);
-//
-//        if (lastTimestamp != -1L) {
-//            if (lastMessage != null && lastMessage.timestamp > lastTimestamp) {
-//                lastTimestamp = lastMessage.timestamp + TIMESTAMP_BUFFER;
-//            }
-//
-//            int insertedMessages = 0;
-//            List<Conversation> conversationsWithNewMessages =
-//                    SmsMmsUtils.queryNewConversations(this, lastTimestamp);
-//
-//            if (conversationsWithNewMessages.size() > 0) {
-//                NotificationCompat.Builder builder = showNotification();
-//
-//                int progress = 1;
-//
-//                for (Conversation conversation : conversationsWithNewMessages) {
-//                    if (conversation.phoneNumbers != null && !conversation.phoneNumbers.isEmpty() &&
-//                            conversation.title != null && !conversation.title.isEmpty() &&
-//                            !conversation.title.contains("UNKNOWN_SENDER") &&
-//                            !conversation.title.contains("insert-address-token") &&
-//                            conversation.snippet != null && !conversation.snippet.isEmpty()) {
-//                        insertedMessages = source.insertNewMessages(conversation, lastTimestamp,
-//                                SmsMmsUtils.queryConversation(conversation.id, this));
-//                        builder.setProgress(conversationsWithNewMessages.size() + 1, progress, false);
-//                        NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, builder.build());
-//                    }
-//
-//                    progress++;
-//                }
-//
-//                if (insertedMessages > 0) {
-//                    sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
-//                }
-//            }
-//
-//            NotificationManagerCompat.from(this).cancel(MESSAGE_CHECKING_ID);
-//        }
-//
-//        source.close();
-//        sharedPrefs.edit().putLong("last_new_message_check", System.currentTimeMillis()).apply();
-//
-//        if (lastTimestamp != -1L && Account.get(this).exists()) {
-//            // do this after closing the database, becuase it will reopen it
-//            // conversations will have been uploaded already, but we need to upload any messages
-//            // newer than that timestamp.
-//            uploadMessages(lastTimestamp);
-//        }
-    }
+        // grab the latest 60 messages from Pulse's database
+        // grab the latest 20 messages from the the internal SMS/MMS database
+        // iterate over the internal messages and see if they are in the list from Pulse's database (search by text is fine)
+        // if they are:
+        //      continue, no problems here
+        // if they aren't:
+        //      insert them into the correct conversation and give the conversation update broadcast
+        //      should I worry about updating the conversation list here?
 
-    private NotificationCompat.Builder showNotification() {
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this)
-                .setContentTitle(getString(R.string.updating_database))
-                .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setProgress(0, 0, true)
-                .setLocalOnly(true)
-                .setColor(Settings.get(this).mainColorSet.color)
-                .setOngoing(true);
-        NotificationManagerCompat.from(this).notify(MESSAGE_CHECKING_ID, notification.build());
+        DataSource source = DataSource.getInstance(this);
+        source.open();
 
-        return notification;
-    }
+        List<Message> pulseMessages = source.getNumberOfMessages(60);
+        Cursor internalMessages = SmsMmsUtils.getLatestSmsMessages(this, 20);
 
-    /**
-     * This method is very similar to the one in the {@link ApiUploadService}.
-     *
-     * @param latestTimestamp the timestamp that used to be the latest in our database.
-     */
-    private void uploadMessages(long latestTimestamp) {
-        final DataSource source = DataSource.getInstance(this);
-        final Account account = Account.get(this);
-        final EncryptionUtils encryptionUtils = account.getEncryptor();
-        final ApiUtils apiUtils = new ApiUtils();
-
-        long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getNewerMessages(latestTimestamp);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            List<MessageBody> messages = new ArrayList<>();
-            int firebaseNumber = 0;
-
+        List<Message> messagesToInsert = new ArrayList<>();
+        List<String> addressesForMessages = new ArrayList<>();
+        if (internalMessages != null && internalMessages.moveToFirst()) {
             do {
-                Message m = new Message();
-                m.fillFromCursor(cursor);
+                String body = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY));
+                if (SmsMmsUtils.getSmsMessageType(internalMessages) == Message.TYPE_SENT &&
+                        !alreadyInDatabase(pulseMessages, body.trim())) {
+                    Message message = new Message();
 
-                // instead of sending the URI, we'll upload these images to firebase and retrieve
-                // them on another device based on account id and message id.
-                if (!m.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    m.data = "firebase " + firebaseNumber;
-                    firebaseNumber++;
+                    message.type = Message.TYPE_SENT;
+                    message.data = body.trim();
+                    message.timestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
+                    message.mimeType = MimeType.TEXT_PLAIN;
+                    message.read = true;
+                    message.seen = true;
+
+                    messagesToInsert.add(message);
+                    addressesForMessages.add(PhoneNumberUtils.clearFormatting(
+                            internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.ADDRESS))));
                 }
+            } while (internalMessages.moveToNext());
 
-                m.encrypt(encryptionUtils);
-                MessageBody message = new MessageBody(m.id, m.conversationId, m.type, m.data,
-                        m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color);
-                messages.add(message);
-            } while (cursor.moveToNext());
-
-            List<Object> results = new ArrayList<>();
-            List<List<MessageBody>> pages = PaginationUtils.getPages(messages, ApiUploadService.MESSAGE_UPLOAD_PAGE_SIZE);
-
-            for (List<MessageBody> page : pages) {
-                AddMessagesRequest request = new AddMessagesRequest(account.accountId, page.toArray(new MessageBody[0]));
-                try {
-                    results.add(apiUtils.getApi().message().add(request).execute().body());
-                } catch (IOException e) { }
-
-                Log.v(TAG, "uploaded " + page.size() + " messages for page " + results.size());
-            }
-
-            if (results.size() != pages.size() || !ApiUploadService.noNull(results)) {
-                Log.v(TAG, "failed to upload messages in " +
-                        (System.currentTimeMillis() - startTime) + " ms");
-            } else {
-                Log.v(TAG, "messages upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms");
-            }
+            try {
+                internalMessages.close();
+            } catch (Exception e) { }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        for (int i = 0; i < messagesToInsert.size(); i++) {
+            Message message = messagesToInsert.get(i);
+            long conversationId = source.insertMessage(message,
+                    PhoneNumberUtils.clearFormatting(addressesForMessages.get(i)), this);
+            MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
+        }
+
+        if (messagesToInsert.size() > 0) {
+            sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+        }
+
+        source.close();
+    }
+
+    private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch) {
+        for (Message message : messages) {
+            if (message.type == Message.TYPE_SENT && message.mimeType.equals(MimeType.TEXT_PLAIN) &&
+                    message.data.equals(bodyToSearch)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
