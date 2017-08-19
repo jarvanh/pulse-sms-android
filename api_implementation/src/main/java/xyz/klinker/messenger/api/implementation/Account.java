@@ -39,7 +39,6 @@ public class Account {
         }
     }
 
-    private Context context;
     private EncryptionUtils encryptionUtils;
 
     public boolean primary;
@@ -73,8 +72,7 @@ public class Account {
 
     @VisibleForTesting
     protected void init(Context context) {
-        this.context = context;
-        SharedPreferences sharedPrefs = getSharedPrefs();
+        SharedPreferences sharedPrefs = getSharedPrefs(context);
 
         // account info
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.api_pref_primary), false);
@@ -91,7 +89,7 @@ public class Account {
         if (key == null && passhash != null && accountId != null && salt != null) {
             // we have all the requirements to recompute the key,
             // not sure why this wouldn't have worked in the first place..
-            recomputeKey();
+            recomputeKey(context);
             this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null);
 
             SecretKey secretKey = new SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES");
@@ -108,7 +106,7 @@ public class Account {
     }
 
     @VisibleForTesting
-    protected SharedPreferences getSharedPrefs() {
+    protected SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
@@ -121,8 +119,8 @@ public class Account {
         return encryptionUtils;
     }
 
-    public void clearAccount() {
-        getSharedPrefs().edit()
+    public void clearAccount(Context context) {
+        getSharedPrefs(context).edit()
                 .remove(context.getString(R.string.api_pref_account_id))
                 .remove(context.getString(R.string.api_pref_salt))
                 .remove(context.getString(R.string.api_pref_passhash))
@@ -134,15 +132,15 @@ public class Account {
         init(context);
     }
 
-    public void updateSubscription(SubscriptionType type, Date expiration) {
-        updateSubscription(type, expiration == null ? null : expiration.getTime(), true);
+    public void updateSubscription(Context context, SubscriptionType type, Date expiration) {
+        updateSubscription(context, type, expiration == null ? null : expiration.getTime(), true);
     }
 
-    public void updateSubscription(SubscriptionType type, Long expiration, boolean sendToApi) {
+    public void updateSubscription(Context context, SubscriptionType type, Long expiration, boolean sendToApi) {
         this.subscriptionType = type;
         this.subscriptionExpiration = expiration;
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), type == null ? 0 : type.typeCode)
                 .putLong(context.getString(R.string.api_pref_subscription_expiration), expiration == null ? 0 : expiration)
                 .commit();
@@ -152,45 +150,45 @@ public class Account {
         }
     }
 
-    public void setName(String name) {
+    public void setName(Context context, String name) {
         this.myName = name;
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_my_name), name)
                 .commit();
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(Context context, String phoneNumber) {
         this.myPhoneNumber = phoneNumber;
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_my_name), phoneNumber)
                 .commit();
     }
 
-    public void setPrimary(boolean primary) {
+    public void setPrimary(Context context, boolean primary) {
         this.primary = primary;
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putBoolean(context.getString(R.string.api_pref_primary), primary)
                 .commit();
     }
 
-    public void setDeviceId(String deviceId) {
+    public void setDeviceId(Context context, String deviceId) {
         this.deviceId = deviceId;
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_device_id), deviceId)
                 .commit();
     }
 
-    public void recomputeKey() {
+    public void recomputeKey(Context context) {
         KeyUtils keyUtils = new KeyUtils();
         SecretKey key = keyUtils.createKey(passhash, accountId, salt);
 
         String encodedKey = Base64.encodeToString(key.getEncoded(), Base64.DEFAULT);
 
-        getSharedPrefs().edit()
+        getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_key), encodedKey)
                 .commit();
     }

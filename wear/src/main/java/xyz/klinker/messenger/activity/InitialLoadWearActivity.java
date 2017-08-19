@@ -80,8 +80,8 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
 
             if (responseCode == RESULT_CANCELED) {
                 Account account = Account.get(this);
-                account.setDeviceId(null);
-                account.setPrimary(false);
+                account.setDeviceId(this, null);
+                account.setPrimary(this, false);
 
                 startDatabaseSync();
             } else if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
@@ -134,8 +134,8 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
                 String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
                 final Account account = Account.get(context);
-                account.setName(myName);
-                account.setPhoneNumber(myPhoneNumber);
+                account.setName(InitialLoadWearActivity.this, myName);
+                account.setPhoneNumber(InitialLoadWearActivity.this, myPhoneNumber);
 
                 DataSource source = DataSource.getInstance(context);
                 source.open();

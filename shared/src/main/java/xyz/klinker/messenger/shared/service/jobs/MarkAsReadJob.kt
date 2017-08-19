@@ -54,12 +54,10 @@ class MarkAsReadJob : BackgroundJob() {
                 return
             }
 
-            Log.v("MarkAsReadJob", "scheduling mark as read")
-
             val bundle = PersistableBundle()
             bundle.putLong(EXTRA_MESSAGE_ID, messageId);
 
-            val component = ComponentName(context, ContentObserverRunCheckJob::class.java)
+            val component = ComponentName(context, MarkAsReadJob::class.java)
             val builder = JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(MESSAGE_SENDING_TIMEOUT)
                     .setOverrideDeadline(MESSAGE_SENDING_TIMEOUT * 2)

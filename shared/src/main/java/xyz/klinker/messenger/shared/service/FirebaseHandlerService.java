@@ -250,7 +250,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         if (json.getString("id").equals(account.accountId)) {
             Log.v(TAG, "clearing account");
             source.clearTables();
-            account.clearAccount();
+            account.clearAccount(context);
         } else {
             Log.v(TAG, "ids do not match, did not clear account");
         }
@@ -263,8 +263,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
         String number = json.getString("phone_number");
 
         if (json.getString("id").equals(account.accountId)) {
-            account.setName(name);
-            account.setPhoneNumber(number);
+            account.setName(context, name);
+            account.setPhoneNumber(context, number);
             Log.v(TAG, "updated account name and number");
         } else {
             Log.v(TAG, "ids do not match, did not clear account");
@@ -807,7 +807,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         Account account = Account.get(context);
 
         if (account.primary) {
-            account.updateSubscription(
+            account.updateSubscription(context,
                     Account.SubscriptionType.findByTypeCode(type), expiration, false
             );
 
@@ -832,7 +832,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         Account account = Account.get(context);
         if (newPrimaryDeviceId != null && !newPrimaryDeviceId.equals(account.deviceId)) {
-            account.setPrimary(false);
+            account.setPrimary(context, false);
         }
     }
 

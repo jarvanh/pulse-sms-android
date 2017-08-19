@@ -11,7 +11,7 @@ public class RecreateAccountActivity extends LoginActivity {
         super.onCreate(savedInstanceState);
 
         final Account account = Account.get(this);
-        account.clearAccount();
+        account.clearAccount(this);
 
         signup();
     }

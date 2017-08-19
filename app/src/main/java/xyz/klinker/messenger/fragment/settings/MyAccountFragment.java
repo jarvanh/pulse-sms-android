@@ -228,7 +228,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
                         final Account account = Account.get(getActivity());
                         final String accountId = account.accountId;
-                        account.clearAccount();
+                        account.clearAccount(getActivity());
 
                         new Thread(() -> {
                             new ApiUtils().deleteAccount(accountId);
@@ -457,7 +457,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                 if (Account.get(getActivity()).accountId == null) {
                     // write lifetime here, just so they don't think it is a trial..
                     if (product.getProductId().contains("lifetime")) {
-                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.LIFETIME, new Date(1));
+                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(1));
                     }
 
                     startLoginActivity();
@@ -466,9 +466,9 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     long newExperation = ProductPurchased.getExperation(product.getProductId());
 
                     if (product.getProductId().contains("lifetime")) {
-                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.LIFETIME, new Date(newExperation));
+                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(newExperation));
                     } else {
-                        Account.get(getActivity()).updateSubscription(Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));
+                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));
                     }
 
                     returnToConversationsAfterLogin();

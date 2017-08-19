@@ -131,13 +131,13 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
 
     private void writeLifetimeSubscriber() {
         Account account = Account.get(this);
-        account.updateSubscription(
+        account.updateSubscription(this,
                 Account.SubscriptionType.LIFETIME, 1L, true);
     }
 
     private void writeNewExpirationToAccount(long time) {
         Account account = Account.get(this);
-        account.updateSubscription(
+        account.updateSubscription(this,
                 Account.SubscriptionType.SUBSCRIBER, time, true);
     }
 

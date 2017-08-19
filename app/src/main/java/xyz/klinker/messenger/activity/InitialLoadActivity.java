@@ -111,8 +111,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             if (responseCode == RESULT_CANCELED) {
                 if (!startUploadAfterSync) {
                     Account account = Account.get(this);
-                    account.setDeviceId(null);
-                    account.setPrimary(true);
+                    account.setDeviceId(this, null);
+                    account.setPrimary(this,true);
                 }
 
                 startDatabaseSync();
@@ -164,8 +164,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
             final Account account = Account.get(context);
-            account.setName(myName);
-            account.setPhoneNumber(myPhoneNumber);
+            account.setName(this, myName);
+            account.setPhoneNumber(this, myPhoneNumber);
 
             DataSource source = DataSource.getInstance(context);
             source.open();

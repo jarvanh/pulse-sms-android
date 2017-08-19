@@ -276,8 +276,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (deviceId != null) {
             Account account = Account.get(this);
-            account.setDeviceId(Long.toString(deviceId));
-            account.setPrimary(primary);
+            account.setDeviceId(this, Long.toString(deviceId));
+            account.setPrimary(this, primary);
 
             runOnUiThread(() -> {
                 dialog.dismiss();
@@ -346,8 +346,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Account account = Account.get(this);
-        account.setDeviceId(null);
-        account.setPrimary(false);
+        account.setDeviceId(this, null);
+        account.setPrimary(this, false);
 
         runOnUiThread(() -> {
             Toast.makeText(getApplicationContext(), R.string.api_device_error,
