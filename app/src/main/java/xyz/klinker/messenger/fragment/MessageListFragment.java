@@ -119,6 +119,7 @@ import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
 import xyz.klinker.messenger.shared.util.AudioWrapper;
@@ -1237,6 +1238,7 @@ public class MessageListFragment extends Fragment implements
                 }
 
                 m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
+
                 loadMessages = true;
             }
 
@@ -1245,6 +1247,7 @@ public class MessageListFragment extends Fragment implements
                         .setForceNoSignature(forceNoSignature)
                         .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
+                MarkAsReadJob.Companion.scheduleNextRun(getActivity(), m.id);
 
                 if (imageUri != null) {
                     source.updateMessageData(m.id, imageUri.toString());
@@ -1265,6 +1268,7 @@ public class MessageListFragment extends Fragment implements
                                 .setForceNoSignature(forceNoSignature)
                                 .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
+                        MarkAsReadJob.Companion.scheduleNextRun(getActivity(), m.id);
 
                         if (imageUri != null) {
                             source.updateMessageData(m.id, imageUri.toString());

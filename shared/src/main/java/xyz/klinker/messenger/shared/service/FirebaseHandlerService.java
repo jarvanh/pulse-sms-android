@@ -56,6 +56,7 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
@@ -321,19 +322,16 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 return;
             }
 
-            source.insertMessage(context, message, message.conversationId);
+            long messageId = source.insertMessage(context, message, message.conversationId);
             Log.v(TAG, "added message");
 
             if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try { Thread.sleep(500); } catch (Exception e) {}
-                        DataSource source = DataSource.getInstance(context);
-                        source.open();
-                        source.updateMessageType(id, Message.TYPE_SENT);
-                        source.close();
-                    }
+                new Thread(() -> {
+                    try { Thread.sleep(500); } catch (Exception e) {}
+                    DataSource source1 = DataSource.getInstance(context);
+                    source1.open();
+                    source1.updateMessageType(id, Message.TYPE_SENT);
+                    source1.close();
                 }).start();
             }
 
@@ -350,10 +348,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                         new SendUtils(conversation.simSubscriptionId)
                                 .send(context, message.data, conversation.phoneNumbers);
+                        MarkAsReadJob.Companion.scheduleNextRun(context, messageId);
                     } else {
                         new SendUtils(conversation.simSubscriptionId)
                                 .send(context, "", conversation.phoneNumbers,
                                 Uri.parse(message.data), message.mimeType);
+                        MarkAsReadJob.Companion.scheduleNextRun(context, messageId);
                     }
                 } else {
                     Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");

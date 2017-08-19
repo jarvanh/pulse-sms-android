@@ -51,6 +51,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.ReplyService;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
 import xyz.klinker.messenger.shared.util.ContactImageCreator;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.DensityUtil;
@@ -398,14 +399,14 @@ public class NotificationReplyActivity extends AppCompatActivity {
         // we don't have to check zero length, since the button is disabled if zero length
         DataSource source = DataSource.getInstance(this);
         source.open();
-        source.insertMessage(this, m, m.conversationId);
+        final long messageId = source.insertMessage(this, m, m.conversationId, true);
         source.readConversation(NotificationReplyActivity.this, conversationId);
         source.close();
 
         new Thread(() -> {
             new SendUtils(conversation.simSubscriptionId)
-                    .send(NotificationReplyActivity.this, message,
-                        conversation.phoneNumbers);
+                    .send(NotificationReplyActivity.this, message,conversation.phoneNumbers);
+            MarkAsReadJob.Companion.scheduleNextRun(this, messageId);
         }).start();
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);

@@ -18,7 +18,7 @@
 
     <version
         name="2.5.0"
-        description="August 16th, 2017">
+        description="August 21st, 2017">
         <text>[New - Global Themes] Add the ability to apply a theme to the conversation list while still using the per-conversation themes</text>
         <text>[New - Global Themes] Add way more color choices</text>
         <text>[New - Global Themes] Set the accent color separately from the primary color</text>
@@ -28,10 +28,12 @@
         <text>[New] Edit recipients in group messages</text>
         <text>[New] Send messages from the Android TV app</text>
         <text>[New] Long clicking the send button will send messages without the signature, if you have a signature set up in settings</text>
+        <text>Fixes for messages failing to send and getting stuck sending</text>
         <text>Cleanup the settings menu</text>
         <text>Fixes for marking MMS as seen</text>
         <text>MMS improvements</text>
         <text>Improved memory management</text>
+        <text>Battery drain improvements</text>
         <text>Performance improvements</text>
         <text>Bug and crash fixes</text>
     </version>

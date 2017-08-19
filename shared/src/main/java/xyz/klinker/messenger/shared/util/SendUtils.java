@@ -76,20 +76,20 @@ public class SendUtils {
     }
 
     public void send(Context context, String text, String address) {
-        send(context, text, address.split(", "), null, null, subscriptionId);
+        send(context, text, address.split(", "), null, null);
     }
 
     public void send(Context context, String text, String[] addresses) {
-        send(context, text, addresses, null, null, subscriptionId);
+        send(context, text, addresses, null, null);
     }
 
     public Uri send(Context context, String text, String addresses, Uri data,
                            String mimeType) {
-        return send(context, text, addresses.split(", "), data, mimeType, subscriptionId);
+        return send(context, text, addresses.split(", "), data, mimeType);
     }
 
     public Uri send(Context context, String text, String[] addresses, Uri data,
-                           String mimeType, Integer subscriptionId) {
+                           String mimeType) {
         xyz.klinker.messenger.shared.data.Settings appSettings = xyz.klinker.messenger.shared.data.Settings.get(context);
         if (!appSettings.signature.isEmpty() && !forceNoSignature) {
             text += "\n" + appSettings.signature;

@@ -17,6 +17,7 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.ReplyService;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 
@@ -60,13 +61,14 @@ public class CarReplyReceiver extends BroadcastReceiver {
         m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(context)
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
-        source.insertMessage(context, m, conversationId);
+        long messageId = source.insertMessage(context, m, conversationId, true);
         source.readConversation(context, conversationId);
 
         Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
 
         new SendUtils(conversation.simSubscriptionId)
                 .send(context, reply, conversation.phoneNumbers);
+        MarkAsReadJob.Companion.scheduleNextRun(context, messageId);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
