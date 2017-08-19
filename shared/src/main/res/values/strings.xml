@@ -381,7 +381,7 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
-    <string name="use_internal_browser">Use Internal Browser</string>
+    <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
@@ -400,19 +400,19 @@
 
 
     <!-- MMS Configuration Settings -->
-    <string name="max_mms_size">Max image size</string>
-    <string name="use_group_mms">Use group MMS</string>
-    <string name="auto_save_media">Auto-save media</string>
+    <string name="max_mms_size">Max Image Size</string>
+    <string name="use_group_mms">Use Group MMS</string>
+    <string name="auto_save_media">Auto-save Media</string>
     <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
         it is received</string>
     <string name="apn_configuration">APN Configuration</string>
-    <string name="override_system_apn">Override system APNs</string>
+    <string name="override_system_apn">Override System APNs</string>
     <string name="mmsc_url">MMSC URL</string>
-    <string name="mms_proxy">MMS proxy</string>
-    <string name="mms_port">MMS port</string>
-    <string name="user_agent">User agent</string>
-    <string name="user_agent_profile_url">User agent profile URL</string>
-    <string name="user_agent_profile_tag">User agent profile tag name</string>
+    <string name="mms_proxy">MMS Proxy</string>
+    <string name="mms_port">MMS Port</string>
+    <string name="user_agent">User Agent</string>
+    <string name="user_agent_profile_url">User Agent Profile URL</string>
+    <string name="user_agent_profile_tag">User Agent Profile Tag Name</string>
 
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>

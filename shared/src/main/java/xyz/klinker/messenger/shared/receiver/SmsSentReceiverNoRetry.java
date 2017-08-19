@@ -16,34 +16,6 @@
 
 package xyz.klinker.messenger.shared.receiver;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.Telephony;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.telephony.SmsManager;
-
-import com.klinker.android.send_message.SentReceiver;
-import com.klinker.android.send_message.StripAccents;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import xyz.klinker.messenger.shared.MessengerActivityExtras;
-import xyz.klinker.messenger.shared.R;
-import xyz.klinker.messenger.shared.data.ColorSet;
-import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.shared.service.ResendFailedMessage;
-import xyz.klinker.messenger.shared.util.ActivityUtils;
-import xyz.klinker.messenger.shared.util.NotificationUtils;
-import xyz.klinker.messenger.shared.util.SmsMmsUtils;
-
 /**
  * Receiver for getting notifications of when an SMS has finished sending. By default it's super
  * class will mark the internal message as sent, we need to also mark our database as sent.
