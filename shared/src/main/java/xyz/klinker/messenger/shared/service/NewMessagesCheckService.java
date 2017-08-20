@@ -127,10 +127,14 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     public static void writeLastRun(Context context) {
-        Settings.get(context).getSharedPrefs(context)
-                .edit()
-                .putLong("new_message_check_last_run", System.currentTimeMillis())
-                .apply();
+        try {
+            Settings.get(context).getSharedPrefs(context)
+                    .edit()
+                    .putLong("new_message_check_last_run", System.currentTimeMillis())
+                    .apply();
+        } catch (Exception e) {
+            // in robolectric, i don't want it to crash
+        }
     }
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
