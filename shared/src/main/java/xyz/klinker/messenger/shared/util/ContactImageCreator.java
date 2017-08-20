@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 
@@ -37,7 +38,8 @@ public class ContactImageCreator {
 
         Paint textPaint = new Paint();
         textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setColor(context.getResources().getColor(android.R.color.white));
+        textPaint.setColor(ColorUtils.isColorDark(backgroundColor) ? context.getResources().getColor(android.R.color.white) :
+                context.getResources().getColor(R.color.lightToolbarTextColor));
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize((int) (size / 1.5));

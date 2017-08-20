@@ -74,11 +74,10 @@ public class NewMessagesCheckService extends IntentService {
         if (internalMessages != null && internalMessages.moveToFirst()) {
             do {
                 String body = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY));
-                if (SmsMmsUtils.getSmsMessageType(internalMessages) == Message.TYPE_SENT &&
-                        !alreadyInDatabase(pulseMessages, body.trim())) {
+                if (!alreadyInDatabase(pulseMessages, body.trim())) {
                     Message message = new Message();
 
-                    message.type = Message.TYPE_SENT;
+                    message.type = SmsMmsUtils.getSmsMessageType(internalMessages);
                     message.data = body.trim();
                     message.timestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
                     message.mimeType = MimeType.TEXT_PLAIN;
@@ -112,8 +111,7 @@ public class NewMessagesCheckService extends IntentService {
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch) {
         for (Message message : messages) {
-            if (message.type == Message.TYPE_SENT && message.mimeType.equals(MimeType.TEXT_PLAIN) &&
-                    message.data.equals(bodyToSearch)) {
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && message.data.equals(bodyToSearch)) {
                 return true;
             }
         }
