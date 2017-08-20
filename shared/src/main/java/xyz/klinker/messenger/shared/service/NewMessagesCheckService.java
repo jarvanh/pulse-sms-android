@@ -2,7 +2,9 @@ package xyz.klinker.messenger.shared.service;
 
 import android.app.Activity;
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
@@ -54,6 +56,10 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
+        SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs(this);
+        long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
+
+
         // grab the latest 60 messages from Pulse's database
         // grab the latest 20 messages from the the internal SMS/MMS database
         // iterate over the internal messages and see if they are in the list from Pulse's database (search by text is fine)
@@ -75,12 +81,13 @@ public class NewMessagesCheckService extends IntentService {
             do {
                 String messageBody = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY)).trim();
                 int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
-                if (!alreadyInDatabase(pulseMessages, messageBody, messageType)) {
+                long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
+                if (!alreadyInDatabase(pulseMessages, messageBody, messageType) && messageTimestamp > lastRun) {
                     Message message = new Message();
 
                     message.type = messageType;
                     message.data = messageBody;
-                    message.timestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
+                    message.timestamp = messageTimestamp;
                     message.mimeType = MimeType.TEXT_PLAIN;
                     message.read = true;
                     message.seen = true;
@@ -112,10 +119,18 @@ public class NewMessagesCheckService extends IntentService {
         }
 
         if (conversationsToRefresh.size() > 0) {
-            sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
+            //sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
         }
 
         source.close();
+        NewMessagesCheckService.writeLastRun(this);
+    }
+
+    public static void writeLastRun(Context context) {
+        Settings.get(context).getSharedPrefs(context)
+                .edit()
+                .putLong("new_message_check_last_run", System.currentTimeMillis())
+                .apply();
     }
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {

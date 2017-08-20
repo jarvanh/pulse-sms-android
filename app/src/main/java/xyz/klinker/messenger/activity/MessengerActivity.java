@@ -264,7 +264,7 @@ public class  MessengerActivity extends AppCompatActivity
                 new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
 
         new Handler().postDelayed(() ->
-                startService(new Intent(MessengerActivity.this, NewMessagesCheckService.class)), 3000);
+                NewMessagesCheckService.startService(MessengerActivity.this), 3000);
     }
 
     @Override

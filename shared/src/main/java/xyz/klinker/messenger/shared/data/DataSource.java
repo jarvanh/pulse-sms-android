@@ -46,6 +46,7 @@ import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
@@ -1094,6 +1095,7 @@ public class DataSource {
         NotificationUtils.deleteChannel(context, conversationId);
 
         writeUnreadCount();
+        NewMessagesCheckService.writeLastRun(context);
     }
 
     /**
