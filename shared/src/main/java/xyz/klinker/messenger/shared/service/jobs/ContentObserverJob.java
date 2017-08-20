@@ -19,7 +19,7 @@ public class ContentObserverJob extends BackgroundJob {
 
     @Override
     void onRunJob(JobParameters parameters) {
-        ContentObserverService.SmsContentObserver.processLastMessage(this);
+//        ContentObserverService.SmsContentObserver.processLastMessage(this);
         scheduleNextRun(this);
     }
 
@@ -33,6 +33,6 @@ public class ContentObserverJob extends BackgroundJob {
                 .addTriggerContentUri(new JobInfo.TriggerContentUri(Telephony.MmsSms.CONTENT_URI, 0));
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.schedule(builder.build());
+//        jobScheduler.schedule(builder.build());
     }
 }

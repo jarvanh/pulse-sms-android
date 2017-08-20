@@ -19,9 +19,9 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
 
     @Override
     protected void onRunJob(JobParameters parameters) {
-        if (!ContentObserverService.IS_RUNNING) {
-            startService(new Intent(this, ContentObserverService.class));
-        }
+//        if (!ContentObserverService.IS_RUNNING) {
+//            startService(new Intent(this, ContentObserverService.class));
+//        }
 
         scheduleNextRun(this);
     }
@@ -42,6 +42,6 @@ public class ContentObserverRunCheckJob extends BackgroundJob {
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.cancel(JOB_ID);
-        jobScheduler.schedule(builder.build());
+        //jobScheduler.schedule(builder.build());
     }
 }

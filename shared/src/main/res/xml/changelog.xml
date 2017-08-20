@@ -29,6 +29,7 @@
         <text>[New] Send messages from the Android TV app</text>
         <text>[New] Long clicking the send button will send messages without the signature, if you have a signature set up in settings</text>
         <text>Fixes for messages failing to send and getting stuck sending</text>
+        <text>Fixes for messages sent from Google assistant or other services not showing up</text>
         <text>Cleanup the settings menu</text>
         <text>Fixes for marking MMS as seen</text>
         <text>MMS improvements</text>
