@@ -73,12 +73,13 @@ public class NewMessagesCheckService extends IntentService {
         List<String> addressesForMessages = new ArrayList<>();
         if (internalMessages != null && internalMessages.moveToFirst()) {
             do {
-                String body = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY));
-                if (!alreadyInDatabase(pulseMessages, body.trim())) {
+                String messageBody = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY)).trim();
+                int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
+                if (!alreadyInDatabase(pulseMessages, messageBody, messageType)) {
                     Message message = new Message();
 
-                    message.type = SmsMmsUtils.getSmsMessageType(internalMessages);
-                    message.data = body.trim();
+                    message.type = messageType;
+                    message.data = messageBody;
                     message.timestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
                     message.mimeType = MimeType.TEXT_PLAIN;
                     message.read = true;
@@ -95,23 +96,32 @@ public class NewMessagesCheckService extends IntentService {
             } catch (Exception e) { }
         }
 
+        List<Long> conversationsToRefresh = new ArrayList<>();
         for (int i = 0; i < messagesToInsert.size(); i++) {
             Message message = messagesToInsert.get(i);
             long conversationId = source.insertMessage(message,
                     PhoneNumberUtils.clearFormatting(addressesForMessages.get(i)), this);
+
+            if (!conversationsToRefresh.contains(conversationId)) {
+                conversationsToRefresh.add(conversationId);
+            }
+        }
+
+        for (Long conversationId : conversationsToRefresh) {
             MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
         }
 
-        if (messagesToInsert.size() > 0) {
+        if (conversationsToRefresh.size() > 0) {
             sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
         }
 
         source.close();
     }
 
-    private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch) {
+    private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
         for (Message message : messages) {
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && message.data.equals(bodyToSearch)) {
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && newMessageType == message.type &&
+                    message.data.equals(bodyToSearch)) {
                 return true;
             }
         }
