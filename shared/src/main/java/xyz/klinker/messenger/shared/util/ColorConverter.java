@@ -28,7 +28,7 @@ public class ColorConverter {
         if (color == Color.WHITE) {
             return Color.WHITE;
         } else {
-            return lighten(color, 12);
+            return lighten(color, 6);
         }
     }
 
@@ -62,10 +62,13 @@ public class ColorConverter {
     public static int lighten(int base, int amount) {
         float[] hsv = new float[3];
         Color.colorToHSV(base, hsv);
+
         float[] hsl = hsv2hsl(hsv);
         hsl[2] += amount / 100f;
+
         if (hsl[2] > 1)
             hsl[2] = 1f;
+
         hsv = hsl2hsv(hsl);
         return Color.HSVToColor(hsv);
     }
