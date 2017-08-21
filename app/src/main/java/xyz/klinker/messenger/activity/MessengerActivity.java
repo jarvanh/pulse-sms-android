@@ -126,6 +126,7 @@ public class  MessengerActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private MaterialSearchView searchView;
     private boolean inSettings = false;
+    private boolean startImportOrLoad = false;
 
     private DataSource dataSource;
 
@@ -163,7 +164,7 @@ public class  MessengerActivity extends AppCompatActivity
 //                    DualSimUtils.get(this).getDefaultPhoneNumber() != null;
 
             boolean hasPhoneFeature = hasTelephone && !getResources().getBoolean(R.bool.is_tablet);
-            if (hasPhoneFeature ) {
+            if (hasPhoneFeature) {
                 startActivityForResult(
                         new Intent(this, OnboardingActivity.class),
                         INSTANCE.getREQUEST_ONBOARDING()
@@ -175,6 +176,8 @@ public class  MessengerActivity extends AppCompatActivity
                 startActivity(login);
                 finish();
             }
+
+            startImportOrLoad = true;
         }
     }
 
@@ -263,8 +266,12 @@ public class  MessengerActivity extends AppCompatActivity
         registerReceiver(refreshAllReceiver,
                 new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
 
-        new Handler().postDelayed(() ->
-                NewMessagesCheckService.startService(MessengerActivity.this), 3000);
+        if (!startImportOrLoad) {
+            new Handler().postDelayed(() ->
+                    NewMessagesCheckService.startService(MessengerActivity.this), 3000);
+        } else {
+            startImportOrLoad = false;
+        }
     }
 
     @Override
