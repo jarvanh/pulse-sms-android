@@ -410,6 +410,10 @@ public class  MessengerActivity extends AppCompatActivity
 
     private void initSnooze() {
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
+        if (snooze == null) {
+            return;
+        }
+
         if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
             snooze.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }

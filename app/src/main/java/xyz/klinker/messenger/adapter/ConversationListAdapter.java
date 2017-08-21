@@ -345,6 +345,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     }
 
     public boolean removeItem(int position, ReorderType reorderType) {
+        if (position == -1) {
+            return false;
+        }
+
         // The logic here can get a little tricky because we are removing items from the adapter
         // but need to account for the headers taking up a position as well. On top of that, if all
         // the items in a section are gone, then there shouldn't be a header for that section.

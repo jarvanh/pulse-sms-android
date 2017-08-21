@@ -96,7 +96,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
             int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.colors.color;
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.title.substring(0, 1));
-                if (holder.groupIcon.getVisibility() != View.GONE) {
+                if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
                 }
 
@@ -107,20 +107,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 }
             } else {
                 holder.imageLetter.setText(null);
-                if (holder.groupIcon.getVisibility() != View.VISIBLE) {
-                    holder.groupIcon.setVisibility(View.VISIBLE);
-                }
 
-                if (conversation.phoneNumbers.contains(",")) {
-                    holder.groupIcon.setImageResource(R.drawable.ic_group);
-                } else {
-                    holder.groupIcon.setImageResource(R.drawable.ic_person);
-                }
+                if (holder.groupIcon != null) {
+                    if (holder.groupIcon.getVisibility() != View.VISIBLE) {
+                        holder.groupIcon.setVisibility(View.VISIBLE);
+                    }
 
-                if (ColorUtils.isColorDark(colorToInspect)) {
-                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-                } else {
-                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
+                    if (conversation.phoneNumbers.contains(",")) {
+                        holder.groupIcon.setImageResource(R.drawable.ic_group);
+                    } else {
+                        holder.groupIcon.setImageResource(R.drawable.ic_person);
+                    }
+
+                    if (ColorUtils.isColorDark(colorToInspect)) {
+                        holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                    } else {
+                        holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
+                    }
                 }
             }
         } else {

@@ -49,13 +49,13 @@ class MarkAsReadJob : BackgroundJob() {
         private val MESSAGE_SENDING_TIMEOUT = TimeUtils.MINUTE
         private val EXTRA_MESSAGE_ID = "extra_message_id"
 
-        fun scheduleNextRun(context: Context, messageId: Long) {
-            if (Account.get(context).exists() && !Account.get(context).primary) {
+        fun scheduleNextRun(context: Context?, messageId: Long) {
+            if (context == null || Account.get(context).exists() && !Account.get(context).primary) {
                 return
             }
 
             val bundle = PersistableBundle()
-            bundle.putLong(EXTRA_MESSAGE_ID, messageId);
+            bundle.putLong(EXTRA_MESSAGE_ID, messageId)
 
             val component = ComponentName(context, MarkAsReadJob::class.java)
             val builder = JobInfo.Builder(JOB_ID, component)
