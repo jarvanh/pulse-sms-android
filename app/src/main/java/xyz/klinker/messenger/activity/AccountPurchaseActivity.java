@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
+import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
@@ -40,10 +42,17 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         setUpInitialLayout();
 
         Settings settings = Settings.get(this);
-        findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.color);
-        findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.color);
-        ((TextView)findViewById(R.id.try_it))
-                .setTextColor(ColorStateList.valueOf(settings.mainColorSet.color));
+        if (settings.mainColorSet.color == Color.WHITE) {
+            findViewById(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color);
+            findViewById(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color);
+            ((TextView)findViewById(R.id.try_it))
+                    .setTextColor(ColorStateList.valueOf(ColorSet.TEAL(this).color));
+        } else {
+            findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.color);
+            findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.color);
+            ((TextView)findViewById(R.id.try_it))
+                    .setTextColor(ColorStateList.valueOf(settings.mainColorSet.color));
+        }
 
         new Handler().postDelayed(this::circularRevealIn, 100);
     }
