@@ -22,6 +22,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
@@ -30,6 +31,7 @@ import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.util.PaginationUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
  * Check whether or not there are messages in the internal database, that are not in Pulse's
@@ -58,7 +60,7 @@ public class NewMessagesCheckService extends IntentService {
 
         SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs(this);
         long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
-
+        long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.SECOND * 5);
 
         // grab the latest 60 messages from Pulse's database
         // grab the latest 20 messages from the the internal SMS/MMS database
@@ -82,7 +84,11 @@ public class NewMessagesCheckService extends IntentService {
                 String messageBody = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY)).trim();
                 int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
                 long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
-                if (!alreadyInDatabase(pulseMessages, messageBody, messageType) && messageTimestamp > lastRun) {
+
+                // the message timestamp should be more than the last time this service ran, but more than 5 seconds old,
+                // and it shouldn't already be in the database
+                if (messageTimestamp > lastRun && messageTimestamp < fiveSecondsBefore &&
+                        !alreadyInDatabase(pulseMessages, messageBody, messageType)) {
                     Message message = new Message();
 
                     message.type = messageType;
@@ -138,6 +144,10 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
+        if (!FeatureFlags.get(this).DATABASE_SYNC_SERVICE_ALL && newMessageType != Message.TYPE_SENT) {
+            return true;
+        }
+
         for (Message message : messages) {
             if (message.mimeType.equals(MimeType.TEXT_PLAIN) && newMessageType == message.type &&
                     message.data.equals(bodyToSearch)) {
