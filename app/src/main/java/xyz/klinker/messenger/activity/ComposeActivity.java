@@ -62,6 +62,7 @@ import xyz.klinker.messenger.shared.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.NonStandardUriUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
@@ -371,10 +372,29 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             if (extras != null && extras.containsKey("sms_body")) {
                 setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN, false);
             } else if (data != null) {
+                String body = NonStandardUriUtils.getQueryParams(data).get("body");
                 if (data.contains("smsto:")) {
-                    showConversation(data.replace("smsto:", ""));
+                    String to = data.replace("smsto:", "");
+                    if (to.contains("?")) {
+                        to = to.substring(0, to.indexOf("?"));
+                    }
+
+                    if (body != null) {
+                        applyShare(MimeType.TEXT_PLAIN, body, to);
+                    } else {
+                        showConversation(to);
+                    }
                 } else if (data.contains("sms:")) {
-                    showConversation(data.replace("sms:", ""));
+                    String to = data.replace("sms:", "");
+                    if (to.contains("?")) {
+                        to = to.substring(0, to.indexOf("?"));
+                    }
+
+                    if (body != null) {
+                        applyShare(MimeType.TEXT_PLAIN, body, to);
+                    } else {
+                        showConversation(to);
+                    }
                 }
             }
         }
@@ -463,7 +483,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         long id = source.insertDraft(conversationId, data, mimeType);
         source.close();
 
-        showConversation();
+        showConversation(conversationId);
     }
 
     private void shareWithDirectShare(String data, String mimeType, boolean isVcard) {
