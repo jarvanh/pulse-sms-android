@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.5.1"
+        description="August 22nd, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.5.0"
         description="August 21st, 2017">
         <text>[New - Global Themes] Add the ability to apply a theme to the conversation list while still using the per-conversation themes</text>
