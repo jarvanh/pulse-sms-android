@@ -149,8 +149,9 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             } else if (item.getItemId() == R.id.menu_copy_message) {
                 handled = true;
                 Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
+                String text = MessageMultiSelectDelegate.getMessageContent(message);
 
-                CopyMessageTextFragment fragment = new CopyMessageTextFragment(message);
+                CopyMessageTextFragment fragment = new CopyMessageTextFragment(text);
                 fragment.show(activity.getSupportFragmentManager(), "");
             } else {
                 handled = true;
