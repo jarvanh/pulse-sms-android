@@ -102,7 +102,13 @@ public class PermissionsUtils {
     public static void setDefaultSmsApp(Context context) {
         Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
-        context.startActivity(intent);
+
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            // Android TV trying to get set as the default app
+            e.printStackTrace();
+        }
     }
 
 

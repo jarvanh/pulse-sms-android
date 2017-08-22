@@ -27,6 +27,8 @@ public class ColorConverter {
     public static int lightenPrimaryColor(int color) {
         if (color == Color.WHITE) {
             return Color.WHITE;
+        } else if (color == Color.BLACK) {
+            return Color.BLACK;
         } else {
             return lighten(color, 6);
         }

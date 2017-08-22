@@ -90,8 +90,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         }
 
         insertInternalSms(context, address, body, date);
-        long conversationId = insertSms(context, handler, address, body, simSlot);
 
+        long conversationId = insertSms(context, handler, address, body, simSlot);
         if (conversationId != -1L) {
             context.startService(new Intent(context, NotificationService.class));
 

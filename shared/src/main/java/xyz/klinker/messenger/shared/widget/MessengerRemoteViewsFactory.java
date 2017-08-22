@@ -49,10 +49,10 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public void onCreate() {
-        reloadArticles();
+        reloadConversations();
     }
 
-    private void reloadArticles() {
+    private void reloadConversations() {
         DataSource source = DataSource.getInstance(context);
         source.open();
         Cursor items = source.getUnarchivedConversations();
@@ -75,7 +75,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public void onDataSetChanged() {
-        reloadArticles();
+        reloadConversations();
     }
 
     @Override

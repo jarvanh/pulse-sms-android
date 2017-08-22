@@ -101,7 +101,9 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
     public void onDestroy() {
         super.onDestroy();
 
-        unregisterReceiver(updatedReceiver);
+        try {
+            unregisterReceiver(updatedReceiver);
+        } catch (Exception e) { }
 
         if (adapter != null) {
             adapter.getMessages().close();
