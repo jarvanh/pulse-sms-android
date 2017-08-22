@@ -62,6 +62,8 @@ public class NewMessagesCheckService extends IntentService {
         long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
         long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.SECOND * 5);
 
+        String appSignature = "\n" + Settings.get(this).signature;
+
         // grab the latest 60 messages from Pulse's database
         // grab the latest 20 messages from the the internal SMS/MMS database
         // iterate over the internal messages and see if they are in the list from Pulse's database (search by text is fine)
@@ -84,6 +86,13 @@ public class NewMessagesCheckService extends IntentService {
                 String messageBody = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY)).trim();
                 int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
                 long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
+
+                if (messageType == Message.TYPE_SENT) {
+                    // sent message don't show a signature in the app, but they would be written to the internal database with one
+                    // received messages don't need to worry about this, and shouldn't. If you send yourself a message, then it would come
+                    // in with a signature, if this was applied to received messages, then that received message would get duplicated
+                    messageBody = messageBody.replace(appSignature, "");
+                }
 
                 // the message timestamp should be more than the last time this service ran, but more than 5 seconds old,
                 // and it shouldn't already be in the database
@@ -150,7 +159,7 @@ public class NewMessagesCheckService extends IntentService {
 
         for (Message message : messages) {
             if (message.mimeType.equals(MimeType.TEXT_PLAIN) && newMessageType == message.type &&
-                    message.data.equals(bodyToSearch)) {
+                    message.data.trim().equals(bodyToSearch.trim())) {
                 return true;
             }
         }
