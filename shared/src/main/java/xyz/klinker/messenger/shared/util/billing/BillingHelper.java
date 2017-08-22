@@ -135,7 +135,7 @@ public class BillingHelper {
                     REQUEST_PURCHASE, new Intent(), Integer.valueOf(0), Integer.valueOf(0),
                     Integer.valueOf(0));
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

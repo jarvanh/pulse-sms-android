@@ -26,6 +26,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -317,6 +318,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         Settings.get(getActivity()).forceUpdate(getActivity());
         if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
+            Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId);
             if (productId.equals(ProductAvailable.createLifetime().getProductId())) {
                 purchaseProduct(ProductAvailable.createLifetime());
             } else if (productId.equals(ProductAvailable.createYearly().getProductId())) {
