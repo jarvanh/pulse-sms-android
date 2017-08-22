@@ -13,12 +13,15 @@ import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 
 class CopyMessageTextFragment(val message: Message) : TabletOptimizedBottomSheetDialogFragment() {
 
+    constructor() : this(Message())
+
     override fun createLayout(inflater: LayoutInflater): View {
         val contentView = View.inflate(activity, R.layout.bottom_sheet_copy, null)
 
+        val messageContent = if (message.mimeType == null) "" else MessageMultiSelectDelegate.getMessageContent(message)
         val copyText = contentView.findViewById<View>(R.id.copy_all)
         copyText.setOnClickListener {
-            val clip = ClipData.newPlainText("message", MessageMultiSelectDelegate.getMessageContent(message))
+            val clip = ClipData.newPlainText("message", messageContent)
             (activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = clip
             Toast.makeText(activity, R.string.message_copied_to_clipboard, Toast.LENGTH_SHORT).show()
 
@@ -26,7 +29,7 @@ class CopyMessageTextFragment(val message: Message) : TabletOptimizedBottomSheet
         }
 
         val messageTv = contentView.findViewById<View>(R.id.message) as TextView
-        messageTv.text = MessageMultiSelectDelegate.getMessageContent(message)
+        messageTv.text = messageContent
 
         return contentView
     }

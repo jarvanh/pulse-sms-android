@@ -114,8 +114,16 @@ public class EncryptionUtils {
         String dataOne = data.split(SEPARATOR)[0];
         String dataTwo = data.split(SEPARATOR)[1];
 
-        byte[] iv = Base64.decode(dataOne, Base64.DEFAULT);
-        byte[] ciphertext = Base64.decode(dataTwo, Base64.DEFAULT);
+        byte[] iv;
+        byte[] ciphertext;
+
+        try {
+            iv = Base64.decode(dataOne, Base64.DEFAULT);
+            ciphertext = Base64.decode(dataTwo, Base64.DEFAULT);
+        } catch (IllegalArgumentException e) {
+            // bad base-64. Seems to come from an image
+            return new byte[0];
+        }
 
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -124,8 +132,9 @@ public class EncryptionUtils {
         } catch (InvalidKeyException | InvalidAlgorithmParameterException |
                 IllegalBlockSizeException | BadPaddingException |
                 NoSuchAlgorithmException | NoSuchPaddingException e) {
-            throw new RuntimeException("could not decryptData data. Key: " +
-                    Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT), e);
+//            throw new RuntimeException("could not decryptData data. Key: " +
+//                    Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT), e);
+            return new byte[0];
         }
     }
 

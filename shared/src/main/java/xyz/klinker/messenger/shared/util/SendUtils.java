@@ -151,7 +151,10 @@ public class SendUtils {
             try {
                 transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
             } catch (IllegalArgumentException e) {
-                
+                e.printStackTrace();
+            } catch (UnsupportedOperationException e) {
+                // Sent from a Chromebook? How did they get to this point?
+                e.printStackTrace();
             }
         }
 

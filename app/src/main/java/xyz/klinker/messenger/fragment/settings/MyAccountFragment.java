@@ -415,6 +415,10 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     }
 
     private void returnToConversationsAfterLogin() {
+        if (getActivity() == null) {
+            return;
+        }
+
         NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
         if (nav != null) {
             nav.setCheckedItem(R.id.drawer_conversation);

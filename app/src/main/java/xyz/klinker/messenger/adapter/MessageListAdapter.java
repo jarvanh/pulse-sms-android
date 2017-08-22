@@ -656,18 +656,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     DataSource source = DataSource.getInstance(holder.itemView.getContext());
                     source.open();
 
-                    int originalLength = contact.phoneNumber.length();
-                    int newLength = contact.phoneNumber.replaceAll("[0-9]", "").length();
-                    if (originalLength == newLength) {
-                        // all letters, so we should use the contact name to find the phone number
-                        List<Contact> contacts = source.getContactsByNames(contact.name);
-                        if (contacts.size() > 0) {
-                            contact.phoneNumber = contacts.get(0).phoneNumber;
+                    if (contact.phoneNumber != null) {
+                        int originalLength = contact.phoneNumber.length();
+                        int newLength = contact.phoneNumber.replaceAll("[0-9]", "").length();
+                        if (originalLength == newLength) {
+                            // all letters, so we should use the contact name to find the phone number
+                            List<Contact> contacts = source.getContactsByNames(contact.name);
+                            if (contacts.size() > 0) {
+                                contact.phoneNumber = contacts.get(0).phoneNumber;
+                            }
                         }
-                    }
 
-                    source.insertContact(contact);
-                    source.close();
+                        source.insertContact(contact);
+                        source.close();
+                    }
                 }).start();
             }
         }
