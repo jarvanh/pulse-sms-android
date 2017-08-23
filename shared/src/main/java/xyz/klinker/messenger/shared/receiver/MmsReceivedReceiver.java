@@ -19,18 +19,22 @@ package xyz.klinker.messenger.shared.receiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
+import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.MediaParserService;
@@ -42,6 +46,7 @@ import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.MediaSaver;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
  * Receiver for notifying us when a new MMS has been received by the device. By default it will
@@ -55,14 +60,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals("android.provider.Telephony.MMS_DOWNLOADED")) {
-            // this seems to be an undocumented intent action, that I found in the Android Messages app...
-            // it does seem to get called when the MMS are downloaded. Perhaps we can use this for something?
-            // I don't know enough about it, yet
-
-            return;
-        }
-
         new Thread(() -> {
             try {
                 super.onReceive(context, intent);
@@ -73,11 +70,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             String nullableOrBlankBodyText = insertMms(context);
 
             if (!ignoreNotification) {
-//                if (AndroidVersionUtil.isAndroidO()) {
-//
-//                } else {
-//                    context.startService(new Intent(context, NotificationService.class));
-//                }
                 try {
                     context.startService(new Intent(context, NotificationService.class));
                 } catch (Exception e) {
@@ -190,7 +182,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         }
 
         builder.append(from);
-//        return SmsMmsUtils.stripDuplicatePhoneNumbers(builder.toString());
         return builder.toString().replaceAll(",", ", ").replaceAll("  ", " ");
     }
 

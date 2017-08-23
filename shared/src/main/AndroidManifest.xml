@@ -184,9 +184,8 @@
             android:exported="true"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED">
 
-            <!--<intent-filter-->
-            <!--android:priority="2147483647">-->
-            <!--<action android:name="android.provider.Telephony.MMS_DOWNLOADED" />-->
+            <!--<intent-filter android:priority="2147483647">-->
+                <!--<action android:name="android.provider.Telephony.MMS_DOWNLOADED" />-->
             <!--</intent-filter>-->
 
         </receiver>
