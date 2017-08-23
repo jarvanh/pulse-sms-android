@@ -464,7 +464,7 @@ public class MessageListFragment extends Fragment implements
         messageEntry.setHighlightColor(accent);
 
         String firstName;
-        if (getArguments() != null && getArguments().getString(ARG_TITLE) != null) {
+        if (getArguments() != null && getArguments().getString(ARG_TITLE) != null && !getArguments().getString(ARG_TITLE).isEmpty()) {
             firstName = getArguments().getString(ARG_TITLE).split(" ")[0];
         } else {
             firstName = "";

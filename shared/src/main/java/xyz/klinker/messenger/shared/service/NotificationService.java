@@ -102,7 +102,7 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         boolean foreground = false;
-        if (intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.isAndroidO()) {
+        if (intent != null && intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.isAndroidO()) {
             foreground = true;
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
