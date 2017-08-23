@@ -7,28 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.provider.Telephony;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.klinker.messenger.shared.R;
-import xyz.klinker.messenger.api.entity.AddMessagesRequest;
-import xyz.klinker.messenger.api.entity.MessageBody;
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.shared.util.PaginationUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
@@ -54,6 +43,14 @@ public class NewMessagesCheckService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        try {
+            handle(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handle(Intent intent) {
         if (ApiDownloadService.IS_RUNNING || (Account.get(this).exists() && !Account.get(this).primary)) {
             return;
         }
@@ -62,7 +59,12 @@ public class NewMessagesCheckService extends IntentService {
         long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
         long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.SECOND * 5);
 
-        String appSignature = "\n" + Settings.get(this).signature;
+        String appSignature;
+        if (!Settings.get(this).signature.isEmpty()) {
+            appSignature = "\n" + Settings.get(this).signature;
+        } else {
+            appSignature = "";
+        }
 
         // grab the latest 60 messages from Pulse's database
         // grab the latest 20 messages from the the internal SMS/MMS database

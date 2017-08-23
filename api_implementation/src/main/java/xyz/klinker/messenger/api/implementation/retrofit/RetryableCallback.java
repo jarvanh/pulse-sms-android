@@ -27,8 +27,8 @@ public abstract class RetryableCallback<T> implements Callback<T> {
         if (!ApiUtils.isCallSuccessful(response)) {
             if (retryCount++ < totalRetries) {
                 Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
-                Log.v(TAG, "Error -  " + response.message());
-                Log.v(TAG, "For call -  " + call.request().url().toString());
+                Log.v(TAG, "Error: " + response.message());
+                Log.v(TAG, "For call:" + call.request().url().toString());
                 retry();
             } else {
                 onFinalResponse(call, response);
@@ -40,9 +40,13 @@ public abstract class RetryableCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        Log.e(TAG, t.getMessage());
+        if (t != null) {
+            Log.e(TAG, t.getMessage());
+        }
+
         if (retryCount++ < totalRetries) {
-            Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
+            Log.v(TAG, "On Failure, Retrying API Call: (" + retryCount + " / " + totalRetries + ")");
+            Log.v(TAG, "For call: " + call.request().url().toString());
             retry();
         } else {
             onFinalFailure(call, t);

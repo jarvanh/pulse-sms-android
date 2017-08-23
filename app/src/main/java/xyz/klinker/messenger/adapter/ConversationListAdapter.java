@@ -155,7 +155,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             tryIt.setTextColor(Settings.get(activity).mainColorSet.color);
 
             tryIt.setOnClickListener(v -> {
-                sectionCounts.remove(0);
+                if (sectionCounts.size() > 0) {
+                    sectionCounts.remove(0);
+                }
+
                 Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
 
@@ -166,7 +169,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 }, 500);
             });
             holder.headerCardForTextOnline.findViewById(R.id.not_now).setOnClickListener(v -> {
-                sectionCounts.remove(0);
+                if (sectionCounts.size() > 0) {
+                    sectionCounts.remove(0);
+                }
+
                 Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
                 AnalyticsHelper.convoListNotNow(activity);

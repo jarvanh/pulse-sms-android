@@ -535,7 +535,11 @@ public class  MessengerActivity extends AppCompatActivity
 
         if (conversationListFragment == null) {
             Fragment messageListFragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
-            getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
+
+            try {
+                getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
+            } catch (Exception e) { }
+
             displayConversations();
             fab.show();
             if (drawerLayout != null) {

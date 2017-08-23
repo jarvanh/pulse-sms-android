@@ -560,8 +560,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                                 .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
                                 .setAction(R.string.read, view -> manager.scrollToPosition(finalCount - 1));
 
-                        ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
-                                .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
+                        try {
+                            ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
+                                    .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         SnackbarAnimationFix.apply(snackbar);
                         snackbar.show();

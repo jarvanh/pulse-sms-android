@@ -18,11 +18,15 @@ public class LoggingRetryableCallback<T> extends RetryableCallback<T> {
 
     @Override
     public void onFinalResponse(Call<T> call, Response<T> response) {
-        Log.v(TAG, logMessage + ": SUCCESS");
+        try {
+            Log.v(TAG, logMessage + ": SUCCESS");
+        } catch (Exception e) { }
     }
 
     @Override
     public void onFinalFailure(Call<T> call, Throwable t) {
-        Log.e(TAG, logMessage + ": FAILED");
+        try {
+            Log.e(TAG, logMessage + ": FAILED");
+        } catch (Exception e) { }
     }
 }

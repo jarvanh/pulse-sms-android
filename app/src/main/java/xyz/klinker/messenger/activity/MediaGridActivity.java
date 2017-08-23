@@ -23,9 +23,13 @@ public class MediaGridActivity extends AbstractSettingsActivity {
         fragment = MediaGridFragment.newInstance(
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.settings_content, fragment)
-                .commit();
+        try {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.settings_content, fragment)
+                    .commit();
+        } catch (Exception e) {
+
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

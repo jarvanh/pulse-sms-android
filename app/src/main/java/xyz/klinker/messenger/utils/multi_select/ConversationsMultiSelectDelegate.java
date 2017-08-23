@@ -77,10 +77,15 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 if (isSelected(i, 0)) {
                     selectedPositions.add(i);
-                    if (adapter.showHeaderAboutTextingOnline()) {
-                        selectedConversations.add(adapter.findConversationForPosition(i - 1));
-                    } else {
-                        selectedConversations.add(adapter.findConversationForPosition(i));
+
+                    try {
+                        if (adapter.showHeaderAboutTextingOnline()) {
+                            selectedConversations.add(adapter.findConversationForPosition(i - 1));
+                        } else {
+                            selectedConversations.add(adapter.findConversationForPosition(i));
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+
                     }
                 }
             }

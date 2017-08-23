@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -122,7 +123,12 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         preference.setOnPreferenceClickListener(preference1 -> {
             Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse("https://messenger.klinkerapps.com"));
             web.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(web);
+
+            try {
+                startActivity(web);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+            }
 
             return false;
         });

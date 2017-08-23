@@ -761,7 +761,8 @@ public class MessageListFragment extends Fragment implements
         return !Account.get(getActivity()).primary &&
                 (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
                         Build.MANUFACTURER.toLowerCase().equals("sony") || Build.MANUFACTURER.toLowerCase().equals("xiaomi") ||
-                        Build.MODEL.toLowerCase().equals("sm-t800") || Build.MANUFACTURER.toLowerCase().equals("lge"));
+                        Build.MODEL.toLowerCase().equals("sm-t800") || Build.MANUFACTURER.toLowerCase().equals("lge") ||
+                        Build.MODEL.toLowerCase().contains("kindle"));
     }
 
     private void initAttachStub() {

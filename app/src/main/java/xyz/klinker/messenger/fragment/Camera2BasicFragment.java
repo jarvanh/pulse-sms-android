@@ -654,14 +654,15 @@ public class Camera2BasicFragment extends Fragment
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
-            if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
-                throw new RuntimeException("Time out waiting to lock camera opening.");
+            if (mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
+                manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
+            } else {
+                //throw new RuntimeException("Time out waiting to lock camera opening.");
             }
-            manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-            throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
+            //throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "no camera found for the device");
         }
