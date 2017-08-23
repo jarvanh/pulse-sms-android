@@ -65,11 +65,6 @@ object DataSource {
      */
     private val MAX_ID = java.lang.Long.MAX_VALUE / 10000
 
-    /**
-     * Get the currently open database
-     *
-     * @return sqlite database
-     */
     var _database: SQLiteDatabase? = null
     private fun database(context: Context): SQLiteDatabase {
         if (_database == null) {
@@ -105,7 +100,16 @@ object DataSource {
         
         return _accountId!!
     }
-    private var androidDeviceId: String? = null
+
+    private var _androidDeviceId: String? = null
+    private fun androidDeviceId(context: Context): String {
+        if (_androidDeviceId == null) {
+            _androidDeviceId = Account.get(context).deviceId
+        }
+
+        return _androidDeviceId!!
+    }
+
     private var apiUtils: ApiUtils = ApiUtils()
 
 
@@ -1953,7 +1957,7 @@ object DataSource {
         }
 
         if (updated > 0) {
-            apiUtils.readConversation(accountId(context), androidDeviceId, conversationId)
+            apiUtils.readConversation(accountId(context), androidDeviceId(context), conversationId)
         }
 
         writeUnreadCount(context)
@@ -2002,7 +2006,7 @@ object DataSource {
         Log.v("Data Source", "updated: " + updated)
         if (updated > 0) {
             for (id in conversationIds) {
-                apiUtils.readConversation(accountId(context), androidDeviceId, id)
+                apiUtils.readConversation(accountId(context), androidDeviceId(context), id)
             }
 
             writeUnreadCount(context)
@@ -2203,7 +2207,7 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        apiUtils.deleteDrafts(accountId(context), androidDeviceId, conversationId)
+        apiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
     }
 
     /**
