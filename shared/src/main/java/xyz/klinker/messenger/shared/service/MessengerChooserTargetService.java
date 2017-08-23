@@ -46,7 +46,7 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                                                    IntentFilter intentFilter) {
         List<ChooserTarget> targets = new ArrayList<>();
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         Cursor cursor = source.getPinnedConversations();
 

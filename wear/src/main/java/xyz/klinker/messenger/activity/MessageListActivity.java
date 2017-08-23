@@ -62,7 +62,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         actionDrawer = (WearableActionDrawer) findViewById(R.id.action_drawer);
         recyclerView = (WearableRecyclerView) findViewById(R.id.recycler_view);
 
-        source = DataSource.getInstance(this);
+        source = DataSource.Companion.getInstance(this);
         source.open();
 
         conversation = source.getConversation(getIntent().getLongExtra(CONVERSATION_ID, -1L));

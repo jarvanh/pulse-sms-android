@@ -93,7 +93,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         long conversationId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         messages = source.getMediaMessages(conversationId);
         source.close();

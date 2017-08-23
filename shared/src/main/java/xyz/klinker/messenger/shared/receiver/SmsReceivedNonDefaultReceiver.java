@@ -103,7 +103,7 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
         message.seen = false;
         message.simPhoneNumber = null;
 
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         if (shouldSaveMessages(source, message)) {

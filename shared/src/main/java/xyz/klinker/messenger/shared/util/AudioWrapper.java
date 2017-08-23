@@ -31,7 +31,7 @@ public class AudioWrapper {
         }
 
         try {
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             Conversation conversation = source.getConversation(conversationId);
             source.close();

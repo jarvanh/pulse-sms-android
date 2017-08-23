@@ -53,7 +53,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
     }
 
     private void reloadConversations() {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
         Cursor items = source.getUnarchivedConversations();
         conversations = new ArrayList<>();

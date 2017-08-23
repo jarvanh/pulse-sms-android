@@ -167,7 +167,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             account.setName(this, myName);
             account.setPhoneNumber(this, myPhoneNumber);
 
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
 
             List<Conversation> conversations = SmsMmsUtils.queryConversations(context);

@@ -78,7 +78,7 @@ public class MediaParserService extends IntentService {
 
         Message message = parser.parse(conversationId);
         if (message != null) {
-            DataSource source = DataSource.getInstance(this);
+            DataSource source = DataSource.Companion.getInstance(this);
             source.open();
             source.insertMessage(this, message, conversationId, true);
             source.close();

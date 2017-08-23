@@ -141,7 +141,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     private void displayRecents() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            DataSource source = DataSource.getInstance(getApplicationContext());
+            DataSource source = DataSource.Companion.getInstance(getApplicationContext());
             source.open();
             Cursor cursor = source.getUnarchivedConversations();
 
@@ -205,7 +205,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void showConversation(String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         Long conversationId = source.findConversationId(phoneNumbers);
 
@@ -419,7 +419,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void sendvCard(String mimeType, String data, String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
         Conversation conversation = source.getConversation(conversationId);
@@ -441,7 +441,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void sendvCard(String mimeType, String data, long conversationId) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         Conversation conversation = source.getConversation(conversationId);
 
@@ -467,7 +467,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void applyShare(String mimeType, String data, String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         Long conversationId = source.findConversationId(phoneNumbers);
 
@@ -490,7 +490,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void shareWithDirectShare(String data, String mimeType, boolean isVcard) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.EXTRA_CONVO_ID);
 

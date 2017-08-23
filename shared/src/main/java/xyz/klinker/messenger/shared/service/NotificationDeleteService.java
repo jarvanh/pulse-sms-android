@@ -30,7 +30,7 @@ public class NotificationDeleteService extends IntentService {
         long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         source.deleteMessage(messageId);
 

@@ -63,7 +63,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         source = new DataSource(helper);
-        source.context = RuntimeEnvironment.application;
+        source.setContext(RuntimeEnvironment.application);
         when(database.isOpen()).thenReturn(true);
         when(helper.getWritableDatabase()).thenReturn(database);
         source.open();
@@ -77,7 +77,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void realConstructor() {
-        DataSource dataSource = DataSource.getInstance(RuntimeEnvironment.application);
+        DataSource dataSource = DataSource.Companion.getInstance(RuntimeEnvironment.application);
         dataSource.open();
         dataSource.close();
     }

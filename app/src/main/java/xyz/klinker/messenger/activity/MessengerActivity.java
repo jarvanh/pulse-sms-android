@@ -147,7 +147,7 @@ public class  MessengerActivity extends AppCompatActivity
         new UpdateUtils(this).checkForUpdate();
         new PromotionUtils(this).checkPromotions();
 
-        dataSource = DataSource.getInstance(this);
+        dataSource = DataSource.Companion.getInstance(this);
         dataSource.open();
 
         setContentView(R.layout.activity_messenger);
@@ -236,7 +236,7 @@ public class  MessengerActivity extends AppCompatActivity
             snoozeIcon();
 
             new Thread(() -> {
-                DataSource source = DataSource.getInstance(MessengerActivity.this);
+                DataSource source = DataSource.Companion.getInstance(MessengerActivity.this);
                 source.open();
                 Cursor c = source.getUnseenMessages();
                 int count = c.getCount();
@@ -1054,7 +1054,7 @@ public class  MessengerActivity extends AppCompatActivity
         if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
             final ConversationListFragment fragment = getShownConversationList();
             Conversation conversation = fragment.getExpandedItem().conversation;
-            DataSource source = DataSource.getInstance(this);
+            DataSource source = DataSource.Companion.getInstance(this);
             source.open();
 
             new AlertDialog.Builder(this)

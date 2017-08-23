@@ -581,7 +581,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public void onMessageDeleted(Context context, long conversationId, int position) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         List<Message> messageList = source.getMessages(conversationId, 1);
@@ -657,7 +657,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                 // then write it to the database for later
                 new Thread(() -> {
-                    DataSource source = DataSource.getInstance(holder.itemView.getContext());
+                    DataSource source = DataSource.Companion.getInstance(holder.itemView.getContext());
                     source.open();
 
                     if (contact.phoneNumber != null) {

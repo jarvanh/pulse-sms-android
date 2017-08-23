@@ -90,7 +90,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                 }
             }
 
-            DataSource source = DataSource.getInstance(activity);
+            DataSource source = DataSource.Companion.getInstance(activity);
 
             switch (item.getItemId()) {
                 case R.id.menu_archive_conversation:

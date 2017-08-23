@@ -43,7 +43,7 @@ public class FirebaseResetService extends IntentService {
         }
 
         // going to re-download everything I guess..
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         source.clearTables();
         source.close();

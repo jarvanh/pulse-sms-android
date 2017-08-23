@@ -106,7 +106,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     PhoneNumberUtils.getMyPhoneNumber(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
 
             for (ContentValues value : values) {

@@ -112,7 +112,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
     @VisibleForTesting
     DataSource getDataSource() {
-        return DataSource.getInstance(getActivity());
+        return DataSource.Companion.getInstance(getActivity());
     }
 
     private void setUpDefaults() {
@@ -326,7 +326,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     public void saveSettings() {
-        DataSource source = DataSource.getInstance(getActivity());
+        DataSource source = DataSource.Companion.getInstance(getActivity());
         source.open();
         source.updateConversationSettings(conversation);
 

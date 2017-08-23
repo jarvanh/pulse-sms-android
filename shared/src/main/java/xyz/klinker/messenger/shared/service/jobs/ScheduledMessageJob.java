@@ -58,7 +58,7 @@ public class ScheduledMessageJob extends BackgroundJob {
 
     @Override
     protected void onRunJob(JobParameters parameters) {
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
 
         Cursor messages = source.getScheduledMessages();
@@ -116,7 +116,7 @@ public class ScheduledMessageJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         scheduleNextRun(context, source);

@@ -888,7 +888,7 @@ public class NotificationService extends IntentService {
 
     @VisibleForTesting
     DataSource getDataSource(Context context) {
-        return DataSource.getInstance(context);
+        return DataSource.Companion.getInstance(context);
     }
 
     public static void cancelRepeats(Context context) {

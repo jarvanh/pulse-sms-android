@@ -108,7 +108,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final DataSource source = DataSource.getInstance(getActivity());
+                final DataSource source = DataSource.Companion.getInstance(getActivity());
                 source.open();
                 final List<Blacklist> blacklists = source.getBlacklistAsList();
                 source.close();
@@ -179,7 +179,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                             Blacklist blacklist = new Blacklist();
                             blacklist.phoneNumber = cleared;
 
-                            DataSource source = DataSource.getInstance(getActivity());
+                            DataSource source = DataSource.Companion.getInstance(getActivity());
                             source.open();
                             source.insertBlacklist(blacklist);
                             source.close();
@@ -200,7 +200,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DataSource source = DataSource.getInstance(getActivity());
+                        DataSource source = DataSource.Companion.getInstance(getActivity());
                         source.open();
                         source.deleteBlacklist(id);
                         source.close();

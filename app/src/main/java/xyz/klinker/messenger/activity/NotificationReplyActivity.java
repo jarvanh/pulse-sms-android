@@ -87,7 +87,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
     public void onBackPressed() {
         String text = messageInput.getText().toString();
         if (!text.isEmpty() && sendButton.isEnabled()) {
-            DataSource source = DataSource.getInstance(this);
+            DataSource source = DataSource.Companion.getInstance(this);
             source.open();
             source.insertDraft(conversationId, text, MimeType.TEXT_PLAIN);
             source.close();
@@ -179,7 +179,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     // region setup message history
     private void setupMessageHistory() {
-        DataSource source = DataSource.getInstance(NotificationReplyActivity.this);
+        DataSource source = DataSource.Companion.getInstance(NotificationReplyActivity.this);
         source.open();
 
         conversation = source.getConversation(conversationId);
@@ -397,7 +397,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
         // we don't have to check zero length, since the button is disabled if zero length
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         final long messageId = source.insertMessage(this, m, m.conversationId, true);
         source.readConversation(NotificationReplyActivity.this, conversationId);

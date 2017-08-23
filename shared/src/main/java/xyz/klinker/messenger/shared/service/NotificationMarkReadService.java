@@ -25,7 +25,7 @@ public class NotificationMarkReadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
         source.readConversation(this, conversationId);
         Conversation conversation = source.getConversation(conversationId);

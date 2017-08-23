@@ -50,7 +50,7 @@ public class ContactSyncJob extends BackgroundJob {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
 
         List<Contact> contactsList = ContactUtils.queryNewContacts(this, source, since);

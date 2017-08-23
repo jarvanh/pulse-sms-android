@@ -40,7 +40,7 @@ public class TvBrowseFragment extends BrowseSupportFragment {
     public void onStart() {
         super.onStart();
 
-        DataSource source = DataSource.getInstance(getActivity());
+        DataSource source = DataSource.Companion.getInstance(getActivity());
         source.open();
         Cursor conversations = source.getUnarchivedConversations();
 

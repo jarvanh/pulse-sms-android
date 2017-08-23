@@ -44,7 +44,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
             return;
         }
 
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         Conversation conversation = source.getConversation(conversationId);

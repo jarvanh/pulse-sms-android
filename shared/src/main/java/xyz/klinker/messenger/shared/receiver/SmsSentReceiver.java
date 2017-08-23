@@ -114,7 +114,7 @@ public class SmsSentReceiver extends SentReceiver {
                 body = body.replace("\n" + settings.signature, "");
             }
 
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             Cursor messages = source.searchMessages(body);
 
@@ -205,7 +205,7 @@ public class SmsSentReceiver extends SentReceiver {
 
     public void fallbackToLatestMessages(Context context) {
         try {
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             List<Message> messageList = source.getNumberOfMessages(10);
             source.close();

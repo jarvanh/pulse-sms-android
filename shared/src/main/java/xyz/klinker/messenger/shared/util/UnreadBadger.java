@@ -21,7 +21,7 @@ public class UnreadBadger {
         }
 
         try {
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.INSTANCE;
             source.open();
             int count = source.getUnreadConversationsCount();
             source.close();

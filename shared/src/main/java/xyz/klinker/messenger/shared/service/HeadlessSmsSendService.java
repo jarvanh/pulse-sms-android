@@ -58,7 +58,7 @@ public class HeadlessSmsSendService extends Service {
                 }
             }
 
-            DataSource source = DataSource.getInstance(this);
+            DataSource source = DataSource.Companion.getInstance(this);
             source.open();
             long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
             Conversation conversation = source.getConversation(conversationId);

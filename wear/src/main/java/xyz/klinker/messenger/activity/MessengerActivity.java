@@ -96,7 +96,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
 
     private void loadConversations() {
         new Thread(() -> {
-            DataSource source = DataSource.getInstance(MessengerActivity.this);
+            DataSource source = DataSource.Companion.getInstance(MessengerActivity.this);
             source.open();
 
             final List<Conversation> conversations = source.getUnarchivedConversationsAsList();

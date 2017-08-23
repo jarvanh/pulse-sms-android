@@ -88,7 +88,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         boolean removeEmpty = conversations.size() == 0;
 
         if (adapterPosition == -1) {
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             Conversation conversation = source.getConversation(conversationId);
             source.close();
@@ -187,7 +187,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                                      boolean read) {
         try {
             if (snippet == null) {
-                DataSource source = DataSource.getInstance(context);
+                DataSource source = DataSource.Companion.getInstance(context);
                 Conversation conversation = source.getConversation(conversationId);
                 if (conversation != null) {
                     snippet = conversation.snippet;

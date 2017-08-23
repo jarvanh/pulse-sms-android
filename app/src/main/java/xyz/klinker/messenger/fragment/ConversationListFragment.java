@@ -218,7 +218,7 @@ public class ConversationListFragment extends Fragment
             }
 
             long startTime = System.currentTimeMillis();
-            final DataSource source = DataSource.getInstance(getActivity());
+            final DataSource source = DataSource.Companion.getInstance(getActivity());
             source.open();
             final List<Conversation> conversations = getCursor(source);
             source.close();
@@ -364,7 +364,7 @@ public class ConversationListFragment extends Fragment
     private void dismissDeleteSnackbar(final Activity activity, final int currentSize) {
         new Thread(() -> {
             if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
-                DataSource dataSource = DataSource.getInstance(activity);
+                DataSource dataSource = DataSource.Companion.getInstance(activity);
                 dataSource.open();
 
                 // we were getting a concurrent modification exception, so
@@ -435,7 +435,7 @@ public class ConversationListFragment extends Fragment
     private void dismissArchiveSnackbar(final Activity activity, final int currentSize) {
         new Thread(() -> {
             if ((currentSize == -1 || pendingArchive.size() == currentSize) && activity != null) {
-                DataSource dataSource = DataSource.getInstance(activity);
+                DataSource dataSource = DataSource.Companion.getInstance(activity);
                 dataSource.open();
 
                 // we were getting a concurrent modification exception, so
@@ -498,7 +498,7 @@ public class ConversationListFragment extends Fragment
                 }
             }
 
-            DataSource source = DataSource.getInstance(getActivity());
+            DataSource source = DataSource.Companion.getInstance(getActivity());
             source.open();
             source.readConversations(getActivity(), markAsRead);
             source.close();

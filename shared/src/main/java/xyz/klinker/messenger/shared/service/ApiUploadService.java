@@ -127,7 +127,7 @@ public class ApiUploadService extends Service {
                 return;
             }
 
-            source = DataSource.getInstance(getApplicationContext());
+            source = DataSource.Companion.getInstance(getApplicationContext());
             source.open();
 
             long startTime = System.currentTimeMillis();

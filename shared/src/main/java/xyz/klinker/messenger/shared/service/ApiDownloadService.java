@@ -131,7 +131,7 @@ public class ApiDownloadService extends Service {
 
             apiUtils = new ApiUtils();
             encryptionUtils = account.getEncryptor();
-            source = DataSource.getInstance(getApplicationContext());
+            source = DataSource.Companion.getInstance(getApplicationContext());
             source.open();
             source.setUpload(false);
             source.beginTransaction();

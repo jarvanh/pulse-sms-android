@@ -31,7 +31,7 @@ public class ResendFailedMessage extends IntentService {
 
         NotificationManagerCompat.from(this).cancel(6666 + (int) messageId);
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
 
         Message original = source.getMessage(messageId);

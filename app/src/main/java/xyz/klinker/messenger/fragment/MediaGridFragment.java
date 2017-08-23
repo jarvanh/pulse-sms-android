@@ -72,7 +72,7 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
 
     @VisibleForTesting
     DataSource getDataSource() {
-        return DataSource.getInstance(getActivity());
+        return DataSource.Companion.getInstance(getActivity());
     }
 
     private void setUpToolbar() {

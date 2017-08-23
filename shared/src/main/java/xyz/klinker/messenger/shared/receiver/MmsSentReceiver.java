@@ -49,7 +49,7 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
             List<ContentValues> mmsParts = SmsMmsUtils.processMessage(message, -1, context);
             message.close();
 
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
 
             for (ContentValues values : mmsParts) {

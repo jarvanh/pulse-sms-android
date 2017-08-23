@@ -75,7 +75,7 @@ public class NewMessagesCheckService extends IntentService {
         //      insert them into the correct conversation and give the conversation update broadcast
         //      should I worry about updating the conversation list here?
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
 
         List<Message> pulseMessages = source.getNumberOfMessages(60);

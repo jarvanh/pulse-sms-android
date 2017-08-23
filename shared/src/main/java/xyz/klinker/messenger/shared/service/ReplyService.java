@@ -71,7 +71,7 @@ public class ReplyService extends IntentService {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.Companion.getInstance(this);
         source.open();
 
         Conversation conversation = source.getConversation(conversationId);

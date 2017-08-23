@@ -95,7 +95,7 @@ public class MessengerApplication extends FirebaseApplication {
             new Thread(() -> {
                 try {
                     Thread.sleep(10 * 1000);
-                    DataSource source = DataSource.getInstance(MessengerApplication.this);
+                    DataSource source = DataSource.Companion.getInstance(MessengerApplication.this);
                     source.open();
                     List<Conversation> conversations = source.getPinnedConversationsAsList();
                     if (conversations.size() == 0) {

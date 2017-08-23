@@ -131,7 +131,7 @@ public class ContentObserverService extends Service {
                     return;
                 }
 
-                DataSource source = DataSource.getInstance(context);
+                DataSource source = DataSource.Companion.getInstance(context);
                 source.open();
 
                 Cursor search = source.searchMessages(body);

@@ -82,7 +82,7 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
                 body = body.replace("\n" + settings.signature, "");
             }
 
-            DataSource source = DataSource.getInstance(context);
+            DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             Cursor messages = source.searchMessages(body);
 

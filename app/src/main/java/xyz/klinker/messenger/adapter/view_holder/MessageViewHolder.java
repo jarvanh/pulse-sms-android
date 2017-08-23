@@ -309,7 +309,7 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private void showMessageDetails() {
-        DataSource source = DataSource.getInstance(message.getContext());
+        DataSource source = DataSource.Companion.getInstance(message.getContext());
         source.open();
 
         new AlertDialog.Builder(message.getContext())
@@ -326,7 +326,7 @@ public class MessageViewHolder extends SwappingHolder {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DataSource source = DataSource.getInstance(message.getContext());
+                        DataSource source = DataSource.Companion.getInstance(message.getContext());
                         source.open();
                         Message m = source.getMessage(messageId);
 
@@ -394,7 +394,7 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private Message getMessage(long messageId) {
-        DataSource source = DataSource.getInstance(itemView.getContext());
+        DataSource source = DataSource.Companion.getInstance(itemView.getContext());
         source.open();
         Message message = source.getMessage(messageId);
         source.close();

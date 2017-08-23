@@ -87,7 +87,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataSource source = DataSource.getInstance(getActivity());
+                DataSource source = DataSource.Companion.getInstance(getActivity());
                 source.open();
 
                 final List<Conversation> conversations = source.searchConversationsAsList(query, 60);
@@ -115,7 +115,7 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Message message) {
         dismissKeyboard();
 
-        DataSource source = DataSource.getInstance(getActivity());
+        DataSource source = DataSource.Companion.getInstance(getActivity());
         source.open();
         source.archiveConversation(message.conversationId, false);
         source.close();
@@ -132,7 +132,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         dismissKeyboard();
 
         if (conversation.archive) {
-            DataSource source = DataSource.getInstance(getActivity());
+            DataSource source = DataSource.Companion.getInstance(getActivity());
             source.open();
             source.archiveConversation(conversation.id, false);
             source.close();

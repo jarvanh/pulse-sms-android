@@ -114,7 +114,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         try {
             json = new JSONObject(data);
 
-            final DataSource source = DataSource.getInstance(context);
+            final DataSource source = DataSource.Companion.getInstance(context);
             source.open();
             source.setUpload(false);
 
@@ -328,7 +328,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
                 new Thread(() -> {
                     try { Thread.sleep(500); } catch (Exception e) {}
-                    DataSource source1 = DataSource.getInstance(context);
+                    DataSource source1 = DataSource.Companion.getInstance(context);
                     source1.open();
                     source1.updateMessageType(id, Message.TYPE_SENT);
                     source1.close();
@@ -384,7 +384,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         final File file = new File(context.getFilesDir(),
                 message.id + MimeType.getExtension(message.mimeType));
 
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
         source.insertMessage(context, message, message.conversationId);
         source.close();
@@ -398,7 +398,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         FirebaseDownloadCallback callback = () -> {
             message.data = Uri.fromFile(file).toString();
-            DataSource source1 = DataSource.getInstance(context);
+            DataSource source1 = DataSource.Companion.getInstance(context);
             source1.open();
             source1.updateMessageData(message.id, message.data);
             MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);

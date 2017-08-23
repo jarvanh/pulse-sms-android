@@ -28,7 +28,7 @@ import xyz.klinker.messenger.shared.data.model.Blacklist;
 public class BlacklistUtils {
 
     public static boolean isBlacklisted(Context context, String number) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         Cursor cursor = source.getBlacklists();

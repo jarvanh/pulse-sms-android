@@ -43,7 +43,7 @@ public abstract class MessengerRobolectricSuite {
 
     @After
     public final void teardown() {
-        DataSource.forceCloseImmediate();
+        DataSource.Companion.forceCloseImmediate();
     }
 
     /**

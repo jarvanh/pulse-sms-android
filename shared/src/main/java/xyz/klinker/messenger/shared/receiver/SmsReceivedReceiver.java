@@ -128,7 +128,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.seen = false;
         message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
 
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
 
         if (shouldSaveMessages(source, message)) {

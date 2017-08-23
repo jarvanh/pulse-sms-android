@@ -45,7 +45,7 @@ public class MediaSaver {
     }
 
     public void saveMedia(long messageId) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.Companion.getInstance(context);
         source.open();
         Message message = source.getMessage(messageId);
         source.close();

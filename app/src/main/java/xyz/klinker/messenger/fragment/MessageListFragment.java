@@ -267,7 +267,7 @@ public class MessageListFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
-        source = DataSource.getInstance(getActivity());
+        source = DataSource.Companion.getInstance(getActivity());
         source.open();
 
         delayedSendingHandler = new Handler();
