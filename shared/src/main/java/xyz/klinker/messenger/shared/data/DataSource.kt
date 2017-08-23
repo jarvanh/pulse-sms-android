@@ -2387,7 +2387,7 @@ object DataSource {
      */
     @VisibleForTesting
     fun forceCloseImmediate() {
-        _dbHelper!!.close()
+        _dbHelper?.close()
     }
 
 

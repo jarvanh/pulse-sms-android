@@ -53,7 +53,7 @@ import static org.mockito.Mockito.when;
 
 public class DataSourceTest extends MessengerRobolectricSuite {
 
-    private DataSource source = spy(DataSource.INSTANCE);
+    private DataSource source = DataSource.INSTANCE;
     private Context context = RuntimeEnvironment.application;
 
     @Mock

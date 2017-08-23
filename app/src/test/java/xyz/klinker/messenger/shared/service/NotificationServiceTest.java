@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ import static org.mockito.Mockito.when;
 public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     private NotificationService service;
+    private Context context = spy(RuntimeEnvironment.application);
 
     @Mock
     private DataSource source;
@@ -72,10 +74,10 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void getUnseenConversations() {
         service = spy(service);
-        when(source.getUnseenMessages()).thenReturn(getUnseenCursor());
-        when(source.getConversation(1)).thenReturn(getConversation1());
-        when(source.getConversation(2)).thenReturn(getConversation2());
-        when(source.getConversation(3)).thenReturn(getConversation3());
+        when(source.getUnseenMessages(any(Context.class))).thenReturn(getUnseenCursor());
+        when(source.getConversation(any(Context.class), 1)).thenReturn(getConversation1());
+        when(source.getConversation(any(Context.class), 2)).thenReturn(getConversation2());
+        when(source.getConversation(any(Context.class), 3)).thenReturn(getConversation3());
 
         List<NotificationConversation> conversations = NotificationService.getUnseenConversations(service, source);
 

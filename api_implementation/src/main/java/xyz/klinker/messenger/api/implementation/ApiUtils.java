@@ -69,7 +69,7 @@ public class ApiUtils {
     private static final String TAG = "ApiUtils";
     private static final long MAX_SIZE = 1024 * 1024 * 5;
     private static final String FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com";
-    public static String environment;
+    public static String environment = null;
 
     private Api api;
     private boolean active = true;
@@ -79,7 +79,7 @@ public class ApiUtils {
      * Creates a new api utility that will be used to directly interface with the server apis.
      */
     public ApiUtils() {
-        this.api = ApiAccessor.create(environment);
+        this.api = ApiAccessor.create(environment == null ? "debug" : environment);
     }
 
     /**
