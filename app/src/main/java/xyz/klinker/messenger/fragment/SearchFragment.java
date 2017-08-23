@@ -84,22 +84,12 @@ public class SearchFragment extends Fragment implements SearchListener {
     private void loadSearch() {
         final Handler handler = new Handler();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataSource source = DataSource.Companion.getInstance(getActivity());
-                source.open();
+        new Thread(() -> {
+            DataSource source = DataSource.INSTANCE;
+            final List<Conversation> conversations = source.searchConversationsAsList(getActivity(), query, 60);
+            final List<Message> messages = source.searchMessagesAsList(getActivity(), query, 60);
 
-                final List<Conversation> conversations = source.searchConversationsAsList(query, 60);
-                final List<Message> messages = source.searchMessagesAsList(query, 60);
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setSearchResults(conversations, messages);
-                    }
-                });
-            }
+            handler.post(() -> setSearchResults(conversations, messages));
         }).start();
     }
 
@@ -115,10 +105,7 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Message message) {
         dismissKeyboard();
 
-        DataSource source = DataSource.Companion.getInstance(getActivity());
-        source.open();
-        source.archiveConversation(message.conversationId, false);
-        source.close();
+        DataSource.INSTANCE.archiveConversation(getActivity(), message.conversationId, false);
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);
         intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), message.conversationId);
@@ -132,10 +119,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         dismissKeyboard();
 
         if (conversation.archive) {
-            DataSource source = DataSource.Companion.getInstance(getActivity());
-            source.open();
-            source.archiveConversation(conversation.id, false);
-            source.close();
+            DataSource.INSTANCE.archiveConversation(getActivity(), conversation.id, false);
         }
 
         Intent intent = new Intent(getActivity(), MessengerActivity.class);

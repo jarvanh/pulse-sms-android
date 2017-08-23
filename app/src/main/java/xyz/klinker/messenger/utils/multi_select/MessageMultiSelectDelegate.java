@@ -134,21 +134,21 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                 handled = true;
 
                 for (Long id : selectedIds) {
-                    fragment.getDataSource().deleteMessage(id);
+                    fragment.getDataSource().deleteMessage(activity, id);
                 }
 
                 adapter.onMessageDeleted(activity, fragment.getConversationId(), highestKey);
                 fragment.loadMessages();
             } else if (item.getItemId() == R.id.menu_share_message) {
                 handled = true;
-                Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
+                Message message = fragment.getDataSource().getMessage(activity, selectedIds.get(0));
 
                 MessageShareFragment fragment = new MessageShareFragment();
                 fragment.setMessage(message);
                 fragment.show(activity.getSupportFragmentManager(), "");
             } else if (item.getItemId() == R.id.menu_copy_message) {
                 handled = true;
-                Message message = fragment.getDataSource().getMessage(selectedIds.get(0));
+                Message message = fragment.getDataSource().getMessage(activity, selectedIds.get(0));
                 String text = MessageMultiSelectDelegate.getMessageContent(message);
 
                 CopyMessageTextFragment fragment = new CopyMessageTextFragment(text);

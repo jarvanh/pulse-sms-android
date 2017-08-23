@@ -64,15 +64,13 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
 
     private void loadConversation() {
         DataSource source = getDataSource();
-        source.open();
-        conversation = source.getConversation(getArguments().getLong(ARG_CONVERSATION_ID));
-        messages = source.getMediaMessages(conversation.id);
-        source.close();
+        conversation = source.getConversation(getActivity(), getArguments().getLong(ARG_CONVERSATION_ID));
+        messages = source.getMediaMessages(getActivity(), conversation.id);
     }
 
     @VisibleForTesting
     DataSource getDataSource() {
-        return DataSource.Companion.getInstance(getActivity());
+        return DataSource.INSTANCE;
     }
 
     private void setUpToolbar() {

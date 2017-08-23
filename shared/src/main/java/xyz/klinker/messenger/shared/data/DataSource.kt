@@ -32,7 +32,6 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.Date
-import java.util.concurrent.atomic.AtomicInteger
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
@@ -71,8 +70,7 @@ object DataSource {
      *
      * @return sqlite database
      */
-    private var _database: SQLiteDatabase? = null
-
+    var _database: SQLiteDatabase? = null
     private fun database(context: Context): SQLiteDatabase {
         if (_database == null) {
             _database = dbHelper(context).writableDatabase
@@ -81,7 +79,7 @@ object DataSource {
         return _database!!
     }
 
-    private var _dbHelper: DatabaseSQLiteHelper? = null
+    var _dbHelper: DatabaseSQLiteHelper? = null
     private fun dbHelper(context: Context): DatabaseSQLiteHelper {
         if (_dbHelper == null) {
             _dbHelper = DatabaseSQLiteHelper(context)
@@ -90,7 +88,7 @@ object DataSource {
         return _dbHelper!!
     }
 
-    private var _encryptor: EncryptionUtils? = null
+    var _encryptor: EncryptionUtils? = null
     private fun encryptor(context: Context): EncryptionUtils {
         if (_encryptor == null) {
             _encryptor = Account.get(context).encryptor
@@ -706,7 +704,7 @@ object DataSource {
      *
      * @return a list of conversations.
      */
-    fun getUnarchivedConversation(context: Context): Cursor =
+    fun getUnarchivedConversations(context: Context): Cursor =
             try {
                 database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", arrayOf("0"), null, null,
                         Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
@@ -723,7 +721,7 @@ object DataSource {
      * @return a list of the conversations in the cursor
      */
     fun getUnarchivedConversationsAsList(context: Context): List<Conversation> =
-            convertConversationCursorToList(getUnarchivedConversation(context))
+            convertConversationCursorToList(getUnarchivedConversations(context))
 
     /**
      * Get a list of all the conversations.
@@ -2392,10 +2390,11 @@ object DataSource {
         _dbHelper!!.close()
     }
 
+
     /**
      * Generates a random id for the row.
      */
-    private fun generateId(): Long {
+    fun generateId(): Long {
         val leftLimit = 1L
         val rightLimit = MAX_ID
         return leftLimit + (Math.random() * (rightLimit - leftLimit)).toLong()

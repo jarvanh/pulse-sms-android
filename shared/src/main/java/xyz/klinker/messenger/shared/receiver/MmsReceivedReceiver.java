@@ -106,8 +106,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     PhoneNumberUtils.getMyPhoneNumber(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
-            DataSource source = DataSource.Companion.getInstance(context);
-            source.open();
+            DataSource source = DataSource.INSTANCE;
 
             for (ContentValues value : values) {
                 Message message = new Message();
@@ -128,12 +127,12 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     message.from = null;
                 }
 
-                if (SmsReceivedReceiver.shouldSaveMessages(source, message)) {
+                if (SmsReceivedReceiver.shouldSaveMessages(context, source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
 
-                    Conversation conversation = source.getConversation(conversationId);
+                    Conversation conversation = source.getConversation(context, conversationId);
                     if (conversation != null && conversation.mute) {
-                        source.seenConversation(conversationId);
+                        source.seenConversation(context, conversationId);
                         ignoreNotification = true;
                     }
 
@@ -143,8 +142,6 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     }
                 }
             }
-
-            source.close();
 
             if (conversationId != null) {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversationId,

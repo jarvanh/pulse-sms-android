@@ -21,11 +21,7 @@ public class UnreadBadger {
         }
 
         try {
-            DataSource source = DataSource.INSTANCE;
-            source.open();
-            int count = source.getUnreadConversationsCount();
-            source.close();
-
+            int count = DataSource.INSTANCE.getUnreadConversationCount(context);
             writeCount(count);
         } catch (Exception e) {
 

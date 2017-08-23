@@ -581,17 +581,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public void onMessageDeleted(Context context, long conversationId, int position) {
-        DataSource source = DataSource.Companion.getInstance(context);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        List<Message> messageList = source.getMessages(conversationId, 1);
+        List<Message> messageList = source.getMessages(context, conversationId, 1);
         if (messageList.size() == 0) {
             ((MessengerActivity) fragment.getActivity()).menuItemClicked(R.id.menu_delete_conversation);
         } else {
             Message message = messageList.get(0);
 
-            Conversation conversation = source.getConversation(conversationId);
-            source.updateConversation(conversationId, conversation.read, message.timestamp,
+            Conversation conversation = source.getConversation(context, conversationId);
+            source.updateConversation(context, conversationId, conversation.read, message.timestamp,
                     message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
                             context.getString(R.string.you) + ": " + message.data : message.data,
                     message.mimeType, conversation.archive);
@@ -599,8 +598,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             fragment.setConversationUpdateInfo(message.type == Message.TYPE_SENDING ?
                     context.getString(R.string.you) + ": " + message.data : message.data);
         }
-
-        source.close();
     }
 
     public void setFromColorMapper(Map<String, Contact> colorMapper, Map<String, Contact> colorMapperByName) {
@@ -657,22 +654,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                 // then write it to the database for later
                 new Thread(() -> {
-                    DataSource source = DataSource.Companion.getInstance(holder.itemView.getContext());
-                    source.open();
+                    final Context context = holder.itemView.getContext();
+                    DataSource source = DataSource.INSTANCE;
 
                     if (contact.phoneNumber != null) {
                         int originalLength = contact.phoneNumber.length();
                         int newLength = contact.phoneNumber.replaceAll("[0-9]", "").length();
                         if (originalLength == newLength) {
                             // all letters, so we should use the contact name to find the phone number
-                            List<Contact> contacts = source.getContactsByNames(contact.name);
+                            List<Contact> contacts = source.getContactsByNames(context, contact.name);
                             if (contacts.size() > 0) {
                                 contact.phoneNumber = contacts.get(0).phoneNumber;
                             }
                         }
 
-                        source.insertContact(contact);
-                        source.close();
+                        source.insertContact(context, contact);
                     }
                 }).start();
             }

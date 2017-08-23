@@ -29,18 +29,13 @@ class MarkAsReadJob : BackgroundJob() {
         val messageId = bundle.getLong(EXTRA_MESSAGE_ID, -1L)
         Log.v("MarkAsReadJob", "found message: " + messageId)
 
-        val source = DataSource.getInstance(this)
-        source.open()
-
-        val message = source.getMessage(messageId)
+        val message = DataSource.getMessage(this, messageId)
         if (message != null && message.type == Message.TYPE_SENDING) {
             Log.v("MarkAsReadJob", "marking as read")
 
-            source.updateMessageType(messageId, Message.TYPE_SENT)
+            DataSource.updateMessageType(this, messageId, Message.TYPE_SENT)
             MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId)
         }
-
-        source.close()
     }
 
     companion object {

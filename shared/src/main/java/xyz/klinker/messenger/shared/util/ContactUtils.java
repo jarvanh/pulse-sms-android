@@ -323,7 +323,7 @@ public class ContactUtils {
     public static List<Contact> queryContacts(Context context, DataSource dataSource) {
         List<Contact> contacts = new ArrayList<>();
         List<Conversation> conversations = new ArrayList<>();
-        Cursor convoCursor = dataSource.getAllConversations();
+        Cursor convoCursor = dataSource.getAllConversations(context);
 
         if (convoCursor.moveToFirst()) {
             do {
@@ -385,7 +385,7 @@ public class ContactUtils {
     public static List<Contact> queryNewContacts(Context context, DataSource dataSource, long since) {
         List<Contact> contacts = new ArrayList<>();
         List<Conversation> conversations = new ArrayList<>();
-        Cursor convoCursor = dataSource.getAllConversations();
+        Cursor convoCursor = dataSource.getAllConversations(context);
 
         if (convoCursor.moveToFirst()) {
             do {
@@ -484,7 +484,7 @@ public class ContactUtils {
                 contact.name = number;
                 contact.phoneNumber = number;
                 contact.colors = ColorUtils.getRandomMaterialColor(context);
-                dataSource.insertContact(contact);
+                dataSource.insertContact(context, contact);
             }
 
             contactMap.put(contact.name, contact);

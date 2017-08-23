@@ -62,6 +62,7 @@ import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver;
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.NotificationServiceHelper;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
@@ -173,14 +174,12 @@ public class NotificationService extends IntentService {
 
     @VisibleForTesting
     public static List<NotificationConversation> getUnseenConversations(Context context, DataSource source) {
-        source.open();
-
         // timestamps are ASC, so it will start with the oldest message, and move to the newest.
-        Cursor unseenMessages = source.getUnseenMessages();
+        Cursor unseenMessages = source.getUnseenMessages(context);
         List<NotificationConversation> conversations = new ArrayList<>();
         List<Long> keys = new ArrayList<>();
 
-        if (unseenMessages != null && unseenMessages.moveToFirst()) {
+        if (unseenMessages.moveToFirst()) {
             do {
                 long conversationId = unseenMessages
                         .getLong(unseenMessages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
@@ -200,7 +199,7 @@ public class NotificationService extends IntentService {
                     NotificationConversation conversation = null;
 
                     if (conversationIndex == -1) {
-                        Conversation c = source.getConversation(conversationId);
+                        Conversation c = source.getConversation(context, conversationId);
                         if (c != null) {
                             conversation = new NotificationConversation();
                             conversation.id = c.id;
@@ -241,11 +240,7 @@ public class NotificationService extends IntentService {
             } while (unseenMessages.moveToNext());
         }
 
-        try {
-            unseenMessages.close();
-        } catch (Exception e) { }
-
-        source.close();
+        CursorUtil.closeSilent(unseenMessages);
 
         Collections.sort(conversations, (result1, result2) ->
                 new Date(result2.timestamp).compareTo(new Date(result1.timestamp)));
@@ -338,9 +333,7 @@ public class NotificationService extends IntentService {
             }
 
             DataSource source = getDataSource(this);
-            source.open();
-            List<Message> messages = source.getMessages(conversation.id, 10);
-            source.close();
+            List<Message> messages = source.getMessages(this, conversation.id, 10);
 
             for (int i = messages.size() - 1; i >= 0; i--) {
                 Message message = messages.get(i);
@@ -800,12 +793,9 @@ public class NotificationService extends IntentService {
 
     private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {
         DataSource source = getDataSource(this);
-        source.open();
-        List<Message> messages = source.getMessages(conversation.id, 10);
-        source.close();
+        List<Message> messages = source.getMessages(this, conversation.id, 10);
 
         String you = getString(R.string.you);
-
         StringBuilder builder = new StringBuilder();
 
         for (Message message : messages) {
@@ -888,7 +878,7 @@ public class NotificationService extends IntentService {
 
     @VisibleForTesting
     DataSource getDataSource(Context context) {
-        return DataSource.Companion.getInstance(context);
+        return DataSource.INSTANCE;
     }
 
     public static void cancelRepeats(Context context) {

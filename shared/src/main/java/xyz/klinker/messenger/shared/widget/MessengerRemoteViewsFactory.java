@@ -34,6 +34,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 
 public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -53,9 +54,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
     }
 
     private void reloadConversations() {
-        DataSource source = DataSource.Companion.getInstance(context);
-        source.open();
-        Cursor items = source.getUnarchivedConversations();
+        Cursor items = DataSource.INSTANCE.getUnarchivedConversations(context);
         conversations = new ArrayList<>();
 
         if (items.moveToFirst()) {
@@ -66,11 +65,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
             } while (items.moveToNext());
         }
 
-        try {
-            items.close();
-        } catch (Exception e) { }
-
-        source.close();
+        CursorUtil.closeSilent(items);
     }
 
     @Override

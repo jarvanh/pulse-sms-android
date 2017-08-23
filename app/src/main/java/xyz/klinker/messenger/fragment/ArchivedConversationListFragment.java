@@ -19,7 +19,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     // only grab the archived messages
     @Override
     protected List<Conversation> getCursor(DataSource source) {
-        return source.getArchivedConversationsAsList();
+        return source.getArchivedConversationsAsList(getActivity());
     }
 
     // create swipe helper that has the unarchive icon instead of the archive one
@@ -38,7 +38,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     // unarchive instead of archive when the snackbar is dismissed
     @Override
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        dataSource.unarchiveConversation(conversation.id);
+        dataSource.unarchiveConversation(getActivity(), conversation.id);
     }
 
     // always consume the back event and send us to the conversation list

@@ -45,11 +45,7 @@ public class DashclockExtension extends DashClockExtension {
     }
 
     protected void onUpdateData(int reason) {
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
-        List<Conversation> conversations = source.getUnreadConversationsAsList();
-        source.close();
-
+        List<Conversation> conversations = DataSource.INSTANCE.getUnreadConversationsAsList(this);
         publishUpdate(new ExtensionData()
                 .visible(conversations.size() > 0)
                 .icon(R.drawable.ic_stat_notify_group)

@@ -94,14 +94,13 @@ public class MessengerApplication extends FirebaseApplication {
         if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1()) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(10 * 1000);
-                    DataSource source = DataSource.Companion.getInstance(MessengerApplication.this);
-                    source.open();
-                    List<Conversation> conversations = source.getPinnedConversationsAsList();
+                    Thread.sleep(10 * TimeUtils.SECOND);
+                    DataSource source = DataSource.INSTANCE;
+
+                    List<Conversation> conversations = source.getPinnedConversationsAsList(this);
                     if (conversations.size() == 0) {
-                        conversations = source.getUnarchivedConversationsAsList();
+                        conversations = source.getUnarchivedConversationsAsList(this);
                     }
-                    source.close();
 
                     new DynamicShortcutUtils(MessengerApplication.this).buildDynamicShortcuts(conversations);
                 } catch (Exception e) { }

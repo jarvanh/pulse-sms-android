@@ -13,6 +13,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
@@ -30,11 +31,10 @@ public class NotificationDeleteService extends IntentService {
         long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
-        source.deleteMessage(messageId);
+        DataSource source = DataSource.INSTANCE;
+        source.deleteMessage(this, messageId);
 
-        List<Message> messages = source.getMessages(conversationId, 1);
+        List<Message> messages = source.getMessages(this, conversationId, 1);
         Message latest = null;
 
         if (messages.size() == 1) {
@@ -42,22 +42,21 @@ public class NotificationDeleteService extends IntentService {
         }
 
         if (latest == null) {
-            source.deleteConversation(conversationId);
+            source.deleteConversation(this, conversationId);
         } else if (latest.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            source.updateConversation(conversationId, true, latest.timestamp, latest.data, latest.mimeType, false);
+            source.updateConversation(this, conversationId, true, latest.timestamp, latest.data, latest.mimeType, false);
         }
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
-        Cursor unseenMessages = source.getUnseenMessages();
+        Cursor unseenMessages = source.getUnseenMessages(this);
         if (unseenMessages.getCount() <= 0) {
             NotificationManagerCompat.from(this).cancelAll();
         } else {
             NotificationManagerCompat.from(this).cancel((int) conversationId);
         }
 
-        unseenMessages.close();
-        source.close();
+        CursorUtil.closeSilent(unseenMessages);
 
         new ApiUtils().dismissNotification(Account.get(this).accountId,
                 Account.get(this).deviceId,

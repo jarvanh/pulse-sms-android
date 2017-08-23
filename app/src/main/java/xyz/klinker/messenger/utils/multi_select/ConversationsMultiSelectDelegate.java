@@ -90,7 +90,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
                 }
             }
 
-            DataSource source = DataSource.Companion.getInstance(activity);
+            DataSource source = DataSource.INSTANCE;
 
             switch (item.getItemId()) {
                 case R.id.menu_archive_conversation:
@@ -124,7 +124,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
 
                     for (Conversation conversation : selectedConversations) {
                         conversation.mute = !conversation.mute;
-                        source.updateConversationSettings(conversation);
+                        source.updateConversationSettings(activity, conversation);
                     }
 
                     fragment.loadConversations();
@@ -134,14 +134,12 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
 
                     for (Conversation conversation : selectedConversations) {
                         conversation.pinned = !conversation.pinned;
-                        source.updateConversationSettings(conversation);
+                        source.updateConversationSettings(activity, conversation);
                     }
 
                     fragment.loadConversations();
                     break;
             }
-
-            source.close();
 
             mode.finish();
             return handled;

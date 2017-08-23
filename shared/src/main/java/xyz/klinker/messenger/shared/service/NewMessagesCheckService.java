@@ -75,10 +75,9 @@ public class NewMessagesCheckService extends IntentService {
         //      insert them into the correct conversation and give the conversation update broadcast
         //      should I worry about updating the conversation list here?
 
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        List<Message> pulseMessages = source.getNumberOfMessages(60);
+        List<Message> pulseMessages = source.getNumberOfMessages(this, 60);
         Cursor internalMessages = SmsMmsUtils.getLatestSmsMessages(this, 20);
 
         List<Message> messagesToInsert = new ArrayList<>();
@@ -139,7 +138,6 @@ public class NewMessagesCheckService extends IntentService {
             //sendBroadcast(new Intent(REFRESH_WHOLE_CONVERSATION_LIST));
         }
 
-        source.close();
         NewMessagesCheckService.writeLastRun(this);
     }
 

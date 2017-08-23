@@ -31,10 +31,8 @@ public class AudioWrapper {
         }
 
         try {
-            DataSource source = DataSource.Companion.getInstance(context);
-            source.open();
-            Conversation conversation = source.getConversation(conversationId);
-            source.close();
+            DataSource source = DataSource.INSTANCE;
+            Conversation conversation = source.getConversation(context, conversationId);
 
             Uri tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
 

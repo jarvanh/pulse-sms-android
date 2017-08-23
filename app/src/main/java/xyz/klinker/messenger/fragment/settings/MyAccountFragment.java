@@ -211,11 +211,9 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     private void initMessageCountPreference() {
         Preference preference = findPreference(getString(R.string.pref_message_count));
 
-        DataSource source = DataSource.Companion.getInstance(getContext());
-        source.open();
-        int conversationCount = source.getConversationCount();
-        int messageCount = source.getMessageCount();
-        source.close();
+        DataSource source = DataSource.INSTANCE;
+        int conversationCount = source.getConversationCount(getActivity());
+        int messageCount = source.getMessageCount(getActivity());
 
         String title = getResources().getQuantityString(R.plurals.message_count, messageCount,
                 messageCount);
@@ -372,10 +370,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         dialog.show();
 
         new Thread(() -> {
-            DataSource source = DataSource.Companion.getInstance(getActivity());
-            source.open();
-            source.clearTables();
-            source.close();
+            DataSource.INSTANCE.clearTables(getActivity());
 
             getActivity().runOnUiThread(() -> {
                 dialog.dismiss();
@@ -403,11 +398,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         dialog.show();
 
         new Thread(() -> {
-            DataSource source = DataSource.Companion.getInstance(getActivity());
-            source.open();
-            source.clearTables();
-            source.close();
-
+            DataSource.INSTANCE.clearTables(getActivity());
             new ApiUtils().cleanAccount(account.accountId);
 
             getActivity().runOnUiThread(() -> {

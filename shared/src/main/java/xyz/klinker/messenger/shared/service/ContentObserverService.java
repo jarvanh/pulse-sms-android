@@ -39,6 +39,7 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.jobs.ContentObserverJob;
 import xyz.klinker.messenger.shared.service.jobs.ContentObserverRunCheckJob;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
@@ -131,14 +132,13 @@ public class ContentObserverService extends Service {
                     return;
                 }
 
-                DataSource source = DataSource.Companion.getInstance(context);
-                source.open();
+                DataSource source = DataSource.INSTANCE;
 
-                Cursor search = source.searchMessages(body);
+                Cursor search = source.searchMessages(context, body);
                 if (search != null && search.moveToFirst()) {
                     Message message = new Message();
                     message.fillFromCursor(search);
-                    Conversation conversation = source.getConversation(message.conversationId);
+                    Conversation conversation = source.getConversation(context, message.conversationId);
 
                     search.close();
 
@@ -172,18 +172,10 @@ public class ContentObserverService extends Service {
                     }
                 }
 
-                try {
-                    search.close();
-                } catch (Exception e) { }
-
-                source.close();
+                CursorUtil.closeSilent(search);
             }
 
-            try {
-                cursor.close();
-            } catch (Exception e) {
-
-            }
+            CursorUtil.closeSilent(cursor);
         }
 
         private static void insertReceivedMessage(Context context, DataSource source, String body, String address) {

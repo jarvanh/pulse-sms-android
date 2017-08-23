@@ -33,6 +33,7 @@ import java.util.List;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.util.ContactImageCreator;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 
@@ -46,27 +47,21 @@ public class MessengerChooserTargetService extends ChooserTargetService {
                                                    IntentFilter intentFilter) {
         List<ChooserTarget> targets = new ArrayList<>();
 
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
-        Cursor cursor = source.getPinnedConversations();
+        DataSource source = DataSource.INSTANCE;
+        Cursor cursor = source.getPinnedConversations(this);
 
-        if (cursor == null || cursor.getCount() == 0) {
-            try {
-                cursor.close();
-            } catch (Exception e) { }
-
-            cursor = source.getUnarchivedConversations();
+        if (cursor.getCount() == 0) {
+            CursorUtil.closeSilent(cursor);
+            cursor = source.getUnarchivedConversations(this);
         }
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 targets.add(createTarget(cursor, componentName));
             } while (cursor.moveToNext() && targets.size() < 5);
-
-            cursor.close();
         }
 
-        source.close();
+        CursorUtil.closeSilent(cursor);
         return targets;
     }
 

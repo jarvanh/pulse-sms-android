@@ -31,15 +31,14 @@ public class ResendFailedMessage extends IntentService {
 
         NotificationManagerCompat.from(this).cancel(6666 + (int) messageId);
 
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        Message original = source.getMessage(messageId);
+        Message original = source.getMessage(this, messageId);
         if (original == null) {
             return;
         }
 
-        Conversation conversation = source.getConversation(original.conversationId);
+        Conversation conversation = source.getConversation(this, original.conversationId);
 
         Message m = new Message();
         m.conversationId = original.conversationId;
@@ -54,14 +53,12 @@ public class ResendFailedMessage extends IntentService {
         m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
-        source.deleteMessage(messageId);
+        source.deleteMessage(this, messageId);
         messageId = source.insertMessage(this, m, m.conversationId, true);
 
         new SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
                 .setRetryFailedMessages(false)
                 .send(this, m.data, conversation.phoneNumbers);
         MarkAsReadJob.Companion.scheduleNextRun(this, messageId);
-
-        source.close();
     }
 }

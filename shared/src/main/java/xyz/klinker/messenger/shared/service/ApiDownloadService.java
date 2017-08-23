@@ -59,6 +59,7 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.listener.DirectExecutor;
@@ -131,10 +132,9 @@ public class ApiDownloadService extends Service {
 
             apiUtils = new ApiUtils();
             encryptionUtils = account.getEncryptor();
-            source = DataSource.Companion.getInstance(getApplicationContext());
-            source.open();
+            source = DataSource.INSTANCE;
             source.setUpload(false);
-            source.beginTransaction();
+            source.beginTransaction(this);
 
             long startTime = System.currentTimeMillis();
             wipeDatabase();
@@ -148,9 +148,9 @@ public class ApiDownloadService extends Service {
 
             sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
             NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
-            source.setTransactionSuccessful();
+            source.setTransactionSuccessful(this);
             source.setUpload(true);
-            source.endTransaction();
+            source.endTransaction(this);
             downloadMedia();
 
             IS_RUNNING = false;
@@ -158,7 +158,7 @@ public class ApiDownloadService extends Service {
     }
 
     private void wipeDatabase() {
-        source.clearTables();
+        source.clearTables(this);
     }
 
     private void downloadMessages() {
@@ -253,7 +253,7 @@ public class ApiDownloadService extends Service {
                     image.recycle();
                 }
 
-                source.insertConversation(conversation);
+                source.insertConversation(this, conversation);
             }
 
             Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -290,7 +290,7 @@ public class ApiDownloadService extends Service {
                         conversation.imageUri += "/photo";
                     }
 
-                    source.insertConversation(conversation);
+                    source.insertConversation(this, conversation);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + conversation.id);
@@ -317,7 +317,7 @@ public class ApiDownloadService extends Service {
             for (BlacklistBody body : blacklists) {
                 Blacklist blacklist = new Blacklist(body);
                 blacklist.decrypt(encryptionUtils);
-                source.insertBlacklist(blacklist);
+                source.insertBlacklist(this, blacklist);
             }
 
             Log.v(TAG, "blacklists inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -340,7 +340,7 @@ public class ApiDownloadService extends Service {
             for (ScheduledMessageBody body : messages) {
                 ScheduledMessage message = new ScheduledMessage(body);
                 message.decrypt(encryptionUtils);
-                source.insertScheduledMessage(message);
+                source.insertScheduledMessage(this, message);
             }
 
             Log.v(TAG, "scheduled messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -363,7 +363,7 @@ public class ApiDownloadService extends Service {
             for (DraftBody body : drafts) {
                 Draft draft = new Draft(body);
                 draft.decrypt(encryptionUtils);
-                source.insertDraft(draft);
+                source.insertDraft(this, draft);
             }
 
             Log.v(TAG, "drafts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -391,7 +391,7 @@ public class ApiDownloadService extends Service {
                 contactList.add(contact);
             }
 
-            source.insertContacts(contactList, null);
+            source.insertContacts(this, contactList, null);
 
             Log.v(TAG, "contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
@@ -437,7 +437,7 @@ public class ApiDownloadService extends Service {
         }).start();
 
 
-        Cursor media = source.getFirebaseMediaMessages();
+        Cursor media = source.getFirebaseMediaMessages(this);
         if (media.moveToFirst()) {
             final int mediaCount = media.getCount() > MAX_MEDIA_DOWNLOADS ?
                     MAX_MEDIA_DOWNLOADS : media.getCount();
@@ -455,7 +455,7 @@ public class ApiDownloadService extends Service {
                 apiUtils.downloadFileFromFirebase(account.accountId, file, message.id, encryptionUtils, () -> {
                     completedMediaDownloads++;
 
-                    source.updateMessageData(message.id, Uri.fromFile(file).toString());
+                    source.updateMessageData(this, message.id, Uri.fromFile(file).toString());
                     builder.setProgress(mediaCount, completedMediaDownloads, false);
 
                     if (completedMediaDownloads >= mediaCount) {
@@ -467,12 +467,11 @@ public class ApiDownloadService extends Service {
             } while (media.moveToNext() && processing < MAX_MEDIA_DOWNLOADS);
         }
 
-        media.close();
+        CursorUtil.closeSilent(media);
     }
 
     private void finishMediaDownload(NotificationManagerCompat manager) {
         stopForeground(true);
-        source.close();
         stopSelf();
     }
 

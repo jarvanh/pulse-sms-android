@@ -62,10 +62,8 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         actionDrawer = (WearableActionDrawer) findViewById(R.id.action_drawer);
         recyclerView = (WearableRecyclerView) findViewById(R.id.recycler_view);
 
-        source = DataSource.Companion.getInstance(this);
-        source.open();
-
-        conversation = source.getConversation(getIntent().getLongExtra(CONVERSATION_ID, -1L));
+        source = DataSource.INSTANCE;
+        conversation = source.getConversation(this, getIntent().getLongExtra(CONVERSATION_ID, -1L));
 
         if (conversation == null) {
             finish();
@@ -110,7 +108,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         }
 
         if (source != null) {
-            source.close();
+            source.close(this);
         }
     }
 
@@ -133,7 +131,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
     @Override
     public void loadMessages() {
         new Thread(() -> {
-            final Cursor cursor = source.getMessages(conversation.id);
+            final Cursor cursor = source.getMessages(this, conversation.id);
             runOnUiThread(() -> {
                 if (adapter.getMessages() == null) {
                     adapter.setMessages(cursor);

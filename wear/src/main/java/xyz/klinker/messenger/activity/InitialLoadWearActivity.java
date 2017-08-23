@@ -124,46 +124,30 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     }
 
     private void startDatabaseSync() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Context context = getApplicationContext();
-                long startTime = System.currentTimeMillis();
+        new Thread(() -> {
+            final Context context = getApplicationContext();
+            long startTime = System.currentTimeMillis();
 
-                String myName = getName();
-                String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
+            String myName = getName();
+            String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
-                final Account account = Account.get(context);
-                account.setName(InitialLoadWearActivity.this, myName);
-                account.setPhoneNumber(InitialLoadWearActivity.this, myPhoneNumber);
+            final Account account = Account.get(context);
+            account.setName(InitialLoadWearActivity.this, myName);
+            account.setPhoneNumber(InitialLoadWearActivity.this, myPhoneNumber);
 
-                DataSource source = DataSource.Companion.getInstance(context);
-                source.open();
+            DataSource source = DataSource.INSTANCE;
+            List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
+            source.insertConversations(conversations, context, InitialLoadWearActivity.this);
 
-                List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
-                source.insertConversations(conversations, context, InitialLoadWearActivity.this);
+            handler.post(() -> progress.setIndeterminate(true));
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setIndeterminate(true);
-                    }
-                });
+            List<Contact> contacts = ContactUtils.queryContacts(context, source);
+            source.insertContacts(context, contacts, null);
 
-                List<Contact> contacts = ContactUtils.queryContacts(context, source);
-                source.insertContacts(contacts, null);
-                source.close();
+            handler.postDelayed(() -> close(), 5000);
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        close();
-                    }
-                }, 5000);
-
-                Log.v("initial_load", "load took " +
-                        (System.currentTimeMillis() - startTime) + " ms");
-            }
+            Log.v("initial_load", "load took " +
+                    (System.currentTimeMillis() - startTime) + " ms");
         }).start();
     }
 

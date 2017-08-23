@@ -310,7 +310,7 @@ public class SmsMmsUtils {
         if (isSms(messages)) {
             if (messages.getString(1) != null) {
                 ContentValues message = new ContentValues(9);
-                message.put(Message.COLUMN_ID, DataSource.Companion.generateId());
+                message.put(Message.COLUMN_ID, DataSource.INSTANCE.generateId());
                 message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
                 message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
                 message.put(Message.COLUMN_DATA, messages.getString(1).trim());

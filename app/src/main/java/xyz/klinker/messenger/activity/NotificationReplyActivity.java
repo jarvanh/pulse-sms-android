@@ -54,6 +54,7 @@ import xyz.klinker.messenger.shared.service.ReplyService;
 import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
 import xyz.klinker.messenger.shared.util.ContactImageCreator;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.DensityUtil;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
@@ -87,10 +88,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
     public void onBackPressed() {
         String text = messageInput.getText().toString();
         if (!text.isEmpty() && sendButton.isEnabled()) {
-            DataSource source = DataSource.Companion.getInstance(this);
-            source.open();
-            source.insertDraft(conversationId, text, MimeType.TEXT_PLAIN);
-            source.close();
+            DataSource source = DataSource.INSTANCE;
+            source.insertDraft(this, conversationId, text, MimeType.TEXT_PLAIN);
         }
 
         hideKeyboard();
@@ -179,13 +178,12 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     // region setup message history
     private void setupMessageHistory() {
-        DataSource source = DataSource.Companion.getInstance(NotificationReplyActivity.this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        conversation = source.getConversation(conversationId);
-        source.seenConversation(conversationId);
+        conversation = source.getConversation(this, conversationId);
+        source.seenConversation(this, conversationId);
 
-        Cursor cursor = source.getMessages(conversationId);
+        Cursor cursor = source.getMessages(this, conversationId);
 
         messages = new ArrayList<>();
         if (cursor.moveToLast()) {
@@ -199,8 +197,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
             } while (cursor.moveToPrevious() && messages.size() < PREV_MESSAGES_TOTAL);
         }
 
-        cursor.close();
-        source.close();
+        CursorUtil.closeSilent(cursor);
     }
 
     private void displayMessages() {
@@ -397,11 +394,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
         // we don't have to check zero length, since the button is disabled if zero length
-        DataSource source = DataSource.Companion.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
         final long messageId = source.insertMessage(this, m, m.conversationId, true);
-        source.readConversation(NotificationReplyActivity.this, conversationId);
-        source.close();
+        source.readConversation(this, conversationId);
 
         new Thread(() -> {
             new SendUtils(conversation.simSubscriptionId)

@@ -35,11 +35,7 @@ public class DualSimApplication {
                 visible = true;
                 switchSim.setVisibility(View.VISIBLE);
                 final ViewBadger badger = new ViewBadger(context, switchSim);
-
-                DataSource source = DataSource.Companion.getInstance(context);
-                source.open();
-                final Conversation conversation = source.getConversation(conversationId);
-                source.close();
+                final Conversation conversation = DataSource.INSTANCE.getConversation(context, conversationId);
 
                 boolean set = false;
                 if (conversation != null && conversation.simSubscriptionId != null) {
@@ -93,11 +89,7 @@ public class DualSimApplication {
                         badger.setText(String.valueOf(i));
                     }
 
-                    DataSource source = DataSource.Companion.getInstance(context);
-                    source.open();
-                    source.updateConversationSettings(conversation);
-                    source.close();
-
+                    DataSource.INSTANCE.updateConversationSettings(context, conversation);
                     dialogInterface.dismiss();
                 }).show();
     }

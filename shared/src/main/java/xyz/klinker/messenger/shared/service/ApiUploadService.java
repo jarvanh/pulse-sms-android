@@ -69,6 +69,7 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.api.implementation.BinaryUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.PaginationUtils;
 import xyz.klinker.messenger.shared.util.listener.DirectExecutor;
@@ -127,8 +128,7 @@ public class ApiUploadService extends Service {
                 return;
             }
 
-            source = DataSource.Companion.getInstance(getApplicationContext());
-            source.open();
+            source = DataSource.INSTANCE;
 
             long startTime = System.currentTimeMillis();
             uploadMessages();
@@ -145,9 +145,9 @@ public class ApiUploadService extends Service {
 
     private void uploadMessages() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getMessages();
+        Cursor cursor = source.getMessages(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             List<MessageBody> messages = new ArrayList<>();
             int firebaseNumber = 0;
 
@@ -196,16 +196,14 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     private void uploadConversations() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getAllConversations();
+        Cursor cursor = source.getAllConversations(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             ConversationBody[] conversations = new ConversationBody[cursor.getCount()];
 
             do {
@@ -241,16 +239,14 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     private void uploadContacts() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getContacts();
+        Cursor cursor = source.getContacts(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             List<ContactBody> contacts = new ArrayList<>();
 
             do {
@@ -290,16 +286,14 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     private void uploadBlacklists() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getBlacklists();
+        Cursor cursor = source.getBlacklists(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             BlacklistBody[] blacklists = new BlacklistBody[cursor.getCount()];
 
             do {
@@ -329,16 +323,14 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     private void uploadScheduledMessages() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getScheduledMessages();
+        Cursor cursor = source.getScheduledMessages(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             ScheduledMessageBody[] messages = new ScheduledMessageBody[cursor.getCount()];
 
             do {
@@ -370,16 +362,14 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     private void uploadDrafts() {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getDrafts();
+        Cursor cursor = source.getDrafts(this);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             DraftBody[] drafts = new DraftBody[cursor.getCount()];
 
             do {
@@ -409,9 +399,7 @@ public class ApiUploadService extends Service {
             }
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(cursor);
     }
 
     /**
@@ -448,7 +436,7 @@ public class ApiUploadService extends Service {
             finishMediaUpload(manager);
         }).start();
 
-        Cursor media = source.getAllMediaMessages(NUM_MEDIA_TO_UPLOAD);
+        Cursor media = source.getAllMediaMessages(this, NUM_MEDIA_TO_UPLOAD);
         if (media.moveToFirst()) {
             int mediaCount = media.getCount() < NUM_MEDIA_TO_UPLOAD ? media.getCount() : NUM_MEDIA_TO_UPLOAD;
             do {
@@ -474,13 +462,12 @@ public class ApiUploadService extends Service {
             } while (media.moveToNext());
         }
 
-        media.close();
+        CursorUtil.closeSilent(media);
     }
 
     private boolean finished = false;
     private void finishMediaUpload(NotificationManagerCompat manager) {
         stopForeground(true);
-        source.close();
         stopSelf();
         finished = true;
     }

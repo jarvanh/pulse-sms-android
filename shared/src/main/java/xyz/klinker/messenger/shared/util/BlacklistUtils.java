@@ -28,27 +28,22 @@ import xyz.klinker.messenger.shared.data.model.Blacklist;
 public class BlacklistUtils {
 
     public static boolean isBlacklisted(Context context, String number) {
-        DataSource source = DataSource.Companion.getInstance(context);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
+        Cursor cursor = source.getBlacklists(context);
 
-        Cursor cursor = source.getBlacklists();
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             int numberIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER);
 
             do {
                 String blacklisted = cursor.getString(numberIndex);
                 if (PhoneNumberUtils.checkEquality(number, blacklisted)) {
+                    CursorUtil.closeSilent(cursor);
                     return true;
                 }
             } while (cursor.moveToNext());
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
-
-        source.close();
-
+        CursorUtil.closeSilent(cursor);
         return false;
     }
 

@@ -103,14 +103,12 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
         message.seen = false;
         message.simPhoneNumber = null;
 
-        DataSource source = DataSource.Companion.getInstance(context);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        if (shouldSaveMessages(source, message)) {
+        if (shouldSaveMessages(context, source, message)) {
             long conversationId = source
                     .insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
-
-            Conversation conversation = source.getConversation(conversationId);
+            Conversation conversation = source.getConversation(context, conversationId);
 
             handler.post(() -> {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId);
@@ -118,24 +116,21 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
             });
 
             if (conversation.mute) {
-                source.seenConversation(conversationId);
-                source.close();
+                source.seenConversation(context, conversationId);
 
                 // don't run the notification service
                 return -1;
             }
 
-            source.close();
             return conversationId;
         } else {
-            source.close();
             return -1;
         }
     }
 
-    public static boolean shouldSaveMessages(DataSource source, Message message) {
+    public static boolean shouldSaveMessages(Context context, DataSource source, Message message) {
         try {
-            List<Message> search = source.searchMessagesAsList(message.data, 1);
+            List<Message> search = source.searchMessagesAsList(context, message.data, 1);
             if (search.isEmpty()) {
                 return true;
             }

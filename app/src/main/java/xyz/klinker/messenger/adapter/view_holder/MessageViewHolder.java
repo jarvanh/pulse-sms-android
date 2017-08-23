@@ -309,46 +309,32 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private void showMessageDetails() {
-        DataSource source = DataSource.Companion.getInstance(message.getContext());
-        source.open();
-
+        DataSource source = DataSource.INSTANCE;
         new AlertDialog.Builder(message.getContext())
                 .setMessage(source.getMessageDetails(message.getContext(), messageId))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
-
-        source.close();
     }
 
     private void deleteMessage() {
         new AlertDialog.Builder(itemView.getContext())
                 .setTitle(R.string.delete_message)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DataSource source = DataSource.Companion.getInstance(message.getContext());
-                        source.open();
-                        Message m = source.getMessage(messageId);
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                    DataSource source = DataSource.INSTANCE;
+                    Message m = source.getMessage(message.getContext(), messageId);
 
-                        if (m != null) {
-                            long conversationId = m.conversationId;
-                            source.deleteMessage(messageId);
-                            MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
-                        }
+                    if (m != null) {
+                        long conversationId = m.conversationId;
+                        source.deleteMessage(message.getContext(), messageId);
+                        MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
+                    }
 
-                        if (messageDeletedListener != null && m != null) {
-                            messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
-                                    getAdapterPosition());
-                        }
-
-                        source.close();
+                    if (messageDeletedListener != null && m != null) {
+                        messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
+                                getAdapterPosition());
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).show();
+                .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.dismiss()).show();
     }
 
     private void copyMessageText() {
@@ -394,12 +380,7 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private Message getMessage(long messageId) {
-        DataSource source = DataSource.Companion.getInstance(itemView.getContext());
-        source.open();
-        Message message = source.getMessage(messageId);
-        source.close();
-
-        return message;
+        return DataSource.INSTANCE.getMessage(itemView.getContext(), messageId);
     }
 
     public void setColors(int color, int accentColor) {
