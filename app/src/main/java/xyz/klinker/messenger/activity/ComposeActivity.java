@@ -45,6 +45,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -378,6 +379,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     if (to.contains("?")) {
                         to = to.substring(0, to.indexOf("?"));
                     }
+                    to = URLDecoder.decode(to);
 
                     if (body != null) {
                         applyShare(MimeType.TEXT_PLAIN, body, to);
@@ -389,6 +391,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     if (to.contains("?")) {
                         to = to.substring(0, to.indexOf("?"));
                     }
+                    to = URLDecoder.decode(to);
 
                     if (body != null) {
                         applyShare(MimeType.TEXT_PLAIN, body, to);
