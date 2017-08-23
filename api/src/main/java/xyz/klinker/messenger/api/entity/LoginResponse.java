@@ -23,6 +23,13 @@ public class LoginResponse {
     public String salt2;
     public String phoneNumber;
     public String name;
+    public String baseTheme;
+    public boolean rounderBubbles;
+    public boolean useGlobalTheme;
+    public int color;
+    public int colorDark;
+    public int colorLight;
+    public int colorAccent;
 
     @Override
     public String toString() {

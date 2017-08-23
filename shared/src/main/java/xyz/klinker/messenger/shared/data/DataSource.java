@@ -308,7 +308,7 @@ public class DataSource {
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, generateId());
-            values.put(Contact.COLUMN_PHONE_NUMBER, ContactUtils.getPlainNumber(contact.phoneNumber));
+            values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber);
             values.put(Contact.COLUMN_NAME, contact.name);
             values.put(Contact.COLUMN_COLOR, contact.colors.color);
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark);

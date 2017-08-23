@@ -35,6 +35,16 @@ public class AccountEncryptionCreator {
     }
 
     public EncryptionUtils createAccountEncryptionFromLogin(LoginResponse loginResponse) {
+        getSharedPrefs(context).edit()
+                .putInt("global_primary_color", loginResponse.color)
+                .putInt("global_primary_dark_color", loginResponse.colorDark)
+                .putInt("global_primary_light_color", loginResponse.colorLight)
+                .putInt("global_accent_color", loginResponse.colorAccent)
+                .putBoolean("apply_theme_globally", loginResponse.useGlobalTheme)
+                .putBoolean("rounder_bubbles", loginResponse.rounderBubbles)
+                .putString("base_theme", loginResponse.baseTheme)
+                .apply();
+
         return createEncryptorParams(loginResponse.name, loginResponse.phoneNumber,
                 loginResponse.accountId, loginResponse.salt1, loginResponse.salt2);
     }
