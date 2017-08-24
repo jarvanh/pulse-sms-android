@@ -36,7 +36,7 @@ import xyz.klinker.messenger.shared.R;
  */
 public class AnimationUtils {
 
-    public static final int EXPAND_CONVERSATION_DURATION = 250;
+    public static final int EXPAND_CONVERSATION_DURATION = 200;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
 
     /**
