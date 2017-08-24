@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.5.3"
+        description="August 27th, 2017">
+        <text>Performance improvements</text>
+        <text>Crash fixes</text>
+    </version>
+
+    <version
         name="2.5.2"
         description="August 24th, 2017">
         <text>Bug fixes</text>

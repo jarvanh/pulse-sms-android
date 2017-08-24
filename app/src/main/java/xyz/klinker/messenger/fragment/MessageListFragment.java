@@ -1300,7 +1300,8 @@ public class MessageListFragment extends Fragment implements
 
         prepareAttachHolder(0);
         if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                attachHolder != null) {
             attachHolder.addView(new AttachImageView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
                             Settings.get(getActivity()).mainColorSet.color :
