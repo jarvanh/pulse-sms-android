@@ -64,6 +64,7 @@ import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
+import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper;
 import xyz.klinker.messenger.shared.util.NotificationServiceHelper;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.NotificationWindowManager;
@@ -173,7 +174,7 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    public static List<NotificationConversation> getUnseenConversations(Context context, DataSource source) {
+    public static List<NotificationConversation> getUnseenConversations(Context context, MockableDataSourceWrapper source) {
         // timestamps are ASC, so it will start with the oldest message, and move to the newest.
         Cursor unseenMessages = source.getUnseenMessages(context);
         List<NotificationConversation> conversations = new ArrayList<>();
@@ -332,7 +333,7 @@ public class NotificationService extends IntentService {
                         .setConversationTitle(conversation.title);
             }
 
-            DataSource source = getDataSource(this);
+            MockableDataSourceWrapper source = getDataSource(this);
             List<Message> messages = source.getMessages(this, conversation.id, 10);
 
             for (int i = messages.size() - 1; i >= 0; i--) {
@@ -792,7 +793,7 @@ public class NotificationService extends IntentService {
     }
 
     private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {
-        DataSource source = getDataSource(this);
+        MockableDataSourceWrapper source = getDataSource(this);
         List<Message> messages = source.getMessages(this, conversation.id, 10);
 
         String you = getString(R.string.you);
@@ -877,8 +878,8 @@ public class NotificationService extends IntentService {
     }
 
     @VisibleForTesting
-    DataSource getDataSource(Context context) {
-        return DataSource.INSTANCE;
+    MockableDataSourceWrapper getDataSource(Context context) {
+        return new MockableDataSourceWrapper(DataSource.INSTANCE);
     }
 
     public static void cancelRepeats(Context context) {

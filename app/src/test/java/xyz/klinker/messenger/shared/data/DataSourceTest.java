@@ -34,6 +34,8 @@ import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -61,12 +63,21 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Mock
     private DatabaseSQLiteHelper helper;
     @Mock
+    private EncryptionUtils encryption;
+    @Mock
+    private ApiUtils apiUtils;
+    @Mock
     private Cursor cursor;
 
     @Before
     public void setUp() {
         source.set_dbHelper(helper);
         source.set_database(database);
+        source.set_encryptor(encryption);
+        source.set_accountId("1234");
+        source.set_androidDeviceId("1234");
+        source.setApiUtils(apiUtils);
+
         when(database.isOpen()).thenReturn(true);
         when(helper.getWritableDatabase()).thenReturn(database);
     }
@@ -121,13 +132,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void rawQuery() {
-        source.rawQuery(context, "test sql");
-        verify(database).rawQuery("test sql", null);
+        source.rawQuery(context, "select * from conversation");
+        verify(database).rawQuery("select * from conversation", null);
     }
 
     @Test
     public void insertContacts() {
-        source.insertContacts(context, getFakeContacts(RuntimeEnvironment.application.getResources()), null);
+        source.insertContacts(context, getFakeContacts(context.getResources()), null);
         verify(database, times(7)).insert(eq("contact"), eq((String) null),
                 any(ContentValues.class));
     }
@@ -149,7 +160,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertConversations() {
         source.insertConversations(
-                getFakeConversations(RuntimeEnvironment.application.getResources()),
+                getFakeConversations(context.getResources()),
                 context, null);
 
         verify(database, times(7)).insert(eq("conversation"), eq((String) null),
@@ -189,16 +200,26 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void findConversationByNumbers() {
-        source.findConversationId(context, "515");
-        verify(database).query("conversation", new String[]{"_id", "id_matcher"},
-                "id_matcher=? OR id_matcher=? OR id_matcher=?", new String[]{"515", "515", "515"}, null, null, null);
+        when(database.query("conversation", new String[]{"_id", "id_matcher"},
+                "id_matcher=? OR id_matcher=? OR id_matcher=?", new String[]{"515", "515", "515"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.moveToFirst()).thenReturn(true);
+        when(cursor.getLong(0)).thenReturn(1001L);
+
+        long convoId = source.findConversationId(context, "515");
+        assertEquals(1001L, convoId);
     }
 
     @Test
     public void findConversationByTitle() {
-        source.findConversationIdByTitle(context, "test");
-        verify(database).query("conversation", new String[]{"_id", "title"},
-                "title=?", new String[]{"test"}, null, null, null);
+        when(database.query("conversation", new String[]{"_id", "title"},
+                "title=?", new String[]{"test"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.moveToFirst()).thenReturn(true);
+        when(cursor.getLong(0)).thenReturn(1001L);
+
+        long convoId = source.findConversationIdByTitle(context, "test");
+        assertEquals(1001L, convoId);
     }
 
     @Test
@@ -339,7 +360,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getMediaMessages() {
-        when(database.query("message", null, "conversation_id=? AND mime_type!='text/plain'",
+        when(database.query("message", null, "conversation_id=? AND mime_type!='text/plain' AND mime_type!='text/x-vcard' AND mime_type!='text/vcard'",
                 new String[]{"1"}, null, null, "timestamp asc")).thenReturn(cursor);
         assertNotNull(source.getMediaMessages(context,1));
     }
@@ -403,7 +424,10 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertMessage() {
-        source.insertMessage(context, new Message(), 1);
+        Message message = new Message();
+        message.data = "test";
+
+        source.insertMessage(context, message, 1);
 
         verify(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
@@ -563,9 +587,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         Conversation conversation = new Conversation();
         conversation.title = "Luke Klinker";
         conversation.phoneNumbers = "(515) 991-1493";
-        conversation.colors.color = resources.getColor(R.color.materialIndigo);
-        conversation.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialIndigo);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
         conversation.pinned = true;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60);
@@ -579,9 +603,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Matt Swiontek";
         conversation.phoneNumbers = "(708) 928-0846";
-        conversation.colors.color = resources.getColor(R.color.materialRed);
-        conversation.colors.colorDark = resources.getColor(R.color.materialRedDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialRed);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialRedDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
         conversation.pinned = true;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 12);
@@ -595,9 +619,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Kris Klinker";
         conversation.phoneNumbers = "(515) 419-6726";
-        conversation.colors.color = resources.getColor(R.color.materialPink);
-        conversation.colors.colorDark = resources.getColor(R.color.materialPinkDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialPink);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialPinkDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
         conversation.pinned = false;
         conversation.read = false;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 20);
@@ -611,9 +635,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Andrew Klinker";
         conversation.phoneNumbers = "(515) 991-8235";
-        conversation.colors.color = resources.getColor(R.color.materialBlue);
-        conversation.colors.colorDark = resources.getColor(R.color.materialBlueDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialBlue);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialBlueDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
         conversation.pinned = false;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 26);
@@ -627,9 +651,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Aaron Klinker";
         conversation.phoneNumbers = "(515) 556-7749";
-        conversation.colors.color = resources.getColor(R.color.materialGreen);
-        conversation.colors.colorDark = resources.getColor(R.color.materialGreenDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialGreen);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialGreenDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
         conversation.pinned = false;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 32);
@@ -643,9 +667,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Mike Klinker";
         conversation.phoneNumbers = "(515) 480-8532";
-        conversation.colors.color = resources.getColor(R.color.materialBrown);
-        conversation.colors.colorDark = resources.getColor(R.color.materialBrownDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialBrown);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialBrownDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
         conversation.pinned = false;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 55);
@@ -659,9 +683,9 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation = new Conversation();
         conversation.title = "Ben Madden";
         conversation.phoneNumbers = "(847) 609-0939";
-        conversation.colors.color = resources.getColor(R.color.materialPurple);
-        conversation.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
-        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
+//        conversation.colors.color = resources.getColor(R.color.materialPurple);
+//        conversation.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
+//        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
         conversation.pinned = false;
         conversation.read = true;
         conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 78);
@@ -681,64 +705,64 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         Contact contact = new Contact();
         contact.name = "Luke Klinker";
         contact.phoneNumber = "(515) 991-1493";
-        contact.colors.color = resources.getColor(R.color.materialIndigo);
-        contact.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialIndigoLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
+//        contact.colors.color = resources.getColor(R.color.materialIndigo);
+//        contact.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialIndigoLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Matt Swiontek";
         contact.phoneNumber = "(708) 928-0846";
-        contact.colors.color = resources.getColor(R.color.materialRed);
-        contact.colors.colorDark = resources.getColor(R.color.materialRedDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialRedLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
+//        contact.colors.color = resources.getColor(R.color.materialRed);
+//        contact.colors.colorDark = resources.getColor(R.color.materialRedDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialRedLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Kris Klinker";
         contact.phoneNumber = "(515) 419-6726";
-        contact.colors.color = resources.getColor(R.color.materialPink);
-        contact.colors.colorDark = resources.getColor(R.color.materialPinkDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialPinkLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
+//        contact.colors.color = resources.getColor(R.color.materialPink);
+//        contact.colors.colorDark = resources.getColor(R.color.materialPinkDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialPinkLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Andrew Klinker";
         contact.phoneNumber = "(515) 991-8235";
-        contact.colors.color = resources.getColor(R.color.materialBlue);
-        contact.colors.colorDark = resources.getColor(R.color.materialBlueDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialBlueLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
+//        contact.colors.color = resources.getColor(R.color.materialBlue);
+//        contact.colors.colorDark = resources.getColor(R.color.materialBlueDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialBlueLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Aaron Klinker";
         contact.phoneNumber = "(515) 556-7749";
-        contact.colors.color = resources.getColor(R.color.materialGreen);
-        contact.colors.colorDark = resources.getColor(R.color.materialGreenDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialGreenLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
+//        contact.colors.color = resources.getColor(R.color.materialGreen);
+//        contact.colors.colorDark = resources.getColor(R.color.materialGreenDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialGreenLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Mike Klinker";
         contact.phoneNumber = "(515) 480-8532";
-        contact.colors.color = resources.getColor(R.color.materialBrown);
-        contact.colors.colorDark = resources.getColor(R.color.materialBrownDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialBrownLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
+//        contact.colors.color = resources.getColor(R.color.materialBrown);
+//        contact.colors.colorDark = resources.getColor(R.color.materialBrownDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialBrownLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
         contacts.add(contact);
 
         contact = new Contact();
         contact.name = "Ben Madden";
         contact.phoneNumber = "(847) 609-0939";
-        contact.colors.color = resources.getColor(R.color.materialPurple);
-        contact.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
-        contact.colors.colorLight = resources.getColor(R.color.materialPurpleLight);
-        contact.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
+//        contact.colors.color = resources.getColor(R.color.materialPurple);
+//        contact.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
+//        contact.colors.colorLight = resources.getColor(R.color.materialPurpleLight);
+//        contact.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
         contacts.add(contact);
 
         return contacts;

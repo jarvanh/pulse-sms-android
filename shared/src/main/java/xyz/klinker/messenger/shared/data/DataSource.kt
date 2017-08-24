@@ -92,7 +92,7 @@ object DataSource {
         return _encryptor!!
     }
 
-    private var _accountId: String? = null
+    var _accountId: String? = null
     private fun accountId(context: Context): String {
         if (_accountId == null) {
             _accountId = Account.get(context).accountId
@@ -101,7 +101,7 @@ object DataSource {
         return _accountId!!
     }
 
-    private var _androidDeviceId: String? = null
+    var _androidDeviceId: String? = null
     private fun androidDeviceId(context: Context): String? {
         if (_androidDeviceId == null) {
             _androidDeviceId = Account.get(context).deviceId
@@ -110,7 +110,7 @@ object DataSource {
         return _androidDeviceId
     }
 
-    private var apiUtils: ApiUtils = ApiUtils()
+    var apiUtils: ApiUtils = ApiUtils()
 
 
 //    /**
