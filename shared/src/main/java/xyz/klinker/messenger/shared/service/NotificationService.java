@@ -669,7 +669,7 @@ public class NotificationService extends IntentService {
                         .setDescription(content)
                         .show();
             }
-        } catch (WindowManager.BadTokenException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

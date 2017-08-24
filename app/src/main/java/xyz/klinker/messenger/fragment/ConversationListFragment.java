@@ -79,8 +79,8 @@ public class ConversationListFragment extends Fragment
     private View empty;
     private FixedScrollLinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private List<Conversation> pendingDelete;
-    protected List<Conversation> pendingArchive;
+    private List<Conversation> pendingDelete = new ArrayList<>();
+    protected List<Conversation> pendingArchive = new ArrayList<>();
     private ConversationViewHolder expandedConversation;
     private MessageListFragment messageListFragment;
     private Snackbar deleteSnackbar;
@@ -223,6 +223,10 @@ public class ConversationListFragment extends Fragment
             Log.v("conversation_load", "load took " + (
                     System.currentTimeMillis() - startTime) + " ms");
 
+            if (getActivity() == null) {
+                return;
+            }
+
             handler.post(() -> {
                 setConversations(conversations);
                 lastRefreshTime = System.currentTimeMillis();
@@ -355,7 +359,7 @@ public class ConversationListFragment extends Fragment
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
-        new Handler().postDelayed(() -> checkEmptyViewDisplay(), 500);
+        new Handler().postDelayed(this::checkEmptyViewDisplay, 500);
     }
 
     private void dismissDeleteSnackbar(final Activity activity, final int currentSize) {

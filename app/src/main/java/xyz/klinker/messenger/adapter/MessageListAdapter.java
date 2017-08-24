@@ -482,13 +482,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             return -1;
         }
 
-        messages.moveToPosition(position);
-        int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
-        if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
-            type = Message.TYPE_SENT;
-        }
+        try {
+            messages.moveToPosition(position);
+            int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
+            if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
+                type = Message.TYPE_SENT;
+            }
 
-        return type;
+            return type;
+        } catch (IllegalStateException e) {
+            return -1;
+        }
     }
 
     @Override

@@ -19,6 +19,10 @@ public class ComposeTileService extends TileService {
 
     @Override
     public void onStartListening() {
-        getQsTile().setState(Tile.STATE_ACTIVE);
+        try {
+            getQsTile().setState(Tile.STATE_ACTIVE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

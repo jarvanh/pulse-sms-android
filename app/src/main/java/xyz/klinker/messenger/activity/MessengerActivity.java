@@ -235,18 +235,21 @@ public class  MessengerActivity extends AppCompatActivity
 
             snoozeIcon();
 
-            new Thread(() -> {
-                DataSource source = DataSource.INSTANCE;
-                Cursor c = source.getUnseenMessages(this);
-                int count = c.getCount();
-                CursorUtil.closeSilent(c);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                new Thread(() -> {
+                    Cursor c = DataSource.INSTANCE.getUnseenMessages(this);
+                    int count = c.getCount();
+                    CursorUtil.closeSilent(c);
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && count > 1) {
-                    // since the notification functionality here is not nearly as good as 7.0,
-                    // we will just remove them all, if there is more than one
-                    NotificationManagerCompat.from(MessengerActivity.this).cancelAll();
-                }
-            }).start();
+                    if (count > 1) {
+                        // since the notification functionality here is not nearly as good as 7.0,
+                        // we will just remove them all, if there is more than one
+                        try {
+                            NotificationManagerCompat.from(MessengerActivity.this).cancelAll();
+                        } catch (IllegalStateException e) { }
+                    }
+                }).start();
+            }
         }, 1000);
 
         if (getIntent().getBooleanExtra(INSTANCE.getEXTRA_START_MY_ACCOUNT(), false)) {

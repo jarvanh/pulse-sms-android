@@ -111,7 +111,7 @@ public class MediaSaver {
                 InputStream in = context.getContentResolver().openInputStream(Uri.parse(message.data));
                 FileUtils.copy(in, dst);
                 makeToast(R.string.saved);
-            } catch (IOException e) {
+            } catch (IOException | SecurityException e) {
                 e.printStackTrace();
                 try {
                     makeToast(R.string.failed_to_save);

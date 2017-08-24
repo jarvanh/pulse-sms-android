@@ -121,6 +121,10 @@ public class ColorUtils {
      * @param activity the activity to find the views in.
      */
     public static void adjustStatusBarColor(int color, final Activity activity) {
+        if (activity == null) {
+            return;
+        }
+
         if (Settings.get(activity).useGlobalThemeColor) {
             color = Settings.get(activity).mainColorSet.colorDark;
         }

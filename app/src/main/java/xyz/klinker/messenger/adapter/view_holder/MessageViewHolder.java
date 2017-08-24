@@ -263,7 +263,13 @@ public class MessageViewHolder extends SwappingHolder {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setDataAndType(uri, MimeType.TEXT_VCARD);
-                    itemView.getContext().startActivity(intent);
+
+                    try {
+                        itemView.getContext().startActivity(intent);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+
                 } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
                     itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
                             YoutubeParser.getVideoUriFromThumbnail(data)
