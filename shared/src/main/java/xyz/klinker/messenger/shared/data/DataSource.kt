@@ -66,6 +66,13 @@ object DataSource {
     private val MAX_ID = java.lang.Long.MAX_VALUE / 10000
 
     var _database: SQLiteDatabase? = null
+    var _dbHelper: DatabaseSQLiteHelper? = null
+    var _encryptor: EncryptionUtils? = null
+    var _accountId: String? = null
+    var _androidDeviceId: String? = null
+    var apiUtils: ApiUtils = ApiUtils()
+
+    @Synchronized
     private fun database(context: Context): SQLiteDatabase {
         if (_database == null) {
             _database = dbHelper(context).writableDatabase
@@ -74,7 +81,7 @@ object DataSource {
         return _database!!
     }
 
-    var _dbHelper: DatabaseSQLiteHelper? = null
+    @Synchronized
     private fun dbHelper(context: Context): DatabaseSQLiteHelper {
         if (_dbHelper == null) {
             _dbHelper = DatabaseSQLiteHelper(context)
@@ -83,25 +90,25 @@ object DataSource {
         return _dbHelper!!
     }
 
-    var _encryptor: EncryptionUtils? = null
-    private fun encryptor(context: Context): EncryptionUtils {
+    @Synchronized
+    private fun encryptor(context: Context): EncryptionUtils? {
         if (_encryptor == null) {
             _encryptor = Account.get(context).encryptor
         }
 
-        return _encryptor!!
+        return _encryptor
     }
 
-    var _accountId: String? = null
-    private fun accountId(context: Context): String {
+    @Synchronized
+    private fun accountId(context: Context): String? {
         if (_accountId == null) {
             _accountId = Account.get(context).accountId
         }
         
-        return _accountId!!
+        return _accountId
     }
 
-    var _androidDeviceId: String? = null
+    @Synchronized
     private fun androidDeviceId(context: Context): String? {
         if (_androidDeviceId == null) {
             _androidDeviceId = Account.get(context).deviceId
@@ -110,33 +117,10 @@ object DataSource {
         return _androidDeviceId
     }
 
-    var apiUtils: ApiUtils = ApiUtils()
-
-
-//    /**
-//     * Contructor to help with testing.
-//     *
-//     * @param helper Mock of the database helper
-//     */
-//    @VisibleForTesting
-//    constructor(helper: DatabaseSQLiteHelper) {
-//        this.dbHelper = helper
-//        this.apiUtils = ApiUtils()
-//        this.unreadBadger = UnreadBadger(null)
-//    }
-//
-//    /**
-//     * Constructor to help with testing.
-//     *
-//     * @param database Mock of the sqlite database
-//     */
-//    @VisibleForTesting
-//    constructor(database: SQLiteDatabase) {
-//        this.database = database
-//        this.apiUtils = ApiUtils()
-//    }
-
+    @Synchronized
     fun ensureActionable(context: Context) {
+        Log.v(TAG, "ensuring database actionable")
+
         try {
             Thread.sleep(500)
         } catch (e: Exception) {
@@ -146,11 +130,10 @@ object DataSource {
         close(context)
     }
 
-    /**
-     * Closes the database.
-     */
     @Synchronized
     fun close(context: Context) {
+        Log.v(TAG, "closing database")
+
         try {
             dbHelper(context).close()
         } catch (e: Exception) {
