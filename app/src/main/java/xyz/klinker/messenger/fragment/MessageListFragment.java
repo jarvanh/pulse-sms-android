@@ -354,7 +354,7 @@ public class MessageListFragment extends Fragment implements
                 // just in case
             }
 
-        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 25);
 
         return view;
     }
