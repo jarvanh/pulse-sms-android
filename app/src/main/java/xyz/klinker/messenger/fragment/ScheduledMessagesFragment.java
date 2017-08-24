@@ -271,6 +271,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void displayTimeDialog(final ScheduledMessage message) {
+        if (getActivity() == null) {
+            return;
+        }
+
         Calendar calendar = Calendar.getInstance();
         new TimePickerDialog(getActivity(), (timePicker, hourOfDay, minute) -> {
             message.timestamp += (1000 * 60 * 60 * hourOfDay);

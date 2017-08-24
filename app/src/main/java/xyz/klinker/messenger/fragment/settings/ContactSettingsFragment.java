@@ -116,6 +116,11 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     private void setUpDefaults() {
+        if (conversation == null) {
+            getActivity().finish();
+            return;
+        }
+
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
                 .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.privateNotifications)

@@ -134,7 +134,12 @@ public class MessengerApplication extends FirebaseApplication {
                 handleMessage.setAction(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED);
                 handleMessage.putExtra(EXTRA_OPERATION, operation);
                 handleMessage.putExtra(EXTRA_DATA, data);
-                startService(handleMessage);
+
+                try {
+                    startService(handleMessage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

@@ -145,23 +145,27 @@ public class RecordAudioView extends FrameLayout {
     }
 
     private void stopRecording() {
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+        try {
+            recorder.stop();
+            recorder.release();
+            recorder = null;
 
-        record.setImageResource(R.drawable.ic_record_audio);
-        text.setText(R.string.start_recording_audio);
+            record.setImageResource(R.drawable.ic_record_audio);
+            text.setText(R.string.start_recording_audio);
 
-        if (listener != null) {
-            File file = new File(fileName);
-            Log.v(TAG, "saved to file " + fileName + " with size " +
-                    file.length());
-            if (file.length() != 0) {
-                listener.onRecorded(Uri.fromFile(new File(fileName)));
-            } else {
-                Toast.makeText(getContext(), R.string.audio_recording_error, Toast.LENGTH_SHORT)
-                        .show();
+            if (listener != null) {
+                File file = new File(fileName);
+                Log.v(TAG, "saved to file " + fileName + " with size " +
+                        file.length());
+                if (file.length() != 0) {
+                    listener.onRecorded(Uri.fromFile(new File(fileName)));
+                } else {
+                    Toast.makeText(getContext(), R.string.audio_recording_error, Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
+        } catch (Exception e) {
+            
         }
     }
 

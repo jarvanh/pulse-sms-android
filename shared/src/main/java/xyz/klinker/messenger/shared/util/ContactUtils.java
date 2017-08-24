@@ -258,7 +258,7 @@ public class ContactUtils {
     public static String findImageUri(String number, Context context) {
         String uri = null;
 
-        if (number.split(", ").length > 1) {
+        if (number == null || number.split(", ").length > 1) {
             return null;
         } else {
             try {

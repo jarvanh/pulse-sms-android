@@ -57,7 +57,11 @@ public class BillingHelper {
 
     public void destroy() {
         if (billingService != null) {
-            context.unbindService(serviceConnection);
+            try {
+                context.unbindService(serviceConnection);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
