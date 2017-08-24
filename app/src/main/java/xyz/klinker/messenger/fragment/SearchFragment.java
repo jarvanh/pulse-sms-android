@@ -86,10 +86,12 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         new Thread(() -> {
             DataSource source = DataSource.INSTANCE;
-            final List<Conversation> conversations = source.searchConversationsAsList(getActivity(), query, 60);
-            final List<Message> messages = source.searchMessagesAsList(getActivity(), query, 60);
+            if (getActivity() != null) {
+                final List<Conversation> conversations = source.searchConversationsAsList(getActivity(), query, 60);
+                final List<Message> messages = source.searchMessagesAsList(getActivity(), query, 60);
 
-            handler.post(() -> setSearchResults(conversations, messages));
+                handler.post(() -> setSearchResults(conversations, messages));
+            }
         }).start();
     }
 

@@ -102,12 +102,12 @@ object DataSource {
     }
 
     private var _androidDeviceId: String? = null
-    private fun androidDeviceId(context: Context): String {
+    private fun androidDeviceId(context: Context): String? {
         if (_androidDeviceId == null) {
             _androidDeviceId = Account.get(context).deviceId
         }
 
-        return _androidDeviceId!!
+        return _androidDeviceId
     }
 
     private var apiUtils: ApiUtils = ApiUtils()
