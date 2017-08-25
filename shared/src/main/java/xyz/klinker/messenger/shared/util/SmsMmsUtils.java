@@ -102,7 +102,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).tenLetter;
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -165,7 +165,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).tenLetter;
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;

@@ -1697,7 +1697,7 @@ object DataSource {
             conversation.phoneNumbers = phoneNumbers
             conversation.title = ContactUtils.findContactNames(phoneNumbers, context)
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context)
-            conversation.idMatcher = matcher.tenLetter
+            conversation.idMatcher = matcher.sevenLetter
             conversation.mute = false
             conversation.archive = false
             conversation.ledColor = Color.WHITE
