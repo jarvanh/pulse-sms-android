@@ -107,7 +107,6 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -119,7 +118,7 @@ import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.NotificationService;
-import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
 import xyz.klinker.messenger.shared.util.AudioWrapper;
@@ -1243,7 +1242,7 @@ public class MessageListFragment extends Fragment implements
                         .setForceNoSignature(forceNoSignature)
                         .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
-                MarkAsReadJob.Companion.scheduleNextRun(getActivity(), m.id);
+                MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
                 if (imageUri != null) {
                     source.updateMessageData(getActivity(), m.id, imageUri.toString());
@@ -1264,7 +1263,7 @@ public class MessageListFragment extends Fragment implements
                                 .setForceNoSignature(forceNoSignature)
                                 .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
-                        MarkAsReadJob.Companion.scheduleNextRun(getActivity(), m.id);
+                        MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
                         if (imageUri != null) {
                             source.updateMessageData(getActivity(), m.id, imageUri.toString());

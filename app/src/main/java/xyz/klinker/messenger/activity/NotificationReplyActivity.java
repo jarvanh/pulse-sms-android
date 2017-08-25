@@ -51,7 +51,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.ReplyService;
-import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.util.ContactImageCreator;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.CursorUtil;
@@ -401,7 +401,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         new Thread(() -> {
             new SendUtils(conversation.simSubscriptionId)
                     .send(NotificationReplyActivity.this, message,conversation.phoneNumbers);
-            MarkAsReadJob.Companion.scheduleNextRun(this, messageId);
+            MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
         }).start();
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);

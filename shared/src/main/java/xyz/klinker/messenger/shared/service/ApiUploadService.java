@@ -222,14 +222,38 @@ public class ApiUploadService extends Service {
                     new AddConversationRequest(account.accountId, conversations);
             Response result;
 
+            String errorText = null;
             try {
                 result = apiUtils.getApi().conversation().add(request).execute();
             } catch (IOException e) {
-                e.printStackTrace();
-                result = null;
+                try {
+                    result = apiUtils.getApi().conversation().add(request).execute();
+                } catch (Exception x) {
+                    errorText = e.getMessage();
+                    e.printStackTrace();
+                    result = null;
+                }
             }
 
             if (result == null || !ApiUtils.isCallSuccessful(result)) {
+                if (errorText == null && result != null) {
+                    if (result.body() != null) {
+                        errorText = result.body().toString();
+                    } else {
+                        errorText = result.message();
+                    }
+                }
+
+//                if (errorText != null) {
+//                    final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+//                            .setContentTitle("Error uploading " + conversations.length + " conversations")
+//                            .setContentText(errorText)
+//                            .setStyle(new NotificationCompat.BigTextStyle().bigText(errorText))
+//                            .setSmallIcon(R.drawable.ic_upload);
+//                    final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+//                    manager.notify(1234354, builder.build());
+//                }
+
                 Log.v(TAG, "failed to upload conversations in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {

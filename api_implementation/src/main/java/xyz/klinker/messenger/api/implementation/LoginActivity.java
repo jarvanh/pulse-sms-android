@@ -125,7 +125,8 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        if (!hasTelephony(this)) {
+        String lollipopPhoneNumber = getLollipopPhoneNumber();
+        if (!hasTelephony(this) && (lollipopPhoneNumber == null || lollipopPhoneNumber.isEmpty())) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
@@ -591,16 +592,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getPhoneNumber() {
-        String number = "";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager manager = SubscriptionManager.from(this);
-            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
-
-            if (availableSims != null && availableSims.size() > 0) {
-                number = availableSims.get(0).getNumber();
-            }
-        }
+        String number = getLollipopPhoneNumber();
 
         if (number == null || number.isEmpty()) {
             TelephonyManager telephonyManager = (TelephonyManager)
@@ -609,6 +601,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return PhoneNumberUtils.stripSeparators(number);
+    }
+
+    private String getLollipopPhoneNumber() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            SubscriptionManager manager = SubscriptionManager.from(this);
+            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
+
+            if (availableSims != null && availableSims.size() > 0) {
+                return availableSims.get(0).getNumber();
+            }
+        }
+
+        return null;
     }
 
     private String getFirebaseId() {
