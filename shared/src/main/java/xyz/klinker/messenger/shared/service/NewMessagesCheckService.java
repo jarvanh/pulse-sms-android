@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.provider.Telephony;
+import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,20 +99,26 @@ public class NewMessagesCheckService extends IntentService {
 
                 // the message timestamp should be more than the last time this service ran, but more than 5 seconds old,
                 // and it shouldn't already be in the database
-                if (messageTimestamp > lastRun && messageTimestamp < fiveSecondsBefore &&
-                        !alreadyInDatabase(pulseMessages, messageBody, messageType)) {
-                    Message message = new Message();
+                if (messageTimestamp > lastRun && messageTimestamp < fiveSecondsBefore) {
+                    if (!alreadyInDatabase(pulseMessages, messageBody, messageType)) {
+                        Message message = new Message();
 
-                    message.type = messageType;
-                    message.data = messageBody;
-                    message.timestamp = messageTimestamp;
-                    message.mimeType = MimeType.TEXT_PLAIN;
-                    message.read = true;
-                    message.seen = true;
+                        message.type = messageType;
+                        message.data = messageBody;
+                        message.timestamp = messageTimestamp;
+                        message.mimeType = MimeType.TEXT_PLAIN;
+                        message.read = true;
+                        message.seen = true;
 
-                    messagesToInsert.add(message);
-                    addressesForMessages.add(PhoneNumberUtils.clearFormatting(
-                            internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.ADDRESS))));
+                        messagesToInsert.add(message);
+                        addressesForMessages.add(PhoneNumberUtils.clearFormatting(
+                                internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.ADDRESS))));
+                    } else {
+                        Message message = messageStatusNeedsUpdatedToSent(pulseMessages, messageBody, messageType);
+                        if (message !=  null) {
+                            DataSource.INSTANCE.updateMessageType(this, message.id, Message.TYPE_SENT);
+                        }
+                    }
                 }
             } while (internalMessages.moveToNext());
 
@@ -158,11 +166,38 @@ public class NewMessagesCheckService extends IntentService {
         }
 
         for (Message message : messages) {
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && newMessageType == message.type &&
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && (typesAreEqual(newMessageType, message.type)) &&
                     message.data.trim().equals(bodyToSearch.trim())) {
                 return true;
             }
         }
+
         return false;
+    }
+
+    private Message messageStatusNeedsUpdatedToSent(List<Message> messages, String bodyToSearch, int newMessageType) {
+        if (newMessageType != Message.TYPE_SENT) {
+            return null;
+        }
+
+        for (Message message : messages) {
+            if (message.mimeType.equals(MimeType.TEXT_PLAIN) &&  message.type == Message.TYPE_SENDING &&
+                    message.data.trim().equals(bodyToSearch.trim())) {
+                return message;
+            }
+        }
+
+        return null;
+    }
+
+    @VisibleForTesting
+    public static boolean typesAreEqual(int newMessageType, int oldMessageType) {
+        if (newMessageType == Message.TYPE_ERROR) {
+            return oldMessageType == Message.TYPE_ERROR;
+        } else if (newMessageType == Message.TYPE_RECEIVED) {
+            return oldMessageType == Message.TYPE_RECEIVED;
+        } else {
+            return oldMessageType != Message.TYPE_RECEIVED;
+        }
     }
 }
