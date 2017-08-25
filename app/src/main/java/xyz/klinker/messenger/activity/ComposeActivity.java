@@ -136,6 +136,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             contactEntry.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
             contactEntry.setHintTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }
+
+        contactEntry.requestFocus();
     }
 
     private void displayRecents() {
