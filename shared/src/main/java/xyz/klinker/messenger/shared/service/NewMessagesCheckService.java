@@ -161,9 +161,9 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
-        if (!FeatureFlags.get(this).DATABASE_SYNC_SERVICE_ALL && newMessageType != Message.TYPE_SENT) {
-            return true;
-        }
+//        if (!FeatureFlags.get(this).DATABASE_SYNC_SERVICE_ALL && newMessageType != Message.TYPE_SENT) {
+//            return true;
+//        }
 
         for (Message message : messages) {
             if (message.mimeType.equals(MimeType.TEXT_PLAIN) && (typesAreEqual(newMessageType, message.type)) &&
