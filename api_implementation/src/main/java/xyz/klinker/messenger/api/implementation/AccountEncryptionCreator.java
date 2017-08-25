@@ -2,6 +2,7 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
@@ -35,12 +36,15 @@ public class AccountEncryptionCreator {
     }
 
     public EncryptionUtils createAccountEncryptionFromLogin(LoginResponse loginResponse) {
-        getSharedPrefs(context).edit()
-                .putInt("global_primary_color", loginResponse.color)
-                .putInt("global_primary_dark_color", loginResponse.colorDark)
-                .putInt("global_primary_light_color", loginResponse.colorLight)
-                .putInt("global_accent_color", loginResponse.colorAccent)
-                .putBoolean("apply_theme_globally", loginResponse.useGlobalTheme)
+
+        SharedPreferences.Editor editor = getSharedPrefs(context).edit();
+
+        if (loginResponse.color != -1) editor.putInt("global_primary_color", loginResponse.color);
+        if (loginResponse.colorDark != -1) editor.putInt("global_primary_dark_color", loginResponse.colorDark);
+        if (loginResponse.colorLight != -1) editor.putInt("global_primary_light_color", loginResponse.colorLight);
+        if (loginResponse.colorAccent != -1) editor.putInt("global_accent_color", loginResponse.colorAccent);
+
+        editor.putBoolean("apply_theme_globally", loginResponse.useGlobalTheme)
                 .putBoolean("rounder_bubbles", loginResponse.rounderBubbles)
                 .putString("base_theme", loginResponse.baseTheme)
                 .apply();
@@ -55,7 +59,7 @@ public class AccountEncryptionCreator {
     }
 
     private EncryptionUtils createEncryptorParams(String name, String phone, String accountId,
-                                                   String salt1, String salt2) {
+                                                  String salt1, String salt2) {
         KeyUtils keyUtils = new KeyUtils();
         String hash = keyUtils.hashPassword(password, salt2);
         SecretKey key = keyUtils.createKey(hash, accountId, salt1);
@@ -64,7 +68,7 @@ public class AccountEncryptionCreator {
     }
 
     private EncryptionUtils createAccount(String name, String phone, String accountId, String salt1,
-                                            String passhash, SecretKey key) {
+                                          String passhash, SecretKey key) {
         sharedPrefs.edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), Account.get(context).subscriptionType == Account.SubscriptionType.LIFETIME ?
                         Account.SubscriptionType.LIFETIME.typeCode : Account.SubscriptionType.TRIAL.typeCode)
