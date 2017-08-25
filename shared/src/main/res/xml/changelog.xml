@@ -19,8 +19,10 @@
     <version
         name="2.5.3"
         description="August 27th, 2017">
+        <text>New "Two short, one long" vibration pattern</text>
         <text>Performance improvements</text>
         <text>Crash fixes</text>
+        <text>Bug fixes</text>
     </version>
 
     <version

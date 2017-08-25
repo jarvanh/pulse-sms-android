@@ -300,12 +300,6 @@ public class  MessengerActivity extends AppCompatActivity
 
     @Override
     public void onDestroy() {
-        try {
-            dataSource.close(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         super.onDestroy();
 
         if (downloadReceiver != null) {

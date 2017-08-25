@@ -75,19 +75,11 @@ object DataSource {
     @Synchronized
     private fun database(context: Context): SQLiteDatabase {
         if (_database == null) {
-            _database = dbHelper(context).writableDatabase
+            _dbHelper = DatabaseSQLiteHelper(context)
+            _database = _dbHelper!!.writableDatabase
         }
 
         return _database!!
-    }
-
-    @Synchronized
-    private fun dbHelper(context: Context): DatabaseSQLiteHelper {
-        if (_dbHelper == null) {
-            _dbHelper = DatabaseSQLiteHelper(context)
-        }
-
-        return _dbHelper!!
     }
 
     @Synchronized
@@ -121,13 +113,26 @@ object DataSource {
     fun ensureActionable(context: Context) {
         Log.v(TAG, "ensuring database actionable")
 
+        // ensure we are closing everything and getting a brand new database connection the
+        // next time we go to use it.
+
         try {
-            Thread.sleep(500)
+            _database?.close()
         } catch (e: Exception) {
         }
 
-        // ensure we are closing everything and getting a brand new database connection
-        close(context)
+        try {
+            _dbHelper?.close()
+        } catch (e: Exception) {
+        }
+
+        _dbHelper = null
+        _database = null
+
+        try {
+            Thread.sleep(1000)
+        } catch (e: Exception) {
+        }
     }
 
     @Synchronized
@@ -135,11 +140,12 @@ object DataSource {
         Log.v(TAG, "closing database")
 
         try {
-            dbHelper(context).close()
+            _database?.close()
         } catch (e: Exception) {
         }
+
         try {
-            database(context).close()
+            _dbHelper?.close()
         } catch (e: Exception) {
         }
 
@@ -1471,7 +1477,7 @@ object DataSource {
                 }
             }
 
-    fun searchMessagesAsList(context: Context, query: String, amount: Int): List<Message> {
+    fun searchMessagesAsList(context: Context, query: String?, amount: Int): List<Message> {
         val cursor = searchMessages(context, query)
         val messages = ArrayList<Message>()
 

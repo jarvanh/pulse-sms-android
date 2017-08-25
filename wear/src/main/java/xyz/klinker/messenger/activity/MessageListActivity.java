@@ -106,10 +106,6 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         if (adapter != null) {
             adapter.getMessages().close();
         }
-
-        if (source != null) {
-            source.close(this);
-        }
     }
 
     private void initRecycler() {
