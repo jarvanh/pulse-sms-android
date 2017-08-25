@@ -50,6 +50,7 @@
         <item>@string/vibrate_one_short</item>
         <item>@string/vibrate_one_long</item>
         <item>@string/vibrate_one_extra_long</item>
+        <item>@string/vibrate_two_short_one_long</item>
     </string-array>
 
     <string-array name="vibrate_values">
@@ -63,6 +64,7 @@
         <item>vibrate_one_short</item>
         <item>vibrate_one_long</item>
         <item>vibrate_one_extra_long</item>
+        <item>vibrate_two_short_one_long</item>
     </string-array>
 
     <string-array name="repeat">
