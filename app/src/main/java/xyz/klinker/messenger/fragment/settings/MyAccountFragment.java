@@ -235,9 +235,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                         final String accountId = account.accountId;
                         account.clearAccount(getActivity());
 
-                        new Thread(() -> {
-                            new ApiUtils().deleteAccount(accountId);
-                        }).start();
+                        new Thread(() -> new ApiUtils().deleteAccount(accountId)).start();
 
                         returnToConversationsAfterLogin();
 
