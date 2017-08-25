@@ -8,7 +8,7 @@ import android.util.Log;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 
@@ -60,7 +60,7 @@ public class ResendFailedMessage extends IntentService {
         new SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
                 .setRetryFailedMessages(false)
                 .send(this, m.data, conversation.phoneNumbers);
-        MarkAsReadJob.Companion.scheduleNextRun(this, messageId);
+        MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
 
         source.close();
     }

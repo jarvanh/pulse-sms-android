@@ -262,7 +262,7 @@
             android:name=".service.jobs.ContentObserverJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.jobs.MarkAsReadJob"
+            android:name=".service.jobs.MarkAsSentJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name=".service.ForceTokenRefreshService" />

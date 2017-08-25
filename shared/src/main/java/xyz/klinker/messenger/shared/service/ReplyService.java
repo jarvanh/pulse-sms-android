@@ -33,7 +33,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
@@ -100,7 +100,7 @@ public class ReplyService extends IntentService {
 
         new SendUtils(conversation.simSubscriptionId)
                 .send(this, reply, conversation.phoneNumbers);
-        MarkAsReadJob.Companion.scheduleNextRun(this, messageId);
+        MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

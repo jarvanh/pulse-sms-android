@@ -42,7 +42,6 @@ import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback;
 import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService;
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -56,7 +55,7 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.shared.service.jobs.MarkAsReadJob;
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
@@ -348,12 +347,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                         new SendUtils(conversation.simSubscriptionId)
                                 .send(context, message.data, conversation.phoneNumbers);
-                        MarkAsReadJob.Companion.scheduleNextRun(context, messageId);
+                        MarkAsSentJob.Companion.scheduleNextRun(context, messageId);
                     } else {
                         new SendUtils(conversation.simSubscriptionId)
                                 .send(context, "", conversation.phoneNumbers,
                                 Uri.parse(message.data), message.mimeType);
-                        MarkAsReadJob.Companion.scheduleNextRun(context, messageId);
+                        MarkAsSentJob.Companion.scheduleNextRun(context, messageId);
                     }
                 } else {
                     Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
