@@ -191,6 +191,10 @@ public class ConversationListFragment extends Fragment
     }
 
     public void dismissSnackbars(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+
         if (archiveSnackbar != null && archiveSnackbar.isShown()) {
             archiveSnackbar.dismiss();
 
@@ -213,11 +217,12 @@ public class ConversationListFragment extends Fragment
     public void loadConversations() {
         final Handler handler = new Handler();
         new Thread(() -> {
+            long startTime = System.currentTimeMillis();
+
             if (getActivity() == null) {
                 return;
             }
-
-            long startTime = System.currentTimeMillis();
+            
             final List<Conversation> conversations = getCursor(DataSource.INSTANCE);
 
             Log.v("conversation_load", "load took " + (

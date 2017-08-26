@@ -101,6 +101,10 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     private void loadBlacklists() {
         final Handler handler = new Handler();
         new Thread(() -> {
+            if (getActivity() == null) {
+                return;
+            }
+
             final List<Blacklist> blacklists = DataSource.INSTANCE.getBlacklistsAsList(getActivity());
             handler.post(() -> setBlacklists(blacklists));
         }).start();

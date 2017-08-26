@@ -61,7 +61,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     private void handleReceiver(Context context, Intent intent, Handler handler) {
         Bundle extras = intent.getExtras();
 
-        int simSlot = extras.getInt("slot", -1);
+        final int simSlot = extras.getInt("slot", -1);
         String body = "";
         String address = "";
         long date = System.currentTimeMillis();
@@ -128,7 +128,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.seen = false;
         message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
 
-        DataSource source = DataSource.INSTANCE;
+        final DataSource source = DataSource.INSTANCE;
 
         if (shouldSaveMessages(context, source, message)) {
             long conversationId;

@@ -1244,7 +1244,7 @@ public class MessageListFragment extends Fragment implements
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
                 MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
-                if (imageUri != null) {
+                if (imageUri != null && getActivity() != null) {
                     source.updateMessageData(getActivity(), m.id, imageUri.toString());
                 }
             }).start();
