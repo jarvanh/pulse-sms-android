@@ -515,12 +515,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     }
 
     public long getItemId(int position) {
-        if (messages == null || messages.getCount() == 0) {
-            return -1;
+        try {
+            messages.moveToPosition(position);
+            return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
+        } catch (Exception e) {
+            return -1L;
         }
-
-        messages.moveToPosition(position);
-        return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
     }
 
     public void addMessage(RecyclerView recycler, Cursor newMessages) {
@@ -590,10 +590,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             Message message = messageList.get(0);
 
             Conversation conversation = source.getConversation(context, conversationId);
-            source.updateConversation(context, conversationId, conversation.read, message.timestamp,
+            source.updateConversation(context, conversationId, true, message.timestamp,
                     message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
                             context.getString(R.string.you) + ": " + message.data : message.data,
-                    message.mimeType, conversation.archive);
+                    message.mimeType, conversation != null && conversation.archive);
 
             fragment.setConversationUpdateInfo(message.type == Message.TYPE_SENDING ?
                     context.getString(R.string.you) + ": " + message.data : message.data);

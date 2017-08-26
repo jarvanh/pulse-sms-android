@@ -1928,6 +1928,7 @@ object DataSource {
             database(context).update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
         } catch (e: Exception) {
+            e.printStackTrace()
             ensureActionable(context)
             database(context).update(Message.TABLE, values, Message.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))

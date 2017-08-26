@@ -920,6 +920,7 @@ public class MessageListFragment extends Fragment implements
                 long startTime = System.currentTimeMillis();
                 drafts = source.getDrafts(getActivity(), conversationId);
 
+                source.readConversation(getActivity(), conversationId);
                 final Cursor cursor = source.getMessages(getActivity(), conversationId);
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
@@ -1002,13 +1003,11 @@ public class MessageListFragment extends Fragment implements
                     }
                 }
 
-
                 if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
                     Thread.sleep(1000);
 
                     // this could happen in the background, we don't want to dismiss that then!
                     dismissNotification();
-                    source.readConversation(getActivity(), conversationId);
                     dismissOnStartup = false;
                 }
             } catch (Exception e) {
