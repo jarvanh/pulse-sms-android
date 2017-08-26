@@ -74,7 +74,6 @@ public class FeatureFlags {
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
-    public boolean DATABASE_SYNC_SERVICE_ALL;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -85,7 +84,6 @@ public class FeatureFlags {
         //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
-        DATABASE_SYNC_SERVICE_ALL = getValue(sharedPrefs, FLAG_DATABASE_SYNC_SERVICE_ALL);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -103,9 +101,6 @@ public class FeatureFlags {
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
-                break;
-            case FLAG_DATABASE_SYNC_SERVICE_ALL:
-                DATABASE_SYNC_SERVICE_ALL = flag;
                 break;
         }
     }
