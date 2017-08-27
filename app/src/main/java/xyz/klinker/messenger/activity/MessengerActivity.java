@@ -544,8 +544,12 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         closeDrawer();
+
+        if (item == null) {
+            return true;
+        }
         
         if (item.isChecked() || ApiDownloadService.IS_RUNNING) {
             return true;

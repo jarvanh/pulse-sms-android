@@ -211,7 +211,11 @@ public class ConversationListFragment extends Fragment
     }
 
     protected List<Conversation> getCursor(DataSource source) {
-        return source.getUnarchivedConversationsAsList(getActivity());
+        if (getActivity() != null) {
+            return source.getUnarchivedConversationsAsList(getActivity());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public void loadConversations() {
@@ -376,7 +380,7 @@ public class ConversationListFragment extends Fragment
                 // copy this list and continue to delete in the background.
                 List<Conversation> copiedList = new ArrayList<>(pendingDelete);
                 for (Conversation conversation : copiedList) {
-                    if (conversation != null) { // there are those blank convos that get populated with a new one
+                    if (conversation != null && getActivity() != null) { // there are those blank convos that get populated with a new one
                         dataSource.deleteConversation(getActivity(), conversation);
                         SmsMmsUtils.deleteConversation(getActivity(), conversation.phoneNumbers);
                     }
@@ -394,7 +398,9 @@ public class ConversationListFragment extends Fragment
     }
 
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        dataSource.archiveConversation(getActivity(), conversation.id);
+        if (getActivity() != null) {
+            dataSource.archiveConversation(getActivity(), conversation.id);
+        }
     }
 
     @Override

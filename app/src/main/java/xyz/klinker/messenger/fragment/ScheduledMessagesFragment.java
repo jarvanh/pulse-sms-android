@@ -164,9 +164,11 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void loadMessages() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            final List<ScheduledMessage> messages =
-                    DataSource.INSTANCE.getScheduledMessagesAsList(getActivity());
-            handler.post(() -> setMessages(messages));
+            if (getActivity() != null) {
+                final List<ScheduledMessage> messages =
+                        DataSource.INSTANCE.getScheduledMessagesAsList(getActivity());
+                handler.post(() -> setMessages(messages));
+            }
         }).start();
     }
 

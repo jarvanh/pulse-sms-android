@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.R;
@@ -86,12 +87,22 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         new Thread(() -> {
             DataSource source = DataSource.INSTANCE;
-            if (getActivity() != null) {
-                final List<Conversation> conversations = source.searchConversationsAsList(getActivity(), query, 60);
-                final List<Message> messages = source.searchMessagesAsList(getActivity(), query, 60);
 
-                handler.post(() -> setSearchResults(conversations, messages));
+            final List<Conversation> conversations;
+            if (getActivity() != null) {
+                conversations = source.searchConversationsAsList(getActivity(), query, 60);
+            } else {
+                conversations = new ArrayList<>();
             }
+
+            final List<Message> messages;
+            if (getActivity() != null) {
+                messages = source.searchMessagesAsList(getActivity(), query, 60);
+            } else {
+                messages = new ArrayList<>();
+            }
+
+            handler.post(() -> setSearchResults(conversations, messages));
         }).start();
     }
 
