@@ -255,6 +255,10 @@ public class MessageMultiSelectDelegate extends MultiSelector {
     }
 
     public static String getMessageContent(Message message) {
+        if (message == null) {
+            return "";
+        }
+
         if (MimeType.isExpandedMedia(message.mimeType)) {
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
                 YouTubePreview preview = YouTubePreview.build(message.data);
