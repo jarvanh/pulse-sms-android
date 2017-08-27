@@ -310,7 +310,7 @@ public class SmsMmsUtils {
         if (isSms(messages)) {
             if (messages.getString(1) != null) {
                 ContentValues message = new ContentValues(9);
-                message.put(Message.COLUMN_ID, DataSource.generateId());
+                message.put(Message.COLUMN_ID, DataSource.INSTANCE.generateId());
                 message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
                 message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
                 message.put(Message.COLUMN_DATA, messages.getString(1).trim());
@@ -729,80 +729,32 @@ public class SmsMmsUtils {
     private static void sendReadReport(final Context context,
                                        final long threadId,
                                        final int status) {
-        String selection = Telephony.Mms.READ + "=0";
+//        String selection = Telephony.Mms.MESSAGE_TYPE + " = " + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
+//                + " AND " + Telephony.Mms.READ + " = 0"
+//                + " AND " + Telephony.Mms.READ_REPORT + " = " + PduHeaders.VALUE_YES;
+        String selection = Telephony.Mms.READ + " = 0";
 
         if (threadId != -1) {
             selection = selection + " AND " + Telephony.Mms.THREAD_ID + " = " + threadId;
         }
 
-        final Cursor c = com.google.android.mms.util_alt.SqliteWrapper.query(context, context.getContentResolver(),
-                Telephony.Mms.Inbox.CONTENT_URI, new String[]{Telephony.Mms._ID, Telephony.Mms.MESSAGE_ID},
-                selection, null, null);
-
         try {
-            if (c == null) {
-                Log.v(TAG, "null cursor when marking read");
-                return;
-            } else if (c.getCount() == 0) {
-                Log.v(TAG, "no cursor content");
-                return;
-            } else if (c.getCount() > 0) {
-                Log.v(TAG, "cursor count: " + c.getCount());
-            }
+            final Cursor c = context.getContentResolver().query(Telephony.Mms.Inbox.CONTENT_URI,
+                    new String[]{Telephony.Mms._ID, Telephony.Mms.MESSAGE_ID},
+                    selection, null, null);
 
-            while (c.moveToNext()) {
-//                if (c.getString(1) != null) {
-//                    Log.v("SmsMmsUtils", "marking MMS as seen. _id:" + c.getString(0) + ", message_id: " + c.getString(1));
-//                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
-//                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
-//                            c.getString(1), status);
-//                } else {
-//                    Log.v("SmsMmsUtils", "null message_id, _id: " + c.getString(0));
-//                }
-
-                Log.v("SmsMmsUtils", "marking MMS as seen. _id:" + c.getString(0) + ", message_id: " + c.getString(1));
-                Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
-                MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
-                        c.getString(0), status);
+            if (c != null && c.moveToFirst()) {
+                do {
+                    Log.v("SmsMmsUtils", "marking MMS as seen. ID:" + c.getString(1));
+                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
+                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
+                            c.getString(1), status);
+                } while (c.moveToNext());
             }
-        } finally {
-            if (c != null) {
-                c.close();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-//    private static void sendReadReport(final Context context,
-//                                       final long threadId,
-//                                       final int status) {
-////        String selection = Telephony.Mms.MESSAGE_TYPE + " = " + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
-////                + " AND " + Telephony.Mms.READ + " = 0"
-////                + " AND " + Telephony.Mms.READ_REPORT + " = " + PduHeaders.VALUE_YES;
-//        String selection = Telephony.Mms.READ + " = 0";
-//
-//        if (threadId != -1) {
-//            selection = selection + " AND " + Telephony.Mms.THREAD_ID + " = " + threadId;
-//        }
-//
-//        final Cursor c = com.google.android.mms.util_alt.SqliteWrapper.query(context, context.getContentResolver(),
-//                Telephony.Mms.Inbox.CONTENT_URI, new String[]{Telephony.Mms._ID, Telephony.Mms.MESSAGE_ID},
-//                selection, null, null);
-//
-//        try {
-//            if (c != null && c.moveToFirst()) {
-//                do {
-//                    Log.v("SmsMmsUtils", "marking MMS as seen. ID:" + c.getString(1));
-//                    Uri uri = ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, c.getLong(0));
-//                    MmsMessageSender.sendReadRec(context, getMmsFrom(uri, context),
-//                            c.getString(1), status);
-//                } while (c.moveToNext());
-//            }
-//        } finally {
-//            if (c != null) {
-//                c.close();
-//            }
-//        }
-//    }
 
     /**
      * Deletes a conversation from the internal sms database.

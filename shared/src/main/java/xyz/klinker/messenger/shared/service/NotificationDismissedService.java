@@ -46,16 +46,13 @@ public class NotificationDismissedService extends IntentService {
 
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, 0);
 
-        DataSource source = DataSource.getInstance(context);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
         if (conversationId == 0) {
-            source.seenAllMessages();
+            source.seenAllMessages(context);
         } else {
-            source.seenConversation(conversationId);
+            source.seenConversation(context, conversationId);
         }
-
-        source.close();
 
         Log.v("dismissed_notification", "id: " + conversationId);
 

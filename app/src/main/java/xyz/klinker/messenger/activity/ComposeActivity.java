@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,6 +62,7 @@ import xyz.klinker.messenger.shared.service.MessengerChooserTargetService;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.NonStandardUriUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
@@ -143,11 +143,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     private void displayRecents() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            DataSource source = DataSource.getInstance(getApplicationContext());
-            source.open();
-            Cursor cursor = source.getUnarchivedConversations();
+            DataSource source = DataSource.INSTANCE;
+            Cursor cursor = source.getUnarchivedConversations(this);
 
-            if (cursor != null && cursor.moveToFirst()) {
+            if (cursor.moveToFirst()) {
                 final List<Conversation> conversations = new ArrayList<>();
 
                 do {
@@ -168,11 +167,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 });
             }
 
-            try {
-                cursor.close();
-            } catch (Exception e) { }
-
-            source.close();
+            CursorUtil.closeSilent(cursor);
         }).start();
     }
 
@@ -207,12 +202,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void showConversation(String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        Long conversationId = source.findConversationId(phoneNumbers);
+        DataSource source = DataSource.INSTANCE;
+        Long conversationId = source.findConversationId(this, phoneNumbers);
 
         if (conversationId == null && contactEntry.getRecipients().length == 1) {
-            conversationId = source.findConversationIdByTitle(
+            conversationId = source.findConversationIdByTitle(this,
                     contactEntry.getRecipients()[0].getEntry().getDisplayName());
         }
 
@@ -227,10 +221,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
         } else {
-            source.unarchiveConversation(conversationId);
+            source.unarchiveConversation(this, conversationId);
         }
-
-        source.close();
 
         Intent open = new Intent(this, MessengerActivity.class);
         open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversationId);
@@ -421,45 +413,35 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void sendvCard(String mimeType, String data, String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
         long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
-        Conversation conversation = source.getConversation(conversationId);
+        Conversation conversation = source.getConversation(this, conversationId);
 
         Uri uri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                 .send(this, "", phoneNumbers, Uri.parse(data), mimeType);
-        Cursor cursor = source.searchMessages(data);
+        Cursor cursor = source.searchMessages(this, data);
 
         if (cursor != null && cursor.moveToFirst()) {
-            source.updateMessageData(cursor.getLong(0), uri.toString());
+            source.updateMessageData(this, cursor.getLong(0), uri.toString());
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
-
-        source.close();
+        CursorUtil.closeSilent(cursor);
         finish();
     }
 
     private void sendvCard(String mimeType, String data, long conversationId) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        Conversation conversation = source.getConversation(conversationId);
+        DataSource source = DataSource.INSTANCE;
+        Conversation conversation = source.getConversation(this, conversationId);
 
         Uri uri = new SendUtils(conversation.simSubscriptionId)
                 .send(this, "", conversation.phoneNumbers, Uri.parse(data), mimeType);
-        Cursor cursor = source.searchMessages(data);
+        Cursor cursor = source.searchMessages(this, data);
 
         if (cursor != null && cursor.moveToFirst()) {
-            source.updateMessageData(cursor.getLong(0), uri.toString());
+            source.updateMessageData(this, cursor.getLong(0), uri.toString());
         }
 
-        try {
-            cursor.close();
-        } catch (Exception e) { }
-
-        source.close();
+        CursorUtil.closeSilent(cursor);
         finish();
     }
 
@@ -469,9 +451,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void applyShare(String mimeType, String data, String phoneNumbers) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        Long conversationId = source.findConversationId(phoneNumbers);
+        DataSource source = DataSource.INSTANCE;
+        Long conversationId = source.findConversationId(this, phoneNumbers);
 
         if (conversationId == null) {
             Message message = new Message();
@@ -485,25 +466,19 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             conversationId = source.insertMessage(message, phoneNumbers, this);
         }
 
-        long id = source.insertDraft(conversationId, data, mimeType);
-        source.close();
-
+        source.insertDraft(this, conversationId, data, mimeType);
         showConversation(conversationId);
     }
 
     private void shareWithDirectShare(String data, String mimeType, boolean isVcard) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
         Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.EXTRA_CONVO_ID);
 
         if (isVcard) {
             sendvCard(mimeType, data, conversationId);
         } else {
-            source.insertDraft(conversationId, data, mimeType);
+            DataSource.INSTANCE.insertDraft(this, conversationId, data, mimeType);
             showConversation(conversationId);
         }
-
-        source.close();
     }
 
     @Override

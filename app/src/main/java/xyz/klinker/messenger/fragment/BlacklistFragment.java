@@ -76,12 +76,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         list = (RecyclerView) view.findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addBlacklist();
-            }
-        });
+        fab.setOnClickListener(view1 -> addBlacklist());
         emptyView = view.findViewById(R.id.empty_view);
 
         Settings settings = Settings.get(getActivity());
@@ -105,21 +100,13 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     private void loadBlacklists() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final DataSource source = DataSource.getInstance(getActivity());
-                source.open();
-                final List<Blacklist> blacklists = source.getBlacklistAsList();
-                source.close();
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setBlacklists(blacklists);
-                    }
-                });
+        new Thread(() -> {
+            if (getActivity() == null) {
+                return;
             }
+
+            final List<Blacklist> blacklists = DataSource.INSTANCE.getBlacklistsAsList(getActivity());
+            handler.post(() -> setBlacklists(blacklists));
         }).start();
     }
 
@@ -144,12 +131,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
         new AlertDialog.Builder(getActivity())
                 .setView(layout)
-                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        addBlacklist(editText.getText().toString());
-                    }
-                })
+                .setPositiveButton(R.string.add, (dialogInterface, i) -> addBlacklist(editText.getText().toString()))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
@@ -161,31 +143,19 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         if (cleared.length() == 0) {
             new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.blacklist_need_number)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            addBlacklist();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> addBlacklist())
                     .show();
         } else {
             String message = getString(R.string.add_blacklist, formatted);
 
             new AlertDialog.Builder(getActivity())
                     .setMessage(message)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Blacklist blacklist = new Blacklist();
-                            blacklist.phoneNumber = cleared;
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                        Blacklist blacklist = new Blacklist();
+                        blacklist.phoneNumber = cleared;
 
-                            DataSource source = DataSource.getInstance(getActivity());
-                            source.open();
-                            source.insertBlacklist(blacklist);
-                            source.close();
-
-                            loadBlacklists();
-                        }
+                        DataSource.INSTANCE.insertBlacklist(getActivity(), blacklist);
+                        loadBlacklists();
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
@@ -197,16 +167,10 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
         new AlertDialog.Builder(getActivity())
                 .setMessage(message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DataSource source = DataSource.getInstance(getActivity());
-                        source.open();
-                        source.deleteBlacklist(id);
-                        source.close();
+                .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
+                    DataSource.INSTANCE.deleteBlacklist(getActivity(), id);
 
-                        loadBlacklists();
-                    }
+                    loadBlacklists();
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .show();

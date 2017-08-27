@@ -345,7 +345,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="alert_types_summary">Vele aanpassingen voor notificaties</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="use_internal_browser">Gebruik interne browser</string>
-    <string name="strip_unicode_summary">Deze karakters zullen verwijderd worden voor uitgaande berichten</string>
+    <string name="strip_unicode_summary">Deze karakters zullen worden verwijderd bij uitgaande berichten.</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notificatieacties</string>
     <string name="notification_actions_summary">Je kan maximum 3 acties toevoegen aan een notificatie</string>
@@ -359,6 +359,7 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="show_conversation_history_summary">Notificaties zullen vorige berichten uit de conversatie weergeven</string>
     <string name="emoji_style">Emoji stijl</string>
     <string name="emoji_style_default">Standaard systeem</string>
+    <string name="emoji_style_android_o">Google\'s Android O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="use_group_mms">Gebruik groep MMS</string>

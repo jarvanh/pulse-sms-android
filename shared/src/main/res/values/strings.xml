@@ -311,6 +311,7 @@
     <string name="vibrate_one_short">One short vibration</string>
     <string name="vibrate_one_long">One long vibration</string>
     <string name="vibrate_one_extra_long">One extra long vibration</string>
+    <string name="vibrate_two_short_one_long">Two short, one long vibration</string>
     <string name="keyboard_layout">Keyboard Layout</string>
     <string name="keyboard_default">Default Keyboard</string>
     <string name="keyboard_send_key">Send Key</string>

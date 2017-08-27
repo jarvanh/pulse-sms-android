@@ -93,19 +93,10 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         long conversationId = getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
-        messages = source.getMediaMessages(conversationId);
-        source.close();
-
+        messages = DataSource.INSTANCE.getMediaMessages(this, conversationId);
         if (messages.size() == 0) {
             Snackbar.make(findViewById(android.R.id.content), R.string.no_media, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.close, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            finish();
-                        }
-                    }).show();
+                    .setAction(R.string.close, view -> finish()).show();
         }
     }
 

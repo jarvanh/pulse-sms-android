@@ -44,6 +44,7 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.SendUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -58,12 +59,10 @@ public class ScheduledMessageJob extends BackgroundJob {
 
     @Override
     protected void onRunJob(JobParameters parameters) {
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
+        Cursor messages = source.getScheduledMessages(this);
 
-        Cursor messages = source.getScheduledMessages();
-
-        if (messages != null && messages.moveToFirst()) {
+        if (messages.moveToFirst()) {
             do {
                 long timestamp = messages.getLong(
                         messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP));
@@ -76,9 +75,9 @@ public class ScheduledMessageJob extends BackgroundJob {
                     message.fillFromCursor(messages);
 
                     // delete, insert and send
-                    source.deleteScheduledMessage(message.id);
+                    source.deleteScheduledMessage(this, message.id);
                     long conversationId = source.insertSentMessage(message.to, message.data, message.mimeType, this);
-                    Conversation conversation = source.getConversation(conversationId);
+                    Conversation conversation = source.getConversation(this, conversationId);
 
                     new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                             .send(this, message.data, message.to);
@@ -106,22 +105,14 @@ public class ScheduledMessageJob extends BackgroundJob {
             } while (messages.moveToNext());
         }
 
-        try {
-            messages.close();
-            source.close();
-        } catch (Exception e) { }
+        CursorUtil.closeSilent(messages);
 
         sendBroadcast(new Intent(BROADCAST_SCHEDULED_SENT));
         scheduleNextRun(this);
     }
 
     public static void scheduleNextRun(Context context) {
-        DataSource source = DataSource.getInstance(context);
-        source.open();
-
-        scheduleNextRun(context, source);
-
-        source.close();
+        scheduleNextRun(context, DataSource.INSTANCE);
     }
 
     public static void scheduleNextRun(Context context, DataSource source) {
@@ -131,7 +122,7 @@ public class ScheduledMessageJob extends BackgroundJob {
             return;
         }
 
-        List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
+        List<ScheduledMessage> messages = source.getScheduledMessagesAsList(context);
 
         if (messages.size() > 0) {
             long timeout = messages.get(0).timestamp - new Date().getTime();

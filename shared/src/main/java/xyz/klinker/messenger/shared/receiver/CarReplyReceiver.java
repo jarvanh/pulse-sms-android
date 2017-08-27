@@ -17,6 +17,7 @@ import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.ReplyService;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
@@ -44,10 +45,9 @@ public class CarReplyReceiver extends BroadcastReceiver {
             return;
         }
 
-        DataSource source = DataSource.getInstance(context);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        Conversation conversation = source.getConversation(conversationId);
+        Conversation conversation = source.getConversation(context, conversationId);
         Message m = new Message();
         m.conversationId = conversationId;
         m.type = Message.TYPE_SENDING;
@@ -72,7 +72,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
-        Cursor unseenMessages = source.getUnseenMessages();
+        Cursor unseenMessages = source.getUnseenMessages(context);
         if (unseenMessages.getCount() <= 0) {
             NotificationManagerCompat.from(context).cancelAll();
         } else {
@@ -83,8 +83,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
                 Account.get(context).deviceId,
                 conversationId);
 
-        unseenMessages.close();
-        source.close();
+        CursorUtil.closeSilent(unseenMessages);
 
         ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, context.getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId);

@@ -105,14 +105,12 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
     private void loadConversation() {
         DataSource source = getDataSource();
-        source.open();
-        conversation = source.getConversation(getArguments().getLong(ARG_CONVERSATION_ID));
-        source.close();
+        conversation = source.getConversation(getActivity(), getArguments().getLong(ARG_CONVERSATION_ID));
     }
 
     @VisibleForTesting
     DataSource getDataSource() {
-        return DataSource.getInstance(getActivity());
+        return DataSource.INSTANCE;
     }
 
     private void setUpDefaults() {
@@ -331,23 +329,20 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     public void saveSettings() {
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        source.updateConversationSettings(conversation);
+        DataSource source = DataSource.INSTANCE;
+        source.updateConversationSettings(getActivity(), conversation);
 
         List<Contact> contactList;
         if (conversation.phoneNumbers.contains(", ")) {
-            contactList = source.getContactsByNames(conversation.title);
+            contactList = source.getContactsByNames(getActivity(), conversation.title);
         } else {
-            contactList = source.getContacts(conversation.phoneNumbers);
+            contactList = source.getContacts(getActivity(), conversation.phoneNumbers);
         }
 
         if (contactList.size() == 1) {
             // it is an individual conversation and we have the contact in our database! Yay.
             contactList.get(0).colors = conversation.colors;
-            source.updateContact(contactList.get(0));
+            source.updateContact(getActivity(), contactList.get(0));
         }
-
-        source.close();
     }
 }

@@ -42,6 +42,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.ResendFailedMessage;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
@@ -114,9 +115,8 @@ public class SmsSentReceiver extends SentReceiver {
                 body = body.replace("\n" + settings.signature, "");
             }
 
-            DataSource source = DataSource.getInstance(context);
-            source.open();
-            Cursor messages = source.searchMessages(body);
+            DataSource source = DataSource.INSTANCE;
+            Cursor messages = source.searchMessages(context, body);
 
             if (messages != null && messages.moveToFirst()) {
                 long id = messages.getLong(0);
@@ -127,7 +127,7 @@ public class SmsSentReceiver extends SentReceiver {
                 markMessage(source, context, error, id, conversationId, data);
             } else {
                 // if the message was unicode, then it won't match here and would never get marked as sent or error
-                List<Message> messageList = source.getNumberOfMessages(10);
+                List<Message> messageList = source.getNumberOfMessages(context, 10);
                 boolean markedAsSent = false;
                 for (Message m : messageList) {
                     if (StripAccents.stripAccents(m.data).equals(body) && m.type == Message.TYPE_SENDING) {
@@ -142,7 +142,7 @@ public class SmsSentReceiver extends SentReceiver {
 
                     for (Message m : messageList) {
                         if (m.type == Message.TYPE_SENDING) {
-                            source.updateMessageType(m.id, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
+                            source.updateMessageType(context, m.id, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
                             conversationIds.add(m.conversationId);
                         }
                     }
@@ -153,18 +153,14 @@ public class SmsSentReceiver extends SentReceiver {
                 }
             }
 
-            try {
-                messages.close();
-            } catch (Exception e) { }
-
-            source.close();
+            CursorUtil.closeSilent(messages);
         } else {
             throw new RuntimeException("no messages found");
         }
     }
 
     private void markMessage(DataSource source, Context context, boolean error, long messageId, long conversationId, String data) {
-        source.updateMessageType(messageId, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
+        source.updateMessageType(context, messageId, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
 
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
 
@@ -205,16 +201,14 @@ public class SmsSentReceiver extends SentReceiver {
 
     public void fallbackToLatestMessages(Context context) {
         try {
-            DataSource source = DataSource.getInstance(context);
-            source.open();
-            List<Message> messageList = source.getNumberOfMessages(10);
-            source.close();
+            DataSource source = DataSource.INSTANCE;
+            List<Message> messageList = source.getNumberOfMessages(context, 10);
 
             Set<Long> conversationIds = new HashSet<>();
 
             for (Message m : messageList) {
                 if (m.type == Message.TYPE_SENDING) {
-                    source.updateMessageType(m.id, Message.TYPE_SENT);
+                    source.updateMessageType(context, m.id, Message.TYPE_SENT);
                     conversationIds.add(m.conversationId);
                 }
             }

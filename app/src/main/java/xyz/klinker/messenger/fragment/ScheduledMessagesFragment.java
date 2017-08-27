@@ -164,11 +164,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void loadMessages() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            final DataSource source = DataSource.getInstance(getActivity());
-            source.open();
-            final List<ScheduledMessage> messages = source.getScheduledMessagesAsList();
-            source.close();
-
+            final List<ScheduledMessage> messages =
+                    DataSource.INSTANCE.getScheduledMessagesAsList(getActivity());
             handler.post(() -> setMessages(messages));
         }).start();
     }
@@ -317,11 +314,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void saveMessage(final ScheduledMessage message) {
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        source.insertScheduledMessage(message);
-        source.close();
-
+        DataSource.INSTANCE.insertScheduledMessage(getActivity(), message);
         loadMessages();
     }
 

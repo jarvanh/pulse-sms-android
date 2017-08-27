@@ -88,10 +88,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         boolean removeEmpty = conversations.size() == 0;
 
         if (adapterPosition == -1) {
-            DataSource source = DataSource.getInstance(context);
-            source.open();
-            Conversation conversation = source.getConversation(conversationId);
-            source.close();
+            Conversation conversation = DataSource.INSTANCE.getConversation(context, conversationId);
 
             // need to insert after the pinned conversations
             conversations.add(pinnedCount, conversation);
@@ -187,12 +184,10 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                                      boolean read) {
         try {
             if (snippet == null) {
-                DataSource source = DataSource.getInstance(context);
-                Conversation conversation = source.getConversation(conversationId);
+                Conversation conversation = DataSource.INSTANCE.getConversation(context, conversationId);
                 if (conversation != null) {
                     snippet = conversation.snippet;
                 }
-                source.close();
             }
         } catch (Exception e) {
             e.printStackTrace();

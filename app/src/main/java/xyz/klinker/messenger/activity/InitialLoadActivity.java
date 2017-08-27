@@ -167,28 +167,26 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             account.setName(this, myName);
             account.setPhoneNumber(this, myPhoneNumber);
 
-            DataSource source = DataSource.getInstance(context);
-            source.open();
+            DataSource source = DataSource.INSTANCE;
 
             List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
             try {
                 source.insertConversations(conversations, context, InitialLoadActivity.this);
             } catch (Exception e) {
-                source.ensureActionable();
+                source.ensureActionable(this);
                 source.insertConversations(conversations, context, InitialLoadActivity.this);
             }
 
             handler.post(() -> progress.setIndeterminate(true));
 
             List<Contact> contacts = ContactUtils.queryContacts(context, source);
-            source.insertContacts(contacts, null);
-            source.close();
+            source.insertContacts(this, contacts, null);
 
             long importTime = (System.currentTimeMillis() - startTime);
             AnalyticsHelper.importFinished(this, importTime);
             Log.v("initial_load", "load took " + importTime + " ms");
 
-            handler.postDelayed(() -> close(), 5000);
+            handler.postDelayed(this::close, 5000);
         }).start();
     }
 

@@ -93,6 +93,7 @@ import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
@@ -147,8 +148,7 @@ public class  MessengerActivity extends AppCompatActivity
         new UpdateUtils(this).checkForUpdate();
         new PromotionUtils(this).checkPromotions();
 
-        dataSource = DataSource.getInstance(this);
-        dataSource.open();
+        dataSource = DataSource.INSTANCE;
 
         setContentView(R.layout.activity_messenger);
         initToolbar();
@@ -237,25 +237,16 @@ public class  MessengerActivity extends AppCompatActivity
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 new Thread(() -> {
-                    DataSource source = DataSource.getInstance(MessengerActivity.this);
-                    source.open();
-                    Cursor c = source.getUnseenMessages();
+                    Cursor c = DataSource.INSTANCE.getUnseenMessages(this);
                     int count = c.getCount();
-                    try {
-                        c.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    source.close();
+                    CursorUtil.closeSilent(c);
 
                     if (count > 1) {
                         // since the notification functionality here is not nearly as good as 7.0,
                         // we will just remove them all, if there is more than one
                         try {
                             NotificationManagerCompat.from(MessengerActivity.this).cancelAll();
-                        } catch (IllegalStateException e) {
-
-                        }
+                        } catch (IllegalStateException e) { }
                     }
                 }).start();
             }
@@ -310,12 +301,6 @@ public class  MessengerActivity extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        try {
-            dataSource.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);
@@ -1060,11 +1045,10 @@ public class  MessengerActivity extends AppCompatActivity
         if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
             final ConversationListFragment fragment = getShownConversationList();
             Conversation conversation = fragment.getExpandedItem().conversation;
-            DataSource source = DataSource.getInstance(this);
-            source.open();
+            DataSource source = DataSource.INSTANCE;
 
             new AlertDialog.Builder(this)
-                    .setMessage(source.getConversationDetails(conversation))
+                    .setMessage(source.getConversationDetails(this, conversation))
                     .setPositiveButton(android.R.string.ok, null)
                     .setNegativeButton(R.string.menu_copy_phone_number, (dialogInterface, i) -> {
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -1072,8 +1056,6 @@ public class  MessengerActivity extends AppCompatActivity
                         clipboard.setPrimaryClip(clip);
                     })
                     .show();
-
-            source.close();
             return true;
         } else {
             return false;

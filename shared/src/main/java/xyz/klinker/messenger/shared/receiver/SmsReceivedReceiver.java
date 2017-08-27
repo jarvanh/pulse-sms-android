@@ -61,7 +61,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
     private void handleReceiver(Context context, Intent intent, Handler handler) {
         Bundle extras = intent.getExtras();
 
-        int simSlot = extras.getInt("slot", -1);
+        final int simSlot = extras.getInt("slot", -1);
         String body = "";
         String address = "";
         long date = System.currentTimeMillis();
@@ -128,22 +128,19 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.seen = false;
         message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
 
-        DataSource source = DataSource.getInstance(context);
-        source.open();
+        final DataSource source = DataSource.INSTANCE;
 
-        if (shouldSaveMessages(source, message)) {
+        if (shouldSaveMessages(context, source, message)) {
             long conversationId;
 
             try {
                 conversationId = source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
             } catch (Exception e) {
-                source.close();
-                source.open();
-
+                source.ensureActionable(context);
                 conversationId = source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
             }
 
-            Conversation conversation = source.getConversation(conversationId);
+            Conversation conversation = source.getConversation(context, conversationId);
 
             handler.post(() -> {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversation.id, body, NotificationService.CONVERSATION_ID_OPEN == conversation.id);
@@ -151,24 +148,20 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             });
 
             if (conversation.mute) {
-                source.seenConversation(conversationId);
-                source.close();
-
+                source.seenConversation(context, conversationId);
                 // don't run the notification service
                 return -1;
             }
 
-            source.close();
             return conversationId;
         } else {
-            source.close();
             return -1;
         }
     }
 
-    public static boolean shouldSaveMessages(DataSource source, Message message) {
+    public static boolean shouldSaveMessages(Context context, DataSource source, Message message) {
         try {
-            List<Message> search = source.searchMessagesAsList(message.data, 1);
+            List<Message> search = source.searchMessagesAsList(context, message.data, 1);
             if (!search.isEmpty()) {
                 Message inDatabase = search.get(0);
                 if (inDatabase.data.equals(message.data) && inDatabase.type == Message.TYPE_RECEIVED &&

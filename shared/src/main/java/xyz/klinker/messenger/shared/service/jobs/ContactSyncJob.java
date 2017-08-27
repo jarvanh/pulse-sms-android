@@ -1,14 +1,10 @@
 package xyz.klinker.messenger.shared.service.jobs;
 
-import android.app.AlarmManager;
-import android.app.IntentService;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -50,19 +46,16 @@ public class ContactSyncJob extends BackgroundJob {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
         List<Contact> contactsList = ContactUtils.queryNewContacts(this, source, since);
         if (contactsList.size() == 0) {
-            source.close();
             writeUpdateTimestamp(sharedPrefs);
             scheduleNextRun(this);
             return;
         }
 
-        source.insertContacts(contactsList, null);
-        source.close();
+        source.insertContacts(this, contactsList, null);
 
         ContactBody[] contacts = new ContactBody[contactsList.size()];
 

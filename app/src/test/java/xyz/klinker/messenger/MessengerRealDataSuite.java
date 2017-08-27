@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import org.junit.Before;
@@ -25,9 +26,12 @@ import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.shared.util.FixtureLoader;
 
+import static org.mockito.Mockito.spy;
+
 public abstract class MessengerRealDataSuite extends MessengerRobolectricSuite {
 
     public DataSource source;
+    protected Context context = spy(RuntimeEnvironment.application);
 
     @Before
     public void setUp() throws Exception {
@@ -35,12 +39,13 @@ public abstract class MessengerRealDataSuite extends MessengerRobolectricSuite {
         DatabaseSQLiteHelper helper = new DatabaseSQLiteHelper(RuntimeEnvironment.application);
         helper.onCreate(database);
 
-        source = new DataSource(database);
+        source = DataSource.INSTANCE;
+        source.set_database(database);
         insertData();
     }
 
     private void insertData() throws Exception {
-        SQLiteDatabase database = source.getDatabase();
+        SQLiteDatabase database = source.get_database();
         FixtureLoader loader = new FixtureLoader();
         loader.loadFixturesToDatabase(database);
     }

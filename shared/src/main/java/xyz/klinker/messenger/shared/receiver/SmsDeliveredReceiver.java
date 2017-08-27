@@ -28,6 +28,7 @@ import com.klinker.android.send_message.DeliveredReceiver;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
 /**
@@ -82,24 +83,19 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
                 body = body.replace("\n" + settings.signature, "");
             }
 
-            DataSource source = DataSource.getInstance(context);
-            source.open();
-            Cursor messages = source.searchMessages(body);
+            DataSource source = DataSource.INSTANCE;
+            Cursor messages = source.searchMessages(context, body);
 
             if (messages != null && messages.moveToFirst()) {
                 long id = messages.getLong(0);
-                source.updateMessageType(id, error ? Message.TYPE_ERROR : Message.TYPE_DELIVERED);
+                source.updateMessageType(context, id, error ? Message.TYPE_ERROR : Message.TYPE_DELIVERED);
 
                 long conversationId = messages
                         .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
             }
 
-            try {
-                messages.close();
-            } catch (Exception e) { }
-
-            source.close();
+            CursorUtil.closeSilent(messages);
         }
     }
 

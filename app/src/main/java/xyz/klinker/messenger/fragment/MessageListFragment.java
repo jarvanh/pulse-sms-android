@@ -266,8 +266,7 @@ public class MessageListFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
-        source = DataSource.getInstance(getActivity());
-        source.open();
+        source = DataSource.INSTANCE;
 
         delayedSendingHandler = new Handler();
         multiSelect = new MessageMultiSelectDelegate(this);
@@ -426,19 +425,19 @@ public class MessageListFragment extends Fragment implements
     public void createDrafts() {
         if (sendProgress.getVisibility() != View.VISIBLE && messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
             if (drafts.size() > 0) {
-                source.deleteDrafts(getConversationId());
+                source.deleteDrafts(getActivity(), getConversationId());
             }
 
-            source.insertDraft(getConversationId(),
+            source.insertDraft(getActivity(), getConversationId(),
                     messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
         } else if (messageEntry.getText() != null && messageEntry.getText().length() == 0 && textChanged) {
             if (drafts.size() > 0) {
-                source.deleteDrafts(getConversationId());
+                source.deleteDrafts(getActivity(), getConversationId());
             }
         }
 
         if (attachedUri != null) {
-            source.insertDraft(getConversationId(), attachedUri.toString(), attachedMimeType);
+            source.insertDraft(getActivity(), getConversationId(), attachedUri.toString(), attachedMimeType);
         }
     }
 
@@ -448,10 +447,6 @@ public class MessageListFragment extends Fragment implements
 
         if (adapter != null) {
             adapter.getMessages().close();
-        }
-
-        if (source != null) {
-            source.close();
         }
     }
 
@@ -923,16 +918,17 @@ public class MessageListFragment extends Fragment implements
             try {
                 listRefreshMonitor.incrementRefreshThreadsCount();
                 long startTime = System.currentTimeMillis();
-                drafts = source.getDrafts(conversationId);
+                drafts = source.getDrafts(getActivity(), conversationId);
 
-                final Cursor cursor = source.getMessages(conversationId);
+                source.readConversation(getActivity(), conversationId);
+                final Cursor cursor = source.getMessages(getActivity(), conversationId);
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
                 final String title = getArguments().getString(ARG_TITLE);
 
                 if (contactMap == null || contactByNameMap == null) {
-                    final List<Contact> contacts = source.getContacts(numbers);
-                    final List<Contact> contactsByName = source.getContactsByNames(title);
+                    final List<Contact> contacts = source.getContacts(getActivity(), numbers);
+                    final List<Contact> contactsByName = source.getContactsByNames(getActivity(), title);
                     contactMap = fillMapByNumber(numbers, contacts);
                     contactByNameMap = fillMapByName(title, contactsByName);
                 }
@@ -988,7 +984,7 @@ public class MessageListFragment extends Fragment implements
                     if (!name.equals(getArguments().getString(ARG_TITLE)) &&
                             !PhoneNumberUtils.checkEquality(name, number)) {
                         Log.v(TAG, "contact name and conversation name do not match, updating");
-                        source.updateConversationTitle(
+                        source.updateConversationTitle(getActivity(),
                                 getArguments().getLong(ARG_CONVERSATION_ID), name);
 
                         ConversationListFragment fragment = (ConversationListFragment) getActivity()
@@ -1003,17 +999,15 @@ public class MessageListFragment extends Fragment implements
 
                     String originalImage = getArguments().getString(ARG_IMAGE_URI);
                     if ((photoUri != null && (!photoUri.equals(originalImage)) || originalImage == null || originalImage.isEmpty())) {
-                        source.updateConversationImage(getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
+                        source.updateConversationImage(getActivity(), getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
                     }
                 }
-
 
                 if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
                     Thread.sleep(1000);
 
                     // this could happen in the background, we don't want to dismiss that then!
                     dismissNotification();
-                    source.readConversation(getActivity(), conversationId);
                     dismissOnStartup = false;
                 }
             } catch (Exception e) {
@@ -1106,7 +1100,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void resendMessage(long originalMessageId, String text) {
-        source.deleteMessage(originalMessageId);
+        source.deleteMessage(getActivity(), originalMessageId);
         messageEntry.setText(text);
         requestPermissionThenSend();
     }
@@ -1188,7 +1182,7 @@ public class MessageListFragment extends Fragment implements
                 attachedMimeType : MimeType.TEXT_PLAIN;
 
         if (message.length() > 0 || uris.size() > 0) {
-            Conversation conversation = source.getConversation(getConversationId());
+            Conversation conversation = source.getConversation(getActivity(), getConversationId());
 
             final Message m = new Message();
             m.conversationId = getConversationId();
@@ -1204,13 +1198,13 @@ public class MessageListFragment extends Fragment implements
                     DualSimUtils.get(getActivity()).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
             if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
-                source.deleteMessage(adapter.getItemId(0));
+                source.deleteMessage(getActivity(), adapter.getItemId(0));
             }
 
             clearAttachedData();
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
-            source.deleteDrafts(getConversationId());
+            source.deleteDrafts(getActivity(), getConversationId());
             messageEntry.setText(null);
 
             if (getActivity() != null) {
@@ -1249,8 +1243,8 @@ public class MessageListFragment extends Fragment implements
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
                 MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
-                if (imageUri != null) {
-                    source.updateMessageData(m.id, imageUri.toString());
+                if (imageUri != null && getActivity() != null) {
+                    source.updateMessageData(getActivity(), m.id, imageUri.toString());
                 }
             }).start();
 
@@ -1271,7 +1265,7 @@ public class MessageListFragment extends Fragment implements
                         MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
                         if (imageUri != null) {
-                            source.updateMessageData(m.id, imageUri.toString());
+                            source.updateMessageData(getActivity(), m.id, imageUri.toString());
                         }
                     }).start();
                 }
@@ -1304,7 +1298,8 @@ public class MessageListFragment extends Fragment implements
 
         prepareAttachHolder(0);
         if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                attachHolder != null) {
             attachHolder.addView(new AttachImageView(getActivity(), this,
                     Settings.get(getActivity()).useGlobalThemeColor ?
                             Settings.get(getActivity()).mainColorSet.color :
@@ -1542,7 +1537,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void clearAttachedData() {
-        source.deleteDrafts(getConversationId());
+        source.deleteDrafts(getActivity(), getConversationId());
         attachedImageHolder.setVisibility(View.GONE);
         attachedImage.setImageDrawable(null);
         attachedUri = null;

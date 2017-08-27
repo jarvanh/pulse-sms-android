@@ -214,6 +214,9 @@ public class Settings {
             case "vibrate_one_extra_long":
                 this.vibrate = VibratePattern.ONE_EXTRA_LONG;
                 break;
+            case "vibrate_two_short_one_long":
+                this.vibrate = VibratePattern.TWO_SHORT_ONE_LONG;
+                break;
             default:
                 this.vibrate = VibratePattern.DEFAULT;
                 break;

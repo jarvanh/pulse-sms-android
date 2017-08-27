@@ -10,6 +10,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.UnreadBadger;
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider;
 
@@ -25,22 +26,20 @@ public class NotificationMarkReadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
         source.readConversation(this, conversationId);
-        Conversation conversation = source.getConversation(conversationId);
+        Conversation conversation = source.getConversation(this, conversationId);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
-        Cursor unseenMessages = source.getUnseenMessages();
+        Cursor unseenMessages = source.getUnseenMessages(this);
         if (unseenMessages.getCount() <= 0) {
             NotificationManagerCompat.from(this).cancelAll();
         } else {
             NotificationManagerCompat.from(this).cancel((int) conversationId);
         }
 
-        unseenMessages.close();
-        source.close();
+        CursorUtil.closeSilent(unseenMessages);
 
         new ApiUtils().dismissNotification(Account.get(this).accountId,
                 Account.get(this).deviceId,

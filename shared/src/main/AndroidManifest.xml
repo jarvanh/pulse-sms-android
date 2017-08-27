@@ -244,9 +244,6 @@
             android:name=".service.jobs.RepeatNotificationJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.jobs.ContentObserverRunCheckJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
             android:name=".service.jobs.ContactSyncJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
@@ -257,9 +254,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".service.jobs.SignoutJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".service.jobs.ContentObserverJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".service.jobs.MarkAsSentJob"
@@ -273,7 +267,6 @@
         <service android:name=".service.NotificationDeleteService" />
         <service android:name=".service.NotificationCallService" />
         <service android:name=".service.ReplyService" />
-        <service android:name=".service.ContentObserverService" />
         <service android:name=".service.ApiUploadService" />
         <service android:name=".service.ApiDownloadService" />
         <service android:name=".service.SimpleSubscriptionCheckService" />

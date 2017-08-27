@@ -33,6 +33,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.util.DualSimUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
@@ -71,12 +72,10 @@ public class ReplyService extends IntentService {
             return;
         }
 
-        DataSource source = DataSource.getInstance(this);
-        source.open();
+        DataSource source = DataSource.INSTANCE;
 
-        Conversation conversation = source.getConversation(conversationId);
+        Conversation conversation = source.getConversation(this, conversationId);
         if (conversation == null) {
-            source.close();
             return;
         }
 
@@ -104,7 +103,7 @@ public class ReplyService extends IntentService {
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
-        Cursor unseenMessages = source.getUnseenMessages();
+        Cursor unseenMessages = source.getUnseenMessages(this);
         if (unseenMessages.getCount() <= 0) {
             NotificationManagerCompat.from(this).cancelAll();
         } else {
@@ -115,8 +114,7 @@ public class ReplyService extends IntentService {
                 Account.get(this).deviceId,
                 conversationId);
 
-        unseenMessages.close();
-        source.close();
+        CursorUtil.closeSilent(unseenMessages);
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId);

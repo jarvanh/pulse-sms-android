@@ -89,11 +89,7 @@ public class AttachContactView extends FrameLayout {
 
         final Handler ui = new Handler();
         new Thread(() -> {
-            DataSource source = DataSource.getInstance(getContext());
-            source.open();
-            List<Conversation> conversations = source.getUnarchivedConversationsAsList();
-            source.close();
-
+            List<Conversation> conversations = DataSource.INSTANCE.getUnarchivedConversationsAsList(getContext());
             ui.post(() -> adapter.setContacts(conversations));
         }).start();
     }

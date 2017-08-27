@@ -17,6 +17,15 @@
 <changelog>
 
     <version
+        name="2.5.3"
+        description="August 26th, 2017">
+        <text>New "Two short, one long" vibration pattern</text>
+        <text>Performance improvements</text>
+        <text>Crash fixes</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.5.2"
         description="August 24th, 2017">
         <text>Bug fixes</text>

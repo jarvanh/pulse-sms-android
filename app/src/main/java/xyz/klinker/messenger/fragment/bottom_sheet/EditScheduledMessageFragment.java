@@ -72,21 +72,14 @@ public class EditScheduledMessageFragment extends TabletOptimizedBottomSheetDial
 
     private void save() {
         scheduledMessage.data = messageText.getText().toString();
-
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        source.updateScheduledMessage(scheduledMessage);
-        source.close();
+        DataSource.INSTANCE.updateScheduledMessage(getActivity(), scheduledMessage);
 
         dismiss();
         fragment.loadMessages();
     }
 
     private void delete() {
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        source.deleteScheduledMessage(scheduledMessage.id);
-        source.close();
+        DataSource.INSTANCE.deleteScheduledMessage(getActivity(), scheduledMessage.id);
 
         dismiss();
         fragment.loadMessages();

@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
+import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -43,6 +45,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -50,9 +53,10 @@ import static org.mockito.Mockito.when;
 public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     private NotificationService service;
+    private Context context = spy(RuntimeEnvironment.application);
 
     @Mock
-    private DataSource source;
+    private MockableDataSourceWrapper source;
 
     @Before
     public void setUp() {
@@ -72,10 +76,10 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void getUnseenConversations() {
         service = spy(service);
-        when(source.getUnseenMessages()).thenReturn(getUnseenCursor());
-        when(source.getConversation(1)).thenReturn(getConversation1());
-        when(source.getConversation(2)).thenReturn(getConversation2());
-        when(source.getConversation(3)).thenReturn(getConversation3());
+        doReturn(getUnseenCursor()).when(source).getUnseenMessages(any(Context.class));
+        doReturn(getConversation1()).when(source).getConversation(any(Context.class), eq(1L));
+        doReturn(getConversation2()).when(source).getConversation(any(Context.class), eq(2L));
+        doReturn(getConversation3()).when(source).getConversation(any(Context.class), eq(3L));
 
         List<NotificationConversation> conversations = NotificationService.getUnseenConversations(service, source);
 

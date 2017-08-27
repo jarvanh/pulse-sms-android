@@ -191,6 +191,10 @@ public class ConversationListFragment extends Fragment
     }
 
     public void dismissSnackbars(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+
         if (archiveSnackbar != null && archiveSnackbar.isShown()) {
             archiveSnackbar.dismiss();
 
@@ -207,21 +211,19 @@ public class ConversationListFragment extends Fragment
     }
 
     protected List<Conversation> getCursor(DataSource source) {
-        return source.getUnarchivedConversationsAsList();
+        return source.getUnarchivedConversationsAsList(getActivity());
     }
 
     public void loadConversations() {
         final Handler handler = new Handler();
         new Thread(() -> {
+            long startTime = System.currentTimeMillis();
+
             if (getActivity() == null) {
                 return;
             }
-
-            long startTime = System.currentTimeMillis();
-            final DataSource source = DataSource.getInstance(getActivity());
-            source.open();
-            final List<Conversation> conversations = getCursor(source);
-            source.close();
+            
+            final List<Conversation> conversations = getCursor(DataSource.INSTANCE);
 
             Log.v("conversation_load", "load took " + (
                     System.currentTimeMillis() - startTime) + " ms");
@@ -368,21 +370,18 @@ public class ConversationListFragment extends Fragment
     private void dismissDeleteSnackbar(final Activity activity, final int currentSize) {
         new Thread(() -> {
             if ((currentSize == -1 || pendingDelete.size() == currentSize) && activity != null) {
-                DataSource dataSource = DataSource.getInstance(activity);
-                dataSource.open();
+                DataSource dataSource = DataSource.INSTANCE;
 
                 // we were getting a concurrent modification exception, so
                 // copy this list and continue to delete in the background.
                 List<Conversation> copiedList = new ArrayList<>(pendingDelete);
                 for (Conversation conversation : copiedList) {
                     if (conversation != null) { // there are those blank convos that get populated with a new one
-                        dataSource.deleteConversation(conversation);
-                        SmsMmsUtils.deleteConversation(getActivity(),
-                                conversation.phoneNumbers);
+                        dataSource.deleteConversation(getActivity(), conversation);
+                        SmsMmsUtils.deleteConversation(getActivity(), conversation.phoneNumbers);
                     }
                 }
 
-                dataSource.close();
                 copiedList.clear();
                 pendingDelete = new ArrayList<>();
             }
@@ -395,7 +394,7 @@ public class ConversationListFragment extends Fragment
     }
 
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        dataSource.archiveConversation(conversation.id);
+        dataSource.archiveConversation(getActivity(), conversation.id);
     }
 
     @Override
@@ -439,19 +438,15 @@ public class ConversationListFragment extends Fragment
     private void dismissArchiveSnackbar(final Activity activity, final int currentSize) {
         new Thread(() -> {
             if ((currentSize == -1 || pendingArchive.size() == currentSize) && activity != null) {
-                DataSource dataSource = DataSource.getInstance(activity);
-                dataSource.open();
-
                 // we were getting a concurrent modification exception, so
                 // copy this list and continue to archive in the background.
                 List<Conversation> copiedList = new ArrayList<>(pendingArchive);
                 for (Conversation conversation : copiedList) {
                     if (conversation != null) {
-                        performArchiveOperation(dataSource, conversation);
+                        performArchiveOperation(DataSource.INSTANCE, conversation);
                     }
                 }
 
-                dataSource.close();
                 copiedList.clear();
                 pendingArchive = new ArrayList<>();
             }
@@ -502,12 +497,8 @@ public class ConversationListFragment extends Fragment
                 }
             }
 
-            DataSource source = DataSource.getInstance(getActivity());
-            source.open();
-            source.readConversations(getActivity(), markAsRead);
-            source.close();
-
-            handler.post(() -> loadConversations());
+            DataSource.INSTANCE.readConversations(getActivity(), markAsRead);
+            handler.post(this::loadConversations);
         }).start();
     }
 

@@ -26,6 +26,7 @@ import java.util.List;
 
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 import xyz.klinker.messenger.shared.util.SmsMmsUtils;
 
 /**
@@ -49,30 +50,24 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
             List<ContentValues> mmsParts = SmsMmsUtils.processMessage(message, -1, context);
             message.close();
 
-            DataSource source = DataSource.getInstance(context);
-            source.open();
+            DataSource source = DataSource.INSTANCE;
 
             for (ContentValues values : mmsParts) {
-                Cursor messages = source.searchMessages(values.getAsLong(Message.COLUMN_TIMESTAMP));
-
-                if (messages != null && messages.moveToFirst()) {
+                Cursor messages = source.searchMessages(context, values.getAsLong(Message.COLUMN_TIMESTAMP));
+                if (messages.moveToFirst()) {
                     do {
                         Message m = new Message();
                         m.fillFromCursor(messages);
 
                         if (m.type == Message.TYPE_SENDING) {
-                            source.updateMessageType(m.id, Message.TYPE_SENT);
+                            source.updateMessageType(context, m.id, Message.TYPE_SENT);
                             MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
                         }
                     } while (messages.moveToNext());
                 }
 
-                try {
-                    messages.close();
-                } catch (Exception e) { }
+                CursorUtil.closeSilent(message);
             }
-
-            source.close();
         }
 
         try {

@@ -25,6 +25,7 @@ import com.sgottard.sofa.support.BrowseSupportFragment;
 
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.CursorUtil;
 
 /**
  * A fragment that displays messages on the right side of the screen and conversations on the left
@@ -40,11 +41,10 @@ public class TvBrowseFragment extends BrowseSupportFragment {
     public void onStart() {
         super.onStart();
 
-        DataSource source = DataSource.getInstance(getActivity());
-        source.open();
-        Cursor conversations = source.getUnarchivedConversations();
+        DataSource source = DataSource.INSTANCE;
+        Cursor conversations = source.getUnarchivedConversations(getActivity());
 
-        if (conversations != null && conversations.moveToFirst()) {
+        if (conversations.moveToFirst()) {
             ArrayObjectAdapter adapter = new ArrayObjectAdapter();
             do {
                 Conversation conversation = new Conversation();
@@ -60,11 +60,7 @@ public class TvBrowseFragment extends BrowseSupportFragment {
             setAdapter(adapter);
         }
 
-        try {
-            conversations.close();
-        } catch (Exception e) { }
-
-        source.close();
+        CursorUtil.closeSilent(conversations);
     }
 
 }
