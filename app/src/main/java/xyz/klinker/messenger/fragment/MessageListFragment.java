@@ -1181,7 +1181,7 @@ public class MessageListFragment extends Fragment implements
         final String mimeType = attachedMimeType != null ?
                 attachedMimeType : MimeType.TEXT_PLAIN;
 
-        if (message.length() > 0 || uris.size() > 0) {
+        if ((message.length() > 0 || uris.size() > 0) && getActivity() != null) {
             Conversation conversation = source.getConversation(getActivity(), getConversationId());
 
             final Message m = new Message();
