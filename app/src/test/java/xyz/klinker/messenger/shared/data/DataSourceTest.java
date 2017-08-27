@@ -163,7 +163,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void deleteAllContacts() {
         when(database.delete("contact", null, null)).thenReturn(10);
-        source.deleteAllContacts(context);
+        assertEquals(10, source.deleteAllContacts(context));
     }
 
     @Test
