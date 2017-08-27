@@ -145,7 +145,10 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertContact() {
-        source.insertContact(context, new Contact());
+        Contact contact = new Contact();
+        contact.phoneNumber = "1234";
+
+        source.insertContact(context, contact);
         verify(database).insert(eq("contact"), eq((String) null), any(ContentValues.class));
     }
 

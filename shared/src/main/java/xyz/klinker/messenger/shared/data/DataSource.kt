@@ -237,12 +237,13 @@ object DataSource {
         for (i in contacts.indices) {
             val contact = contacts[i]
 
-            val values = ContentValues(7)
+            val values = ContentValues(8)
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, generateId())
-            values.put(Contact.COLUMN_PHONE_NUMBER, ContactUtils.getPlainNumber(contact.phoneNumber))
+            values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
+            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).sevenLetter)
             values.put(Contact.COLUMN_NAME, contact.name)
             values.put(Contact.COLUMN_COLOR, contact.colors.color)
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -270,14 +271,15 @@ object DataSource {
      * @return id of the inserted contact or -1 if the insert failed
      */
     fun insertContact(context: Context, contact: Contact): Long {
-        val values = ContentValues(7)
+        val values = ContentValues(8)
 
         if (contact.id <= 0) {
             contact.id = generateId()
         }
 
         values.put(Contact.COLUMN_ID, contact.id)
-        values.put(Contact.COLUMN_PHONE_NUMBER, ContactUtils.getPlainNumber(contact.phoneNumber))
+        values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
+        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).sevenLetter)
         values.put(Contact.COLUMN_NAME, contact.name)
         values.put(Contact.COLUMN_COLOR, contact.colors.color)
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -321,13 +323,14 @@ object DataSource {
      * @return Contact from the database
      */
     fun getContact(context: Context, phoneNumber: String): Contact? {
+        val idMatcher = SmsMmsUtils.createIdMatcher(phoneNumber).sevenLetter
         val cursor = try {
-            database(context).query(Contact.TABLE, null, Contact.COLUMN_PHONE_NUMBER + "=?",
-                    arrayOf(phoneNumber), null, null, null)
+            database(context).query(Contact.TABLE, null, Contact.COLUMN_ID_MATCHER + "=?",
+                    arrayOf(idMatcher), null, null, null)
         } catch (e: Exception) {
             ensureActionable(context)
-            database(context).query(Contact.TABLE, null, Contact.COLUMN_PHONE_NUMBER + "=?",
-                    arrayOf(phoneNumber), null, null, null)
+            database(context).query(Contact.TABLE, null, Contact.COLUMN_ID_MATCHER + "=?",
+                    arrayOf(idMatcher), null, null, null)
         }
 
         return if (cursor.moveToFirst()) {
@@ -353,22 +356,21 @@ object DataSource {
             return ArrayList()
         }
 
-        // Could we miss matching a contact here? Sometimes phone numbers are resolved as
-        // 5154224558 and other times it is +15154224558 depending on the carrier.
-        val array = numbers.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val array = numbers.split(", ".toRegex())
+                .dropLastWhile { it.isEmpty() }
+                .map { "%${SmsMmsUtils.createIdMatcher(it).sevenLetter}%" }
+                .toTypedArray()
+
         var where = ""
         when {
             array.isEmpty() -> return ArrayList()
             array.size == 1 -> {
-                array[0] = "%" + ContactUtils.getPlainNumber(array[0]) + "%"
-                where += Contact.COLUMN_PHONE_NUMBER + " LIKE ?"
+                where += Contact.COLUMN_ID_MATCHER + " LIKE ?"
             }
             else -> {
-                array[0] = "%" + ContactUtils.getPlainNumber(array[0]) + "%"
-                where = Contact.COLUMN_PHONE_NUMBER + " LIKE ?"
+                where = Contact.COLUMN_ID_MATCHER + " LIKE ?"
                 for (i in 1 until array.size) {
-                    array[i] = "%" + ContactUtils.getPlainNumber(array[i]) + "%"
-                    where += " OR " + Contact.COLUMN_PHONE_NUMBER + " LIKE ?"
+                    where += " OR " + Contact.COLUMN_ID_MATCHER + " LIKE ?"
                 }
             }
         }

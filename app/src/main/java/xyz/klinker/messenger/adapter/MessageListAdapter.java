@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -486,7 +487,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
 
             return type;
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException|CursorIndexOutOfBoundsException e) {
             return -1;
         }
     }
