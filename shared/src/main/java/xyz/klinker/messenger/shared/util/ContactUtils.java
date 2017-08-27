@@ -322,20 +322,7 @@ public class ContactUtils {
      */
     public static List<Contact> queryContacts(Context context, DataSource dataSource) {
         List<Contact> contacts = new ArrayList<>();
-        List<Conversation> conversations = new ArrayList<>();
-        Cursor convoCursor = dataSource.getAllConversations(context);
-
-        if (convoCursor.moveToFirst()) {
-            do {
-                Conversation conversation = new Conversation();
-                conversation.fillFromCursor(convoCursor);
-                conversations.add(conversation);
-            } while (convoCursor.moveToNext());
-        }
-
-        try {
-            convoCursor.close();
-        } catch (Exception e) { }
+        List<Conversation> conversations = dataSource.getAllConversationsAsList(context);
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String[] projection = new String[]{
@@ -367,13 +354,9 @@ public class ContactUtils {
 
                 contacts.add(contact);
             } while (cursor.moveToNext());
-
-            cursor.close();
-        } else {
-            try {
-                cursor.close();
-            } catch (Exception e) { }
         }
+
+        CursorUtil.closeSilent(cursor);
 
         conversations.clear();
         return contacts;
