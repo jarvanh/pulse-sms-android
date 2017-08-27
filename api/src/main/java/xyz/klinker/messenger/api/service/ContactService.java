@@ -25,6 +25,9 @@ public interface ContactService {
     @POST("contacts/remove/{phone_number}")
     Call<Void> remove(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId);
 
+    @POST("contacts/clear")
+    Call<Void> clear(@Query("account_id") String accountId);
+
     @GET("contacts")
     Call<ContactBody[]> list(@Query("account_id") String accountId);
 }
