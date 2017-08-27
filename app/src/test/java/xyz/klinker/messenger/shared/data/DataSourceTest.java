@@ -161,6 +161,12 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void deleteAllContacts() {
+        when(database.delete("contact", null, null)).thenReturn(10);
+        source.deleteAllContacts(context);
+    }
+
+    @Test
     public void insertConversations() {
         source.insertConversations(
                 getFakeConversations(context.getResources()),

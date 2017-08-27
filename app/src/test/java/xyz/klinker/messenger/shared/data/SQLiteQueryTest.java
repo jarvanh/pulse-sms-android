@@ -211,6 +211,14 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void deleteAllContacts() {
+        source.deleteAllContacts(context);
+        int contactSize = source.getContacts(context).getCount();
+
+        assertEquals(0, contactSize);
+    }
+
+    @Test
     public void deleteSingleContactById() {
         int initialContactSize = source.getContacts(context).getCount();
         source.deleteContacts(context, new String[] { "1" });

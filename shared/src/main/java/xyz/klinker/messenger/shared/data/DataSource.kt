@@ -484,6 +484,23 @@ object DataSource {
             database(context).delete(Contact.TABLE, where, ids)
         }
     }
+    /**
+     * Deletes a contact from the database.
+     *
+     * @param ids the phone number to delete
+     */
+    fun deleteAllContacts(context: Context) {
+        val removed = try {
+            database(context).delete(Contact.TABLE, null, null)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(Contact.TABLE, null, null)
+        }
+
+        if (removed > 0) {
+            apiUtils.clearContacts(accountId(context))
+        }
+    }
 
     /**
      * Updates the conversation with given values.
