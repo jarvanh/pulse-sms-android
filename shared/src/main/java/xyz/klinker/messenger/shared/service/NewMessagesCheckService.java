@@ -90,7 +90,7 @@ public class NewMessagesCheckService extends IntentService {
                 int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
                 long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
 
-                if (messageType == Message.TYPE_SENT) {
+                if (messageType != Message.TYPE_RECEIVED) {
                     // sent message don't show a signature in the app, but they would be written to the internal database with one
                     // received messages don't need to worry about this, and shouldn't. If you send yourself a message, then it would come
                     // in with a signature, if this was applied to received messages, then that received message would get duplicated
