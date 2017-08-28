@@ -123,78 +123,36 @@ public class ContactUtils {
         }
 
         for (int i = 0; i < number.length; i++) {
+            String origin = number[i];
+
             try {
-                String origin = number[i];
+                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                        Uri.encode(origin));
 
-                Uri phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(origin));
+                Cursor phonesCursor = context.getContentResolver()
+                        .query(phoneUri, new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME },
+                                null, null, null);
 
-                Cursor phonesCursor = null;
+                if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                    names += ", " + phonesCursor.getString(0).replaceAll(",", "");
+                } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                    phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+                            Uri.encode(origin));
 
-                try {
                     phonesCursor = context.getContentResolver()
-                            .query(phoneUri, new String[]{
-                                            ContactsContract.PhoneLookup.DISPLAY_NAME,
-                                            ContactsContract.Contacts._ID
-                                    }, null, null,
-                                    ContactsContract.PhoneLookup.DISPLAY_NAME + " desc limit 1");
-                } catch (Exception e) {
-                    // funky placeholder number coming from an mms message, don't do anything with it
-                    if (phonesCursor != null) {
-                        phonesCursor.close();
-                    }
+                            .query(phoneUri, new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME },
+                                    null, null, null);
 
-                    return numbers;
-                }
-
-                try {
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                    } else if (origin.length() > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
-                        phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
-                                Uri.encode(origin));
-                        try {
-                            phonesCursor = context.getContentResolver()
-                                    .query(phoneUri, new String[]{
-                                                    ContactsContract.Contacts.DISPLAY_NAME,
-                                                    ContactsContract.CommonDataKinds.Phone._ID
-                                            }, null, null,
-                                            ContactsContract.Contacts.DISPLAY_NAME + " desc limit 1");
-                        } catch (Exception e) {
-                            // funky placeholder number coming from an mms message, dont do anything with it
-                            if (phonesCursor != null) {
-                                phonesCursor.close();
-                            }
-
-                            return numbers;
-                        }
-
-                        if (phonesCursor != null && phonesCursor.moveToFirst()) {
-                            names += ", " + phonesCursor.getString(0).replaceAll(",", "");
-                        } else {
-                            try {
-                                names += ", " + PhoneNumberUtils.format(number[i]);
-                            } catch (Exception e) {
-                                names += ", " + number;
-                            }
-                        }
-                    } else {
-                        try {
-                            names += ", " + PhoneNumberUtils.format(number[i]);
-                        } catch (Exception e) {
-                            names += ", " + number;
-                        }
-                    }
-                } finally {
-                    if (phonesCursor != null) {
-                        phonesCursor.close();
                     }
                 }
-            } catch (IllegalArgumentException e) {
-                try {
-                    names += ", " + PhoneNumberUtils.format(number[i]);
-                } catch (Exception f) {
-                    names += ", " + number;
+
+                if (phonesCursor != null) {
+                    phonesCursor.close();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
