@@ -105,7 +105,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
                         showStorageChooser();
                     } else {
                         if (getActivity() != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, -1);
+                            getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
                         } else {
                             showStorageChooser();
                         }

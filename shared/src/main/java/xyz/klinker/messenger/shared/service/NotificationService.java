@@ -658,20 +658,16 @@ public class NotificationService extends IntentService {
             NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
         }
 
-        try {
-            if (!TvUtils.hasTouchscreen(this)) {
-                if (notificationWindowManager == null) {
-                    notificationWindowManager = new NotificationWindowManager(this);
-                }
-
-                NotificationView.newInstance(notificationWindowManager)
-                        .setImage(null)
-                        .setTitle(conversation.title)
-                        .setDescription(content)
-                        .show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!TvUtils.hasTouchscreen(this)) {
+//            if (notificationWindowManager == null) {
+//                notificationWindowManager = new NotificationWindowManager(this);
+//            }
+//
+//            NotificationView.newInstance(notificationWindowManager)
+//                    .setImage(null)
+//                    .setTitle(conversation.title)
+//                    .setDescription(content)
+//                    .show();
         }
     }
 
