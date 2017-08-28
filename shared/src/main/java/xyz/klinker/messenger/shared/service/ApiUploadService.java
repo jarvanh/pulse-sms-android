@@ -133,7 +133,7 @@ public class ApiUploadService extends Service {
             long startTime = System.currentTimeMillis();
             uploadMessages();
             uploadConversations();
-            uploadContacts();
+            uploadContacts(this, source, encryptionUtils, account, apiUtils);
             uploadBlacklists();
             uploadScheduledMessages();
             uploadDrafts();
@@ -266,9 +266,9 @@ public class ApiUploadService extends Service {
         CursorUtil.closeSilent(cursor);
     }
 
-    private void uploadContacts() {
+    protected static void uploadContacts(Context context, DataSource source, EncryptionUtils encryptionUtils, Account account, ApiUtils apiUtils) {
         long startTime = System.currentTimeMillis();
-        Cursor cursor = source.getContacts(this);
+        Cursor cursor = source.getContacts(context);
 
         if (cursor.moveToFirst()) {
             List<ContactBody> contacts = new ArrayList<>();

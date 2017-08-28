@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="2.5.4"
+        description="August 28th, 2017">
+        <text>Improvements around contact syncing for the web version of Pulse</text>
+        <text>Improvements around contact message colors in group conversations</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.5.3"
         description="August 26th, 2017">
         <text>New "Two short, one long" vibration pattern</text>

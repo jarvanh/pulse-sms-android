@@ -14,6 +14,7 @@ import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.service.ContactResyncService;
 import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
 import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
@@ -38,6 +39,8 @@ public class UpdateUtils {
         Settings settings = Settings.get(context);
         MmsSettings mmsSettings = MmsSettings.get(context);
 
+        int storedAppVersion = sharedPreferences.getInt("app_version", 0);
+
         if (sharedPreferences.getBoolean("v2.5.0.1", true)) {
             String colorSetName = sharedPreferences.getString(context.getString(R.string.pref_global_color_theme), "default");
             ColorSet legacyGlobalTheme = ColorSet.getFromString(context, colorSetName);
@@ -54,7 +57,16 @@ public class UpdateUtils {
             settings.forceUpdate(context);
         }
 
-        int storedAppVersion = sharedPreferences.getInt("app_version", 0);
+        if (sharedPreferences.getBoolean("v2.5.4.2", true)) {
+            if (storedAppVersion != 0) {
+                context.startService(new Intent(context, ContactResyncService.class));
+            }
+
+            sharedPreferences.edit()
+                    .putBoolean("v2.5.4.2", false)
+                    .commit();
+        }
+
         int currentAppVersion = getAppVersion();
 
         if (storedAppVersion != currentAppVersion) {

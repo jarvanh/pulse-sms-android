@@ -234,7 +234,7 @@ public class ApiUtils {
     }
 
     /**
-     * Deletes a conversation and all of its messages.
+     * Deletes a contact
      */
     public void deleteContact(final String accountId, final String phoneNumber,
                               final EncryptionUtils encryptionUtils) {
@@ -244,6 +244,19 @@ public class ApiUtils {
 
         String message = "delete contact";
         Call<Void> call = api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId);
+
+        call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
+    }
+    /**
+     * Deletes a conversation and all of its messages.
+     */
+    public void clearContacts(final String accountId) {
+        if (!active || accountId == null) {
+            return;
+        }
+
+        String message = "delete contact";
+        Call<Void> call = api.contact().clear(accountId);
 
         call.enqueue(new LoggingRetryableCallback<>(call, RETRY_COUNT, message));
     }

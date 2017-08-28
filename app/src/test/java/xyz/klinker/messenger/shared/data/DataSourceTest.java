@@ -145,7 +145,10 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertContact() {
-        source.insertContact(context, new Contact());
+        Contact contact = new Contact();
+        contact.phoneNumber = "1234";
+
+        source.insertContact(context, contact);
         verify(database).insert(eq("contact"), eq((String) null), any(ContentValues.class));
     }
 
@@ -155,6 +158,12 @@ public class DataSourceTest extends MessengerRobolectricSuite {
                 "name ASC")).thenReturn(cursor);
 
         assertEquals(cursor, source.getContacts(context));
+    }
+
+    @Test
+    public void deleteAllContacts() {
+        when(database.delete("contact", null, null)).thenReturn(10);
+        assertEquals(10, source.deleteAllContacts(context));
     }
 
     @Test

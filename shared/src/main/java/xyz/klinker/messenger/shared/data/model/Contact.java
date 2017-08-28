@@ -20,11 +20,13 @@ public class Contact implements DatabaseSQLiteHelper.DatabaseTable {
     public static final String COLUMN_COLOR_DARK = "color_dark";
     public static final String COLUMN_COLOR_LIGHT = "color_light";
     public static final String COLUMN_COLOR_ACCENT = "color_accent";
+    public static final String COLUMN_ID_MATCHER = "id_matcher"; // created in database v9
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
             COLUMN_ID + " integer primary key, " +
             COLUMN_PHONE_NUMBER + " varchar(255) not null, " +
+            COLUMN_ID_MATCHER + " text not null, " +
             COLUMN_NAME + " varchar(255) not null, " +
             COLUMN_COLOR + " integer not null, " +
             COLUMN_COLOR_DARK + " integer not null, " +
@@ -34,6 +36,7 @@ public class Contact implements DatabaseSQLiteHelper.DatabaseTable {
 
     public long id;
     public String phoneNumber;
+    public String idMatcher;
     public String name;
     public ColorSet colors = new ColorSet();
 
@@ -74,6 +77,8 @@ public class Contact implements DatabaseSQLiteHelper.DatabaseTable {
                 this.id = cursor.getLong(i);
             } else if (column.equals(COLUMN_PHONE_NUMBER)) {
                 this.phoneNumber = cursor.getString(i);
+            } else if (column.equals(COLUMN_ID_MATCHER)) {
+                this.idMatcher = cursor.getString(i);
             } else if (column.equals(COLUMN_NAME)) {
                 this.name = cursor.getString(i);
             } else if (column.equals(COLUMN_COLOR)) {
