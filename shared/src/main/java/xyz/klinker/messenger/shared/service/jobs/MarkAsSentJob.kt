@@ -13,6 +13,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.TimeUtils
+import java.util.*
 
 /**
  * Some devices don't seem to ever get messages marked as sent and I don't really know why.
@@ -51,8 +52,11 @@ class MarkAsSentJob : BackgroundJob() {
             val bundle = PersistableBundle()
             bundle.putLong(EXTRA_MESSAGE_ID, messageId)
 
+            // so that we can schedule 50 of these. Aparently there is a max of 100 unique jobs
+            val randomJobId = Random().nextInt(50)
+
             val component = ComponentName(context, MarkAsSentJob::class.java)
-            val builder = JobInfo.Builder(messageId.toInt(), component)
+            val builder = JobInfo.Builder(randomJobId + 145356, component)
                     .setMinimumLatency(MESSAGE_SENDING_TIMEOUT / 2)
                     .setOverrideDeadline(MESSAGE_SENDING_TIMEOUT)
                     .setExtras(bundle)
@@ -61,12 +65,7 @@ class MarkAsSentJob : BackgroundJob() {
                     .setRequiresDeviceIdle(false)
 
             val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-
-            try {
-                jobScheduler.schedule(builder.build())
-            } catch (e: Exception) {
-                // can't schedule more than 100 distinct jobs
-            }
+            jobScheduler.schedule(builder.build())
         }
     }
 }
