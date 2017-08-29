@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -70,72 +71,66 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage();
-            }
-        });
+        fab.setOnClickListener(view1 -> sendMessage());
 
         loadContacts();
     }
 
     private void loadContacts() {
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Cursor cursor = getActivity().getContentResolver()
-                        .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                new String[]{
-                                        ContactsContract.CommonDataKinds.Phone._ID,
-                                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                                        ContactsContract.CommonDataKinds.Phone.NUMBER}
-                                , null, null,
-                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
 
-                final List<Conversation> contacts = new ArrayList<>();
-                if (cursor != null && cursor.moveToFirst()) {
-                    do {
-                        try {
-                            Conversation conversation = new Conversation();
-                            conversation.title = cursor.getString(1);
-                            conversation.phoneNumbers = PhoneNumberUtils
-                                    .clearFormatting(cursor.getString(2));
-                            conversation.imageUri = ContactUtils
-                                    .findImageUri(conversation.phoneNumbers, getActivity());
-                            conversation.simSubscriptionId = -1;
+        new Thread(() -> {
+            Cursor cursor = activity.getContentResolver()
+                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            new String[]{
+                                    ContactsContract.CommonDataKinds.Phone._ID,
+                                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                                    ContactsContract.CommonDataKinds.Phone.NUMBER}
+                            , null, null,
+                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
-                            Bitmap image = ImageUtils.getContactImage(conversation.imageUri, getActivity());
-                            if (image == null) {
-                                conversation.imageUri = null;
-                            } else {
-                                image.recycle();
-                            }
+            final List<Conversation> contacts = new ArrayList<>();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    try {
+                        Conversation conversation = new Conversation();
+                        conversation.title = cursor.getString(1);
+                        conversation.phoneNumbers = PhoneNumberUtils
+                                .clearFormatting(cursor.getString(2));
+                        conversation.imageUri = ContactUtils
+                                .findImageUri(conversation.phoneNumbers, getActivity());
+                        conversation.simSubscriptionId = -1;
 
-                            if (contacts.size() == 0 ||
-                                    !conversation.title.equals(contacts.get(contacts.size() - 1).title)) {
-                                contacts.add(conversation);
-                            }
-                        } catch (NullPointerException e) {
-                            return;
+                        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, getActivity());
+                        if (image == null) {
+                            conversation.imageUri = null;
+                        } else {
+                            image.recycle();
                         }
-                    } while (cursor.moveToNext());
-                }
 
-                try {
-                    cursor.close();
-                } catch (Exception e) { }
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (getActivity() != null) {
-                            setContacts(contacts);
+                        if (contacts.size() == 0 ||
+                                !conversation.title.equals(contacts.get(contacts.size() - 1).title)) {
+                            contacts.add(conversation);
                         }
+                    } catch (NullPointerException e) {
+                        return;
                     }
-                });
+                } while (cursor.moveToNext());
             }
+
+            try {
+                cursor.close();
+            } catch (Exception e) { }
+
+            handler.post(() -> {
+                if (getActivity() != null) {
+                    setContacts(contacts);
+                }
+            });
         }).start();
     }
 

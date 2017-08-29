@@ -897,7 +897,7 @@ public class  MessengerActivity extends AppCompatActivity
 
             for (int i = 0; i < numbers.length; i++) {
                 Conversation c = new Conversation();
-                c.title = names[i];
+                c.title = i < names.length ? names[i] : "";
                 c.phoneNumbers = numbers[i];
                 c.imageUri = ContactUtils.findImageUri(numbers[i], this);
 

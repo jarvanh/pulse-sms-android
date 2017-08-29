@@ -466,7 +466,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             conversationId = source.insertMessage(message, phoneNumbers, this);
         }
 
-        source.insertDraft(this, conversationId, data, mimeType);
+        if (data != null) {
+            source.insertDraft(this, conversationId, data, mimeType);
+        }
+
         showConversation(conversationId);
     }
 
@@ -476,7 +479,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         if (isVcard) {
             sendvCard(mimeType, data, conversationId);
         } else {
-            DataSource.INSTANCE.insertDraft(this, conversationId, data, mimeType);
+            if (data != null) {
+                DataSource.INSTANCE.insertDraft(this, conversationId, data, mimeType);
+            }
+
             showConversation(conversationId);
         }
     }

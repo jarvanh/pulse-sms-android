@@ -211,8 +211,9 @@ public class ConversationListFragment extends Fragment
     }
 
     protected List<Conversation> getCursor(DataSource source) {
-        if (getActivity() != null) {
-            return source.getUnarchivedConversationsAsList(getActivity());
+        final Activity activity = getActivity();
+        if (activity != null) {
+            return source.getUnarchivedConversationsAsList(activity);
         } else {
             return new ArrayList<>();
         }
@@ -364,7 +365,9 @@ public class ConversationListFragment extends Fragment
         SnackbarAnimationFix.apply(deleteSnackbar);
         deleteSnackbar.show();
 
-        NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
+        if (conversation != null) {
+            NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
+        }
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed

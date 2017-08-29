@@ -47,6 +47,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -181,6 +182,8 @@ public class MessageListFragment extends Fragment implements
     private static final int RESULT_GALLERY_PICKER_REQUEST = 6;
     public static final int RESULT_CAPTURE_IMAGE_REQUEST = 7;
 
+    private FragmentActivity activity;
+
     private DataSource source;
     private View appBarLayout;
     private Toolbar toolbar;
@@ -267,6 +270,7 @@ public class MessageListFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle) {
         source = DataSource.INSTANCE;
+        activity = getActivity();
 
         delayedSendingHandler = new Handler();
         multiSelect = new MessageMultiSelectDelegate(this);
@@ -315,8 +319,8 @@ public class MessageListFragment extends Fragment implements
                 @Override
                 public void onDragDismissed() {
                     new Handler().postDelayed(() -> {
-                        if (getActivity() != null) {
-                            getActivity().onBackPressed();
+                        if (activity != null) {
+                            activity.onBackPressed();
                         }
                     }, keyboardOpen ? 300 : 100);
 
@@ -361,7 +365,7 @@ public class MessageListFragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         updatedReceiver = new MessageListUpdatedReceiver(this);
-        getActivity().registerReceiver(updatedReceiver,
+        activity.registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
 
         if (extraMarginLeft != 0 || extraMarginTop != 0) {
@@ -371,8 +375,8 @@ public class MessageListFragment extends Fragment implements
             view.invalidate();
         }
 
-        if (Settings.get(getActivity()).rounderBubbles) {
-            messageEntry.setBackground(getActivity().getResources().getDrawable(R.drawable.message_circle));
+        if (Settings.get(activity).rounderBubbles) {
+            messageEntry.setBackground(activity.getResources().getDrawable(R.drawable.message_circle));
         }
     }
 
@@ -409,7 +413,7 @@ public class MessageListFragment extends Fragment implements
         super.onDestroyView();
 
         if (updatedReceiver != null) {
-            getActivity().unregisterReceiver(updatedReceiver);
+            activity.unregisterReceiver(updatedReceiver);
             updatedReceiver = null;
         }
 
@@ -425,19 +429,19 @@ public class MessageListFragment extends Fragment implements
     public void createDrafts() {
         if (sendProgress.getVisibility() != View.VISIBLE && messageEntry.getText() != null && messageEntry.getText().length() > 0 && textChanged) {
             if (drafts.size() > 0) {
-                source.deleteDrafts(getActivity(), getConversationId());
+                source.deleteDrafts(activity, getConversationId());
             }
 
-            source.insertDraft(getActivity(), getConversationId(),
+            source.insertDraft(activity, getConversationId(),
                     messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
         } else if (messageEntry.getText() != null && messageEntry.getText().length() == 0 && textChanged) {
             if (drafts.size() > 0) {
-                source.deleteDrafts(getActivity(), getConversationId());
+                source.deleteDrafts(activity, getConversationId());
             }
         }
 
         if (attachedUri != null) {
-            source.insertDraft(getActivity(), getConversationId(), attachedUri.toString(), attachedMimeType);
+            source.insertDraft(activity, getConversationId(), attachedUri.toString(), attachedMimeType);
         }
     }
 
@@ -471,7 +475,7 @@ public class MessageListFragment extends Fragment implements
             messageEntry.setHint(R.string.type_message);
         }
 
-        Settings settings = Settings.get(getActivity());
+        Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
             toolbar.setBackgroundColor(settings.mainColorSet.color);
             send.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
@@ -496,7 +500,7 @@ public class MessageListFragment extends Fragment implements
 
         if (!getResources().getBoolean(R.bool.pin_drawer)) {
             // phone
-            DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+            DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
             if (drawerLayout != null) {
                 drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
                     @Override
@@ -521,18 +525,18 @@ public class MessageListFragment extends Fragment implements
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(view -> {
                 new Handler().postDelayed(() -> {
-                    if (getActivity() != null) {
-                        getActivity().onBackPressed();
+                    if (activity != null) {
+                        activity.onBackPressed();
                     }
                 }, keyboardOpen ? 300 : 100);
 
                 dismissKeyboard();
             });
         } else {
-            setNameAndDrawerColor(getActivity());
+            setNameAndDrawerColor(activity);
         }
 
-        ColorUtils.adjustStatusBarColor(colorDarker, getActivity());
+        ColorUtils.adjustStatusBarColor(colorDarker, activity);
 
         new Handler().postDelayed(() -> {
             toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
@@ -540,16 +544,16 @@ public class MessageListFragment extends Fragment implements
 
             try {
                 MenuItem callItem = toolbar.getMenu().findItem(R.id.menu_call);
-                ImageView image = new ImageView(getActivity());
+                ImageView image = new ImageView(activity);
                 image.setImageResource(R.drawable.ic_call);
-                image.setPaddingRelative(0, 0, DensityUtil.toDp(getActivity(), 12), 0);
+                image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 12), 0);
                 callItem.setActionView(image);
                 TooltipCompat.setTooltipText(callItem.getActionView(), getString(R.string.menu_call));
 
                 image.setOnClickListener(view -> {
                     new Handler().postDelayed(() -> {
-                        if (getActivity() != null) {
-                            ((MessengerActivity) getActivity()).menuItemClicked(R.id.menu_call);
+                        if (activity != null) {
+                            ((MessengerActivity) activity).menuItemClicked(R.id.menu_call);
                         }
                     }, keyboardOpen ? 300 : 100);
 
@@ -557,7 +561,7 @@ public class MessageListFragment extends Fragment implements
                 });
 
                 image.setOnLongClickListener(view -> {
-                    Toast.makeText(getActivity(), R.string.menu_call, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, R.string.menu_call, Toast.LENGTH_SHORT).show();
                     return true;
                 });
             } catch (Exception e) {
@@ -566,8 +570,8 @@ public class MessageListFragment extends Fragment implements
 
             toolbar.setOnMenuItemClickListener(item -> {
                 new Handler().postDelayed(() -> {
-                    if (getActivity() != null) {
-                        ((MessengerActivity) getActivity()).menuItemClicked(item.getItemId());
+                    if (activity != null) {
+                        ((MessengerActivity) activity).menuItemClicked(item.getItemId());
                     }
                 }, keyboardOpen ? 300 : 100);
 
@@ -580,14 +584,14 @@ public class MessageListFragment extends Fragment implements
             }
 
             if (!getResources().getBoolean(R.bool.pin_drawer)) {
-                setNameAndDrawerColor(getActivity());
+                setNameAndDrawerColor(activity);
             }
 
             ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
             ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent);
         }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
 
-        if (!TvUtils.hasTouchscreen(getActivity())) {
+        if (!TvUtils.hasTouchscreen(activity)) {
             appBarLayout.setVisibility(View.GONE);
         }
     }
@@ -617,7 +621,7 @@ public class MessageListFragment extends Fragment implements
 
             image.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
             if (imageUri != null) {
-                Glide.with(getActivity())
+                Glide.with(activity)
                         .load(Uri.parse(imageUri))
                         .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .into(image);
@@ -642,14 +646,14 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initSendbar() {
-        new KeyboardLayoutHelper(getActivity()).applyLayout(messageEntry);
-        messageEntry.setTextSize(Settings.get(getActivity()).largeFont);
+        new KeyboardLayoutHelper(activity).applyLayout(messageEntry);
+        messageEntry.setTextSize(Settings.get(activity).largeFont);
 
         messageEntry.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             boolean handled = false;
 
             if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
-                    Settings.get(getActivity()).keyboardLayout != KeyboardLayout.ENTER &&
+                    Settings.get(activity).keyboardLayout != KeyboardLayout.ENTER &&
                     keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
                     actionId == EditorInfo.IME_ACTION_SEND) {
                 requestPermissionThenSend();
@@ -667,7 +671,7 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        final boolean sendOnEnter = Settings.get(getActivity()).keyboardLayout == KeyboardLayout.SEND;
+        final boolean sendOnEnter = Settings.get(activity).keyboardLayout == KeyboardLayout.SEND;
         messageEntry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -697,7 +701,7 @@ public class MessageListFragment extends Fragment implements
         sendProgress.setProgressTintMode(PorterDuff.Mode.SRC_IN);
         send.setOnClickListener(view -> requestPermissionThenSend());
 
-        String signature = Settings.get(getActivity()).signature;
+        String signature = Settings.get(activity).signature;
         if (signature != null && !signature.isEmpty()) {
             send.setOnLongClickListener(view -> {
                 requestPermissionThenSend(true);
@@ -715,10 +719,10 @@ public class MessageListFragment extends Fragment implements
                 options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
                 options.setCompressionQuality(100);
 
-                File destination = File.createTempFile("ucrop", "jpg", getActivity().getCacheDir());
+                File destination = File.createTempFile("ucrop", "jpg", activity.getCacheDir());
                 UCrop.of(attachedUri, Uri.fromFile(destination))
                         .withOptions(options)
-                        .start(getActivity());
+                        .start(activity);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -740,8 +744,8 @@ public class MessageListFragment extends Fragment implements
 
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
-            Settings settings = Settings.get(getActivity());
-            MmsSettings mmsSettings = MmsSettings.get(getActivity());
+            Settings settings = Settings.get(activity);
+            MmsSettings mmsSettings = MmsSettings.get(activity);
             String text = messageEntry.getText().toString();
 
             counter.setText(MessageCountHelper.getMessageCounterText(settings, mmsSettings, text));
@@ -752,7 +756,7 @@ public class MessageListFragment extends Fragment implements
 
     private boolean ignoreCounterText() {
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
-        return !Account.get(getActivity()).primary &&
+        return !Account.get(activity).primary &&
                 (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
                         Build.MANUFACTURER.toLowerCase().equals("sony") || Build.MANUFACTURER.toLowerCase().equals("xiaomi") ||
                         Build.MODEL.toLowerCase().equals("sm-t800") || Build.MANUFACTURER.toLowerCase().equals("lge") ||
@@ -787,7 +791,7 @@ public class MessageListFragment extends Fragment implements
         attachContact.setOnClickListener(view -> attachContact());
 
         boolean colorButtonsDark = false;
-        Settings settings = Settings.get(getActivity());
+        Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
             attachButtonHolder.setBackgroundColor(settings.mainColorSet.color);
             if (!ColorUtils.isColorDark(settings.mainColorSet.color)) {
@@ -813,7 +817,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initAttachHolder() {
-        if (!TvUtils.hasTouchscreen(getActivity())) {
+        if (!TvUtils.hasTouchscreen(activity)) {
             attach.setVisibility(View.GONE);
             send.setNextFocusDownId(R.id.message_entry);
         }
@@ -862,14 +866,14 @@ public class MessageListFragment extends Fragment implements
     private void initRecycler() {
         ColorUtils.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
 
-        manager = new LinearLayoutManager(getActivity());
+        manager = new LinearLayoutManager(activity);
         manager.setStackFromEnd(true);
         messageList.setLayoutManager(manager);
         adapter = null;
 
-        final Settings settings = Settings.get(getActivity());
+        final Settings settings = Settings.get(activity);
         dragScrollBar.setIndicator(new DateAndTimeIndicator(
-                                getActivity(), true, true, true, false),
+                                activity, true, true, true, false),
                         true)
                 .setHandleColour(settings.useGlobalThemeColor ?
                         settings.mainColorSet.color : getArguments().getInt(ARG_COLOR))
@@ -893,14 +897,14 @@ public class MessageListFragment extends Fragment implements
     private void dismissNotification() {
         try {
             if (dismissNotification && notificationActive()) {
-                NotificationManagerCompat.from(getActivity())
+                NotificationManagerCompat.from(activity)
                         .cancel((int) getConversationId());
 
-                new ApiUtils().dismissNotification(Account.get(getActivity()).accountId,
-                        Account.get(getActivity()).deviceId,
+                new ApiUtils().dismissNotification(Account.get(activity).accountId,
+                        Account.get(activity).deviceId,
                         getConversationId());
 
-                NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
+                NotificationUtils.cancelGroupedNotificationWithNoContent(activity);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -911,7 +915,7 @@ public class MessageListFragment extends Fragment implements
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         } else {
-            NotificationManager manager = (NotificationManager) getActivity()
+            NotificationManager manager = (NotificationManager) activity
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             StatusBarNotification[] notifications = manager.getActiveNotifications();
 
@@ -936,17 +940,17 @@ public class MessageListFragment extends Fragment implements
             try {
                 listRefreshMonitor.incrementRefreshThreadsCount();
                 long startTime = System.currentTimeMillis();
-                drafts = source.getDrafts(getActivity(), conversationId);
+                drafts = source.getDrafts(activity, conversationId);
 
-                source.readConversation(getActivity(), conversationId);
-                final Cursor cursor = source.getMessages(getActivity(), conversationId);
+                source.readConversation(activity, conversationId);
+                final Cursor cursor = source.getMessages(activity, conversationId);
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
                 final String title = getArguments().getString(ARG_TITLE);
 
                 if (contactMap == null || contactByNameMap == null) {
-                    final List<Contact> contacts = source.getContacts(getActivity(), numbers);
-                    final List<Contact> contactsByName = source.getContactsByNames(getActivity(), title);
+                    final List<Contact> contacts = source.getContacts(activity, numbers);
+                    final List<Contact> contactsByName = source.getContactsByNames(activity, title);
                     contactMap = fillMapByNumber(numbers, contacts);
                     contactByNameMap = fillMapByName(title, contactsByName);
                 }
@@ -993,8 +997,8 @@ public class MessageListFragment extends Fragment implements
 
                 if (!getArguments().getBoolean(ARG_IS_GROUP)) {
                     String number = getArguments().getString(ARG_PHONE_NUMBERS);
-                    final String name = ContactUtils.findContactNames(number, getActivity());
-                    String photoUri = ContactUtils.findImageUri(number, getActivity());
+                    final String name = ContactUtils.findContactNames(number, activity);
+                    String photoUri = ContactUtils.findImageUri(number, activity);
                     if (photoUri != null && !photoUri.isEmpty()) {
                         photoUri += "/photo";
                     }
@@ -1002,10 +1006,10 @@ public class MessageListFragment extends Fragment implements
                     if (!name.equals(getArguments().getString(ARG_TITLE)) &&
                             !PhoneNumberUtils.checkEquality(name, number)) {
                         Log.v(TAG, "contact name and conversation name do not match, updating");
-                        source.updateConversationTitle(getActivity(),
+                        source.updateConversationTitle(activity,
                                 getArguments().getLong(ARG_CONVERSATION_ID), name);
 
-                        ConversationListFragment fragment = (ConversationListFragment) getActivity()
+                        ConversationListFragment fragment = (ConversationListFragment) activity
                                 .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
 
                         if (fragment != null) {
@@ -1017,7 +1021,7 @@ public class MessageListFragment extends Fragment implements
 
                     String originalImage = getArguments().getString(ARG_IMAGE_URI);
                     if ((photoUri != null && (!photoUri.equals(originalImage)) || originalImage == null || originalImage.isEmpty())) {
-                        source.updateConversationImage(getActivity(), getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
+                        source.updateConversationImage(activity, getArguments().getLong(ARG_CONVERSATION_ID), photoUri);
                     }
                 }
 
@@ -1047,7 +1051,7 @@ public class MessageListFragment extends Fragment implements
     private Map<String, Contact> fillMapByNumber(String numbers, List<Contact> contacts) {
         try {
             return ContactUtils.getMessageFromMapping(
-                    numbers, contacts, source, getActivity()
+                    numbers, contacts, source, activity
             );
         } catch (Exception e) {
             return new HashMap<>();
@@ -1075,8 +1079,8 @@ public class MessageListFragment extends Fragment implements
             adapter.addMessage(messageList, messages);
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
-                    Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).mainColorSet.colorAccent :
+                    Settings.get(activity).useGlobalThemeColor ?
+                            Settings.get(activity).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
@@ -1118,7 +1122,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void resendMessage(long originalMessageId, String text) {
-        source.deleteMessage(getActivity(), originalMessageId);
+        source.deleteMessage(activity, originalMessageId);
         messageEntry.setText(text);
         requestPermissionThenSend();
     }
@@ -1140,13 +1144,13 @@ public class MessageListFragment extends Fragment implements
             uris.add(attachedUri);
         }
 
-        if (PermissionsUtils.checkRequestMainPermissions(getActivity())) {
-            PermissionsUtils.startMainPermissionRequest(getActivity());
-        } else if (Account.get(getActivity()).primary &&
-                !PermissionsUtils.isDefaultSmsApp(getActivity())) {
-            PermissionsUtils.setDefaultSmsApp(getActivity());
+        if (PermissionsUtils.checkRequestMainPermissions(activity)) {
+            PermissionsUtils.startMainPermissionRequest(activity);
+        } else if (Account.get(activity).primary &&
+                !PermissionsUtils.isDefaultSmsApp(activity)) {
+            PermissionsUtils.setDefaultSmsApp(activity);
         } else if (message.length() > 0 || uris.size() > 0) {
-            Settings settings = Settings.get(getActivity());
+            Settings settings = Settings.get(activity);
             if (settings.delayedSendingTimeout != 0) {
                 changeDelayedSendingComponents(true);
             }
@@ -1172,7 +1176,7 @@ public class MessageListFragment extends Fragment implements
             send.setImageResource(R.drawable.ic_close);
             send.setOnClickListener((view) -> changeDelayedSendingComponents(false));
 
-            final Settings settings = Settings.get(getActivity());
+            final Settings settings = Settings.get(activity);
             sendProgress.setMax((int) settings.delayedSendingTimeout / 10);
 
             delayedTimer = new CountDownTimer(settings.delayedSendingTimeout, 10) {
@@ -1199,8 +1203,8 @@ public class MessageListFragment extends Fragment implements
         final String mimeType = attachedMimeType != null ?
                 attachedMimeType : MimeType.TEXT_PLAIN;
 
-        if ((message.length() > 0 || uris.size() > 0) && getActivity() != null) {
-            Conversation conversation = source.getConversation(getActivity(), getConversationId());
+        if ((message.length() > 0 || uris.size() > 0) && activity != null) {
+            Conversation conversation = source.getConversation(activity, getConversationId());
 
             final Message m = new Message();
             m.conversationId = getConversationId();
@@ -1213,20 +1217,20 @@ public class MessageListFragment extends Fragment implements
             m.from = null;
             m.color = null;
             m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
-                    DualSimUtils.get(getActivity()).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
+                    DualSimUtils.get(activity).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
 
             if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
-                source.deleteMessage(getActivity(), adapter.getItemId(0));
+                source.deleteMessage(activity, adapter.getItemId(0));
             }
 
             clearAttachedData();
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
-            source.deleteDrafts(getActivity(), getConversationId());
+            source.deleteDrafts(activity, getConversationId());
             messageEntry.setText(null);
 
-            if (getActivity() != null) {
-                Fragment fragment = getActivity()
+            if (activity != null) {
+                Fragment fragment = activity
                         .getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
 
                 if (fragment != null && fragment instanceof ConversationListFragment) {
@@ -1237,7 +1241,7 @@ public class MessageListFragment extends Fragment implements
             boolean loadMessages = false;
 
             if (message.length() != 0) {
-                source.insertMessage(getActivity(), m, m.conversationId);
+                source.insertMessage(activity, m, m.conversationId);
                 loadMessages = true;
             }
 
@@ -1249,7 +1253,7 @@ public class MessageListFragment extends Fragment implements
                     m.id = 0;
                 }
 
-                m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
+                m.id = source.insertMessage(activity, m, m.conversationId, true);
 
                 loadMessages = true;
             }
@@ -1257,12 +1261,12 @@ public class MessageListFragment extends Fragment implements
             new Thread(() -> {
                 Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                         .setForceNoSignature(forceNoSignature)
-                        .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                        .send(activity, message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
-                MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
+                MarkAsSentJob.Companion.scheduleNextRun(activity, m.id);
 
-                if (imageUri != null && getActivity() != null) {
-                    source.updateMessageData(getActivity(), m.id, imageUri.toString());
+                if (imageUri != null && activity != null) {
+                    source.updateMessageData(activity, m.id, imageUri.toString());
                 }
             }).start();
 
@@ -1273,17 +1277,17 @@ public class MessageListFragment extends Fragment implements
                     m.mimeType = mimeType;
                     m.id = 0;
 
-                    m.id = source.insertMessage(getActivity(), m, m.conversationId, true);
+                    m.id = source.insertMessage(activity, m, m.conversationId, true);
 
                     new Thread(() -> {
                         Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                                 .setForceNoSignature(forceNoSignature)
-                                .send(getActivity(), message, getArguments().getString(ARG_PHONE_NUMBERS),
+                                .send(activity, message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
-                        MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
+                        MarkAsSentJob.Companion.scheduleNextRun(activity, m.id);
 
-                        if (imageUri != null && getActivity() != null) {
-                            source.updateMessageData(getActivity(), m.id, imageUri.toString());
+                        if (imageUri != null && activity != null) {
+                            source.updateMessageData(activity, m.id, imageUri.toString());
                         }
                     }).start();
                 }
@@ -1295,12 +1299,12 @@ public class MessageListFragment extends Fragment implements
                 loadMessages();
             }
 
-            new AudioWrapper(getActivity(), R.raw.message_ping).play();
+            new AudioWrapper(activity, R.raw.message_ping).play();
 
             if (notificationActive()) {
-                NotificationManagerCompat.from(getActivity())
+                NotificationManagerCompat.from(activity)
                         .cancel((int) getConversationId());
-                NotificationUtils.cancelGroupedNotificationWithNoContent(getActivity());
+                NotificationUtils.cancelGroupedNotificationWithNoContent(activity);
             }
         }
     }
@@ -1315,12 +1319,12 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(0);
-        if (ContextCompat.checkSelfPermission(getActivity(),
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 attachHolder != null) {
-            attachHolder.addView(new AttachImageView(getActivity(), this,
-                    Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).mainColorSet.color :
+            attachHolder.addView(new AttachImageView(activity, this,
+                    Settings.get(activity).useGlobalThemeColor ?
+                            Settings.get(activity).mainColorSet.color :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
@@ -1346,8 +1350,8 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(2);
-        new Giphy.Builder(getActivity(), BuildConfig.GIPHY_API_KEY)
-                .maxFileSize(MmsSettings.get(getActivity()).maxImageSize)
+        new Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
+                .maxFileSize(MmsSettings.get(activity).maxImageSize)
                 .start();
     }
 
@@ -1358,16 +1362,16 @@ public class MessageListFragment extends Fragment implements
 
         prepareAttachHolder(3);
 
-        MaterialCamera camera = new MaterialCamera(getActivity())
-                .saveDir(getActivity().getFilesDir().getPath())
+        MaterialCamera camera = new MaterialCamera(activity)
+                .saveDir(activity.getFilesDir().getPath())
                 .qualityProfile(MaterialCamera.QUALITY_LOW)
-                .maxAllowedFileSize(MmsSettings.get(getActivity()).maxImageSize)
+                .maxAllowedFileSize(MmsSettings.get(activity).maxImageSize)
                 .allowRetry(false)
                 .autoSubmit(true)
                 .showPortraitWarning(false);
 
-        if (Settings.get(getActivity()).useGlobalThemeColor) {
-            camera.primaryColor(Settings.get(getActivity()).mainColorSet.color);
+        if (Settings.get(activity).useGlobalThemeColor) {
+            camera.primaryColor(Settings.get(activity).mainColorSet.color);
         } else {
             camera.primaryColor(getArguments().getInt(ARG_COLOR));
         }
@@ -1385,13 +1389,13 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(4);
-        if (ContextCompat.checkSelfPermission(getActivity(),
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getActivity(),
+                ContextCompat.checkSelfPermission(activity,
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new RecordAudioView(getActivity(), this,
-                    Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).mainColorSet.colorAccent :
+            attachHolder.addView(new RecordAudioView(activity, this,
+                    Settings.get(activity).useGlobalThemeColor ?
+                            Settings.get(activity).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1409,13 +1413,13 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(5);
-        if (ContextCompat.checkSelfPermission(getActivity(),
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getActivity(),
+                ContextCompat.checkSelfPermission(activity,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachLocationView(getActivity(), this, this,
-                    Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).mainColorSet.colorAccent :
+            attachHolder.addView(new AttachLocationView(activity, this, this,
+                    Settings.get(activity).useGlobalThemeColor ?
+                            Settings.get(activity).mainColorSet.colorAccent :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
@@ -1430,11 +1434,11 @@ public class MessageListFragment extends Fragment implements
         }
 
         prepareAttachHolder(6);
-        if (ContextCompat.checkSelfPermission(getActivity(),
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(new AttachContactView(getActivity(), this,
-                    Settings.get(getActivity()).useGlobalThemeColor ?
-                            Settings.get(getActivity()).mainColorSet.color :
+            attachHolder.addView(new AttachContactView(activity, this,
+                    Settings.get(activity).useGlobalThemeColor ?
+                            Settings.get(activity).mainColorSet.color :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1443,7 +1447,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachPermissionRequest(final int permissionRequestCode, final String... permissions) {
-        LayoutInflater.from(getActivity()).inflate(R.layout.permission_request, attachHolder, true);
+        LayoutInflater.from(activity).inflate(R.layout.permission_request, attachHolder, true);
         Button request = (Button) attachHolder.findViewById(R.id.permission_needed);
         request.setOnClickListener(view -> requestPermissions(permissions, permissionRequestCode));
     }
@@ -1489,7 +1493,7 @@ public class MessageListFragment extends Fragment implements
             } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 e.printStackTrace();
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == Giphy.REQUEST_GIPHY) {
             onBackPressed();
@@ -1510,7 +1514,7 @@ public class MessageListFragment extends Fragment implements
             String uriString = data.getDataString();
             String mimeType = MimeType.IMAGE_JPEG;
             if (uriString.contains("content://")) {
-                mimeType = getActivity().getContentResolver().getType(uri);
+                mimeType = activity.getContentResolver().getType(uri);
             }
 
             attachImage(uri);
@@ -1522,7 +1526,7 @@ public class MessageListFragment extends Fragment implements
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
-            Uri uri = ImageUtils.getUriForLatestPhoto(getActivity());
+            Uri uri = ImageUtils.getUriForLatestPhoto(activity);
             onBackPressed();
             attachImage(uri);
 
@@ -1555,8 +1559,8 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void clearAttachedData() {
-        if (getActivity() != null) {
-            source.deleteDrafts(getActivity(), getConversationId());
+        if (activity != null) {
+            source.deleteDrafts(activity, getConversationId());
         }
 
         attachedImageHolder.setVisibility(View.GONE);
@@ -1569,7 +1573,7 @@ public class MessageListFragment extends Fragment implements
     private void dismissKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(messageEntry.getWindowToken(), 0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1653,7 +1657,7 @@ public class MessageListFragment extends Fragment implements
         onBackPressed();
 
         try {
-            Uri contactFile = VCardWriter.writeContactCard(getActivity(), firstName, lastName, phone);
+            Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
             attachContact(contactFile);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1675,8 +1679,8 @@ public class MessageListFragment extends Fragment implements
         attachedImageHolder.setVisibility(View.VISIBLE);
 
         try {
-            if (getActivity() != null) {
-                Glide.with(getActivity())
+            if (activity != null) {
+                Glide.with(activity)
                         .load(uri).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .placeholder(R.drawable.ic_image_sending)
                         .into(attachedImage);
@@ -1723,7 +1727,7 @@ public class MessageListFragment extends Fragment implements
         }
 
         if (updatedReceiver != null) {
-            getActivity().unregisterReceiver(updatedReceiver);
+            activity.unregisterReceiver(updatedReceiver);
             updatedReceiver = null;
         }
 
@@ -1792,7 +1796,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void setConversationUpdateInfo(String newMessage) {
-        Fragment fragment = getActivity().getSupportFragmentManager()
+        Fragment fragment = activity.getSupportFragmentManager()
                 .findFragmentById(R.id.conversation_list_container);
 
         if (fragment != null && newMessage != null && fragment instanceof ConversationListFragment) {
@@ -1811,34 +1815,34 @@ public class MessageListFragment extends Fragment implements
 
     public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
         File original = new File(uri.getPath());
-        if (original.length() < MmsSettings.get(getActivity()).maxImageSize) {
+        if (original.length() < MmsSettings.get(activity).maxImageSize) {
             attachImage(uri);
             attachedMimeType = MimeType.VIDEO_MP4;
             editImage.setVisibility(View.GONE);
         } else {
             final File file;
             try {
-                File outputDir = new File(getActivity().getExternalFilesDir(null), "outputs");
+                File outputDir = new File(activity.getExternalFilesDir(null), "outputs");
                 boolean mkdir = outputDir.mkdir();
                 file = File.createTempFile("transcode_video", ".mp4", outputDir);
             } catch (IOException e) {
-                Toast.makeText(getActivity(), "Failed to create temporary file.", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Failed to create temporary file.", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            ContentResolver resolver = getActivity().getContentResolver();
+            ContentResolver resolver = activity.getContentResolver();
             final ParcelFileDescriptor parcelFileDescriptor;
             try {
                 parcelFileDescriptor = resolver.openFileDescriptor(uri, "r");
             } catch (FileNotFoundException e) {
-                Toast.makeText(getActivity(), "File not found.", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "File not found.", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            final ProgressDialog progressDialog = new ProgressDialog(activity);
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage(getActivity().getString(R.string.preparing_video));
+            progressDialog.setMessage(activity.getString(R.string.preparing_video));
 
             if (parcelFileDescriptor == null) {
                 return;
@@ -1857,7 +1861,7 @@ public class MessageListFragment extends Fragment implements
                 @Override
                 public void onTranscodeFailed(Exception exception) {
                     exception.printStackTrace();
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(activity,
                             "Failed to process video for sending: " + exception.getMessage(),
                             Toast.LENGTH_SHORT).show();
 
@@ -1870,7 +1874,7 @@ public class MessageListFragment extends Fragment implements
 
                 @Override
                 public void onTranscodeCompleted() {
-                    attachImage(ImageUtils.createContentUri(getActivity(), file));
+                    attachImage(ImageUtils.createContentUri(activity, file));
                     attachedMimeType = MimeType.VIDEO_MP4;
                     editImage.setVisibility(View.GONE);
 

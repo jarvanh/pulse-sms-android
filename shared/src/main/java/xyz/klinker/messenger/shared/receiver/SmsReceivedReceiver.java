@@ -142,15 +142,17 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
             Conversation conversation = source.getConversation(context, conversationId);
 
-            handler.post(() -> {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversation.id, body, NotificationService.CONVERSATION_ID_OPEN == conversation.id);
-                MessageListUpdatedReceiver.sendBroadcast(context, conversation.id, message.data, message.type);
-            });
+            if (conversation != null) {
+                handler.post(() -> {
+                    ConversationListUpdatedReceiver.sendBroadcast(context, conversation.id, body, NotificationService.CONVERSATION_ID_OPEN == conversation.id);
+                    MessageListUpdatedReceiver.sendBroadcast(context, conversation.id, message.data, message.type);
+                });
 
-            if (conversation.mute) {
-                source.seenConversation(context, conversationId);
-                // don't run the notification service
-                return -1;
+                if (conversation.mute) {
+                    source.seenConversation(context, conversationId);
+                    // don't run the notification service
+                    return -1;
+                }
             }
 
             return conversationId;

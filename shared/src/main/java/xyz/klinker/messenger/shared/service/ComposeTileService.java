@@ -13,8 +13,12 @@ public class ComposeTileService extends TileService {
 
     @Override
     public void onClick() {
-        Intent compose = ActivityUtils.buildForComponent(ActivityUtils.COMPOSE_ACTIVITY);
-        startActivityAndCollapse(compose);
+        try {
+            Intent compose = ActivityUtils.buildForComponent(ActivityUtils.COMPOSE_ACTIVITY);
+            startActivityAndCollapse(compose);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -136,6 +136,11 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     }
 
     private void setUpToolbar() {
+        if (conversation == null) {
+            getActivity().finish();
+            return;
+        }
+
         getActivity().setTitle(conversation.title);
 
         Settings settings = Settings.get(getActivity());

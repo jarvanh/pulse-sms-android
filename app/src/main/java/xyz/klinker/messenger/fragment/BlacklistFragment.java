@@ -154,7 +154,10 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                         Blacklist blacklist = new Blacklist();
                         blacklist.phoneNumber = cleared;
 
-                        DataSource.INSTANCE.insertBlacklist(getActivity(), blacklist);
+                        if (getActivity() != null) {
+                            DataSource.INSTANCE.insertBlacklist(getActivity(), blacklist);
+                        }
+
                         loadBlacklists();
                     })
                     .setNegativeButton(android.R.string.cancel, null)
