@@ -214,6 +214,8 @@ public class MessageViewHolder extends SwappingHolder {
         clippedImage = (ImageView) itemView.findViewById(R.id.clipped_image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
+        image.setClipToOutline(true);
+
         Settings settings = Settings.get(itemView.getContext());
 
         // done from the adapter, since we have the ability to change emoji sizes

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import xyz.klinker.messenger.shared.R;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
@@ -93,21 +94,24 @@ public class MessageListStylingHelper {
         return this;
     }
 
-    public MessageListStylingHelper setBackground(View messageHolder,String mimeType) {
+    public MessageListStylingHelper setBackground(View messageHolder, String mimeType) {
         if (MimeType.isExpandedMedia(mimeType) || currentType == Message.TYPE_INFO || messageHolder == null) {
-            return this;
-        }
 
-        int background;
-        if (roundMessages) {
-            background = roundBubbleBackground();
+        } else if (FeatureFlags.get(messageHolder.getContext()).REMOVE_IMAGE_BORDERS &&
+                (mimeType.contains("image") || mimeType.contains("video"))) {
+            messageHolder.setBackground(null);
         } else {
-            background = dialogSquareBackground();
-        }
+            int background;
+            if (roundMessages) {
+                background = roundBubbleBackground();
+            } else {
+                background = dialogSquareBackground();
+            }
 
-        messageHolder.setBackground(
-                messageHolder.getContext().getResources().getDrawable(background)
-        );
+            messageHolder.setBackground(
+                    messageHolder.getContext().getResources().getDrawable(background)
+            );
+        }
 
         return this;
     }
