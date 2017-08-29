@@ -145,5 +145,5 @@ public class Regex {
     public static final Pattern WEB_URL =  Pattern.compile(VALID_URL_PATTERN_STRING, Pattern.CASE_INSENSITIVE);
 
     // Emojis
-    public static final String EMOJI = "([\\u20a0-\\u32ff\\ud83c\\udc00-\\ud83d\\udeff\\udbb9\\udce5-\\udbb9\\udcee])";
+    public static final String EMOJI = "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]";
 }
