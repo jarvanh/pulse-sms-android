@@ -233,9 +233,10 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
                         final Account account = Account.get(getActivity());
                         final String accountId = account.accountId;
-                        account.clearAccount(getActivity());
 
                         new Thread(() -> new ApiUtils().deleteAccount(accountId)).start();
+
+                        account.clearAccount(getActivity());
 
                         returnToConversationsAfterLogin();
 

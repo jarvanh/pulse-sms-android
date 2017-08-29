@@ -451,8 +451,14 @@ public class ImageUtils {
         if (context == null || file.getPath().contains("firebase -1")) {
             return Uri.EMPTY;
         } else {
-            return FileProvider.getUriForFile(context,
-                    context.getPackageName() + ".provider", file);
+            try {
+                return FileProvider.getUriForFile(context,
+                        context.getPackageName() + ".provider", file);
+            } catch (IllegalArgumentException e) {
+                // photo doesn't exist
+                e.printStackTrace();
+                return Uri.EMPTY;
+            }
         }
     }
 
@@ -481,11 +487,7 @@ public class ImageUtils {
     }
 
     private static File lastFileModifiedPhoto(File fl) {
-        File[] files = fl.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isFile() && file.getName().contains(".jpg");
-            }
-        });
+        File[] files = fl.listFiles(file -> file.isFile() && file.getName().contains(".jpg"));
         long lastMod = Long.MIN_VALUE;
         File choice = null;
         for (File file : files) {

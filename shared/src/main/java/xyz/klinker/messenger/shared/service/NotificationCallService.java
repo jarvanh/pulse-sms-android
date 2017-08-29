@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.service;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -19,7 +20,11 @@ public class NotificationCallService extends NotificationMarkReadService {
             call.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             call.setData(Uri.parse("tel:" + phoneNumber));
 
-            startActivity(call);
+            try {
+                startActivity(call);
+            } catch (ActivityNotFoundException e) {
+                // no call activity
+            }
         }
     }
 }

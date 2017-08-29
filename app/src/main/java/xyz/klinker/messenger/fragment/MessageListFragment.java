@@ -1264,7 +1264,7 @@ public class MessageListFragment extends Fragment implements
                                         sendUri, mimeType);
                         MarkAsSentJob.Companion.scheduleNextRun(getActivity(), m.id);
 
-                        if (imageUri != null) {
+                        if (imageUri != null && getActivity() != null) {
                             source.updateMessageData(getActivity(), m.id, imageUri.toString());
                         }
                     }).start();
@@ -1537,7 +1537,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void clearAttachedData() {
-        source.deleteDrafts(getActivity(), getConversationId());
+        if (getActivity() != null) {
+            source.deleteDrafts(getActivity(), getConversationId());
+        }
+
         attachedImageHolder.setVisibility(View.GONE);
         attachedImage.setImageDrawable(null);
         attachedUri = null;

@@ -138,7 +138,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
                     if (MmsSettings.get(context).autoSaveMedia &&
                             !MimeType.TEXT_PLAIN.equals(message.mimeType)) {
-                        new MediaSaver(context).saveMedia(message);
+                        try {
+                            new MediaSaver(context).saveMedia(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

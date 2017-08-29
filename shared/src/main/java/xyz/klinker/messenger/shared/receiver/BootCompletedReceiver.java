@@ -37,17 +37,21 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            if (!AndroidVersionUtil.isAndroidO()) {
-                context.startService(new Intent(context, ForceTokenRefreshService.class));
-            }
+        try {
+            if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+                if (!AndroidVersionUtil.isAndroidO()) {
+                    context.startService(new Intent(context, ForceTokenRefreshService.class));
+                }
 
-            ScheduledMessageJob.scheduleNextRun(context);
-            CleanupOldMessagesJob.scheduleNextRun(context);
-            ContactSyncJob.scheduleNextRun(context);
-            SubscriptionExpirationCheckJob.scheduleNextRun(context);
-            SignoutJob.scheduleNextRun(context);
-            ScheduledTokenRefreshService.scheduleNextRun(context);
+                ScheduledMessageJob.scheduleNextRun(context);
+                CleanupOldMessagesJob.scheduleNextRun(context);
+                ContactSyncJob.scheduleNextRun(context);
+                SubscriptionExpirationCheckJob.scheduleNextRun(context);
+                SignoutJob.scheduleNextRun(context);
+                ScheduledTokenRefreshService.scheduleNextRun(context);
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 

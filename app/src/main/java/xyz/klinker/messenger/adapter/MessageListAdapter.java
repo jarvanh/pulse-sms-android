@@ -487,7 +487,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
 
             return type;
-        } catch (IllegalStateException|CursorIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             return -1;
         }
     }

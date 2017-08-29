@@ -41,7 +41,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         if (t != null) {
-            Log.e(TAG, t.getMessage());
+            Log.e(TAG, t.getMessage() != null && !t.getMessage().isEmpty() ? t.getMessage() : "no failure message");
         }
 
         if (retryCount++ < totalRetries) {

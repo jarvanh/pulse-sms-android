@@ -43,8 +43,8 @@ class MarkAsSentJob : BackgroundJob() {
         private val MESSAGE_SENDING_TIMEOUT = TimeUtils.MINUTE
         private val EXTRA_MESSAGE_ID = "extra_message_id"
 
-        fun scheduleNextRun(context: Context?, messageId: Long) {
-            if (context == null || (Account.get(context).exists() && !Account.get(context).primary)) {
+        fun scheduleNextRun(context: Context?, messageId: Long?) {
+            if (context == null || (Account.get(context).exists() && !Account.get(context).primary) || messageId == null) {
                 return
             }
 
@@ -61,7 +61,12 @@ class MarkAsSentJob : BackgroundJob() {
                     .setRequiresDeviceIdle(false)
 
             val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.schedule(builder.build())
+
+            try {
+                jobScheduler.schedule(builder.build())
+            } catch (e: Exception) {
+                // can't schedule more than 100 distinct jobs
+            }
         }
     }
 }

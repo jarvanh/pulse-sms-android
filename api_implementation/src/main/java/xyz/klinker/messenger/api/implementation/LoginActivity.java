@@ -125,8 +125,8 @@ public class LoginActivity extends AppCompatActivity {
         View signupFailed = findViewById(R.id.signup_failed);
         Button skip = (Button) findViewById(R.id.skip);
 
-        String lollipopPhoneNumber = getLollipopPhoneNumber();
-        if (!hasTelephony(this) && (lollipopPhoneNumber == null || lollipopPhoneNumber.isEmpty())) {
+        String phoneNumber = getPhoneNumber();
+        if (!hasTelephony(this) && (phoneNumber == null || phoneNumber.isEmpty())) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
@@ -604,13 +604,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getLollipopPhoneNumber() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager manager = SubscriptionManager.from(this);
-            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SubscriptionManager manager = SubscriptionManager.from(this);
+                List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
 
-            if (availableSims != null && availableSims.size() > 0) {
-                return availableSims.get(0).getNumber();
+                if (availableSims != null && availableSims.size() > 0) {
+                    return availableSims.get(0).getNumber();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;
