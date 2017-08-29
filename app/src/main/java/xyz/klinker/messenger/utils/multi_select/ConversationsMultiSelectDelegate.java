@@ -66,6 +66,24 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
         }
 
         @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            int checked = 0;
+            for(int i = 0; i < mSelections.size(); i++) {
+                int key = mSelections.keyAt(i);
+                if (mSelections.get(key))
+                    checked++;
+                if (checked > 1)
+                    break;
+            }
+
+            if (checked == 0) {
+                clearActionMode();
+            }
+
+            return false;
+        }
+
+        @Override
         public void onDestroyActionMode(ActionMode mode) {
             clearSelections();
 

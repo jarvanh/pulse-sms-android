@@ -121,7 +121,7 @@ public class MessageViewHolder extends SwappingHolder {
                 return true;
             }
 
-            if (MimeType.isExpandedMedia(mimeType) || (message.getVisibility() == View.VISIBLE && type != Message.TYPE_ERROR &&
+            if (MimeType.isExpandedMedia(mimeType) || (message != null && message.getVisibility() == View.VISIBLE && type != Message.TYPE_ERROR &&
                     fragment.getMultiSelect() != null && type != Message.TYPE_INFO)) {
 
                 if (!fragment.getMultiSelect().isSelectable()) {
@@ -135,7 +135,7 @@ public class MessageViewHolder extends SwappingHolder {
             }
 
             String[] items;
-            if (message.getVisibility() == View.VISIBLE) {
+            if (message != null && message.getVisibility() == View.VISIBLE) {
                 if (type == Message.TYPE_ERROR) {
                     items = new String[5];
                     items[4] = view.getContext().getString(R.string.resend);

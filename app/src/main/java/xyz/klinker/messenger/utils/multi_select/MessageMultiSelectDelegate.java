@@ -79,7 +79,9 @@ public class MessageMultiSelectDelegate extends MultiSelector {
                     break;
             }
 
-            if (checked > 1) {
+            if (checked == 0) {
+                clearActionMode();
+            } else if (checked > 1) {
                 share.setVisible(false);
                 info.setVisible(false);
                 copy.setVisible(false);
