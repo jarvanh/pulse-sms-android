@@ -786,11 +786,29 @@ public class MessageListFragment extends Fragment implements
         attachLocation.setOnClickListener(view -> attachLocation());
         attachContact.setOnClickListener(view -> attachContact());
 
+        boolean colorButtonsDark = false;
         Settings settings = Settings.get(getActivity());
         if (settings.useGlobalThemeColor) {
             attachButtonHolder.setBackgroundColor(settings.mainColorSet.color);
+            if (!ColorUtils.isColorDark(settings.mainColorSet.color)) {
+                colorButtonsDark = true;
+            }
         } else {
             attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
+            if (!ColorUtils.isColorDark(getArguments().getInt(ARG_COLOR))) {
+                colorButtonsDark = true;
+            }
+        }
+
+        if (colorButtonsDark) {
+            ColorStateList list = ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor));
+            attachImage.setImageTintList(list);
+            captureImage.setImageTintList(list);
+            attachGif.setImageTintList(list);
+            recordVideo.setImageTintList(list);
+            recordAudio.setImageTintList(list);
+            attachLocation.setImageTintList(list);
+            attachContact.setImageTintList(list);
         }
     }
 
