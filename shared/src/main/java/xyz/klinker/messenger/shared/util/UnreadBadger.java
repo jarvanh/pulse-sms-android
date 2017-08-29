@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.Settings;
 
 public class UnreadBadger {
 
@@ -28,12 +29,12 @@ public class UnreadBadger {
         }
     }
 
-    public void writeCount(final int newCount) {
-        new Thread(() -> shortcutBadger(newCount)).start();
-    }
-
     public void clearCount() {
         writeCount(0);
+    }
+
+    public void writeCount(final int newCount) {
+        new Thread(() -> shortcutBadger(newCount)).start();
     }
 
     private void shortcutBadger(final int count) {

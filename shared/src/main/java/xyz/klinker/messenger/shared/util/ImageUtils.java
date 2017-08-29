@@ -244,7 +244,8 @@ public class ImageUtils {
             int srcWidth = options.outWidth;
             int srcHeight = options.outHeight;
 
-            String fileName = ((int) (Math.random() * Integer.MAX_VALUE)) + ".jpg";
+            String fileName = "image-" + new Date().getTime() + ".jpg";
+
             // start generating bitmaps and checking the size against the max size
             Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
             scaled = rotateBasedOnExifData(context, uri, scaled);
