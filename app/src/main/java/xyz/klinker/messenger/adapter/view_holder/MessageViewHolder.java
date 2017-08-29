@@ -214,7 +214,9 @@ public class MessageViewHolder extends SwappingHolder {
         clippedImage = (ImageView) itemView.findViewById(R.id.clipped_image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
-        image.setClipToOutline(true);
+        if (image != null) {
+            image.setClipToOutline(true);
+        }
 
         Settings settings = Settings.get(itemView.getContext());
 

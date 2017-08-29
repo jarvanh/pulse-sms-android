@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -485,8 +486,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
                 type = Message.TYPE_SENT;
-            } else if (FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS &&
-                    (mimeType.contains("image") || mimeType.contains("video"))) {
+            } else if ((Build.FINGERPRINT.equals("robolectric") ||FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
+                    mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
                 if (type == Message.TYPE_RECEIVED) {
                     type = Message.TYPE_IMAGE_RECEIVED;
                 } else {
