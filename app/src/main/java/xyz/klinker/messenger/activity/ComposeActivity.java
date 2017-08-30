@@ -35,6 +35,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Toast;
 
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
@@ -321,8 +322,10 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             String data = "";
             boolean isVcard = false;
 
+            Toast.makeText(this, "share action: " + getIntent().getAction() + ", mime type: " + mimeType, Toast.LENGTH_LONG).show();
+
             try {
-                if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+                if (mimeType.equals(MimeType.TEXT_PLAIN) || getIntent().getStringExtra(Intent.EXTRA_TEXT) != null) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
                 } else if (MimeType.isVcard(mimeType)) {
                     fab.setImageResource(R.drawable.ic_send);
