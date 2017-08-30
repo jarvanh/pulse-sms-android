@@ -196,4 +196,8 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         return ContactUtils.findContactNames(number, context);
     }
 
+    @Override
+    public MmscInformation getMmscInfoForReceptionAck() {
+        return new MmscInformation("http://mms.bell.ca/mms/wapenc", "web.wireless.bell.ca", 80);
+    }
 }
