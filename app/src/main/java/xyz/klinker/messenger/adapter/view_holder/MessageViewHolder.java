@@ -320,8 +320,8 @@ public class MessageViewHolder extends SwappingHolder {
 
     private void showMessageDetails() {
         DataSource source = DataSource.INSTANCE;
-        new AlertDialog.Builder(message.getContext())
-                .setMessage(source.getMessageDetails(message.getContext(), messageId))
+        new AlertDialog.Builder(itemView.getContext())
+                .setMessage(source.getMessageDetails(itemView.getContext(), messageId))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
@@ -331,16 +331,16 @@ public class MessageViewHolder extends SwappingHolder {
                 .setTitle(R.string.delete_message)
                 .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                     DataSource source = DataSource.INSTANCE;
-                    Message m = source.getMessage(message.getContext(), messageId);
+                    Message m = source.getMessage(itemView.getContext(), messageId);
 
                     if (m != null) {
                         long conversationId = m.conversationId;
-                        source.deleteMessage(message.getContext(), messageId);
-                        MessageListUpdatedReceiver.sendBroadcast(message.getContext(), conversationId);
+                        source.deleteMessage(itemView.getContext(), messageId);
+                        MessageListUpdatedReceiver.sendBroadcast(itemView.getContext(), conversationId);
                     }
 
                     if (messageDeletedListener != null && m != null) {
-                        messageDeletedListener.onMessageDeleted(message.getContext(), m.conversationId,
+                        messageDeletedListener.onMessageDeleted(itemView.getContext(), m.conversationId,
                                 getAdapterPosition());
                     }
                 })
@@ -349,11 +349,11 @@ public class MessageViewHolder extends SwappingHolder {
 
     private void copyMessageText() {
         ClipboardManager clipboard = (ClipboardManager)
-                message.getContext().getSystemService(CLIPBOARD_SERVICE);
+                itemView.getContext().getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("messenger",
                 message.getText().toString());
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(message.getContext(), R.string.message_copied_to_clipboard,
+        Toast.makeText(itemView.getContext(), R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show();
     }
 

@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -318,13 +319,19 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 showConversation(builder.toString());
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_SEND)) {
-            final String mimeType = getIntent().getType();
+            final ClipData clipData = getIntent().getClipData();
+            String mimeType = getIntent().getType();
             String data = "";
             boolean isVcard = false;
-            
+
             try {
-                if (mimeType.equals(MimeType.TEXT_PLAIN) || getIntent().getStringExtra(Intent.EXTRA_TEXT) != null) {
+                if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+                } else if (clipData != null) {
+                    mimeType = MimeType.TEXT_PLAIN;
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        data += clipData.getItemAt(i).getText();
+                    }
                 } else if (MimeType.isVcard(mimeType)) {
                     fab.setImageResource(R.drawable.ic_send);
                     isVcard = true;
