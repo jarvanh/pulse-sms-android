@@ -145,6 +145,18 @@ public class ContactUtils {
 
                     if (phonesCursor != null && phonesCursor.moveToFirst()) {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
+                    } else {
+                        try {
+                            names += ", " + PhoneNumberUtils.format(number[i]);
+                        } catch (Exception e) {
+                            names += ", " + number;
+                        }
+                    }
+                } else {
+                    try {
+                        names += ", " + PhoneNumberUtils.format(number[i]);
+                    } catch (Exception e) {
+                        names += ", " + number;
                     }
                 }
 
