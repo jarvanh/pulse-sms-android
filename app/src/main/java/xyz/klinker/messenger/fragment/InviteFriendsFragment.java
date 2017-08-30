@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +49,8 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener;
  */
 public class InviteFriendsFragment extends Fragment implements ContactClickedListener {
 
+    private FragmentActivity activity;
+
     private RecyclerView list;
     private FloatingActionButton fab;
     private ProgressBar progress;
@@ -55,6 +58,8 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        this.activity = getActivity();
+
         View view = inflater.inflate(R.layout.fragment_invite_friends, parent, false);
 
         list = (RecyclerView) view.findViewById(R.id.list);
@@ -62,7 +67,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
         progress = (ProgressBar) view.findViewById(R.id.progress);
 
         fab.hide();
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(activity));
 
         return view;
     }
@@ -78,7 +83,6 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
 
     private void loadContacts() {
         final Handler handler = new Handler();
-        final Activity activity = getActivity();
         if (activity == null) {
             return;
         }
@@ -102,10 +106,10 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                         conversation.phoneNumbers = PhoneNumberUtils
                                 .clearFormatting(cursor.getString(2));
                         conversation.imageUri = ContactUtils
-                                .findImageUri(conversation.phoneNumbers, getActivity());
+                                .findImageUri(conversation.phoneNumbers, activity);
                         conversation.simSubscriptionId = -1;
 
-                        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, getActivity());
+                        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, activity);
                         if (image == null) {
                             conversation.imageUri = null;
                         } else {
@@ -127,7 +131,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
             } catch (Exception e) { }
 
             handler.post(() -> {
-                if (getActivity() != null) {
+                if (activity != null) {
                     setContacts(contacts);
                 }
             });
@@ -161,10 +165,10 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
         }
 
         for (String number : phoneNumbers) {
-            new SendUtils().send(getActivity(), getString(R.string.invite_friends_sms), number);
+            new SendUtils().send(activity, getString(R.string.invite_friends_sms), number);
         }
 
-        getActivity().onBackPressed();
+        activity.onBackPressed();
     }
 
     private void unlockFreeMonth() {

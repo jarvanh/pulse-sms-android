@@ -37,24 +37,37 @@ open class EmojiableEditText : AppCompatEditText {
 
     private fun init() {
         if (useEmojiCompat) {
-            super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+            try {
+                super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     override fun setKeyListener(keyListener: android.text.method.KeyListener) {
         if (useEmojiCompat) {
-            super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+            try {
+                super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+            } catch (e: Exception) {
+                super.setKeyListener(keyListener)
+            }
         } else {
             super.setKeyListener(keyListener)
         }
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
-        if (useEmojiCompat) {
+        return if (useEmojiCompat) {
             val inputConnection = super.onCreateInputConnection(outAttrs)
-            return emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)
+            try {
+                emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                super.onCreateInputConnection(outAttrs)
+            }
         } else {
-            return super.onCreateInputConnection(outAttrs)
+            super.onCreateInputConnection(outAttrs)
         }
     }
 }

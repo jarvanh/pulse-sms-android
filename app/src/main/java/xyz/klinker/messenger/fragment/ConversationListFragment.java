@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -92,6 +93,8 @@ public class ConversationListFragment extends Fragment
     private String newConversationTitle = null;
     public ConversationUpdateInfo updateInfo = null;
 
+    private FragmentActivity activity;
+
     public static ConversationListFragment newInstance() {
         return newInstance(-1);
     }
@@ -119,13 +122,15 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
+        this.activity = getActivity();
+
         View view = inflater.inflate(R.layout.fragment_conversation_list, viewGroup, false);
         empty = view.findViewById(R.id.empty_view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         loadConversations();
 
-        Settings settings = Settings.get(getActivity());
+        Settings settings = Settings.get(activity);
         empty.setBackgroundColor(settings.mainColorSet.colorLight);
         ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.mainColorSet.color);
 
@@ -138,7 +143,7 @@ public class ConversationListFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         updatedReceiver = new ConversationListUpdatedReceiver(this);
-        getActivity().registerReceiver(updatedReceiver,
+        activity.registerReceiver(updatedReceiver,
                 ConversationListUpdatedReceiver.getIntentFilter());
     }
 
@@ -156,15 +161,15 @@ public class ConversationListFragment extends Fragment
         checkUnreadCount();
 
         if (messageListFragment != null && !messageListFragment.isAdded()) {
-            Intent main = new Intent(getActivity(), MessengerActivity.class);
+            Intent main = new Intent(activity, MessengerActivity.class);
             main.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(),
                     messageListFragment.getConversationId());
 
-            getActivity().overridePendingTransition(0,0);
-            getActivity().finish();
+            activity.overridePendingTransition(0,0);
+            activity.finish();
 
-            getActivity().overridePendingTransition(0,0);
-            getActivity().startActivity(main);
+            activity.overridePendingTransition(0,0);
+            activity.startActivity(main);
         }
     }
 
@@ -173,7 +178,7 @@ public class ConversationListFragment extends Fragment
         super.onDestroyView();
 
         if (updatedReceiver != null) {
-            getActivity().unregisterReceiver(updatedReceiver);
+            activity.unregisterReceiver(updatedReceiver);
         }
 
         multiSelector.clearActionMode();
@@ -211,7 +216,6 @@ public class ConversationListFragment extends Fragment
     }
 
     protected List<Conversation> getCursor(DataSource source) {
-        final Activity activity = getActivity();
         if (activity != null) {
             return source.getUnarchivedConversationsAsList(activity);
         } else {
@@ -224,7 +228,7 @@ public class ConversationListFragment extends Fragment
         new Thread(() -> {
             long startTime = System.currentTimeMillis();
 
-            if (getActivity() == null) {
+            if (activity == null) {
                 return;
             }
             
@@ -233,7 +237,7 @@ public class ConversationListFragment extends Fragment
             Log.v("conversation_load", "load took " + (
                     System.currentTimeMillis() - startTime) + " ms");
 
-            if (getActivity() == null) {
+            if (activity == null) {
                 return;
             }
 
@@ -242,14 +246,14 @@ public class ConversationListFragment extends Fragment
                 lastRefreshTime = System.currentTimeMillis();
 
                 try {
-                    ((MessengerApplication) getActivity().getApplication()).refreshDynamicShortcuts();
+                    ((MessengerApplication) activity.getApplication()).refreshDynamicShortcuts();
                 } catch (Exception e) { }
             });
         }).start();
     }
 
     public ItemTouchHelper getSwipeTouchHelper(ConversationListAdapter adapter) {
-        return new SwipeTouchHelper(adapter, getActivity());
+        return new SwipeTouchHelper(adapter, activity);
     }
 
     private void setConversations(List<Conversation> conversations) {
@@ -265,10 +269,10 @@ public class ConversationListFragment extends Fragment
             adapter.setConversations(conversations);
             adapter.notifyDataSetChanged();
         } else {
-            adapter = new ConversationListAdapter((MessengerActivity) getActivity(),
+            adapter = new ConversationListAdapter((MessengerActivity) activity,
                     conversations, multiSelector, this, this);
 
-            layoutManager = new FixedScrollLinearLayoutManager(getActivity());
+            layoutManager = new FixedScrollLinearLayoutManager(activity);
             layoutManager.setCanScroll(true);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
@@ -339,7 +343,7 @@ public class ConversationListFragment extends Fragment
         final int currentSize = pendingDelete.size();
 
         if (isDetached()) {
-            dismissDeleteSnackbar(getActivity(), currentSize);
+            dismissDeleteSnackbar(activity, currentSize);
             return;
         }
 
@@ -359,14 +363,14 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-                        dismissDeleteSnackbar(getActivity(), currentSize);
+                        dismissDeleteSnackbar(activity, currentSize);
                     }
                 });
         SnackbarAnimationFix.apply(deleteSnackbar);
         deleteSnackbar.show();
 
         if (conversation != null) {
-            NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
+            NotificationManagerCompat.from(activity).cancel((int) conversation.id);
         }
 
         // for some reason, if this is done immediately then the final snackbar will not be
@@ -383,9 +387,9 @@ public class ConversationListFragment extends Fragment
                 // copy this list and continue to delete in the background.
                 List<Conversation> copiedList = new ArrayList<>(pendingDelete);
                 for (Conversation conversation : copiedList) {
-                    if (conversation != null && getActivity() != null) { // there are those blank convos that get populated with a new one
-                        dataSource.deleteConversation(getActivity(), conversation);
-                        SmsMmsUtils.deleteConversation(getActivity(), conversation.phoneNumbers);
+                    if (conversation != null && activity != null) { // there are those blank convos that get populated with a new one
+                        dataSource.deleteConversation(activity, conversation);
+                        SmsMmsUtils.deleteConversation(activity, conversation.phoneNumbers);
                     }
                 }
 
@@ -401,8 +405,8 @@ public class ConversationListFragment extends Fragment
     }
 
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        if (getActivity() != null) {
-            dataSource.archiveConversation(getActivity(), conversation.id);
+        if (activity != null) {
+            dataSource.archiveConversation(activity, conversation.id);
         }
     }
 
@@ -412,7 +416,7 @@ public class ConversationListFragment extends Fragment
         final int currentSize = pendingArchive.size();
 
         if (!isAdded()) {
-            dismissArchiveSnackbar(getActivity(), currentSize);
+            dismissArchiveSnackbar(activity, currentSize);
             return;
         }
 
@@ -431,13 +435,13 @@ public class ConversationListFragment extends Fragment
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-                        dismissArchiveSnackbar(getActivity(), currentSize);
+                        dismissArchiveSnackbar(activity, currentSize);
                     }
                 });
         SnackbarAnimationFix.apply(archiveSnackbar);
         archiveSnackbar.show();
 
-        NotificationManagerCompat.from(getActivity()).cancel((int) conversation.id);
+        NotificationManagerCompat.from(activity).cancel((int) conversation.id);
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -464,7 +468,7 @@ public class ConversationListFragment extends Fragment
 
     @Override
     public void onShowMarkAsRead(String text) {
-        Toast.makeText(getActivity(), getString(R.string.mark_section_as_read, text.toLowerCase(Locale.US)), Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, getString(R.string.mark_section_as_read, text.toLowerCase(Locale.US)), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -506,7 +510,7 @@ public class ConversationListFragment extends Fragment
                 }
             }
 
-            DataSource.INSTANCE.readConversations(getActivity(), markAsRead);
+            DataSource.INSTANCE.readConversations(activity, markAsRead);
             handler.post(this::loadConversations);
         }).start();
     }
@@ -528,7 +532,7 @@ public class ConversationListFragment extends Fragment
         }
 
         expandedConversation = viewHolder;
-        AnimationUtils.expandActivityForConversation(getActivity());
+        AnimationUtils.expandActivityForConversation(activity);
 
         if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
@@ -539,23 +543,23 @@ public class ConversationListFragment extends Fragment
         }
 
         try {
-            getActivity().getSupportFragmentManager().beginTransaction()
+            activity.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.message_list_container, messageListFragment)
                     .commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (!Settings.get(getActivity()).useGlobalThemeColor) {
-            ActivityUtils.setTaskDescription(getActivity(),
+        if (!Settings.get(activity).useGlobalThemeColor) {
+            ActivityUtils.setTaskDescription(activity,
                     viewHolder.conversation.title, viewHolder.conversation.colors.color);
         }
         
         checkUnreadCount();
         layoutManager.setCanScroll(false);
 
-        if (getActivity() != null)
-            getActivity().getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+        if (activity != null)
+            activity.getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         if (getArguments() != null)
             getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
         
@@ -565,7 +569,7 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
-        AnimationUtils.contractActivityFromConversation(getActivity());
+        AnimationUtils.contractActivityFromConversation(activity);
 
         if (messageListFragment == null) {
             return;
@@ -575,9 +579,9 @@ public class ConversationListFragment extends Fragment
 
         try {
             new Handler().postDelayed(() -> {
-                if (getActivity() != null) {
+                if (activity != null) {
                     try {
-                        getActivity().getSupportFragmentManager().beginTransaction()
+                        activity.getSupportFragmentManager().beginTransaction()
                                 .remove(messageListFragment)
                                 .commit();
                     } catch (Exception e) {
@@ -593,24 +597,24 @@ public class ConversationListFragment extends Fragment
 
         }
 
-        ColorSet color = Settings.get(getActivity()).mainColorSet;
-        ColorUtils.adjustStatusBarColor(color.colorDark, getActivity());
-        ColorUtils.adjustDrawerColor(color.colorDark, getActivity());
+        ColorSet color = Settings.get(activity).mainColorSet;
+        ColorUtils.adjustStatusBarColor(color.colorDark, activity);
+        ColorUtils.adjustDrawerColor(color.colorDark, activity);
 
         ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.color);
-        ActivityUtils.setTaskDescription(getActivity());
+        ActivityUtils.setTaskDescription(activity);
 
         if (viewHolder.conversation != null) {
             NotificationService.CONVERSATION_ID_OPEN = 0L;
         }
 
         if (updateInfo != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(getActivity(), updateInfo);
+            ConversationListUpdatedReceiver.sendBroadcast(activity, updateInfo);
             updateInfo = null;
         }
 
         if (newConversationTitle != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(getActivity(), contractedId, newConversationTitle);
+            ConversationListUpdatedReceiver.sendBroadcast(activity, contractedId, newConversationTitle);
             newConversationTitle = null;
         }
 
@@ -685,7 +689,7 @@ public class ConversationListFragment extends Fragment
 //                Thread.sleep(1500);
 //            } catch (InterruptedException e) { }
 //
-//            new UnreadBadger(getActivity()).writeCountFromDatabase();
+//            new UnreadBadger(activity).writeCountFromDatabase();
 //        }).start();
     }
 }

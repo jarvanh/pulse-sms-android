@@ -25,13 +25,22 @@ class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: Attri
 
     init {
         if (useEmojiCompat) {
-            emojiHelper.updateTransformationMethod()
+            try {
+                emojiHelper.updateTransformationMethod()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     override fun setFilters(filters: Array<InputFilter>) {
         if (useEmojiCompat) {
-            super.setFilters(emojiHelper.getFilters(filters))
+            try {
+                super.setFilters(emojiHelper.getFilters(filters))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                super.setFilters(filters)
+            }
         } else {
             super.setFilters(filters)
         }
@@ -39,7 +48,11 @@ class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: Attri
 
     override fun setAllCaps(allCaps: Boolean) {
         super.setAllCaps(allCaps)
-        emojiHelper.setAllCaps(allCaps)
+        try {
+            emojiHelper.setAllCaps(allCaps)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

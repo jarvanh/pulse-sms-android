@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +50,8 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     private static final String ARG_PHONE_NUMBER = "phone_number";
 
+    private FragmentActivity activity;
+
     private RecyclerView list;
     private BlacklistAdapter adapter;
     private FloatingActionButton fab;
@@ -72,14 +75,16 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        this.activity = getActivity();
+
         View view = inflater.inflate(R.layout.fragment_blacklist, parent, false);
         list = (RecyclerView) view.findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(activity));
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(view1 -> addBlacklist());
         emptyView = view.findViewById(R.id.empty_view);
 
-        Settings settings = Settings.get(getActivity());
+        Settings settings = Settings.get(activity);
         emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
         fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
         ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
@@ -101,11 +106,11 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     private void loadBlacklists() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            if (getActivity() == null) {
+            if (activity == null) {
                 return;
             }
 
-            final List<Blacklist> blacklists = DataSource.INSTANCE.getBlacklistsAsList(getActivity());
+            final List<Blacklist> blacklists = DataSource.INSTANCE.getBlacklistsAsList(activity);
             handler.post(() -> setBlacklists(blacklists));
         }).start();
     }
@@ -123,13 +128,13 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
 
     private void addBlacklist() {
         //noinspection AndroidLintInflateParams
-        View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
+        View layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text,
                 null, false);
         final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
         editText.setHint(R.string.blacklist_hint);
         editText.setInputType(InputType.TYPE_CLASS_PHONE);
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(activity)
                 .setView(layout)
                 .setPositiveButton(R.string.add, (dialogInterface, i) -> addBlacklist(editText.getText().toString()))
                 .setNegativeButton(android.R.string.cancel, null)
@@ -141,21 +146,21 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         String formatted = PhoneNumberUtils.format(cleared);
 
         if (cleared.length() == 0) {
-            new AlertDialog.Builder(getActivity())
+            new AlertDialog.Builder(activity)
                     .setMessage(R.string.blacklist_need_number)
                     .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> addBlacklist())
                     .show();
         } else {
             String message = getString(R.string.add_blacklist, formatted);
 
-            new AlertDialog.Builder(getActivity())
+            new AlertDialog.Builder(activity)
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                         Blacklist blacklist = new Blacklist();
                         blacklist.phoneNumber = cleared;
 
-                        if (getActivity() != null) {
-                            DataSource.INSTANCE.insertBlacklist(getActivity(), blacklist);
+                        if (activity != null) {
+                            DataSource.INSTANCE.insertBlacklist(activity, blacklist);
                         }
 
                         loadBlacklists();
@@ -168,10 +173,10 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     private void removeBlacklist(final long id, String number) {
         String message = getString(R.string.remove_blacklist, PhoneNumberUtils.format(number));
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(activity)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
-                    DataSource.INSTANCE.deleteBlacklist(getActivity(), id);
+                    DataSource.INSTANCE.deleteBlacklist(activity, id);
 
                     loadBlacklists();
                 })

@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,6 +74,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_PHONE_NUMBERS = "phone_numbers";
+    
+    private FragmentActivity activity;
 
     private RecyclerView list;
     private ProgressBar progress;
@@ -102,6 +105,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        this.activity = getActivity();
+
         View view = inflater.inflate(R.layout.fragment_schedule_messages, parent, false);
 
         list = (RecyclerView) view.findViewById(R.id.list);
@@ -109,10 +114,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         emptyView = view.findViewById(R.id.empty_view);
 
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(activity));
         fab.setOnClickListener(view1 -> startSchedulingMessage());
 
-        Settings settings = Settings.get(getActivity());
+        Settings settings = Settings.get(activity);
         emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
         fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
         ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
@@ -139,7 +144,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     @Override
     public void onStart() {
         super.onStart();
-        getActivity().registerReceiver(scheduledMessageSent,
+        activity.registerReceiver(scheduledMessageSent,
                 new IntentFilter(ScheduledMessageJob.BROADCAST_SCHEDULED_SENT));
     }
 
@@ -148,12 +153,12 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         super.onStop();
 
         try {
-            getActivity().unregisterReceiver(scheduledMessageSent);
+            activity.unregisterReceiver(scheduledMessageSent);
         } catch (Exception e) {
 
         }
 
-        ScheduledMessageJob.scheduleNextRun(getActivity());
+        ScheduledMessageJob.scheduleNextRun(activity);
     }
 
     @Override
@@ -164,9 +169,9 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void loadMessages() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            if (getActivity() != null) {
+            if (activity != null) {
                 final List<ScheduledMessage> messages =
-                        DataSource.INSTANCE.getScheduledMessagesAsList(getActivity());
+                        DataSource.INSTANCE.getScheduledMessagesAsList(activity);
                 handler.post(() -> setMessages(messages));
             }
         }).start();
@@ -188,7 +193,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         EditScheduledMessageFragment fragment = new EditScheduledMessageFragment();
         fragment.setMessage(message);
         fragment.setFragment(this);
-        fragment.show(getActivity().getSupportFragmentManager(), "");
+        fragment.show(activity.getSupportFragmentManager(), "");
     }
 
     private void startSchedulingMessage() {
@@ -198,18 +203,18 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
     private void displayNameDialog(final ScheduledMessage message) {
         //noinspection AndroidLintInflateParams
-        View layout = LayoutInflater.from(getActivity())
+        View layout = LayoutInflater.from(activity)
                 .inflate(R.layout.dialog_recipient_edit_text, null, false);
         final RecipientEditTextView editText = (RecipientEditTextView)
                 layout.findViewById(R.id.edit_text);
         editText.setHint(R.string.scheduled_to_hint);
         editText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         BaseRecipientAdapter adapter =
-                new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getActivity());
-        adapter.setShowMobileOnly(Settings.get(getActivity()).mobileOnly);
+                new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, activity);
+        adapter.setShowMobileOnly(Settings.get(activity).mobileOnly);
         editText.setAdapter(adapter);
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     if (editText.getRecipients().length > 0) {
@@ -250,7 +255,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         Context context = getContextToFixDatePickerCrash();
 
         if (context == null) {
-            context = getActivity();
+            context = activity;
         }
         
         if (context == null) {
@@ -270,37 +275,37 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void displayTimeDialog(final ScheduledMessage message) {
-        if (getActivity() == null) {
+        if (activity == null) {
             return;
         }
 
         Calendar calendar = Calendar.getInstance();
-        new TimePickerDialog(getActivity(), (timePicker, hourOfDay, minute) -> {
+        new TimePickerDialog(activity, (timePicker, hourOfDay, minute) -> {
             message.timestamp += (1000 * 60 * 60 * hourOfDay);
             message.timestamp += (1000 * 60 * minute);
 
             if (message.timestamp > System.currentTimeMillis()) {
                 displayMessageDialog(message);
             } else {
-                Toast.makeText(getActivity(), R.string.scheduled_message_in_future,
+                Toast.makeText(activity, R.string.scheduled_message_in_future,
                         Toast.LENGTH_SHORT).show();
                 displayDateDialog(message);
             }
         },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
-                DateFormat.is24HourFormat(getActivity()))
+                DateFormat.is24HourFormat(activity))
                 .show();
     }
 
     private void displayMessageDialog(final ScheduledMessage message) {
         //noinspection AndroidLintInflateParams
-        View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_edit_text,
+        View layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text,
                 null, false);
         final EditText editText = (EditText) layout.findViewById(R.id.edit_text);
         editText.setHint(R.string.scheduled_message_hint);
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(activity)
                 .setView(layout)
                 .setPositiveButton(R.string.add, (dialogInterface, i) -> {
                     if (editText.getText().length() > 0) {
@@ -316,7 +321,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     }
 
     private void saveMessage(final ScheduledMessage message) {
-        DataSource.INSTANCE.insertScheduledMessage(getActivity(), message);
+        DataSource.INSTANCE.insertScheduledMessage(activity, message);
         loadMessages();
     }
 
@@ -327,7 +332,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         try {
             InputMethodManager imm = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         } catch (Exception e) {
 
@@ -337,7 +342,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     // samsung messed up the date picker in some languages on Lollipop 5.0 and 5.1. Ugh.
     // fixes this issue: http://stackoverflow.com/a/34853067
     private ContextWrapper getContextToFixDatePickerCrash() {
-        return new ContextWrapper(getActivity()) {
+        return new ContextWrapper(activity) {
 
             private Resources wrappedResources;
 

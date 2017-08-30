@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +47,8 @@ import xyz.klinker.messenger.shared.util.listener.SearchListener;
  */
 public class SearchFragment extends Fragment implements SearchListener {
 
+    private FragmentActivity activity;
+
     private RecyclerView list;
     private SearchAdapter adapter;
     private String query;
@@ -61,8 +64,10 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        this.activity = getActivity();
+
         list = (RecyclerView) inflater.inflate(R.layout.fragment_search, parent, false);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(activity));
 
         if (adapter == null) {
             adapter = new SearchAdapter(query, null, null, this);
@@ -89,15 +94,15 @@ public class SearchFragment extends Fragment implements SearchListener {
             DataSource source = DataSource.INSTANCE;
 
             final List<Conversation> conversations;
-            if (getActivity() != null) {
-                conversations = source.searchConversationsAsList(getActivity(), query, 60);
+            if (activity != null) {
+                conversations = source.searchConversationsAsList(activity, query, 60);
             } else {
                 conversations = new ArrayList<>();
             }
 
             final List<Message> messages;
-            if (getActivity() != null) {
-                messages = source.searchMessagesAsList(getActivity(), query, 60);
+            if (activity != null) {
+                messages = source.searchMessagesAsList(activity, query, 60);
             } else {
                 messages = new ArrayList<>();
             }
@@ -118,13 +123,13 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Message message) {
         dismissKeyboard();
 
-        DataSource.INSTANCE.archiveConversation(getActivity(), message.conversationId, false);
+        DataSource.INSTANCE.archiveConversation(activity, message.conversationId, false);
 
-        Intent intent = new Intent(getActivity(), MessengerActivity.class);
+        Intent intent = new Intent(activity, MessengerActivity.class);
         intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), message.conversationId);
         intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_MESSAGE_ID(), message.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getActivity().startActivity(intent);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -132,13 +137,13 @@ public class SearchFragment extends Fragment implements SearchListener {
         dismissKeyboard();
 
         if (conversation.archive) {
-            DataSource.INSTANCE.archiveConversation(getActivity(), conversation.id, false);
+            DataSource.INSTANCE.archiveConversation(activity, conversation.id, false);
         }
 
-        Intent intent = new Intent(getActivity(), MessengerActivity.class);
+        Intent intent = new Intent(activity, MessengerActivity.class);
         intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getActivity().startActivity(intent);
+        activity.startActivity(intent);
     }
 
     private void dismissKeyboard() {

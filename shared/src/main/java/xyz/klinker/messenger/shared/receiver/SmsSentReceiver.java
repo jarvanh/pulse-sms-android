@@ -38,6 +38,7 @@ import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.service.ResendFailedMessage;
@@ -169,7 +170,7 @@ public class SmsSentReceiver extends SentReceiver {
         resend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         if (error) {
-            if (retryFailedMessages()) {
+            if (FeatureFlags.get(context).AUTO_RETRY_FAILED_MESSAGES && retryFailedMessages()) {
                 context.startService(resend);
             } else {
                 Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
