@@ -30,7 +30,7 @@ public class ColorConverter {
         } else if (color == Color.BLACK) {
             return Color.BLACK;
         } else {
-            return lighten(color, 6);
+            return lighten(color, 10);
         }
     }
 
