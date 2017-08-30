@@ -321,9 +321,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             final String mimeType = getIntent().getType();
             String data = "";
             boolean isVcard = false;
-
-            Toast.makeText(this, "share action: " + getIntent().getAction() + ", mime type: " + mimeType, Toast.LENGTH_LONG).show();
-
+            
             try {
                 if (mimeType.equals(MimeType.TEXT_PLAIN) || getIntent().getStringExtra(Intent.EXTRA_TEXT) != null) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
