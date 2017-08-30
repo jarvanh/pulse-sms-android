@@ -136,7 +136,7 @@ public class RecordAudioView extends FrameLayout {
 
         try {
             recorder.prepare();
-        } catch (IOException e) {
+        } catch (IllegalStateException | IOException e) {
             Log.e(TAG, "prepare() failed");
         }
 
