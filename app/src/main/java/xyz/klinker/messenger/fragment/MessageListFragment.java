@@ -756,10 +756,11 @@ public class MessageListFragment extends Fragment implements
 
     private boolean ignoreCounterText() {
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
+        // happens when the user is running LineageOS
         return !Account.get(activity).primary &&
                 (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
                         Build.MANUFACTURER.toLowerCase().equals("sony") || Build.MANUFACTURER.toLowerCase().equals("xiaomi") ||
-                        Build.MODEL.toLowerCase().equals("sm-t800") || Build.MANUFACTURER.toLowerCase().equals("lge") ||
+                        Build.MANUFACTURER.toLowerCase().equals("samsung") || Build.MANUFACTURER.toLowerCase().equals("lge") ||
                         Build.MODEL.toLowerCase().contains("kindle"));
     }
 

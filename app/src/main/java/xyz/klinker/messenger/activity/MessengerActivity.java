@@ -900,6 +900,7 @@ public class  MessengerActivity extends AppCompatActivity
                 c.title = i < names.length ? names[i] : "";
                 c.phoneNumbers = numbers[i];
                 c.imageUri = ContactUtils.findImageUri(numbers[i], this);
+                c.colors = conversation.colors;
 
                 Bitmap image = ImageUtils.getContactImage(c.imageUri, this);
                 if (c.imageUri != null && image == null) {
