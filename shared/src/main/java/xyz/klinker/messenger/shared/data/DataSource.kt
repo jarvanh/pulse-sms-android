@@ -1409,7 +1409,7 @@ object DataSource {
             }
 
     /**
-     * Gets all messages in the database, never than the given time
+     * Gets all messages in the database, newer than the given time
      */
     fun getNewerMessages(context: Context, timestamp: Long): Cursor =
             try {
@@ -1422,6 +1422,41 @@ object DataSource {
                         arrayOf(timestamp.toString()), null, null,
                         Message.COLUMN_TIMESTAMP + " desc")
             }
+
+    /**
+     * Gets all messages in the database, newer than the given time
+     */
+    fun getNewerSendingMessages(context: Context, timestamp: Long): Cursor =
+            try {
+                database(context).query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + ">? AND " + Message.COLUMN_TYPE + "=?",
+                        arrayOf(timestamp.toString(), Message.TYPE_SENDING.toString()), null, null,
+                        Message.COLUMN_TIMESTAMP + " desc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Message.TABLE, null, Message.COLUMN_TIMESTAMP + ">? AND " + Message.COLUMN_TYPE + "=?",
+                        arrayOf(timestamp.toString(), Message.TYPE_SENDING.toString()), null, null,
+                        Message.COLUMN_TIMESTAMP + " desc")
+            }
+
+    /**
+     * Gets all messages in the database, newer than the given time
+     */
+    fun getNewerSendingMessagesAsList(context: Context, timestamp: Long): List<Message> {
+        val cursor = getNewerSendingMessages(context, timestamp)
+        val messages = ArrayList<Message>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val message = Message()
+                message.fillFromCursor(cursor)
+
+                messages.add(message)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.closeSilent()
+        return messages
+    }
 
     /**
      * Get the specified number of messages from the conversation.

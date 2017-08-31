@@ -22,25 +22,21 @@ import java.util.*
 class MarkAsSentJob : BackgroundJob() {
 
     override fun onRunJob(parameters: JobParameters) {
-        val bundle = parameters.extras
-        if (bundle == null || bundle.getLong(EXTRA_MESSAGE_ID, -1L) == -1L) {
-            return
-        }
+        val messages = DataSource.getNewerSendingMessagesAsList(
+                this,
+                System.currentTimeMillis() - TimeUtils.MINUTE * 5)
 
-        val messageId = bundle.getLong(EXTRA_MESSAGE_ID, -1L)
-        Log.v("MarkAsSentJob", "found message: " + messageId)
+        for (message in messages) {
+            Log.v("MarkAsSentJob", "marking as read: " + message.id)
 
-        val message = DataSource.getMessage(this, messageId)
-        if (message != null && message.type == Message.TYPE_SENDING) {
-            Log.v("MarkAsSentJob", "marking as read")
-
-            DataSource.updateMessageType(this, messageId, Message.TYPE_SENT)
+            DataSource.updateMessageType(this, message.id, Message.TYPE_SENT)
             MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId)
         }
     }
 
     companion object {
 
+        private val JOB_ID = 9
         private val MESSAGE_SENDING_TIMEOUT = TimeUtils.MINUTE
         private val EXTRA_MESSAGE_ID = "extra_message_id"
 
@@ -52,11 +48,8 @@ class MarkAsSentJob : BackgroundJob() {
             val bundle = PersistableBundle()
             bundle.putLong(EXTRA_MESSAGE_ID, messageId)
 
-            // so that we can schedule 50 of these. Aparently there is a max of 100 unique jobs
-            val randomJobId = Random().nextInt(50)
-
             val component = ComponentName(context, MarkAsSentJob::class.java)
-            val builder = JobInfo.Builder(randomJobId + 145356, component)
+            val builder = JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(MESSAGE_SENDING_TIMEOUT / 2)
                     .setOverrideDeadline(MESSAGE_SENDING_TIMEOUT)
                     .setExtras(bundle)
@@ -65,6 +58,7 @@ class MarkAsSentJob : BackgroundJob() {
                     .setRequiresDeviceIdle(false)
 
             val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            jobScheduler.cancel(JOB_ID)
             jobScheduler.schedule(builder.build())
         }
     }
