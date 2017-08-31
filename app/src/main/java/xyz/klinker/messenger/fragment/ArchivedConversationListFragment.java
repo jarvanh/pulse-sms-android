@@ -19,7 +19,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     // only grab the archived messages
     @Override
     protected List<Conversation> getCursor(DataSource source) {
-        return source.getArchivedConversationsAsList(getActivity());
+        return source.getArchivedConversationsAsList(activity);
     }
 
     // create swipe helper that has the unarchive icon instead of the archive one
@@ -38,18 +38,18 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     // unarchive instead of archive when the snackbar is dismissed
     @Override
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        dataSource.unarchiveConversation(getActivity(), conversation.id);
+        dataSource.unarchiveConversation(activity, conversation.id);
     }
 
     // always consume the back event and send us to the conversation list
     @Override
     public boolean onBackPressed() {
         if (!super.onBackPressed()) {
-            NavigationView navView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+            NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
             navView.getMenu().getItem(1).setChecked(true);
 
-            getActivity().setTitle(getString(R.string.app_title));
-            ((MessengerActivity) getActivity()).displayConversations();
+            activity.setTitle(getString(R.string.app_title));
+            ((MessengerActivity) activity).displayConversations();
         }
 
         return true;
@@ -59,7 +59,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         super.onConversationContracted(viewHolder);
 
-        NavigationView navView = (NavigationView) getActivity().findViewById(R.id.navigation_view);
+        NavigationView navView = (NavigationView) activity.findViewById(R.id.navigation_view);
         navView.getMenu().getItem(2).setChecked(true);
     }
 

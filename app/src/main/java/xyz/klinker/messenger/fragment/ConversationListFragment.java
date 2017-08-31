@@ -93,7 +93,7 @@ public class ConversationListFragment extends Fragment
     private String newConversationTitle = null;
     public ConversationUpdateInfo updateInfo = null;
 
-    private FragmentActivity activity;
+    protected FragmentActivity activity;
 
     public static ConversationListFragment newInstance() {
         return newInstance(-1);
