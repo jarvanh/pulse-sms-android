@@ -64,6 +64,10 @@ public class NewMessagesCheckService extends IntentService {
         String appSignature;
         if (!Settings.get(this).signature.isEmpty()) {
             appSignature = "\n" + Settings.get(this).signature;
+
+            // issues with this duplicating sent messages that I hadn't worked out. Disable for now
+            // TODO: fix this integration.
+            return;
         } else {
             appSignature = "";
         }

@@ -237,6 +237,10 @@ object DataSource {
         for (i in contacts.indices) {
             val contact = contacts[i]
 
+            if (contact.phoneNumber == null) {
+                continue
+            }
+
             val values = ContentValues(8)
 
             // here we are loading the id from the internal database into the conversation object

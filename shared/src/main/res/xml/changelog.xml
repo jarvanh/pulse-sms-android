@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="2.5.5"
+        description="September 1st, 2017">
+        <text>Bug fixes</text>
+        <text>Crash fixes</text>
+    </version>
+
+    <version
         name="2.5.4"
         description="August 28th, 2017">
         <text>Improvements around contact syncing for the web version of Pulse</text>

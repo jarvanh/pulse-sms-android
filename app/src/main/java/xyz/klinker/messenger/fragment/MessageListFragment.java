@@ -943,7 +943,10 @@ public class MessageListFragment extends Fragment implements
                 long startTime = System.currentTimeMillis();
                 drafts = source.getDrafts(activity, conversationId);
 
-                source.readConversation(activity, conversationId);
+                if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
+                    source.readConversation(activity, conversationId);
+                }
+
                 final Cursor cursor = source.getMessages(activity, conversationId);
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);

@@ -64,7 +64,7 @@ open class EmojiableEditText : AppCompatEditText {
                 emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)
             } catch (e: Exception) {
                 e.printStackTrace()
-                super.onCreateInputConnection(outAttrs)
+                inputConnection
             }
         } else {
             super.onCreateInputConnection(outAttrs)
