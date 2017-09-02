@@ -55,11 +55,13 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
  */
 public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsReceivedReceiver {
 
+    private Context context;
     private Long conversationId = null;
     private boolean ignoreNotification = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context
         new Thread(() -> {
             try {
                 super.onReceive(context, intent);
@@ -196,8 +198,13 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         return ContactUtils.findContactNames(number, context);
     }
 
-//    @Override
-//    public MmscInformation getMmscInfoForReceptionAck() {
-//        return new MmscInformation("http://mms.bell.ca/mms/wapenc", "web.wireless.bell.ca", 80);
-//    }
+    @Override
+    public MmscInformation getMmscInfoForReceptionAck() {
+        MmsSettings settings = MmsSettings.get(context);
+        if (settings.mmscUrl != null && settings.mmscUrl.isEmpty()) {
+            return new MmscInformation(settings.mmscUrl, settings.mmsProxy, Integer.parseInt(settings.mmsPort));
+        } else {
+            return null;
+        }
+    }
 }
