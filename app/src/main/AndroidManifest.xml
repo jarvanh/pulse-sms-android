@@ -98,8 +98,7 @@
             android:configChanges="keyboardHidden"
             android:launchMode="singleTop"
             android:theme="@style/PulseTheme.MessengerActivity"
-            android:resizeableActivity="true"
-            android:supportsPictureInPicture="true" >
+            android:resizeableActivity="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
