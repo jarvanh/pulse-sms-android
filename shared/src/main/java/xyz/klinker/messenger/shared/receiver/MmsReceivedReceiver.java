@@ -62,7 +62,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
-        
+
         new Thread(() -> {
             try {
                 super.onReceive(context, intent);
