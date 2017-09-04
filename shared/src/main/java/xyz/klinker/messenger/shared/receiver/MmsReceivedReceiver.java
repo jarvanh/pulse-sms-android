@@ -202,7 +202,9 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     @Override
     public MmscInformation getMmscInfoForReceptionAck() {
         MmsSettings settings = MmsSettings.get(context);
-        if (settings.mmscUrl != null && settings.mmscUrl.isEmpty()) {
+        if (settings.mmscUrl != null && !settings.mmscUrl.isEmpty() &&
+                settings.mmsProxy != null && !settings.mmsProxy.isEmpty() &&
+                settings.mmsPort != null && !settings.mmsPort.isEmpty()) {
             return new MmscInformation(settings.mmscUrl, settings.mmsProxy, Integer.parseInt(settings.mmsPort));
         } else {
             return null;
