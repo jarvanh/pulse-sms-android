@@ -162,6 +162,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 layoutId = R.layout.message_info;
             } else if (viewType == Message.TYPE_MEDIA) {
                 layoutId = R.layout.message_media;
+            } else if (viewType == Message.TYPE_IMAGE_SENDING) {
+                layoutId = rounder ? R.layout.message_image_sending_round : R.layout.message_image_sending;
             } else if (viewType == Message.TYPE_IMAGE_SENT) {
                 layoutId = rounder ? R.layout.message_image_sent_round : R.layout.message_image_sent;
             } else if (viewType == Message.TYPE_IMAGE_RECEIVED) {
@@ -442,8 +444,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         if (message.simPhoneNumber != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
                     message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
-        } else {
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+        } else if (holder.timestamp != null) {
+            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.itemView.getContext(),
                     message.timestamp));
         }
 
@@ -486,10 +488,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
                 type = Message.TYPE_SENT;
-            } else if ((Build.FINGERPRINT.equals("robolectric") ||FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
+            } else if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
                     mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
                 if (type == Message.TYPE_RECEIVED) {
                     type = Message.TYPE_IMAGE_RECEIVED;
+                } else if (type == Message.TYPE_SENDING) {
+                    type = Message.TYPE_IMAGE_SENDING;
                 } else {
                     type = Message.TYPE_IMAGE_SENT;
                 }

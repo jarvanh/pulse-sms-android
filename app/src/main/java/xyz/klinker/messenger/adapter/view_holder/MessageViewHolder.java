@@ -223,7 +223,7 @@ public class MessageViewHolder extends SwappingHolder {
         // done from the adapter, since we have the ability to change emoji sizes
         // message.setTextSize(settings.largeFont);
 
-        if (type != Message.TYPE_MEDIA) {
+        if (type != Message.TYPE_MEDIA && type != Message.TYPE_IMAGE_SENDING) {
             timestamp.setTextSize(settings.smallFont);
             timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 

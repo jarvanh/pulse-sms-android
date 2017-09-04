@@ -72,8 +72,9 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
     public static final int TYPE_MEDIA = 6;
 
     // only used in the adapter, this TYPE_IMAGE should NEVER be written to the database.
-    public static final int TYPE_IMAGE_SENT = 7;
-    public static final int TYPE_IMAGE_RECEIVED = 8;
+    public static final int TYPE_IMAGE_SENDING = 7;
+    public static final int TYPE_IMAGE_SENT = 8;
+    public static final int TYPE_IMAGE_RECEIVED = 9;
 
     public long id;
     public long conversationId;
