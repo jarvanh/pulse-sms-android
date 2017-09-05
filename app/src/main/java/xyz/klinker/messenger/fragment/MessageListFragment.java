@@ -448,7 +448,7 @@ public class MessageListFragment extends Fragment implements
             }
         }
 
-        if (attachedUri != null) {
+        if (attachedUri != null && attachedMimeType != null) {
             source.insertDraft(activity, getConversationId(), attachedUri.toString(), attachedMimeType);
         }
     }
