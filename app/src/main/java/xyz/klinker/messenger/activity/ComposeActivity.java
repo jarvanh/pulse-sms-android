@@ -333,6 +333,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             try {
                 if (mimeType.equals(MimeType.TEXT_PLAIN)) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+                } else if (MimeType.isVcard(mimeType)) {
+                    fab.setImageResource(R.drawable.ic_send);
+                    isVcard = true;
+                    data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
+                    Log.v(TAG, "got vcard at: " + data);
                 } else if (clipData != null) {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
                         data += clipData.getItemAt(i).getText();
@@ -343,11 +348,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     } else {
                         mimeType = MimeType.TEXT_PLAIN;
                     }
-                } else if (MimeType.isVcard(mimeType)) {
-                    fab.setImageResource(R.drawable.ic_send);
-                    isVcard = true;
-                    data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
-                    Log.v(TAG, "got vcard at: " + data);
                 } else {
                     image = true;
                 }

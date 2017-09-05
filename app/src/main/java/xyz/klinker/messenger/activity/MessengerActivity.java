@@ -1062,11 +1062,15 @@ public class  MessengerActivity extends AppCompatActivity
                         clipboard.setPrimaryClip(clip);
                     });
 
-            if (source.getMessageCount(this) > MessageListFragment.MESSAGE_LIMIT) {
+            Cursor messages = source.getMessages(this, conversation.id);
+
+            if (messages.getCount() > MessageListFragment.MESSAGE_LIMIT) {
                 builder.setNegativeButton(R.string.menu_view_full_conversation, (dialogInterface, i) -> {
-                    NoLimitMessageListActivity.Companion.start(this, conversation.id);
+                    NoLimitMessageListActivity.start(this, conversation.id);
                 });
             }
+
+            CursorUtil.closeSilent(messages);
 
             builder.show();
             return true;

@@ -19,6 +19,7 @@ package xyz.klinker.messenger.shared.data
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
@@ -1293,17 +1294,26 @@ object DataSource {
      * @param conversationId the conversation id to find messages for.
      * @return a cursor with all messages.
      */
-    fun getMessageCursorWithLimit(context: Context, conversationId: Long, limit: Int): Cursor =
+    fun getMessageCursorWithLimit(context: Context, conversationId: Long, limit: Int): Cursor {
+        val numberOfEntries = DatabaseUtils.queryNumEntries(database(context), Message.TABLE,
+                Message.COLUMN_CONVERSATION_ID + "=?", arrayOf(java.lang.Long.toString(conversationId)))
+
+        return if (numberOfEntries > limit) {
             try {
                 database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
                         arrayOf(java.lang.Long.toString(conversationId)), null, null,
-                        Message.COLUMN_TIMESTAMP + " asc", limit.toString())
+                        Message.COLUMN_TIMESTAMP + " asc", (numberOfEntries - limit).toString() + "," + limit)
             } catch (e: Exception) {
                 ensureActionable(context)
                 database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
                         arrayOf(java.lang.Long.toString(conversationId)), null, null,
-                        Message.COLUMN_TIMESTAMP + " asc", limit.toString())
+                        Message.COLUMN_TIMESTAMP + " asc", (numberOfEntries - limit).toString() + "," + limit)
             }
+        } else {
+            getMessages(context, conversationId)
+        }
+
+    }
 
     /**
      * Gets a single message from the database.
@@ -1483,7 +1493,7 @@ object DataSource {
     /**
      * Get the specified number of messages from the conversation.
      */
-    fun getMessages(context: Context, conversat ionId: Long, count: Int): List<Message> {
+    fun getMessages(context: Context, conversationId: Long, count: Int): List<Message> {
         val cursor = getMessageCursorWithLimit(context, conversationId, count)
         val messages = ArrayList<Message>()
 

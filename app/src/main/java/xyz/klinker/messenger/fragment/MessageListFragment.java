@@ -160,7 +160,7 @@ public class MessageListFragment extends Fragment implements
         ImageSelectedListener, AudioRecordedListener, AttachContactListener, TextSelectedListener,
         ContentFragment, InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
-    public static final int MESSAGE_LIMIT = 8000;
+    public static final int MESSAGE_LIMIT = 6000;
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -547,8 +547,10 @@ public class MessageListFragment extends Fragment implements
         ColorUtils.adjustStatusBarColor(colorDarker, activity);
 
         new Handler().postDelayed(() -> {
-            toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
-                    R.menu.fragment_messages_group : R.menu.fragment_messages);
+            if (shouldLimitMessages()) {
+                toolbar.inflateMenu(getArguments().getBoolean(ARG_IS_GROUP) ?
+                        R.menu.fragment_messages_group : R.menu.fragment_messages);
+            }
 
             try {
                 MenuItem callItem = toolbar.getMenu().findItem(R.id.menu_call);

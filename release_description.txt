@@ -3,4 +3,5 @@ This release:<br/>
 - Fixes issue with some devices receiving duplicate picture messages, on specific carriers (please see the FAQ for more information)<br/>
 - Fixes a ton of little bugs that had been reported<br/>
 - Fixes crashes that had been reported<br/>
+- Power management improvements<br/>
 - Improves performance in some areas of the app
