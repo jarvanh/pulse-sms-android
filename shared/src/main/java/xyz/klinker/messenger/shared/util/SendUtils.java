@@ -133,8 +133,8 @@ public class SendUtils {
         if (data != null) {
             try {
                 if (MimeType.isStaticImage(mimeType)) {
-                    data = ImageUtils.scaleToSend(context, data);
-                    mimeType = MimeType.IMAGE_JPEG;
+                    data = ImageUtils.scaleToSend(context, data, mimeType);
+                    mimeType = MimeType.IMAGE_PNG;
                 }
 
                 byte[] bytes = getBytes(context, data);

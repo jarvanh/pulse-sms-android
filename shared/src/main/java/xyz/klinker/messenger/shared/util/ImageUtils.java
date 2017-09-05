@@ -45,6 +45,7 @@ import java.util.Date;
 import xyz.klinker.messenger.shared.BuildConfig;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
+import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -208,7 +209,7 @@ public class ImageUtils {
      * have a 1 MB limit, so we'll scale to under that. This method will create a new file in the
      * application memory.
      */
-    public static Uri scaleToSend(Context context, Uri uri) throws IOException {
+    public static Uri scaleToSend(Context context, Uri uri, String mimeType) throws IOException {
         try {
             InputStream input = context.getContentResolver().openInputStream(uri);
 
@@ -244,12 +245,18 @@ public class ImageUtils {
             int srcWidth = options.outWidth;
             int srcHeight = options.outHeight;
 
-            String fileName = "image-" + new Date().getTime() + ".jpg";
+            String fileName = "image-" + new Date().getTime() + ".png";
+
+//            if (mimeType.equals(MimeType.IMAGE_PNG)) {
+//                fileName += ".png";
+//            } else {
+//                fileName += ".jpg";
+//            }
 
             // start generating bitmaps and checking the size against the max size
             Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
             scaled = rotateBasedOnExifData(context, uri, scaled);
-            File file = createFileFromBitmap(context, fileName, scaled);
+            File file = createFileFromBitmap(context, fileName, scaled, mimeType);
 
             int maxResolution = 1500;
             while (maxResolution > 0 && file.length() > MmsSettings.get(context).maxImageSize) {
@@ -257,7 +264,7 @@ public class ImageUtils {
 
                 scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
                 scaled = rotateBasedOnExifData(context, uri, scaled);
-                file = createFileFromBitmap(context, fileName, scaled);
+                file = createFileFromBitmap(context, fileName, scaled, mimeType);
                 maxResolution -= 250;
             }
 
@@ -303,7 +310,7 @@ public class ImageUtils {
         return inSampleSize;
     }
 
-    private static File createFileFromBitmap(Context context, String name, Bitmap bitmap) {
+    private static File createFileFromBitmap(Context context, String name, Bitmap bitmap, String mimeType) {
         FileOutputStream out = null;
         File file = new File(context.getFilesDir(), name);
 
@@ -313,7 +320,7 @@ public class ImageUtils {
             }
 
             out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
         } catch (IOException e) {
             Log.e("Scale to Send", "failed to write output stream", e);
         } finally {
