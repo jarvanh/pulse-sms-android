@@ -160,6 +160,8 @@ public class MessageListFragment extends Fragment implements
         ImageSelectedListener, AudioRecordedListener, AttachContactListener, TextSelectedListener,
         ContentFragment, InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
+    public static final int MESSAGE_LIMIT = 8000;
+
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
     public static final String ARG_PHONE_NUMBERS = "phone_numbers";
@@ -173,6 +175,7 @@ public class MessageListFragment extends Fragment implements
     public static final String ARG_READ = "read";
     public static final String ARG_IMAGE_URI = "image_uri";
     public static final String ARG_IS_ARCHIVED = "is_archived";
+    public static final String ARG_LIMIT_MESSAGES = "limit_messages";
 
     private static final int PERMISSION_STORAGE_REQUEST = 1;
     private static final int PERMISSION_AUDIO_REQUEST = 2;
@@ -240,6 +243,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     public static MessageListFragment newInstance(Conversation conversation, long messageToOpenId) {
+        return newInstance(conversation, messageToOpenId, true);
+    }
+
+    public static MessageListFragment newInstance(Conversation conversation, long messageToOpenId, boolean limitMessages) {
         MessageListFragment fragment = new MessageListFragment();
 
         Bundle args = new Bundle();
@@ -254,6 +261,7 @@ public class MessageListFragment extends Fragment implements
         args.putBoolean(ARG_READ, conversation.read);
         args.putString(ARG_IMAGE_URI, conversation.imageUri);
         args.putBoolean(ARG_IS_ARCHIVED, conversation.archive);
+        args.putBoolean(ARG_LIMIT_MESSAGES, limitMessages);
 
         if (messageToOpenId != -1) {
             args.putLong(ARG_MESSAGE_TO_OPEN_ID, messageToOpenId);
@@ -947,7 +955,12 @@ public class MessageListFragment extends Fragment implements
                     source.readConversation(activity, conversationId);
                 }
 
-                final Cursor cursor = source.getMessages(activity, conversationId);
+                final Cursor cursor;
+                if (shouldLimitMessages()) {
+                    cursor = source.getMessageCursorWithLimit(activity, conversationId, MESSAGE_LIMIT);
+                } else {
+                    cursor = source.getMessages(activity, conversationId);
+                }
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
                 final String title = getArguments().getString(ARG_TITLE);
@@ -1758,6 +1771,10 @@ public class MessageListFragment extends Fragment implements
 
     public long getConversationId() {
         return getArguments().getLong(ARG_CONVERSATION_ID);
+    }
+
+    private boolean shouldLimitMessages() {
+        return getArguments().getBoolean(ARG_LIMIT_MESSAGES, true);
     }
 
     public boolean isDragging() {

@@ -168,6 +168,9 @@
             android:launchMode="singleTask"/>
 
         <activity
+            android:name=".activity.NoLimitMessageListActivity"
+            android:theme="@style/PulseTheme.NoActionBar" />
+        <activity
             android:name=".shared.util.RedirectToMyAccount"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity

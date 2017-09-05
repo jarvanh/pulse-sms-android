@@ -72,6 +72,7 @@ import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
+import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -1052,15 +1053,22 @@ public class  MessengerActivity extends AppCompatActivity
             Conversation conversation = fragment.getExpandedItem().conversation;
             DataSource source = DataSource.INSTANCE;
 
-            new AlertDialog.Builder(this)
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setMessage(source.getConversationDetails(this, conversation))
                     .setPositiveButton(android.R.string.ok, null)
                     .setNegativeButton(R.string.menu_copy_phone_number, (dialogInterface, i) -> {
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                         ClipData clip = ClipData.newPlainText("phone_number", conversation.phoneNumbers);
                         clipboard.setPrimaryClip(clip);
-                    })
-                    .show();
+                    });
+
+            if (source.getMessageCount(this) > MessageListFragment.MESSAGE_LIMIT) {
+                builder.setNegativeButton(R.string.menu_view_full_conversation, (dialogInterface, i) -> {
+                    NoLimitMessageListActivity.Companion.start(this, conversation.id);
+                });
+            }
+
+            builder.show();
             return true;
         } else {
             return false;

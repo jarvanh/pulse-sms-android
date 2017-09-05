@@ -20,7 +20,10 @@
         name="2.5.6"
         description="September 5th, 2017">
         <text>Fixes for receiving duplicate MMS on some carriers (please read the FAQ for information on what you need to do to prevent this)</text>
+        <text>Improve handling of extremely large conversations</text>
+        <text>Bug fixes</text>
     </version>
+    
     <version
         name="2.5.5"
         description="September 1st, 2017">

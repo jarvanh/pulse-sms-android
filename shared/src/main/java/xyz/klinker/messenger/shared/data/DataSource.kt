@@ -1288,6 +1288,24 @@ object DataSource {
             }
 
     /**
+     * Gets a limited number of messages for a given conversation.
+     *
+     * @param conversationId the conversation id to find messages for.
+     * @return a cursor with all messages.
+     */
+    fun getMessageCursorWithLimit(context: Context, conversationId: Long, limit: Int): Cursor =
+            try {
+                database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
+                        arrayOf(java.lang.Long.toString(conversationId)), null, null,
+                        Message.COLUMN_TIMESTAMP + " asc", limit.toString())
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
+                        arrayOf(java.lang.Long.toString(conversationId)), null, null,
+                        Message.COLUMN_TIMESTAMP + " asc", limit.toString())
+            }
+
+    /**
      * Gets a single message from the database.
      */
     fun getMessage(context: Context, messageId: Long): Message? {
@@ -1465,8 +1483,8 @@ object DataSource {
     /**
      * Get the specified number of messages from the conversation.
      */
-    fun getMessages(context: Context, conversationId: Long, count: Int): List<Message> {
-        val cursor = getMessages(context, conversationId)
+    fun getMessages(context: Context, conversat ionId: Long, count: Int): List<Message> {
+        val cursor = getMessageCursorWithLimit(context, conversationId, count)
         val messages = ArrayList<Message>()
 
         if (cursor.moveToLast()) {
@@ -1474,7 +1492,7 @@ object DataSource {
                 val message = Message()
                 message.fillFromCursor(cursor)
                 messages.add(message)
-            } while (cursor.moveToPrevious() && messages.size < count)
+            } while (cursor.moveToPrevious())
         }
 
         cursor.closeSilent()
