@@ -1,8 +1,6 @@
-v2.5.0 brings some awesome new features:<br/>
-- Enhancements to global themes (more colors, separate accent colors, theme the conversation list while using per-conversation colors)<br/>
-- Pick between your system and the Android O emojis<br/>
-- Edit the recipients in a group conversation<br/>
-- Send messages from Android TV<br/>
-+ fixes, cleanup, and way more!<br/><br/>
-
-Check out the changelog in the "About" section of the app for a full list.
+This release:<br/>
+- Improves handling of extremely large message threads<br/>
+- Fixes issue with some devices receiving duplicate picture messages, on specific carriers (please see the FAQ for more information)<br/>
+- Fixes a ton of little bugs that had been reported<br/>
+- Fixes crashes that had been reported<br/>
+- Improves performance in some areas of the app
