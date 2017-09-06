@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.util.List;
@@ -54,7 +55,7 @@ public class MediaGridAdapter extends RecyclerView.Adapter<ImageViewHolder> {
         holder.image.setBackgroundColor(Color.TRANSPARENT);
         Glide.with(holder.image.getContext())
                 .load(image)
-                .centerCrop()
+                .apply(new RequestOptions().centerCrop())
                 .into(holder.image);
     }
 

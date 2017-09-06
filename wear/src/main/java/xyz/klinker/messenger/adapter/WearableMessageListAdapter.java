@@ -15,15 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.WearableMessageViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.ArticlePreview;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.YouTubePreview;
@@ -166,19 +165,19 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                 }
 
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
                         .asBitmap()
-                        .error(placeholder)
-                        .placeholder(placeholder)
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .fitCenter()
+                        .load(Uri.parse(message.data))
+                        .apply(new RequestOptions()
+                                .error(placeholder)
+                                .placeholder(placeholder)
+                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .fitCenter())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource,
-                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                 ImageUtils.overlayBitmap(holder.image.getContext(),
-                                        resource, R.drawable.ic_play);
-                                holder.image.setImageBitmap(resource);
+                                        bitmap, R.drawable.ic_play);
+                                holder.image.setImageBitmap(bitmap);
                             }
                         });
             } else if (MimeType.isAudio(message.mimeType)) {
@@ -197,19 +196,20 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         } else {
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
                         .asBitmap()
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .fitCenter()
+                        .load(Uri.parse(message.data))
+                        .apply(new RequestOptions()
+                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .fitCenter())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource,
-                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                 ImageUtils.overlayBitmap(holder.image.getContext(),
-                                        resource, R.drawable.ic_play);
-                                holder.image.setImageBitmap(resource);
+                                        bitmap, R.drawable.ic_play);
+                                holder.image.setImageBitmap(bitmap);
                             }
                         });
+
                 setGone(holder.message);
                 setGone(holder.clippedImage);
                 setGone(holder.title);
@@ -218,17 +218,17 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                 YouTubePreview preview = YouTubePreview.build(message.data);
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
-                            .load(Uri.parse(preview.thumbnail))
                             .asBitmap()
-                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                            .fitCenter()
+                            .load(Uri.parse(preview.thumbnail))
+                            .apply(new RequestOptions()
+                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .fitCenter())
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onResourceReady(Bitmap resource,
-                                                            GlideAnimation<? super Bitmap> glideAnimation) {
+                                public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                     ImageUtils.overlayBitmap(holder.image.getContext(),
-                                            resource, R.drawable.ic_play);
-                                    holder.clippedImage.setImageBitmap(resource);
+                                            bitmap, R.drawable.ic_play);
+                                    holder.clippedImage.setImageBitmap(bitmap);
                                 }
                             });
 
@@ -253,10 +253,11 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                 ArticlePreview preview = ArticlePreview.build(message.data);
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
-                            .load(Uri.parse(preview.imageUrl))
                             .asBitmap()
-                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                            .fitCenter()
+                            .load(Uri.parse(message.data))
+                            .apply(new RequestOptions()
+                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .fitCenter())
                             .into(holder.clippedImage);
 
                     holder.contact.setText(preview.title);

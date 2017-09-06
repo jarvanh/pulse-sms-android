@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -260,12 +261,14 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
     }
 
     @Override
+    @SuppressLint("Range")
     public int getHeaderViewType(int section) {
         //noinspection ResourceType
         return VIEW_TYPE_HEADER;
     }
 
     @Override
+    @SuppressLint("Range")
     public int getItemViewType(int section, int relativePosition, int absolutePosition) {
         if (section == 0) {
             //noinspection ResourceType

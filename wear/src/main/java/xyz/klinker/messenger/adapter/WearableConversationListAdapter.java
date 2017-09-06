@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,7 +83,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
 
     @Override
     public void onBindHeaderViewHolder(WearableConversationViewHolder holder, int section) {
-        String text = null;
+        String text;
 
         if (sectionCounts.get(section).type == SectionType.PINNED) {
             text = holder.header.getContext().getString(R.string.pinned);
@@ -106,7 +107,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
-            Glide.clear(holder.image);
+            Glide.with(holder.image).clear(holder.image);
         }
     }
 
@@ -123,7 +124,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
             holder.name.setText(null);
             holder.summary.setText(null);
             holder.imageLetter.setText(null);
-            Glide.clear(holder.image);
+            Glide.with(holder.image).clear(holder.image);
             return;
         }
 
@@ -163,7 +164,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
 
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
-                    .signature(new StringSignature(String.valueOf(time)))
+                    .apply(new RequestOptions().signature(new ObjectKey(String.valueOf(time))))
                     .into(holder.image);
         }
 

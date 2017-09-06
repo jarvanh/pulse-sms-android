@@ -38,8 +38,9 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 import com.klinker.android.link_builder.TouchableMovementMethod;
@@ -293,16 +294,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             if (MimeType.isStaticImage(message.mimeType)) {
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .fitCenter()
+                        .apply(new RequestOptions()
+                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                            .fitCenter())
                         .into(holder.image);
             } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
                 holder.image.setMaxWidth(holder.image.getContext()
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data)).fitCenter()
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .load(Uri.parse(message.data))
+                        .apply(new RequestOptions()
+                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                .fitCenter())
                         .into(holder.image);
             } else if (MimeType.isVideo(message.mimeType)) {
                 Drawable placeholder;
@@ -315,16 +320,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
 
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
                         .asBitmap()
-                        .error(placeholder)
-                        .placeholder(placeholder)
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .fitCenter()
+                        .load(Uri.parse(message.data))
+                        .apply(new RequestOptions()
+                                .error(placeholder)
+                                .placeholder(placeholder)
+                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                .fitCenter())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource,
-                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                 ImageUtils.overlayBitmap(holder.image.getContext(),
                                         resource, R.drawable.ic_play);
                                 holder.image.setImageBitmap(resource);
@@ -342,8 +348,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                 Glide.with(holder.image.getContext())
                         .load(Uri.parse(message.data))
-                        .error(placeholder)
-                        .placeholder(placeholder)
+                        .apply(new RequestOptions()
+                                .error(placeholder)
+                                .placeholder(placeholder))
                         .into(holder.image);
             } else if (MimeType.isVcard(message.mimeType)) {
                 holder.message.setText(message.data);
@@ -358,17 +365,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         } else {
             if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
                         .asBitmap()
-                        .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                        .fitCenter()
+                        .load(Uri.parse(message.data))
+                        .apply(new RequestOptions()
+                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .fitCenter())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource,
-                                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                 ImageUtils.overlayBitmap(holder.image.getContext(),
-                                        resource, R.drawable.ic_play);
-                                holder.image.setImageBitmap(resource);
+                                        bitmap, R.drawable.ic_play);
+                                holder.image.setImageBitmap(bitmap);
                             }
                         });
                 setGone(holder.message);
@@ -378,18 +385,18 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             } else if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
                 YouTubePreview preview = YouTubePreview.build(message.data);
                 if (preview != null) {
-                    Glide.with(holder.clippedImage.getContext())
-                            .load(Uri.parse(preview.thumbnail))
+                    Glide.with(holder.image.getContext())
                             .asBitmap()
-                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                            .fitCenter()
+                            .load(Uri.parse(preview.thumbnail))
+                            .apply(new RequestOptions()
+                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .fitCenter())
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onResourceReady(Bitmap resource,
-                                                            GlideAnimation<? super Bitmap> glideAnimation) {
+                                public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                     ImageUtils.overlayBitmap(holder.image.getContext(),
-                                            resource, R.drawable.ic_play);
-                                    holder.clippedImage.setImageBitmap(resource);
+                                            bitmap, R.drawable.ic_play);
+                                    holder.image.setImageBitmap(bitmap);
                                 }
                             });
 
@@ -414,10 +421,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 ArticlePreview preview = ArticlePreview.build(message.data);
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
-                            .load(Uri.parse(preview.imageUrl))
                             .asBitmap()
-                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                            .fitCenter()
+                            .load(Uri.parse(preview.imageUrl))
+                            .apply(new RequestOptions()
+                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .fitCenter())
                             .into(holder.clippedImage);
 
                     holder.contact.setText(preview.title);

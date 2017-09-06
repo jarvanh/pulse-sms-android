@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.RequestOptions;
 
 import uk.co.senab.photoview.PhotoView;
 import xyz.klinker.messenger.R;
@@ -59,7 +59,6 @@ public class ImageViewerFragment extends Fragment {
 
         player = (EasyVideoPlayer) view.findViewById(R.id.player);
         PhotoView photo = (PhotoView) view.findViewById(R.id.photo);
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(photo);
 
         String data = getArguments().getString(ARG_DATA_URI);
         String mimeType = getArguments().getString(ARG_DATA_MIME_TYPE);
@@ -67,8 +66,8 @@ public class ImageViewerFragment extends Fragment {
         if (MimeType.isStaticImage(mimeType)) {
             Glide.with(getActivity())
                     .load(Uri.parse(data))
-                    .fitCenter()
-                    .into(target);
+                    .apply(new RequestOptions().fitCenter())
+                    .into(photo);
         } else if (MimeType.isVideo(mimeType) || MimeType.isAudio(mimeType)) {
             player.setVisibility(View.VISIBLE);
             photo.setVisibility(View.GONE);
@@ -87,7 +86,7 @@ public class ImageViewerFragment extends Fragment {
         } else {
             Glide.with(getActivity())
                     .load(Uri.parse(data))
-                    .into(target);
+                    .into(photo);
         }
 
         return view;

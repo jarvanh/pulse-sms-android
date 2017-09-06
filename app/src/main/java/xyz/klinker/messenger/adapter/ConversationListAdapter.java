@@ -28,7 +28,8 @@ import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +40,6 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
-import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -218,7 +218,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
-            Glide.clear(holder.image);
+            Glide.with(holder.image).clear(holder.image);
         }
     }
 
@@ -239,7 +239,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             holder.name.setText(null);
             holder.summary.setText(null);
             holder.imageLetter.setText(null);
-            Glide.clear(holder.image);
+            Glide.with(holder.image).clear(holder.image);
             return;
         }
 
@@ -298,7 +298,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
-                    .signature(new StringSignature(String.valueOf(time)))
+                    .apply(new RequestOptions().signature(new ObjectKey(String.valueOf(time))))
                     .into(holder.image);
         }
 

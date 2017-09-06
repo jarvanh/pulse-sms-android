@@ -80,7 +80,8 @@ import android.widget.Toast;
 import com.afollestad.materialcamera.MaterialCamera;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.sgottard.sofa.ContentFragment;
 import com.turingtechnologies.materialscrollbar.DateAndTimeIndicator;
 import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
@@ -633,7 +634,7 @@ public class MessageListFragment extends Fragment implements
             if (imageUri != null) {
                 Glide.with(activity)
                         .load(Uri.parse(imageUri))
-                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                        .apply(new RequestOptions().signature(new ObjectKey(String.valueOf(System.currentTimeMillis()))))
                         .into(image);
             }
 
@@ -1700,8 +1701,10 @@ public class MessageListFragment extends Fragment implements
         try {
             if (activity != null) {
                 Glide.with(activity)
-                        .load(uri).diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .placeholder(R.drawable.ic_image_sending)
+                        .load(uri)
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                .placeholder(R.drawable.ic_image_sending))
                         .into(attachedImage);
                 changeCounterText();
             }

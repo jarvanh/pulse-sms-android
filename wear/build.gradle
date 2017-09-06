@@ -95,6 +95,9 @@ android {
 dependencies {
     compile project(":shared")
 
+    annotationProcessor "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
+    compile "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
+
     compile 'com.klinkerapps:wearable-reply:1.0.1'
     compile "com.google.android.gms:play-services-wearable:${GOOGLE_PLAY_SERVICES_VERSION}"
 

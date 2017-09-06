@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
@@ -100,7 +101,7 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
             holder.image.setBackgroundColor(Color.TRANSPARENT);
             Glide.with(holder.image.getContext())
                     .load(uri)
-                    .centerCrop()
+                    .apply(new RequestOptions().centerCrop())
                     .into(holder.image);
 
             if (holder.mimeType != null && holder.mimeType.contains("video") && holder.playButton.getVisibility() == View.GONE) {
