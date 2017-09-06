@@ -65,9 +65,11 @@ public class NewMessagesCheckService extends IntentService {
         if (!Settings.get(this).signature.isEmpty()) {
             appSignature = "\n" + Settings.get(this).signature;
 
-            // issues with this duplicating sent messages that I hadn't worked out. Disable for now
-            // TODO: fix this integration.
-            return;
+            if (!FeatureFlags.get(this).CHECK_NEW_MESSAGES_WITH_SIGNATURE) {
+                // issues with this duplicating sent messages that I hadn't worked out. Disable for now
+                // TODO: fix this integration.
+                return;
+            }
         } else {
             appSignature = "";
         }
@@ -165,13 +167,9 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
-//        if (!FeatureFlags.get(this).DATABASE_SYNC_SERVICE_ALL && newMessageType != Message.TYPE_SENT) {
-//            return true;
-//        }
-
         for (Message message : messages) {
             if (message.mimeType.equals(MimeType.TEXT_PLAIN) && (typesAreEqual(newMessageType, message.type)) &&
-                    message.data.trim().equals(bodyToSearch.trim())) {
+                    bodyToSearch.trim().contains(message.data.trim())) {
                 return true;
             }
         }
