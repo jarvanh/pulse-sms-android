@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -46,8 +47,11 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
-        final Handler handler = new Handler();
+        if (Account.get(context).exists() && !Account.get(context).primary) {
+            return;
+        }
 
+        final Handler handler = new Handler();
         new Thread(() -> {
             try {
                 Thread.sleep(4000);

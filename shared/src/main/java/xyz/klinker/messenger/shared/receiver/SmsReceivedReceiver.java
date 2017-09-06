@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
@@ -47,15 +48,19 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
+        if (Account.get(context).exists() && !Account.get(context).primary) {
+            return;
+        }
+
         final Handler handler = new Handler();
-        //new Thread(() -> {
+        new Thread(() -> {
             try {
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
                 AnalyticsHelper.failedToSaveSms(context, e.getMessage());
                 e.printStackTrace();
             }
-        //}).start();
+        }).start();
     }
 
     private void handleReceiver(Context context, Intent intent, Handler handler) {
