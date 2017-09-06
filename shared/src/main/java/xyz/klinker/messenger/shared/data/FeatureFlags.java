@@ -58,7 +58,7 @@ public class FeatureFlags {
     private static final String FLAG_EMOJI_STYLE = "flag_emoji_style";
     private static final String FLAG_TV_MESSAGE_ENTRY = "flag_tv_message_entry";
     private static final String FLAG_DATABASE_SYNC_SERVICE_ALL = "flag_database_sync_service_all";
-    private static final String FLAG_REMOVE_IMAGE_BORDERS = "flag_remove_image_borders";
+    private static final String FLAG_REMOVE_IMAGE_BORDERS = "flag_remove_image_borders_beta";
     private static final String FLAG_AUTO_RETRY_FAILED_MESSAGES = "flag_auto_retry_failed_messages";
     // endregion
 
