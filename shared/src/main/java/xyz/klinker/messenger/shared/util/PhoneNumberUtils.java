@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Build;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.klinker.android.send_message.Utils;
@@ -28,6 +29,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import xyz.klinker.messenger.api.implementation.Account;
 
 /**
  * Helper for working with phone numbers, mainly formatting them.
@@ -114,22 +117,35 @@ public class PhoneNumberUtils {
      * Returns the device's phone number.
      */
     public static String getMyPhoneNumber(Context context) {
-        String number = "";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager manager = SubscriptionManager.from(context);
-            List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
-
-            if (availableSims != null && availableSims.size() > 0) {
-                number = availableSims.get(0).getNumber();
-            }
+        Account account = Account.get(context);
+        if (account.exists()) {
+            return account.myPhoneNumber;
         }
+
+        String number = getLollipopPhoneNumber(context);
 
         if (number == null || number.isEmpty()) {
             number = Utils.getMyPhoneNumber(context);
         }
 
         return clearFormatting(number);
+    }
+
+    private static String getLollipopPhoneNumber(Context context) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SubscriptionManager manager = SubscriptionManager.from(context);
+                List<SubscriptionInfo> availableSims = manager.getActiveSubscriptionInfoList();
+
+                if (availableSims != null && availableSims.size() > 0) {
+                    return availableSims.get(0).getNumber();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

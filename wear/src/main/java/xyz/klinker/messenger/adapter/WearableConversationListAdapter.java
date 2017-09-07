@@ -164,7 +164,6 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
 
             Glide.with(holder.image.getContext())
                     .load(Uri.parse(conversation.imageUri))
-                    .apply(new RequestOptions().signature(new ObjectKey(String.valueOf(time))))
                     .into(holder.image);
         }
 

@@ -379,7 +379,7 @@ public class  MessengerActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.drawer_header_my_name))
                         .setText(account.myName);
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
-                        .setText(PhoneNumberUtils.format(account.myPhoneNumber));
+                        .setText(PhoneNumberUtils.format(PhoneNumberUtils.getMyPhoneNumber(this)));
 
                 if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
                     ((TextView) findViewById(R.id.drawer_header_my_name))
