@@ -128,6 +128,10 @@ public class MimeType {
      * Gets whether the mime type is a supported static image (not a gif).
      */
     public static boolean isStaticImage(String mimeType) {
+        if (mimeType == null) {
+            return false;
+        }
+
         mimeType = mimeType.toLowerCase();
         return mimeType.startsWith("image/") && !mimeType.equals(IMAGE_GIF);
     }

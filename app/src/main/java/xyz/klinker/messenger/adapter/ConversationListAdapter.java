@@ -218,7 +218,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
-            Glide.with(holder.image).clear(holder.image);
+            Glide.with(holder.image.getContext()).clear(holder.image);
         }
     }
 
@@ -239,7 +239,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             holder.name.setText(null);
             holder.summary.setText(null);
             holder.imageLetter.setText(null);
-            Glide.with(holder.image).clear(holder.image);
+            Glide.with(holder.image.getContext()).clear(holder.image);
             return;
         }
 

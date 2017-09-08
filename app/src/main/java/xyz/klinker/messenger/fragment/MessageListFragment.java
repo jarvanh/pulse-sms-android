@@ -398,6 +398,9 @@ public class MessageListFragment extends Fragment implements
             dismissNotification();
             dismissOnStartup = false;
         }
+
+        new Handler().postDelayed(() -> source.readConversation(activity, getConversationId()),
+                AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
     }
 
     @Override
@@ -953,10 +956,6 @@ public class MessageListFragment extends Fragment implements
                 listRefreshMonitor.incrementRefreshThreadsCount();
                 long startTime = System.currentTimeMillis();
                 drafts = source.getDrafts(activity, conversationId);
-
-                if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
-                    source.readConversation(activity, conversationId);
-                }
 
                 final Cursor cursor;
                 if (shouldLimitMessages()) {
