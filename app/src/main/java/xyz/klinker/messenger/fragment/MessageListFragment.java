@@ -161,7 +161,7 @@ public class MessageListFragment extends Fragment implements
         ImageSelectedListener, AudioRecordedListener, AttachContactListener, TextSelectedListener,
         ContentFragment, InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
-    public static final int MESSAGE_LIMIT = 6000;
+    public static final int MESSAGE_LIMIT = 8000;
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -961,6 +961,9 @@ public class MessageListFragment extends Fragment implements
                 final Cursor cursor;
                 if (shouldLimitMessages()) {
                     cursor = source.getMessageCursorWithLimit(activity, conversationId, MESSAGE_LIMIT);
+                    if (cursor.getCount() != MESSAGE_LIMIT) {
+                        setShouldLimitMessages(false);
+                    }
                 } else {
                     cursor = source.getMessages(activity, conversationId);
                 }
@@ -1780,6 +1783,10 @@ public class MessageListFragment extends Fragment implements
 
     private boolean shouldLimitMessages() {
         return getArguments().getBoolean(ARG_LIMIT_MESSAGES, true);
+    }
+
+    private void setShouldLimitMessages(boolean limit) {
+        getArguments().putBoolean(ARG_LIMIT_MESSAGES, limit);
     }
 
     public boolean isDragging() {
