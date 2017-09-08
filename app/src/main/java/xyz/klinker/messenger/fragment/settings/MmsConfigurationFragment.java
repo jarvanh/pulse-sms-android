@@ -2,20 +2,14 @@ package xyz.klinker.messenger.fragment.settings;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
 import com.codekidlabs.storagechooser.StorageChooser;
 
@@ -24,7 +18,6 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
-import xyz.klinker.messenger.shared.util.DensityUtil;
 
 public class MmsConfigurationFragment extends MaterialPreferenceFragment {
 
