@@ -283,8 +283,10 @@ public class ConversationListFragment extends Fragment
         }
 
         if (getArguments() != null) {
-            long conversationToOpen = getArguments().getLong(ARG_CONVERSATION_TO_OPEN_ID, 0);
-            if (conversationToOpen != 0) {
+            long conversationToOpen = getArguments().getLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
+            getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
+
+            if (conversationToOpen != -1L) {
                 clickConversationWithId(conversationToOpen);
             }
         } else {
@@ -560,6 +562,7 @@ public class ConversationListFragment extends Fragment
 
         if (activity != null)
             activity.getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+
         if (getArguments() != null)
             getArguments().putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L);
         

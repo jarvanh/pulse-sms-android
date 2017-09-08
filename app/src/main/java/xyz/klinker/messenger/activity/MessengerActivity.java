@@ -278,6 +278,7 @@ public class  MessengerActivity extends AppCompatActivity
 
         boolean handled = handleShortcutIntent(intent);
         long convoId = intent.getLongExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+        intent.putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (!handled && convoId != -1L) {
             getIntent().putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), convoId);
@@ -717,10 +718,11 @@ public class  MessengerActivity extends AppCompatActivity
         long convoId = getIntent().getLongExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         long messageId = getIntent().getLongExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
 
+        getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+        getIntent().putExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
+
         if (messageId != -1L && convoId != -1L) {
             conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
-            getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
-            getIntent().putExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
         } else if (convoId != -1L && convoId != 0) {
             conversationListFragment = ConversationListFragment.newInstance(convoId);
         } else {
@@ -1213,6 +1215,8 @@ public class  MessengerActivity extends AppCompatActivity
     private void dismissIfFromNotification() {
         boolean fromNotification = getIntent().getBooleanExtra(INSTANCE.getEXTRA_FROM_NOTIFICATION(), false);
         long convoId = getIntent().getLongExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
+
+        getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (fromNotification && convoId != -1) {
             new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
