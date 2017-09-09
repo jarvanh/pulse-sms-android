@@ -23,6 +23,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
 import static org.junit.Assert.assertEquals;
@@ -44,28 +48,28 @@ public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
     @Test
     public void regularGetPhoneNumbers() {
         assertEquals("+15159911493",
-                receiver.getPhoneNumbers("+15159911493", "+15154224558", "5154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "+15154224558", Arrays.asList("5154224558"), context));
 
         assertEquals("+15159911493",
-                receiver.getPhoneNumbers("+15159911493", "5154224558", "+15154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "5154224558", Arrays.asList("+15154224558"), context));
 
         assertEquals("5159911493",
-                receiver.getPhoneNumbers("5159911493", "5154224558", "5154224558", context));
+                receiver.getPhoneNumbers("5159911493", "5154224558", Arrays.asList("5154224558"), context));
 
         assertEquals("+15159911493",
-                receiver.getPhoneNumbers("+15159911493", "+15154224558", "+15154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "+15154224558", Arrays.asList("+15154224558"), context));
     }
 
     @Test
     public void groupGetPhoneNumbers() {
         assertEquals("5154808532, +15159911493",
-                receiver.getPhoneNumbers("+15159911493", "+15154224558, 5154808532", "5154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "+15154224558, 5154808532", Arrays.asList("5154224558"), context));
 
         assertEquals("+15154808532, +15159911493",
-                receiver.getPhoneNumbers("+15159911493", "+15154808532, 5154224558", "+15154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "+15154808532, 5154224558", Arrays.asList("+15154224558"), context));
 
         assertEquals("+15154808532, +15154196726, +15159911493",
-                receiver.getPhoneNumbers("+15159911493", "+15154808532, 5154224558, +15154196726", "+15154224558", context));
+                receiver.getPhoneNumbers("+15159911493", "+15154808532, 5154224558, +15154196726", Arrays.asList("+15154224558"), context));
 
     }
 
