@@ -163,6 +163,7 @@ public class MessageListFragment extends Fragment implements
 
     public static final int MESSAGE_LIMIT = 8000;
     private boolean limitMessagesBasedOnPreviousSize = true;
+    private int messageLoadedCount = -1;
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -947,6 +948,10 @@ public class MessageListFragment extends Fragment implements
     }
 
     public void loadMessages() {
+        loadMessages(false);
+    }
+
+    public void loadMessages(boolean addedNewMessage) {
         final Handler handler = new Handler();
         new Thread(() -> {
             Log.v(TAG, "loading messages");
@@ -960,8 +965,12 @@ public class MessageListFragment extends Fragment implements
 
                 final Cursor cursor;
                 if (shouldLimitMessages() && limitMessagesBasedOnPreviousSize) {
-                    cursor = source.getMessageCursorWithLimit(activity, conversationId, MESSAGE_LIMIT);
-                    if (cursor.getCount() != MESSAGE_LIMIT) {
+                    cursor = source.getMessageCursorWithLimit(activity, conversationId,
+                            messageLoadedCount == -1 ? MESSAGE_LIMIT :
+                                    addedNewMessage ? messageLoadedCount + 1 : messageLoadedCount
+                    );
+
+                    if (cursor.getCount() < MESSAGE_LIMIT) {
                         limitMessagesBasedOnPreviousSize = false;
                     }
                 } else {
@@ -1098,6 +1107,8 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void setMessages(Cursor messages, Map<String, Contact> contactMap, Map<String, Contact> contactMapByName) {
+        messageLoadedCount = messages.getCount();
+
         if (adapter != null) {
             adapter.addMessage(messageList, messages);
         } else {
@@ -1319,7 +1330,7 @@ public class MessageListFragment extends Fragment implements
             }
 
             if (loadMessages) {
-                loadMessages();
+                loadMessages(true);
             }
 
             new AudioWrapper(activity, R.raw.message_ping).play();

@@ -126,6 +126,12 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
     @Override
     public void loadMessages() {
+        // doens't really matter here. We are loading everything anyways
+        loadMessages(true);
+    }
+
+    @Override
+    public void loadMessages(boolean addedNewMessage) {
         new Thread(() -> {
             final Cursor cursor = source.getMessages(this, conversation.id);
             runOnUiThread(() -> {

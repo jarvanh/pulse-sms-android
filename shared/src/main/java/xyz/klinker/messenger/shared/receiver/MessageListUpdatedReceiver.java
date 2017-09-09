@@ -68,9 +68,11 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
         if (conversationId == fragment.getConversationId()) {
             if (messageType == Message.TYPE_RECEIVED) {
                 fragment.setShouldPullDrafts(false);
+                fragment.loadMessages(true);
+            } else {
+                fragment.loadMessages(false);
             }
 
-            fragment.loadMessages();
             fragment.setDismissOnStartup();
 
             if (Settings.get(context).soundEffects && messageType == Message.TYPE_RECEIVED &&

@@ -6,6 +6,7 @@ public interface IMessageListFragment {
 
     void setShouldPullDrafts(boolean pull);
     void loadMessages();
+    void loadMessages(boolean addedNewMessage);
     void setDismissOnStartup();
     void setConversationUpdateInfo(String text);
 }
