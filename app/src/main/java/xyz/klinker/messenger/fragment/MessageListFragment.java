@@ -965,17 +965,28 @@ public class MessageListFragment extends Fragment implements
 
                 final Cursor cursor;
                 if (shouldLimitMessages() && limitMessagesBasedOnPreviousSize) {
+                    // weird logic with the counts for this. If we just load the MESSAGE_LIMIT each time,
+                    // then the adapter gets screwed up and can display the wrong messages, since recycler views
+                    // are meant to be "smart" about managing state.
+                    // So, if we send a message, or a message is received, we should increment the number of messages
+                    // that we are reading from the database, to account for this.
+                    
                     cursor = source.getMessageCursorWithLimit(activity, conversationId,
                             messageLoadedCount == -1 ? MESSAGE_LIMIT :
                                     addedNewMessage ? messageLoadedCount + 1 : messageLoadedCount
                     );
 
                     if (cursor.getCount() < MESSAGE_LIMIT) {
+                        // When the conversations are small enough, then we shouldn't need to do this
+                        // this is just a slight cleanup to remove the extra size check that happens in the
+                        // above data load. If it isn't necessary, then we shouldn't do it
                         limitMessagesBasedOnPreviousSize = false;
                     }
                 } else {
                     cursor = source.getMessages(activity, conversationId);
                 }
+
+                messageLoadedCount = cursor.getCount();
 
                 final String numbers = getArguments().getString(ARG_PHONE_NUMBERS);
                 final String title = getArguments().getString(ARG_TITLE);
@@ -1107,8 +1118,6 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void setMessages(Cursor messages, Map<String, Contact> contactMap, Map<String, Contact> contactMapByName) {
-        messageLoadedCount = messages.getCount();
-
         if (adapter != null) {
             adapter.addMessage(messageList, messages);
         } else {
