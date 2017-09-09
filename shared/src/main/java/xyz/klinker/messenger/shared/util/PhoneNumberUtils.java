@@ -25,6 +25,7 @@ import android.text.TextUtils;
 
 import com.klinker.android.send_message.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -114,21 +115,39 @@ public class PhoneNumberUtils {
     }
 
     /**
-     * Returns the device's phone number.
+     * Returns the most likely device phone number
      */
     public static String getMyPhoneNumber(Context context) {
+        List<String> numbers = getMyPossiblePhoneNumbers(context);
+        if (numbers.size() > 0) {
+            return numbers.get(0);
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Returns the devices possible phone numbers. (Account, Lollipop method, legacy method)
+     */
+    public static List<String> getMyPossiblePhoneNumbers(Context context) {
+        List<String> numbers = new ArrayList<>();
+
         Account account = Account.get(context);
         if (account.exists()) {
-            return account.myPhoneNumber;
+            numbers.add(account.myPhoneNumber);
         }
 
-        String number = getLollipopPhoneNumber(context);
-
-        if (number == null || number.isEmpty()) {
-            number = Utils.getMyPhoneNumber(context);
+        String lollipopNumber = getLollipopPhoneNumber(context);
+        if (lollipopNumber != null && !lollipopNumber.isEmpty()) {
+            numbers.add(lollipopNumber);
         }
 
-        return clearFormatting(number);
+        String legacyNumber = Utils.getMyPhoneNumber(context);
+        if (legacyNumber != null && !legacyNumber.isEmpty()) {
+            numbers.add(legacyNumber);
+        }
+
+        return numbers;
     }
 
     private static String getLollipopPhoneNumber(Context context) {

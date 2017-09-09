@@ -106,7 +106,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
             final String to = SmsMmsUtils.getMmsTo(uri, context);
             final String phoneNumbers = getPhoneNumbers(from, to,
-                    PhoneNumberUtils.getMyPhoneNumber(context), context);
+                    PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
             DataSource source = DataSource.INSTANCE;
@@ -165,21 +165,23 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     }
 
     @VisibleForTesting
-    protected String getPhoneNumbers(String from, String to, String myNumber, Context context) {
+    protected String getPhoneNumbers(String from, String to, List<String> myPossiblePhoneNumbers, Context context) {
         String[] toNumbers = to.split(", ");
         StringBuilder builder = new StringBuilder();
-        String myName = getMyName(context);
         
         for (String number : toNumbers) {
-            String cleanNumber = PhoneNumberUtils.clearFormatting(number).replace("+", "");
-            String myCleanNumber = PhoneNumberUtils.clearFormatting(myNumber).replace("+", "");
             String contactName = ContactUtils.findContactNames(number, context);
-            String idMatcher = SmsMmsUtils.createIdMatcher(cleanNumber).sevenLetter;
-            String myIdMatcher = SmsMmsUtils.createIdMatcher(myCleanNumber).sevenLetter;
+            String idMatcher = SmsMmsUtils.createIdMatcher(number).sevenLetter;
+
+            boolean myNumberMatches = false;
+            for (String myNumber : myPossiblePhoneNumbers) {
+                String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetter;
+                if (myIdMatcher.equals(idMatcher)) {
+                    myNumberMatches = true;
+                }
+            }
             
-            if (!cleanNumber.contains(myCleanNumber) && !myCleanNumber.contains(cleanNumber) && !contactName.equals(myName) &&
-                    !builder.toString().contains(cleanNumber) && !idMatcher.contains(myIdMatcher) &&
-                    !myIdMatcher.equals(idMatcher) && !contactName.toLowerCase().equals("me")) {
+            if (!myNumberMatches && !contactName.toLowerCase().equals("me")) {
                 builder.append(number);
                 builder.append(", ");
             }
