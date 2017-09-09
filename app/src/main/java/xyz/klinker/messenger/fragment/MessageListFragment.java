@@ -162,6 +162,7 @@ public class MessageListFragment extends Fragment implements
         ContentFragment, InputConnectionCompat.OnCommitContentListener, IMessageListFragment {
 
     public static final int MESSAGE_LIMIT = 8000;
+    private boolean limitMessagesBasedOnPreviousSize = true;
 
     public static final String TAG = "MessageListFragment";
     public static final String ARG_TITLE = "title";
@@ -958,10 +959,10 @@ public class MessageListFragment extends Fragment implements
                 drafts = source.getDrafts(activity, conversationId);
 
                 final Cursor cursor;
-                if (shouldLimitMessages()) {
+                if (shouldLimitMessages() && limitMessagesBasedOnPreviousSize) {
                     cursor = source.getMessageCursorWithLimit(activity, conversationId, MESSAGE_LIMIT);
                     if (cursor.getCount() != MESSAGE_LIMIT) {
-                        setShouldLimitMessages(false);
+                        limitMessagesBasedOnPreviousSize = false;
                     }
                 } else {
                     cursor = source.getMessages(activity, conversationId);
@@ -1782,10 +1783,6 @@ public class MessageListFragment extends Fragment implements
 
     private boolean shouldLimitMessages() {
         return getArguments().getBoolean(ARG_LIMIT_MESSAGES, true);
-    }
-
-    private void setShouldLimitMessages(boolean limit) {
-        getArguments().putBoolean(ARG_LIMIT_MESSAGES, limit);
     }
 
     public boolean isDragging() {
