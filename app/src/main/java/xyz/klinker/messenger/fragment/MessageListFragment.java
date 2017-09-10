@@ -409,6 +409,9 @@ public class MessageListFragment extends Fragment implements
     public void onStop() {
         super.onStop();
         dismissNotification = false;
+
+        new Handler().postDelayed(() -> source.readConversation(activity, getConversationId()),
+                AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
     }
 
     @Override
@@ -970,7 +973,7 @@ public class MessageListFragment extends Fragment implements
                     // are meant to be "smart" about managing state.
                     // So, if we send a message, or a message is received, we should increment the number of messages
                     // that we are reading from the database, to account for this.
-                    
+
                     cursor = source.getMessageCursorWithLimit(activity, conversationId,
                             messageLoadedCount == -1 ? MESSAGE_LIMIT :
                                     addedNewMessage ? messageLoadedCount + 1 : messageLoadedCount
