@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -243,7 +243,7 @@
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2017 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">View open source license information</string>
     <string name="app_version">App Version</string>
     <string name="account_information">Account Information</string>
