@@ -45,16 +45,24 @@ import xyz.klinker.messenger.shared.util.TimeUtils;
 
 public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
+    public static long lastReceived = 0L;
+
     @Override
     public void onReceive(Context context, final Intent intent) {
         if (Account.get(context).exists() && !Account.get(context).primary) {
             return;
         }
 
+        if (System.currentTimeMillis() - SmsReceivedNonDefaultReceiver.lastReceived < TimeUtils.SECOND * 10) {
+            return;
+        } else {
+            SmsReceivedNonDefaultReceiver.lastReceived = System.currentTimeMillis();
+        }
+
         final Handler handler = new Handler();
         new Thread(() -> {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(TimeUtils.SECOND * 4);
                 handleReceiver(context, intent, handler);
             } catch (Exception e) {
                 e.printStackTrace();
