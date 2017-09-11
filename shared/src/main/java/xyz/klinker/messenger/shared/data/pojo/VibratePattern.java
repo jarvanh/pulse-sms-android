@@ -10,7 +10,8 @@ public enum VibratePattern {
     ONE_LONG(new long[] {0,1000}),
     ONE_SHORT(new long[] {0,300}),
     ONE_EXTRA_LONG(new long[] {0,3500}),
-    TWO_SHORT_ONE_LONG(new long[] {0, 225, 50, 225, 50, 500});
+    TWO_SHORT_ONE_LONG(new long[] {0, 225, 50, 225, 50, 500}),
+    ONE_LONG_ONE_SHORT_ONE_LONG(new long[] {0, 500, 50, 225, 50, 500});
 
     public long[] pattern;
     VibratePattern(long[] pattern) {

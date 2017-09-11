@@ -22,8 +22,10 @@
         <text>Fixes for receiving duplicate MMS on some carriers (please read the FAQ for information on what you need to do to prevent this)</text>
         <text>Improve handling of extremely large conversations</text>
         <text>Fix sharing contact cards from contacts app</text>
+        <text>New vibration pattern</text>
         <text>Battery improvements</text>
         <text>Bug fixes</text>
+        <text>FAQ improvements</text>
     </version>
 
     <version
