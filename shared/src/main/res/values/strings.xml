@@ -261,7 +261,10 @@
     <string name="troubleshooting">Troubleshooting</string>
     <string name="get_in_touch">Get in Touch</string>
     <string name="faqs">Frequently Asked Questions</string>
-    <string name="features">Features</string>
+    <string name="get_help">Get Help</string>
+    <string name="get_help_summary">Have a question? I get a crazy amount of emails every day, to help me out, it would be great if you could search here quick to see if I have addressed your question.</string>
+    <string name="get_help_summary_2">The help section is pretty extensive, but if you don\'t find your specific question, feel free to get in touch and I will be happy to get back to you.</string>
+    <string name="features">Pulse\'s Features</string>
     <string name="issues">Issue Tracker</string>
     <string name="issues_summary">Also serves as a feature roadmap</string>
     <string name="google_plus">Google+</string>

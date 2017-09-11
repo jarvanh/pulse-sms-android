@@ -21,16 +21,20 @@
 
         <Preference
             android:key="@string/pref_help_faqs"
-            android:title="@string/faqs" />
+            android:title="@string/get_help"
+            android:summary="@string/get_help_summary" />
 
         <Preference
-            android:key="@string/pref_help_features"
-            android:title="@string/features" />
+            android:summary="@string/get_help_summary_2" />
 
         <Preference
             android:key="@string/pref_help_issues"
             android:title="@string/issues"
             android:summary="@string/issues_summary" />
+
+        <Preference
+            android:key="@string/pref_help_features"
+            android:title="@string/features" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 

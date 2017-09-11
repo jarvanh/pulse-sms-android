@@ -36,13 +36,13 @@ public class HelpAndFeedbackFragment extends MaterialPreferenceFragmentCompat {
 
         findPreference(getString(R.string.pref_help_faqs))
                 .setOnPreferenceClickListener(preference -> {
-                    openWeb("https://messenger.klinkerapps.com/faq.html");
+                    openWeb("https://messenger.klinkerapps.com/help/");
                     return true;
                 });
 
         findPreference(getString(R.string.pref_help_features))
                 .setOnPreferenceClickListener(preference -> {
-                    openWeb("https://messenger.klinkerapps.com/features.html");
+                    openWeb("https://messenger.klinkerapps.com/overview/");
                     return true;
                 });
 
