@@ -262,8 +262,8 @@
     <string name="get_in_touch">Get in Touch</string>
     <string name="faqs">Frequently Asked Questions</string>
     <string name="get_help">Get Help</string>
-    <string name="get_help_summary">Have a question? I get a crazy amount of emails every day, to help me out, it would be great if you could search here quick to see if I have addressed your question.</string>
-    <string name="get_help_summary_2">The help section is pretty extensive, but if you don\'t find your specific question, feel free to get in touch and I will be happy to get back to you.</string>
+    <string name="get_help_summary">Have a question? As a one-man crew, I get a crazy amount of emails every day, which does dig into my development time. To help me out, it would be great if you could search here quick to see if I have addressed your question.</string>
+    <string name="get_help_summary_2">The help section is pretty extensive, but if you don\'t find your specific question, feel free to get in touch and I will be happy to get back to you!</string>
     <string name="features">Pulse\'s Features</string>
     <string name="issues">Issue Tracker</string>
     <string name="issues_summary">Also serves as a feature roadmap</string>
@@ -538,7 +538,8 @@
     <string name="monthly_purchase">$0.99 every month</string>
     <string name="monthly_purchase_summary">Just want to try? No problem.</string>
     <string name="change_subscription_message">Want to upgrade? Great! After you have made your
-        selection on the next screen, you should go to the Play Store app, and cancel the old subscription manually.</string>
+        selection on the next screen, you <b>must</b> go through the Play Store app and cancel your old trial or subscription.
+        I <b>cannot</b> do this automatically.</string>
     <string name="beautiful_powerful_instant">Beautiful, powerful, instant.</string>
     <string name="optimized_for_all_your_devices">Pulse is optimized for <b>all</b> your devices.
         Send texts from the web, a desktop computer, your tablet, a watch, and even your TV.</string>
