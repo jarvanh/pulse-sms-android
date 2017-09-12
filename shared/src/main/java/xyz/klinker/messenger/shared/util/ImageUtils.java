@@ -245,13 +245,13 @@ public class ImageUtils {
             int srcWidth = options.outWidth;
             int srcHeight = options.outHeight;
 
-            String fileName = "image-" + new Date().getTime() + ".png";
+            String fileName = "image-" + new Date().getTime();
 
-//            if (mimeType.equals(MimeType.IMAGE_PNG)) {
-//                fileName += ".png";
-//            } else {
-//                fileName += ".jpg";
-//            }
+            if (mimeType.equals(MimeType.IMAGE_PNG)) {
+                fileName += ".png";
+            } else {
+                fileName += ".jpg";
+            }
 
             // start generating bitmaps and checking the size against the max size
             Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
@@ -320,7 +320,8 @@ public class ImageUtils {
             }
 
             out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bitmap.compress(mimeType.equals(MimeType.IMAGE_PNG) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
+                    90, out);
         } catch (IOException e) {
             Log.e("Scale to Send", "failed to write output stream", e);
         } finally {

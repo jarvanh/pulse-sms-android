@@ -1960,6 +1960,7 @@ public class MessageListFragment extends Fragment implements
             editImage.setVisibility(View.GONE);
         } else if (mime.contains("image/")) {
             attachImage(inputContentInfo.getContentUri());
+            attachedMimeType = MimeType.IMAGE_PNG;
         } else if (mime.contains(MimeType.VIDEO_MP4)) {
             attachImage(inputContentInfo.getContentUri());
             attachedMimeType = MimeType.VIDEO_MP4;
