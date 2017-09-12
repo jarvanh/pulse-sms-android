@@ -142,9 +142,13 @@ public class PhoneNumberUtils {
             numbers.add(lollipopNumber);
         }
 
-        String legacyNumber = Utils.getMyPhoneNumber(context);
-        if (legacyNumber != null && !legacyNumber.isEmpty()) {
-            numbers.add(legacyNumber);
+        try {
+            String legacyNumber = Utils.getMyPhoneNumber(context);
+            if (legacyNumber != null && !legacyNumber.isEmpty()) {
+                numbers.add(legacyNumber);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
 
         return numbers;

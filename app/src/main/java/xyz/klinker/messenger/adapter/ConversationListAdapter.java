@@ -218,7 +218,11 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
-            Glide.with(holder.image.getContext()).clear(holder.image);
+            try {
+                Glide.with(holder.image.getContext()).clear(holder.image);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 

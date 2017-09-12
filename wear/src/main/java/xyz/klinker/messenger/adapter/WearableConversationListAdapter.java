@@ -107,7 +107,11 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         super.onViewRecycled(holder);
 
         if (holder.image != null) {
-            Glide.with(holder.image).clear(holder.image);
+            try {
+                Glide.with(holder.image).clear(holder.image);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 
