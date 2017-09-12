@@ -360,7 +360,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
     }
 
     private void addMessageAfterFirebaseDownload(final Context context, final Message message) {
-        ApiUtils apiUtils = new ApiUtils();
+        ApiUtils apiUtils = ApiUtils.INSTANCE;
         apiUtils.saveFirebaseFolderRef(Account.get(context).accountId);
         final File file = new File(context.getFilesDir(),
                 message.id + MimeType.getExtension(message.mimeType));

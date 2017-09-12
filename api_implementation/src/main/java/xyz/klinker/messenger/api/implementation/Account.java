@@ -146,7 +146,7 @@ public class Account {
                 .commit();
 
         if (sendToApi) {
-            new ApiUtils().updateSubscription(accountId, type == null ? null : type.typeCode, expiration);
+            ApiUtils.INSTANCE.updateSubscription(accountId, type == null ? null : type.typeCode, expiration);
         }
     }
 

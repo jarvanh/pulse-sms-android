@@ -32,7 +32,7 @@ public class ApiUtilsTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        apiUtils = new ApiUtils();
+        apiUtils = ApiUtils.INSTANCE;
     }
 
     @Test

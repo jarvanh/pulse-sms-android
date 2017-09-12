@@ -68,7 +68,7 @@ public class ActivateActivity extends AppCompatActivity {
 
         handler = new Handler();
         code = generateActivationCode();
-        api = new ApiUtils().getApi();
+        api = ApiUtils.INSTANCE.getApi();
 
         TextView activationCode = (TextView) findViewById(R.id.activation_code);
         activationCode.setText(code);
@@ -132,7 +132,7 @@ public class ActivateActivity extends AppCompatActivity {
                     }
                 }
 
-                new ApiUtils().registerDevice(response.accountId,
+                ApiUtils.INSTANCE.registerDevice(response.accountId,
                         Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                         false, FirebaseInstanceId.getInstance().getToken());
 

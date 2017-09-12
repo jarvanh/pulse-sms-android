@@ -18,10 +18,12 @@
 
     <version
         name="2.5.6"
-        description="September 5th, 2017">
+        description="September 12th, 2017">
         <text>Fixes for receiving duplicate MMS on some carriers (please read the FAQ for information on what you need to do to prevent this)</text>
         <text>Improve handling of extremely large conversations</text>
+        <text>Improved sync between web and phone</text>
         <text>Fix sharing contact cards from contacts app</text>
+        <text>Theme fixes</text>
         <text>New vibration pattern</text>
         <text>Battery improvements</text>
         <text>Bug fixes</text>

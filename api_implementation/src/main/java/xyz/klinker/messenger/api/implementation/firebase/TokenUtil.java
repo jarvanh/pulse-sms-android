@@ -23,7 +23,7 @@ public class TokenUtil {
         if (account.exists() && token != null) {
             Log.v(TAG, "refreshing on server");
             new Thread(() -> {
-                ApiUtils api = new ApiUtils();
+                ApiUtils api = ApiUtils.INSTANCE;
                 api.updateDevice(account.accountId, Integer.parseInt(account.deviceId), Build.MODEL,
                         FirebaseInstanceId.getInstance().getToken());
             }).start();

@@ -41,7 +41,7 @@ public class NotificationMarkReadService extends IntentService {
 
         CursorUtil.closeSilent(unseenMessages);
 
-        new ApiUtils().dismissNotification(Account.get(this).accountId,
+        ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId,
                 Account.get(this).deviceId,
                 conversationId);
 

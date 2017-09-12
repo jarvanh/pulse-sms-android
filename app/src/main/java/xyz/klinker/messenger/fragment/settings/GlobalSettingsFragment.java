@@ -91,7 +91,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_keyboard_layout))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String layout = (String) o;
-                    new ApiUtils().updateKeyboardLayout(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateKeyboardLayout(Account.get(getActivity()).accountId,
                             layout);
 
                     return true;
@@ -102,7 +102,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         Preference actions = findPreference(getString(R.string.pref_notification_actions));
         actions.setOnPreferenceChangeListener((preference, o) -> {
             Set<String> options = (Set<String>) o;
-            new ApiUtils().updateNotificationActions(Account.get(getActivity()).accountId,
+            ApiUtils.INSTANCE.updateNotificationActions(Account.get(getActivity()).accountId,
                     SetUtils.stringify(options));
             return true;
         });
@@ -112,7 +112,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_swipe_delete))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean delete = (boolean) o;
-                    new ApiUtils().updateSwipeToDelete(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateSwipeToDelete(Account.get(getActivity()).accountId,
                             delete);
                     return true;
                 });
@@ -124,14 +124,14 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
 
         normal.setOnPreferenceChangeListener((preference, o) -> {
                     boolean delivery = (boolean) o;
-                    new ApiUtils().updateDeliveryReports(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateDeliveryReports(Account.get(getActivity()).accountId,
                             delivery);
                     return true;
                 });
 
         giffgaff.setOnPreferenceChangeListener((preference, o) -> {
                     boolean delivery = (boolean) o;
-                    new ApiUtils().updateGiffgaffDeliveryReports(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateGiffgaffDeliveryReports(Account.get(getActivity()).accountId,
                             delivery);
                     return true;
                 });
@@ -151,7 +151,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_strip_unicode))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean strip = (boolean) o;
-                    new ApiUtils().updateStripUnicode(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateStripUnicode(Account.get(getActivity()).accountId,
                             strip);
                     return true;
                 });
@@ -161,7 +161,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         Preference pref = findPreference(getString(R.string.pref_history_in_notifications));
         pref.setOnPreferenceChangeListener((preference, o) -> {
                     boolean history = (boolean) o;
-                    new ApiUtils().updateShowHistoryInNotification(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateShowHistoryInNotification(Account.get(getActivity()).accountId,
                             history);
                     return true;
                 });
@@ -181,7 +181,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         } else {
             pref.setOnPreferenceChangeListener((preference, o) -> {
                 String value = (String) o;
-                new ApiUtils().updateEmojiStyle(Account.get(getActivity()).accountId, value);
+                ApiUtils.INSTANCE.updateEmojiStyle(Account.get(getActivity()).accountId, value);
 
                 new Handler().postDelayed(() -> {
                     Settings.get(getActivity()).forceUpdate(getActivity());
@@ -197,7 +197,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_sound_effects))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean effects = (boolean) o;
-                    new ApiUtils().updateSoundEffects(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateSoundEffects(Account.get(getActivity()).accountId,
                             effects);
                     return true;
                 });

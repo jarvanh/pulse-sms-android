@@ -171,7 +171,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                     .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
 
             NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.id);
-            new ApiUtils().dismissNotification(Account.get(NotificationReplyActivity.this).accountId,
+            ApiUtils.INSTANCE.dismissNotification(Account.get(NotificationReplyActivity.this).accountId,
                     Account.get(NotificationReplyActivity.this).deviceId, conversation.id);
         }, 300);
     }

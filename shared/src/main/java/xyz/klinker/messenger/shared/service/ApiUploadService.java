@@ -120,7 +120,7 @@ public class ApiUploadService extends Service {
 
         new Thread(() -> {
             account = Account.get(getApplicationContext());
-            apiUtils = new ApiUtils();
+            apiUtils = ApiUtils.INSTANCE;
             encryptionUtils = account.getEncryptor();
 
             if (encryptionUtils == null) {
@@ -177,7 +177,7 @@ public class ApiUploadService extends Service {
                 try {
                     Response response = apiUtils.getApi().message().add(request).execute();
                     expectedPages++;
-                    if (ApiUtils.isCallSuccessful(response)) {
+                    if (ApiUtils.INSTANCE.isCallSuccessful(response)) {
                         successPages++;
                     }
                 } catch (IOException e) {
@@ -235,7 +235,7 @@ public class ApiUploadService extends Service {
                 }
             }
 
-            if (result == null || !ApiUtils.isCallSuccessful(result)) {
+            if (result == null || !ApiUtils.INSTANCE.isCallSuccessful(result)) {
                 if (errorText == null && result != null) {
                     if (result.body() != null) {
                         errorText = result.body().toString();
@@ -291,7 +291,7 @@ public class ApiUploadService extends Service {
                 try {
                     Response response = apiUtils.getApi().contact().add(request).execute();
                     expectedPages++;
-                    if (ApiUtils.isCallSuccessful(response)) {
+                    if (apiUtils.isCallSuccessful(response)) {
                         successPages++;
                     }
                 } catch (IOException e) {
@@ -338,7 +338,7 @@ public class ApiUploadService extends Service {
                 result = null;
             }
 
-            if (result == null || !ApiUtils.isCallSuccessful(result)) {
+            if (result == null || !ApiUtils.INSTANCE.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload blacklists in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {
@@ -377,7 +377,7 @@ public class ApiUploadService extends Service {
                 result = null;
             }
 
-            if (result == null || !ApiUtils.isCallSuccessful(result)) {
+            if (result == null || !ApiUtils.INSTANCE.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload scheduled messages in " +
                         (System.currentTimeMillis() - startTime) + " ms");
             } else {

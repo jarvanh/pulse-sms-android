@@ -53,9 +53,9 @@ public class MessengerApplication extends FirebaseApplication {
         super.onCreate();
 
         try {
-            ApiUtils.environment = getString(R.string.environment);
+            ApiUtils.Companion.setEnvironment(getString(R.string.environment));
         } catch (Exception e) {
-            ApiUtils.environment = "release";
+            ApiUtils.Companion.setEnvironment("release");
         }
         enableSecurity();
 

@@ -283,7 +283,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 contactEntry.getAdapter().setShowMobileOnly(item.isChecked());
                 contactEntry.getAdapter().notifyDataSetChanged();
 
-                new ApiUtils().updateMobileOnly(Account.get(this).accountId, newValue);
+                ApiUtils.INSTANCE.updateMobileOnly(Account.get(this).accountId, newValue);
 
                 return true;
         }

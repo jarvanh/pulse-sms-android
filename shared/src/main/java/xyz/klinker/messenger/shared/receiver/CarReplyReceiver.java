@@ -79,7 +79,7 @@ public class CarReplyReceiver extends BroadcastReceiver {
             NotificationManagerCompat.from(context).cancel((int) conversationId);
         }
 
-        new ApiUtils().dismissNotification(Account.get(context).accountId,
+        ApiUtils.INSTANCE.dismissNotification(Account.get(context).accountId,
                 Account.get(context).deviceId,
                 conversationId);
 

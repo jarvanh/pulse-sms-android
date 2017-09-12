@@ -59,7 +59,7 @@ public class ActivateWearActivity extends Activity {
 
         handler = new Handler();
         code = generateActivationCode();
-        api = new ApiUtils().getApi();
+        api = ApiUtils.INSTANCE.getApi();
 
         codeText = (TextView) findViewById(R.id.code);
         codeText.setText(code);
@@ -133,7 +133,7 @@ public class ActivateWearActivity extends Activity {
                     }
                 }
 
-                new ApiUtils().registerDevice(response.accountId,
+                ApiUtils.INSTANCE.registerDevice(response.accountId,
                         Build.MANUFACTURER + ", " + Build.MODEL, Build.MODEL,
                         false, FirebaseInstanceId.getInstance().getToken());
 

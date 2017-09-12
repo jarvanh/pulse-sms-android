@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
 
         new Thread(() -> {
-            ApiUtils utils = new ApiUtils();
+            ApiUtils utils = ApiUtils.INSTANCE;
             final LoginResponse response = utils.login(email.getText().toString(),
                     password.getText().toString());
 
@@ -244,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
 
         new Thread(() -> {
-            ApiUtils utils = new ApiUtils();
+            ApiUtils utils = ApiUtils.INSTANCE;
             final SignupResponse response = utils.signup(email.getText().toString(),
                     password.getText().toString(), name.getText().toString(),
                     phoneNumber.getText().toString());

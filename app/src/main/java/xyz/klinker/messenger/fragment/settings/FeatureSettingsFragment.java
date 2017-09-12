@@ -43,7 +43,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
         Preference preference = findPreference(getString(R.string.pref_secure_private_conversations));
         preference.setOnPreferenceChangeListener((p, o) -> {
                     boolean secure = (boolean) o;
-                    new ApiUtils().updateSecurePrivateConversations(
+                    ApiUtils.INSTANCE.updateSecurePrivateConversations(
                             Account.get(getActivity()).accountId, secure);
                     return true;
                 });
@@ -57,7 +57,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
         Preference preference = findPreference(getString(R.string.pref_quick_compose));
         preference.setOnPreferenceChangeListener((p, o) -> {
                     boolean quickCompose = (boolean) o;
-                    new ApiUtils().updateQuickCompose(
+                    ApiUtils.INSTANCE.updateQuickCompose(
                             Account.get(getActivity()).accountId, quickCompose);
                     return true;
                 });
@@ -71,7 +71,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
         Preference preference = findPreference(getString(R.string.pref_delayed_sending));
         preference.setOnPreferenceChangeListener((p, o) -> {
                     String delayedSending = (String) o;
-                    new ApiUtils().updateDelayedSending(
+                    ApiUtils.INSTANCE.updateDelayedSending(
                             Account.get(getActivity()).accountId, delayedSending);
                     return true;
                 });
@@ -81,7 +81,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
         Preference preference = findPreference(getString(R.string.pref_cleanup_messages));
         preference.setOnPreferenceChangeListener((p, o) -> {
                     String cleanup = (String) o;
-                    new ApiUtils().updateCleanupOldMessages(
+                    ApiUtils.INSTANCE.updateCleanupOldMessages(
                             Account.get(getActivity()).accountId, cleanup);
                     return true;
                 });
@@ -104,10 +104,10 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
                         Settings.get(getActivity()).setValue(getActivity(),
                                 getActivity().getString(R.string.pref_signature), signature);
                         if (editText.getText().length() > 0) {
-                            new ApiUtils().updateSignature(Account.get(getActivity()).accountId,
+                            ApiUtils.INSTANCE.updateSignature(Account.get(getActivity()).accountId,
                                     signature);
                         } else {
-                            new ApiUtils().updateSignature(Account.get(getActivity()).accountId, "");
+                            ApiUtils.INSTANCE.updateSignature(Account.get(getActivity()).accountId, "");
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)

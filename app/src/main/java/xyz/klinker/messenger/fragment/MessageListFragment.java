@@ -920,7 +920,7 @@ public class MessageListFragment extends Fragment implements
                 NotificationManagerCompat.from(activity)
                         .cancel((int) getConversationId());
 
-                new ApiUtils().dismissNotification(Account.get(activity).accountId,
+                ApiUtils.INSTANCE.dismissNotification(Account.get(activity).accountId,
                         Account.get(activity).deviceId,
                         getConversationId());
 

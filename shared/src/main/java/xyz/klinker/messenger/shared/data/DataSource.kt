@@ -71,7 +71,6 @@ object DataSource {
     var _encryptor: EncryptionUtils? = null
     var _accountId: String? = null
     var _androidDeviceId: String? = null
-    var apiUtils: ApiUtils = ApiUtils()
 
     @Synchronized
     private fun database(context: Context): SQLiteDatabase {
@@ -292,7 +291,7 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
 
         if (useApi) {
-            apiUtils.addContact(accountId(context), contact.phoneNumber, contact.name, contact.colors.color,
+            ApiUtils.addContact(accountId(context), contact.phoneNumber, contact.name, contact.colors.color,
                     contact.colors.colorDark, contact.colors.colorLight,
                     contact.colors.colorAccent, encryptor(context))
         }
@@ -463,7 +462,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteContact(accountId(context), phoneNumber, encryptor(context))
+            ApiUtils.deleteContact(accountId(context), phoneNumber, encryptor(context))
         }
     }
 
@@ -545,7 +544,7 @@ object DataSource {
         }
 
         if (updated > 0 && useApi) {
-            apiUtils.updateContact(accountId(context), phoneNumber, name, color, colorDark,
+            ApiUtils.updateContact(accountId(context), phoneNumber, name, color, colorDark,
                     colorLight, colorAccent, encryptor(context))
         }
     }
@@ -676,7 +675,7 @@ object DataSource {
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications)
 
         if (useApi) {
-            apiUtils.addConversation(accountId(context), conversation.id, conversation.colors.color,
+            ApiUtils.addConversation(accountId(context), conversation.id, conversation.colors.color,
                     conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
                     conversation.ledColor, conversation.pinned, conversation.read,
                     conversation.timestamp, conversation.title, conversation.phoneNumbers,
@@ -969,7 +968,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteConversation(accountId(context), conversationId)
+            ApiUtils.deleteConversation(accountId(context), conversationId)
         }
 
         NotificationUtils.deleteChannel(context, conversationId)
@@ -1011,9 +1010,9 @@ object DataSource {
         if (updated > 0) {
             if (useApi) {
                 if (archive) {
-                    apiUtils.archiveConversation(accountId(context), conversationId)
+                    ApiUtils.archiveConversation(accountId(context), conversationId)
                 } else {
-                    apiUtils.unarchiveConversation(accountId(context), conversationId)
+                    ApiUtils.unarchiveConversation(accountId(context), conversationId)
                 }
             }
 
@@ -1056,7 +1055,7 @@ object DataSource {
         }
 
         if (updated > 0) {
-            if (useApi) apiUtils.updateConversationSnippet(accountId(context), conversationId,
+            if (useApi) ApiUtils.updateConversationSnippet(accountId(context), conversationId,
                     read, archive, timestamp, snippet, encryptor(context))
             writeUnreadCount(context)
         }
@@ -1094,7 +1093,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.updateConversation(accountId(context), conversation.id, conversation.colors.color,
+            ApiUtils.updateConversation(accountId(context), conversation.id, conversation.colors.color,
                     conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
                     conversation.ledColor, conversation.pinned, null, null,
                     conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
@@ -1122,7 +1121,7 @@ object DataSource {
         }
 
         if (updated > 0 && useApi) {
-            apiUtils.updateConversationTitle(accountId(context), conversationId, title, encryptor(context))
+            ApiUtils.updateConversationTitle(accountId(context), conversationId, title, encryptor(context))
         }
     }
 
@@ -1623,7 +1622,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.updateMessageType(accountId(context), messageId, type)
+            ApiUtils.updateMessageType(accountId(context), messageId, type)
         }
     }
 
@@ -1899,7 +1898,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
+            ApiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
                     message.timestamp, message.mimeType, message.read, message.seen, message.from,
                     message.color, encryptor(context))
         }
@@ -1953,7 +1952,7 @@ object DataSource {
                 database(context).insert(Message.TABLE, null, values)
             }
 
-            //            apiUtils.addMessage(context, accountId(context), message.id, message.conversationId, message.type, message.data,
+            //            ApiUtils.addMessage(context, accountId(context), message.id, message.conversationId, message.type, message.data,
             //                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
             //                    message.color, getEncryptionUtils(context));
 
@@ -1983,7 +1982,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteMessage(accountId(context), messageId)
+            ApiUtils.deleteMessage(accountId(context), messageId)
         }
 
         return deleted
@@ -2006,7 +2005,7 @@ object DataSource {
                 arrayOf(java.lang.Long.toString(timestamp)))
 
         if (deleted > 0 && useApi) {
-            apiUtils.cleanupMessages(accountId(context), timestamp)
+            ApiUtils.cleanupMessages(accountId(context), timestamp)
         }
 
         return deleted
@@ -2045,7 +2044,7 @@ object DataSource {
         }
 
         if (updated > 0 && useApi) {
-            apiUtils.readConversation(accountId(context), androidDeviceId(context), conversationId)
+            ApiUtils.readConversation(accountId(context), androidDeviceId(context), conversationId)
         }
 
         writeUnreadCount(context)
@@ -2095,7 +2094,7 @@ object DataSource {
         if (updated > 0) {
             if (useApi) {
                 for (id in conversationIds) {
-                    apiUtils.readConversation(accountId(context), androidDeviceId(context), id)
+                    ApiUtils.readConversation(accountId(context), androidDeviceId(context), id)
                 }
             }
 
@@ -2129,7 +2128,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.seenConversation(accountId(context), conversationId)
+            ApiUtils.seenConversation(accountId(context), conversationId)
         }
     }
 
@@ -2147,7 +2146,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.seenConversations(accountId(context))
+            ApiUtils.seenConversations(accountId(context))
         }
     }
 
@@ -2166,7 +2165,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.seenConversations(accountId(context))
+            ApiUtils.seenConversations(accountId(context))
         }
     }
 
@@ -2212,7 +2211,7 @@ object DataSource {
         values.put(Draft.COLUMN_MIME_TYPE, mimeType)
 
         if (useApi) {
-            apiUtils.addDraft(accountId(context), id, conversationId, data, mimeType, encryptor(context))
+            ApiUtils.addDraft(accountId(context), id, conversationId, data, mimeType, encryptor(context))
         }
 
         return try {
@@ -2306,7 +2305,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
+            ApiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
         }
     }
 
@@ -2359,7 +2358,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, encryptor(context))
+            ApiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, encryptor(context))
         }
     }
 
@@ -2377,7 +2376,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteBlacklist(accountId(context), id)
+            ApiUtils.deleteBlacklist(accountId(context), id)
         }
     }
 
@@ -2432,7 +2431,7 @@ object DataSource {
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp)
 
         if (useApi) {
-            apiUtils.addScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
+            ApiUtils.addScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
                     message.mimeType, message.timestamp, encryptor(context))
         }
 
@@ -2469,7 +2468,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.updateScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
+            ApiUtils.updateScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
                     message.mimeType, message.timestamp, encryptor(context))
         }
     }
@@ -2488,7 +2487,7 @@ object DataSource {
         }
 
         if (useApi) {
-            apiUtils.deleteScheduledMessage(accountId(context), id)
+            ApiUtils.deleteScheduledMessage(accountId(context), id)
         }
     }
 

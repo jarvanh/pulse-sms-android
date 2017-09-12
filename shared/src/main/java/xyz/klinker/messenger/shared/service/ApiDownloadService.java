@@ -130,7 +130,7 @@ public class ApiDownloadService extends Service {
 
             account = Account.get(getApplicationContext());
 
-            apiUtils = new ApiUtils();
+            apiUtils = ApiUtils.INSTANCE;
             encryptionUtils = account.getEncryptor();
             source = DataSource.INSTANCE;
             source.beginTransaction(this);

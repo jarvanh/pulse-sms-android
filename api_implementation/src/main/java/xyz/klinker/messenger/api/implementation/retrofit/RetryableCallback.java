@@ -12,7 +12,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     public abstract void onFinalResponse(Call<T> call, Response<T> response);
     public abstract void onFinalFailure(Call<T> call, Throwable t);
 
-    private int totalRetries = ApiUtils.RETRY_COUNT;
+    private int totalRetries = ApiUtils.INSTANCE.getRETRY_COUNT();
     private static final String TAG = RetryableCallback.class.getSimpleName();
     private final Call<T> call;
     private int retryCount = 0;
@@ -24,7 +24,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        if (!ApiUtils.isCallSuccessful(response)) {
+        if (!ApiUtils.INSTANCE.isCallSuccessful(response)) {
             if (retryCount++ < totalRetries) {
                 Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
                 Log.v(TAG, "Error: " + response.message());

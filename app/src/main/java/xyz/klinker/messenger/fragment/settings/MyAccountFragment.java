@@ -234,7 +234,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                         final Account account = Account.get(getActivity());
                         final String accountId = account.accountId;
 
-                        new Thread(() -> new ApiUtils().deleteAccount(accountId)).start();
+                        new Thread(() -> ApiUtils.INSTANCE.deleteAccount(accountId)).start();
 
                         account.clearAccount(getActivity());
 
@@ -298,7 +298,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                         final String accountId = account.accountId;
 
                         new Thread(() -> {
-                            new ApiUtils().deleteAccount(accountId);
+                            ApiUtils.INSTANCE.deleteAccount(accountId);
                         }).start();
 
                         startActivity(new Intent(getActivity(), RecreateAccountActivity.class));
@@ -398,7 +398,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
         new Thread(() -> {
             DataSource.INSTANCE.clearTables(getActivity());
-            new ApiUtils().cleanAccount(account.accountId);
+            ApiUtils.INSTANCE.cleanAccount(account.accountId);
 
             getActivity().runOnUiThread(() -> {
                 dialog.dismiss();
@@ -424,7 +424,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
         Account account = Account.get(getActivity());
         if (account.exists() && account.primary) {
-            new ApiUtils().updateSubscription(account.accountId,
+            ApiUtils.INSTANCE.updateSubscription(account.accountId,
                     account.subscriptionType.typeCode, account.subscriptionExpiration);
         }
 

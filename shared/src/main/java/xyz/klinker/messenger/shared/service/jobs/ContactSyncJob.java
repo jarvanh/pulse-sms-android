@@ -72,7 +72,7 @@ public class ContactSyncJob extends BackgroundJob {
         // send the contacts to our backend
         AddContactRequest request =
                 new AddContactRequest(Account.get(this).accountId, contacts);
-        new ApiUtils().addContact(request);
+        ApiUtils.INSTANCE.addContact(request);
 
         // set the "since" time for our change listener
         writeUpdateTimestamp(sharedPrefs);

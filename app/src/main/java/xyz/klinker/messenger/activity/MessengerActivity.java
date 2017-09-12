@@ -451,7 +451,7 @@ public class  MessengerActivity extends AppCompatActivity
 
                 Settings.get(getApplicationContext()).setValue(getApplicationContext(),
                         getString(R.string.pref_snooze), snoozeTil);
-                new ApiUtils().updateSnooze(Account.get(getApplicationContext()).accountId,
+                ApiUtils.INSTANCE.updateSnooze(Account.get(getApplicationContext()).accountId,
                         snoozeTil);
 
                 snoozeIcon();
@@ -1219,7 +1219,7 @@ public class  MessengerActivity extends AppCompatActivity
         getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (fromNotification && convoId != -1) {
-            new ApiUtils().dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
+            ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
         }
     }
 

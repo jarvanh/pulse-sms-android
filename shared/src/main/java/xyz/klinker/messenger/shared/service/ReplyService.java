@@ -110,7 +110,7 @@ public class ReplyService extends IntentService {
             NotificationManagerCompat.from(this).cancel((int) conversationId);
         }
 
-        new ApiUtils().dismissNotification(Account.get(this).accountId,
+        ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId,
                 Account.get(this).deviceId,
                 conversationId);
 

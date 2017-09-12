@@ -82,29 +82,29 @@ android {
 
 dependencies {
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${KOTLIN_VERSION}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$KOTLIN_VERSION"
 
     //noinspection GradleCompatible
-    compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-v4:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-emoji:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:support-annotations:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:palette-v7:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:leanback-v17:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:percent:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
-    compile "com.android.support:exifinterface:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:appcompat-v7:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:support-v4:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:support-v13:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:support-emoji:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:support-annotations:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:design:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:recyclerview-v7:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:palette-v7:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:preference-v14:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:leanback-v17:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:percent:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:customtabs:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:exifinterface:$ANDROID_SUPPORT_VERSION"
 
-    compile "com.google.firebase:firebase-perf:${FIREBASE_VERSION}"
-    compile "com.google.firebase:firebase-crash:${FIREBASE_VERSION}"
-    compile "com.google.android.gms:play-services-maps:${GOOGLE_PLAY_SERVICES_VERSION}"
+    compile "com.google.firebase:firebase-perf:$FIREBASE_VERSION"
+    compile "com.google.firebase:firebase-crash:$FIREBASE_VERSION"
+    compile "com.google.android.gms:play-services-maps:$GOOGLE_PLAY_SERVICES_VERSION"
 
-    annotationProcessor "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
-    compile "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
+    annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_VERSION"
+    compile "com.github.bumptech.glide:glide:$GLIDE_VERSION"
 
     compile 'com.klinkerapps:android-smsmms:4.2.2'
     compile 'com.klinkerapps:link_builder:1.5.2'
