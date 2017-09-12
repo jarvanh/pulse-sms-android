@@ -57,13 +57,13 @@ public class UpdateUtils {
             settings.forceUpdate(context);
         }
 
-        if (sharedPreferences.getBoolean("v2.5.4.2", true)) {
+        if (sharedPreferences.getBoolean("v2.5.4.3", true)) {
             if (storedAppVersion != 0) {
                 context.startService(new Intent(context, ContactResyncService.class));
             }
 
             sharedPreferences.edit()
-                    .putBoolean("v2.5.4.2", false)
+                    .putBoolean("v2.5.4.3", false)
                     .commit();
         }
 

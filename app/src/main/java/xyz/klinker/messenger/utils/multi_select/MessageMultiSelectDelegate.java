@@ -240,6 +240,9 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             ImageView image = new ImageView(activity);
             image.setImageResource(icon);
             image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0);
+            image.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+            image.setAlpha(1.0f);
+
             item.setActionView(image);
             TooltipCompat.setTooltipText(item.getActionView(), activity.getString(text));
 

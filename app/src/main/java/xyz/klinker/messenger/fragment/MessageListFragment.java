@@ -1167,10 +1167,16 @@ public class MessageListFragment extends Fragment implements
         }
     }
 
-    public void resendMessage(long originalMessageId, String text) {
+    public void resendMessage(long originalMessageId, final String text) {
         source.deleteMessage(activity, originalMessageId);
-        messageEntry.setText(text);
-        requestPermissionThenSend();
+        messageLoadedCount--;
+
+        loadMessages(false);
+
+        new Handler().postDelayed(() -> {
+            messageEntry.setText(text);
+            requestPermissionThenSend();
+        }, 300);
     }
 
     private void requestPermissionThenSend() {
