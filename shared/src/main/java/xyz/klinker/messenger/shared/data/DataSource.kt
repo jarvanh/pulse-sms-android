@@ -1682,7 +1682,7 @@ object DataSource {
      * @return the conversation id that the message was inserted into.
      */
     @JvmOverloads fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long {
-        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), useApi)
+        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), false, useApi)
     }
 
     /**

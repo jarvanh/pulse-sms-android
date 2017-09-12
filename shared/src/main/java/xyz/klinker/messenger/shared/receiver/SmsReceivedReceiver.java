@@ -145,19 +145,17 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
                 conversationId = source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context);
             }
 
+            final long fConvoId = conversationId;
             Conversation conversation = source.getConversation(context, conversationId);
+            handler.post(() -> {
+                ConversationListUpdatedReceiver.sendBroadcast(context, fConvoId, body, NotificationService.CONVERSATION_ID_OPEN == fConvoId);
+                MessageListUpdatedReceiver.sendBroadcast(context, fConvoId, message.data, message.type);
+            });
 
-            if (conversation != null) {
-                handler.post(() -> {
-                    ConversationListUpdatedReceiver.sendBroadcast(context, conversation.id, body, NotificationService.CONVERSATION_ID_OPEN == conversation.id);
-                    MessageListUpdatedReceiver.sendBroadcast(context, conversation.id, message.data, message.type);
-                });
-
-                if (conversation.mute) {
-                    source.seenConversation(context, conversationId);
-                    // don't run the notification service
-                    return -1;
-                }
+            if (conversation != null && conversation.mute) {
+                source.seenConversation(context, conversationId);
+                // don't run the notification service
+                return -1;
             }
 
             return conversationId;
@@ -176,7 +174,8 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
                     return false;
                 }
             }
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
 
         return true;
     }
