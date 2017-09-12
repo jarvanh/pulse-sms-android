@@ -232,7 +232,7 @@ object DataSource {
      * @param contacts a list of all the contacts to insert
      * @param listener callback for the progress of the insert
      */
-    fun insertContacts(context: Context, contacts: List<Contact>, listener: ProgressUpdateListener?) {
+    @JvmOverloads fun insertContacts(context: Context, contacts: List<Contact>, listener: ProgressUpdateListener?, useApi: Boolean = false) {
         beginTransaction(context)
 
         for (i in contacts.indices) {
@@ -275,7 +275,7 @@ object DataSource {
      * @param contact the new contact
      * @return id of the inserted contact or -1 if the insert failed
      */
-    fun insertContact(context: Context, contact: Contact): Long {
+    @JvmOverloads fun insertContact(context: Context, contact: Contact, useApi: Boolean = true): Long {
         val values = ContentValues(8)
 
         if (contact.id <= 0) {
@@ -291,9 +291,11 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight)
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
 
-        apiUtils.addContact(accountId(context), contact.phoneNumber, contact.name, contact.colors.color,
-                contact.colors.colorDark, contact.colors.colorLight,
-                contact.colors.colorAccent, encryptor(context))
+        if (useApi) {
+            apiUtils.addContact(accountId(context), contact.phoneNumber, contact.name, contact.colors.color,
+                    contact.colors.colorDark, contact.colors.colorLight,
+                    contact.colors.colorAccent, encryptor(context))
+        }
 
         return try {
             database(context).insert(Contact.TABLE, null, values)
@@ -450,7 +452,7 @@ object DataSource {
      *
      * @param phoneNumber the phone number to delete
      */
-    fun deleteContact(context: Context, phoneNumber: String) {
+    @JvmOverloads fun deleteContact(context: Context, phoneNumber: String, useApi: Boolean = true) {
         try {
             database(context).delete(Contact.TABLE, Contact.COLUMN_PHONE_NUMBER + "=?",
                     arrayOf(phoneNumber))
@@ -460,7 +462,9 @@ object DataSource {
                     arrayOf(phoneNumber))
         }
 
-        apiUtils.deleteContact(accountId(context), phoneNumber, encryptor(context))
+        if (useApi) {
+            apiUtils.deleteContact(accountId(context), phoneNumber, encryptor(context))
+        }
     }
 
     /**
@@ -468,7 +472,7 @@ object DataSource {
      *
      * @param ids the phone number to delete
      */
-    fun deleteContacts(context: Context, ids: Array<String>) {
+    @JvmOverloads fun deleteContacts(context: Context, ids: Array<String>, useApi: Boolean = true) {
         if (ids.isEmpty()) {
             return
         }
@@ -506,9 +510,9 @@ object DataSource {
      *
      * @param contact the contact with new values
      */
-    fun updateContact(context: Context, contact: Contact) {
+    @JvmOverloads fun updateContact(context: Context, contact: Contact, useApi: Boolean = true) {
         updateContact(context, contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
-                contact.colors.colorLight, contact.colors.colorAccent)
+                contact.colors.colorLight, contact.colors.colorAccent, useApi)
     }
 
     /**
@@ -521,8 +525,8 @@ object DataSource {
      * @param colorLight     the new light color (null if we don't want to update it)
      * @param colorAccent    the new accent color (null if we don't want to update it)
      */
-    fun updateContact(context: Context, phoneNumber: String, name: String?, color: Int?, colorDark: Int?,
-                      colorLight: Int?, colorAccent: Int?) {
+    @JvmOverloads fun updateContact(context: Context, phoneNumber: String, name: String?, color: Int?, colorDark: Int?,
+                      colorLight: Int?, colorAccent: Int?, useApi: Boolean = true) {
         val values = ContentValues()
 
         if (name != null) values.put(Contact.COLUMN_NAME, name)
@@ -540,7 +544,7 @@ object DataSource {
                     arrayOf(phoneNumber))
         }
 
-        if (updated > 0) {
+        if (updated > 0 && useApi) {
             apiUtils.updateContact(accountId(context), phoneNumber, name, color, colorDark,
                     colorLight, colorAccent, encryptor(context))
         }
@@ -604,7 +608,7 @@ object DataSource {
                 val messages = SmsMmsUtils.queryConversation(conversation.id, context) ?: continue
 
                 if (messages.count == 0) {
-                    deleteConversation(context, conversationId)
+                    deleteConversation(context, conversationId, false)
 
                     try {
                         messages.close()
@@ -645,7 +649,7 @@ object DataSource {
      * @param conversation the conversation to insert.
      * @return the conversation id after insertion.
      */
-    fun insertConversation(context: Context, conversation: Conversation): Long {
+    @JvmOverloads fun insertConversation(context: Context, conversation: Conversation, useApi: Boolean = true): Long {
         val values = ContentValues(16)
 
         if (conversation.id <= 0) {
@@ -671,15 +675,15 @@ object DataSource {
         values.put(Conversation.COLUMN_ARCHIVED, conversation.archive)
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications)
 
-        apiUtils.addConversation(accountId(context), conversation.id, conversation.colors.color,
-                conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
-                conversation.ledColor, conversation.pinned, conversation.read,
-                conversation.timestamp, conversation.title, conversation.phoneNumbers,
-                conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
-                conversation.mute, conversation.archive, conversation.privateNotifications,
-                encryptor(context))
+        if (useApi) {
+            apiUtils.addConversation(accountId(context), conversation.id, conversation.colors.color,
+                    conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
+                    conversation.ledColor, conversation.pinned, conversation.read,
+                    conversation.timestamp, conversation.title, conversation.phoneNumbers,
+                    conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
+                    conversation.mute, conversation.archive, conversation.privateNotifications,
+                    encryptor(context))
 
-        if (apiUtils.isActive) {
             writeUnreadCount(context)
         }
 
@@ -932,9 +936,9 @@ object DataSource {
      *
      * @param conversation the conversation to delete.
      */
-    fun deleteConversation(context: Context, conversation: Conversation?) {
+    @JvmOverloads fun deleteConversation(context: Context, conversation: Conversation?, useApi: Boolean = true) {
         if (conversation != null) {
-            deleteConversation(context, conversation.id)
+            deleteConversation(context, conversation.id, useApi)
         } else {
             // more than likely already deleted
         }
@@ -945,7 +949,7 @@ object DataSource {
      *
      * @param conversationId the conversation id to delete.
      */
-    fun deleteConversation(context: Context, conversationId: Long) {
+    @JvmOverloads fun deleteConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
         try {
             database(context).delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
@@ -964,7 +968,10 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        apiUtils.deleteConversation(accountId(context), conversationId)
+        if (useApi) {
+            apiUtils.deleteConversation(accountId(context), conversationId)
+        }
+
         NotificationUtils.deleteChannel(context, conversationId)
 
         writeUnreadCount(context)
@@ -976,8 +983,8 @@ object DataSource {
      *
      * @param conversationId the conversation to archive.
      */
-    fun unarchiveConversation(context: Context, conversationId: Long) {
-        archiveConversation(context, conversationId, false)
+    @JvmOverloads fun unarchiveConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
+        archiveConversation(context, conversationId, false, useApi)
     }
 
     /**
@@ -986,8 +993,8 @@ object DataSource {
      * @param conversationId the conversation id to archive.
      * @param archive true if we want to archive, false if we want to have it not archived
      */
-    @JvmOverloads
-    fun archiveConversation(context: Context, conversationId: Long, archive: Boolean = true) {
+    @JvmOverloads fun archiveConversation(context: Context, conversationId: Long,
+                                          archive: Boolean = true, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Conversation.COLUMN_ARCHIVED, archive)
         values.put(Conversation.COLUMN_READ, true)
@@ -1002,10 +1009,12 @@ object DataSource {
         }
 
         if (updated > 0) {
-            if (archive) {
-                apiUtils.archiveConversation(accountId(context), conversationId)
-            } else {
-                apiUtils.unarchiveConversation(accountId(context), conversationId)
+            if (useApi) {
+                if (archive) {
+                    apiUtils.archiveConversation(accountId(context), conversationId)
+                } else {
+                    apiUtils.unarchiveConversation(accountId(context), conversationId)
+                }
             }
 
             writeUnreadCount(context)
@@ -1021,8 +1030,8 @@ object DataSource {
      * @param snippet        the snippet to display for appropriate mime types.
      * @param snippetMime    the snippet's mime type.
      */
-    fun updateConversation(context: Context, conversationId: Long, read: Boolean, timestamp: Long,
-                           snippet: String, snippetMime: String?, archive: Boolean) {
+    @JvmOverloads fun updateConversation(context: Context, conversationId: Long, read: Boolean, timestamp: Long,
+                           snippet: String, snippetMime: String?, archive: Boolean, useApi: Boolean = true) {
         var snippet = snippet
         val values = ContentValues(4)
         values.put(Conversation.COLUMN_READ, read)
@@ -1047,7 +1056,7 @@ object DataSource {
         }
 
         if (updated > 0) {
-            apiUtils.updateConversationSnippet(accountId(context), conversationId,
+            if (useApi) apiUtils.updateConversationSnippet(accountId(context), conversationId,
                     read, archive, timestamp, snippet, encryptor(context))
             writeUnreadCount(context)
         }
@@ -1056,7 +1065,7 @@ object DataSource {
     /**
      * Updates the settings_global for a conversation, such as ringtone and colors.
      */
-    fun updateConversationSettings(context: Context, conversation: Conversation) {
+    @JvmOverloads fun updateConversationSettings(context: Context, conversation: Conversation, useApi: Boolean = true) {
         val values = ContentValues(13)
         values.put(Conversation.COLUMN_PINNED, conversation.pinned)
         values.put(Conversation.COLUMN_TITLE, conversation.title)
@@ -1084,18 +1093,20 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversation.id)))
         }
 
-        apiUtils.updateConversation(accountId(context), conversation.id, conversation.colors.color,
-                conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
-                conversation.ledColor, conversation.pinned, null, null,
-                conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
-                conversation.privateNotifications, encryptor(context))
+        if (useApi) {
+            apiUtils.updateConversation(accountId(context), conversation.id, conversation.colors.color,
+                    conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
+                    conversation.ledColor, conversation.pinned, null, null,
+                    conversation.title, null, conversation.ringtoneUri, conversation.mute, conversation.archive,
+                    conversation.privateNotifications, encryptor(context))
+        }
     }
 
     /**
      * Updates the conversation title for a given conversation. Handy when the user has changed
      * the contact's name.
      */
-    fun updateConversationTitle(context: Context, conversationId: Long, title: String) {
+    @JvmOverloads fun updateConversationTitle(context: Context, conversationId: Long, title: String, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Conversation.COLUMN_TITLE, title)
 
@@ -1110,7 +1121,7 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId), title))
         }
 
-        if (updated > 0) {
+        if (updated > 0 && useApi) {
             apiUtils.updateConversationTitle(accountId(context), conversationId, title, encryptor(context))
         }
     }
@@ -1598,7 +1609,7 @@ object DataSource {
      * @param messageId the message to update.
      * @param type      the type to change it to.
      */
-    fun updateMessageType(context: Context, messageId: Long, type: Int) {
+    @JvmOverloads fun updateMessageType(context: Context, messageId: Long, type: Int, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Message.COLUMN_TYPE, type)
 
@@ -1611,7 +1622,9 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED)))
         }
 
-        apiUtils.updateMessageType(accountId(context), messageId, type)
+        if (useApi) {
+            apiUtils.updateMessageType(accountId(context), messageId, type)
+        }
     }
 
     /**
@@ -1646,7 +1659,7 @@ object DataSource {
      * @param mimeType  the message mimeType.
      * @param context   the application context.
      */
-    fun insertSentMessage(addresses: String, data: String, mimeType: String, context: Context): Long {
+    @JvmOverloads fun insertSentMessage(addresses: String, data: String, mimeType: String, context: Context, useApi: Boolean = true): Long {
         val m = Message()
         m.type = Message.TYPE_SENDING
         m.data = data
@@ -1657,7 +1670,7 @@ object DataSource {
         m.from = null
         m.color = null
 
-        return insertMessage(m, addresses, context)
+        return insertMessage(m, addresses, context, useApi)
     }
 
     /**
@@ -1669,8 +1682,8 @@ object DataSource {
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
      * @return the conversation id that the message was inserted into.
      */
-    fun insertMessage(message: Message, phoneNumbers: String, context: Context): Long {
-        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context))
+    @JvmOverloads fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long {
+        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), useApi)
     }
 
     /**
@@ -1736,7 +1749,7 @@ object DataSource {
      * @param message      the message to use to initialize a conversation if needed.
      * @return the conversation id to use.
      */
-    private fun updateOrCreateConversation(phoneNumbers: String, message: Message, context: Context): Long {
+    @JvmOverloads private fun updateOrCreateConversation(phoneNumbers: String, message: Message, context: Context, useApi: Boolean = true): Long {
         val matcher = SmsMmsUtils.createIdMatcher(phoneNumbers)
         val cursor = try {
             database(context).query(Conversation.TABLE,
@@ -1760,7 +1773,7 @@ object DataSource {
                         context.getString(R.string.you) + ": " + message.data
                     else
                         message.data,
-                    message.mimeType, false)
+                    message.mimeType, false, useApi)
             cursor.closeSilent()
         } else {
             cursor.closeSilent()
@@ -1797,7 +1810,7 @@ object DataSource {
                 conversation.colors = contacts[0].colors
             }
 
-            conversationId = insertConversation(context, conversation)
+            conversationId = insertConversation(context, conversation, useApi)
         }
 
         return conversationId
@@ -1810,7 +1823,7 @@ object DataSource {
      * @param conversation the conversation with the parameters we are looking for
      * @return the conversation id to use.
      */
-    private fun updateOrCreateConversation(context: Context, conversation: Conversation): Long {
+    @JvmOverloads private fun updateOrCreateConversation(context: Context, conversation: Conversation, useApi: Boolean = true): Long {
         val cursor = try {
             database(context).query(Conversation.TABLE,
                     arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
@@ -1827,9 +1840,9 @@ object DataSource {
         if (cursor.moveToFirst()) {
             conversationId = cursor.getLong(0)
             updateConversation(context, conversationId, conversation.read, conversation.timestamp,
-                    conversation.snippet, MimeType.TEXT_PLAIN, false)
+                    conversation.snippet, MimeType.TEXT_PLAIN, false, useApi)
         } else {
-            conversationId = insertConversation(context, conversation)
+            conversationId = insertConversation(context, conversation, useApi)
         }
 
         cursor.closeSilent()
@@ -1844,8 +1857,8 @@ object DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    @JvmOverloads
-    fun insertMessage(context: Context, message: Message, conversationId: Long, returnMessageId: Boolean = false): Long {
+    @JvmOverloads fun insertMessage(context: Context, message: Message, conversationId: Long,
+                                    returnMessageId: Boolean = false, useApi: Boolean = true): Long {
         message.conversationId = conversationId
 
         val values = ContentValues(11)
@@ -1885,9 +1898,11 @@ object DataSource {
 
         }
 
-        apiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
-                message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                message.color, encryptor(context))
+        if (useApi) {
+            apiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
+                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
+                    message.color, encryptor(context))
+        }
 
         if (message.type != Message.TYPE_MEDIA) {
             updateConversation(context, conversationId, message.read, message.timestamp,
@@ -1895,7 +1910,7 @@ object DataSource {
                         context.getString(R.string.you) + ": " + message.data
                     else
                         message.data,
-                    message.mimeType, false)
+                    message.mimeType, false, useApi)
         }
 
         return if (returnMessageId) id else conversationId
@@ -1907,7 +1922,7 @@ object DataSource {
      *
      * @param messages        list of messages to batch insert
      */
-    fun insertMessages(context: Context, messages: List<Message>) {
+    @JvmOverloads fun insertMessages(context: Context, messages: List<Message>, useApi: Boolean = false) {
         beginTransaction(context)
 
         for (i in messages.indices) {
@@ -1947,7 +1962,7 @@ object DataSource {
                         context.getString(R.string.you) + ": " + message.data
                     else
                         message.data,
-                    message.mimeType, false)
+                    message.mimeType, false, useApi)
         }
 
         setTransactionSuccessful(context)
@@ -1957,7 +1972,7 @@ object DataSource {
     /**
      * Deletes a message with the given id.
      */
-    fun deleteMessage(context: Context, messageId: Long): Int {
+    @JvmOverloads fun deleteMessage(context: Context, messageId: Long, useApi: Boolean = true): Int {
         val deleted = try {
             database(context).delete(Message.TABLE, Message.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(messageId)))
@@ -1967,14 +1982,17 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(messageId)))
         }
 
-        apiUtils.deleteMessage(accountId(context), messageId)
+        if (useApi) {
+            apiUtils.deleteMessage(accountId(context), messageId)
+        }
+
         return deleted
     }
 
     /**
      * Deletes messages and conversations older than the given timestamp
      */
-    fun cleanupOldMessages(context: Context, timestamp: Long): Int {
+    @JvmOverloads fun cleanupOldMessages(context: Context, timestamp: Long, useApi: Boolean = true): Int {
         val deleted = try {
             database(context).delete(Message.TABLE, Message.COLUMN_TIMESTAMP + "<?",
                     arrayOf(java.lang.Long.toString(timestamp)))
@@ -1987,7 +2005,7 @@ object DataSource {
         database(context).delete(Conversation.TABLE, Conversation.COLUMN_TIMESTAMP + "<?",
                 arrayOf(java.lang.Long.toString(timestamp)))
 
-        if (deleted > 0) {
+        if (deleted > 0 && useApi) {
             apiUtils.cleanupMessages(accountId(context), timestamp)
         }
 
@@ -1999,7 +2017,7 @@ object DataSource {
      *
      * @param conversationId the conversation id to mark.
      */
-    fun readConversation(context: Context, conversationId: Long) {
+    @JvmOverloads fun readConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
         var values = ContentValues(2)
         values.put(Message.COLUMN_READ, true)
         values.put(Message.COLUMN_SEEN, true)
@@ -2026,7 +2044,7 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        if (updated > 0) {
+        if (updated > 0 && useApi) {
             apiUtils.readConversation(accountId(context), androidDeviceId(context), conversationId)
         }
 
@@ -2045,7 +2063,7 @@ object DataSource {
      *
      * @param conversations the conversation ids to mark.
      */
-    fun readConversations(context: Context, conversations: List<Conversation>) {
+    @JvmOverloads fun readConversations(context: Context, conversations: List<Conversation>, useApi: Boolean = true) {
         val conversationIds = conversations.mapTo(ArrayList()) { it.id }
 
         var values = ContentValues(2)
@@ -2075,8 +2093,10 @@ object DataSource {
 
         Log.v("Data Source", "updated: " + updated)
         if (updated > 0) {
-            for (id in conversationIds) {
-                apiUtils.readConversation(accountId(context), androidDeviceId(context), id)
+            if (useApi) {
+                for (id in conversationIds) {
+                    apiUtils.readConversation(accountId(context), androidDeviceId(context), id)
+                }
             }
 
             writeUnreadCount(context)
@@ -2095,7 +2115,7 @@ object DataSource {
     /**
      * Marks all messages in a conversation as seen.
      */
-    fun seenConversation(context: Context, conversationId: Long) {
+    @JvmOverloads fun seenConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Message.COLUMN_SEEN, 1)
 
@@ -2108,13 +2128,15 @@ object DataSource {
                     Message.COLUMN_SEEN + "=0", arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        apiUtils.seenConversation(accountId(context), conversationId)
+        if (useApi) {
+            apiUtils.seenConversation(accountId(context), conversationId)
+        }
     }
 
     /**
      * Mark all messages as seen.
      */
-    fun seenConversations(context: Context) {
+    @JvmOverloads fun seenConversations(context: Context, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Message.COLUMN_SEEN, 1)
 
@@ -2124,13 +2146,15 @@ object DataSource {
             ensureActionable(context)
         }
 
-        apiUtils.seenConversations(accountId(context))
+        if (useApi) {
+            apiUtils.seenConversations(accountId(context))
+        }
     }
 
     /**
      * Mark all messages as seen.
      */
-    fun seenAllMessages(context: Context) {
+    @JvmOverloads fun seenAllMessages(context: Context, useApi: Boolean = true) {
         val values = ContentValues(1)
         values.put(Message.COLUMN_SEEN, 1)
 
@@ -2141,7 +2165,9 @@ object DataSource {
             database(context).update(Message.TABLE, values, Message.COLUMN_SEEN + "=0", null)
         }
 
-        apiUtils.seenConversations(accountId(context))
+        if (useApi) {
+            apiUtils.seenConversations(accountId(context))
+        }
     }
 
     /**
@@ -2177,7 +2203,7 @@ object DataSource {
     /**
      * Inserts a draft into the database with the given parameters.
      */
-    fun insertDraft(context: Context, conversationId: Long, data: String, mimeType: String): Long {
+    @JvmOverloads fun insertDraft(context: Context, conversationId: Long, data: String, mimeType: String, useApi: Boolean = true): Long {
         val values = ContentValues(4)
         val id = generateId()
         values.put(Draft.COLUMN_ID, id)
@@ -2185,7 +2211,9 @@ object DataSource {
         values.put(Draft.COLUMN_DATA, data)
         values.put(Draft.COLUMN_MIME_TYPE, mimeType)
 
-        apiUtils.addDraft(accountId(context), id, conversationId, data, mimeType, encryptor(context))
+        if (useApi) {
+            apiUtils.addDraft(accountId(context), id, conversationId, data, mimeType, encryptor(context))
+        }
 
         return try {
             database(context).insert(Draft.TABLE, null, values)
@@ -2198,7 +2226,7 @@ object DataSource {
     /**
      * Inserts a draft into the database.
      */
-    fun insertDraft(context: Context, draft: Draft): Long {
+    @JvmOverloads fun insertDraft(context: Context, draft: Draft, useApi: Boolean = true): Long {
         val values = ContentValues(4)
 
         if (draft.id > 0) {
@@ -2267,7 +2295,7 @@ object DataSource {
      * Deletes all drafts for a given conversation. This should be used after a message has been
      * sent to the conversation.
      */
-    fun deleteDrafts(context: Context, conversationId: Long) {
+    @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true) {
         try {
             database(context).delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
@@ -2277,7 +2305,9 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        apiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
+        if (useApi) {
+            apiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
+        }
     }
 
     /**
@@ -2311,7 +2341,7 @@ object DataSource {
     /**
      * Inserts a blacklist into the database.
      */
-    fun insertBlacklist(context: Context, blacklist: Blacklist) {
+    @JvmOverloads fun insertBlacklist(context: Context, blacklist: Blacklist, useApi: Boolean = true) {
         val values = ContentValues(2)
 
         if (blacklist.id <= 0) {
@@ -2328,13 +2358,15 @@ object DataSource {
             database(context).insert(Blacklist.TABLE, null, values)
         }
 
-        apiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, encryptor(context))
+        if (useApi) {
+            apiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, encryptor(context))
+        }
     }
 
     /**
      * Deletes a blacklist from the database.
      */
-    fun deleteBlacklist(context: Context, id: Long) {
+    @JvmOverloads fun deleteBlacklist(context: Context, id: Long, useApi: Boolean = true) {
         try {
             database(context).delete(Blacklist.TABLE, Blacklist.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(id)))
@@ -2344,7 +2376,9 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(id)))
         }
 
-        apiUtils.deleteBlacklist(accountId(context), id)
+        if (useApi) {
+            apiUtils.deleteBlacklist(accountId(context), id)
+        }
     }
 
     /**
@@ -2383,7 +2417,7 @@ object DataSource {
     /**
      * Inserts a scheduled message into the database.
      */
-    fun insertScheduledMessage(context: Context, message: ScheduledMessage): Long {
+    @JvmOverloads fun insertScheduledMessage(context: Context, message: ScheduledMessage, useApi: Boolean = true): Long {
         val values = ContentValues(6)
 
         if (message.id <= 0) {
@@ -2397,16 +2431,17 @@ object DataSource {
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType)
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp)
 
-        try {
-            apiUtils.addScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
-                    message.mimeType, message.timestamp, encryptor(context))
-        } catch (e: Exception) {
-            ensureActionable(context)
+        if (useApi) {
             apiUtils.addScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
                     message.mimeType, message.timestamp, encryptor(context))
         }
 
-        return database(context).insert(ScheduledMessage.TABLE, null, values)
+        return try {
+            database(context).insert(ScheduledMessage.TABLE, null, values)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).insert(ScheduledMessage.TABLE, null, values)
+        }
     }
 
     /**
@@ -2414,7 +2449,7 @@ object DataSource {
      *
      * @param message the message to upate
      */
-    fun updateScheduledMessage(context: Context, message: ScheduledMessage) {
+    @JvmOverloads fun updateScheduledMessage(context: Context, message: ScheduledMessage, useApi: Boolean = true) {
         val values = ContentValues(6)
 
         values.put(ScheduledMessage.COLUMN_ID, message.id)
@@ -2433,14 +2468,16 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(message.id)))
         }
 
-        apiUtils.updateScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
-                message.mimeType, message.timestamp, encryptor(context))
+        if (useApi) {
+            apiUtils.updateScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
+                    message.mimeType, message.timestamp, encryptor(context))
+        }
     }
 
     /**
      * Deletes a scheduled message from the database.
      */
-    fun deleteScheduledMessage(context: Context, id: Long) {
+    @JvmOverloads fun deleteScheduledMessage(context: Context, id: Long, useApi: Boolean = true) {
         try {
             database(context).delete(ScheduledMessage.TABLE, ScheduledMessage.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(id)))
@@ -2450,15 +2487,9 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(id)))
         }
 
-        apiUtils.deleteScheduledMessage(accountId(context), id)
-    }
-
-    /**
-     * Sets whether or not to upload data changes to the server. If there is no account id, then
-     * this value will always be false.
-     */
-    fun setUpload(upload: Boolean) {
-        this.apiUtils.isActive = upload
+        if (useApi) {
+            apiUtils.deleteScheduledMessage(accountId(context), id)
+        }
     }
 
     /**

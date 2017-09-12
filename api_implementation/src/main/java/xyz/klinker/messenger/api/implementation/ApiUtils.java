@@ -72,7 +72,6 @@ public class ApiUtils {
     public static String environment = null;
 
     private Api api;
-    private boolean active = true;
     private StorageReference folderRef;
 
     /**
@@ -80,19 +79,6 @@ public class ApiUtils {
      */
     public ApiUtils() {
         this.api = ApiAccessor.create(environment == null ? "debug" : environment);
-    }
-
-    /**
-     * Sets whether or not the utilities are currently active. This will be useful when we
-     * receive messages on devices through FCM and we don't want to persist those messages back
-     * to FCM again.
-     */
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public static boolean isCallSuccessful(Response response) {
@@ -175,7 +161,7 @@ public class ApiUtils {
     }
 
     public void updatePrimaryDevice(final String accountId, final String newPrimaryDeviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -212,7 +198,7 @@ public class ApiUtils {
     public void addContact(final String accountId, final String phoneNumber, final String name, final int color,
                                 final int colorDark, final int colorLight, final int colorAccent,
                                 final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -238,7 +224,7 @@ public class ApiUtils {
      */
     public void deleteContact(final String accountId, final String phoneNumber,
                               final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -251,7 +237,7 @@ public class ApiUtils {
      * Deletes a conversation and all of its messages.
      */
     public void clearContacts(final String accountId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -268,7 +254,7 @@ public class ApiUtils {
                                    final Integer color, final Integer colorDark, final Integer colorLight,
                                    final Integer colorAccent,
                                    final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -292,7 +278,7 @@ public class ApiUtils {
                                 final String ringtone, final String idMatcher, final boolean mute,
                                 final boolean archive, final boolean privateNotifications,
                                 final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -314,7 +300,7 @@ public class ApiUtils {
      * Deletes a conversation and all of its messages.
      */
     public void deleteConversation(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -328,7 +314,7 @@ public class ApiUtils {
      * Archives a conversation.
      */
     public void archiveConversation(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -342,7 +328,7 @@ public class ApiUtils {
      * Moves a conversation back to the inbox.
      */
     public void unarchiveConversation(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -362,7 +348,7 @@ public class ApiUtils {
                                    final String snippet, final String ringtone, final Boolean mute,
                                    final Boolean archive, final Boolean privateNotifications,
                                    final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -384,7 +370,7 @@ public class ApiUtils {
                                           final Boolean read, final Boolean archive,
                                           final Long timestamp, final String snippet,
                                           final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -403,7 +389,7 @@ public class ApiUtils {
      */
     public void updateConversationTitle(final String accountId, final long deviceId,
                                           final String title, final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -417,7 +403,7 @@ public class ApiUtils {
      * Marks all messages in conversation as read.
      */
     public void readConversation(final String accountId, final String androidDevice, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -431,7 +417,7 @@ public class ApiUtils {
      * Marks all messages in conversation as seen.
      */
     public void seenConversation(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -445,7 +431,7 @@ public class ApiUtils {
      * Marks all messages as seen.
      */
     public void seenConversations(final String accountId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -463,7 +449,7 @@ public class ApiUtils {
                            final String data, final long timestamp, final String mimeType,
                            final boolean read, final boolean seen, final String messageFrom,
                            final Integer color, final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -499,7 +485,7 @@ public class ApiUtils {
      */
     public void updateMessage(final String accountId, final long deviceId, Integer type,
                               Boolean read, Boolean seen) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -514,7 +500,7 @@ public class ApiUtils {
      * Updates a message with the given parameters.
      */
     public void updateMessageType(final String accountId, final long deviceId, final int type) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -528,7 +514,7 @@ public class ApiUtils {
      * Deletes the given message.
      */
     public void deleteMessage(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -542,7 +528,7 @@ public class ApiUtils {
      * Deletes messages older than the given timestamp.
      */
     public void cleanupMessages(final String accountId, final long timestamp) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -558,7 +544,7 @@ public class ApiUtils {
     public void addDraft(final String accountId, final long deviceId,
                          final long deviceConversationId, final String data,
                          final String mimeType, final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -576,7 +562,7 @@ public class ApiUtils {
      * Deletes the given drafts.
      */
     public void deleteDrafts(final String accountId, final String androidDeviceId, final long deviceConversationId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -591,7 +577,7 @@ public class ApiUtils {
      */
     public void addBlacklist(final String accountId, final long deviceId, final String phoneNumber,
                              final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -609,7 +595,7 @@ public class ApiUtils {
      * Deletes the given blacklist.
      */
     public void deleteBlacklist(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -625,7 +611,7 @@ public class ApiUtils {
     public void addScheduledMessage(final String accountId, final long deviceId, final String title,
                                     final String to, final String data, final String mimeType,
                                     final long timestamp, final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -649,7 +635,7 @@ public class ApiUtils {
     public void updateScheduledMessage(final String accountId, final long deviceId, final String title,
                                        final String to, final String data, final String mimeType,
                                        final long timestamp, final EncryptionUtils encryptionUtils) {
-        if (!active || accountId == null || encryptionUtils == null) {
+        if (accountId == null || encryptionUtils == null) {
             return;
         }
 
@@ -668,7 +654,7 @@ public class ApiUtils {
      * Deletes the given scheduled message.
      */
     public void deleteScheduledMessage(final String accountId, final long deviceId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -687,7 +673,7 @@ public class ApiUtils {
      */
     public void uploadBytesToFirebase(final String accountId, final byte[] bytes, final long messageId, final EncryptionUtils encryptionUtils,
                                       final FirebaseUploadCallback callback, int retryCount) {
-        if (!active || encryptionUtils == null || retryCount > RETRY_COUNT) {
+        if (encryptionUtils == null || retryCount > RETRY_COUNT) {
             callback.onUploadFinished();
             return;
         }
@@ -795,7 +781,7 @@ public class ApiUtils {
      * Dismiss a notification across all devices.
      */
     public void dismissNotification(final String accountId, final String deviceId, final long conversationId) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -809,7 +795,7 @@ public class ApiUtils {
      * Update the subscription status on the server.
      */
     public void updateSubscription(final String accountId, final Integer subscriptionType, final Long expirationDate) {
-        if (!active || accountId == null) {
+        if (accountId == null) {
             return;
         }
 
@@ -823,7 +809,7 @@ public class ApiUtils {
      * Update the snooze time setting.
      */
     public void updateSnooze(final String accountId, final long snoozeTil) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "snooze", "long", snoozeTil);
         }
     }
@@ -832,7 +818,7 @@ public class ApiUtils {
      * Update the vibrate setting.
      */
     public void updateVibrate(final String accountId, final String vibratePattern) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "vibrate_pattern_identifier", "string", vibratePattern);
         }
     }
@@ -841,7 +827,7 @@ public class ApiUtils {
      * Update the repeat notifications setting.
      */
     public void updateRepeatNotifications(final String accountId, final String repeatString) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "repeat_notifications_interval", "string", repeatString);
         }
     }
@@ -850,7 +836,7 @@ public class ApiUtils {
      * Update the wake screen setting
      */
     public void updateWakeScreen(final String accountId, final String wake) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "wake_screen", "string", wake);
         }
     }
@@ -859,7 +845,7 @@ public class ApiUtils {
      * Update the wake screen setting
      */
     public void updateHeadsUp(final String accountId, final String headsUp) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "heads_up", "string", headsUp);
         }
     }
@@ -868,7 +854,7 @@ public class ApiUtils {
      * Update the delivery reports setting.
      */
     public void updateDeliveryReports(final String accountId, final boolean deliveryReports) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "delivery_reports", "boolean", deliveryReports);
         }
     }
@@ -877,7 +863,7 @@ public class ApiUtils {
      * Update the delivery reports setting.
      */
     public void updateGiffgaffDeliveryReports(final String accountId, final boolean deliveryReports) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "giffgaff_delivery", "boolean", deliveryReports);
         }
     }
@@ -886,7 +872,7 @@ public class ApiUtils {
      * Update the strip Unicode setting.
      */
     public void updateStripUnicode(final String accountId, final boolean stripUnicode) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "strip_unicode", "boolean", stripUnicode);
         }
     }
@@ -895,7 +881,7 @@ public class ApiUtils {
      * Update the notification history option
      */
     public void updateShowHistoryInNotification(final String accountId, final boolean showHistory) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "history_in_notifications", "boolean", showHistory);
         }
     }
@@ -904,7 +890,7 @@ public class ApiUtils {
      * Update the rounder bubbles setting.
      */
     public void updateRounderBubbles(final String accountId, final boolean rounderBubbles) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "rounder_bubbles", "boolean", rounderBubbles);
         }
     }
@@ -913,7 +899,7 @@ public class ApiUtils {
      * Update the notification actions setting.
      */
     public void updateNotificationActions(final String accountId, final String stringified) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "notification_actions", "set", stringified);
         }
     }
@@ -922,7 +908,7 @@ public class ApiUtils {
      * Update the swipe to delete setting
      */
     public void updateSwipeToDelete(final String accountId, final boolean swipeDelete) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "swipe_delete", "boolean", swipeDelete);
         }
     }
@@ -931,7 +917,7 @@ public class ApiUtils {
      * Update the convert to MMS setting, for long messages
      */
     public void updateConvertToMMS(final String accountId, final String convert) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "sms_to_mms_message_conversion_count", "string", convert);
         }
     }
@@ -940,7 +926,7 @@ public class ApiUtils {
      * Update the MMS size limit setting.
      */
     public void updateMmsSize(final String accountId, final String mmsSize) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mms_size_limit", "string", mmsSize);
         }
     }
@@ -949,7 +935,7 @@ public class ApiUtils {
      * Update the group MMS setting.
      */
     public void updateGroupMMS(final String accountId, final boolean groupMMS) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "group_mms", "boolean", groupMMS);
         }
     }
@@ -958,7 +944,7 @@ public class ApiUtils {
      * Update the auto save media setting.
      */
     public void updateAutoSaveMedia(final String accountId, final boolean save) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "auto_save_media", "boolean", save);
         }
     }
@@ -967,7 +953,7 @@ public class ApiUtils {
      * Update the override system apn setting.
      */
     public void updateOverrideSystemApn(final String accountId, final boolean override) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mms_override", "boolean", override);
         }
     }
@@ -976,7 +962,7 @@ public class ApiUtils {
      * Update the mmsc url for MMS.
      */
     public void updateMmscUrl(final String accountId, final String mmsc) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mmsc_url", "string", mmsc);
         }
     }
@@ -985,7 +971,7 @@ public class ApiUtils {
      * Update the MMS proxy setting.
      */
     public void updateMmsProxy(final String accountId, final String proxy) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mms_proxy", "string", proxy);
         }
     }
@@ -994,7 +980,7 @@ public class ApiUtils {
      * Update the MMS port setting.
      */
     public void updateMmsPort(final String accountId, final String port) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mms_port", "string", port);
         }
     }
@@ -1003,7 +989,7 @@ public class ApiUtils {
      * Update the user agent setting.
      */
     public void updateUserAgent(final String accountId, final String userAgent) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "user_agent", "string", userAgent);
         }
     }
@@ -1012,7 +998,7 @@ public class ApiUtils {
      * Update the user agent profile url setting.
      */
     public void updateUserAgentProfileUrl(final String accountId, final String userAgentProfileUrl) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "user_agent_profile_url", "string", userAgentProfileUrl);
         }
     }
@@ -1021,7 +1007,7 @@ public class ApiUtils {
      * Update the user agent tag name setting.
      */
     public void updateUserAgentProfileTagName(final String accountId, final String tagName) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "user_agent_profile_tag_name", "string", tagName);
         }
     }
@@ -1030,7 +1016,7 @@ public class ApiUtils {
      * Update the secure private conversations setting.
      */
     public void updateSecurePrivateConversations(final String accountId, final boolean secure) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "secure_private_conversations", "boolean", secure);
         }
     }
@@ -1039,7 +1025,7 @@ public class ApiUtils {
      * Update the quick compose setting.
      */
     public void updateQuickCompose(final String accountId, final boolean quickCompose) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "quick_compose", "boolean", quickCompose);
         }
     }
@@ -1048,7 +1034,7 @@ public class ApiUtils {
      * Update the signature setting.
      */
     public void updateSignature(final String accountId, final String signature) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "signature", "string", signature);
         }
     }
@@ -1058,7 +1044,7 @@ public class ApiUtils {
      * Update the delayed sending setting.
      */
     public void updateDelayedSending(final String accountId, final String delayedSending) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "delayed_sending", "string", delayedSending);
         }
     }
@@ -1068,7 +1054,7 @@ public class ApiUtils {
      * Update the cleanup old messages setting.
      */
     public void updateCleanupOldMessages(final String accountId, final String cleanup) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "cleanup_old_messages", "string", cleanup);
         }
     }
@@ -1077,7 +1063,7 @@ public class ApiUtils {
      * Update the sound effects setting.
      */
     public void updateSoundEffects(final String accountId, final boolean effects) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "sound_effects", "boolean", effects);
         }
     }
@@ -1086,7 +1072,7 @@ public class ApiUtils {
      * Update the mobile only setting
      */
     public void updateMobileOnly(final String accountId, final boolean mobileOnly) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "mobile_only", "boolean", mobileOnly);
         }
     }
@@ -1095,7 +1081,7 @@ public class ApiUtils {
      * Update the font size setting
      */
     public void updateFontSize(final String accountId, final String size) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "font_size", "string", size);
         }
     }
@@ -1104,7 +1090,7 @@ public class ApiUtils {
      * Update the emoji style setting
      */
     public void updateEmojiStyle(final String accountId, final String style) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "emoji_style", "string", style);
         }
     }
@@ -1113,7 +1099,7 @@ public class ApiUtils {
      * Update the keyboard layout setting
      */
     public void updateKeyboardLayout(final String accountId, final String layout) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "keyboard_layout", "string", layout);
         }
     }
@@ -1122,7 +1108,7 @@ public class ApiUtils {
      * Update the global theme color setting
      */
     public void updatePrimaryThemeColor(final String accountId, final int color) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "global_primary_color", "int", color);
         }
     }
@@ -1131,7 +1117,7 @@ public class ApiUtils {
      * Update the global theme color setting
      */
     public void updatePrimaryDarkThemeColor(final String accountId, final int color) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "global_primary_dark_color", "int", color);
         }
     }
@@ -1140,7 +1126,7 @@ public class ApiUtils {
      * Update the global theme color setting
      */
     public void updateAccentThemeColor(final String accountId, final int color) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "global_accent_color", "int", color);
         }
     }
@@ -1149,7 +1135,7 @@ public class ApiUtils {
      * Update the mobile only setting
      */
     public void updateUseGlobalTheme(final String accountId, final boolean useGlobal) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "apply_theme_globally", "boolean", useGlobal);
         }
     }
@@ -1158,7 +1144,7 @@ public class ApiUtils {
      * Update the base theme (day/night, always dark, always black)
      */
     public void updateBaseTheme(final String accountId, final String themeString) {
-        if (active && accountId != null) {
+        if (accountId != null) {
             updateSetting(accountId, "base_theme", "string", themeString);
         }
     }

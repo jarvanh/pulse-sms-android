@@ -114,7 +114,6 @@ public class FirebaseHandlerService extends WakefulIntentService {
             json = new JSONObject(data);
 
             final DataSource source = DataSource.INSTANCE;
-            source.setUpload(false);
 
             switch (operation) {
                 case "removed_account":
@@ -223,10 +222,6 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     Log.e(TAG, "unsupported operation: " + operation);
                     break;
             }
-
-            // sleep for a short amount of time to try to avoid uploading duplicates
-            try { Thread.sleep(50); } catch (Exception e) { }
-            source.setUpload(true);
         } catch (JSONException e) {
             Log.e(TAG, "error parsing data json", e);
         }
@@ -311,13 +306,13 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 return;
             }
 
-            long messageId = source.insertMessage(context, message, message.conversationId);
+            long messageId = source.insertMessage(context, message, message.conversationId, true, false);
             Log.v(TAG, "added message");
 
             if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
                 new Thread(() -> {
                     try { Thread.sleep(500); } catch (Exception e) {}
-                    DataSource.INSTANCE.updateMessageType(this, id, Message.TYPE_SENT);
+                    DataSource.INSTANCE.updateMessageType(this, id, Message.TYPE_SENT, true);
                 }).start();
             }
 
@@ -356,7 +351,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             if (message.type == Message.TYPE_RECEIVED) {
                 context.startService(new Intent(context, NotificationService.class));
             } else if (isSending) {
-                source.readConversation(context, message.conversationId);
+                source.readConversation(context, message.conversationId, false);
                 NotificationManagerCompat.from(context).cancel((int) message.conversationId);
             }
         } else {
@@ -370,7 +365,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
         final File file = new File(context.getFilesDir(),
                 message.id + MimeType.getExtension(message.mimeType));
 
-        DataSource.INSTANCE.insertMessage(context, message, message.conversationId);
+        final DataSource source = DataSource.INSTANCE;
+
+        source.insertMessage(context, message, message.conversationId, false, false);
         Log.v(TAG, "added message");
 
         final boolean isSending = message.type == Message.TYPE_SENDING;
@@ -381,12 +378,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         FirebaseDownloadCallback callback = () -> {
             message.data = Uri.fromFile(file).toString();
-            DataSource source1 = DataSource.INSTANCE;
-            source1.updateMessageData(context, message.id, message.data);
+            source.updateMessageData(context, message.id, message.data);
             MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
 
             if (Account.get(context).primary && isSending) {
-                Conversation conversation = source1.getConversation(context, message.conversationId);
+                Conversation conversation = source.getConversation(context, message.conversationId);
 
                 if (conversation != null) {
                     if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
@@ -405,7 +401,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             }
 
             if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
-                source1.updateMessageType(context, message.id, Message.TYPE_SENT);
+                source.updateMessageType(context, message.id, Message.TYPE_SENT, false);
             }
 
             MessageListUpdatedReceiver.sendBroadcast(context, message);
@@ -416,7 +412,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             if (message.type == Message.TYPE_RECEIVED) {
                 context.startService(new Intent(context, NotificationService.class));
             } else if (isSending) {
-                source1.readConversation(context, message.conversationId);
+                source.readConversation(context, message.conversationId, false);
                 NotificationManagerCompat.from(context).cancel((int) message.conversationId);
             }
         };
@@ -429,11 +425,13 @@ public class FirebaseHandlerService extends WakefulIntentService {
             throws JSONException {
         long id = getLong(json, "id");
         int type = json.getInt("type");
-        source.updateMessageType(context, id, type);
+        source.updateMessageType(context, id, type, false);
+
         Message message = source.getMessage(context, id);
         if (message != null) {
             MessageListUpdatedReceiver.sendBroadcast(context, message);
         }
+
         Log.v(TAG, "updated message type");
     }
 
@@ -441,23 +439,25 @@ public class FirebaseHandlerService extends WakefulIntentService {
             throws JSONException {
         long id = getLong(json, "id");
         int type = json.getInt("message_type");
-        source.updateMessageType(context, id, type);
+        source.updateMessageType(context, id, type, false);
+
         Message message = source.getMessage(context, id);
         if (message != null) {
             MessageListUpdatedReceiver.sendBroadcast(context, message);
         }
+
         Log.v(TAG, "updated message type");
     }
 
     private void removeMessage(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
-        source.deleteMessage(this, id);
+        source.deleteMessage(this, id, false);
         Log.v(TAG, "removed message");
     }
 
     private void cleanupMessages(JSONObject json, DataSource source) throws JSONException {
         long timestamp = getLong(json, "timestamp");
-        source.cleanupOldMessages(this, timestamp);
+        source.cleanupOldMessages(this, timestamp, false);
         Log.v(TAG, "cleaned up old messages");
     }
 
@@ -497,7 +497,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         }
 
         try {
-            source.insertConversation(context, conversation);
+            source.insertConversation(context, conversation, false);
         } catch (SQLiteConstraintException e) {
             // conversation already exists
         }
@@ -514,7 +514,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             contact.colors.colorLight = json.getInt("color_light");
             contact.colors.colorAccent = json.getInt("color_accent");
 
-            source.updateContact(this, contact);
+            source.updateContact(this, contact, false);
             Log.v(TAG, "updated contact");
         } catch (RuntimeException e) {
             Log.e(TAG, "failed to update contact b/c of decrypting data");
@@ -523,13 +523,13 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void removeContact(JSONObject json, DataSource source) throws JSONException {
         String phoneNumber = json.getString("phone_number");
-        source.deleteContact(this, phoneNumber);
+        source.deleteContact(this, phoneNumber, false);
         Log.v(TAG, "removed contact");
     }
 
     private void removeContactById(JSONObject json, DataSource source) throws JSONException {
         String[] ids = json.getString("id").split(",");
-        source.deleteContacts(this, ids);
+        source.deleteContacts(this, ids, false);
         Log.v(TAG, "removed contacts by id");
     }
 
@@ -545,7 +545,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             contact.colors.colorLight = json.getInt("color_light");
             contact.colors.colorAccent = json.getInt("color_accent");
 
-            source.insertContact(this, contact);
+            source.insertContact(this, contact, false);
             Log.v(TAG, "added contact");
         } catch (SQLiteConstraintException e) {
             // contact already exists
@@ -575,10 +575,10 @@ public class FirebaseHandlerService extends WakefulIntentService {
             conversation.archive = json.getBoolean("archive");
             conversation.privateNotifications = json.getBoolean("private_notifications");
 
-            source.updateConversationSettings(this, conversation);
+            source.updateConversationSettings(this, conversation, false);
 
             if (conversation.read) {
-                source.readConversation(context, conversation.id);
+                source.readConversation(context, conversation.id, false);
             }
             Log.v(TAG, "updated conversation");
         } catch (RuntimeException e) {
@@ -591,7 +591,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
         try {
             source.updateConversationTitle(this,
                     getLong(json, "id"),
-                    encryptionUtils.decrypt(json.getString("title"))
+                    encryptionUtils.decrypt(json.getString("title")),
+                    false
             );
 
             Log.v(TAG, "updated conversation title");
@@ -609,7 +610,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     getLong(json, "timestamp"),
                     encryptionUtils.decrypt(json.getString("snippet")),
                     MimeType.TEXT_PLAIN,
-                    json.getBoolean("archive")
+                    json.getBoolean("archive"),
+                    false
             );
 
             Log.v(TAG, "updated conversation snippet");
@@ -620,7 +622,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void removeConversation(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
-        source.deleteConversation(this, id);
+        source.deleteConversation(this, id, false);
         Log.v(TAG, "removed conversation");
     }
 
@@ -630,8 +632,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
             Conversation conversation = source.getConversation(context, id);
-            source.setUpload(false);
-            source.readConversation(context, id);
+            source.readConversation(context, id, false);
 
             if (conversation != null && !conversation.read) {
                 ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.snippet, true);
@@ -643,19 +644,19 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void seenConversation(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
-        source.seenConversation(this, id);
+        source.seenConversation(this, id, false);
         Log.v(TAG, "seen conversation");
     }
 
     private void archiveConversation(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
         boolean archive = json.getBoolean("archive");
-        source.archiveConversation(this, id, archive);
+        source.archiveConversation(this, id, archive, false);
         Log.v(TAG, "archive conversation: " + archive);
     }
 
     private void seenConversations(DataSource source) throws JSONException {
-        source.seenConversations(this);
+        source.seenConversations(this, false);
         Log.v(TAG, "seen all conversations");
     }
 
@@ -666,7 +667,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         draft.data = encryptionUtils.decrypt(json.getString("data"));
         draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
 
-        source.insertDraft(this, draft);
+        source.insertDraft(this, draft, false);
         Log.v(TAG, "added draft");
     }
 
@@ -675,7 +676,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         String deviceId = json.getString("android_device");
 
         if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
-            source.deleteDrafts(this, id);
+            source.deleteDrafts(this, id, false);
             Log.v(TAG, "removed drafts");
         }
     }
@@ -688,13 +689,13 @@ public class FirebaseHandlerService extends WakefulIntentService {
         Blacklist blacklist = new Blacklist();
         blacklist.id = id;
         blacklist.phoneNumber = phoneNumber;
-        source.insertBlacklist(this, blacklist);
+        source.insertBlacklist(this, blacklist, false);
         Log.v(TAG, "added blacklist");
     }
 
     private void removeBlacklist(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
-        source.deleteBlacklist(this, id);
+        source.deleteBlacklist(this, id, false);
         Log.v(TAG, "removed blacklist");
     }
 
@@ -707,7 +708,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.timestamp = getLong(json, "timestamp");
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
-        source.insertScheduledMessage(this, message);
+        source.insertScheduledMessage(this, message, false);
         ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "added scheduled message");
     }
@@ -721,14 +722,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.timestamp = getLong(json, "timestamp");
         message.title = encryptionUtils.decrypt(json.getString("title"));
 
-        source.updateScheduledMessage(this, message);
+        source.updateScheduledMessage(this, message, false);
         ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "updated scheduled message");
     }
 
     private void removeScheduledMessage(JSONObject json, DataSource source) throws JSONException {
         long id = getLong(json, "id");
-        source.deleteScheduledMessage(this, id);
+        source.deleteScheduledMessage(this, id, false);
         ScheduledMessageJob.scheduleNextRun(this, source);
         Log.v(TAG, "removed scheduled message");
     }
@@ -742,7 +743,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             Conversation conversation = source.getConversation(context, conversationId);
 
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
-            source.readConversation(context, conversationId);
+            source.readConversation(context, conversationId, false);
             if (conversation != null && !conversation.read) {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.snippet, true);
             }
@@ -870,10 +871,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.seen = true;
         message.simPhoneNumber = DualSimUtils.get(this).getDefaultPhoneNumber();
 
-        source.setUpload(true);
-        long conversationId = source.insertMessage(message, to, context);
+        long conversationId = source.insertMessage(message, to, context, true);
         Conversation conversation = source.getConversation(context, conversationId);
-        source.setUpload(false);
 
         new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                 .send(context, message.data, to);

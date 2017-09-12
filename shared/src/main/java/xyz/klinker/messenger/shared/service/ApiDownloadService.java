@@ -133,7 +133,6 @@ public class ApiDownloadService extends Service {
             apiUtils = new ApiUtils();
             encryptionUtils = account.getEncryptor();
             source = DataSource.INSTANCE;
-            source.setUpload(false);
             source.beginTransaction(this);
 
             long startTime = System.currentTimeMillis();
@@ -149,7 +148,6 @@ public class ApiDownloadService extends Service {
             sendBroadcast(new Intent(ACTION_DOWNLOAD_FINISHED));
             NotificationManagerCompat.from(getApplicationContext()).cancel(MESSAGE_DOWNLOAD_ID);
             source.setTransactionSuccessful(this);
-            source.setUpload(true);
             source.endTransaction(this);
             downloadMedia();
 
@@ -205,7 +203,7 @@ public class ApiDownloadService extends Service {
         } while (messageList.size() % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5);
 
         if (messageList.size() > 0) {
-            source.insertMessages(this, messageList);
+            source.insertMessages(this, messageList, false);
             Log.v(TAG, messageList.size() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages");
 
             messageList.clear();
@@ -253,7 +251,7 @@ public class ApiDownloadService extends Service {
                     image.recycle();
                 }
 
-                source.insertConversation(this, conversation);
+                source.insertConversation(this, conversation, false);
             }
 
             Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -290,7 +288,7 @@ public class ApiDownloadService extends Service {
                         conversation.imageUri += "/photo";
                     }
 
-                    source.insertConversation(this, conversation);
+                    source.insertConversation(this, conversation, false);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + conversation.id);
@@ -317,7 +315,7 @@ public class ApiDownloadService extends Service {
             for (BlacklistBody body : blacklists) {
                 Blacklist blacklist = new Blacklist(body);
                 blacklist.decrypt(encryptionUtils);
-                source.insertBlacklist(this, blacklist);
+                source.insertBlacklist(this, blacklist, false);
             }
 
             Log.v(TAG, "blacklists inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -340,7 +338,7 @@ public class ApiDownloadService extends Service {
             for (ScheduledMessageBody body : messages) {
                 ScheduledMessage message = new ScheduledMessage(body);
                 message.decrypt(encryptionUtils);
-                source.insertScheduledMessage(this, message);
+                source.insertScheduledMessage(this, message, false);
             }
 
             Log.v(TAG, "scheduled messages inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -363,7 +361,7 @@ public class ApiDownloadService extends Service {
             for (DraftBody body : drafts) {
                 Draft draft = new Draft(body);
                 draft.decrypt(encryptionUtils);
-                source.insertDraft(this, draft);
+                source.insertDraft(this, draft, false);
             }
 
             Log.v(TAG, "drafts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
@@ -391,7 +389,7 @@ public class ApiDownloadService extends Service {
                 contactList.add(contact);
             }
 
-            source.insertContacts(this, contactList, null);
+            source.insertContacts(this, contactList, null, false);
 
             Log.v(TAG, "contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms");
         } else {
