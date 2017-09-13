@@ -16,13 +16,11 @@
 
 package xyz.klinker.messenger.shared.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
@@ -33,19 +31,14 @@ import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.media.ExifInterface;
 import android.support.v4.content.FileProvider;
-import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 
-import id.zelory.compressor.Compressor;
-import xyz.klinker.messenger.shared.BuildConfig;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MimeType;
