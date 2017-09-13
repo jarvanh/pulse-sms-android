@@ -23,11 +23,12 @@
         <text>Improve handling of extremely large conversations</text>
         <text>Improved sync between web and phone</text>
         <text>Fix sharing contact cards from contacts app</text>
-        <text>Theme fixes</text>
         <text>New vibration pattern</text>
+        <text>MMS improvements</text>
         <text>Battery improvements</text>
-        <text>Bug fixes</text>
         <text>FAQ improvements</text>
+        <text>Theme fixes</text>
+        <text>Bug fixes</text>
     </version>
 
     <version

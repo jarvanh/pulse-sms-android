@@ -4,4 +4,5 @@ This release:<br/>
 - Fixes a ton of little bugs that had been reported<br/>
 - Fixes crashes that had been reported<br/>
 - Power management improvements<br/>
-- Improves performance in some areas of the app
+- Improves performance<br/>
++ way more in the <i>about</i> section of the app!
