@@ -65,8 +65,6 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Mock
     private EncryptionUtils encryption;
     @Mock
-    private ApiUtils apiUtils;
-    @Mock
     private Cursor cursor;
 
     @Before
@@ -76,7 +74,6 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         source.set_encryptor(encryption);
         source.set_accountId("1234");
         source.set_androidDeviceId("1234");
-        source.setApiUtils(apiUtils);
 
         when(database.isOpen()).thenReturn(true);
         when(helper.getWritableDatabase()).thenReturn(database);
@@ -138,7 +135,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertContacts() {
-        source.insertContacts(context, getFakeContacts(context.getResources()), null);
+        source.insertContacts(context, getFakeContacts(context.getResources()), null, false);
         verify(database, times(7)).insert(eq("contact"), eq((String) null),
                 any(ContentValues.class));
     }
@@ -148,7 +145,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         Contact contact = new Contact();
         contact.phoneNumber = "1234";
 
-        source.insertContact(context, contact);
+        source.insertContact(context, contact, false);
         verify(database).insert(eq("contact"), eq((String) null), any(ContentValues.class));
     }
 
@@ -178,7 +175,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertConversation() {
-        source.insertConversation(context, new Conversation());
+        source.insertConversation(context, new Conversation(), false);
         verify(database).insert(eq("conversation"), eq((String) null), any(ContentValues.class));
     }
 
@@ -233,20 +230,20 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, "515", "Test", 1, 2, 3, 4);
+        source.updateContact(context, "515", "Test", 1, 2, 3, 4, false);
         verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),
                 eq(new String[]{"515"}));
     }
 
     @Test
     public void deleteContact() {
-        source.deleteContact(context, "515");
+        source.deleteContact(context, "515", false);
         verify(database).delete("contact", "phone_number=?", new String[]{"515"});
     }
 
     @Test
     public void deleteMultipleContactsById() {
-        source.deleteContacts(context, new String[] { "1", "2" });
+        source.deleteContacts(context, new String[] { "1", "2" }, false);
         verify(database).delete("contact", "_id=? OR _id=?", new String[]{ "1", "2" });
     }
 
@@ -291,7 +288,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteConversation() {
         Conversation conversation = new Conversation();
         conversation.id = 1;
-        source.deleteConversation(context, conversation);
+        source.deleteConversation(context, conversation, false);
 
         verify(database).delete("conversation", "_id=?", new String[]{"1"});
         verify(database).delete("message", "conversation_id=?", new String[]{"1"});
@@ -299,28 +296,28 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void archiveConversation() {
-        source.archiveConversation(context, 1);
+        source.archiveConversation(context, 1, false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
     }
 
     @Test
     public void updateConversation() {
-        source.updateConversation(context, 1, true, System.currentTimeMillis(), "test", "text/plain", false);
+        source.updateConversation(context, 1, true, System.currentTimeMillis(), "test", "text/plain", false, false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
     }
 
     @Test
     public void updateConversationSettings() {
-        source.updateConversationSettings(context, new Conversation());
+        source.updateConversationSettings(context, new Conversation(), false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"0"}));
     }
 
     @Test
     public void updateConversationTitle() {
-        source.updateConversationTitle(context, 0L, "test");
+        source.updateConversationTitle(context, 0L, "test", false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=? AND title <> ?"),
                 eq(new String[]{"0", "test"}));
     }
@@ -426,7 +423,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateMessageType() {
-        source.updateMessageType(context, 1, Message.TYPE_SENT);
+        source.updateMessageType(context, 1, Message.TYPE_SENT, false);
         verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>?"),
                 eq(new String[]{"1", "0"}));
     }
@@ -436,7 +433,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         Message message = new Message();
         message.data = "test";
 
-        source.insertMessage(context, message, 1);
+        source.insertMessage(context, message, 1, false, false);
 
         verify(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
@@ -445,14 +442,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void deleteMessage() {
-        source.deleteMessage(context, 1);
+        source.deleteMessage(context, 1, false);
 
         verify(database).delete("message", "_id=?", new String[]{"1"});
     }
 
     @Test
     public void cleanupMessages() {
-        source.cleanupOldMessages(context, 1);
+        source.cleanupOldMessages(context, 1, false);
 
         verify(database).delete("message", "timestamp<?", new String[]{"1"});
         verify(database).delete("conversation", "timestamp<?", new String[]{"1"});
@@ -460,7 +457,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void readConversation() {
-        source.readConversation(context, 3);
+        source.readConversation(context, 3, false);
 
         verify(database).update(eq("message"), any(ContentValues.class),
                 eq("conversation_id=?"), eq(new String[]{"3"}));
@@ -470,7 +467,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void seenConversation() {
-        source.seenConversation(context, 1);
+        source.seenConversation(context, 1, false);
 
         verify(database).update(eq("message"), any(ContentValues.class),
                 eq("conversation_id=? AND seen=0"), eq(new String[]{"1"}));
@@ -478,7 +475,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void seenConversations() {
-        source.seenConversations(context);
+        source.seenConversations(context, false);
 
         verify(database).update(eq("message"), any(ContentValues.class),
                 eq("seen=0"), eq((String[]) null));
@@ -486,7 +483,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void seenAllMessages() {
-        source.seenAllMessages(context);
+        source.seenAllMessages(context, false);
 
         verify(database).update(eq("message"), any(ContentValues.class),
                 eq("seen=0"), eq((String[]) null));
@@ -523,7 +520,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertDraft() {
-        source.insertDraft(context, 1, "test", "text/plain");
+        source.insertDraft(context, 1, "test", "text/plain", false);
         verify(database).insert(eq("draft"), eq((String) null), any(ContentValues.class));
     }
 
@@ -535,7 +532,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         draft.data = "test";
         draft.mimeType = "text/plain";
 
-        source.insertDraft(context, draft);
+        source.insertDraft(context, draft, false);
 
         ContentValues values = new ContentValues(4);
         values.put("_id", 1L);
@@ -548,7 +545,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void deleteDrafts() {
-        source.deleteDrafts(context, 1);
+        source.deleteDrafts(context, 1, false);
         verify(database).delete("draft", "conversation_id=?", new String[]{"1"});
     }
 
@@ -560,13 +557,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertBlacklist() {
-        source.insertBlacklist(context, new Blacklist());
+        source.insertBlacklist(context, new Blacklist(), false);
         verify(database).insert(eq("blacklist"), eq((String) null), any(ContentValues.class));
     }
 
     @Test
     public void deleteBlacklist() {
-        source.deleteBlacklist(context, 1);
+        source.deleteBlacklist(context, 1, false);
         verify(database).delete("blacklist", "_id=?", new String[]{"1"});
     }
 
@@ -579,14 +576,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void insertScheduledMessage() {
-        source.insertScheduledMessage(context, new ScheduledMessage());
+        source.insertScheduledMessage(context, new ScheduledMessage(), false);
         verify(database).insert(eq("scheduled_message"), eq((String) null),
                 any(ContentValues.class));
     }
 
     @Test
     public void deleteScheduledMessage() {
-        source.deleteScheduledMessage(context, 1);
+        source.deleteScheduledMessage(context, 1, false);
         verify(database).delete("scheduled_message", "_id=?", new String[]{"1"});
     }
 
