@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.shared.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -40,8 +41,10 @@ import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
+import id.zelory.compressor.Compressor;
 import xyz.klinker.messenger.shared.BuildConfig;
 import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.shared.data.ColorSet;
@@ -254,18 +257,18 @@ public class ImageUtils {
             }
 
             // start generating bitmaps and checking the size against the max size
-            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 2000);
+            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 640);
             scaled = rotateBasedOnExifData(context, uri, scaled);
             File file = createFileFromBitmap(context, fileName, scaled, mimeType);
 
-            int maxResolution = 1500;
+            int maxResolution = 500;
             while (maxResolution > 0 && file.length() > MmsSettings.get(context).maxImageSize) {
                 scaled.recycle();
 
                 scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
                 scaled = rotateBasedOnExifData(context, uri, scaled);
                 file = createFileFromBitmap(context, fileName, scaled, mimeType);
-                maxResolution -= 250;
+                maxResolution -= 100;
             }
 
             return ImageUtils.createContentUri(context, file);
@@ -277,6 +280,10 @@ public class ImageUtils {
 
     private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int srcWidth, int srcHeight, int maxSize) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
+
+        if (maxSize < 100) {
+            maxSize = 50;
+        }
 
         // in sample size reduces the size of the image by this factor of 2
         options.inSampleSize = calculateInSampleSize(srcHeight, srcWidth, maxSize);
@@ -321,7 +328,7 @@ public class ImageUtils {
 
             out = new FileOutputStream(file);
             bitmap.compress(mimeType.equals(MimeType.IMAGE_PNG) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
-                    90, out);
+                    80, out);
         } catch (IOException e) {
             Log.e("Scale to Send", "failed to write output stream", e);
         } finally {
