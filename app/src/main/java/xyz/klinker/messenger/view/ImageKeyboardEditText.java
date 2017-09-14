@@ -33,7 +33,7 @@ public class ImageKeyboardEditText extends EmojiableEditText {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         final InputConnection con = super.onCreateInputConnection(outAttrs);
-        EditorInfoCompat.setContentMimeTypes(outAttrs, new String[] { "image/gif", "image/png" });
+        EditorInfoCompat.setContentMimeTypes(outAttrs, new String[] { "image/png" });
 
         return InputConnectionCompat.createWrapper(con, outAttrs, (inputContentInfo, flags, opts) -> {
             if (commitContentListener != null) {
