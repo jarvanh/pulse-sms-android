@@ -1,5 +1,7 @@
 package xyz.klinker.messenger.shared.util;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -7,6 +9,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
@@ -34,7 +37,19 @@ public class AudioWrapper {
             DataSource source = DataSource.INSTANCE;
             Conversation conversation = source.getConversation(context, conversationId);
 
-            Uri tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+            Uri tone;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationChannel channel = manager.getNotificationChannel(conversationId + "");
+
+                if (channel != null) {
+                    tone = channel.getSound();
+                } else {
+                    tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+                }
+            } else {
+                tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+            }
 
             if (tone != null) {
                 mediaPlayer = MediaPlayer.create(context, tone, null, new AudioAttributes.Builder()

@@ -101,7 +101,7 @@ public class NotificationUtils {
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel defaultChannel = new NotificationChannel(DEFAULT_CONVERSATION_CHANNEL_ID,
                 context.getString(R.string.default_notifications_channel),
-                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_DEFAULT);
         defaultChannel.setDescription(context.getString(R.string.default_notifications_channel_description));
         defaultChannel.setGroup("conversations");
         manager.createNotificationChannel(defaultChannel);
@@ -116,7 +116,7 @@ public class NotificationUtils {
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel testChannel = new NotificationChannel(TEST_NOTIFICATIONS_CHANNEL_ID,
                 context.getString(R.string.test_notifications_channel),
-                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(testChannel);
     }
 
@@ -165,7 +165,7 @@ public class NotificationUtils {
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel testChannel = new NotificationChannel(FAILED_MESSAGES_CHANNEL_ID,
                 context.getString(R.string.failed_messages_channel),
-                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                Settings.get(context).headsUp ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(testChannel);
     }
 
@@ -209,7 +209,7 @@ public class NotificationUtils {
         Settings settings = Settings.get(context);
 
         NotificationChannel channel = new NotificationChannel(conversation.id + "", conversation.title,
-                settings.headsUp ? NotificationManager.IMPORTANCE_MAX : NotificationManager.IMPORTANCE_DEFAULT);
+                settings.headsUp ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_DEFAULT);
         channel.setGroup("conversations");
         channel.enableLights(true);
         channel.setLightColor(conversation.ledColor);
