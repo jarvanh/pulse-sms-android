@@ -49,6 +49,7 @@ import xyz.klinker.messenger.shared.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -447,6 +448,8 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
+                .setPriority(Settings.get(this).headsUp && FeatureFlags.get(this).HEADS_UP_GROUP_PRIORITY ?
+                        Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 

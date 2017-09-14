@@ -61,6 +61,7 @@ public class FeatureFlags {
     private static final String FLAG_REMOVE_IMAGE_BORDERS = "flag_remove_image_borders_beta";
     private static final String FLAG_AUTO_RETRY_FAILED_MESSAGES = "flag_auto_retry_failed_messages";
     private static final String FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE = "flag_new_messages_with_signature";
+    private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -80,6 +81,7 @@ public class FeatureFlags {
     public boolean REMOVE_IMAGE_BORDERS;
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
+    public boolean HEADS_UP_GROUP_PRIORITY;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -93,6 +95,7 @@ public class FeatureFlags {
         REMOVE_IMAGE_BORDERS = getValue(sharedPrefs, FLAG_REMOVE_IMAGE_BORDERS);
         AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE);
+        HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -119,6 +122,9 @@ public class FeatureFlags {
                 break;
             case FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE:
                 CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag;
+                break;
+            case FLAG_HEADS_UP_ON_GROUP_PRIORITY:
+                HEADS_UP_GROUP_PRIORITY = flag;
                 break;
         }
     }
