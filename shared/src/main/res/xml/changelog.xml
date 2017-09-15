@@ -16,6 +16,12 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="2.5.7"-->
+        <!--description="September 16th, 2017">-->
+        <!--<text>Fix: some users were re-receiving group MMS messages that they sent to the group</text>-->
+    <!--</version>-->
+
     <version
         name="2.5.6"
         description="September 12th, 2017">

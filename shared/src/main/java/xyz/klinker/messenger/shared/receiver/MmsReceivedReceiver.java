@@ -109,6 +109,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
+            if (isReceivingMessageFromThemself(context, from) && !phoneNumbers.contains(",")) {
+                return null;
+            }
+
             DataSource source = DataSource.INSTANCE;
 
             for (ContentValues value : values) {
@@ -199,6 +203,21 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     @VisibleForTesting
     protected String getContactName(Context context, String number) {
         return ContactUtils.findContactNames(number, context);
+    }
+
+    private boolean isReceivingMessageFromThemself(Context context, String from) {
+        List<String> myPossiblePhoneNumbers = PhoneNumberUtils.getMyPossiblePhoneNumbers(context);
+        String fromMatcher = SmsMmsUtils.createIdMatcher(from).sevenLetter;
+
+        boolean myNumberMatches = false;
+        for (String myNumber : myPossiblePhoneNumbers) {
+            String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetter;
+            if (myIdMatcher.equals(fromMatcher)) {
+                myNumberMatches = true;
+            }
+        }
+
+        return myNumberMatches;
     }
 
     @Override
