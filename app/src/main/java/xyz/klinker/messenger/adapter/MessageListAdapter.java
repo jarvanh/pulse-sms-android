@@ -217,7 +217,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
 
             int linkColor = accentColor;
-            if (message.type == Message.TYPE_RECEIVED) {
+            if (FeatureFlags.get(holder.itemView.getContext()).WHITE_LINK_TEXT && message.type == Message.TYPE_RECEIVED) {
                 if (ColorUtils.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
                     linkColor = holder.itemView.getContext().getResources().getColor(R.color.lightText);
                 } else {

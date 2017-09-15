@@ -59,6 +59,7 @@ public class FeatureFlags {
     private static final String FLAG_TV_MESSAGE_ENTRY = "flag_tv_message_entry";
     private static final String FLAG_DATABASE_SYNC_SERVICE_ALL = "flag_database_sync_service_all";
     private static final String FLAG_REMOVE_IMAGE_BORDERS = "flag_remove_image_borders_beta";
+    private static final String FLAG_WHITE_LINK_TEXT = "flag_white_link_text";
     private static final String FLAG_AUTO_RETRY_FAILED_MESSAGES = "flag_auto_retry_failed_messages";
     private static final String FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE = "flag_new_messages_with_signature";
     private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
@@ -80,6 +81,7 @@ public class FeatureFlags {
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
     public boolean REMOVE_IMAGE_BORDERS;
+    public boolean WHITE_LINK_TEXT;
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
     public boolean HEADS_UP_GROUP_PRIORITY;
@@ -95,6 +97,7 @@ public class FeatureFlags {
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
         REMOVE_IMAGE_BORDERS = getValue(sharedPrefs, FLAG_REMOVE_IMAGE_BORDERS);
+        WHITE_LINK_TEXT = getValue(sharedPrefs, FLAG_WHITE_LINK_TEXT);
         AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE);
         HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
@@ -119,6 +122,9 @@ public class FeatureFlags {
                 break;
             case FLAG_REMOVE_IMAGE_BORDERS:
                 REMOVE_IMAGE_BORDERS = flag;
+                break;
+            case FLAG_WHITE_LINK_TEXT:
+                WHITE_LINK_TEXT = flag;
                 break;
             case FLAG_AUTO_RETRY_FAILED_MESSAGES:
                 AUTO_RETRY_FAILED_MESSAGES = flag;
