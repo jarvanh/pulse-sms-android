@@ -62,6 +62,7 @@ public class FeatureFlags {
     private static final String FLAG_AUTO_RETRY_FAILED_MESSAGES = "flag_auto_retry_failed_messages";
     private static final String FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE = "flag_new_messages_with_signature";
     private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
+    private static final String FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF = "flag_rereceive_group_message_from_self";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -82,6 +83,7 @@ public class FeatureFlags {
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
     public boolean HEADS_UP_GROUP_PRIORITY;
+    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -96,6 +98,7 @@ public class FeatureFlags {
         AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE);
         HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
+        STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = getValue(sharedPrefs, FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -125,6 +128,9 @@ public class FeatureFlags {
                 break;
             case FLAG_HEADS_UP_ON_GROUP_PRIORITY:
                 HEADS_UP_GROUP_PRIORITY = flag;
+                break;
+            case FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF:
+                STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = flag;
                 break;
         }
     }

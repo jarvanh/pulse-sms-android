@@ -206,6 +206,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     }
 
     private boolean isReceivingMessageFromThemself(Context context, String from) {
+        if (!FeatureFlags.get(context).STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF) {
+            return false;
+        }
+
         List<String> myPossiblePhoneNumbers = PhoneNumberUtils.getMyPossiblePhoneNumbers(context);
         String fromMatcher = SmsMmsUtils.createIdMatcher(from).sevenLetter;
 
