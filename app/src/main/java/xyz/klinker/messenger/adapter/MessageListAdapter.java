@@ -91,6 +91,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     private Map<String, Contact> fromColorMapper;
     private Map<String, Contact> fromColorMapperByName;
     private int receivedColor;
+    private int receivedLinkColor;
     private int accentColor;
     private boolean isGroup;
     private boolean ignoreSendingStatus;
@@ -203,7 +204,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         holder.mimeType = message.mimeType;
         holder.data = message.data;
 
-        colorMessage(holder, message);
+        int backgroundColor = colorMessage(holder, message);
 
         if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
             holder.message.setText(message.data);
@@ -215,8 +216,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 holder.message.setTextSize(largeFont);
             }
 
+            int linkColor = accentColor;
+            if (message.type == Message.TYPE_RECEIVED) {
+                if (ColorUtils.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
+                    linkColor = holder.itemView.getContext().getResources().getColor(R.color.lightText);
+                } else {
+                    linkColor = holder.itemView.getContext().getResources().getColor(R.color.darkText);
+                }
+            }
+
             Link urls = new Link(Regex.WEB_URL);
-            urls.setTextColor(accentColor);
+            urls.setTextColor(linkColor);
             urls.setHighlightAlpha(.4f);
 
             urls.setOnLongClickListener(clickedText -> {
@@ -258,7 +268,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             });
 
             Link phoneNumbers = new Link(Regex.PHONE);
-            phoneNumbers.setTextColor(accentColor);
+            phoneNumbers.setTextColor(linkColor);
             phoneNumbers.setHighlightAlpha(.4f);
             phoneNumbers.setOnClickListener(clickedText -> {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -267,7 +277,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             });
 
             Link emails = new Link(Patterns.EMAIL_ADDRESS);
-            emails.setTextColor(accentColor);
+            emails.setTextColor(linkColor);
             emails.setHighlightAlpha(.4f);
             emails.setOnClickListener(clickedText -> {
                 String[] email = new String[]{clickedText};
@@ -629,9 +639,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         this.fromColorMapperByName = colorMapperByName;
     }
 
-    private void colorMessage(final MessageViewHolder holder, final Message message) {
+    private int colorMessage(final MessageViewHolder holder, final Message message) {
         if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
-            return;
+            return Integer.MIN_VALUE;
         }
 
         if (message.type == Message.TYPE_RECEIVED &&
@@ -651,6 +661,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
                     }
                 }
+
+                return color;
             } else if (fromColorMapperByName != null && fromColorMapperByName.containsKey(message.from)) {
                 // group convo, color them differently
                 // this is the usual result
@@ -666,6 +678,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
                     }
                 }
+
+                return color;
             } else {
                 // group convo without the contact here.. uh oh. Could happen if the conversation
                 // title doesn't match the message from database column.
@@ -699,7 +713,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         source.insertContact(context, contact);
                     }
                 }).start();
+
+                return contact.colors.color;
             }
         }
+
+        return Integer.MIN_VALUE;
     }
 }
