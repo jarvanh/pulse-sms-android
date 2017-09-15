@@ -78,10 +78,16 @@ public class FeatureFlags {
 
     // step 1
     //public boolean MESSAGING_STYLE_NOTIFICATIONS;
+
+    // disabled for future features
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
+
+    // unlock for next update
     public boolean REMOVE_IMAGE_BORDERS;
     public boolean WHITE_LINK_TEXT;
+
+    // need tested
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
     public boolean HEADS_UP_GROUP_PRIORITY;
