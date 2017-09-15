@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
@@ -38,6 +39,9 @@ public class AnimationUtils {
 
     public static final int EXPAND_CONVERSATION_DURATION = 200;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
+
+    private static int toolbarSize = Integer.MIN_VALUE;
+    private static int conversationListSize = Integer.MIN_VALUE;
 
     /**
      * Animates a lines item to the full height of the view.
@@ -104,8 +108,13 @@ public class AnimationUtils {
                 recyclerView.getLayoutParams();
 
         Activity activity = (Activity) itemView.getContext();
-        final int originalHeight = activity.findViewById(R.id.content).getHeight() -
-                activity.findViewById(R.id.toolbar).getHeight();
+
+        if (conversationListSize == Integer.MIN_VALUE) {
+            toolbarSize = activity.findViewById(R.id.toolbar).getHeight();
+            conversationListSize = activity.findViewById(R.id.content).getHeight();
+        }
+
+        final int originalHeight = conversationListSize - toolbarSize;
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(valueAnimator -> {
@@ -200,8 +209,13 @@ public class AnimationUtils {
                 fragmentContainer.getLayoutParams();
 
         Activity activity = (Activity) fragmentContainer.getContext();
-        final int originalHeight = activity.findViewById(R.id.content).getHeight() -
-                activity.findViewById(R.id.toolbar).getHeight();
+
+        if (conversationListSize == Integer.MIN_VALUE) {
+            toolbarSize = activity.findViewById(R.id.toolbar).getHeight();
+            conversationListSize = activity.findViewById(R.id.content).getHeight();
+        }
+
+        final int originalHeight = conversationListSize - toolbarSize;
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(valueAnimator -> {
