@@ -86,12 +86,12 @@ public class FeatureFlags {
     // unlock for next update
     public boolean REMOVE_IMAGE_BORDERS;
     public boolean WHITE_LINK_TEXT;
+    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
 
     // need tested
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
     public boolean HEADS_UP_GROUP_PRIORITY;
-    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
 
     private Context context;
     private FeatureFlags(final Context context) {
