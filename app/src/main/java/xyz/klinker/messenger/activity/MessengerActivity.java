@@ -87,6 +87,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.CustomSnoozeFragment;
 import xyz.klinker.messenger.fragment.settings.AboutFragment;
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ApiDownloadService;
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.service.NotificationService;
@@ -148,6 +149,11 @@ public class  MessengerActivity extends AppCompatActivity
 
         new UpdateUtils(this).checkForUpdate();
         new PromotionUtils(this).checkPromotions();
+
+        if (Build.MANUFACTURER.toLowerCase().equals("samsung") && Build.MODEL.toLowerCase().contains("s8") &&
+                Settings.get(this).isCurrentlyDarkTheme()) {
+            getWindow().setNavigationBarColor(Color.BLACK);
+        }
 
         dataSource = DataSource.INSTANCE;
 
