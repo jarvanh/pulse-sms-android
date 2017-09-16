@@ -75,6 +75,7 @@ import xyz.klinker.messenger.api.implementation.LoginActivity;
 import xyz.klinker.messenger.fragment.MessageListFragment;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
@@ -151,7 +152,7 @@ public class  MessengerActivity extends AppCompatActivity
         new PromotionUtils(this).checkPromotions();
 
         if (Build.MANUFACTURER.toLowerCase().equals("samsung") && Build.MODEL.toLowerCase().contains("s8") &&
-                Settings.get(this).isCurrentlyDarkTheme()) {
+                Settings.get(this).isCurrentlyDarkTheme() && FeatureFlags.get(this).S8_BLACK_NAV_BAR) {
             getWindow().setNavigationBarColor(Color.BLACK);
         }
 

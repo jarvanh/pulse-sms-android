@@ -64,6 +64,7 @@ public class FeatureFlags {
     private static final String FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE = "flag_new_messages_with_signature";
     private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
     private static final String FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF = "flag_rereceive_group_message_from_self";
+    private static final String FLAG_S8_BLACK_NAV_BAR = "flag_s8_black_nav_bar";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -76,38 +77,37 @@ public class FeatureFlags {
     // 3. Add the switch case for the flag in the updateFlag method
 
 
-    // step 1
-    //public boolean MESSAGING_STYLE_NOTIFICATIONS;
-
     // disabled for future features
     public boolean SECURE_PRIVATE;
     public boolean QUICK_COMPOSE;
+    public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
 
     // unlock for next update
     public boolean REMOVE_IMAGE_BORDERS;
     public boolean WHITE_LINK_TEXT;
-    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
 
     // need tested
+    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
     public boolean AUTO_RETRY_FAILED_MESSAGES;
-    public boolean CHECK_NEW_MESSAGES_WITH_SIGNATURE;
     public boolean HEADS_UP_GROUP_PRIORITY;
+    public boolean S8_BLACK_NAV_BAR;
 
     private Context context;
     private FeatureFlags(final Context context) {
         this.context = context;
         SharedPreferences sharedPrefs = getSharedPrefs();
 
-        // step 2
-        //MESSAGING_STYLE_NOTIFICATIONS = getValue(sharedPrefs, FLAG_MESSAGING_STYLE_NOTIFICATIONS);
         SECURE_PRIVATE = getValue(sharedPrefs, FLAG_SECURE_PRIVATE);
         QUICK_COMPOSE = getValue(sharedPrefs, FLAG_QUICK_COMPOSE);
+        CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE);
+
         REMOVE_IMAGE_BORDERS = getValue(sharedPrefs, FLAG_REMOVE_IMAGE_BORDERS);
         WHITE_LINK_TEXT = getValue(sharedPrefs, FLAG_WHITE_LINK_TEXT);
-        AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
-        CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE);
-        HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
+
         STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = getValue(sharedPrefs, FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF);
+        AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
+        HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
+        S8_BLACK_NAV_BAR = getValue(sharedPrefs, FLAG_S8_BLACK_NAV_BAR);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -116,33 +116,36 @@ public class FeatureFlags {
                 .apply();
 
         switch (identifier) {
-            // step 3
-            /*case FLAG_MESSAGING_STYLE_NOTIFICATIONS:
-                MESSAGING_STYLE_NOTIFICATIONS = flag;
-                break;*/
             case FLAG_SECURE_PRIVATE:
                 SECURE_PRIVATE = flag;
                 break;
             case FLAG_QUICK_COMPOSE:
                 QUICK_COMPOSE = flag;
                 break;
+            case FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE:
+                CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag;
+                break;
+
+
             case FLAG_REMOVE_IMAGE_BORDERS:
                 REMOVE_IMAGE_BORDERS = flag;
                 break;
             case FLAG_WHITE_LINK_TEXT:
                 WHITE_LINK_TEXT = flag;
                 break;
+
+
+            case FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF:
+                STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = flag;
+                break;
             case FLAG_AUTO_RETRY_FAILED_MESSAGES:
                 AUTO_RETRY_FAILED_MESSAGES = flag;
-                break;
-            case FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE:
-                CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag;
                 break;
             case FLAG_HEADS_UP_ON_GROUP_PRIORITY:
                 HEADS_UP_GROUP_PRIORITY = flag;
                 break;
-            case FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF:
-                STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = flag;
+            case FLAG_S8_BLACK_NAV_BAR:
+                S8_BLACK_NAV_BAR = flag;
                 break;
         }
     }
