@@ -151,10 +151,7 @@ public class  MessengerActivity extends AppCompatActivity
         new UpdateUtils(this).checkForUpdate();
         new PromotionUtils(this).checkPromotions();
 
-        if (Build.MANUFACTURER.toLowerCase().equals("samsung") && Build.MODEL.toLowerCase().contains("s8") &&
-                Settings.get(this).isCurrentlyDarkTheme() && FeatureFlags.get(this).S8_BLACK_NAV_BAR) {
-            getWindow().setNavigationBarColor(Color.BLACK);
-        }
+        getWindow().setNavigationBarColor(Color.BLACK);
 
         dataSource = DataSource.INSTANCE;
 
