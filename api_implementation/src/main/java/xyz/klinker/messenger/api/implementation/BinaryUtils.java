@@ -34,10 +34,9 @@ public class BinaryUtils {
         byte[] bytes;
         if (mimeType.startsWith("image/") && !mimeType.equals("image/gif")) {
             try {
-                Bitmap bitmap = MediaStore.Images.Media
-                        .getBitmap(context.getContentResolver(), Uri.parse(uri));
+                Bitmap bitmap = ImageScaler.scaleToSend(context, Uri.parse(uri));
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                bitmap.compress(mimeType.equals("image/png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 75, baos);
                 bytes = baos.toByteArray();
 
                 bitmap.recycle();

@@ -132,9 +132,13 @@ public class SendUtils {
 
         if (data != null) {
             try {
+                Log.v("Sending MMS", "mime type: " + mimeType);
                 if (MimeType.isStaticImage(mimeType)) {
                     data = ImageUtils.scaleToSend(context, data, mimeType);
-                    mimeType = MimeType.IMAGE_PNG;
+
+                    if (!mimeType.equals(MimeType.IMAGE_PNG)) {
+                        mimeType = MimeType.IMAGE_JPEG;
+                    }
                 }
 
                 byte[] bytes = getBytes(context, data);

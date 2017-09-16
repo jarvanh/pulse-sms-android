@@ -66,6 +66,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
 
     compile "com.android.support:design:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:exifinterface:$ANDROID_SUPPORT_VERSION"
+
     compile "com.google.firebase:firebase-core:$FIREBASE_VERSION"
     compile "com.google.firebase:firebase-messaging:$FIREBASE_VERSION"
     compile "com.google.firebase:firebase-storage:$FIREBASE_VERSION"
