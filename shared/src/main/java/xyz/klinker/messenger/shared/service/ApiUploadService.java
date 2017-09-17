@@ -119,7 +119,7 @@ public class ApiUploadService extends Service {
         startForeground(MESSAGE_UPLOAD_ID, notification);
 
         new Thread(() -> {
-            account = Account.get(getApplicationContext());
+            account = Account.INSTANCE;
             apiUtils = ApiUtils.INSTANCE;
             encryptionUtils = account.getEncryptor();
 
@@ -173,7 +173,7 @@ public class ApiUploadService extends Service {
             List<List<MessageBody>> pages = PaginationUtils.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<MessageBody> page : pages) {
-                AddMessagesRequest request = new AddMessagesRequest(account.accountId, page.toArray(new MessageBody[0]));
+                AddMessagesRequest request = new AddMessagesRequest(account.getAccountId(), page.toArray(new MessageBody[0]));
                 try {
                     Response response = apiUtils.getApi().message().add(request).execute();
                     expectedPages++;
@@ -219,7 +219,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddConversationRequest request =
-                    new AddConversationRequest(account.accountId, conversations);
+                    new AddConversationRequest(account.getAccountId(), conversations);
             Response result;
 
             String errorText = null;
@@ -287,7 +287,7 @@ public class ApiUploadService extends Service {
             List<List<ContactBody>> pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<ContactBody> page : pages) {
-                AddContactRequest request = new AddContactRequest(account.accountId, page.toArray(new ContactBody[0]));
+                AddContactRequest request = new AddContactRequest(account.getAccountId(), page.toArray(new ContactBody[0]));
                 try {
                     Response response = apiUtils.getApi().contact().add(request).execute();
                     expectedPages++;
@@ -330,7 +330,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddBlacklistRequest request =
-                    new AddBlacklistRequest(account.accountId, blacklists);
+                    new AddBlacklistRequest(account.getAccountId(), blacklists);
             Response result;
             try {
                 result = apiUtils.getApi().blacklist().add(request).execute();
@@ -368,7 +368,7 @@ public class ApiUploadService extends Service {
             } while (cursor.moveToNext());
 
             AddScheduledMessageRequest request =
-                    new AddScheduledMessageRequest(account.accountId, messages);
+                    new AddScheduledMessageRequest(account.getAccountId(), messages);
             Response result;
 
             try {
@@ -405,7 +405,7 @@ public class ApiUploadService extends Service {
                 drafts[cursor.getPosition()] = draft;
             } while (cursor.moveToNext());
 
-            AddDraftRequest request = new AddDraftRequest(account.accountId, drafts);
+            AddDraftRequest request = new AddDraftRequest(account.getAccountId(), drafts);
             Object result;
 
             try {
@@ -453,7 +453,7 @@ public class ApiUploadService extends Service {
     private int completedMediaUploads = 0;
     private void processMediaUpload(NotificationManagerCompat manager,
                                     final NotificationCompat.Builder builder) {
-        apiUtils.saveFirebaseFolderRef(account.accountId);
+        apiUtils.saveFirebaseFolderRef(account.getAccountId());
 
         new Thread(() -> {
             try { Thread.sleep(1000 * 60 * 2); } catch (InterruptedException e) { }
@@ -470,7 +470,7 @@ public class ApiUploadService extends Service {
                 Log.v(TAG, "started uploading " + message.id);
 
                 byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
-                apiUtils.uploadBytesToFirebase(account.accountId, bytes, message.id, encryptionUtils, () -> {
+                apiUtils.uploadBytesToFirebase(account.getAccountId(), bytes, message.id, encryptionUtils, () -> {
                     completedMediaUploads++;
 
                     builder.setProgress(mediaCount, completedMediaUploads, false);

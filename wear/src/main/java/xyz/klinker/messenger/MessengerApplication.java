@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import java.lang.reflect.Field;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler;
@@ -57,7 +58,9 @@ public class MessengerApplication extends FirebaseApplication {
         } catch (Exception e) {
             ApiUtils.INSTANCE.setEnvironment("release");
         }
+
         enableSecurity();
+        Account.INSTANCE.init(this);
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {

@@ -30,6 +30,7 @@ import android.util.Log;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication;
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler;
@@ -73,6 +74,7 @@ public class MessengerApplication extends FirebaseApplication {
         }
 
         enableSecurity();
+        Account.INSTANCE.init(this);
         EmojiInitializer.INSTANCE.initializeEmojiCompat(getApplicationContext());
 
         BaseTheme theme = Settings.get(this).baseTheme;
