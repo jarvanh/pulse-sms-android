@@ -15,7 +15,6 @@ import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.service.ContactResyncService;
-import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
 import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
@@ -86,8 +85,6 @@ public class UpdateUtils {
         SubscriptionExpirationCheckJob.scheduleNextRun(context);
         SignoutJob.scheduleNextRun(context);
         ScheduledTokenRefreshService.scheduleNextRun(context);
-
-        context.startService(new Intent(context, ForceTokenRefreshService.class));
     }
 
     private int getAppVersion() {

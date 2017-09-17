@@ -90,6 +90,7 @@ import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment;
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.ApiDownloadService;
+import xyz.klinker.messenger.shared.service.FirebaseTokenUpdateCheckService;
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
@@ -269,8 +270,10 @@ public class  MessengerActivity extends AppCompatActivity
                 new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
 
         if (!startImportOrLoad) {
-            new Handler().postDelayed(() ->
-                    NewMessagesCheckService.startService(MessengerActivity.this), 3000);
+            new Handler().postDelayed(() -> {
+                startService(new Intent(this, FirebaseTokenUpdateCheckService.class));
+                NewMessagesCheckService.startService(MessengerActivity.this);
+            }, 3000);
         } else {
             startImportOrLoad = false;
         }

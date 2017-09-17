@@ -259,7 +259,7 @@
             android:name=".service.jobs.MarkAsSentJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <service android:name=".service.ForceTokenRefreshService" />
+        <service android:name=".service.FirebaseTokenUpdateCheckService" />
         <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.NotificationService" />
         <service android:name=".service.NotificationDismissedService" />

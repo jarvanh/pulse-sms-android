@@ -23,11 +23,9 @@ import android.content.Intent;
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob;
 import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob;
-import xyz.klinker.messenger.shared.service.ForceTokenRefreshService;
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob;
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -39,10 +37,6 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-                if (!AndroidVersionUtil.isAndroidO()) {
-                    context.startService(new Intent(context, ForceTokenRefreshService.class));
-                }
-
                 ScheduledMessageJob.scheduleNextRun(context);
                 CleanupOldMessagesJob.scheduleNextRun(context);
                 ContactSyncJob.scheduleNextRun(context);
