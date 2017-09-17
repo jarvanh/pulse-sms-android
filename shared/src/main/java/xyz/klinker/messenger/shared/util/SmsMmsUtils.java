@@ -102,7 +102,7 @@ public class SmsMmsUtils {
                 conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
                 conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).sevenLetter;
+                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).getDefault();
                 conversation.mute = false;
                 conversation.privateNotifications = false;
                 conversation.ledColor = Color.WHITE;
@@ -139,6 +139,7 @@ public class SmsMmsUtils {
 
         List<String> fiveMatchers = new ArrayList<>();
         List<String> sevenMatchers = new ArrayList<>();
+        List<String> eightMatchers = new ArrayList<>();
         List<String> tenMatchers = new ArrayList<>();
 
         for (String n : numbers) {
@@ -166,6 +167,17 @@ public class SmsMmsUtils {
         for (String n : numbers) {
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
+                eightMatchers.add(n);
+            } else if (n.length() >= 8) {
+                eightMatchers.add(n.substring(n.length() - 8));
+            } else {
+                eightMatchers.add(n);
+            }
+        }
+
+        for (String n : numbers) {
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
                 tenMatchers.add(n);
             } else if (n.length() >= 10) {
                 tenMatchers.add(n.substring(n.length() - 10));
@@ -174,8 +186,9 @@ public class SmsMmsUtils {
             }
         }
 
-        Collections.sort(sevenMatchers);
         Collections.sort(fiveMatchers);
+        Collections.sort(sevenMatchers);
+        Collections.sort(eightMatchers);
         Collections.sort(tenMatchers);
 
         StringBuilder tenBuilder = new StringBuilder();
@@ -188,12 +201,17 @@ public class SmsMmsUtils {
             sevenBuilder.append(m);
         }
 
+        StringBuilder eightBuilder = new StringBuilder();
+        for (String m : eightMatchers) {
+            eightBuilder.append(m);
+        }
+
         StringBuilder fiveBuilder = new StringBuilder();
         for (String m : fiveMatchers) {
             fiveBuilder.append(m);
         }
 
-        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), tenBuilder.toString());
+        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), eightBuilder.toString(), tenBuilder.toString());
     }
 
     /**

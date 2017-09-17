@@ -247,7 +247,7 @@ object DataSource {
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, generateId())
             values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).sevenLetter)
+            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).default)
             values.put(Contact.COLUMN_NAME, contact.name)
             values.put(Contact.COLUMN_COLOR, contact.colors.color)
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -283,7 +283,7 @@ object DataSource {
 
         values.put(Contact.COLUMN_ID, contact.id)
         values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).sevenLetter)
+        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).default)
         values.put(Contact.COLUMN_NAME, contact.name)
         values.put(Contact.COLUMN_COLOR, contact.colors.color)
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -1694,14 +1694,12 @@ object DataSource {
         val cursor = try {
             database(context).query(Conversation.TABLE,
                     arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    arrayOf(matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter), null, null, null)
+                    matcher.whereClause, matcher.allMatchers, null, null, null)
         } catch (e: Exception) {
             ensureActionable(context)
             database(context).query(Conversation.TABLE,
                     arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    arrayOf(matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter), null, null, null)
+                    matcher.whereClause, matcher.allMatchers, null, null, null)
         }
 
         return if (cursor.moveToFirst()) {
@@ -1753,14 +1751,12 @@ object DataSource {
         val cursor = try {
             database(context).query(Conversation.TABLE,
                     arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    arrayOf(matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter), null, null, null)
+                    matcher.whereClause, matcher.allMatchers, null, null, null)
         } catch (e: Exception) {
             ensureActionable(context)
             database(context).query(Conversation.TABLE,
                     arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=?",
-                    arrayOf(matcher.fiveLetter, matcher.sevenLetter, matcher.tenLetter), null, null, null)
+                    matcher.whereClause, matcher.allMatchers, null, null, null)
         }
 
         val conversationId: Long
@@ -1795,7 +1791,7 @@ object DataSource {
             conversation.phoneNumbers = phoneNumbers
             conversation.title = ContactUtils.findContactNames(phoneNumbers, context)
             conversation.imageUri = ContactUtils.findImageUri(phoneNumbers, context)
-            conversation.idMatcher = matcher.sevenLetter
+            conversation.idMatcher = matcher.default
             conversation.mute = false
             conversation.archive = false
             conversation.ledColor = Color.WHITE
