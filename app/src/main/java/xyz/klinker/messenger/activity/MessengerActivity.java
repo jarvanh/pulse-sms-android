@@ -381,8 +381,11 @@ public class  MessengerActivity extends AppCompatActivity
         navigationView.postDelayed(() -> {
             Account account = Account.get(getApplicationContext());
             try {
-                ((TextView) findViewById(R.id.drawer_header_my_name))
-                        .setText(account.myName);
+                if (account.exists()) {
+                    ((TextView) findViewById(R.id.drawer_header_my_name))
+                            .setText(account.myName);
+                }
+
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                         .setText(PhoneNumberUtils.format(PhoneNumberUtils.getMyPhoneNumber(this)));
 

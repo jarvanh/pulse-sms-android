@@ -403,7 +403,7 @@ public class NotificationService extends IntentService {
                         text.append("\n");
                     } else {
                         text.append(conversation.messages.get(i).data);
-                        text.append(" | ");
+                        text.append("<br/>");
                     }
                 } else if (MimeType.isStaticImage(message.mimeType)) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
@@ -413,8 +413,8 @@ public class NotificationService extends IntentService {
         }
 
         String content = text.toString().trim();
-        if (content.endsWith(" |")) {
-            content = content.substring(0, content.length() - 2);
+        if (content.endsWith("<br/>")) {
+            content = content.substring(0, content.length() - 5);
         }
 
         if (!conversation.privateNotification) {
