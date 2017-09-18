@@ -36,8 +36,8 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Account account = Account.get(this);
-        if (account.accountId == null) {
+        Account account = Account.INSTANCE;
+        if (account.getAccountId() == null) {
             startActivity(new Intent(this, InitialLoadWearActivity.class));
             finish();
             return;

@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.api.implementation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -16,6 +17,7 @@ import javax.crypto.spec.SecretKeySpec
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.encryption.KeyUtils
 
+@SuppressLint("ApplySharedPref")
 object Account {
 
     enum class SubscriptionType constructor(var typeCode: Int) {
@@ -108,7 +110,7 @@ object Account {
 
         getSharedPrefs(context).edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), type?.typeCode ?: 0)
-                .putLong(context.getString(R.string.api_pref_subscription_expiration), expiration ?: 0)
+                .putLong(context.getString(R.string.api_pref_subscription_expiration), expiration)
                 .commit()
 
         if (sendToApi) {

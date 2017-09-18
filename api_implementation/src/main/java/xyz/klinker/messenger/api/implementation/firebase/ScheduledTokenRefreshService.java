@@ -26,7 +26,7 @@ public class ScheduledTokenRefreshService extends IntentService {
     }
 
     public static void scheduleNextRun(Context context) {
-        if (!Account.get(context).primary) {
+        if (!Account.INSTANCE.getPrimary()) {
             return;
         }
 

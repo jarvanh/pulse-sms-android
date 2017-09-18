@@ -41,8 +41,8 @@ public class NotificationMarkReadService extends IntentService {
 
         CursorUtil.closeSilent(unseenMessages);
 
-        ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId,
-                Account.get(this).deviceId,
+        ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
+                Account.INSTANCE.getDeviceId(),
                 conversationId);
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, conversation == null ? "" : conversation.snippet, true);

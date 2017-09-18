@@ -34,7 +34,7 @@ public class UpdateUtils {
     public boolean checkForUpdate() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         Settings settings = Settings.get(context);
         MmsSettings mmsSettings = MmsSettings.get(context);
 

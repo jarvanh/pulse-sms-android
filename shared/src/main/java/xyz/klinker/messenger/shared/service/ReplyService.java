@@ -110,8 +110,8 @@ public class ReplyService extends IntentService {
             NotificationManagerCompat.from(this).cancel((int) conversationId);
         }
 
-        ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId,
-                Account.get(this).deviceId,
+        ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
+                Account.INSTANCE.getDeviceId(),
                 conversationId);
 
         CursorUtil.closeSilent(unseenMessages);

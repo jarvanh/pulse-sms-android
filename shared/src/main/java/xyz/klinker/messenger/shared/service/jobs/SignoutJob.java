@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.service.jobs;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -33,14 +34,14 @@ public class SignoutJob extends BackgroundJob {
     protected void onRunJob(JobParameters parameters) {
         Log.v(TAG, "starting signout service.");
 
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         billing = new BillingHelper(this);
 
         // Only need to manage this on the primary device
-        if (account.exists() && account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME &&
-                account.subscriptionExpiration < new Date().getTime() && isExpired()) {
+        if (account.exists() && account.getPrimary() && account.getSubscriptionType() != Account.SubscriptionType.LIFETIME &&
+                account.getSubscriptionExpiration() < new Date().getTime() && isExpired()) {
             Log.v(TAG, "forcing signout due to expired account!");
-            final String accountId = account.accountId;
+            final String accountId = account.getAccountId();
 
             //account.clearAccount();
             //ApiUtils.INSTANCE.deleteAccount(accountId);
@@ -80,13 +81,13 @@ public class SignoutJob extends BackgroundJob {
     }
 
     private void writeLifetimeSubscriber() {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.LIFETIME, 1L, true);
     }
 
     private void writeNewExpirationToAccount(long time) {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.SUBSCRIBER, time, true);
     }
@@ -111,7 +112,7 @@ public class SignoutJob extends BackgroundJob {
 
     public static void scheduleNextRun(Context context, long signoutTime) {
         long currentTime = new Date().getTime();
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         ComponentName component = new ComponentName(context, SignoutJob.class);
@@ -120,7 +121,7 @@ public class SignoutJob extends BackgroundJob {
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(false);
 
-        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary || signoutTime == 0) {
+        if (account.getAccountId() == null || account.getSubscriptionType() == Account.SubscriptionType.LIFETIME || !account.getPrimary() || signoutTime == 0) {
             jobScheduler.cancel(JOB_ID);
         } else {
             Log.v(TAG, "CURRENT TIME: " + new Date().toString());
@@ -130,6 +131,7 @@ public class SignoutJob extends BackgroundJob {
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     public static void writeSignoutTime(Context context, long signoutTime) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit().putLong("account_signout_time", signoutTime)

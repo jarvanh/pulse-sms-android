@@ -42,8 +42,8 @@ public class MessengerTvActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Account account = Account.get(this);
-        if (account.accountId == null) {
+        Account account = Account.INSTANCE;
+        if (account.getAccountId() == null) {
             startActivity(new Intent(this, InitialLoadTvActivity.class));
             finish();
             return;

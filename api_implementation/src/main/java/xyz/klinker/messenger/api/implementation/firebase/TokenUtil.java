@@ -16,7 +16,7 @@ public class TokenUtil {
     public static void refreshToken(Context context) {
         Log.v(TAG, "starting refresh");
 
-        final Account account = Account.get(context);
+        final Account account = Account.INSTANCE;
         final String token = FirebaseInstanceId.getInstance().getToken();
 
         Log.v(TAG, "token: " + token);
@@ -24,7 +24,7 @@ public class TokenUtil {
             Log.v(TAG, "refreshing on server");
             new Thread(() -> {
                 ApiUtils api = ApiUtils.INSTANCE;
-                api.updateDevice(account.accountId, Integer.parseInt(account.deviceId), Build.MODEL,
+                api.updateDevice(account.getAccountId(), Integer.parseInt(account.getDeviceId()), Build.MODEL,
                         FirebaseInstanceId.getInstance().getToken());
             }).start();
         }

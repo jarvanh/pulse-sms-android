@@ -53,7 +53,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_convert_to_mms))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String convert = (String) o;
-                    ApiUtils.INSTANCE.updateConvertToMMS(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateConvertToMMS(Account.INSTANCE.getAccountId(),
                             convert);
                     return true;
                 });
@@ -63,7 +63,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_mms_size))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String size = (String) o;
-                    ApiUtils.INSTANCE.updateMmsSize(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateMmsSize(Account.INSTANCE.getAccountId(),
                             size);
                     return true;
                 });
@@ -73,7 +73,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_group_mms))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean group = (boolean) o;
-                    ApiUtils.INSTANCE.updateGroupMMS(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateGroupMMS(Account.INSTANCE.getAccountId(),
                             group);
                     return true;
                 });
@@ -83,7 +83,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_auto_save_media))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean save = (boolean) o;
-                    ApiUtils.INSTANCE.updateAutoSaveMedia(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateAutoSaveMedia(Account.INSTANCE.getAccountId(),
                             save);
                     return true;
                 });
@@ -126,7 +126,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_override_system_apn))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean override = (boolean) o;
-                    ApiUtils.INSTANCE.updateOverrideSystemApn(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateOverrideSystemApn(Account.INSTANCE.getAccountId(),
                             override);
 
                     if (override) {
@@ -156,7 +156,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_mmsc_url))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String mmsc = (String) o;
-                    ApiUtils.INSTANCE.updateMmscUrl(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateMmscUrl(Account.INSTANCE.getAccountId(),
                             mmsc);
                     return true;
                 });
@@ -166,7 +166,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_mms_proxy))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String proxy = (String) o;
-                    ApiUtils.INSTANCE.updateMmsProxy(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateMmsProxy(Account.INSTANCE.getAccountId(),
                             proxy);
                     return true;
                 });
@@ -176,7 +176,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_mms_port))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String port = (String) o;
-                    ApiUtils.INSTANCE.updateMmsPort(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateMmsPort(Account.INSTANCE.getAccountId(),
                             port);
                     return true;
                 });
@@ -186,7 +186,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_user_agent))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String userAgent = (String) o;
-                    ApiUtils.INSTANCE.updateUserAgent(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateUserAgent(Account.INSTANCE.getAccountId(),
                             userAgent);
                     return true;
                 });
@@ -196,7 +196,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_user_agent_profile_url))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String uaProfileUrl = (String) o;
-                    ApiUtils.INSTANCE.updateUserAgentProfileUrl(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateUserAgentProfileUrl(Account.INSTANCE.getAccountId(),
                             uaProfileUrl);
                     return true;
                 });
@@ -206,7 +206,7 @@ public class MmsConfigurationFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_user_agent_profile_tag))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String uaProfileTagName = (String) o;
-                    ApiUtils.INSTANCE.updateUserAgentProfileTagName(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateUserAgentProfileTagName(Account.INSTANCE.getAccountId(),
                             uaProfileTagName);
                     return true;
                 });

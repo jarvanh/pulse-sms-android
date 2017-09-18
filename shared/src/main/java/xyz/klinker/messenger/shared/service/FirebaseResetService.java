@@ -24,7 +24,7 @@ public class FirebaseResetService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (Account.get(this).primary) {
+        if (Account.INSTANCE.getPrimary()) {
             return;
         }
 

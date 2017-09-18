@@ -26,7 +26,7 @@ public class SimpleSubscriptionCheckService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         billing = new BillingHelper(this);
 
-        if (Account.get(this).accountId == null || !Account.get(this).primary) {
+        if (Account.INSTANCE.getAccountId() == null || !Account.INSTANCE.getPrimary()) {
             return;
         }
 
@@ -54,13 +54,13 @@ public class SimpleSubscriptionCheckService extends IntentService {
     }
 
     protected void writeLifetimeSubscriber() {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.LIFETIME, 1L, true);
     }
 
     private void writeNewExpirationToAccount(long time) {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.SUBSCRIBER, time, true);
     }

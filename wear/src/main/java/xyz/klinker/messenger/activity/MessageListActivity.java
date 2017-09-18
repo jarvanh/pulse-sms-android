@@ -167,8 +167,8 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
     private void dismissNotification() {
         NotificationManagerCompat.from(this).cancel((int) conversation.id);
 
-        ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId,
-                Account.get(this).deviceId, conversation.id);
+        ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
+                Account.INSTANCE.deviceId, conversation.id);
 
         NotificationUtils.cancelGroupedNotificationWithNoContent(this);
     }

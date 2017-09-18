@@ -79,7 +79,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
             Settings.get(this).forceUpdate(this);
 
             if (responseCode == RESULT_CANCELED) {
-                Account account = Account.get(this);
+                Account account = Account.INSTANCE;
                 account.setDeviceId(this, null);
                 account.setPrimary(this, false);
 
@@ -131,7 +131,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
             String myName = getName();
             String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
-            final Account account = Account.get(context);
+            final Account account = Account.INSTANCE;
             account.setName(InitialLoadWearActivity.this, myName);
             account.setPhoneNumber(InitialLoadWearActivity.this, myPhoneNumber);
 

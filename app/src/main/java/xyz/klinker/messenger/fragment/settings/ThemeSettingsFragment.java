@@ -43,7 +43,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     }
 
-                    ApiUtils.INSTANCE.updateBaseTheme(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateBaseTheme(Account.INSTANCE.getAccountId(),
                             newValue);
 
                     getActivity().recreate();
@@ -56,7 +56,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_font_size))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     String size = (String) o;
-                    ApiUtils.INSTANCE.updateFontSize(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateFontSize(Account.INSTANCE.getAccountId(),
                             size);
 
                     return true;
@@ -67,7 +67,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_rounder_bubbles))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean rounder = (boolean) o;
-                    ApiUtils.INSTANCE.updateRounderBubbles(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateRounderBubbles(Account.INSTANCE.getAccountId(),
                             rounder);
                     return true;
                 });
@@ -77,7 +77,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         findPreference(getString(R.string.pref_apply_theme_globally))
                 .setOnPreferenceChangeListener((preference, o) -> {
                     boolean global = (boolean) o;
-                    ApiUtils.INSTANCE.updateUseGlobalTheme(Account.get(getActivity()).accountId,
+                    ApiUtils.INSTANCE.updateUseGlobalTheme(Account.INSTANCE.getAccountId(),
                             global);
                     return true;
                 });
@@ -98,7 +98,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
             settings.mainColorSet.color = (int) o;
 
-            ApiUtils.INSTANCE.updatePrimaryThemeColor(Account.get(getActivity()).accountId, (int) o);
+            ApiUtils.INSTANCE.updatePrimaryThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
             return true;
         });
@@ -115,7 +115,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
             settings.mainColorSet.colorDark = (int) o;
 
-            ApiUtils.INSTANCE.updatePrimaryDarkThemeColor(Account.get(getActivity()).accountId, (int) o);
+            ApiUtils.INSTANCE.updatePrimaryDarkThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
             return true;
         });
@@ -126,7 +126,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
             settings.mainColorSet.colorAccent = (int) o;
 
-            ApiUtils.INSTANCE.updateAccentThemeColor(Account.get(getActivity()).accountId, (int) o);
+            ApiUtils.INSTANCE.updateAccentThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
             return true;
         });

@@ -98,7 +98,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     private boolean initSetupPreference() {
         Preference preference = findPreference(getString(R.string.pref_my_account_setup));
-        Account account = Account.get(getActivity());
+        Account account = Account.INSTANCE;
 
         if ((!account.exists()) && preference != null) {
             preference.setOnPreferenceClickListener(preference1 -> {
@@ -181,14 +181,14 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         icon.setTint(getResources().getColor(R.color.primaryText));
         preference.setIcon(icon);
 
-        if (!Account.get(getActivity()).primary) {
+        if (!Account.INSTANCE.getPrimary()) {
             ((PreferenceCategory) findPreference(getString(R.string.pref_category_account_information)))
                     .removePreference(preference);
             return;
         }
 
-        if (Account.get(getActivity()).subscriptionType == Account.SubscriptionType.SUBSCRIBER ||
-                Account.get(getActivity()).subscriptionType == Account.SubscriptionType.TRIAL) {
+        if (Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.SUBSCRIBER ||
+                Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.TRIAL) {
 
             long signoutTime = SignoutJob.isScheduled(getActivity());
             if (signoutTime != 0L) {
@@ -231,8 +231,8 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.delete_account_confirmation)
                     .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
-                        final Account account = Account.get(getActivity());
-                        final String accountId = account.accountId;
+                        final Account account = Account.INSTANCE;
+                        final String accountId = account.getAccountId();
 
                         new Thread(() -> ApiUtils.INSTANCE.deleteAccount(accountId)).start();
 
@@ -257,7 +257,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     private void initResyncAccountPreference() {
         Preference preference = findPreference(getString(R.string.pref_resync_account));
 
-        if (Account.get(getActivity()).primary) {
+        if (Account.INSTANCE.getPrimary()) {
             preference.setSummary(R.string.resync_account_summary_phone);
             preference.setOnPreferenceClickListener(preference1 -> {
                 new AlertDialog.Builder(getActivity())
@@ -283,7 +283,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
     private void initFirebaseRefreshPreference() {
         Preference preference = findPreference(getString(R.string.pref_refresh_firebase));
-        if (!Account.get(getActivity()).primary) {
+        if (!Account.INSTANCE.getPrimary()) {
             ((PreferenceCategory) getPreferenceScreen()
                     .findPreference(getString(R.string.pref_category_account_actions)))
                     .removePreference(preference);
@@ -294,8 +294,8 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.refresh_firebase_warning)
                     .setPositiveButton(R.string.ok, (dialog, which) -> {
-                        final Account account = Account.get(getActivity());
-                        final String accountId = account.accountId;
+                        final Account account = Account.INSTANCE;
+                        final String accountId = account.getAccountId();
 
                         new Thread(() -> {
                             ApiUtils.INSTANCE.deleteAccount(accountId);
@@ -313,7 +313,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
      * @return the device id.
      */
     private String getDeviceId() {
-        return Account.get(getContext()).deviceId;
+        return Account.INSTANCE.getDeviceId();
     }
 
     @Override
@@ -389,7 +389,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     }
 
     private void cleanAccount() {
-        final Account account = Account.get(getActivity());
+        final Account account = Account.INSTANCE;
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setCancelable(false);
         dialog.setIndeterminate(true);
@@ -398,7 +398,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
         new Thread(() -> {
             DataSource.INSTANCE.clearTables(getActivity());
-            ApiUtils.INSTANCE.cleanAccount(account.accountId);
+            ApiUtils.INSTANCE.cleanAccount(account.getAccountId());
 
             getActivity().runOnUiThread(() -> {
                 dialog.dismiss();
@@ -422,10 +422,10 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
             nav.setCheckedItem(R.id.drawer_conversation);
         }
 
-        Account account = Account.get(getActivity());
-        if (account.exists() && account.primary) {
-            ApiUtils.INSTANCE.updateSubscription(account.accountId,
-                    account.subscriptionType.typeCode, account.subscriptionExpiration);
+        Account account = Account.INSTANCE;
+        if (account.exists() && account.getPrimary()) {
+            ApiUtils.INSTANCE.updateSubscription(account.getAccountId(),
+                    account.getSubscriptionType().getTypeCode(), account.getSubscriptionExpiration());
         }
 
         SubscriptionExpirationCheckJob.scheduleNextRun(getActivity());
@@ -456,10 +456,10 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     AnalyticsHelper.userSubscribed(getActivity(), productId);
                 }
 
-                if (Account.get(getActivity()).accountId == null) {
+                if (Account.INSTANCE.getAccountId() == null) {
                     // write lifetime here, just so they don't think it is a trial..
                     if (product.getProductId().contains("lifetime")) {
-                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(1));
+                        Account.INSTANCE.updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(1));
                     }
 
                     startLoginActivity();
@@ -468,9 +468,9 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     long newExperation = ProductPurchased.getExperation(product.getProductId());
 
                     if (product.getProductId().contains("lifetime")) {
-                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(newExperation));
+                        Account.INSTANCE.updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(newExperation));
                     } else {
-                        Account.get(getActivity()).updateSubscription(getActivity(), Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));
+                        Account.INSTANCE.updateSubscription(getActivity(), Account.SubscriptionType.SUBSCRIBER, new Date(newExperation));
                     }
 
                     returnToConversationsAfterLogin();

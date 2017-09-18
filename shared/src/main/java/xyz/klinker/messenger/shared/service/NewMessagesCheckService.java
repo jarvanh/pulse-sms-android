@@ -53,7 +53,7 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     private void handle(Intent intent) {
-        if (ApiDownloadService.IS_RUNNING || (Account.get(this).exists() && !Account.get(this).primary)) {
+        if (ApiDownloadService.IS_RUNNING || (Account.INSTANCE.exists() && !Account.INSTANCE.getPrimary())) {
             return;
         }
 

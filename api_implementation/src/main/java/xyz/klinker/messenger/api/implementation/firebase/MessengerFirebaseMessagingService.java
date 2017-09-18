@@ -64,7 +64,7 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
     public void onDeletedMessages() {
         Log.v(TAG, "deleted FCM messages");
 
-        if (!Account.get(this).primary) {
+        if (!Account.INSTANCE.getPrimary()) {
             ((FirebaseApplication) getApplication()).getFirebaseMessageHandler()
                     .handleDelete(getApplication());
         }

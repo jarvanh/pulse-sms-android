@@ -116,8 +116,8 @@ public class ScheduledMessageJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context, DataSource source) {
-        Account account = Account.get(context);
-        if (account.exists() && !account.primary) {
+        Account account = Account.INSTANCE;
+        if (account.exists() && !account.getPrimary()) {
             // if they have an online account, we only want scheduled messages to go through the phone
             return;
         }

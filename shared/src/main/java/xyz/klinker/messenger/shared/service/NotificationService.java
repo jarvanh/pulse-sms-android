@@ -583,7 +583,7 @@ public class NotificationService extends IntentService {
         }
 
         if (!conversation.groupConversation && settings.notificationActions.contains(NotificationAction.CALL)
-                && (!Account.get(this).exists() || Account.get(this).primary)) {
+                && (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary())) {
             Intent call = new Intent(this, NotificationCallService.class);
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
             call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);

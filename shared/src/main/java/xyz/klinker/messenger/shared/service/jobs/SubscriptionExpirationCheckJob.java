@@ -42,11 +42,11 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     protected void onRunJob(JobParameters parameters) {
         Log.v(TAG, "starting subscription check service.");
 
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
 
         billing = new BillingHelper(this);
 
-        if (account.exists()&& account.primary && account.subscriptionType != Account.SubscriptionType.LIFETIME) {
+        if (account.exists()&& account.getPrimary() && account.getSubscriptionType() != Account.SubscriptionType.LIFETIME) {
             Log.v(TAG, "checking for expiration");
             if (isExpired()) {
                 Log.v(TAG, "service is expired");
@@ -130,13 +130,13 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     }
 
     private void writeLifetimeSubscriber() {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.LIFETIME, 1L, true);
     }
 
     private void writeNewExpirationToAccount(long time) {
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.updateSubscription(this,
                 Account.SubscriptionType.SUBSCRIBER, time, true);
     }
@@ -154,11 +154,11 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
     }
 
     public static void scheduleNextRun(Context context) {
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         long currentTime = new Date().getTime();
-        long expiration = account.subscriptionExpiration + TimeUtils.DAY;
+        long expiration = account.getSubscriptionExpiration() + TimeUtils.DAY;
 
         ComponentName component = new ComponentName(context, SubscriptionExpirationCheckJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
@@ -166,7 +166,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(false);
 
-        if (account.accountId == null || account.subscriptionType == Account.SubscriptionType.LIFETIME || !account.primary) {
+        if (account.getAccountId() == null || account.getSubscriptionType() == Account.SubscriptionType.LIFETIME || !account.getPrimary()) {
             jobScheduler.cancel(JOB_ID);
         } else {
             Log.v(TAG, "CURRENT TIME: " + new Date().toString());

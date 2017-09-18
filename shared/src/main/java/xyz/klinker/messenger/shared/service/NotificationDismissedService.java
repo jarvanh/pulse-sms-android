@@ -56,6 +56,6 @@ public class NotificationDismissedService extends IntentService {
 
         Log.v("dismissed_notification", "id: " + conversationId);
 
-        ApiUtils.INSTANCE.dismissNotification(Account.get(context).accountId, Account.get(context).deviceId, conversationId);
+        ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(), Account.INSTANCE.getDeviceId(), conversationId);
     }
 }

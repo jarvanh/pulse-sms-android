@@ -70,7 +70,7 @@ public class AccountEncryptionCreator {
     private EncryptionUtils createAccount(String name, String phone, String accountId, String salt1,
                                           String passhash, SecretKey key) {
         sharedPrefs.edit()
-                .putInt(context.getString(R.string.api_pref_subscription_type), Account.get(context).getSubscriptionType() == Account.SubscriptionType.LIFETIME ?
+                .putInt(context.getString(R.string.api_pref_subscription_type), Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.LIFETIME ?
                         Account.SubscriptionType.LIFETIME.getTypeCode() : Account.SubscriptionType.TRIAL.getTypeCode())
                 .putLong(context.getString(R.string.api_pref_subscription_expiration), getTrialEnd())
                 .putString(context.getString(R.string.api_pref_my_name), name)
@@ -82,7 +82,7 @@ public class AccountEncryptionCreator {
                         Base64.encodeToString(key.getEncoded(), Base64.DEFAULT))
                 .commit();
 
-        Account account = Account.Companion.get(context);
+        Account account = Account.INSTANCE;
         account = account.forceUpdate(context);
         return account.getEncryptor();
     }
