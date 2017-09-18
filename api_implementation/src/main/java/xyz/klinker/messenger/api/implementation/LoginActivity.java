@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
                 primary, getFirebaseId());
 
         if (deviceId != null) {
-            Account account = Account.get(this);
+            Account account = Account.INSTANCE;
             account.setDeviceId(this, Long.toString(deviceId));
             account.setPrimary(this, primary);
 
@@ -346,7 +346,7 @@ public class LoginActivity extends AppCompatActivity {
             apiUtils.deleteAccount(accountId);
         }
 
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         account.setDeviceId(this, null);
         account.setPrimary(this, false);
 

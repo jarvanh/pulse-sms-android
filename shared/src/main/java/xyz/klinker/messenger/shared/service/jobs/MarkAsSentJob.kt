@@ -41,7 +41,7 @@ class MarkAsSentJob : BackgroundJob() {
         private val EXTRA_MESSAGE_ID = "extra_message_id"
 
         fun scheduleNextRun(context: Context?, messageId: Long?) {
-            if (context == null || (Account.get(context).exists() && !Account.get(context).primary) || messageId == null) {
+            if (context == null || (Account.exists() && !Account.primary) || messageId == null) {
                 return
             }
 

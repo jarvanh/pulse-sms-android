@@ -59,7 +59,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         this.manager = manager;
         this.stylingHelper = new MessageListStylingHelper(context);
 
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         ignoreSendingStatus = true;
 
         if (context == null) {

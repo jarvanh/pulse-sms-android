@@ -49,7 +49,7 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
-        if (Account.get(context).exists() && !Account.get(context).primary) {
+        if (Account.INSTANCE.exists() && !Account.INSTANCE.getPrimary()) {
             return;
         }
 

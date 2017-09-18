@@ -331,7 +331,7 @@ public class  MessengerActivity extends AppCompatActivity
             PermissionsUtils.startMainPermissionRequest(this);
         }
 
-        if (Account.get(this).primary && !PermissionsUtils.isDefaultSmsApp(this)) {
+        if (Account.INSTANCE.getPrimary() && !PermissionsUtils.isDefaultSmsApp(this)) {
             PermissionsUtils.setDefaultSmsApp(this);
         }
     }
@@ -392,11 +392,11 @@ public class  MessengerActivity extends AppCompatActivity
     private void initDrawer() {
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.postDelayed(() -> {
-            Account account = Account.get(getApplicationContext());
+            Account account = Account.INSTANCE;
             try {
                 if (account.exists()) {
                     ((TextView) findViewById(R.id.drawer_header_my_name))
-                            .setText(account.myName);
+                            .setText(account.getMyName());
                 }
 
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
@@ -410,7 +410,7 @@ public class  MessengerActivity extends AppCompatActivity
                 }
 
                 // change the text to
-                if (Account.get(MessengerActivity.this).accountId == null) {
+                if (!Account.INSTANCE.exists()) {
                     navigationView.getMenu().findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting);
                 }
             } catch (NullPointerException e) {
@@ -471,9 +471,7 @@ public class  MessengerActivity extends AppCompatActivity
 
                 Settings.get(getApplicationContext()).setValue(getApplicationContext(),
                         getString(R.string.pref_snooze), snoozeTil);
-                ApiUtils.INSTANCE.updateSnooze(Account.get(getApplicationContext()).accountId,
-                        snoozeTil);
-
+                ApiUtils.INSTANCE.updateSnooze(Account.INSTANCE.getAccountId(), snoozeTil);
                 snoozeIcon();
 
                 return true;
@@ -1239,7 +1237,7 @@ public class  MessengerActivity extends AppCompatActivity
         getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (fromNotification && convoId != -1) {
-            ApiUtils.INSTANCE.dismissNotification(Account.get(this).accountId, Account.get(this).deviceId, convoId);
+            ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(), Account.INSTANCE.getDeviceId(), convoId);
         }
     }
 

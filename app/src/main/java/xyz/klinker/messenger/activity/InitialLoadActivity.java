@@ -110,7 +110,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
             if (responseCode == RESULT_CANCELED) {
                 if (!startUploadAfterSync) {
-                    Account account = Account.get(this);
+                    Account account = Account.INSTANCE;
                     account.setDeviceId(this, null);
                     account.setPrimary(this,true);
                 }
@@ -163,7 +163,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
             String myName = getName();
             String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
 
-            final Account account = Account.get(context);
+            final Account account = Account.INSTANCE;
             account.setName(this, myName);
             account.setPhoneNumber(this, myPhoneNumber);
 

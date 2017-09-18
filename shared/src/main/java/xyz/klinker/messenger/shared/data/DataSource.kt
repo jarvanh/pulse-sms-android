@@ -85,7 +85,7 @@ object DataSource {
     @Synchronized
     private fun encryptor(context: Context): EncryptionUtils? {
         if (_encryptor == null) {
-            _encryptor = Account.get(context).encryptor
+            _encryptor = Account.encryptor
         }
 
         return _encryptor
@@ -94,7 +94,7 @@ object DataSource {
     @Synchronized
     private fun accountId(context: Context): String? {
         if (_accountId == null) {
-            _accountId = Account.get(context).accountId
+            _accountId = Account.accountId
         }
         
         return _accountId
@@ -103,7 +103,7 @@ object DataSource {
     @Synchronized
     private fun androidDeviceId(context: Context): String? {
         if (_androidDeviceId == null) {
-            _androidDeviceId = Account.get(context).deviceId
+            _androidDeviceId = Account.deviceId
         }
 
         return _androidDeviceId

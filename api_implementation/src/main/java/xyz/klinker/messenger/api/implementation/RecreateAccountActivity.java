@@ -10,7 +10,7 @@ public class RecreateAccountActivity extends LoginActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Account account = Account.get(this);
+        final Account account = Account.INSTANCE;
         account.clearAccount(this);
 
         signup();

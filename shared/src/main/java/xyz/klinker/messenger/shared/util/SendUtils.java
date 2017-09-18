@@ -149,7 +149,7 @@ public class SendUtils {
             }
         }
 
-        if (Account.get(context).primary) {
+        if (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary()) {
             try {
                 transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
             } catch (IllegalArgumentException e) {

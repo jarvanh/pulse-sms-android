@@ -132,9 +132,9 @@ public class PhoneNumberUtils {
     public static List<String> getMyPossiblePhoneNumbers(Context context) {
         List<String> numbers = new ArrayList<>();
 
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         if (account.exists()) {
-            numbers.add(account.myPhoneNumber);
+            numbers.add(account.getMyPhoneNumber());
         }
 
         String lollipopNumber = getLollipopPhoneNumber(context);

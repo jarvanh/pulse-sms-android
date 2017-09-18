@@ -128,7 +128,7 @@ public class ApiDownloadService extends Service {
         new Thread(() -> {
             IS_RUNNING = true;
 
-            account = Account.get(getApplicationContext());
+            account = Account.INSTANCE;
 
             apiUtils = ApiUtils.INSTANCE;
             encryptionUtils = account.getEncryptor();
@@ -172,7 +172,7 @@ public class ApiDownloadService extends Service {
 
             try {
                 messages = apiUtils.getApi().message()
-                        .list(account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size())
+                        .list(account.getAccountId(), null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size())
                         .execute().body();
             } catch (IOException e) {
                 messages = new MessageBody[0];
@@ -218,7 +218,7 @@ public class ApiDownloadService extends Service {
 
         try {
             conversations = apiUtils.getApi().conversation()
-                    .list(account.accountId).execute().body();
+                    .list(account.getAccountId()).execute().body();
         } catch (IOException e) {
             conversations = new ConversationBody[0];
         }
@@ -268,7 +268,7 @@ public class ApiDownloadService extends Service {
 
         try {
             conversations = apiUtils.getApi().conversation()
-                    .list(account.accountId).execute().body();
+                    .list(account.getAccountId()).execute().body();
         } catch (IOException e) {
             conversations = new ConversationBody[0];
         }
@@ -306,7 +306,7 @@ public class ApiDownloadService extends Service {
         BlacklistBody[] blacklists;
 
         try {
-            blacklists = apiUtils.getApi().blacklist().list(account.accountId).execute().body();
+            blacklists = apiUtils.getApi().blacklist().list(account.getAccountId()).execute().body();
         } catch (Exception e) {
             blacklists = new BlacklistBody[0];
         }
@@ -329,7 +329,7 @@ public class ApiDownloadService extends Service {
         ScheduledMessageBody[] messages;
 
         try {
-            messages = apiUtils.getApi().scheduled().list(account.accountId).execute().body();
+            messages = apiUtils.getApi().scheduled().list(account.getAccountId()).execute().body();
         } catch (IOException e) {
             messages = new ScheduledMessageBody[0];
         }
@@ -352,7 +352,7 @@ public class ApiDownloadService extends Service {
         DraftBody[] drafts;
 
         try {
-            drafts = apiUtils.getApi().draft().list(account.accountId).execute().body();
+            drafts = apiUtils.getApi().draft().list(account.getAccountId()).execute().body();
         } catch (IOException e) {
             drafts = new DraftBody[0];
         }
@@ -375,7 +375,7 @@ public class ApiDownloadService extends Service {
         ContactBody[] contacts;
 
         try {
-            contacts = apiUtils.getApi().contact().list(account.accountId).execute().body();
+            contacts = apiUtils.getApi().contact().list(account.getAccountId()).execute().body();
         } catch (IOException e) {
             contacts = new ContactBody[0];
         }
@@ -427,7 +427,7 @@ public class ApiDownloadService extends Service {
     private int completedMediaDownloads = 0;
     private void processMediaDownload(NotificationManagerCompat manager,
                                       NotificationCompat.Builder builder) {
-        apiUtils.saveFirebaseFolderRef(account.accountId);
+        apiUtils.saveFirebaseFolderRef(account.getAccountId());
 
         new Thread(() -> {
             try { Thread.sleep(1000 * 60 * 5); } catch (InterruptedException e) { }
@@ -450,7 +450,7 @@ public class ApiDownloadService extends Service {
 
                 Log.v(TAG, "started downloading " + message.id);
 
-                apiUtils.downloadFileFromFirebase(account.accountId, file, message.id, encryptionUtils, () -> {
+                apiUtils.downloadFileFromFirebase(account.getAccountId(), file, message.id, encryptionUtils, () -> {
                     completedMediaDownloads++;
 
                     source.updateMessageData(this, message.id, Uri.fromFile(file).toString());

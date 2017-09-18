@@ -128,7 +128,7 @@ public class NotificationAlertsPreference extends Preference implements
                     String newRepeat = getContext().getResources().getStringArray(R.array.repeat_values)[i];
 
                     settings.setValue(getContext(), getContext().getString(R.string.pref_repeat_notifications), newRepeat);
-                    ApiUtils.INSTANCE.updateRepeatNotifications(Account.get(getContext()).accountId, newRepeat);
+                    ApiUtils.INSTANCE.updateRepeatNotifications(Account.INSTANCE.getAccountId(), newRepeat);
 
                     dialogInterface.dismiss();
                 }).show();
@@ -153,7 +153,7 @@ public class NotificationAlertsPreference extends Preference implements
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
                     settings.setValue(getContext(), getContext().getString(R.string.pref_wake_screen), newVal);
-                    ApiUtils.INSTANCE.updateWakeScreen(Account.get(getContext()).accountId, newVal);
+                    ApiUtils.INSTANCE.updateWakeScreen(Account.INSTANCE.getAccountId(), newVal);
 
                     dialogInterface.dismiss();
                 }).show();
@@ -178,7 +178,7 @@ public class NotificationAlertsPreference extends Preference implements
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
                     settings.setValue(getContext(), getContext().getString(R.string.pref_heads_up), newVal);
-                    ApiUtils.INSTANCE.updateHeadsUp(Account.get(getContext()).accountId, newVal);
+                    ApiUtils.INSTANCE.updateHeadsUp(Account.INSTANCE.getAccountId(), newVal);
 
                     dialogInterface.dismiss();
                 }).show();
@@ -203,7 +203,7 @@ public class NotificationAlertsPreference extends Preference implements
                     String newPattern = getContext().getResources().getStringArray(R.array.vibrate_values)[i];
 
                     settings.setValue(getContext(), getContext().getString(R.string.pref_vibrate), newPattern);
-                    ApiUtils.INSTANCE.updateVibrate(Account.get(getContext()).accountId, newPattern);
+                    ApiUtils.INSTANCE.updateVibrate(Account.INSTANCE.getAccountId(), newPattern);
 
                     dialogInterface.dismiss();
                 }).show();

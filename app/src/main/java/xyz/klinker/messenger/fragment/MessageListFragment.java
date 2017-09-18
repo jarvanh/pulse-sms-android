@@ -757,7 +757,7 @@ public class MessageListFragment extends Fragment implements
     private boolean ignoreCounterText() {
         // they seem to have issues, where some dialog pops up, asking which SIM to send from
         // happens when the user is running LineageOS
-        return !Account.get(activity).primary &&
+        return !Account.INSTANCE.getPrimary() &&
                 (Build.MODEL.equals("Nexus 9") || Build.MANUFACTURER.toLowerCase().equals("oneplus") ||
                         Build.MANUFACTURER.toLowerCase().equals("sony") || Build.MANUFACTURER.toLowerCase().equals("xiaomi") ||
                         Build.MANUFACTURER.toLowerCase().equals("samsung") || Build.MANUFACTURER.toLowerCase().equals("lge") ||
@@ -901,8 +901,8 @@ public class MessageListFragment extends Fragment implements
                 NotificationManagerCompat.from(activity)
                         .cancel((int) getConversationId());
 
-                ApiUtils.INSTANCE.dismissNotification(Account.get(activity).accountId,
-                        Account.get(activity).deviceId,
+                ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
+                        Account.INSTANCE.getDeviceId(),
                         getConversationId());
 
                 NotificationUtils.cancelGroupedNotificationWithNoContent(activity);
@@ -1179,7 +1179,7 @@ public class MessageListFragment extends Fragment implements
 
         if (PermissionsUtils.checkRequestMainPermissions(activity)) {
             PermissionsUtils.startMainPermissionRequest(activity);
-        } else if (Account.get(activity).primary &&
+        } else if (Account.INSTANCE.getPrimary() &&
                 !PermissionsUtils.isDefaultSmsApp(activity)) {
             PermissionsUtils.setDefaultSmsApp(activity);
         } else if (message.length() > 0 || uris.size() > 0) {

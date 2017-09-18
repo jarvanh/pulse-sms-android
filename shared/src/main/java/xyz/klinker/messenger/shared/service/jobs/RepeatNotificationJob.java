@@ -38,7 +38,7 @@ public class RepeatNotificationJob extends BackgroundJob {
         long timeout = nextRun - currentTime;
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        if (!Account.get(context).exists() || (Account.get(context).exists() && Account.get(context).primary)) {
+        if (!Account.INSTANCE.exists() || (Account.INSTANCE.exists() && Account.INSTANCE.getPrimary())) {
             ComponentName component = new ComponentName(context, RepeatNotificationJob.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(timeout)

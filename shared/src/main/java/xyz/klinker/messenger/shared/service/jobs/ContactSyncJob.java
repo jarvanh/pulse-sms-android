@@ -41,7 +41,7 @@ public class ContactSyncJob extends BackgroundJob {
         // otherwise, we should look for the contacts that have changed since the last run and
         // upload those contacts
 
-        Account account = Account.get(this);
+        Account account = Account.INSTANCE;
         if (account.getEncryptor() == null) {
             return;
         }
@@ -71,7 +71,7 @@ public class ContactSyncJob extends BackgroundJob {
 
         // send the contacts to our backend
         AddContactRequest request =
-                new AddContactRequest(Account.get(this).accountId, contacts);
+                new AddContactRequest(Account.INSTANCE.getAccountId(), contacts);
         ApiUtils.INSTANCE.addContact(request);
 
         // set the "since" time for our change listener

@@ -123,8 +123,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
 
         try {
-            Account account = Account.get(fragment.getActivity());
-            ignoreSendingStatus = account.exists() && !account.primary;
+            ignoreSendingStatus = Account.INSTANCE.exists() && !Account.INSTANCE.getPrimary();
         } catch (Exception e) {
             ignoreSendingStatus = false;
         }

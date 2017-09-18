@@ -197,7 +197,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
     @VisibleForTesting
     protected String getMyName(Context context) {
-        return Account.get(context).myName;
+        return Account.INSTANCE.getMyName();
     }
 
     @VisibleForTesting

@@ -90,11 +90,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
     }
 
     private void process(Context context, Intent intent) {
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
 
         // received a message without having initialized an account yet
         // could happen if their subscription ends
-        if (account.key == null) {
+        if (account.getKey() == null) {
             return;
         }
 
@@ -229,9 +229,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void removeAccount(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
 
-        if (json.getString("id").equals(account.accountId)) {
+        if (json.getString("id").equals(account.getAccountId())) {
             Log.v(TAG, "clearing account");
             source.clearTables(context);
             account.clearAccount(context);
@@ -242,11 +242,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void updatedAccount(JSONObject json, Context context)
             throws JSONException {
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
         String name = json.getString("real_name");
         String number = json.getString("phone_number");
 
-        if (json.getString("id").equals(account.accountId)) {
+        if (json.getString("id").equals(account.getAccountId())) {
             account.setName(context, name);
             account.setPhoneNumber(context, number);
             Log.v(TAG, "updated account name and number");
@@ -257,9 +257,9 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void cleanAccount(JSONObject json, DataSource source, Context context)
             throws JSONException {
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
 
-        if (json.getString("id").equals(account.accountId)) {
+        if (json.getString("id").equals(account.getAccountId())) {
             Log.v(TAG, "clearing account");
             source.clearTables(context);
         } else {
@@ -322,7 +322,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 message.type = Message.TYPE_SENT;
             }
 
-            if (Account.get(context).primary && isSending) {
+            if (Account.INSTANCE.getPrimary() && isSending) {
                 conversation = source.getConversation(this, message.conversationId);
 
                 if (conversation != null) {
@@ -361,7 +361,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private void addMessageAfterFirebaseDownload(final Context context, final Message message) {
         ApiUtils apiUtils = ApiUtils.INSTANCE;
-        apiUtils.saveFirebaseFolderRef(Account.get(context).accountId);
+        apiUtils.saveFirebaseFolderRef(Account.INSTANCE.getAccountId());
         final File file = new File(context.getFilesDir(),
                 message.id + MimeType.getExtension(message.mimeType));
 
@@ -381,7 +381,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             source.updateMessageData(context, message.id, message.data);
             MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
 
-            if (Account.get(context).primary && isSending) {
+            if (Account.INSTANCE.getPrimary() && isSending) {
                 Conversation conversation = source.getConversation(context, message.conversationId);
 
                 if (conversation != null) {
@@ -417,7 +417,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             }
         };
 
-        apiUtils.downloadFileFromFirebase(Account.get(context).accountId, file, message.id, encryptionUtils, callback, 0);
+        apiUtils.downloadFileFromFirebase(Account.INSTANCE.getAccountId(), file, message.id, encryptionUtils, callback, 0);
 
     }
 
@@ -630,7 +630,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long id = getLong(json, "id");
         String deviceId = json.getString("android_device");
 
-        if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+        if (deviceId == null || !deviceId.equals(Account.INSTANCE.getDeviceId())) {
             Conversation conversation = source.getConversation(context, id);
             source.readConversation(context, id, false);
 
@@ -675,7 +675,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long id = getLong(json, "id");
         String deviceId = json.getString("android_device");
 
-        if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+        if (deviceId == null || !deviceId.equals(Account.INSTANCE.getDeviceId())) {
             source.deleteDrafts(this, id, false);
             Log.v(TAG, "removed drafts");
         }
@@ -739,7 +739,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long conversationId = getLong(json, "id");
         String deviceId = json.getString("device_id");
 
-        if (deviceId == null || !deviceId.equals(Account.get(context).deviceId)) {
+        if (deviceId == null || !deviceId.equals(Account.INSTANCE.getDeviceId())) {
             Conversation conversation = source.getConversation(context, conversationId);
 
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
@@ -785,11 +785,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
         long expiration = json.has("expiration") ? json.getLong("expiration") : 0L;
         boolean fromAdmin = json.has("from_admin") ? json.getBoolean("from_admin") : false;
 
-        Account account = Account.get(context);
+        Account account = Account.INSTANCE;
 
-        if (account.primary) {
+        if (account.getPrimary()) {
             account.updateSubscription(context,
-                    Account.SubscriptionType.findByTypeCode(type), expiration, false
+                    Account.SubscriptionType.Companion.findByTypeCode(type), expiration, false
             );
 
             SubscriptionExpirationCheckJob.scheduleNextRun(context);
@@ -798,11 +798,11 @@ public class FirebaseHandlerService extends WakefulIntentService {
             if (fromAdmin) {
                 String content = "Enjoy the app!";
 
-                if (!account.subscriptionType.equals(Account.SubscriptionType.LIFETIME)) {
+                if (!account.getSubscriptionType().equals(Account.SubscriptionType.LIFETIME)) {
                     content = "Expiration: " + new Date(expiration).toString();
                 }
 
-                notifyUser("Subscription Updated: " + StringUtils.titleize(account.subscriptionType.name()), content);
+                notifyUser("Subscription Updated: " + StringUtils.titleize(account.getSubscriptionType().name()), content);
             }
         }
     }
@@ -811,8 +811,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
             throws JSONException {
         String newPrimaryDeviceId = json.getString("new_primary_device_id");
 
-        Account account = Account.get(context);
-        if (newPrimaryDeviceId != null && !newPrimaryDeviceId.equals(account.deviceId)) {
+        Account account = Account.INSTANCE;
+        if (newPrimaryDeviceId != null && !newPrimaryDeviceId.equals(account.getDeviceId())) {
             account.setPrimary(context, false);
         }
     }
@@ -845,7 +845,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
     private void forwardToPhone(JSONObject json, DataSource source, Context context)
             throws JSONException {
 
-        if (!Account.get(context).primary) {
+        if (!Account.INSTANCE.getPrimary()) {
             return;
         }
 

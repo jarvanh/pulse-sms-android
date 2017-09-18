@@ -24,11 +24,8 @@ class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
             sharedPrefs.edit().putString(TOKEN_PREF_KEY, currentToken).apply()
 
             if (storedToken != null) {
-                val api = ApiUtils
-                val account = Account.get(this)
-
                 Thread {
-                    api.updateDevice(account.accountId, Integer.parseInt(account.deviceId).toLong(), Build.MODEL,
+                    ApiUtils.updateDevice(Account.accountId, Integer.parseInt(Account.deviceId).toLong(), Build.MODEL,
                             currentToken)
                 }.start()
             }
