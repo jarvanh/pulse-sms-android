@@ -185,6 +185,8 @@ public class ConversationViewHolder extends SwappingHolder {
             int color = Settings.get(itemView.getContext()).mainColorSet.color;
             if (color == Color.WHITE) {
                 color = unreadIndicator.getContext().getResources().getColor(R.color.lightToolbarTextColor);
+            } else if (color == Color.BLACK && Settings.get(unreadIndicator.getContext()).baseTheme == BaseTheme.BLACK) {
+                color = unreadIndicator.getContext().getResources().getColor(android.R.color.white);
             }
             
             ((CircleImageView) unreadIndicator).setImageDrawable(new ColorDrawable(color));
