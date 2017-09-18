@@ -118,7 +118,7 @@ object Account {
         }
     }
 
-    fun setName(context: Context, name: String) {
+    fun setName(context: Context, name: String?) {
         this.myName = name
 
         getSharedPrefs(context).edit()
@@ -126,7 +126,7 @@ object Account {
                 .commit()
     }
 
-    fun setPhoneNumber(context: Context, phoneNumber: String) {
+    fun setPhoneNumber(context: Context, phoneNumber: String?) {
         this.myPhoneNumber = phoneNumber
 
         getSharedPrefs(context).edit()
@@ -142,7 +142,7 @@ object Account {
                 .commit()
     }
 
-    fun setDeviceId(context: Context, deviceId: String) {
+    fun setDeviceId(context: Context, deviceId: String?) {
         this.deviceId = deviceId
 
         getSharedPrefs(context).edit()
