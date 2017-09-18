@@ -329,13 +329,8 @@ public class MessageListFragment extends Fragment implements
             dragDismissFrameLayout.addListener(new ElasticDragDismissCallback() {
                 @Override
                 public void onDragDismissed() {
-                    new Handler().postDelayed(() -> {
-                        if (activity != null) {
-                            activity.onBackPressed();
-                        }
-                    }, keyboardOpen ? 300 : 100);
-
                     dismissKeyboard();
+                    activity.onBackPressed();
                 }
 
                 @Override
@@ -541,13 +536,8 @@ public class MessageListFragment extends Fragment implements
 
             toolbar.setNavigationIcon(R.drawable.ic_collapse);
             toolbar.setNavigationOnClickListener(view -> {
-                new Handler().postDelayed(() -> {
-                    if (activity != null) {
-                        activity.onBackPressed();
-                    }
-                }, keyboardOpen ? 300 : 100);
-
                 dismissKeyboard();
+                activity.onBackPressed();
             });
         } else {
             setNameAndDrawerColor(activity);
@@ -570,13 +560,8 @@ public class MessageListFragment extends Fragment implements
                 TooltipCompat.setTooltipText(callItem.getActionView(), getString(R.string.menu_call));
 
                 image.setOnClickListener(view -> {
-                    new Handler().postDelayed(() -> {
-                        if (activity != null) {
-                            ((MessengerActivity) activity).menuItemClicked(R.id.menu_call);
-                        }
-                    }, keyboardOpen ? 300 : 100);
-
                     dismissKeyboard();
+                    ((MessengerActivity) activity).menuItemClicked(R.id.menu_call);
                 });
 
                 image.setOnLongClickListener(view -> {
@@ -588,13 +573,9 @@ public class MessageListFragment extends Fragment implements
             }
 
             toolbar.setOnMenuItemClickListener(item -> {
-                new Handler().postDelayed(() -> {
-                    if (activity != null) {
-                        ((MessengerActivity) activity).menuItemClicked(item.getItemId());
-                    }
-                }, keyboardOpen ? 300 : 100);
-
                 dismissKeyboard();
+                ((MessengerActivity) activity).menuItemClicked(item.getItemId());
+
                 return false;
             });
 

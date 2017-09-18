@@ -95,6 +95,7 @@ import xyz.klinker.messenger.shared.service.NewMessagesCheckService;
 import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
+import xyz.klinker.messenger.shared.util.AnimationUtils;
 import xyz.klinker.messenger.shared.util.ColorUtils;
 import xyz.klinker.messenger.shared.util.ContactUtils;
 import xyz.klinker.messenger.shared.util.CursorUtil;
@@ -159,6 +160,7 @@ public class  MessengerActivity extends AppCompatActivity
         dataSource = DataSource.INSTANCE;
 
         setContentView(R.layout.activity_messenger);
+
         initToolbar();
         initFab();
         configureGlobalColors();
@@ -187,6 +189,12 @@ public class  MessengerActivity extends AppCompatActivity
 
             startImportOrLoad = true;
         }
+
+        final View content = findViewById(R.id.content);
+        content.post(() -> {
+            AnimationUtils.conversationListSize = content.getHeight();
+            AnimationUtils.toolbarSize = toolbar.getHeight();
+        });
     }
 
     @Override

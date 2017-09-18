@@ -40,8 +40,8 @@ public class AnimationUtils {
     public static final int EXPAND_CONVERSATION_DURATION = 200;
     private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
 
-    private static int toolbarSize = Integer.MIN_VALUE;
-    private static int conversationListSize = Integer.MIN_VALUE;
+    public static int toolbarSize = Integer.MIN_VALUE;
+    public static int conversationListSize = Integer.MIN_VALUE;
 
     /**
      * Animates a lines item to the full height of the view.
