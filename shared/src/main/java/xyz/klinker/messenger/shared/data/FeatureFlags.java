@@ -64,7 +64,7 @@ public class FeatureFlags {
     private static final String FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE = "flag_new_messages_with_signature";
     private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
     private static final String FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF = "flag_rereceive_group_message_from_self";
-    private static final String FLAG_S8_BLACK_NAV_BAR = "flag_s8_black_nav_bar";
+    private static final String FLAG_BLACK_NAV_BAR = "flag_black_nav_bar";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -87,10 +87,8 @@ public class FeatureFlags {
     public boolean WHITE_LINK_TEXT;
 
     // need tested
-    public boolean STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF;
     public boolean AUTO_RETRY_FAILED_MESSAGES;
-    public boolean HEADS_UP_GROUP_PRIORITY;
-    public boolean S8_BLACK_NAV_BAR;
+    public boolean BLACK_NAV_BAR;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -104,10 +102,8 @@ public class FeatureFlags {
         REMOVE_IMAGE_BORDERS = getValue(sharedPrefs, FLAG_REMOVE_IMAGE_BORDERS);
         WHITE_LINK_TEXT = getValue(sharedPrefs, FLAG_WHITE_LINK_TEXT);
 
-        STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = getValue(sharedPrefs, FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF);
         AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
-        HEADS_UP_GROUP_PRIORITY = getValue(sharedPrefs, FLAG_HEADS_UP_ON_GROUP_PRIORITY);
-        S8_BLACK_NAV_BAR = getValue(sharedPrefs, FLAG_S8_BLACK_NAV_BAR);
+        BLACK_NAV_BAR = getValue(sharedPrefs, FLAG_BLACK_NAV_BAR);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -135,17 +131,11 @@ public class FeatureFlags {
                 break;
 
 
-            case FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF:
-                STOP_RECEIVE_GROUP_MESSAGE_FROM_SELF = flag;
-                break;
             case FLAG_AUTO_RETRY_FAILED_MESSAGES:
                 AUTO_RETRY_FAILED_MESSAGES = flag;
                 break;
-            case FLAG_HEADS_UP_ON_GROUP_PRIORITY:
-                HEADS_UP_GROUP_PRIORITY = flag;
-                break;
-            case FLAG_S8_BLACK_NAV_BAR:
-                S8_BLACK_NAV_BAR = flag;
+            case FLAG_BLACK_NAV_BAR:
+                BLACK_NAV_BAR = flag;
                 break;
         }
     }

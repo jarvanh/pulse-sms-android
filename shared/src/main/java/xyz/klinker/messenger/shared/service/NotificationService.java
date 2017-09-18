@@ -448,8 +448,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
-                .setPriority(Settings.get(this).headsUp && FeatureFlags.get(this).HEADS_UP_GROUP_PRIORITY ?
-                        Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
