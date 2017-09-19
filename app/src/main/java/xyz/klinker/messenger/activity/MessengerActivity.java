@@ -153,7 +153,7 @@ public class  MessengerActivity extends AppCompatActivity
         new UpdateUtils(this).checkForUpdate();
         new PromotionUtils(this).checkPromotions();
 
-        if (FeatureFlags.get(this).BLACK_NAV_BAR) {
+        if (FeatureFlags.get(this).BLACK_NAV_BAR && Settings.get(this).isCurrentlyDarkTheme()) {
             getWindow().setNavigationBarColor(Color.BLACK);
         }
 
