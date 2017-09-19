@@ -1747,6 +1747,12 @@ object DataSource {
      * @return the conversation id to use.
      */
     @JvmOverloads private fun updateOrCreateConversation(phoneNumbers: String, message: Message, context: Context, useApi: Boolean = true): Long {
+        val phoneNumbers = when {
+            phoneNumbers.endsWith(", ") -> phoneNumbers.substring(0, phoneNumbers.length - 2)
+            phoneNumbers.endsWith(",") -> phoneNumbers.substring(0, phoneNumbers.length - 1)
+            else -> phoneNumbers
+        }
+
         val matcher = SmsMmsUtils.createIdMatcher(phoneNumbers)
         val cursor = try {
             database(context).query(Conversation.TABLE,

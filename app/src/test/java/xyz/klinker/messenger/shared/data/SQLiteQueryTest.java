@@ -492,10 +492,34 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void insertMessageExistingConversation_withEndingComma() {
+        int initialMessageSize = source.getMessages(context, 1L).getCount();
+        int initialConversationSize = source.getUnarchivedConversations(context).getCount();
+        source.insertMessage(getFakeMessage(), "1111111, ", context, false);
+        int newMessageSize = source.getMessages(context, 1L).getCount();
+        int newConversationSize = source.getUnarchivedConversations(context).getCount();
+
+        assertEquals(initialConversationSize, newConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
     public void insertMessageExistingGroupConversation() {
         int initialMessageSize = source.getMessages(context, 4L).getCount();
         int initialConversationSize = source.getUnarchivedConversations(context).getCount();
         source.insertMessage(getFakeMessage(), "1111111, 3333333", context, false);
+        int newMessageSize = source.getMessages(context, 4L).getCount();
+        int newConversationSize = source.getUnarchivedConversations(context).getCount();
+
+        assertEquals(initialConversationSize, newConversationSize);
+        assertEquals(1, newMessageSize - initialMessageSize);
+    }
+
+    @Test
+    public void insertMessageExistingGroupConversation_withEndingComma() {
+        int initialMessageSize = source.getMessages(context, 4L).getCount();
+        int initialConversationSize = source.getUnarchivedConversations(context).getCount();
+        source.insertMessage(getFakeMessage(), "1111111, 3333333, ", context, false);
         int newMessageSize = source.getMessages(context, 4L).getCount();
         int newConversationSize = source.getUnarchivedConversations(context).getCount();
 
@@ -513,9 +537,36 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void insertMessageNewConversation_withEndingComma() {
+        int initialConversationSize = source.getUnarchivedConversations(context).getCount();
+        source.insertMessage(getFakeMessage(), "4444444, ", context, false);
+        int newConversationSize = source.getUnarchivedConversations(context).getCount();
+
+        assertEquals(1, newConversationSize - initialConversationSize);
+    }
+
+    @Test
     public void insertMessageNewGroupConversation() {
         int initialConversationSize = source.getUnarchivedConversations(context).getCount();
         source.insertMessage(getFakeMessage(), "1111111, 2222222", context, false);
+        int newConversationSize = source.getUnarchivedConversations(context).getCount();
+
+        assertEquals(1, newConversationSize - initialConversationSize);
+    }
+
+    @Test
+    public void insertMessageNewGroupConversation_withEndingCommaAndSpace() {
+        int initialConversationSize = source.getUnarchivedConversations(context).getCount();
+        source.insertMessage(getFakeMessage(), "1111111, 2222222, ", context, false);
+        int newConversationSize = source.getUnarchivedConversations(context).getCount();
+
+        assertEquals(1, newConversationSize - initialConversationSize);
+    }
+
+    @Test
+    public void insertMessageNewGroupConversation_withEndingComma() {
+        int initialConversationSize = source.getUnarchivedConversations(context).getCount();
+        source.insertMessage(getFakeMessage(), "1111111, 2222222,", context, false);
         int newConversationSize = source.getUnarchivedConversations(context).getCount();
 
         assertEquals(1, newConversationSize - initialConversationSize);
