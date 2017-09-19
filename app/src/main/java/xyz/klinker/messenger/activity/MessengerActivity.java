@@ -739,12 +739,23 @@ public class  MessengerActivity extends AppCompatActivity
         getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         getIntent().putExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
 
+        boolean updateConversationListSize = false;
         if (messageId != -1L && convoId != -1L) {
             conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
+            updateConversationListSize = true;
         } else if (convoId != -1L && convoId != 0) {
             conversationListFragment = ConversationListFragment.newInstance(convoId);
+            updateConversationListSize = true;
         } else {
             conversationListFragment = ConversationListFragment.newInstance();
+        }
+
+        if (updateConversationListSize) {
+            final View content = findViewById(R.id.content);
+            content.post(() -> {
+                AnimationUtils.conversationListSize = content.getHeight();
+                AnimationUtils.toolbarSize = toolbar.getHeight();
+            });
         }
         
         otherFragment = null;

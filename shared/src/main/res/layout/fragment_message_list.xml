@@ -207,7 +207,7 @@
                 android:id="@+id/message_entry"
                 android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
                 android:imeOptions="actionSend|flagNoExtractUi"
-                android:maxLines="5" />
+                android:maxLines="@integer/message_list_fragment_line_entry_count" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/send"

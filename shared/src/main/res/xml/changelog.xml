@@ -20,7 +20,8 @@
         name="2.5.7"
         description="September 16th, 2017">
         <text>Improvements to image scaling</text>
-        <text>Fix: some users were re-receiving group MMS messages that they sent to the group</text>
+        <text>Fix for some users re-receiving group MMS messages that they sent</text>
+        <text>Landscape improvements</text>
         <text>Other various bug fixes</text>
     </version>
 
