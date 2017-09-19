@@ -1259,7 +1259,7 @@ object DataSource {
         }
 
         if (message.mimeType != MimeType.TEXT_PLAIN) {
-            val bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType)
+            val bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType, false)
             builder.append("<b>Size: </b>")
             builder.append(Formatter.formatShortFileSize(context, bytes.size.toLong()))
             builder.append("<br/>")

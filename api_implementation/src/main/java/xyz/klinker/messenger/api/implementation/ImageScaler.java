@@ -57,7 +57,7 @@ public class ImageScaler {
             int srcHeight = options.outHeight;
 
             // start generating bitmaps and checking the size against the max size
-            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 640);
+            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight);
             return rotateBasedOnExifData(context, uri, scaled);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,23 +65,21 @@ public class ImageScaler {
         }
     }
 
-    private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int srcWidth, int srcHeight, int maxSize) {
+    private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int srcWidth, int srcHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
-        if (maxSize < 100) {
-            maxSize = 50;
-        }
-
         // in sample size reduces the size of the image by this factor of 2
-        options.inSampleSize = calculateInSampleSize(srcHeight, srcWidth, maxSize);
+        options.inSampleSize = 4;
 
         // these options set up the image coloring
         options.inPreferredConfig = Bitmap.Config.RGB_565; // could be Bitmap.Config.ARGB_8888 for higher quality
         options.inDither = true;
 
+        int largerSide = srcHeight > srcWidth ? srcHeight : srcWidth;
+
         // these options set it up with the actual dimensions that you are looking for
-        options.inDensity = srcWidth;
-        options.inTargetDensity = maxSize * options.inSampleSize;
+        options.inDensity = largerSide;
+        options.inTargetDensity = largerSide * (1 / options.inSampleSize);
 
         // now we actually decode the image to these dimensions
         return BitmapFactory.decodeByteArray(byteArr, 0, arraySize, options);

@@ -463,7 +463,7 @@ object ApiUtils {
             call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
         } else {
             saveFirebaseFolderRef(accountId)
-            val bytes = BinaryUtils.getMediaBytes(context, data, mimeType)
+            val bytes = BinaryUtils.getMediaBytes(context, data, mimeType, true)
             uploadBytesToFirebase(accountId, bytes, deviceId, encryptionUtils, FirebaseUploadCallback {
                 val body = MessageBody(deviceId, deviceConversationId,
                         messageType, encryptionUtils.encrypt("firebase -1"),

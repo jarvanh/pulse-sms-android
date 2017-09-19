@@ -249,19 +249,23 @@ public class ImageUtils {
                 fileName += ".jpg";
             }
 
-            // start generating bitmaps and checking the size against the max size
-            Bitmap scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, 640);
+            int largerSide = srcHeight > srcWidth ? srcHeight : srcWidth;
+            int scaleAmount = 2;
+
+            Bitmap scaled = generateBitmap(byteArr, arraySize, largerSide, scaleAmount);
             scaled = rotateBasedOnExifData(context, uri, scaled);
             File file = createFileFromBitmap(context, fileName, scaled, mimeType);
+            Log.v("ImageUtils", "file size: " + file.length() + ", mms size limit: " + MmsSettings.get(context).maxImageSize);
 
-            int maxResolution = 500;
-            while (maxResolution > 0 && file.length() > MmsSettings.get(context).maxImageSize) {
+            while (scaleAmount < 16 && file.length() > MmsSettings.get(context).maxImageSize) {
                 scaled.recycle();
 
-                scaled = generateBitmap(byteArr, arraySize, srcWidth, srcHeight, maxResolution);
+                scaleAmount = scaleAmount * 2;
+                scaled = generateBitmap(byteArr, arraySize, largerSide, scaleAmount);
                 scaled = rotateBasedOnExifData(context, uri, scaled);
                 file = createFileFromBitmap(context, fileName, scaled, mimeType);
-                maxResolution -= 100;
+
+                Log.v("ImageUtils", "downsampling again. file size: " + file.length() + ", mms size limit: " + MmsSettings.get(context).maxImageSize);
             }
 
             return ImageUtils.createContentUri(context, file);
@@ -271,23 +275,19 @@ public class ImageUtils {
         }
     }
 
-    private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int srcWidth, int srcHeight, int maxSize) {
+    private static Bitmap generateBitmap(byte[] byteArr, int arraySize, int largerSide, int scaleAmount) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
-        if (maxSize < 100) {
-            maxSize = 50;
-        }
-
         // in sample size reduces the size of the image by this factor of 2
-        options.inSampleSize = calculateInSampleSize(srcHeight, srcWidth, maxSize);
+        options.inSampleSize = scaleAmount;
 
         // these options set up the image coloring
         options.inPreferredConfig = Bitmap.Config.RGB_565; // could be Bitmap.Config.ARGB_8888 for higher quality
         options.inDither = true;
 
         // these options set it up with the actual dimensions that you are looking for
-        options.inDensity = srcWidth;
-        options.inTargetDensity = maxSize * options.inSampleSize;
+        options.inDensity = largerSide;
+        options.inTargetDensity = largerSide * (1 / options.inSampleSize);
 
         // now we actually decode the image to these dimensions
         return BitmapFactory.decodeByteArray(byteArr, 0, arraySize, options);
@@ -295,16 +295,20 @@ public class ImageUtils {
 
     private static int calculateInSampleSize(int currentHeight, int currentWidth, int maxSize) {
         int inSampleSize = 1;
+        int largerSide = currentHeight > currentWidth ? currentHeight : currentWidth;
 
-        if (currentHeight > maxSize || currentWidth > maxSize) {
+        if (largerSide > maxSize) {
             // Calculate ratios of height and width to requested height and width
-            final int heightRatio = Math.round((float) currentHeight / (float) maxSize);
-            final int widthRatio = Math.round((float) currentWidth / (float) maxSize);
 
-            // Choose the smallest ratio as inSampleSize value, this will guarantee
-            // a final image with both dimensions larger than or equal to the
-            // requested height and width.
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+            Log.v("ImageUtils", "larger side: " + largerSide + ", max size: " + maxSize);
+
+            if (largerSide < maxSize * 2) {
+                inSampleSize = 2;
+            } else if (largerSide < maxSize * 4) {
+                inSampleSize = 4;
+            } else {
+                inSampleSize = 8;
+            }
         }
 
         return inSampleSize;
@@ -321,7 +325,7 @@ public class ImageUtils {
 
             out = new FileOutputStream(file);
             bitmap.compress(mimeType.equals(MimeType.IMAGE_PNG) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
-                    80, out);
+                    75, out);
         } catch (IOException e) {
             Log.e("Scale to Send", "failed to write output stream", e);
         } finally {

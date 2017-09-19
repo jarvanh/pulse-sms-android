@@ -18,6 +18,7 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
@@ -30,13 +31,16 @@ import java.io.InputStream;
  */
 public class BinaryUtils {
 
-    public static byte[] getMediaBytes(Context context, String uri, String mimeType) {
+    public static byte[] getMediaBytes(Context context, String uri, String mimeType, boolean scale) {
         byte[] bytes;
         if (mimeType.startsWith("image/") && !mimeType.equals("image/gif")) {
             try {
-                Bitmap bitmap = ImageScaler.scaleToSend(context, Uri.parse(uri));
+                Bitmap bitmap = scale ?
+                        ImageScaler.scaleToSend(context, Uri.parse(uri)) :
+                        MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(uri));
+
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(mimeType.equals("image/png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 75, baos);
+                bitmap.compress(mimeType.equals("image/png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 60, baos);
                 bytes = baos.toByteArray();
 
                 bitmap.recycle();

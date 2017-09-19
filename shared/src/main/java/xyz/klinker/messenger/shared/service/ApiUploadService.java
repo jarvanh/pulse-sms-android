@@ -469,7 +469,7 @@ public class ApiUploadService extends Service {
 
                 Log.v(TAG, "started uploading " + message.id);
 
-                byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType);
+                byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType, true);
                 apiUtils.uploadBytesToFirebase(account.getAccountId(), bytes, message.id, encryptionUtils, () -> {
                     completedMediaUploads++;
 
