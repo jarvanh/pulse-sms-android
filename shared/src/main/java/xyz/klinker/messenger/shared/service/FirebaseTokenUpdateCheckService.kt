@@ -6,6 +6,7 @@ import android.os.Build
 import com.google.firebase.iid.FirebaseInstanceId
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.Settings
 
 class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
@@ -21,14 +22,13 @@ class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
         val storedToken = sharedPrefs.getString(TOKEN_PREF_KEY, null)
 
         if (currentToken != null && currentToken != storedToken) {
+            AnalyticsHelper.updatingFcmToken(this)
             sharedPrefs.edit().putString(TOKEN_PREF_KEY, currentToken).apply()
 
-            if (storedToken != null) {
-                Thread {
-                    ApiUtils.updateDevice(Account.accountId, Integer.parseInt(Account.deviceId).toLong(), Build.MODEL,
-                            currentToken)
-                }.start()
-            }
+            Thread {
+                ApiUtils.updateDevice(Account.accountId, Integer.parseInt(Account.deviceId).toLong(), Build.MODEL,
+                        currentToken)
+            }.start()
         }
 
     }

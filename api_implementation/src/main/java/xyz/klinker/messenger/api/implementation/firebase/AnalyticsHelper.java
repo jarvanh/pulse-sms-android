@@ -111,14 +111,19 @@ public class AnalyticsHelper {
     }
 
 
-    // Bad Errors
+    // Other Events
     private static final String FAILED_TO_SAVE_SMS = "FAILED_TO_SAVE_SMS";
+    private static final String UPDATING_FCM_TOKEN = "UPDATING_FCM_TOKEN";
 
     public static void failedToSaveSms(Context context, String error) {
         Bundle bundle = new Bundle();
         bundle.putString("error", error);
 
         logEvent(context, FAILED_TO_SAVE_SMS, bundle);
+    }
+
+    public static void updatingFcmToken(Context context) {
+        logEvent(context, UPDATING_FCM_TOKEN);
     }
 
 }
