@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.FileUriExposedException;
 import android.preference.Preference;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -258,7 +259,12 @@ public class NotificationAlertsPreference extends Preference implements
             notification = builder.build();
         }
 
-        NotificationManagerCompat.from(getContext()).notify(1, notification);
+        try {
+            NotificationManagerCompat.from(getContext()).notify(1, notification);
+        } catch (FileUriExposedException e) {
+            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            NotificationManagerCompat.from(getContext()).notify(1, builder.build());
+        }
     }
 
     private Uri getRingtone() {

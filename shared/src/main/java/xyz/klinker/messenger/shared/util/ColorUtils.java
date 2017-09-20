@@ -154,7 +154,11 @@ public class ColorUtils {
      * @param activity the activity to find the views in.
      */
     public static void adjustDrawerColor(int color, Activity activity) {
-        adjustDrawerColor(color, false, activity);
+        try {
+            adjustDrawerColor(color, false, activity);
+        } catch (IllegalStateException e) {
+
+        }
     }
 
     /**

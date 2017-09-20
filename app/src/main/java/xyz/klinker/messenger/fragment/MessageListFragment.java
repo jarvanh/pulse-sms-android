@@ -396,8 +396,9 @@ public class MessageListFragment extends Fragment implements
             dismissOnStartup = false;
         }
 
-        new Handler().postDelayed(() -> source.readConversation(activity, getConversationId()),
-                AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        new Handler().postDelayed(() -> {
+            new Thread(() -> source.readConversation(activity, getConversationId())).start();
+        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
     }
 
     @Override
@@ -405,8 +406,9 @@ public class MessageListFragment extends Fragment implements
         super.onStop();
         dismissNotification = false;
 
-        new Handler().postDelayed(() -> source.readConversation(activity, getConversationId()),
-                AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        new Handler().postDelayed(() -> {
+            new Thread(() -> source.readConversation(activity, getConversationId())).start();
+        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
     }
 
     @Override
@@ -1351,17 +1353,21 @@ public class MessageListFragment extends Fragment implements
             return;
         }
 
-        prepareAttachHolder(0);
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                attachHolder != null) {
-            attachHolder.addView(new AttachImageView(activity, this,
-                    Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.color :
-                            getArguments().getInt(ARG_COLOR)));
-        } else {
-            attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
-                    Manifest.permission.READ_EXTERNAL_STORAGE);
+        try {
+            prepareAttachHolder(0);
+            if (ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                    attachHolder != null) {
+                attachHolder.addView(new AttachImageView(activity, this,
+                        Settings.get(activity).useGlobalThemeColor ?
+                                Settings.get(activity).mainColorSet.color :
+                                getArguments().getInt(ARG_COLOR)));
+            } else {
+                attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        } catch (NullPointerException e) {
+
         }
     }
 

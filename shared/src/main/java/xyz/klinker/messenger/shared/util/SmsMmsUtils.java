@@ -625,17 +625,19 @@ public class SmsMmsUtils {
      * @param context      the context to get the content provider with.
      * @param phoneNumbers the phone numbers to find the conversation with.
      */
-    public static void markConversationRead(Context context, String phoneNumbers) {
-        try {
-            Set<String> recipients = new HashSet<>();
-            Collections.addAll(recipients, phoneNumbers.split(", "));
-            long threadId = Utils.getOrCreateThreadId(context, recipients);
-            markConversationRead(context,
-                    ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
-        } catch (IllegalStateException | IllegalArgumentException | SQLException | SecurityException e) {
-            // the conversation doesn't exist
-            e.printStackTrace();
-        }
+    public static void markConversationRead(final Context context, final String phoneNumbers) {
+        new Thread(() -> {
+            try {
+                Set<String> recipients = new HashSet<>();
+                Collections.addAll(recipients, phoneNumbers.split(", "));
+                long threadId = Utils.getOrCreateThreadId(context, recipients);
+                markConversationRead(context,
+                        ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId), threadId);
+            } catch (IllegalStateException | IllegalArgumentException | SQLException | SecurityException e) {
+                // the conversation doesn't exist
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private static void markConversationRead(final Context context, final Uri threadUri,

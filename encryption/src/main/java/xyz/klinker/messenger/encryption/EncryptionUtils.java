@@ -60,7 +60,11 @@ public class EncryptionUtils {
         if (data == null) {
             return null;
         } else {
-            return encrypt(data.getBytes(StandardCharsets.UTF_8));
+            try {
+                return encrypt(data.getBytes(StandardCharsets.UTF_8));
+            } catch (OutOfMemoryError e) {
+                return data;
+            }
         }
     }
 

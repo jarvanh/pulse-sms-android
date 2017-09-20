@@ -92,11 +92,7 @@ public class MessengerApplication extends FirebaseApplication {
         return new FirebaseMessageHandler() {
             @Override
             public void handleMessage(Application application, String operation, String data) {
-                final Intent handleMessage = new Intent(application, FirebaseHandlerService.class);
-                handleMessage.setAction(MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED);
-                handleMessage.putExtra(EXTRA_OPERATION, operation);
-                handleMessage.putExtra(EXTRA_DATA, data);
-                startService(handleMessage);
+                new Thread(() -> FirebaseHandlerService.process(application, operation, data)).start();
             }
 
             @Override
