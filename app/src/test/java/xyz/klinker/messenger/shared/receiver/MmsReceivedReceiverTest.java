@@ -58,6 +58,9 @@ public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
 
         assertEquals("+15159911493",
                 receiver.getPhoneNumbers("+15159911493", "+15154224558", Arrays.asList("+15154224558"), context));
+
+        assertEquals("+15159911493",
+                receiver.getPhoneNumbers("+15159911493", "+15154224558", Arrays.asList("+1 (515) 422-4558"), context));
     }
 
     @Test
@@ -70,7 +73,6 @@ public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
 
         assertEquals("+15154808532, +15154196726, +15159911493",
                 receiver.getPhoneNumbers("+15159911493", "+15154808532, 5154224558, +15154196726", Arrays.asList("+15154224558"), context));
-
     }
 
 }

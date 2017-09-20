@@ -175,11 +175,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
         
         for (String number : toNumbers) {
             String contactName = ContactUtils.findContactNames(number, context);
-            String idMatcher = SmsMmsUtils.createIdMatcher(number).sevenLetter;
+            String idMatcher = SmsMmsUtils.createIdMatcher(number).sevenLetterNoFormatting;
 
             boolean myNumberMatches = false;
             for (String myNumber : myPossiblePhoneNumbers) {
-                String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetter;
+                String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetterNoFormatting;
                 if (myIdMatcher.equals(idMatcher)) {
                     myNumberMatches = true;
                 }

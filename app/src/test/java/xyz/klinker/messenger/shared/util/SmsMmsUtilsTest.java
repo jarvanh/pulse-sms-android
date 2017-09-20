@@ -18,13 +18,20 @@ package xyz.klinker.messenger.shared.util;
 
 import org.junit.Test;
 
+import xyz.klinker.messenger.MessengerRobolectricSuite;
+
 import static org.junit.Assert.assertEquals;
 
-public class SmsMmsUtilsTest {
+public class SmsMmsUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void createIdMatcherSingleNumber() {
         assertEquals("4211555", SmsMmsUtils.createIdMatcher("+15154211555").sevenLetter);
+    }
+
+    @Test
+    public void createIdMatcherWithCharacters() {
+        assertEquals("9911493", SmsMmsUtils.createIdMatcher("+(515) (991)-1493").sevenLetterNoFormatting);
     }
 
     @Test

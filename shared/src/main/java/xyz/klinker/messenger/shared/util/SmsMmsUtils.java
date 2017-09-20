@@ -139,6 +139,7 @@ public class SmsMmsUtils {
 
         List<String> fiveMatchers = new ArrayList<>();
         List<String> sevenMatchers = new ArrayList<>();
+        List<String> sevenMatchersNoFormatting = new ArrayList<>();
         List<String> eightMatchers = new ArrayList<>();
         List<String> tenMatchers = new ArrayList<>();
 
@@ -161,6 +162,18 @@ public class SmsMmsUtils {
                 sevenMatchers.add(n.substring(n.length() - 7));
             } else {
                 sevenMatchers.add(n);
+            }
+        }
+
+        for (String n : numbers) {
+            n = PhoneNumberUtils.clearFormatting(n);
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
+                sevenMatchersNoFormatting.add(n);
+            } else if (n.length() >= 7) {
+                sevenMatchersNoFormatting.add(n.substring(n.length() - 7));
+            } else {
+                sevenMatchersNoFormatting.add(n);
             }
         }
 
@@ -188,6 +201,7 @@ public class SmsMmsUtils {
 
         Collections.sort(fiveMatchers);
         Collections.sort(sevenMatchers);
+        Collections.sort(sevenMatchersNoFormatting);
         Collections.sort(eightMatchers);
         Collections.sort(tenMatchers);
 
@@ -201,6 +215,11 @@ public class SmsMmsUtils {
             sevenBuilder.append(m);
         }
 
+        StringBuilder sevenNoFormattingBuilder = new StringBuilder();
+        for (String m : sevenMatchersNoFormatting) {
+            sevenNoFormattingBuilder.append(m);
+        }
+
         StringBuilder eightBuilder = new StringBuilder();
         for (String m : eightMatchers) {
             eightBuilder.append(m);
@@ -211,7 +230,7 @@ public class SmsMmsUtils {
             fiveBuilder.append(m);
         }
 
-        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), eightBuilder.toString(), tenBuilder.toString());
+        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), sevenNoFormattingBuilder.toString(), eightBuilder.toString(), tenBuilder.toString());
     }
 
     /**
