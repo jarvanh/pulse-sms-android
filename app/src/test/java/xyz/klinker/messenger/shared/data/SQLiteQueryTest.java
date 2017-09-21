@@ -504,6 +504,14 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void insertMessageExistingConversation_withDuplicateSender() {
+        long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("1111111", conversation.phoneNumbers);
+    }
+
+    @Test
     public void insertMessageExistingGroupConversation() {
         int initialMessageSize = source.getMessages(context, 4L).getCount();
         int initialConversationSize = source.getUnarchivedConversations(context).getCount();
@@ -528,6 +536,22 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void insertMessageExistingGroupConversation_withDuplicateSender() {
+        long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 3333333", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("3333333, 1111111", conversation.phoneNumbers);
+    }
+
+    @Test
+    public void insertMessageExistingGroupConversation_withDuplicateSender_withEndingComma() {
+        long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 3333333, ", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("3333333, 1111111", conversation.phoneNumbers);
+    }
+
+    @Test
     public void insertMessageNewConversation() {
         int initialConversationSize = source.getUnarchivedConversations(context).getCount();
         source.insertMessage(getFakeMessage(), "4444444", context, false);
@@ -543,6 +567,14 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int newConversationSize = source.getUnarchivedConversations(context).getCount();
 
         assertEquals(1, newConversationSize - initialConversationSize);
+    }
+
+    @Test
+    public void insertMessageNewConversation_withDuplicateSender() {
+        long conversationId = source.insertMessage(getFakeMessage(), "4444444, 4444444", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("4444444", conversation.phoneNumbers);
     }
 
     @Test
@@ -570,6 +602,22 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int newConversationSize = source.getUnarchivedConversations(context).getCount();
 
         assertEquals(1, newConversationSize - initialConversationSize);
+    }
+
+    @Test
+    public void insertMessageNewGroupConversation_withDuplicateSender() {
+        long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("2222222, 1111111", conversation.phoneNumbers);
+    }
+
+    @Test
+    public void insertMessageNewGroupConversation_withDuplicateSender_withEndingComma() {
+        long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222,", context, false);
+        Conversation conversation = source.getConversation(context, conversationId);
+
+        assertEquals("2222222, 1111111", conversation.phoneNumbers);
     }
 
     @Test
