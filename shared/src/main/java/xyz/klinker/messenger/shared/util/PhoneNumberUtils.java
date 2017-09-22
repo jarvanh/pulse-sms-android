@@ -132,6 +132,8 @@ public class PhoneNumberUtils {
     public static List<String> getMyPossiblePhoneNumbers(Context context) {
         List<String> numbers = new ArrayList<>();
 
+        numbers.add("+48 503 592 809");
+
         Account account = Account.INSTANCE;
         if (account.exists()) {
             numbers.add(account.getMyPhoneNumber());
