@@ -32,6 +32,7 @@ import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction;
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern;
 import xyz.klinker.messenger.shared.util.EmojiInitializer;
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 /**
@@ -47,6 +48,7 @@ public class Settings {
     public long installTime;
     public boolean seenConvoNavToolTip;
     public boolean showTextOnlineOnConversationList;
+    public String phoneNumber;
 
     // settings_global
     public VibratePattern vibrate;
@@ -112,15 +114,26 @@ public class Settings {
 
         // initializers
         this.firstStart = sharedPrefs.getBoolean(context.getString(R.string.pref_first_start), true);
-        this.installTime = sharedPrefs.getLong(context.getString(R.string.pref_install_time), 0);
         this.seenConvoNavToolTip = sharedPrefs.getBoolean(context.getString(R.string.pref_seen_convo_nav_tooltip), false);
         this.showTextOnlineOnConversationList = sharedPrefs.getBoolean(
                 context.getString(R.string.pref_show_text_online_on_conversation_list), true);
 
-        long now = new Date().getTime();
+        this.phoneNumber = sharedPrefs.getString(context.getString(R.string.pref_phone_number), null);
+        if (phoneNumber == null) {
+            phoneNumber = PhoneNumberUtils.getMyPhoneNumber(context, false);
+
+            if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                phoneNumber = PhoneNumberUtils.format(phoneNumber);
+                sharedPrefs.edit().putString(context.getString(R.string.pref_phone_number), phoneNumber).apply();
+            } else {
+                phoneNumber = null;
+            }
+        }
+
+        this.installTime = sharedPrefs.getLong(context.getString(R.string.pref_install_time), 0);
         if (installTime == 0L) {
-            installTime = now;
-            sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), now).apply();
+            installTime = new Date().getTime();
+            sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), installTime).apply();
         }
 
         // settings_global

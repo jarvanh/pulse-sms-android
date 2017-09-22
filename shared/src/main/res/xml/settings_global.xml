@@ -16,6 +16,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+        android:key="@string/pref_phone_number"
+        android:title="@string/settings_phone_number" />
+
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_customization_category"
         android:title="@string/theme_settings">

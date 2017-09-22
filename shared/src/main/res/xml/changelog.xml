@@ -18,7 +18,8 @@
 
     <version
         name="2.5.7"
-        description="September 16th, 2017">
+        description="September 22th, 2017">
+        <text>Add the ability to specify your own phone number in settings</text>
         <text>Improvements to image scaling</text>
         <text>Fix for some users re-receiving group MMS messages that they sent</text>
         <text>Landscape improvements</text>
@@ -27,7 +28,7 @@
 
     <version
         name="2.5.6"
-        description="September 12th, 2017">
+        description="September 17th, 2017">
         <text>Fixes for receiving duplicate MMS on some carriers (please read the FAQ for information on what you need to do to prevent this)</text>
         <text>Improve handling of extremely large conversations</text>
         <text>Improved sync between web and phone</text>

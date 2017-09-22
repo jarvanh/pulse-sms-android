@@ -23,6 +23,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import com.klinker.android.send_message.Settings;
 import com.klinker.android.send_message.Utils;
 
 import java.util.ArrayList;
@@ -114,11 +115,15 @@ public class PhoneNumberUtils {
         }
     }
 
+    public static String getMyPhoneNumber(Context context) {
+        return getMyPhoneNumber(context, true);
+    }
+
     /**
      * Returns the most likely device phone number
      */
-    public static String getMyPhoneNumber(Context context) {
-        List<String> numbers = getMyPossiblePhoneNumbers(context);
+    public static String getMyPhoneNumber(Context context, boolean useSettings) {
+        List<String> numbers = getMyPossiblePhoneNumbers(context, useSettings);
         if (numbers.size() > 0) {
             return numbers.get(0);
         } else {
@@ -126,13 +131,23 @@ public class PhoneNumberUtils {
         }
     }
 
+    public static List<String> getMyPossiblePhoneNumbers(Context context) {
+        return getMyPossiblePhoneNumbers(context, true);
+    }
+
     /**
      * Returns the devices possible phone numbers. (Account, Lollipop method, legacy method)
      */
-    public static List<String> getMyPossiblePhoneNumbers(Context context) {
+    public static List<String> getMyPossiblePhoneNumbers(Context context, boolean useSettings) {
         List<String> numbers = new ArrayList<>();
 
-        numbers.add("+48 503 592 809");
+        if (useSettings) {
+            xyz.klinker.messenger.shared.data.Settings settings =
+                    xyz.klinker.messenger.shared.data.Settings.get(context);
+            if (settings.phoneNumber != null) {
+                numbers.add(settings.phoneNumber);
+            }
+        }
 
         Account account = Account.INSTANCE;
         if (account.exists()) {

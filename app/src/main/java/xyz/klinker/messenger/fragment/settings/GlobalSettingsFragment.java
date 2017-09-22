@@ -55,6 +55,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         initThemeRedirect();
         initMmsConfigurationRedirect();
 
+        initPhoneNumber();
         initKeyboardLayout();
         initSwipeDelete();
         initNotificationActions();
@@ -85,6 +86,13 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                     SettingsActivity.startMmsSettings(getActivity());
                     return false;
                 });
+    }
+
+    private void initPhoneNumber() {
+        if (Account.INSTANCE.exists() && !Account.INSTANCE.getPrimary()) {
+            Preference preference = findPreference(getString(R.string.pref_phone_number));
+            getPreferenceScreen().removePreference(preference);
+        }
     }
 
     private void initKeyboardLayout() {
