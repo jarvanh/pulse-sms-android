@@ -109,7 +109,8 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context);
             List<ContentValues> values = SmsMmsUtils.processMessage(lastMessage, -1L, context);
 
-            if (isReceivingMessageFromThemself(context, from) && !phoneNumbers.contains(",")) {
+            if (isReceivingMessageFromThemself(context, from) && phoneNumbers.contains(",")) {
+                // a group message, coming from themselves, should not be saved
                 return null;
             }
 
@@ -130,7 +131,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     snippet = message.data;
                 }
 
-                if (phoneNumbers.split(", ").length == 1) {
+                if (!phoneNumbers.contains(",")) {
                     message.from = null;
                 }
 
@@ -171,21 +172,24 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     @VisibleForTesting
     protected String getPhoneNumbers(String from, String to, List<String> myPossiblePhoneNumbers, Context context) {
         String[] toNumbers = to.split(", ");
+        String fromMatcher = SmsMmsUtils.createIdMatcher(from).sevenLetterNoFormatting;
+
         StringBuilder builder = new StringBuilder();
         
         for (String number : toNumbers) {
             String contactName = ContactUtils.findContactNames(number, context);
             String idMatcher = SmsMmsUtils.createIdMatcher(number).sevenLetterNoFormatting;
 
-            boolean myNumberMatches = false;
+            boolean matchesFromNumber = idMatcher.equals(fromMatcher);
+            boolean matchesMyNumber = false;
             for (String myNumber : myPossiblePhoneNumbers) {
                 String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetterNoFormatting;
                 if (myIdMatcher.equals(idMatcher)) {
-                    myNumberMatches = true;
+                    matchesMyNumber = true;
                 }
             }
-            
-            if (!myNumberMatches && !contactName.toLowerCase().equals("me")) {
+
+            if (!matchesFromNumber && !matchesMyNumber && !contactName.toLowerCase().equals("me") && !number.isEmpty()) {
                 builder.append(number);
                 builder.append(", ");
             }
