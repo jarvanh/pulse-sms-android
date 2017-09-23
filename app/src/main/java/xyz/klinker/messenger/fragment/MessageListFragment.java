@@ -134,6 +134,7 @@ import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper;
 import xyz.klinker.messenger.shared.util.MessageCountHelper;
 import xyz.klinker.messenger.shared.util.MessageListRefreshMonitor;
 import xyz.klinker.messenger.shared.util.NotificationUtils;
+import xyz.klinker.messenger.shared.util.PerformanceProfiler;
 import xyz.klinker.messenger.shared.util.PermissionsUtils;
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils;
 import xyz.klinker.messenger.shared.util.SendUtils;
@@ -940,7 +941,7 @@ public class MessageListFragment extends Fragment implements
     public void loadMessages(boolean addedNewMessage) {
         final Handler handler = new Handler();
         new Thread(() -> {
-            Log.v(TAG, "loading messages");
+            PerformanceProfiler.INSTANCE.logEvent("loading messages");
 
             long conversationId = getConversationId();
 
@@ -986,8 +987,7 @@ public class MessageListFragment extends Fragment implements
 
                 final int position = findMessagePositionFromId(cursor);
 
-                Log.v("message_load", "load took " + (
-                        System.currentTimeMillis() - startTime) + " ms");
+                PerformanceProfiler.INSTANCE.logEvent("finished loading messages");
 
                 listRefreshMonitor.decrementRefreshThreadsCount();
                 if (listRefreshMonitor.shouldLoadMessagesToTheUi()) {

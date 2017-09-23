@@ -74,7 +74,7 @@ object DataSource {
 
     @Synchronized
     private fun database(context: Context): SQLiteDatabase {
-        Log.v("DataSource", "getting datasource")
+        PerformanceProfiler.logEvent("getting datasource")
 
         if (_database == null) {
             _dbHelper = DatabaseSQLiteHelper(context)

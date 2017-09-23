@@ -56,6 +56,8 @@ public class AnimationUtils {
      * @param itemView the item to animate.
      */
     public static void expandConversationListItem(View itemView) {
+        PerformanceProfiler.INSTANCE.logEvent("expanding conversation item");
+
         int extraExpand = itemView.getResources()
                 .getDimensionPixelSize(R.dimen.extra_expand_distance);
         animateConversationListItem(itemView, 0, itemView.getRootView().getHeight(),
@@ -64,7 +66,7 @@ public class AnimationUtils {
 
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
         recyclerView.animate().alpha(0f)
-                .setDuration(EXPAND_CONVERSATION_DURATION / 2)
+                .setDuration(EXPAND_CONVERSATION_DURATION / 5)
                 .setInterpolator(new FastOutLinearInInterpolator())
                 .start();
     }
@@ -75,6 +77,8 @@ public class AnimationUtils {
      * @param itemView the item to animate.
      */
     public static void contractConversationListItem(View itemView) {
+        PerformanceProfiler.INSTANCE.logEvent("contracting conversation item");
+
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
         if (recyclerView != null) {
             final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
@@ -88,7 +92,7 @@ public class AnimationUtils {
 
             recyclerView.animate().alpha(1f)
                     .setStartDelay(100)
-                    .setDuration(CONTRACT_CONVERSATION_DURATION)
+                    .setDuration(EXPAND_CONVERSATION_DURATION)
                     .setInterpolator(new DecelerateInterpolator())
                     .start();
         }
