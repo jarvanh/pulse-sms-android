@@ -250,7 +250,7 @@ public class ImageUtils {
             }
 
             int largerSide = srcHeight > srcWidth ? srcHeight : srcWidth;
-            int scaleAmount = 2;
+            int scaleAmount = 1;
 
             Bitmap scaled = generateBitmap(byteArr, arraySize, largerSide, scaleAmount);
             scaled = rotateBasedOnExifData(context, uri, scaled);
