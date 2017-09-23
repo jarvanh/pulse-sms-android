@@ -504,7 +504,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             String mimeType = messages.getString(messages.getColumnIndex(Message.COLUMN_MIME_TYPE));
 
             if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
-                type = Message.TYPE_SENT;
+                if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
+                        mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
+                    type = Message.TYPE_IMAGE_SENT;
+                } else {
+                    type = Message.TYPE_SENT;
+                }
             } else if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
                     mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
                 if (type == Message.TYPE_RECEIVED) {
