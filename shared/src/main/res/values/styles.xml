@@ -85,4 +85,8 @@
         <item name="android:src">@drawable/ic_overflow</item>
     </style>
 
+    <style name="EllipsizeText">
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>
