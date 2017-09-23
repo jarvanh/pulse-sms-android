@@ -69,7 +69,7 @@ public class ImageScaler {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
         // in sample size reduces the size of the image by this factor of 2
-        options.inSampleSize = 4;
+        options.inSampleSize = 2;
 
         // these options set up the image coloring
         options.inPreferredConfig = Bitmap.Config.RGB_565; // could be Bitmap.Config.ARGB_8888 for higher quality
