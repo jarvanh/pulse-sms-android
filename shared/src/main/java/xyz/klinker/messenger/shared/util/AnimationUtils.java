@@ -20,11 +20,15 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -37,8 +41,11 @@ import xyz.klinker.messenger.shared.R;
  */
 public class AnimationUtils {
 
-    public static final int EXPAND_CONVERSATION_DURATION = 200;
-    private static final int PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
+    public static final int EXPAND_CONVERSATION_DURATION = 250;
+    public static final int CONTRACT_CONVERSATION_DURATION = 175;
+
+    private static final int EXPAND_PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
+    private static final int CONTRACT_PERIPHERAL_DURATION = 100;
 
     public static int toolbarSize = Integer.MIN_VALUE;
     public static int conversationListSize = Integer.MIN_VALUE;
@@ -53,7 +60,13 @@ public class AnimationUtils {
                 .getDimensionPixelSize(R.dimen.extra_expand_distance);
         animateConversationListItem(itemView, 0, itemView.getRootView().getHeight(),
                 0, (int) (-1 * (itemView.getHeight() + itemView.getY() + extraExpand)),
-                new AccelerateInterpolator());
+                new FastOutLinearInInterpolator(), EXPAND_CONVERSATION_DURATION);
+
+        final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
+        recyclerView.animate().alpha(0f)
+                .setDuration(EXPAND_CONVERSATION_DURATION / 2)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .start();
     }
 
     /**
@@ -71,7 +84,13 @@ public class AnimationUtils {
 
             AnimationUtils.animateConversationListItem(itemView, heightToUse, 0,
                     (int) recyclerView.getTranslationY(), 0,
-                    new DecelerateInterpolator());
+                    new DecelerateInterpolator(), CONTRACT_CONVERSATION_DURATION);
+
+            recyclerView.animate().alpha(1f)
+                    .setStartDelay(100)
+                    .setDuration(CONTRACT_CONVERSATION_DURATION)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
         }
     }
 
@@ -90,7 +109,7 @@ public class AnimationUtils {
     private static void animateConversationListItem(final View itemView,
                                                     final int fromBottom, final int toBottom,
                                                     final int startY, final int translateY,
-                                                    Interpolator interpolator) {
+                                                    Interpolator interpolator, final int duration) {
         final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)
                 itemView.getLayoutParams();
 
@@ -100,7 +119,7 @@ public class AnimationUtils {
             itemView.invalidate();
         });
         animator.setInterpolator(interpolator);
-        animator.setDuration(EXPAND_CONVERSATION_DURATION);
+        animator.setDuration(duration);
         animator.start();
 
         final RecyclerView recyclerView = (RecyclerView) itemView.getParent();
@@ -124,7 +143,7 @@ public class AnimationUtils {
             recyclerView.requestLayout();
         });
         recyclerAnimator.setInterpolator(interpolator);
-        recyclerAnimator.setDuration(EXPAND_CONVERSATION_DURATION);
+        recyclerAnimator.setDuration(duration);
         recyclerAnimator.start();
     }
 
@@ -153,7 +172,7 @@ public class AnimationUtils {
 
         animateActivityWithConversation(toolbar, fragmentContainer, fab,
                 toolbarTranslate, 0, fragmentContainerTranslate, fabTranslate,
-                new AccelerateInterpolator());
+                new FastOutLinearInInterpolator(), EXPAND_PERIPHERAL_DURATION);
         fab.hide();
     }
 
@@ -179,7 +198,7 @@ public class AnimationUtils {
 
         animateActivityWithConversation(toolbar, fragmentContainer, fab, 0,
                 (int) fragmentContainer.getTranslationY(), 0, 0,
-                new DecelerateInterpolator());
+                new FastOutLinearInInterpolator(), CONTRACT_PERIPHERAL_DURATION);
         fab.show();
     }
 
@@ -199,9 +218,9 @@ public class AnimationUtils {
                                                         View fab, int toolbarTranslate,
                                                         int containerStart, int containerTranslate,
                                                         int fabTranslate,
-                                                        Interpolator interpolator) {
+                                                        Interpolator interpolator, final int duration) {
         toolbar.animate().withLayer().translationY(toolbarTranslate)
-                .setDuration(PERIPHERAL_DURATION)
+                .setDuration(duration)
                 .setInterpolator(interpolator)
                 .setListener(null);
 
@@ -225,7 +244,7 @@ public class AnimationUtils {
             fragmentContainer.requestLayout();
         });
         containerAnimator.setInterpolator(interpolator);
-        containerAnimator.setDuration(PERIPHERAL_DURATION);
+        containerAnimator.setDuration(duration);
         containerAnimator.start();
     }
 

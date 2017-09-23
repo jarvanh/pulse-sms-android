@@ -74,6 +74,8 @@ object DataSource {
 
     @Synchronized
     private fun database(context: Context): SQLiteDatabase {
+        Log.v("DataSource", "getting datasource")
+
         if (_database == null) {
             _dbHelper = DatabaseSQLiteHelper(context)
             _database = _dbHelper!!.writableDatabase

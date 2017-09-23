@@ -16,6 +16,10 @@ class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
     }
 
     override fun onHandleIntent(intent: Intent?) {
+        if (!Account.exists()) {
+           return
+        }
+
         val sharedPrefs = Settings.get(this).getSharedPrefs(this)
 
         val currentToken = FirebaseInstanceId.getInstance().token
