@@ -81,7 +81,7 @@ public class AboutFragment extends MaterialPreferenceFragmentCompat {
 
         findPreference(getString(R.string.pref_supported_platforms))
                 .setOnPreferenceClickListener(preference -> {
-                    openWebsite("https://messenger.klinkerapps.com/supported_platforms.html");
+                    openWebsite("https://messenger.klinkerapps.com/overview");
                     return true;
                 });
 
