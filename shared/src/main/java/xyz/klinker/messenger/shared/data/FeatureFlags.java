@@ -65,6 +65,7 @@ public class FeatureFlags {
     private static final String FLAG_HEADS_UP_ON_GROUP_PRIORITY = "flag_heads_up_group_priority";
     private static final String FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF = "flag_rereceive_group_message_from_self";
     private static final String FLAG_BLACK_NAV_BAR = "flag_black_nav_bar";
+    private static final String FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -89,6 +90,7 @@ public class FeatureFlags {
     // need tested
     public boolean AUTO_RETRY_FAILED_MESSAGES;
     public boolean BLACK_NAV_BAR;
+    public boolean REENABLE_SENDING_STATUS_ON_NON_PRIMARY;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -104,6 +106,7 @@ public class FeatureFlags {
 
         AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
         BLACK_NAV_BAR = getValue(sharedPrefs, FLAG_BLACK_NAV_BAR);
+        REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -136,6 +139,9 @@ public class FeatureFlags {
                 break;
             case FLAG_BLACK_NAV_BAR:
                 BLACK_NAV_BAR = flag;
+                break;
+            case FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY:
+                REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag;
                 break;
         }
     }

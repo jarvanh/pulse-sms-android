@@ -128,6 +128,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             ignoreSendingStatus = false;
         }
 
+        if (FeatureFlags.get(fragment.getActivity()).REENABLE_SENDING_STATUS_ON_NON_PRIMARY) {
+            ignoreSendingStatus = false;
+        }
+
         stylingHelper = new MessageListStylingHelper(fragment.getActivity());
 
         if (fragment.getMultiSelect() != null)
