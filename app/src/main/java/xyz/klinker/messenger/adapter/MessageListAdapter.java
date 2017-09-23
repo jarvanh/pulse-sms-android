@@ -128,7 +128,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             ignoreSendingStatus = false;
         }
 
-        if (FeatureFlags.get(fragment.getActivity()).REENABLE_SENDING_STATUS_ON_NON_PRIMARY) {
+        if (Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REENABLE_SENDING_STATUS_ON_NON_PRIMARY) {
             ignoreSendingStatus = false;
         }
 
