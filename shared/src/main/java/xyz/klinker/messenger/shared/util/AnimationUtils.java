@@ -45,7 +45,7 @@ public class AnimationUtils {
     public static final int CONTRACT_CONVERSATION_DURATION = 175;
 
     private static final int EXPAND_PERIPHERAL_DURATION = EXPAND_CONVERSATION_DURATION;
-    private static final int CONTRACT_PERIPHERAL_DURATION = 100;
+    private static final int CONTRACT_PERIPHERAL_DURATION = CONTRACT_CONVERSATION_DURATION;
 
     public static int toolbarSize = Integer.MIN_VALUE;
     public static int conversationListSize = Integer.MIN_VALUE;
