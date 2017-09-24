@@ -1,8 +1,8 @@
 This release:<br/>
-- Improves handling of extremely large message threads<br/>
-- Fixes issue with some devices receiving duplicate picture messages, on specific carriers (please see the FAQ for more information)<br/>
-- Fixes a ton of little bugs that had been reported<br/>
-- Fixes crashes that had been reported<br/>
-- Power management improvements<br/>
-- Improves performance<br/>
+- Adds the ability to specify the devices phone number manually, in settings<br/>
+- Improves performance and animations<br/>
+- Improves image scaling<br/>
+- Fixes some MMS issues for group and picture messages<br/>
+- UI tweaks<br/>
+- Device specific bug fixes<br/>
 + way more in the <i>about</i> section of the app!

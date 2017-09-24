@@ -22,10 +22,12 @@
         <text>Add the ability to specify your own phone number in settings</text>
         <text>Performance and animation improvements</text>
         <text>Improvements to image scaling</text>
+        <text>Fix display issues with returning to the conversation list when the keyboard is active</text>
         <text>Fix for some users re-receiving group MMS messages that they sent</text>
         <text>Landscape improvements</text>
         <text>Other various bug fixes</text>
         <text>Improvements around Essential Phone</text>
+        <text>Dependency updates</text>
     </version>
 
     <version
