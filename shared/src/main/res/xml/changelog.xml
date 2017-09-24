@@ -20,6 +20,7 @@
         name="2.5.7"
         description="September 22th, 2017">
         <text>Add the ability to specify your own phone number in settings</text>
+        <text>Performance and animation improvements</text>
         <text>Improvements to image scaling</text>
         <text>Fix for some users re-receiving group MMS messages that they sent</text>
         <text>Landscape improvements</text>
