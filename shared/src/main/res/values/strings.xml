@@ -493,13 +493,20 @@
         Use the default channel to customize any conversations that you have not created an individual channel for.</string>
     <string name="off">Off</string>
     <string name="on">On</string>
-    <string name="rate_it">Rate It!</string>
-    <string name="love_pulse_question">Love Pulse?</string>
-    <string name="give_a_rating">Consider giving it a rating or sharing it with your friends!\n\n
-        Your 5 star reviews warm my heart :)</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
         https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">Verifying password…</string>
+
+
+    <!-- Rate it -->
+    <string name="rate_it">Rate It!</string>
+    <string name="rate_it_title">Top ratings go a long way</string>
+    <string name="rate_it_summary"><b>5-star ratings</b> are extremely helpful to the app\'s growth
+        and visibility on the Play Store. If you want to see the app <i>continue to soar</i>, help me out!</string>
+    <string name="rate_it_not_ready">Not ready to rate it? No problem. Back out of this dialog and I will never ask again.</string>
+    <string name="love_pulse_question">Love Pulse?</string>
+    <string name="give_a_rating">Consider giving it a rating or sharing it with your friends!\n\n
+        Your 5 star reviews warm my heart :)</string>
 
 
     <!-- Times -->

@@ -7,9 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.widget.Toast;
 
 import xyz.klinker.messenger.shared.R;
+import xyz.klinker.messenger.shared.activity.RateItDialog;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 
@@ -50,24 +52,8 @@ public class PromotionUtils {
         sharedPreferences.edit().putBoolean("show_rate_it", false)
                 .apply();
 
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.love_pulse_question)
-                .setMessage(R.string.give_a_rating)
-                .setPositiveButton(R.string.rate_it, (dialog, which) -> {
-                    Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
-                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-
-                    try {
-                        context.startActivity(goToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        Toast.makeText(context, "Couldn't launch the Play Store!", Toast.LENGTH_SHORT).show();
-                    }
-                }).setNegativeButton(R.string.share, (dialog, which) -> {
-                    Intent share = new Intent(Intent.ACTION_SEND);
-                    share.setType(MimeType.TEXT_PLAIN);
-                    share.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_promo));
-
-                    context.startActivity(Intent.createChooser(share, context.getString(R.string.share)));
-                }).show();
+        new Handler().postDelayed(() ->
+                context.startActivity(new Intent(context, RateItDialog.class)),
+                1000);
     }
 }

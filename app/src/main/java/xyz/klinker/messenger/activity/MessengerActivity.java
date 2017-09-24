@@ -151,7 +151,6 @@ public class  MessengerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         new UpdateUtils(this).checkForUpdate();
-        new PromotionUtils(this).checkPromotions();
 
         if (FeatureFlags.get(this).BLACK_NAV_BAR && Settings.get(this).isCurrentlyDarkTheme()) {
             getWindow().setNavigationBarColor(Color.BLACK);
@@ -211,6 +210,7 @@ public class  MessengerActivity extends AppCompatActivity
         super.onStart();
         requestPermissions();
 
+        new PromotionUtils(this).checkPromotions();
         new UnreadBadger(this).clearCount();
 
         if (conversationListFragment != null && conversationListFragment.isExpanded()) {
