@@ -54,6 +54,6 @@ public class PromotionUtils {
 
         new Handler().postDelayed(() ->
                 context.startActivity(new Intent(context, RateItDialog.class)),
-                1000);
+                500);
     }
 }

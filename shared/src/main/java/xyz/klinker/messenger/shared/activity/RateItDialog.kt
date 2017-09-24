@@ -38,10 +38,10 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
                 quickViewReveal(findViewById<View>(R.id.bottom_text_2), startTime + 75)
 
                 quickViewReveal(findViewById<View>(R.id.star_1), startTime)
-                quickViewReveal(findViewById<View>(R.id.star_2), startTime + 75)
-                quickViewReveal(findViewById<View>(R.id.star_3), startTime + 150)
-                quickViewReveal(findViewById<View>(R.id.star_4), startTime + 225)
-                quickViewReveal(findViewById<View>(R.id.star_5), startTime + 300)
+                quickViewReveal(findViewById<View>(R.id.star_2), startTime + 50)
+                quickViewReveal(findViewById<View>(R.id.star_3), startTime + 100)
+                quickViewReveal(findViewById<View>(R.id.star_4), startTime + 150)
+                quickViewReveal(findViewById<View>(R.id.star_5), startTime + 200)
             }
         })
     }
