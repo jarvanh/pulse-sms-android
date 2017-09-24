@@ -111,6 +111,19 @@ public class AnalyticsHelper {
     }
 
 
+    // Rate it events
+    private static final String RATE_IT_PROMPT_SHOWN = "RATE_IT_SHOWN";
+    private static final String RATE_IT_CLICKED = "RATE_IT_CLICKED";
+
+    public static void rateItPromptShown(Context context) {
+        logEvent(context, RATE_IT_PROMPT_SHOWN);
+    }
+
+    public static void rateItClicked(Context context) {
+        logEvent(context, RATE_IT_CLICKED);
+    }
+
+
     // Other Events
     private static final String FAILED_TO_SAVE_SMS = "FAILED_TO_SAVE_SMS";
     private static final String UPDATING_FCM_TOKEN = "UPDATING_FCM_TOKEN";

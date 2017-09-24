@@ -3,20 +3,30 @@ package xyz.klinker.messenger.shared.activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import xyz.klinker.android.floating_tutorial.FloatingTutorialActivity
 import xyz.klinker.android.floating_tutorial.TutorialFinishedListener
 import xyz.klinker.android.floating_tutorial.TutorialPage
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.DensityUtil
 
 class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AnalyticsHelper.rateItPromptShown(this)
+    }
+
     override fun onTutorialFinished() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)))
+            AnalyticsHelper.rateItClicked(this)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, "Couldn't launch the Play Store!", Toast.LENGTH_SHORT).show()
         }
@@ -28,7 +38,14 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
                 setContentView(R.layout.tutorial_page_rate_it)
                 setNextButtonText(R.string.rate_it)
 
-                findViewById<View>(R.id.top_text).setBackgroundColor(Settings.get(getActivity()).mainColorSet.color)
+
+                val topText = findViewById<View>(R.id.top_text) as TextView
+                val primaryColor = Settings.get(getActivity()).mainColorSet.color
+
+                topText.setBackgroundColor(primaryColor)
+                if (!ColorUtils.isColorDark(primaryColor)) {
+                    topText.setTextColor(resources.getColor(R.color.tutorial_light_background_indicator))
+                }
             }
 
             override fun animateLayout() {
