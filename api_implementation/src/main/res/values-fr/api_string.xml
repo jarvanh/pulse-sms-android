@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 <resources>
     <string name="api_login">Se connecter</string>
     <string name="api_signup">S\'enregistrer</string>
-    <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez vous inscrire auprès de l\'appareil principal qui a un numéro de téléphone d\'abord !</string>
+    <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez premièrement vous enregistrer auprès de l\'appareil principal qui possède un numéro de téléphone !</string>
     <string name="api_skip_signup">Ou, si vous voulez juste utiliser l\'application sur cet appareil et non sur le réseau avec des fonctionnalités telles que les SMS/MMS à partir de votre tablette ou d\'un ordinateur, vous pouvez ignorer cette étape.</string>
     <string name="api_skip">Ignorer</string>
-    <string name="api_email">Adresse email</string>
+    <string name="api_email">Adresse courriel</string>
     <string name="api_password">Mot de passe</string>
     <string name="api_forgot_password">Mot de passe oublié ?</string>
     <string name="api_password_confirmation">Confirmez votre mot de passe</string>
@@ -31,24 +31,26 @@
     <string name="api_add_second_primary_device">Il semble que vous ayez déjà un appareil principal (%1$s) pour votre compte, et vous n\'en avez le droit qu\'à un seul. Voulez-vous remplacer l\'appareil principal par celui-ci, ce qui supprimerait l\'ancien ?</string>
     <string name="api_yes">Oui</string>
     <string name="api_no">Non</string>
-    <string name="api_no_email">L\'adresse n\'a pas été entrée</string>
-    <string name="api_email_invalid">Adresse mail invalide</string>
-    <string name="api_no_password">Pas de mot de passe entré</string>
-    <string name="api_no_password_confirmation">Le mot de passe de confirmation n\'a pas été entré</string>
+    <string name="api_no_email">Aucune adresse courriel n\'a été saisie</string>
+    <string name="api_email_invalid">Adresse courriel non valide</string>
+    <string name="api_no_password">Pas de mot de passe saisie</string>
+    <string name="api_no_password_confirmation">Le mot de passe de confirmation n\'a pas été saisie</string>
     <string name="api_password_mismatch">Les mots de passe ne correspondent pas</string>
-    <string name="api_no_name">Pas de nom entré</string>
-    <string name="api_no_phone_number">Pas de numéro de téléphone entré</string>
+    <string name="api_no_name">Pas de nom saisie</string>
+    <string name="api_no_phone_number">Pas de numéro de téléphone saisie</string>
     <string name="api_login_error">Une erreur s\'est produite lors de la connexion, peut-être une mauvaise adresse e-mail ou un mauvais mot de passe ?</string>
     <string name="api_activate_summary">Connectez-vous pour recevoir tous vos messages sur cet appareil !</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Rediriger vers</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">sur un appareil mobile ou sur un ordinateur.</string>
     <string name="api_activate_2_1">Sur le site web</string>
     <string name="api_activate_2_2">Entrer le code à droite</string>
     <string name="api_activate_2_3">pour connecter votre compte</string>
     <string name="api_confirm_password">S\'il vous plaît, veuillez confirmer votre mot de passe :</string>
-    <string name="api_wrong_password">Confirmation échouée. Votre mot de passe est correct?</string>
+    <string name="api_wrong_password">Confirmation échouée. Votre mot de passe est correct ?</string>
     <string name="api_email_taken">Erreur de connexion, avez-vous déjà un compte associé à cette adresse mail ?</string>
     <string name="api_confirm">Confirmer</string>
     <string name="api_continue">Continuer</string>

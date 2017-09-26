@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">В архив</string>
     <string name="menu_move_to_inbox">Переместить во Входящие</string>
     <string name="menu_conversation_information">Информация о диалоге</string>
+    <string name="menu_copy_phone_number">Скопировать номер</string>
     <string name="menu_conversation_blacklist">Добавить в чёрный список</string>
     <string name="menu_conversation_schedule">Отложить сообщение</string>
     <string name="menu_contact_settings">Настройки беседы</string>
@@ -223,6 +224,8 @@
     <string name="app_version">Версия приложения</string>
     <string name="account_information">Об учётной записи</string>
     <string name="account_actions">Действия с учётной записью</string>
+    <string name="danger_zone">Опасные опции</string>
+    <string name="be_careful_using_these_settings">Следуйте инструкциям и будьте осторожны, используя эти опции.</string>
     <string name="device_id">ID устройства</string>
     <string name="device_info">Об устройстве</string>
     <string name="website">Сайт</string>
@@ -295,10 +298,14 @@
     <string name="sound_effects">Звуковые эффекты</string>
     <string name="delivery_reports">Отчёт о доставке</string>
     <string name="theme_settings">Персонализация</string>
+    <string name="conversation_list_category">Список диалогов</string>
+    <string name="general_category">Основные</string>
+    <string name="theme_settings_redirect">Тема</string>
     <string name="base_theme">Основная тема</string>
     <string name="global_theme_color">Цвет темы</string>
     <string name="font_size">Размер шрифта</string>
     <string name="rounder_bubbles">Закруглённые пузырьки сообщений</string>
+    <string name="apply_theme_globally">Применить для всех диалогов</string>
     <string name="swipe_delete">Удалить жестом</string>
     <string name="blacklist_hint">Номер для добавления в ч/с</string>
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
@@ -344,6 +351,7 @@
     <string name="alert_types">Виды уведомлений</string>
     <string name="alert_types_summary">Различные настройки уведомлений</string>
     <string name="strip_unicode">Не использовать Unicode</string>
+    <string name="use_internal_browser">Использовать встроенный браузер</string>
     <string name="strip_unicode_summary">Специальные символы будут убраны из отправляемого сообщения</string>
     <string name="giffgaff_delivery">Отчёт о доставке Giffgaff</string>
     <string name="notification_actions">Быстрые действия в уведомлениях</string>
@@ -355,6 +363,9 @@
     <string name="refresh_firebase_warning">Если вы запустите этот процесс, учтите, что по его завершении вы <b>должны</b> заново авторизоваться со всех ваших устройств. Продолжить?</string>
     <string name="show_conversation_history">Показывать предыдущие сообщения</string>
     <string name="show_conversation_history_summary">В уведомлениях будут отображаться предыдущие сообщения</string>
+    <string name="emoji_style">Стиль emoji</string>
+    <string name="emoji_style_default">Системные</string>
+    <string name="emoji_style_android_o">Google\'s Android O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Максимальный размер изображения</string>
     <string name="use_group_mms">Использовать групповые MMS</string>
@@ -421,6 +432,7 @@
     <string name="minutes">Минуты</string>
     <string name="test">Тест</string>
     <string name="channel_settings">Настройки каналов уведомлений</string>
+    <string name="restore_default_channel_settings">Восстановить стандартные настройки уведомлений</string>
     <string name="channels">Каналы</string>
     <string name="off">Не включать</string>
     <string name="on">Включать</string>

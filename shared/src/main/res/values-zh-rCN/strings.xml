@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -45,9 +45,10 @@
     <string name="menu_archive_conversation">归档对话</string>
     <string name="menu_move_to_inbox">移到收件箱</string>
     <string name="menu_conversation_information">对话详情</string>
+    <string name="menu_copy_phone_number">复制号码</string>
     <string name="menu_conversation_blacklist">黑名单列表</string>
     <string name="menu_conversation_schedule">定时发送</string>
-    <string name="menu_contact_settings">联系人设置</string>
+    <string name="menu_contact_settings">会话设置</string>
     <string name="menu_group_settings">群组设置</string>
     <string name="menu_snooze_off">关闭</string>
     <string name="menu_snooze_1">1小时</string>
@@ -81,6 +82,8 @@
     </plurals>
     <string name="undo">撤销</string>
     <string name="enter_search">搜索</string>
+    <string name="convo_list_try_it">现在试用！</string>
+    <string name="convo_list_not_now">暂时不</string>
     <!-- Search Screen -->
     <string name="conversations">会话</string>
     <string name="messages">消息</string>
@@ -192,6 +195,15 @@
     <string name="new_message">新信息</string>
     <string name="received_new_message">你收到了新内容</string>
     <string name="media">媒体</string>
+    <string name="default_notifications_channel">默认对话通知</string>
+    <string name="test_notifications_channel">测试通知</string>
+    <string name="status_notifications_channel">状态通知</string>
+    <string name="general_notifications_channel">一般通知</string>
+    <string name="media_parse_channel">媒体解析</string>
+    <string name="group_summary_notifications">消息组概要</string>
+    <string name="failed_messages_channel">失败的消息</string>
+    <string name="media_parse_text">正在从先前的文本消息中解析媒体...</string>
+    <string name="creating_channels_text">正在创建通知渠道...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">更新日志</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -199,6 +211,8 @@
     <string name="app_version">应用版本</string>
     <string name="account_information">账户信息</string>
     <string name="account_actions">账户操作</string>
+    <string name="danger_zone">危险区</string>
+    <string name="be_careful_using_these_settings">请遵循说明并小心使用这些操作</string>
     <string name="device_id">设备ID</string>
     <string name="device_info">设备信息</string>
     <string name="website">我们的网站</string>
@@ -257,6 +271,7 @@
     <string name="vibrate_one_long_one_short">一长一短振动</string>
     <string name="vibrate_one_short">一次短震动</string>
     <string name="vibrate_one_long">一次长震动</string>
+    <string name="vibrate_one_extra_long">一次额外长震动</string>
     <string name="keyboard_layout">键盘布局</string>
     <string name="keyboard_default">默认布局</string>
     <string name="keyboard_send_key">发送键</string>
@@ -264,10 +279,14 @@
     <string name="sound_effects">音效</string>
     <string name="delivery_reports">发送报告</string>
     <string name="theme_settings">个性定制</string>
+    <string name="conversation_list_category">会话列表</string>
+    <string name="general_category">常规</string>
+    <string name="theme_settings_redirect">主题</string>
     <string name="base_theme">基本主题</string>
     <string name="global_theme_color">主题颜色</string>
     <string name="font_size">字体大小</string>
     <string name="rounder_bubbles">圆形消息气泡</string>
+    <string name="apply_theme_globally">应用至所有对话</string>
     <string name="swipe_delete">划动删除</string>
     <string name="blacklist_hint">在黑名单中输入数字</string>
     <string name="add_blacklist">%1$s\n\n 你确定将其加入黑名单吗？你以后将不会收到短信显示，已有短信也不会存在了呢。</string>
@@ -290,11 +309,11 @@
     <string name="delete_account_confirmation">你确定你想要删除你的账户以及相关的一切？你可以之后随时注册。</string>
     <string name="change_subscription">更改订阅</string>
     <string name="cancel_on_the_play_store">取消并在Play商店上查看你的订阅</string>
-    <string name="resync_account">重新同步账户</string>
+    <string name="resync_account">重新同步消息</string>
     <string name="resync_account_summary">消息丢失？使用这个找回你主设备上的消息。</string>
     <string name="resync_account_summary_phone">将会清除你的账户，并重新同步您本机中的信息</string>
     <string name="resync_account_confirmation">这会删除此设备上所有的消息，并且复制你主设备上的消息。你确定要这么做吗？</string>
-    <string name="normalize_color_scheme">或者，你可以为此会话选择一种单色：</string>
+    <string name="normalize_color_scheme">或者，你可以以主题为基础为会话选择一种颜色：</string>
     <string name="no_apps_found">没有找到可执行的应用</string>
     <string name="you_denied_permission">你拒绝了权限</string>
     <string name="supported_platforms">支持的平台</string>
@@ -305,18 +324,28 @@
     <string name="font_size_extra_large">超大</string>
     <string name="advanced">高级</string>
     <string name="send_as_mms">切换到彩信</string>
+    <string name="after_one_message">在一条消息后</string>
+    <string name="after_two_messages">在两条消息后</string>
+    <string name="after_three_messages">在三条消息后</string>
+    <string name="after_four_messages">在四条消息后</string>
     <string name="send_as_mms_summary">长消息将会被当做彩信发送（而不是短信）</string>
     <string name="alert_types">提醒类型</string>
     <string name="alert_types_summary">多种提醒方式</string>
     <string name="strip_unicode">去除Unicode字符</string>
+    <string name="use_internal_browser">使用内部浏览器</string>
     <string name="strip_unicode_summary">这些字段将会从发出消息中去除</string>
     <string name="giffgaff_delivery">发送异常报告</string>
     <string name="notification_actions">通知栏动作</string>
     <string name="notification_actions_summary">最多可添加3个动作至通知栏</string>
     <string name="mms_download_directory">媒体文件下载目录</string>
-    <string name="refresh_firebase">刷新通知消息</string>
-    <string name="refresh_firebase_summary">收不到消息吗？试试这个选项吧</string>
+    <string name="refresh_firebase">重新刷新帐号</string>
+    <string name="refresh_firebase_summary">帐户无法同步或遇到了无法登录？试试这个选项吧。</string>
     <string name="refreshing_notifications">正刷新通知</string>
+    <string name="show_conversation_history">显示对话历史</string>
+    <string name="show_conversation_history_summary">通知内会显示对话中的先前消息</string>
+    <string name="emoji_style">Emoji 样式</string>
+    <string name="emoji_style_default">系统默认</string>
+    <string name="emoji_style_android_o">Android O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">最大图片大小</string>
     <string name="use_group_mms">使用群组消息</string>
@@ -382,6 +411,12 @@
     <string name="hours">小时</string>
     <string name="minutes">分钟</string>
     <string name="test">测试</string>
+    <string name="channel_settings">通知渠道设置</string>
+    <string name="channel_settings_summary">使用渠道来自定义通知功能仅在 Android 8.0 以上版本内有效</string>
+    <string name="restore_default_channel_settings">恢复默认通知设置</string>
+    <string name="channels">渠道</string>
+    <string name="default_channel">默认渠道</string>
+    <string name="channels_global_warning">许多全局自定义设置如今仅在各个渠道内生效</string>
     <string name="off">关闭</string>
     <string name="on">开启</string>
     <string name="rate_it">兹瓷！</string>
@@ -389,6 +424,7 @@
     <string name="give_a_rating">考虑一下打个分、分享给你的朋友们吧！我将万分感谢您的5分，笔芯。</string>
     <string name="share_promo">嗨，我最近喜欢上了用Pulse发消息，你也来试试吧：
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">正在验证密码...</string>
     <!-- Times -->
     <string name="one_second">1秒</string>
     <string name="three_seconds">3秒</string>
@@ -423,12 +459,16 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="three_month_purchase_summary">这也挺不错的呐</string>
     <string name="monthly_purchase">$0.99 每月</string>
     <string name="monthly_purchase_summary">只是想试试？没问题，这个方案可以满足你。</string>
-    <string name="change_subscription_message">想要升级订阅吗？那么，在下个页面进行选择之后，请您手动前往Play商店取消旧的订阅。</string>
+    <string name="change_subscription_message">想要升级订阅吗？那么，在下个页面进行选择之后，请您手动前往 Play 商店取消旧的订阅。</string>
     <string name="beautiful_powerful_instant">美观，强大，便捷</string>
+    <string name="true_imessage_competitor">Android 平台首个 <b>真正</b> 意义上的 iMessage 竞争者。</string>
     <string name="try_it">现在试用！</string>
     <string name="seven_days_free">7天免费试用！</string>
+    <string name="select_a_trial_below">选择以下选项中的一项来开始你的<b>免费试用</b>。</string>
     <string name="charged_after_trial">试用后成为正版用户</string>
     <string name="monthly_purchase_improved">0.99美刀/月</string>
     <string name="three_month_purchase_improved">1.99美刀/3月</string>
     <string name="yearly_purchase_improved">5.99美刀/年</string>
+    <string name="subscription_toast">在 7 天试用期结束前，您将 <b>不会</b> 被收取任何费用。
+您可随时取消。</string>
 </resources>

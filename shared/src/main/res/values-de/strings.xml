@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">Unterhaltung archivieren</string>
     <string name="menu_move_to_inbox">In den Posteingang verschieben</string>
     <string name="menu_conversation_information">Information über die Unterhaltung</string>
+    <string name="menu_copy_phone_number">Nummer kopieren</string>
     <string name="menu_conversation_blacklist">Kontakt blockieren</string>
     <string name="menu_conversation_schedule">Nachricht planen</string>
     <string name="menu_contact_settings">Kontakteinstellungen</string>
@@ -84,6 +85,10 @@
     </plurals>
     <string name="undo">Rückgängig</string>
     <string name="enter_search">Suche nach...</string>
+    <string name="text_anywhere_description">Wussten Sie schon: Pulse ist weit mehr als nur eine App auf dem Smartphone.
+Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
+    <string name="convo_list_try_it">Versuchen Sie es!</string>
+    <string name="convo_list_not_now">Nicht jetzt</string>
     <!-- Search Screen -->
     <string name="conversations">Unterhaltungen</string>
     <string name="messages">Nachrichten</string>
@@ -109,6 +114,8 @@
     <string name="record_video">Video aufnehmen</string>
     <string name="record_audio">Audio aufnehmen</string>
     <string name="attach_location">Standort anhängen</string>
+    <string name="attach_contact">Kontakt anhängen</string>
+    <string name="attach_contact_summary">Kontakt auswählen, um ihn an die Nachricht anzuhängen!</string>
     <string name="no_location_found">Konnte Ihren Standort nicht feststellen.</string>
     <string name="camera_permission_needed">Die Berechtigung für die Kamera muss gewährt werden, um Fotos aufnehmen zu können!</string>
     <string name="take_picture">Foto schießen</string>
@@ -170,6 +177,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="start_trial">Testzeitraum\nstarten</string>
     <string name="not_now">Nicht\njetzt</string>
     <string name="onboarding_done">Erledigt</string>
+    <string name="play_store_subscription_warning">Sie werden zum Abonnement-System des Google Play Store weitergeleitet. Ihr Account wird <b>nicht</b> vor dem Ablauf von sieben Tagen belastet, und Sie können jederzeit über den Play Store kündigen.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Neue Nachricht von %1$s</string>
     <plurals name="new_conversations">
@@ -196,16 +204,34 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="new_message">Neue Nachricht</string>
     <string name="received_new_message">Sie haben eine neue SMS erhalten!</string>
     <string name="media">Medien</string>
+    <string name="default_notifications_channel">Standard-Benachrichtigungen für Unterhaltungen</string>
+    <string name="default_notifications_channel_description">Diese Einstellungen werden für alle Unterhaltungen angewandt, für die Sie keinen individuellen Benachrichtigungskanal erstellt haben.</string>
+    <string name="test_notifications_channel">Testbenachrichtigungen</string>
+    <string name="status_notifications_channel">Statusbenachrichtigungen</string>
+    <string name="general_notifications_channel">Allgemeine Benachrichtigungen</string>
+    <string name="media_parse_channel">Medien-Parser</string>
+    <string name="group_summary_notifications">Nachrichtengruppen Zusammenfassungen</string>
+    <string name="failed_messages_channel">Fehlgeschlagene Nachrichten</string>
+    <string name="media_parse_text">Medien aus vorherigen Nachrichten werden gesucht...</string>
+    <string name="creating_channels_text">Benachrichtigungskanäle werden erstellt...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Letzte Änderungen</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Open-Source-Lizenzinformation ansehen</string>
     <string name="app_version">App Version</string>
+    <string name="account_information">Accountinformationen</string>
+    <string name="account_actions">Account-Aktionen</string>
+    <string name="danger_zone">Danger Zone!</string>
+    <string name="be_careful_using_these_settings">Folgen Sie den Anweisungen und nutzen Sie diese Aktionen mit Vorsicht!</string>
     <string name="device_id">Geräte-ID</string>
     <string name="device_info">Geräteinfo</string>
     <string name="website">Webseite</string>
     <string name="access_messages_from_any_device">SMS lesen und senden von jedem Gerät aus!</string>
     <string name="beta_disclaimer">Diese Projekt ist noch im Betastadium, bitte melden Sie Fehler, falls Sie welche finden!</string>
+    <string name="app_info">App-Info</string>
+    <string name="platform_info">Plattform-Info</string>
+    <string name="troubleshooting">Fehlerbehebung</string>
+    <string name="get_in_touch">Treten Sie in Kontakt</string>
     <string name="faqs">FAQ</string>
     <string name="features">Features</string>
     <string name="issues">Issue Tracker</string>
@@ -257,6 +283,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="vibrate_one_long_one_short">Eine lange, eine kurze Vibration</string>
     <string name="vibrate_one_short">Eine kurze Vibration</string>
     <string name="vibrate_one_long">Eine lange Vibration</string>
+    <string name="vibrate_one_extra_long">Eine extralange Vibration</string>
     <string name="keyboard_layout">Tastaturlayout</string>
     <string name="keyboard_default">Standard-Tastatur</string>
     <string name="keyboard_send_key">Senden-Taste</string>
@@ -264,10 +291,15 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="sound_effects">Soundeffekte</string>
     <string name="delivery_reports">Übertragungsberichte</string>
     <string name="theme_settings">Personalisierung</string>
+    <string name="conversation_list_category">Unterhaltungsliste</string>
+    <string name="general_category">Allgemein</string>
+    <string name="theme_settings_redirect">Design</string>
     <string name="base_theme">Basisschema</string>
     <string name="global_theme_color">Schema-Farbe</string>
     <string name="font_size">Schriftgröße</string>
     <string name="rounder_bubbles">Runde Nachrichten-Blasen</string>
+    <string name="apply_theme_globally">Auf alle Unterhaltungen anwenden</string>
+    <string name="apply_theme_globally_summary">Entferne die individuellen Designs von allen Unterhaltungen und ersetze sie durch dieses allgemeine Design.</string>
     <string name="swipe_delete">Wischen, um zu löschen</string>
     <string name="blacklist_hint">Nummer zum Blockieren eintippen...</string>
     <string name="add_blacklist">%1$s\n\nSind Sie sicher, dass diese Nummer blockiert werden soll? Nachrichten werden nicht länger gespeichert, wenn sie von dieser Nummer kommen, und sie werden nicht benachrichtigt!</string>
@@ -292,6 +324,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="cancel_on_the_play_store">Verwalten oder beenden Sie ihr Abo im Play Store</string>
     <string name="resync_account">Account erneut synchronisieren</string>
     <string name="resync_account_summary">Nachrichten fehlen? Bringen Sie hiermit ihr Gerät wieder auf den Stand des primären Gerätes.</string>
+    <string name="resync_account_summary_phone">Entfernt die Inhalte Ihres Accounts und ersetzt sie mit dem derzeitigen Inhalt der internen SMS-Datenbank.</string>
     <string name="resync_account_confirmation">Dies löscht alle Nachrichten von diesem Gerät und lädt eine frische Kopie von ihrem primären Gerät herüber. Fortfahren?</string>
     <string name="normalize_color_scheme">Oder, Sie können eine einzelne Farbe wählen, die für diesen Kontakt verwendet wird:</string>
     <string name="no_apps_found">Keine Apps für diese Aktion verfügbar</string>
@@ -304,10 +337,15 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="font_size_extra_large">Riesig</string>
     <string name="advanced">Fortgeschritten</string>
     <string name="send_as_mms">In MMS konvertieren</string>
+    <string name="after_one_message">Nach einer Nachricht</string>
+    <string name="after_two_messages">Nach zwei Nachrichten</string>
+    <string name="after_three_messages">Nach drei Nachrichten</string>
+    <string name="after_four_messages">Nach vier Nachrichten</string>
     <string name="send_as_mms_summary">Lange Nachrichten werden als MMS statt mehrerer SMS verschickt</string>
     <string name="alert_types">Benachrichtigungstypen</string>
     <string name="alert_types_summary">Benachrichtigungen personalisieren</string>
     <string name="strip_unicode">Unicode-Zeichen entfernen</string>
+    <string name="use_internal_browser">Nutze den internen Browser</string>
     <string name="strip_unicode_summary">Diese Zeichen werden aus ausgehenden Nachrichten entfernt.</string>
     <string name="giffgaff_delivery">Giffgaff-Zustellberichte</string>
     <string name="notification_actions">Benachrichtigungsaktionen</string>
@@ -316,6 +354,13 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="refresh_firebase">Pushbenachrichtigungen aktualisieren</string>
     <string name="refresh_firebase_summary">Nachrichten erscheinen nicht auf diesem Gerät? Versuchen Sie es erneut, nachdem Sie diese Option gewählt haben.</string>
     <string name="refreshing_notifications">Benachrichtigungs-Token wird erneuert...</string>
+    <string name="refresh_firebase_warning">Wenn Sie diesen Prozess starten, <b>müssen</b> Sie ihn zu Ende führen.
+Nach dem Beenden müssen Sie sich in allen anderen Geräten neu einloggen. Fortfahren?</string>
+    <string name="show_conversation_history">Zeige Unterhaltungsverlauf</string>
+    <string name="show_conversation_history_summary">Inhalt der letzten Nachrichten einer Unterhaltung wird in der Benachrichtigung angezeigt</string>
+    <string name="emoji_style">Emoji-Stil</string>
+    <string name="emoji_style_default">Systemstandard</string>
+    <string name="emoji_style_android_o">Google Android O-Stil</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximale Bildgröße</string>
     <string name="use_group_mms">Nutze Gruppen-MMS</string>
@@ -382,6 +427,13 @@ jetzt ausprobieren!</string>
     <string name="hours">Stunden</string>
     <string name="minutes">Minuten</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Benachrichtigungskanal-Einstellungen</string>
+    <string name="channel_settings_summary">Kanäle sind nötig, um Benachrichtigungen ab Android 8.0 zu personalisieren</string>
+    <string name="restore_default_channel_settings">Standard-Benachrichtigungseinstellungen wiederherstellen</string>
+    <string name="channels">Kanäle</string>
+    <string name="default_channel">Standardkanal</string>
+    <string name="channels_global_warning">Viele globale Personalisierungen sind nun nur pro Kanal möglich</string>
+    <string name="channels_global_warning_2">Die Android <i>Benachrichtigungskanäle</i> sind nun für die meisten Einstellungen notwendig.\n\nSie können jede Unterhaltung einzeln konfigurieren, indem Sie einen <i>Benachrichtigungskanal</i> im Einstellungsmenü der jeweiligen Unterhaltung erstellen. Nutzen Sie den Standard-Kanal für die Konfiguration aller Unterhaltungen, für die sie keinen individuellen Kanal erstellt haben.</string>
     <string name="off">Aus</string>
     <string name="on">Ein</string>
     <string name="rate_it">Jetzt bewerten!</string>
@@ -389,6 +441,7 @@ jetzt ausprobieren!</string>
     <string name="give_a_rating">Erzählen Sie Ihren Freunden von Pulse, oder hinterlassen Sie eine Bewertung!\n\n
 Ich würde mich sehr über eine 5-Sterne-Bewertung freuen! :)</string>
     <string name="share_promo">Hey, ich liebe diese tolle neue SMS-App: Pulse! Probier sie jetzt aus: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Prüfe Passwort...</string>
     <!-- Times -->
     <string name="one_second">Eine Sekunde</string>
     <string name="three_seconds">Drei Sekunden</string>
@@ -424,4 +477,5 @@ Wenn Sie innerhalb von zwei Tagen kein neues Abo abschließen, werden Sie aus Ih
     <string name="monthly_purchase">0,99$ monatlich</string>
     <string name="monthly_purchase_summary">Nur ausprobieren? Kein Problem!</string>
     <string name="change_subscription_message">Sie möchten upgraden? Super! Nachdem Sie auf der nächsten Seite Ihre Auswahl getroffen haben sollten Sie die Play Store-App öffnen und das Abo manuell kündigen.</string>
+    <string name="beautiful_powerful_instant">Schön, vielseitig, schnell.</string>
 </resources>

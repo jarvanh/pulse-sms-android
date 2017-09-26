@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
   -->
 <resources>
     <string name="app_name">Pulse</string>
-    <string name="app_name_long">Pulse (SMS/ messagerie tablette)</string>
+    <string name="app_name_long">Pulse (SMS/Messagerie tablette)</string>
     <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
     <string name="shortcut_compose_short">Nouveau Message</string>
-    <string name="shortcut_compose_long">Commencer une nouvelle conversation</string>
+    <string name="shortcut_compose_long">Débuter une nouvelle conversation</string>
     <!-- Drawer Items -->
     <string name="menu_conversations">Liste des conversations</string>
     <string name="menu_archived_conversations">Conversations archivées</string>
@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">Archiver la conversation</string>
     <string name="menu_move_to_inbox">Déplacer dans la boîte de réception</string>
     <string name="menu_conversation_information">Informations de la conversation</string>
+    <string name="menu_copy_phone_number">Numéro de copie</string>
     <string name="menu_conversation_blacklist">Mettre le contact en liste noire</string>
     <string name="menu_conversation_schedule">Programmer un message</string>
     <string name="menu_contact_settings">Paramètres de la conversation</string>
@@ -58,7 +59,7 @@
     <string name="menu_snooze_72">72 heures</string>
     <string name="menu_snooze_custom">Sélectionnez une heure</string>
     <!-- Empty Screen -->
-    <string name="no_messages">Pas de message</string>
+    <string name="no_messages">Aucun message</string>
     <string name="no_messages_summary">Commencez une nouvelle conversation ou profitez simplement de votre journée!</string>
     <string name="close">Fermer</string>
     <!-- Conversation List Screen -->
@@ -83,7 +84,7 @@
         <item quantity="other">%1$d conversations déplacées dans la boîte de réception</item>
     </plurals>
     <string name="undo">Annuler</string>
-    <string name="enter_search">Recherche...</string>
+    <string name="enter_search">Rechercher...</string>
     <string name="text_anywhere_description">Savez-vous que Pulse est bien plus qu\'une simple application pour téléphone ?
 Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appareil !</string>
     <string name="convo_list_try_it">Essayez !</string>
@@ -105,16 +106,16 @@ Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appare
     <string name="mms_image">Message Image</string>
     <string name="now">Maintenant</string>
     <string name="sending">Envoi en cours...</string>
-    <string name="failed">Echec de l\'envoi</string>
+    <string name="failed">Échec de l\'envoi</string>
     <string name="delivered">Message envoyé</string>
     <string name="attach_image">Attacher une image</string>
     <string name="capture_image">Prendre une photo</string>
-    <string name="attach_gif">Attacher une image animée</string>
-    <string name="record_video">Enregistrer une vidéo</string>
-    <string name="record_audio">Enregistrer un son</string>
+    <string name="attach_gif">Attacher un GIF</string>
+    <string name="record_video">Enregistrer la vidéo</string>
+    <string name="record_audio">Enregistrer l\'audio</string>
     <string name="attach_location">Partager votre localisation</string>
     <string name="attach_contact">Joindre un contact</string>
-    <string name="attach_contact_summary">Sélectionner ou entrer un contact à joindre au message!</string>
+    <string name="attach_contact_summary">Sélectionner ou saisir un contact à joindre au message !</string>
     <string name="no_location_found">Impossible de vous localiser.</string>
     <string name="camera_permission_needed">L\'autorisation de caméra doit être accordée pour prendre
 des photos !</string>
@@ -133,7 +134,7 @@ Commencez !
     <string name="share">Partager</string>
     <string name="share_content">Partager le contenu...</string>
     <string name="saved">Sauvegardé dans le dossier de téléchargements</string>
-    <string name="failed_to_save">La sauvegarde a échoué</string>
+    <string name="failed_to_save">La sauvegarde a échouée</string>
     <string name="start_recording_audio">Appuyer pour commencer à enregistrer</string>
     <string name="audio_recording_error">Erreur d\'enregistrement :(</string>
     <string name="message_copied_to_clipboard">Copié dans le presse-papier</string>
@@ -145,7 +146,7 @@ Commencez !
     <string name="error_decrypting">Erreur lors du décryptage. Veuillez lire ce message sur votre téléphone.</string>
     <string name="message_sending_failed">Échec de l\'envoi du message</string>
     <string name="preparing_video">Préparation de la vidéo&#8230;</string>
-    <string name="delete_message">Supprimer ce message?</string>
+    <string name="delete_message">Supprimer ce message ?</string>
     <string name="forward_message">Transférer</string>
     <string name="share_message">Partager</string>
     <string name="copy_message_text">Copier le texte du message</string>
@@ -160,7 +161,8 @@ Commencez !
     <!-- Onboarding Screen -->
     <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions ! Vous devez les accepter avant de pouvoir continuer.</string>
     <string name="loading_messages">Optimisation en cours...</string>
-    <string name="loading_messages_summary">Nous téléchargeons vos messages dans l\'application, cela sera rapide!</string>
+    <string name="loading_messages_summary">Nous téléchargeons vos messages dans l\'application, 
+cela sera rapide!</string>
     <string name="tooltip_got_it">Je l\'ai !</string>
     <string name="navigation_drawer_conversation_hint">Plus d\'options pour cette conversation sont stockées dans le tiroir de navigation.</string>
     <string name="onboarding_title_1">Messagerie réinventée</string>
@@ -179,6 +181,7 @@ Commencez !
     <string name="start_trial">Démarrer\nl\'essai</string>
     <string name="not_now">Pas\nMaintenant</string>
     <string name="onboarding_done">Terminé</string>
+    <string name="play_store_subscription_warning">Vous allez être redirigé vers le système d\'achat d\'abonnement Play Store. Vous <b>ne serez pas</b> chargé avant la fin de la période de sept jours et vous pouvez annuler à tout moment depuis la page Play Store.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nouveau message de %1$s</string>
     <plurals name="new_conversations">
@@ -205,9 +208,14 @@ Commencez !
     <string name="new_message">Nouveau message</string>
     <string name="received_new_message">Vous avez reçu un nouveau message !</string>
     <string name="media">Médias</string>
+    <string name="default_notifications_channel">Notifications de conversation par défaut</string>
+    <string name="default_notifications_channel_description">Ces paramètres s\'appliqueront à toutes conversations
+où vous n\'avez pas créé un canal de notification individuel pour la personnalisation par conversation.</string>
     <string name="test_notifications_channel">Tester les notifications</string>
+    <string name="status_notifications_channel">Notifications d\'état</string>
     <string name="general_notifications_channel">Notifications générales</string>
     <string name="media_parse_channel">Analyseur de média</string>
+    <string name="group_summary_notifications">Résumés des groupes de messages</string>
     <string name="failed_messages_channel">Messages en échec</string>
     <string name="media_parse_text">Analyse des médias des messages précédents...</string>
     <string name="creating_channels_text">Création des canaux de notification...</string>
@@ -218,6 +226,8 @@ Commencez !
     <string name="app_version">Version de l\'application</string>
     <string name="account_information">Informations du compte</string>
     <string name="account_actions">Interventions sur le compte</string>
+    <string name="danger_zone">Zone dangereuse</string>
+    <string name="be_careful_using_these_settings">Suivez les instructions et faites attention lorsque vous utilisez ces actions.</string>
     <string name="device_id">Identifiant du terminal</string>
     <string name="device_info">Informations du terminal</string>
     <string name="website">Site Internet</string>
@@ -234,7 +244,7 @@ pourriez rencontrer !</string>
     <string name="issues_summary">Sert également aux demandes de fonctionnalités</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Communauté de BétaTesteurs de Pulse</string>
-    <string name="email">E-Mail</string>
+    <string name="email">Courriel</string>
     <string name="email_summary">luke@klinkerapps.com</string>
     <string name="twitter">Twitter</string>
     <string name="twitter_summary">\@KlinkerApps</string>
@@ -287,15 +297,20 @@ pourriez rencontrer !</string>
     <string name="sound_effects">Effets sonores</string>
     <string name="delivery_reports">Accusés de réception</string>
     <string name="theme_settings">Personnalisation</string>
+    <string name="conversation_list_category">Liste des conversations</string>
+    <string name="general_category">Général</string>
+    <string name="theme_settings_redirect">Thème</string>
     <string name="base_theme">Thème de base</string>
     <string name="global_theme_color">Couleur du thème</string>
     <string name="font_size">Taille de la police</string>
     <string name="rounder_bubbles">Bulles arrondies</string>
+    <string name="apply_theme_globally">Appliquer à toutes les conversations</string>
+    <string name="apply_theme_globally_summary">Supprimer les thèmes par conversation, en faveur
+de ce jeu de couleurs global.</string>
     <string name="swipe_delete">Glisser pour effacer</string>
     <string name="blacklist_hint">Tapez le numéro à mettre en liste noire</string>
-    <string name="add_blacklist">%1$s
-
-Êtes-vous sûr de vouloir l\'ajouter en liste noire ? Les messages provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifié.</string>
+    <string name="add_blacklist">%1$s\n\nÊtes-vous sûr de vouloir l\'ajouter en liste noire ? Les messages 
+provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifié.</string>
     <string name="remove_blacklist">%1$s\n\nVoulez-vous retirer ce numéro de la liste noire ?</string>
     <string name="blacklist_need_number">Vous devez entrer un numéro dans la liste noire!</string>
     <string name="no_blacklists">Pas de liste noire</string>
@@ -307,7 +322,7 @@ pourriez rencontrer !</string>
     <string name="signout_time">Déconnexion le : %1$s</string>
     <string name="lifetime_subscriber">Abonnement à vie</string>
     <string name="trial_period">Période d\'essai</string>
-    <string name="setup_my_account">Paramétrer le compte</string>
+    <string name="setup_my_account">Configurer le compte</string>
     <string name="setup_my_account_summary">Créez un compte ou connectez-vous pour accéder à davantage de fonctions comme envoyer des messages depuis votre tablette ou PC</string>
     <string name="preparing_new_account">Préparation du compte&#8230;</string>
     <string name="delete_account">Supprimer le compte</string>
@@ -339,6 +354,7 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="alert_types">Types d\'alertes</string>
     <string name="alert_types_summary">Préférences de notifications variées</string>
     <string name="strip_unicode">Remplacer l\'Unicode</string>
+    <string name="use_internal_browser">Utiliser le fureteur interne</string>
     <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants.</string>
     <string name="giffgaff_delivery">Accusés de réception giffgaff</string>
     <string name="notification_actions">Actions depuis les notifications</string>
@@ -351,6 +367,9 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
 Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres appareils. Voulez-vous continuer ?</string>
     <string name="show_conversation_history">Afficher l\'historique de la conversation</string>
     <string name="show_conversation_history_summary">Les notifications afficheront les précédents messages de la conversation</string>
+    <string name="emoji_style">Styles d\'émoticônes</string>
+    <string name="emoji_style_default">Système par défaut</string>
+    <string name="emoji_style_android_o">Google Android O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
     <string name="use_group_mms">Utiliser les MMS groupés</string>
@@ -358,12 +377,12 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="auto_save_media_summary">Sauvegarder automatiquement tous les médias MMS dans le dossier /Téléchargements quand ils sont reçus.</string>
     <string name="apn_configuration">Configuration des APN</string>
     <string name="override_system_apn">Remplacer les APN du système</string>
-    <string name="mmsc_url">MMSC</string>
+    <string name="mmsc_url">URL du MMSC</string>
     <string name="mms_proxy">Proxy MMS</string>
     <string name="mms_port">Port MMS</string>
-    <string name="user_agent">User Agent</string>
-    <string name="user_agent_profile_url">URL du profil d\'User Agent</string>
-    <string name="user_agent_profile_tag">Nom du profil d\'User Agent</string>
+    <string name="user_agent">Agent Utilisateur</string>
+    <string name="user_agent_profile_url">URL du profil de l\'Agent Utilisateur</string>
+    <string name="user_agent_profile_tag">Nom du profil de l\'Agent Utilisateur</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
     <string name="signature_summary">Les signatures ne seront pas affichées dans la liste des messages, elles
@@ -419,15 +438,21 @@ Essayez aujourd\'hui !</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="channel_settings">Paramètres du canal de notification</string>
+    <string name="channel_settings_summary">Des canaux sont nécessaires pour personnaliser les notifications sur Android 8.0 et plus</string>
+    <string name="restore_default_channel_settings">Restaurer les paramètres de notifications par défaut</string>
     <string name="channels">Canaux</string>
+    <string name="default_channel">Canal par défaut</string>
     <string name="channels_global_warning">De nombreuses personnalisations sont désormais uniquement disponibles par canal.</string>
+    <string name="channels_global_warning_2">Les <i>canaux de notifications</i> d\'Android sont maintenant requis pour la plupart des configurations.\n\n
+Vous pouvez personnaliser toutes les alertes de conversations individuelles en créant un <i>canal de notification</i> dans le menu de configuration de cette conversation.
+Utilisez le canal par défaut pour personnaliser les conversations auxquelles vous n\'avez pas créé un canal individuel.</string>
     <string name="off">Inactif</string>
     <string name="on">Actif</string>
     <string name="rate_it">Noter l\'application !</string>
     <string name="love_pulse_question">Vous aimez Pulse ?</string>
     <string name="give_a_rating">Merci de noter l\'application ou de la partager avec vos amis !\n\n
 Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
-    <string name="share_promo">Hey, j\'utilise Pulse pour envoyer des messages ! Essaye la : https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="share_promo">Hey, j\'utilise Pulse pour envoyer des messages ! Essaye le : https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">Vérification du mot de passe...</string>
     <!-- Times -->
     <string name="one_second">Une seconde</string>
@@ -444,7 +469,7 @@ Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
     <string name="six_months">6 mois</string>
     <string name="one_year">1 an</string>
     <!-- Purchase/Subscriptions -->
-    <string name="no_subscription_found">Aucun abonnement trouvé!</string>
+    <string name="no_subscription_found">Aucun abonnement trouvé !</string>
     <string name="cancelled_subscription_error">On dirait que vous avez annulé votre abonnement.
 Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous déconnectera. S\'il s\'agit d\'une erreur, contactez-moi par email.</string>
     <string name="subscription_found">Abonnement trouvé - Ravi de vous revoir !</string>
@@ -469,9 +494,9 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
 Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>
     <string name="true_imessage_competitor">Le premier <b>vrai</b> concurrent de iMessage pour Android.</string>
     <string name="try_it">Essayez-le maintenant!</string>
-    <string name="seven_days_free">Gratuit pendant 7 jours!</string>
+    <string name="seven_days_free">Gratuit pendant 7 jours !</string>
     <string name="competition_cant_beat">La concurrence ne peut rivaliser avec nos prix, notre vitesse ou notre service -
-<b>Prenez 7 jours</b> pour le constater par vous-même!</string>
+<b>Prenez 7 jours</b> pour le constater par vous-même !</string>
     <string name="select_a_trial_below">Sélectionnez une des options ci-dessous pour commencer votre <b>essai gratuit</b>.</string>
     <string name="charged_after_trial">Facturé après l\'essai :</string>
     <string name="monthly_purchase_improved">$0.99 /\nmois</string>

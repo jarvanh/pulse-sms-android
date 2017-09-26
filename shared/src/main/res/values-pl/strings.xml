@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">Archiwizuj konwersację</string>
     <string name="menu_move_to_inbox">Przenieś do skrzynki odbiorczej</string>
     <string name="menu_conversation_information">Szczegóły konwersacji</string>
+    <string name="menu_copy_phone_number">Skopiuj numer</string>
     <string name="menu_conversation_blacklist">Dodaj do czarnej listy</string>
     <string name="menu_conversation_schedule">Zaplanuj wiadomość</string>
     <string name="menu_contact_settings">Ustawienia kontaktu</string>
@@ -183,6 +184,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="start_trial">Rozpocznij\nokres próbny</string>
     <string name="not_now">Nie\nteraz</string>
     <string name="onboarding_done">Gotowe</string>
+    <string name="play_store_subscription_warning">Zostaniesz przekierowany do Sklepu Google Play w celu kontynuowania zakupu subskrypcji. <b>Nie zostaniesz</b> obciążony kosztami przed upłynięciem 7 dni, oraz możesz zrezygnować z subskrypcji w każdej chwili z poziomu Sklepu Google Play.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nowa wiadomość od %1$s</string>
     <plurals name="new_conversations">
@@ -213,6 +215,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="new_message">Nowa wiadomość</string>
     <string name="received_new_message">Otrzymałeś nową wiadomość SMS!</string>
     <string name="media">Multimedia</string>
+    <string name="default_notifications_channel">Domyślna notyfikacja konwersacji</string>
+    <string name="default_notifications_channel_description">Ustawienia te zostaną przypisane dla wszystkich konwersacji, do których nie zostały przypisane indywidualne kanały notyfikacji.</string>
     <string name="test_notifications_channel">Powiadomienia testowe</string>
     <string name="status_notifications_channel">Powiadomienia o statusie</string>
     <string name="general_notifications_channel">Powiadomienia ogólne</string>
@@ -228,6 +232,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="app_version">Wersja aplikacji</string>
     <string name="account_information">Informacje o koncie</string>
     <string name="account_actions">Ustawienia konta</string>
+    <string name="danger_zone">Strefa niebezpieczna</string>
+    <string name="be_careful_using_these_settings">Postępuj zgodnie z instrukcją - z uwagą wykonuj opisywanie akcje.</string>
     <string name="device_id">ID urządzenia</string>
     <string name="device_info">Informacje o urządzeniu</string>
     <string name="website">Strona internetowa</string>
@@ -300,10 +306,15 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="sound_effects">Dźwięki aplikacji</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
     <string name="theme_settings">Personalizacja</string>
+    <string name="conversation_list_category">Lista konwersacji</string>
+    <string name="general_category">Ogólne</string>
+    <string name="theme_settings_redirect">Motyw</string>
     <string name="base_theme">Motyw podstawowy</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
     <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
+    <string name="apply_theme_globally">Zastosuj do wszystkich konwersacji</string>
+    <string name="apply_theme_globally_summary">Usuń motywy przypisane do poszczególnych konwersacji i zatwierdź ustawienie globalne</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
     <string name="add_blacklist">%1$s\n\nCzy jesteś pewien aby dodać ten numer do czarnej listy? Wiadomości przysłane z tego numeru nie będą już zapisywane i nie będziesz o nich informowany!</string>
@@ -349,6 +360,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="alert_types">Typy ostrzeżeń</string>
     <string name="alert_types_summary">Personalizacja powiadomień</string>
     <string name="strip_unicode">Wyklucz znaki unicode</string>
+    <string name="use_internal_browser">Używaj przeglądarki internetowej</string>
     <string name="strip_unicode_summary">Znaki te zostaną usunięte z wysyłanych wiadomości</string>
     <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
     <string name="notification_actions">Akcje na powiadomieniach</string>
@@ -360,6 +372,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="refresh_firebase_warning">Jeżeli będziesz kontynuować, <b>musisz</b> przejść przez cały ten proces. Po zakończeniu należy zalogować się ponownie na wszystkich swoich urządzeniach. Czy chcesz kontynuować?</string>
     <string name="show_conversation_history">Pokaż historię wiadomości</string>
     <string name="show_conversation_history_summary">Powiadomienie wyświetli poprzednie wiadomości tej konwersacji</string>
+    <string name="emoji_style">Style Emoij</string>
+    <string name="emoji_style_default">Ustawienia domyślne</string>
+    <string name="emoji_style_android_o">Android O od Google</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="use_group_mms">Grupowe wiadomości MMS</string>
@@ -426,8 +441,14 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="minutes">Minuty</string>
     <string name="test">Test</string>
     <string name="channel_settings">Ustawienia Kanałów Powiadomień</string>
+    <string name="channel_settings_summary">Kanały są wymagane do spersonalizowania notyfikacji dla Androida O i późniejszych.</string>
+    <string name="restore_default_channel_settings">Przywróc domyślne ustawienia notyfikacji</string>
     <string name="channels">Kanały</string>
+    <string name="default_channel">Kanał domyślny</string>
     <string name="channels_global_warning">Wiele ustawień globalnych możesz teraz zmienić dla konkretnego kanału.</string>
+    <string name="channels_global_warning_2"><i>Kanały notyfikacji</i> są teraz wymagane dla większości ustawień konfiguracji notyfikacji.\n\n
+Możesz spersonalizować notyfikacje dowolnej konwersacji tworząc dla niej <i>kanał notyfikacji</i> w ustawieniach tej konwersacji.
+Użyj ustawień domyślnych kanału notyfikacji, aby spersonalizować wszystkie konwersacji, dla których nie został utworzony indywidualny kanał.</string>
     <string name="off">Wyłącz</string>
     <string name="on">Włączony</string>
     <string name="rate_it">Oceń aplikacje!</string>

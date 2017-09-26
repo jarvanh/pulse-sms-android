@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@
     <string name="api_password_confirmation">Passwort bestätigen</string>
     <string name="api_name">Name</string>
     <string name="api_phone_number">Telefonnummer</string>
+    <string name="api_connecting">Verbinde mit dem Server...</string>
     <string name="api_device_error">Während dem Hinzufügen dieses Gerätes ist ein Fehler aufgetreten. Wird erneut versucht…</string>
     <string name="api_add_second_primary_device">Offenbar ist schon folgendes primäre Gerät für Ihren Account registriert: %1$s. Nur ein primäres Gerät ist erlaubt! Möchten Sie das derzeitige primäre Gerät entfernen und dieses Gerät als neues primäres Gerät definieren?</string>
     <string name="api_yes">Ja</string>
@@ -42,6 +43,8 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Öffnen Sie</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">auf einem Mobilgerät oder Computer.</string>
     <string name="api_activate_2_1">Auf der Webseite</string>
     <string name="api_activate_2_2">Den Code rechts eingeben</string>

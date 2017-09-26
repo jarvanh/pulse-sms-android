@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@
     <string name="menu_copy_phone_number">Kopieer nummer</string>
     <string name="menu_conversation_blacklist">Blokkeer contact</string>
     <string name="menu_conversation_schedule">Plan een bericht</string>
-    <string name="menu_contact_settings">Instellingen conversaties</string>
+    <string name="menu_contact_settings">Instellingen conversatie</string>
     <string name="menu_group_settings">Instellingen groep</string>
     <string name="menu_snooze_off">Uit</string>
     <string name="menu_snooze_1">1 uur</string>
@@ -80,8 +80,8 @@
         <item quantity="other">%1$d conversaties gearchiveerd</item>
     </plurals>
     <plurals name="conversations_unarchived">
-        <item quantity="one">%1$d conversatie verplaatst naar Inbox</item>
-        <item quantity="other">%1$d conversaties verplaatst naar Inbox</item>
+        <item quantity="one">%1$d conversatie verplaatst naar inbox</item>
+        <item quantity="other">%1$d conversaties verplaatst naar inbox</item>
     </plurals>
     <string name="undo">Ongedaan maken</string>
     <string name="enter_search">Zoeken naar...</string>
@@ -364,8 +364,7 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="use_group_mms">Gebruik groep MMS</string>
     <string name="auto_save_media">Auto-save media</string>
-    <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
-it is received.</string>
+    <string name="auto_save_media_summary">Automatisch inkomende MMS-media opslaan in de Downloads-map</string>
     <string name="apn_configuration">APN Configuratie</string>
     <string name="override_system_apn">Override system APNs</string>
     <string name="mmsc_url">MMSC URL</string>
