@@ -83,8 +83,8 @@ public class AnimationUtils {
         if (recyclerView != null) {
             final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
             final int recyclerHeight = itemView.getRootView().getHeight();
-            final double percentDifferent = (double) (realScreenHeight - recyclerHeight) / (double) realScreenHeight;
-            final int heightToUse = percentDifferent > .1 ? realScreenHeight : recyclerHeight;
+            final double percentDifferent = ((double) realScreenHeight - (double) recyclerHeight) / (double) realScreenHeight;
+            final int heightToUse = percentDifferent > .25 ? realScreenHeight : recyclerHeight;
 
             AnimationUtils.animateConversationListItem(itemView, heightToUse, 0,
                     (int) recyclerView.getTranslationY(), 0,
@@ -137,13 +137,14 @@ public class AnimationUtils {
             conversationListSize = activity.findViewById(R.id.content).getHeight();
         }
 
-        final int originalHeight = conversationListSize - toolbarSize;
+        final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        final double percentDifferent = ((double) realScreenHeight - (double) AnimationUtils.conversationListSize) / (double) realScreenHeight;
+        final int heightToUse = (percentDifferent > .25 ? realScreenHeight : AnimationUtils.conversationListSize) - toolbarSize;
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(valueAnimator -> {
             recyclerView.setTranslationY((int) valueAnimator.getAnimatedValue());
-            recyclerParams.height = originalHeight +
-                    (-1 * (int) valueAnimator.getAnimatedValue());
+            recyclerParams.height = heightToUse + (-1 * (int) valueAnimator.getAnimatedValue());
             recyclerView.requestLayout();
         });
         recyclerAnimator.setInterpolator(interpolator);
