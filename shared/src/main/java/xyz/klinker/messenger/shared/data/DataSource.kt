@@ -580,7 +580,8 @@ object DataSource {
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
-            values.put(Conversation.COLUMN_ID, generateId())
+            val conversationId = generateId()
+            values.put(Conversation.COLUMN_ID, conversationId)
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color)
             values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark)
             values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight)
@@ -598,45 +599,44 @@ object DataSource {
             values.put(Conversation.COLUMN_MUTE, conversation.mute)
             values.put(Conversation.COLUMN_ARCHIVED, conversation.archive)
 
-            val conversationId = try {
+            val messages = SmsMmsUtils.queryConversation(conversation.id, context) ?: continue
+
+            if (messages.count == 0) {
+                deleteConversation(context, conversationId, false)
+                messages.closeSilent()
+                continue
+            }
+
+            var latestTimestamp = 0L
+            if (messages.moveToFirst()) {
+                do {
+                    val valuesList = SmsMmsUtils.processMessage(messages, conversationId, context)
+                    var timestamp = 0L
+                    if (valuesList != null) {
+                        for (value in valuesList) {
+                            database(context).insert(Message.TABLE, null, value)
+
+                            if (values.getAsLong(Message.COLUMN_TIMESTAMP) > timestamp)
+                                timestamp = values.getAsLong(Message.COLUMN_TIMESTAMP)
+                        }
+                    }
+
+                    if (timestamp > latestTimestamp) {
+                        latestTimestamp = timestamp
+                    }
+                } while (messages.moveToNext() && messages.position < SmsMmsUtils.INITIAL_MESSAGE_LIMIT)
+            }
+
+            values.put(Conversation.COLUMN_TIMESTAMP, latestTimestamp)
+
+            try {
                 database(context).insert(Conversation.TABLE, null, values)
             } catch (e: Exception) {
                 ensureActionable(context)
                 database(context).insert(Conversation.TABLE, null, values)
             }
 
-            if (conversationId != -1L) {
-                val messages = SmsMmsUtils.queryConversation(conversation.id, context) ?: continue
-
-                if (messages.count == 0) {
-                    deleteConversation(context, conversationId, false)
-
-                    try {
-                        messages.close()
-                    } catch (e: Exception) {
-                    }
-
-                    continue
-                }
-
-                if (messages.moveToFirst()) {
-                    do {
-                        val valuesList = SmsMmsUtils.processMessage(messages, conversationId, context)
-                        if (valuesList != null) {
-                            for (value in valuesList) {
-                                database(context).insert(Message.TABLE, null, value)
-                            }
-                        }
-                    } while (messages.moveToNext() && messages.position < SmsMmsUtils.INITIAL_MESSAGE_LIMIT)
-                }
-
-                try {
-                    messages.close()
-                } catch (e: Exception) {
-                }
-
-            }
-
+            messages.closeSilent()
             listener?.onProgressUpdate(i + 1, conversations.size)
         }
 
