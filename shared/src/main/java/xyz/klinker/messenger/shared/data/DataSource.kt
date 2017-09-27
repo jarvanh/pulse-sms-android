@@ -589,7 +589,6 @@ object DataSource {
             values.put(Conversation.COLUMN_LED_COLOR, conversation.ledColor)
             values.put(Conversation.COLUMN_PINNED, conversation.pinned)
             values.put(Conversation.COLUMN_READ, conversation.read)
-            values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp)
             values.put(Conversation.COLUMN_TITLE, conversation.title)
             values.put(Conversation.COLUMN_PHONE_NUMBERS, conversation.phoneNumbers)
             values.put(Conversation.COLUMN_SNIPPET, conversation.snippet)
