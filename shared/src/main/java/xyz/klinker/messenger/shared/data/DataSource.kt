@@ -610,23 +610,18 @@ object DataSource {
             if (messages.moveToFirst()) {
                 do {
                     val valuesList = SmsMmsUtils.processMessage(messages, conversationId, context)
-                    var timestamp = 0L
                     if (valuesList != null) {
                         for (value in valuesList) {
                             database(context).insert(Message.TABLE, null, value)
 
-                            if (values.getAsLong(Message.COLUMN_TIMESTAMP) > timestamp)
-                                timestamp = values.getAsLong(Message.COLUMN_TIMESTAMP)
+                            if (value.getAsLong(Message.COLUMN_TIMESTAMP) > latestTimestamp)
+                                latestTimestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
                         }
-                    }
-
-                    if (timestamp > latestTimestamp) {
-                        latestTimestamp = timestamp
                     }
                 } while (messages.moveToNext() && messages.position < SmsMmsUtils.INITIAL_MESSAGE_LIMIT)
             }
 
-            values.put(Conversation.COLUMN_TIMESTAMP, latestTimestamp)
+            values.put(Conversation.COLUMN_TIMESTAMP, if (latestTimestamp == 0L) conversation.timestamp else latestTimestamp)
 
             try {
                 database(context).insert(Conversation.TABLE, null, values)
