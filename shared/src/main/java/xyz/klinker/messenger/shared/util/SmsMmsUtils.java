@@ -57,7 +57,7 @@ public class SmsMmsUtils {
 
     private static final String TAG = "SmsMmsUtils";
 
-    public static final int INITIAL_CONVERSATION_LIMIT = 500;
+    public static final int INITIAL_CONVERSATION_LIMIT = 250;
     public static final int INITIAL_MESSAGE_LIMIT = 500;
 
     /**
