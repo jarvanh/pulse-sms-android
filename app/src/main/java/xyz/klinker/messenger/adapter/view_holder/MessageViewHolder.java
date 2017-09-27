@@ -274,10 +274,6 @@ public class MessageViewHolder extends SwappingHolder {
                         e.printStackTrace();
                     }
 
-                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
-                    itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
-                            YoutubeParser.getVideoUriFromThumbnail(data)
-                    )));
                 } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
                     YouTubePreview preview = YouTubePreview.build(data);
                     if (preview != null) {

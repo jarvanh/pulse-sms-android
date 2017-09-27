@@ -129,16 +129,12 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setDataAndType(uri, MimeType.TEXT_VCARD);
                     itemView.getContext().startActivity(intent);
-                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
-                    itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
-                            YoutubeParser.getVideoUriFromThumbnail(data)
-                    )));
-                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                } else if (mimeType != null && mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
 //                        YouTubePreview preview = YouTubePreview.build(data);
 //                        if (preview != null) {
 //                            itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
 //                        }
-                } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                } else if (mimeType != null && mimeType.equals(MimeType.MEDIA_ARTICLE)) {
                     startArticle();
                 } else {
 //                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);

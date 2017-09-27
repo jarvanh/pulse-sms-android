@@ -376,26 +376,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             setGone(holder.message);
             setVisible(holder.image);
         } else {
-            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE)) {
-                Glide.with(holder.image.getContext())
-                        .asBitmap()
-                        .load(Uri.parse(message.data))
-                        .apply(new RequestOptions()
-                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
-                                .fitCenter())
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                                ImageUtils.overlayBitmap(holder.image.getContext(),
-                                        bitmap, R.drawable.ic_play);
-                                holder.image.setImageBitmap(bitmap);
-                            }
-                        });
-                setGone(holder.message);
-                setGone(holder.clippedImage);
-                setGone(holder.title);
-                setGone(holder.contact);
-            } else if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
                 YouTubePreview preview = YouTubePreview.build(message.data);
                 if (preview != null) {
                     Glide.with(holder.image.getContext())
@@ -409,7 +390,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                                 public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                     ImageUtils.overlayBitmap(holder.image.getContext(),
                                             bitmap, R.drawable.ic_play);
-                                    holder.image.setImageBitmap(bitmap);
+                                    holder.clippedImage.setImageBitmap(bitmap);
                                 }
                             });
 
