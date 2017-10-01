@@ -33,6 +33,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import xyz.klinker.android.drag_dismiss.util.StatusBarHelper;
 import xyz.klinker.messenger.shared.R;
 
 /**
@@ -139,12 +140,15 @@ public class AnimationUtils {
 
         final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
         final double percentDifferent = ((double) realScreenHeight - (double) AnimationUtils.conversationListSize) / (double) realScreenHeight;
-        final int heightToUse = (percentDifferent > .25 ? realScreenHeight : AnimationUtils.conversationListSize) - toolbarSize;
+        final int originalHeight = (Math.abs(percentDifferent) > .25 ?
+                realScreenHeight - StatusBarHelper.getStatusBarHeight(activity) :
+                AnimationUtils.conversationListSize
+        ) - toolbarSize;
 
         ValueAnimator recyclerAnimator = ValueAnimator.ofInt(startY, translateY);
         recyclerAnimator.addUpdateListener(valueAnimator -> {
             recyclerView.setTranslationY((int) valueAnimator.getAnimatedValue());
-            recyclerParams.height = heightToUse + (-1 * (int) valueAnimator.getAnimatedValue());
+            recyclerParams.height = originalHeight + (-1 * (int) valueAnimator.getAnimatedValue());
             recyclerView.requestLayout();
         });
         recyclerAnimator.setInterpolator(interpolator);
@@ -239,7 +243,12 @@ public class AnimationUtils {
             conversationListSize = activity.findViewById(R.id.content).getHeight();
         }
 
-        final int originalHeight = conversationListSize - toolbarSize;
+        final int realScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        final double percentDifferent = ((double) realScreenHeight - (double) AnimationUtils.conversationListSize) / (double) realScreenHeight;
+        final int originalHeight = (Math.abs(percentDifferent) > .25 ?
+                realScreenHeight - StatusBarHelper.getStatusBarHeight(activity) :
+                AnimationUtils.conversationListSize
+        ) - toolbarSize;
 
         ValueAnimator containerAnimator = ValueAnimator.ofInt(containerStart, containerTranslate);
         containerAnimator.addUpdateListener(valueAnimator -> {
