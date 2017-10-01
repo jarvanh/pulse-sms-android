@@ -19,9 +19,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
     android:background="@drawable/focusable_background"
     android:focusable="true"
     android:gravity="start"
@@ -31,9 +31,9 @@
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rect_more"
         android:contentDescription="@string/mms_image"
         android:maxHeight="@dimen/max_message_width"
-        android:background="@drawable/rounded_rect_more"
         android:scaleType="fitCenter"
         android:transitionName="image" />
 
@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/contact"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/timestamp_height"
             android:layout_marginEnd="2dp"
             android:textColor="@color/secondaryText"
             android:textSize="12sp"

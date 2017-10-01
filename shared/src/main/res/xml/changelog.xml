@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="2.5.8"
+        description="October 2nd, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.5.7"
         description="September 22th, 2017">
         <text>Add the ability to specify your own phone number in settings</text>
