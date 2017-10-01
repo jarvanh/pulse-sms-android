@@ -19,7 +19,9 @@
     <version
         name="2.5.8"
         description="October 2nd, 2017">
-        <text>Bug fixes</text>
+        <text>Improve the initial message import</text>
+        <text>Bug/crash/UI fixes</text>
+        <text>Translation updates</text>
     </version>
 
     <version
