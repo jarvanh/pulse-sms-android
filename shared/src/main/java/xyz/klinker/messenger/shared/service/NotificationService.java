@@ -478,6 +478,10 @@ public class NotificationService extends IntentService {
         try {
             if (!conversation.groupConversation) {
                 publicVersion.addPerson("tel:" + conversation.phoneNumbers);
+            } else {
+                for (String number : conversation.phoneNumbers.split(", ")) {
+                    publicVersion.addPerson("tel:" + number);
+                }
             }
         } catch (Exception e) { }
 
