@@ -529,37 +529,42 @@ public class  MessengerActivity extends AppCompatActivity
             return;
         }
 
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        try {
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof BackPressedListener) {
-                if (((BackPressedListener) fragment).onBackPressed()) {
-                    return;
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof BackPressedListener) {
+                    if (((BackPressedListener) fragment).onBackPressed()) {
+                        return;
+                    }
                 }
             }
-        }
 
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
-            return;
-        }
-
-        if (conversationListFragment == null) {
-            Fragment messageListFragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
-
-            try {
-                getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
-            } catch (Exception e) { }
-
-            displayConversations();
-            fab.show();
-            if (drawerLayout != null) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            if (searchView.isSearchOpen()) {
+                searchView.closeSearch();
+                return;
             }
-        } else if (inSettings) {
-            clickDefaultDrawerItem();
-        } else {
-            super.onBackPressed();
+
+            if (conversationListFragment == null) {
+                Fragment messageListFragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
+
+                try {
+                    getSupportFragmentManager().beginTransaction().remove(messageListFragment).commit();
+                } catch (Exception e) {
+                }
+
+                displayConversations();
+                fab.show();
+                if (drawerLayout != null) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+            } else if (inSettings) {
+                clickDefaultDrawerItem();
+            } else {
+                super.onBackPressed();
+            }
+        } catch (Exception e) {
+            finish();
         }
     }
 

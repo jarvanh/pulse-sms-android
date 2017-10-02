@@ -136,11 +136,11 @@ public class RecordAudioView extends FrameLayout {
 
         try {
             recorder.prepare();
+            recorder.start();
         } catch (IllegalStateException | IOException e) {
             Log.e(TAG, "prepare() failed");
         }
 
-        recorder.start();
         updateTimer();
     }
 

@@ -2200,7 +2200,11 @@ object DataSource {
     /**
      * Inserts a draft into the database with the given parameters.
      */
-    @JvmOverloads fun insertDraft(context: Context, conversationId: Long, data: String, mimeType: String, useApi: Boolean = true): Long {
+    @JvmOverloads fun insertDraft(context: Context?, conversationId: Long, data: String, mimeType: String, useApi: Boolean = true): Long {
+        if (context == null) {
+            return -1L
+        }
+
         val values = ContentValues(4)
         val id = generateId()
         values.put(Draft.COLUMN_ID, id)

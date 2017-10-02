@@ -657,10 +657,14 @@ public class ConversationListFragment extends Fragment
     }
 
     public void notifyOfSentMessage(Message m) {
+        if (m == null) {
+            return;
+        }
+
         expandedConversation.conversation.timestamp = m.timestamp;
         expandedConversation.conversation.read = m.read;
 
-        if (m.mimeType.equals("text/plain")) {
+        if (m.mimeType != null && m.mimeType.equals("text/plain")) {
             expandedConversation.conversation.snippet = m.data;
             expandedConversation.summary.setText(m.data);
         }
