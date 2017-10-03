@@ -170,7 +170,7 @@ public class SmsSentReceiver extends SentReceiver {
         resend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         if (error) {
-            if (FeatureFlags.get(context).AUTO_RETRY_FAILED_MESSAGES && retryFailedMessages()) {
+            if (retryFailedMessages()) {
                 context.startService(resend);
             } else {
                 Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);

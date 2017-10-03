@@ -170,6 +170,8 @@
     <string name="open_link_to_browser">Open Link to Browser</string>
     <string name="open_link_internal">Open Link Internally</string>
     <string name="copy_link">Copy Link</string>
+    <string name="attach_vcard">Attach Contact as vCard</string>
+    <string name="attach_plain_text">Attach Contact as Plain Text</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>

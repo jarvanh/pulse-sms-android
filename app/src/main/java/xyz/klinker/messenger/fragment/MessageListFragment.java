@@ -20,11 +20,13 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -109,6 +111,7 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -1692,14 +1695,30 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
+    @SuppressLint("SetTextI18n")
     public void onContactAttached(String firstName, String lastName, String phone) {
         onBackPressed();
 
-        try {
-            Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
-            attachContact(contactFile);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (FeatureFlags.get(getActivity()).V_2_6_0) {
+            new AlertDialog.Builder(getActivity())
+                    .setItems(R.array.attach_contact_options, (dialogInterface, i) -> {
+                        switch (i) {
+                            case 0:
+                                try {
+                                    Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
+                                    attachContact(contactFile);
+                                } catch (Exception e) { }
+                                break;
+                            case 1:
+                                messageEntry.setText(firstName + " " + lastName + ": " + phone);
+                                break;
+                        }
+                    }).show();
+        } else {
+            try {
+                Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
+                attachContact(contactFile);
+            } catch (Exception e) { }
         }
     }
 

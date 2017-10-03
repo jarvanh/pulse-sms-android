@@ -152,7 +152,7 @@ public class  MessengerActivity extends AppCompatActivity
 
         new UpdateUtils(this).checkForUpdate();
 
-        if (FeatureFlags.get(this).BLACK_NAV_BAR && Settings.get(this).isCurrentlyDarkTheme()) {
+        if (Settings.get(this).isCurrentlyDarkTheme()) {
             getWindow().setNavigationBarColor(Color.BLACK);
         }
 

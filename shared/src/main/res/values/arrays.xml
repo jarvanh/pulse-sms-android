@@ -211,4 +211,9 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="attach_contact_options">
+        <item>@string/attach_vcard</item>
+        <item>@string/attach_plain_text</item>
+    </string-array>
+
 </resources>

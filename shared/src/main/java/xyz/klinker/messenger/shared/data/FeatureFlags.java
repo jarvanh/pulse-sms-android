@@ -66,6 +66,7 @@ public class FeatureFlags {
     private static final String FLAG_RERECEIVE_GROUP_MESSAGE_FROM_SELF = "flag_rereceive_group_message_from_self";
     private static final String FLAG_BLACK_NAV_BAR = "flag_black_nav_bar";
     private static final String FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status";
+    private static final String FLAG_V_2_6_0 = "flag_v_2_6_0";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -86,10 +87,9 @@ public class FeatureFlags {
     // unlock for next update
     public boolean REMOVE_IMAGE_BORDERS;
     public boolean WHITE_LINK_TEXT;
+    public boolean V_2_6_0;
 
     // need tested
-    public boolean AUTO_RETRY_FAILED_MESSAGES;
-    public boolean BLACK_NAV_BAR;
     public boolean REENABLE_SENDING_STATUS_ON_NON_PRIMARY;
 
     private Context context;
@@ -103,9 +103,8 @@ public class FeatureFlags {
 
         REMOVE_IMAGE_BORDERS = getValue(sharedPrefs, FLAG_REMOVE_IMAGE_BORDERS);
         WHITE_LINK_TEXT = getValue(sharedPrefs, FLAG_WHITE_LINK_TEXT);
+        V_2_6_0 = getValue(sharedPrefs, FLAG_V_2_6_0);
 
-        AUTO_RETRY_FAILED_MESSAGES = getValue(sharedPrefs, FLAG_AUTO_RETRY_FAILED_MESSAGES);
-        BLACK_NAV_BAR = getValue(sharedPrefs, FLAG_BLACK_NAV_BAR);
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY);
     }
 
@@ -132,14 +131,11 @@ public class FeatureFlags {
             case FLAG_WHITE_LINK_TEXT:
                 WHITE_LINK_TEXT = flag;
                 break;
+            case FLAG_V_2_6_0:
+                V_2_6_0 = flag;
+                break;
 
 
-            case FLAG_AUTO_RETRY_FAILED_MESSAGES:
-                AUTO_RETRY_FAILED_MESSAGES = flag;
-                break;
-            case FLAG_BLACK_NAV_BAR:
-                BLACK_NAV_BAR = flag;
-                break;
             case FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY:
                 REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag;
                 break;

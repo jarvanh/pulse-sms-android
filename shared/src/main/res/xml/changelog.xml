@@ -16,6 +16,13 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="2.6.0"-->
+        <!--description="October 10th, 2017">-->
+        <!--<text>UI improvements for images and links</text>-->
+        <!--<text>Allow attaching of a contact as plain text or vCard</text>-->
+    <!--</version>-->
+
     <version
         name="2.5.8"
         description="October 2nd, 2017">
