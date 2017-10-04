@@ -391,6 +391,17 @@ public class MessageListFragment extends Fragment implements
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        NotificationService.CONVERSATION_ID_OPEN = getConversationId();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        NotificationService.CONVERSATION_ID_OPEN = 0L;
+    }
+    @Override
     public void onStart() {
         super.onStart();
         dismissNotification = true;

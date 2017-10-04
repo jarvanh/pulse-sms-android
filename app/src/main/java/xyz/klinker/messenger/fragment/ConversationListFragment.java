@@ -529,10 +529,6 @@ public class ConversationListFragment extends Fragment
             deleteSnackbar.dismiss();
         }
 
-        if (viewHolder.conversation != null) {
-            NotificationService.CONVERSATION_ID_OPEN = viewHolder.conversation.id;
-        }
-
         expandedConversation = viewHolder;
         AnimationUtils.expandActivityForConversation(activity);
 
@@ -606,10 +602,6 @@ public class ConversationListFragment extends Fragment
 
         ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.color);
         ActivityUtils.setTaskDescription(activity);
-
-        if (viewHolder.conversation != null) {
-            NotificationService.CONVERSATION_ID_OPEN = 0L;
-        }
 
         if (updateInfo != null) {
             ConversationListUpdatedReceiver.sendBroadcast(activity, updateInfo);

@@ -213,10 +213,6 @@ public class  MessengerActivity extends AppCompatActivity
         new PromotionUtils(this).checkPromotions();
         new UnreadBadger(this).clearCount();
 
-        if (conversationListFragment != null && conversationListFragment.isExpanded()) {
-            NotificationService.CONVERSATION_ID_OPEN = conversationListFragment.getExpandedId();
-        }
-
         ColorUtils.checkBlackBackground(this);
         ActivityUtils.setTaskDescription(this);
 
@@ -307,8 +303,6 @@ public class  MessengerActivity extends AppCompatActivity
     public void onStop() {
         super.onStop();
         MessengerAppWidgetProvider.refreshWidget(this);
-
-        NotificationService.CONVERSATION_ID_OPEN = 0L;
 
         try {
             unregisterReceiver(refreshAllReceiver);
@@ -732,8 +726,6 @@ public class  MessengerActivity extends AppCompatActivity
      *****************************************************************/
 
     public boolean displayConversations() {
-        NotificationService.CONVERSATION_ID_OPEN = 0L;
-
         fab.show();
         invalidateOptionsMenu();
         inSettings = false;
@@ -780,8 +772,6 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void displayShortcutConversation(long convo) {
-        NotificationService.CONVERSATION_ID_OPEN = 0L;
-
         fab.show();
         invalidateOptionsMenu();
         inSettings = false;
