@@ -53,6 +53,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -163,7 +164,7 @@ public class  MessengerActivity extends AppCompatActivity
         initToolbar();
         initFab();
         configureGlobalColors();
-        displayConversations();
+        displayConversations(savedInstanceState);
 
         dismissIfFromNotification();
 
@@ -692,13 +693,15 @@ public class  MessengerActivity extends AppCompatActivity
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        try {
-            getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), conversationListFragment.getExpandedId());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (outState == null) {
+            outState = new Bundle();
         }
+
+        if (conversationListFragment.isExpanded()) {
+            outState.putLong(INSTANCE.getEXTRA_CONVERSATION_ID(), conversationListFragment.getExpandedId());
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     private void clickDefaultDrawerItem() {
@@ -726,6 +729,10 @@ public class  MessengerActivity extends AppCompatActivity
      *****************************************************************/
 
     public boolean displayConversations() {
+        return displayConversations(null);
+    }
+
+    public boolean displayConversations(Bundle savedInstanceState) {
         fab.show();
         invalidateOptionsMenu();
         inSettings = false;
@@ -735,6 +742,14 @@ public class  MessengerActivity extends AppCompatActivity
 
         getIntent().putExtra(INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
         getIntent().putExtra(INSTANCE.getEXTRA_MESSAGE_ID(), -1L);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE.getEXTRA_CONVERSATION_ID())) {
+            convoId = savedInstanceState.getLong(INSTANCE.getEXTRA_CONVERSATION_ID());
+            messageId = -1L;
+
+            Log.v("MessengerActivity", "setting conversation from saved instance state");
+            savedInstanceState.remove(INSTANCE.getEXTRA_CONVERSATION_ID());
+        }
 
         boolean updateConversationListSize = false;
         if (messageId != -1L && convoId != -1L) {
