@@ -131,7 +131,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
         message.mimeType = MimeType.TEXT_PLAIN;
         message.read = false;
         message.seen = false;
-        message.simPhoneNumber = "test sim";//DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
+        message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
         message.sentDeviceId = -1L;
 
         final DataSource source = DataSource.INSTANCE;

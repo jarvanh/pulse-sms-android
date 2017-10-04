@@ -669,6 +669,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         m.seen = true;
         m.from = null;
         m.color = null;
+        m.sentDeviceId = 1;
         return m;
     }
 

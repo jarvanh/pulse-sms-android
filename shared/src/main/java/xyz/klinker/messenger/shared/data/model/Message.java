@@ -56,8 +56,8 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
             COLUMN_SEEN + " integer not null, " +
             COLUMN_FROM + " text, " +
             COLUMN_COLOR + " integer, " +
-            COLUMN_SIM_NUMBER + " text" +
-            COLUMN_SENT_DEVICE + "integer" +
+            COLUMN_SIM_NUMBER + " text, " +
+            COLUMN_SENT_DEVICE + " integer" +
             ");";
 
     private static final String[] INDEXES = {

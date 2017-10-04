@@ -1,8 +1,8 @@
-| _id   | conversation_id   | type  | data                              | timestamp | mime_type     | read  | seen  | message_from      | color     |
-| 1     | 1                 | 0     | You coming over tonight?          | 900       | text/plain    | 1     | 1     | null              | null      |
-| 2     | 1                 | 1     | Hey, what's up?                   | 1000      | text/plain    | 0     | 0     | null              | null      |
-| 3     | 2                 | 1     | How is the dog?                   | 500       | text/plain    | 1     | 1     | null              | null      |
-| 4     | 3                 | 0     | How is the new app coming?        | 750       | text/plain    | 0     | 1     | null              | null      |
-| 5     | 4                 | 0     | Can you help with my grill?       | 500       | text/plain    | 1     | 1     | Luke              | null      |
-| 6     | 4                 | 1     | content://mms/part/4              | 200       | image/jpg     | 1     | 1     | null              | null      |
-| 7     | 4                 | 1     | firebase 1                        | 200       | image/jpg     | 1     | 1     | null              | null      |
+| _id   | conversation_id   | type  | data                              | timestamp | mime_type     | read  | seen  | message_from      | color     | sent_device   |
+| 1     | 1                 | 0     | You coming over tonight?          | 900       | text/plain    | 1     | 1     | null              | null      | 1             |
+| 2     | 1                 | 1     | Hey, what's up?                   | 1000      | text/plain    | 0     | 0     | null              | null      | 2             |
+| 3     | 2                 | 1     | How is the dog?                   | 500       | text/plain    | 1     | 1     | null              | null      | 3             |
+| 4     | 3                 | 0     | How is the new app coming?        | 750       | text/plain    | 0     | 1     | null              | null      | 4             |
+| 5     | 4                 | 0     | Can you help with my grill?       | 500       | text/plain    | 1     | 1     | Luke              | null      | -1            |
+| 6     | 4                 | 1     | content://mms/part/4              | 200       | image/jpg     | 1     | 1     | null              | null      | 5             |
+| 7     | 4                 | 1     | firebase 1                        | 200       | image/jpg     | 1     | 1     | null              | null      | 6             |
