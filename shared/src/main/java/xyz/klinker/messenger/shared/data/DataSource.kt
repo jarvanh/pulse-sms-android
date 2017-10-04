@@ -1905,7 +1905,7 @@ object DataSource {
         if (useApi) {
             ApiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
                     message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                    message.color, Account.deviceId, message.simPhoneNumber, encryptor(context))
+                    message.color, message.sentDeviceId.toString(), message.simPhoneNumber, encryptor(context))
         }
 
         if (message.type != Message.TYPE_MEDIA) {
