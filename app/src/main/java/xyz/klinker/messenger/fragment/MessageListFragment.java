@@ -1739,6 +1739,14 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void attachImage(Uri uri) {
+        if (editImage == null) {
+            // this happens when opening the full screen capture image intent
+            // then rotating from landscape to portrait
+            // the view has not been initialized by the time we are trying to deliver the results, so delay it.
+            new Handler().postDelayed(() -> attachImage(uri), 500);
+            return;
+        }
+
         editImage.setVisibility(View.VISIBLE);
 
         clearAttachedData();

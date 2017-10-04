@@ -1167,11 +1167,20 @@ public class  MessengerActivity extends AppCompatActivity
             if (billing != null && billing.handleOnActivityResult(requestCode, resultCode, data)) {
                 return;
             }
-
+            
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
             if (fragment != null) {
                 fragment.onActivityResult(requestCode, resultCode, data);
             } else {
+                if (requestCode == MessageListFragment.RESULT_CAPTURE_IMAGE_REQUEST) {
+                    new Handler().postDelayed(() -> {
+                        Fragment messageList = getSupportFragmentManager().findFragmentById(R.id.message_list_container);
+                        if (messageList != null) {
+                            messageList.onActivityResult(requestCode, resultCode, data);
+                        }
+                    }, 1000);
+                }
+
                 fragment = getSupportFragmentManager().findFragmentById(R.id.conversation_list_container);
                 if (fragment != null) {
                     fragment.onActivityResult(requestCode, resultCode, data);
