@@ -1949,6 +1949,7 @@ object DataSource {
             values.put(Message.COLUMN_FROM, message.from)
             values.put(Message.COLUMN_COLOR, message.color)
             values.put(Message.COLUMN_SIM_NUMBER, message.simPhoneNumber)
+            values.put(Message.COLUMN_SENT_DEVICE, message.sentDeviceId)
 
             val id = try {
                 database(context).insert(Message.TABLE, null, values)

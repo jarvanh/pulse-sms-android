@@ -107,8 +107,11 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
         this.seen = body.seen;
         this.from = body.messageFrom;
         this.color = body.color;
-        this.sentDeviceId = body.sentDevice;
         this.simPhoneNumber = body.simStamp;
+
+        if (body.sentDevice != null) {
+            this.sentDeviceId = body.sentDevice;
+        }
     }
 
     @Override
@@ -178,6 +181,10 @@ public class Message implements DatabaseSQLiteHelper.DatabaseTable {
         this.mimeType = utils.decrypt(this.mimeType);
         this.from = utils.decrypt(this.from);
         this.data = utils.decrypt(this.data);
+
+        try {
+            this.simPhoneNumber = utils.decrypt(this.simPhoneNumber);
+        } catch (Exception e) { }
     }
 
 }
