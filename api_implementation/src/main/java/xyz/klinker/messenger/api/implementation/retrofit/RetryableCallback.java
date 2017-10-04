@@ -2,6 +2,8 @@ package xyz.klinker.messenger.api.implementation.retrofit;
 
 import android.util.Log;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +29,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
         if (!ApiUtils.INSTANCE.isCallSuccessful(response)) {
             if (retryCount++ < totalRetries) {
                 Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
-                Log.v(TAG, "Error: " + response.message());
+                try { Log.v(TAG, "Error: " + response.message() + " - " + response.errorBody().string()); } catch (Exception e) { }
                 Log.v(TAG, "For call:" + call.request().url().toString());
                 retry();
             } else {

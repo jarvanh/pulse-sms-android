@@ -91,6 +91,7 @@ public class ReplyService extends IntentService {
         m.color = null;
         m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
+        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
 
         long messageId = source.insertMessage(this, m, conversationId, true);
         source.readConversation(this, conversationId);

@@ -220,6 +220,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             message.mimeType = MimeType.TEXT_PLAIN;
             message.read = true;
             message.seen = true;
+            message.sentDeviceId = -1;
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
         } else {
@@ -485,6 +486,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             message.mimeType = MimeType.TEXT_PLAIN;
             message.read = true;
             message.seen = true;
+            message.sentDeviceId = -1;
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
         }

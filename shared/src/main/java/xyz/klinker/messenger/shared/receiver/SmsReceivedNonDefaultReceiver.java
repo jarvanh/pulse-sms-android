@@ -114,6 +114,7 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
         message.read = false;
         message.seen = false;
         message.simPhoneNumber = null;
+        message.sentDeviceId = -1L;
 
         DataSource source = DataSource.INSTANCE;
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
@@ -52,6 +53,7 @@ public class ResendFailedMessage extends IntentService {
         m.color = null;
         m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
                 .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
+        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
 
         source.deleteMessage(this, messageId);
         messageId = source.insertMessage(this, m, m.conversationId, true);

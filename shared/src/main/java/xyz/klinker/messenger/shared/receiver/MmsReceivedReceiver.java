@@ -126,6 +126,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 message.seen = false;
                 message.from = ContactUtils.findContactNames(from, context);
                 message.simPhoneNumber = DualSimUtils.get(context).getAvailableSims().isEmpty() ? null : to;
+                message.sentDeviceId = -1L;
 
                 if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
                     snippet = message.data;

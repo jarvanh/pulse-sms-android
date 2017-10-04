@@ -164,7 +164,7 @@ public class ApiUploadService extends Service {
 
                 m.encrypt(encryptionUtils);
                 MessageBody message = new MessageBody(m.id, m.conversationId, m.type, m.data,
-                        m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color);
+                        m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color, "-1", m.simPhoneNumber);
                 messages.add(message);
             } while (cursor.moveToNext());
 

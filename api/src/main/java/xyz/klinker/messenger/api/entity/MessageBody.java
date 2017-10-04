@@ -28,10 +28,12 @@ public class MessageBody {
     public boolean seen;
     public String messageFrom;
     public Integer color;
+    public Long sentDevice;
+    public String simStamp;
 
     public MessageBody(long deviceId, long deviceConversationId, int messageType, String data,
                        long timestamp, String mimeType, boolean read, boolean seen,
-                       String messageFrom, Integer color) {
+                       String messageFrom, Integer color, String sentDevice, String simStamp) {
         this.deviceId = deviceId;
         this.deviceConversationId = deviceConversationId;
         this.messageType = messageType;
@@ -42,12 +44,19 @@ public class MessageBody {
         this.seen = seen;
         this.messageFrom = messageFrom;
         this.color = color;
+        this.simStamp = simStamp;
+
+        try {
+            this.sentDevice = Long.parseLong(sentDevice);
+        } catch (Exception e) {
+            this.sentDevice = -1L;
+        }
     }
 
     @Override
     public String toString() {
         return deviceId + ", " + deviceConversationId + ", " + messageType + ", " + data + ", " +
                 timestamp + ", " + mimeType + ", " + read + ", " + seen + ", " + messageFrom
-                + ", " + color;
+                + ", " + color + ", " + sentDevice + ", " + simStamp;
     }
 }

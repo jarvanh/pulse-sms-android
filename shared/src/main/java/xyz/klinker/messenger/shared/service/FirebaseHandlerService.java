@@ -284,6 +284,16 @@ public class FirebaseHandlerService extends WakefulIntentService {
             message.simPhoneNumber = conversation == null || conversation.simSubscriptionId == null ? null :
                     DualSimUtils.get(context).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
 
+            if (json.has("sent_device")) {
+                try {
+                    message.sentDeviceId = json.getLong("sent_device");
+                } catch (Exception e) {
+                    message.sentDeviceId = -1L;
+                }
+            } else {
+                message.sentDeviceId = -1L;
+            }
+
             try {
                 message.data = encryptionUtils.decrypt(json.getString("data"));
                 message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
@@ -872,6 +882,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.read = true;
         message.seen = true;
         message.simPhoneNumber = DualSimUtils.get(context).getDefaultPhoneNumber();
+
+        if (json.has("sent_device")) {
+            message.sentDeviceId = json.getLong("sent_device");
+        } else {
+            message.sentDeviceId = 0;
+        }
 
         long conversationId = source.insertMessage(message, to, context, true);
         Conversation conversation = source.getConversation(context, conversationId);

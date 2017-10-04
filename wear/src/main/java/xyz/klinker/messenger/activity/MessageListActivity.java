@@ -196,7 +196,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         m.color = null;
         m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
                 DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-
+        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
 
         if (text.length() != 0) {
             source.insertMessage(this, m, m.conversationId);

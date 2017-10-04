@@ -115,6 +115,11 @@ public class NewMessagesCheckService extends IntentService {
                         message.mimeType = MimeType.TEXT_PLAIN;
                         message.read = true;
                         message.seen = true;
+                        if (messageType != Message.TYPE_RECEIVED) {
+                            message.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+                        } else {
+                            message.sentDeviceId = -1L;
+                        }
 
                         messagesToInsert.add(message);
                         addressesForMessages.add(PhoneNumberUtils.clearFormatting(

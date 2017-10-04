@@ -1665,6 +1665,12 @@ object DataSource {
         m.from = null
         m.color = null
 
+        if (Account.exists()) {
+            m.sentDeviceId = Account.deviceId!!.toLong()
+        } else {
+            m.sentDeviceId = -1
+        }
+
         return insertMessage(m, addresses, context, useApi)
     }
 
@@ -1858,7 +1864,7 @@ object DataSource {
                                     returnMessageId: Boolean = false, useApi: Boolean = true): Long {
         message.conversationId = conversationId
 
-        val values = ContentValues(11)
+        val values = ContentValues(12)
 
         if (message.id <= 0) {
             message.id = generateId()
@@ -1875,6 +1881,7 @@ object DataSource {
         values.put(Message.COLUMN_FROM, message.from)
         values.put(Message.COLUMN_COLOR, message.color)
         values.put(Message.COLUMN_SIM_NUMBER, message.simPhoneNumber)
+        values.put(Message.COLUMN_SENT_DEVICE, message.sentDeviceId)
 
         val id = try {
             database(context).insert(Message.TABLE, null, values)
@@ -1898,7 +1905,7 @@ object DataSource {
         if (useApi) {
             ApiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
                     message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                    message.color, encryptor(context))
+                    message.color, Account.deviceId, message.simPhoneNumber, encryptor(context))
         }
 
         if (message.type != Message.TYPE_MEDIA) {

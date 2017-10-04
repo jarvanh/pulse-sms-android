@@ -33,6 +33,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import okio.BufferedSink;
 import okio.GzipSink;
 import okio.Okio;
@@ -163,6 +164,10 @@ public class Api {
 
         // gzip all bodies, the server should automatically unzip them
 //        httpClient.addInterceptor(new GzipRequestInterceptor());
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //httpClient.addInterceptor(logging);
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()

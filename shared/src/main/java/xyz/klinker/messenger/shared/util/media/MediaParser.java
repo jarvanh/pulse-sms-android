@@ -6,6 +6,7 @@ import android.support.annotation.VisibleForTesting;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.shared.data.model.Message;
 
 public abstract class MediaParser {
@@ -41,6 +42,7 @@ public abstract class MediaParser {
         message.seen = false;
         message.mimeType = getMimeType();
         message.data = buildBody(matchedText);
+        message.sentDeviceId = -1L;
 
         matchedText = null;
 

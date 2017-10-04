@@ -446,7 +446,8 @@ object ApiUtils {
                    deviceConversationId: Long, messageType: Int,
                    data: String?, timestamp: Long, mimeType: String?,
                    read: Boolean, seen: Boolean, messageFrom: String?,
-                   color: Int?, encryptionUtils: EncryptionUtils?) {
+                   color: Int?, androidDeviceId: String?, simStamp: String?,
+                   encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
@@ -455,7 +456,8 @@ object ApiUtils {
             val body = MessageBody(deviceId,
                     deviceConversationId, messageType, encryptionUtils.encrypt(data),
                     timestamp, encryptionUtils.encrypt(mimeType), read, seen,
-                    encryptionUtils.encrypt(messageFrom), color)
+                    encryptionUtils.encrypt(messageFrom), color, androidDeviceId,
+                    encryptionUtils.encrypt(simStamp))
             val request = AddMessagesRequest(accountId, body)
             val message = "add message"
             val call = api.message().add(request)
@@ -468,7 +470,8 @@ object ApiUtils {
                 val body = MessageBody(deviceId, deviceConversationId,
                         messageType, encryptionUtils.encrypt("firebase -1"),
                         timestamp, encryptionUtils.encrypt(mimeType), read, seen,
-                        encryptionUtils.encrypt(messageFrom), color)
+                        encryptionUtils.encrypt(messageFrom), color, androidDeviceId,
+                        encryptionUtils.encrypt(simStamp))
                 val request = AddMessagesRequest(accountId, body)
                 val message = "add media message"
                 val call = api.message().add(request)

@@ -35,7 +35,7 @@ public class MessageTest extends ApiTest {
         int originalSize = api.message().list(accountId, null, null, null).execute().body().length;
 
         MessageBody message = new MessageBody(1, 1, 1, "test", System.currentTimeMillis(),
-                "text/plain", true, true, null, null);
+                "text/plain", true, true, null, null, null, null);
         AddMessagesRequest request = new AddMessagesRequest(accountId, message);
         Object response = api.message().add(request).execute().body();
         assertNotNull(response);
