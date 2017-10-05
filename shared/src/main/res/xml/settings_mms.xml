@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <xyz.klinker.messenger.view.AutoSummaryListPreference
+    <SwitchPreference
+        android:key="@string/pref_group_mms"
+        android:title="@string/use_group_mms"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:key="@string/pref_auto_save_media"
+        android:title="@string/auto_save_media"
+        android:summary="@string/auto_save_media_summary"
+        android:defaultValue="false" />
+
+    <ListPreference
         android:key="@string/pref_mms_size"
         android:title="@string/max_mms_size"
+        android:summary="@string/max_mms_size_summary"
         android:entries="@array/mms_size"
         android:entryValues="@array/mms_size_values"
         android:defaultValue="500_kb"/>
@@ -15,17 +27,6 @@
         android:entries="@array/convert_to_mms"
         android:entryValues="@array/convert_to_mms_values"
         android:defaultValue="3" />
-
-    <SwitchPreference
-        android:key="@string/pref_group_mms"
-        android:title="@string/use_group_mms"
-        android:defaultValue="true" />
-
-    <SwitchPreference
-        android:key="@string/pref_auto_save_media"
-        android:title="@string/auto_save_media"
-        android:summary="@string/auto_save_media_summary"
-        android:defaultValue="false" />
 
     <Preference
         android:key="@string/pref_mms_save_location"

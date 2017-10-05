@@ -410,6 +410,7 @@
 
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max Image Size</string>
+    <string name="max_mms_size_summary">Do not set this higher than what your carrier allows</string>
     <string name="use_group_mms">Use Group MMS</string>
     <string name="auto_save_media">Auto-save Media</string>
     <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
