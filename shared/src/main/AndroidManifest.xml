@@ -206,7 +206,19 @@
 
         <receiver
             android:name=".receiver.CarReplyReceiver"
-            android:exported="false" />
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="xyz.klinker.messenger.CAR_REPLY"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.CarReadReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="xyz.klinker.messenger.CAR_READ"/>
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".service.HeadlessSmsSendService"

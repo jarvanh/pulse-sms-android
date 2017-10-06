@@ -633,15 +633,24 @@ public class NotificationService extends IntentService {
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
-        Intent carReply = new Intent(this, CarReplyReceiver.class);
-        carReply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+        Intent carReply = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+                .setAction("xyz.klinker.messenger.CAR_REPLY")
+                .putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
+                .setPackage("xyz.klinker.messenger");
         PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.id,
                 carReply, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent carRead = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+                .setAction("xyz.klinker.messenger.CAR_READ")
+                .putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
+                .setPackage("xyz.klinker.messenger");
+        PendingIntent pendingCarRead = PendingIntent.getBroadcast(this, (int) conversation.id,
+                carRead, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Android Auto extender
         NotificationCompat.CarExtender.UnreadConversation.Builder car = new
                 NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
-                .setReadPendingIntent(pendingDelete)
+                .setReadPendingIntent(pendingCarRead)
                 .setReplyAction(pendingCarReply, remoteInput)
                 .setLatestTimestamp(conversation.timestamp);
 

@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.NotificationManagerCompat;
@@ -24,19 +25,23 @@ public class NotificationMarkReadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        handle(intent, this);
+    }
+
+    public static void handle(Intent intent, Context context) {
         long conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1);
 
         DataSource source = DataSource.INSTANCE;
-        source.readConversation(this, conversationId);
-        Conversation conversation = source.getConversation(this, conversationId);
+        source.readConversation(context, conversationId);
+        Conversation conversation = source.getConversation(context, conversationId);
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
-        Cursor unseenMessages = source.getUnseenMessages(this);
+        Cursor unseenMessages = source.getUnseenMessages(context);
         if (unseenMessages.getCount() <= 0) {
-            NotificationManagerCompat.from(this).cancelAll();
+            NotificationManagerCompat.from(context).cancelAll();
         } else {
-            NotificationManagerCompat.from(this).cancel((int) conversationId);
+            NotificationManagerCompat.from(context).cancel((int) conversationId);
         }
 
         CursorUtil.closeSilent(unseenMessages);
@@ -45,9 +50,9 @@ public class NotificationMarkReadService extends IntentService {
                 Account.INSTANCE.getDeviceId(),
                 conversationId);
 
-        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, conversation == null ? "" : conversation.snippet, true);
+        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation == null ? "" : conversation.snippet, true);
 
-        new UnreadBadger(this).writeCountFromDatabase();
-        MessengerAppWidgetProvider.refreshWidget(this);
+        new UnreadBadger(context).writeCountFromDatabase();
+        MessengerAppWidgetProvider.refreshWidget(context);
     }
 }
