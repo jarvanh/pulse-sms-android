@@ -86,6 +86,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
     private BottomNavigationView bottomNavigation;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,9 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
+
+        recyclerView = (RecyclerView) findViewById(R.id.recent_contacts);
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, Settings.get(this).mainColorSet.color);
 
         contactEntry = (RecipientEditTextView) findViewById(R.id.contact_entry);
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -167,13 +171,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         new Thread(() -> {
             List<Conversation> conversations = queryConversations();
             handler.post(() -> {
-                ContactAdapter adapter = new ContactAdapter(conversations,
-                        ComposeActivity.this);
-                RecyclerView recyclerView = (RecyclerView)
-                        findViewById(R.id.recent_contacts);
-
-                recyclerView.setLayoutManager(
-                        new LinearLayoutManager(getApplicationContext()));
+                ContactAdapter adapter = new ContactAdapter(conversations, ComposeActivity.this);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
             });
         }).start();
@@ -193,13 +192,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             groups.addAll(conversations);
             handler.post(() -> {
-                ContactAdapter adapter = new ContactAdapter(groups,
-                        ComposeActivity.this);
-                RecyclerView recyclerView = (RecyclerView)
-                        findViewById(R.id.recent_contacts);
-
-                recyclerView.setLayoutManager(
-                        new LinearLayoutManager(getApplicationContext()));
+                ContactAdapter adapter = new ContactAdapter(groups, ComposeActivity.this);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
             });
         }).start();
