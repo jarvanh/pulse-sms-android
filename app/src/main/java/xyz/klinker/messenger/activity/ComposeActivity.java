@@ -24,6 +24,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -82,6 +85,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
+    private BottomNavigationView bottomNavigation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,22 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this);
         adapter.setShowMobileOnly(Settings.get(this).mobileOnly);
         contactEntry.setAdapter(adapter);
+
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigation.setItemIconTintList(ColorStateList.valueOf(Settings.get(this).mainColorSet.color));
+        bottomNavigation.setItemTextColor(ColorStateList.valueOf(Settings.get(this).mainColorSet.color));
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_recent_conversations:
+                    displayRecents();
+                    break;
+                case R.id.menu_group_conversations:
+                    displayGroups();
+                    break;
+            }
+
+            return false;
+        });
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -145,32 +165,63 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     private void displayRecents() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            DataSource source = DataSource.INSTANCE;
-            Cursor cursor = source.getUnarchivedConversations(this);
+            List<Conversation> conversations = queryConversations();
+            handler.post(() -> {
+                ContactAdapter adapter = new ContactAdapter(conversations,
+                        ComposeActivity.this);
+                RecyclerView recyclerView = (RecyclerView)
+                        findViewById(R.id.recent_contacts);
 
-            if (cursor.moveToFirst()) {
-                final List<Conversation> conversations = new ArrayList<>();
+                recyclerView.setLayoutManager(
+                        new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(adapter);
+            });
+        }).start();
+    }
 
-                do {
-                    Conversation conversation = new Conversation();
-                    conversation.fillFromCursor(cursor);
-                    conversations.add(conversation);
-                } while (cursor.moveToNext());
-
-                handler.post(() -> {
-                    ContactAdapter adapter = new ContactAdapter(conversations,
-                            ComposeActivity.this);
-                    RecyclerView recyclerView = (RecyclerView)
-                            findViewById(R.id.recent_contacts);
-
-                    recyclerView.setLayoutManager(
-                            new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(adapter);
-                });
+    private void displayGroups() {
+        final Handler handler = new Handler();
+        new Thread(() -> {
+            List<Conversation> groups = ContactUtils.queryContactGroups(ComposeActivity.this);
+            List<Conversation> conversations = queryConversations();
+            for (int i = 0; i < conversations.size(); i++) {
+                if (!conversations.get(i).phoneNumbers.contains(", ")) {
+                    conversations.remove(i);
+                    i--;
+                }
             }
 
-            CursorUtil.closeSilent(cursor);
+            groups.addAll(conversations);
+            handler.post(() -> {
+                ContactAdapter adapter = new ContactAdapter(groups,
+                        ComposeActivity.this);
+                RecyclerView recyclerView = (RecyclerView)
+                        findViewById(R.id.recent_contacts);
+
+                recyclerView.setLayoutManager(
+                        new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(adapter);
+            });
         }).start();
+    }
+
+    private List<Conversation> queryConversations() {
+        Cursor cursor = DataSource.INSTANCE.getAllConversations(this);
+
+        if (cursor.moveToFirst()) {
+            final List<Conversation> conversations = new ArrayList<>();
+
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromCursor(cursor);
+                conversations.add(conversation);
+            } while (cursor.moveToNext());
+
+            CursorUtil.closeSilent(cursor);
+            return conversations;
+        }
+
+        return new ArrayList<>();
     }
 
     private void dismissKeyboard() {

@@ -76,12 +76,30 @@
         app:pressedTranslationZ="12dp"
         app:rippleColor="@android:color/white" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recent_contacts"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_holder"
-        android:layout_marginEnd="@dimen/conversation_list_padding"
-        android:layout_marginStart="@dimen/conversation_list_padding" />
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recent_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/conversation_list_padding"
+            android:layout_marginStart="@dimen/conversation_list_padding" />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/drawerBackground"
+            app:itemBackground="@color/drawerBackground"
+            app:itemIconTint="@color/primaryText"
+            app:itemTextColor="@color/primaryText"
+            app:menu="@menu/compose_bottom_nav" />
+
+    </LinearLayout>
 
 </RelativeLayout>

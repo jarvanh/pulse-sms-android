@@ -16,13 +16,16 @@
 
 package xyz.klinker.messenger.shared.data.model;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.provider.ContactsContract;
 
 import xyz.klinker.messenger.api.entity.ConversationBody;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.DatabaseSQLiteHelper;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 /**
  * Data object for holding information about a conversation.
@@ -173,6 +176,23 @@ public class Conversation implements DatabaseSQLiteHelper.DatabaseTable {
                 this.privateNotifications = cursor.getInt(i) == 1;
             } else if (column.equals(COLUMN_SIM_SUBSCRIPTION_ID)) {
                 this.simSubscriptionId = cursor.getInt(i) == -1 ? null : cursor.getInt(i);
+            }
+        }
+    }
+
+    public void fillFromContactGroupCursor(Context context, Cursor cursor) {
+        colors = ColorUtils.getRandomMaterialColor(context);
+
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            String column = cursor.getColumnName(i);
+
+            if (column.equals(ContactsContract.Groups._ID)) {
+                this.id = cursor.getLong(i);
+            } else if (column.equals(ContactsContract.Groups.TITLE)) {
+                this.title = cursor.getString(i);
+                if (title.contains("Group:")) {
+                    title = title.substring(title.indexOf("Group:") + "Group:".length()).trim();
+                }
             }
         }
     }

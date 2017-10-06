@@ -20,6 +20,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,6 +101,73 @@ public class ContactUtils {
         } catch (Exception e) {
             return recipientIds;
         }
+    }
+
+    public static List<Conversation> queryContactGroups(Context context) {
+        Cursor cursor = context.getContentResolver().query(ContactsContract.Groups.CONTENT_URI,
+                new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE },
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            final List<Conversation> conversations = new ArrayList<>();
+
+            do {
+                Conversation conversation = new Conversation();
+                conversation.fillFromContactGroupCursor(context, cursor);
+                conversations.add(conversation);
+            } while (cursor.moveToNext());
+
+            CursorUtil.closeSilent(cursor);
+
+            for (int i = 0; i < conversations.size(); i++) {
+                cursor = context.getContentResolver().query(ContactsContract.Data.CONTENT_URI,
+                        new String[]{ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID},
+                        ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "=?",
+                        new String[] { conversations.get(i).id + "" }, null);
+
+                if (cursor != null && cursor.moveToFirst() && cursor.getCount() < 150) {
+                    String phoneNumbers = "";
+
+                    do {
+                        String num = ContactUtils.findPhoneNumberByContactId(context,
+                                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID)));
+                        if (num != null) phoneNumbers += num + ", ";
+                    } while (cursor.moveToNext());
+
+                    if (phoneNumbers.length() > 0) {
+                        conversations.get(i).phoneNumbers = phoneNumbers.substring(0, phoneNumbers.length() - 2);
+                    } else {
+                        conversations.remove(i);
+                        i--;
+                    }
+                } else {
+                    conversations.remove(i);
+                    i--;
+                }
+
+                CursorUtil.closeSilent(cursor);
+            }
+
+            return conversations;
+        }
+
+        CursorUtil.closeSilent(cursor);
+        return new ArrayList<>();
+    }
+
+    public static String findPhoneNumberByContactId(Context context, String rawContactId) {
+        Cursor phoneNumber = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                new String[]{ ContactsContract.CommonDataKinds.Phone.NUMBER },
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
+                new String[] { rawContactId },null);
+
+        String number = null;
+        if (phoneNumber != null && phoneNumber.moveToFirst()) {
+            number = phoneNumber.getString(0);
+        }
+
+        CursorUtil.closeSilent(phoneNumber);
+        return number;
     }
 
     /**
