@@ -1327,17 +1327,17 @@ public class MessageListFragment extends Fragment implements
                     m.mimeType = mimeType;
                     m.id = 0;
 
-                    m.id = source.insertMessage(activity, m, m.conversationId, true);
+                    final long newId = source.insertMessage(activity, m, m.conversationId, true);
 
                     new Thread(() -> {
                         Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
                                 .setForceNoSignature(forceNoSignature)
                                 .send(activity, message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
-                        MarkAsSentJob.Companion.scheduleNextRun(activity, m.id);
+                        MarkAsSentJob.Companion.scheduleNextRun(activity, newId);
 
                         if (imageUri != null && activity != null) {
-                            source.updateMessageData(activity, m.id, imageUri.toString());
+                            source.updateMessageData(activity, newId, imageUri.toString());
                         }
                     }).start();
                 }
