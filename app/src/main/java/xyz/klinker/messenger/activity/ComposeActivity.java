@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.MultiAutoCompleteTextView;
@@ -44,6 +45,7 @@ import android.widget.Toast;
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
+import com.roughike.bottombar.BottomBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,6 +61,7 @@ import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.MessengerActivityExtras;
 import xyz.klinker.messenger.shared.data.DataSource;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -85,7 +88,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
     private FloatingActionButton fab;
     private RecipientEditTextView contactEntry;
-    private BottomNavigationView bottomNavigation;
+    private BottomBar bottomNavigation;
     private RecyclerView recyclerView;
 
     @Override
@@ -108,21 +111,22 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         adapter.setShowMobileOnly(Settings.get(this).mobileOnly);
         contactEntry.setAdapter(adapter);
 
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setItemIconTintList(ColorStateList.valueOf(Settings.get(this).mainColorSet.color));
-        bottomNavigation.setItemTextColor(ColorStateList.valueOf(Settings.get(this).mainColorSet.color));
-        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.menu_recent_conversations:
+        bottomNavigation = (BottomBar) findViewById(R.id.bottom_navigation);
+        bottomNavigation.setActiveTabColor(Settings.get(this).mainColorSet.colorAccent);
+        bottomNavigation.setOnTabSelectListener(item -> {
+            switch (item) {
+                case R.id.tab_recents:
                     displayRecents();
                     break;
-                case R.id.menu_group_conversations:
+                case R.id.tab_groups:
                     displayGroups();
                     break;
             }
-
-            return false;
         });
+
+        if (!FeatureFlags.get(this).V_2_6_0) {
+            bottomNavigation.setVisibility(View.GONE);
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -166,33 +170,42 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         contactEntry.requestFocus();
     }
 
+    private List<Conversation> conversations;
     private void displayRecents() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            List<Conversation> conversations = queryConversations();
+
+            if (conversations == null) {
+                conversations = queryConversations();
+            }
+
             handler.post(() -> {
-                ContactAdapter adapter = new ContactAdapter(conversations, ComposeActivity.this);
+                ContactAdapter adapter = new ContactAdapter(conversations == null ? new ArrayList<>() : conversations, ComposeActivity.this);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
             });
         }).start();
     }
 
+    private List<Conversation> groups = null;
     private void displayGroups() {
         final Handler handler = new Handler();
         new Thread(() -> {
-            List<Conversation> groups = ContactUtils.queryContactGroups(ComposeActivity.this);
-            List<Conversation> conversations = queryConversations();
-            for (int i = 0; i < conversations.size(); i++) {
-                if (!conversations.get(i).phoneNumbers.contains(", ")) {
-                    conversations.remove(i);
-                    i--;
+
+            if (groups == null) {
+                groups = ContactUtils.queryContactGroups(ComposeActivity.this);
+
+                if (conversations != null) {
+                    for (int i = 0; i < conversations.size(); i++) {
+                        if (conversations.get(i).phoneNumbers.contains(", ")) {
+                            groups.add(conversations.get(i));
+                        }
+                    }
                 }
             }
 
-            groups.addAll(conversations);
             handler.post(() -> {
-                ContactAdapter adapter = new ContactAdapter(groups, ComposeActivity.this);
+                ContactAdapter adapter = new ContactAdapter(groups == null ? new ArrayList<>() : groups, ComposeActivity.this);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
             });

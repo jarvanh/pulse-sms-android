@@ -90,15 +90,12 @@
             android:layout_marginEnd="@dimen/conversation_list_padding"
             android:layout_marginStart="@dimen/conversation_list_padding" />
 
-        <android.support.design.widget.BottomNavigationView
+        <com.roughike.bottombar.BottomBar
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="@color/drawerBackground"
-            app:itemBackground="@color/drawerBackground"
-            app:itemIconTint="@color/primaryText"
-            app:itemTextColor="@color/primaryText"
-            app:menu="@menu/compose_bottom_nav" />
+            app:bb_tabXmlResource="@xml/bottom_bar_compose" />
 
     </LinearLayout>
 

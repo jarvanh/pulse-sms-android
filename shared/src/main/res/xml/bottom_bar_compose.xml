@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        id="@+id/tab_recents"
+        icon="@drawable/ic_history"
+        title="@string/compose_recents" />
+
+    <tab
+        id="@+id/tab_groups"
+        icon="@drawable/ic_group"
+        title="@string/compose_groups" />
+
+</tabs>

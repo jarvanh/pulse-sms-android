@@ -126,6 +126,7 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.github.codekidX:storage-chooser:1.0.30'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+    compile 'com.roughike:bottom-bar:2.3.1'
 
     compile project(":api_implementation")
     compile project(":encryption")
