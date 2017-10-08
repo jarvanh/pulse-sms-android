@@ -206,7 +206,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void findConversationByNumbers() {
         when(database.query("conversation", new String[]{"_id", "id_matcher"},
-                "id_matcher=? OR id_matcher=? OR id_matcher=? OR id_matcher=? OR id_matcher=?", new String[]{"515", "515", "515", "515", "515"}, null, null, null))
+                "id_matcher=? OR id_matcher=? OR id_matcher=? OR id_matcher=? OR id_matcher=? OR id_matcher=?", new String[]{"515", "515", "515", "515", "515", "515"}, null, null, null))
                 .thenReturn(cursor);
         when(cursor.moveToFirst()).thenReturn(true);
         when(cursor.getLong(0)).thenReturn(1001L);

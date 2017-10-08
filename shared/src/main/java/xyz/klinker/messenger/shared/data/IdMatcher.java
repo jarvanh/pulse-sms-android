@@ -27,6 +27,7 @@ public class IdMatcher {
         return new String[] { fiveLetter, sevenLetter, sevenLetterNoFormatting, eightLetter, eightLetterNoFormatting, tenLetter };
     }
 
+    // Remember to update DataSourceTest#findConversationByNumbers
     public String getWhereClause() {
         return Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " +
                 Conversation.COLUMN_ID_MATCHER + "=? OR " + Conversation.COLUMN_ID_MATCHER + "=? OR " +
