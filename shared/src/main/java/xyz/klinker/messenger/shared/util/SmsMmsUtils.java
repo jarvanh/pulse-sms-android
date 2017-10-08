@@ -141,6 +141,7 @@ public class SmsMmsUtils {
         List<String> sevenMatchers = new ArrayList<>();
         List<String> sevenMatchersNoFormatting = new ArrayList<>();
         List<String> eightMatchers = new ArrayList<>();
+        List<String> eightMatchersNoFormatting = new ArrayList<>();
         List<String> tenMatchers = new ArrayList<>();
 
         for (String n : numbers) {
@@ -189,6 +190,18 @@ public class SmsMmsUtils {
         }
 
         for (String n : numbers) {
+            n = PhoneNumberUtils.clearFormatting(n);
+            n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
+            if (n.contains("@")) {
+                eightMatchersNoFormatting.add(n);
+            } else if (n.length() >= 8) {
+                eightMatchersNoFormatting.add(n.substring(n.length() - 8));
+            } else {
+                eightMatchersNoFormatting.add(n);
+            }
+        }
+
+        for (String n : numbers) {
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
                 tenMatchers.add(n);
@@ -203,6 +216,7 @@ public class SmsMmsUtils {
         Collections.sort(sevenMatchers);
         Collections.sort(sevenMatchersNoFormatting);
         Collections.sort(eightMatchers);
+        Collections.sort(eightMatchersNoFormatting);
         Collections.sort(tenMatchers);
 
         StringBuilder tenBuilder = new StringBuilder();
@@ -225,12 +239,18 @@ public class SmsMmsUtils {
             eightBuilder.append(m);
         }
 
+        StringBuilder eightNoFormattingBuilder = new StringBuilder();
+        for (String m : eightMatchersNoFormatting) {
+            eightNoFormattingBuilder.append(m);
+        }
+
         StringBuilder fiveBuilder = new StringBuilder();
         for (String m : fiveMatchers) {
             fiveBuilder.append(m);
         }
 
-        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), sevenNoFormattingBuilder.toString(), eightBuilder.toString(), tenBuilder.toString());
+        return new IdMatcher(fiveBuilder.toString(), sevenBuilder.toString(), sevenNoFormattingBuilder.toString(),
+                eightBuilder.toString(), eightNoFormattingBuilder.toString(), tenBuilder.toString());
     }
 
     /**
