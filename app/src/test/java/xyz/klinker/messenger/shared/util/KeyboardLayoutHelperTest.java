@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util;
 
 import android.text.InputType;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import org.junit.Before;
@@ -19,6 +20,8 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
             InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT |
                     InputType.TYPE_TEXT_FLAG_MULTI_LINE;
 
+    private static final int DEFAULT_IME_OPTIONS = EditorInfo.IME_ACTION_SEND | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+
     private KeyboardLayoutHelper helper;
 
     @Mock
@@ -29,6 +32,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
     @Before
     public void setUp() {
         when(editText.getInputType()).thenReturn(DEFAULT_INPUT_TYPE);
+        when(editText.getImeOptions()).thenReturn(DEFAULT_IME_OPTIONS);
     }
 
     @Test
@@ -38,6 +42,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
         helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
+        verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }
 
     @Test
@@ -47,6 +52,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
         helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
+        verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }
 
     @Test
@@ -55,6 +61,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
         helper = new KeyboardLayoutHelper(settings);
 
         helper.applyLayout(editText);
-        verify(editText).setInputType(DEFAULT_INPUT_TYPE);
+        verify(editText).setInputType(DEFAULT_INPUT_TYPE & InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }
 }
