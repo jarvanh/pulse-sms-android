@@ -125,11 +125,17 @@ public class ActivateWearActivity extends Activity {
             try {
                 ConversationBody[] bodies = api.conversation().list(response.accountId).execute().body();
                 if (bodies.length > 0) {
-                    utils.decrypt(bodies[0].title);
+                    String decrypted = utils.decrypt(bodies[0].title);
+                    if (decrypted.isEmpty()) {
+                        throw new IllegalStateException("failed the decryption. Account password is incorrect.");
+                    }
                 } else {
                     ContactBody[] contacts = api.contact().list(response.accountId).execute().body();
                     if (contacts.length > 0) {
-                        utils.decrypt(contacts[0].name);
+                        String decrypted = utils.decrypt(contacts[0].name);
+                        if (decrypted.isEmpty()) {
+                            throw new IllegalStateException("failed the decryption. Account password is incorrect.");
+                        }
                     }
                 }
 
