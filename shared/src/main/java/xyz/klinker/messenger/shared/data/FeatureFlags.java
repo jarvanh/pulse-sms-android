@@ -67,6 +67,7 @@ public class FeatureFlags {
     private static final String FLAG_BLACK_NAV_BAR = "flag_black_nav_bar";
     private static final String FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status";
     private static final String FLAG_V_2_6_0 = "flag_v_2_6_0";
+    private static final String FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch";
     // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
@@ -91,6 +92,7 @@ public class FeatureFlags {
 
     // need tested
     public boolean REENABLE_SENDING_STATUS_ON_NON_PRIMARY;
+    public boolean NEVER_SEND_FROM_WATCH;
 
     private Context context;
     private FeatureFlags(final Context context) {
@@ -106,6 +108,7 @@ public class FeatureFlags {
         V_2_6_0 = getValue(sharedPrefs, FLAG_V_2_6_0);
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY);
+        NEVER_SEND_FROM_WATCH = getValue(sharedPrefs, FLAG_NEVER_SEND_FROM_WATCH);
     }
 
     public void updateFlag(String identifier, boolean flag) {
@@ -138,6 +141,9 @@ public class FeatureFlags {
 
             case FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY:
                 REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag;
+                break;
+            case FLAG_NEVER_SEND_FROM_WATCH:
+                NEVER_SEND_FROM_WATCH = flag;
                 break;
         }
     }

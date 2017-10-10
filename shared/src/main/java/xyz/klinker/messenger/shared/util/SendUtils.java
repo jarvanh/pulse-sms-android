@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
+import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.receiver.MmsSentReceiver;
@@ -90,6 +91,10 @@ public class SendUtils {
 
     public Uri send(Context context, String text, String[] addresses, Uri data,
                            String mimeType) {
+        if (FeatureFlags.get(context).NEVER_SEND_FROM_WATCH && WearableCheck.isAndroidWear(context)) {
+            return data;
+        }
+
         xyz.klinker.messenger.shared.data.Settings appSettings = xyz.klinker.messenger.shared.data.Settings.get(context);
         if (!appSettings.signature.isEmpty() && !forceNoSignature) {
             text += "\n" + appSettings.signature;
@@ -149,7 +154,7 @@ public class SendUtils {
             }
         }
 
-        if (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary()) {
+        if (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary() ) {
             try {
                 transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
             } catch (IllegalArgumentException e) {
