@@ -31,8 +31,8 @@ public class KeyboardLayoutHelper {
                 inputType |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
                 break;
             case SEND:
-                imeOptions |= EditorInfo.IME_ACTION_SEND;
-                inputType &= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+                // configure this in the ImageKeyboardEditText to fix some issues
+                break;
             case ENTER:
                 break;
         }

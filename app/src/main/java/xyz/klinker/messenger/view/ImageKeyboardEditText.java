@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.view.emoji.EmojiableEditText;
 
 public class ImageKeyboardEditText extends EmojiableEditText {
@@ -34,6 +36,19 @@ public class ImageKeyboardEditText extends EmojiableEditText {
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         final InputConnection con = super.onCreateInputConnection(outAttrs);
         EditorInfoCompat.setContentMimeTypes(outAttrs, new String[] { "image/gif", "image/png" });
+
+        if (Settings.get(getContext()).keyboardLayout == KeyboardLayout.SEND) {
+            int imeActions = outAttrs.imeOptions&EditorInfo.IME_MASK_ACTION;
+            if ((imeActions&EditorInfo.IME_ACTION_SEND) != 0) {
+                // clear the existing action
+                outAttrs.imeOptions ^= imeActions;
+                // set the DONE action
+                outAttrs.imeOptions |= EditorInfo.IME_ACTION_SEND;
+            }
+            if ((outAttrs.imeOptions&EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) {
+                outAttrs.imeOptions &= ~EditorInfo.IME_FLAG_NO_ENTER_ACTION;
+            }
+        }
 
         return InputConnectionCompat.createWrapper(con, outAttrs, (inputContentInfo, flags, opts) -> {
             if (commitContentListener != null) {
