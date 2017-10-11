@@ -28,6 +28,12 @@
     <!--</version>-->
 
     <version
+        name="2.5.9"
+        description="October 12th, 2017">
+        <text>Fixes for the "Send Key" keyboard layout</text>
+    </version>
+
+    <version
         name="2.5.8"
         description="October 7th, 2017">
         <text>Keyboard layout improvements</text>
