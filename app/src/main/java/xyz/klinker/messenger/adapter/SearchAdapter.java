@@ -108,7 +108,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                                  int relativePosition, int absolutePosition) {
 
         if (topMargin == -1) {
-            topMargin = DensityUtil.toDp(holder.itemView.getContext(), 3);
+            topMargin = DensityUtil.INSTANCE.toDp(holder.itemView.getContext(), 3);
         }
 
         Pattern pattern;
@@ -230,24 +230,23 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             int layoutId;
             int color;
 
-            Settings settings = Settings.get(parent.getContext());
-
+            boolean useRounderBubbles = Settings.INSTANCE.getRounderBubbles();
             if (viewType == Message.Companion.getTYPE_RECEIVED()) {
-                layoutId = settings.rounderBubbles ? R.layout.message_received_round : R.layout.message_received;
+                layoutId = useRounderBubbles ? R.layout.message_received_round : R.layout.message_received;
                 color = ColorSet.Companion.DEFAULT(parent.getContext()).getColor();
             } else {
                 color = -1;
 
                 if (viewType == Message.Companion.getTYPE_SENDING()) {
-                    layoutId = settings.rounderBubbles ? R.layout.message_sending_round : R.layout.message_sending;
+                    layoutId = useRounderBubbles ? R.layout.message_sending_round : R.layout.message_sending;
                 } else if (viewType == Message.Companion.getTYPE_ERROR()) {
-                    layoutId = settings.rounderBubbles ? R.layout.message_error_round : R.layout.message_error;
+                    layoutId = useRounderBubbles ? R.layout.message_error_round : R.layout.message_error;
                 } else if (viewType == Message.Companion.getTYPE_DELIVERED()) {
-                    layoutId = settings.rounderBubbles ? R.layout.message_delivered_round : R.layout.message_delivered;
+                    layoutId = useRounderBubbles ? R.layout.message_delivered_round : R.layout.message_delivered;
                 } else if (viewType == Message.Companion.getTYPE_INFO()) {
                     layoutId = R.layout.message_info;
                 } else {
-                    layoutId = settings.rounderBubbles ? R.layout.message_sent_round : R.layout.message_sent;
+                    layoutId = useRounderBubbles ? R.layout.message_sent_round : R.layout.message_sent;
                 }
             }
 

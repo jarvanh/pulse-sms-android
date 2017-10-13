@@ -218,25 +218,23 @@ public class MessageViewHolder extends SwappingHolder {
             image.setClipToOutline(true);
         }
 
-        Settings settings = Settings.get(itemView.getContext());
-
         // done from the adapter, since we have the ability to change emoji sizes
         // message.setTextSize(settings.largeFont);
 
         if (type != Message.Companion.getTYPE_MEDIA() && type != Message.Companion.getTYPE_IMAGE_SENDING()) {
-            timestamp.setTextSize(settings.smallFont);
-            timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+            timestamp.setTextSize(Settings.INSTANCE.getSmallFont());
+            timestamp.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), Settings.INSTANCE.getMediumFont()));
 
             if (contact != null) {
-                contact.setTextSize(settings.smallFont);
-                contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+                contact.setTextSize(Settings.INSTANCE.getSmallFont());
+                contact.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), Settings.INSTANCE.getMediumFont()));
             }
         }
 
         if ((color != Integer.MIN_VALUE && messageHolder != null) ||
-                settings.useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
-            if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).mainColorSet.getColor();
+                Settings.INSTANCE.getUseGlobalThemeColor() && type == Message.Companion.getTYPE_RECEIVED()) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
+                color = Settings.INSTANCE.getMainColorSet().getColor();
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -398,14 +396,14 @@ public class MessageViewHolder extends SwappingHolder {
         ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
                 .setToolbarColor(primaryColor)
                 .setAccentColor(accentColor)
-                .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
+                .setTheme(Settings.INSTANCE.isCurrentlyDarkTheme() ?
                         ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
+                .setTextSize(Settings.INSTANCE.getMediumFont() + 1)
                 .build();
 
         ArticlePreview preview = ArticlePreview.Companion.build(data);
         if (preview != null) {
-            if (Settings.get(itemView.getContext()).internalBrowser) {
+            if (Settings.INSTANCE.getInternalBrowser()) {
                 intent.launchUrl(itemView.getContext(), Uri.parse(preview.getWebUrl()));
             } else {
                 Intent url = new Intent(Intent.ACTION_VIEW);

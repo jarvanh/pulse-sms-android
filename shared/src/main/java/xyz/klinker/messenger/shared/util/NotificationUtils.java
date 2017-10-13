@@ -83,7 +83,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void createNotificationChannel(Context context, Conversation conversation) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -94,7 +94,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void createDefaultChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -109,7 +109,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void createTestChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -122,7 +122,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static void createStatusChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -134,7 +134,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static void createMediaParseChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -146,7 +146,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static void createGeneralChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -158,7 +158,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static void createFailedMessageChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -171,7 +171,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static void createMessageGroupChannel(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -183,7 +183,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void createNotificationChannels(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -230,7 +230,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void deleteChannel(Context context, long conversationId) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 
@@ -240,7 +240,7 @@ public class NotificationUtils {
 
     @TargetApi(Build.VERSION_CODES.O)
     public static void deleteAllChannels(Context context) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 

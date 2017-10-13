@@ -45,6 +45,6 @@ object EmojiInitializer {
     }
 
     fun isAlreadyUsingGoogleAndroidO(): Boolean {
-        return AndroidVersionUtil.isAndroidO() && Build.MANUFACTURER.toLowerCase() == "google"
+        return AndroidVersionUtil.isAndroidO && Build.MANUFACTURER.toLowerCase() == "google"
     }
 }

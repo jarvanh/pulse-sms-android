@@ -119,7 +119,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         if (fragment.getActivity() == null) {
             imageHeight = imageWidth = 50;
         } else {
-            imageHeight = imageWidth = DensityUtil.toPx(fragment.getActivity(), 350);
+            imageHeight = imageWidth = DensityUtil.INSTANCE.toPx(fragment.getActivity(), 350);
         }
 
         try {
@@ -137,7 +137,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         if (fragment.getMultiSelect() != null)
             fragment.getMultiSelect().setAdapter(this);
 
-        largeFont = Settings.get(fragment.getActivity()).largeFont;
+        largeFont = Settings.INSTANCE.getLargeFont();
     }
 
     @Override
@@ -146,11 +146,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         int color;
 
         if (timestampHeight == 0) {
-            setTimestampHeight(DensityUtil.spToPx(parent.getContext(),
-                    Settings.get(parent.getContext()).mediumFont + 2));
+            setTimestampHeight(DensityUtil.INSTANCE.spToPx(parent.getContext(),
+                    Settings.INSTANCE.getMediumFont() + 2));
         }
 
-        boolean rounder = Settings.get(parent.getContext()).rounderBubbles;
+        boolean rounder = Settings.INSTANCE.getRounderBubbles();
         if (viewType == Message.Companion.getTYPE_RECEIVED()) {
             layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;
@@ -253,7 +253,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     clickedText = "http://" + clickedText;
                 }
 
-                if (clickedText.contains("youtube") || !Settings.get(holder.itemView.getContext()).internalBrowser) {
+                if (clickedText.contains("youtube") || !Settings.INSTANCE.getInternalBrowser()) {
                     Intent url = new Intent(Intent.ACTION_VIEW);
                     url.setData(Uri.parse(clickedText));
                     holder.itemView.getContext().startActivity(url);
@@ -261,9 +261,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
                             .setToolbarColor(receivedColor)
                             .setAccentColor(accentColor)
-                            .setTheme(Settings.get(holder.itemView.getContext()).isCurrentlyDarkTheme() ?
+                            .setTheme(Settings.INSTANCE.isCurrentlyDarkTheme() ?
                                     ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                            .setTextSize(Settings.get(holder.itemView.getContext()).mediumFont + 1)
+                            .setTextSize(Settings.INSTANCE.getMediumFont() + 1)
                             .build();
 
                     intent.launchUrl(holder.itemView.getContext(), Uri.parse(clickedText));
@@ -583,7 +583,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                         try {
                             ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
-                                    .bottomMargin = DensityUtil.toDp(recycler.getContext(), 56);
+                                    .bottomMargin = DensityUtil.INSTANCE.toDp(recycler.getContext(), 56);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -627,7 +627,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     }
 
     private int colorMessage(final MessageViewHolder holder, final Message message) {
-        if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
             return Integer.MIN_VALUE;
         }
 

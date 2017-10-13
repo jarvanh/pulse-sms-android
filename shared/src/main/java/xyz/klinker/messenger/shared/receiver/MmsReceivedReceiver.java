@@ -76,7 +76,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                 try {
                     context.startService(new Intent(context, NotificationService.class));
                 } catch (Exception e) {
-                    if (AndroidVersionUtil.isAndroidO()) {
+                    if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
                         Intent foregroundNotificationService = new Intent(context, NotificationService.class);
                         foregroundNotificationService.putExtra(NotificationService.EXTRA_FOREGROUND, true);
                         context.startForegroundService(foregroundNotificationService);
@@ -100,7 +100,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
             Uri uri = Uri.parse("content://mms/" + lastMessage.getLong(0));
             final String from = SmsMmsUtils.getMmsFrom(uri, context);
 
-            if (BlacklistUtils.isBlacklisted(context, from)) {
+            if (BlacklistUtils.INSTANCE.isBlacklisted(context, from)) {
                 return null;
             }
 

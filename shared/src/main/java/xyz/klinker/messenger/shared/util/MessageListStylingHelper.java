@@ -31,7 +31,7 @@ public class MessageListStylingHelper {
 
     public MessageListStylingHelper(Context context) {
         try {
-            eightDp = DensityUtil.toDp(context, 8);
+            eightDp = DensityUtil.INSTANCE.toDp(context, 8);
             roundMessages = Settings.INSTANCE.getRounderBubbles();
         } catch (NullPointerException e) {
             eightDp = 8;

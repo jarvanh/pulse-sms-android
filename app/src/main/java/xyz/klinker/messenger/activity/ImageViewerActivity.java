@@ -81,7 +81,7 @@ public class ImageViewerActivity extends AppCompatActivity {
         initViewPager();
         initToolbar();
 
-        ActivityUtils.setTaskDescription(this, "", Color.BLACK);
+        ActivityUtils.INSTANCE.setTaskDescription(this, "", Color.BLACK);
     }
 
     private void loadMessages() {

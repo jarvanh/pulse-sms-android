@@ -73,20 +73,20 @@ public class MessengerApplication extends FirebaseApplication {
         enableSecurity();
         Account.INSTANCE.init(this);
 
-        BaseTheme theme = Settings.get(this).baseTheme;
+        BaseTheme theme = Settings.INSTANCE.getBaseTheme();
         if (theme == BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else if (theme.isDark() || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             startForegroundService(new Intent(this, CreateNotificationChannelService.class));
         }
     }
 
     public void refreshDynamicShortcuts() {
-        if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1() && !Settings.get(this).getFirstStart()) {
+        if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1() && !Settings.INSTANCE.getFirstStart()) {
             new Thread(() -> {
                 try {
                     Thread.sleep(10 * TimeUtils.SECOND);
@@ -130,7 +130,7 @@ public class MessengerApplication extends FirebaseApplication {
             @Override
             public void handleDelete(Application application) {
                 final Intent handleMessage = new Intent(application, FirebaseResetService.class);
-                if (AndroidVersionUtil.isAndroidO()) {
+                if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
                     startForegroundService(handleMessage);
                 } else {
                     startService(handleMessage);

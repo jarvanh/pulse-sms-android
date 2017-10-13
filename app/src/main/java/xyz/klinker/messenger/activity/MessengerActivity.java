@@ -215,7 +215,7 @@ public class  MessengerActivity extends AppCompatActivity
         new UnreadBadger(this).clearCount();
 
         ColorUtils.INSTANCE.checkBlackBackground(this);
-        ActivityUtils.setTaskDescription(this);
+        ActivityUtils.INSTANCE.setTaskDescription(this);
 
         if (!Build.FINGERPRINT.contains("robolectric")) {
             TimeUtils.setupNightTheme(this);
@@ -322,12 +322,12 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void requestPermissions() {
-        if (PermissionsUtils.checkRequestMainPermissions(this)) {
-            PermissionsUtils.startMainPermissionRequest(this);
+        if (PermissionsUtils.INSTANCE.checkRequestMainPermissions(this)) {
+            PermissionsUtils.INSTANCE.startMainPermissionRequest(this);
         }
 
-        if (Account.INSTANCE.getPrimary() && !PermissionsUtils.isDefaultSmsApp(this)) {
-            PermissionsUtils.setDefaultSmsApp(this);
+        if (Account.INSTANCE.getPrimary() && !PermissionsUtils.INSTANCE.isDefaultSmsApp(this)) {
+            PermissionsUtils.INSTANCE.setDefaultSmsApp(this);
         }
     }
 
@@ -335,7 +335,7 @@ public class  MessengerActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         try {
-            PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults);
+            PermissionsUtils.INSTANCE.processPermissionRequest(this, requestCode, permissions, grantResults);
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
             if (requestCode == INSTANCE.getREQUEST_CALL_PERMISSION()) {

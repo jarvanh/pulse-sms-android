@@ -69,7 +69,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
-        Settings.get(getActivity()).forceUpdate(getActivity());
+        Settings.INSTANCE.forceUpdate(getActivity());
     }
 
     private void initThemeRedirect() {
@@ -192,7 +192,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
                 ApiUtils.INSTANCE.updateEmojiStyle(Account.INSTANCE.getAccountId(), value);
 
                 new Handler().postDelayed(() -> {
-                    Settings.get(getActivity()).forceUpdate(getActivity());
+                    Settings.INSTANCE.forceUpdate(getActivity());
                     EmojiInitializer.INSTANCE.initializeEmojiCompat(getActivity());
                 }, 500);
 

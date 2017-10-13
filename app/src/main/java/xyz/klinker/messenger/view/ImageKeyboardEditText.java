@@ -37,7 +37,7 @@ public class ImageKeyboardEditText extends EmojiableEditText {
         final InputConnection con = super.onCreateInputConnection(outAttrs);
         EditorInfoCompat.setContentMimeTypes(outAttrs, new String[] { "image/gif", "image/png" });
 
-        if (Settings.get(getContext()).keyboardLayout == KeyboardLayout.SEND) {
+        if (Settings.INSTANCE.getKeyboardLayout() == KeyboardLayout.SEND) {
             int imeActions = outAttrs.imeOptions&EditorInfo.IME_MASK_ACTION;
             if ((imeActions&EditorInfo.IME_ACTION_SEND) != 0) {
                 // clear the existing action

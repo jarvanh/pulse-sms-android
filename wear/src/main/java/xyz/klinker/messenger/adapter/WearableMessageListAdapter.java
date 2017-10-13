@@ -65,7 +65,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         if (context == null) {
             imageHeight = imageWidth = 50;
         } else {
-            imageHeight = imageWidth = DensityUtil.toPx(context, 100);
+            imageHeight = imageWidth = DensityUtil.INSTANCE.toPx(context, 100);
         }
     }
 
@@ -81,7 +81,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         int color;
 
         if (timestampHeight == 0) {
-            setTimestampHeight(DensityUtil.spToPx(parent.getContext(),
+            setTimestampHeight(DensityUtil.INSTANCE.spToPx(parent.getContext(),
                     Settings.get(parent.getContext()).mediumFont + 2));
         }
 

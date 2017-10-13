@@ -84,7 +84,6 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         fab.setOnClickListener(view1 -> addBlacklist());
         emptyView = view.findViewById(R.id.empty_view);
 
-        Settings settings = Settings.get(activity);
         emptyView.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColorLight());
         fab.setBackgroundTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
         ColorUtils.INSTANCE.changeRecyclerOverscrollColors(list, Settings.INSTANCE.getMainColorSet().getColor());

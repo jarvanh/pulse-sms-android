@@ -147,12 +147,12 @@ public class ConversationViewHolder extends SwappingHolder {
 
         if (Settings.INSTANCE.getSmallFont() == 10 && conversationImageHolder != null) {
             // user selected small font from the settings
-            int fourtyDp = DensityUtil.toDp(itemView.getContext(), 40);
+            int fourtyDp = DensityUtil.INSTANCE.toDp(itemView.getContext(), 40);
             conversationImageHolder.getLayoutParams().height = fourtyDp;
             conversationImageHolder.getLayoutParams().width = fourtyDp;
             conversationImageHolder.invalidate();
 
-            itemView.getLayoutParams().height = DensityUtil.toDp(itemView.getContext(), 66);
+            itemView.getLayoutParams().height = DensityUtil.INSTANCE.toDp(itemView.getContext(), 66);
             itemView.invalidate();
         }
 

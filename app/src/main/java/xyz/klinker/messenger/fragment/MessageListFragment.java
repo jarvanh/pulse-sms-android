@@ -572,7 +572,7 @@ public class MessageListFragment extends Fragment implements
                 MenuItem callItem = toolbar.getMenu().findItem(R.id.menu_call);
                 ImageView image = new ImageView(activity);
                 image.setImageResource(R.drawable.ic_call);
-                image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 12), 0);
+                image.setPaddingRelative(0, 0, DensityUtil.INSTANCE.toDp(activity, 12), 0);
                 callItem.setActionView(image);
                 TooltipCompat.setTooltipText(callItem.getActionView(), getString(R.string.menu_call));
 
@@ -663,7 +663,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initSendbar() {
-        new KeyboardLayoutHelper(activity).applyLayout(messageEntry);
+        new KeyboardLayoutHelper().applyLayout(messageEntry);
         messageEntry.setTextSize(Settings.INSTANCE.getLargeFont());
 
         messageEntry.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -763,7 +763,7 @@ public class MessageListFragment extends Fragment implements
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
             String text = messageEntry.getText().toString();
 
-            counter.setText(MessageCountHelper.getMessageCounterText(Settings.INSTANCE, MmsSettings.INSTANCE, text));
+            counter.setText(MessageCountHelper.INSTANCE.getMessageCounterText(Settings.INSTANCE, MmsSettings.INSTANCE, text));
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }
@@ -1189,11 +1189,11 @@ public class MessageListFragment extends Fragment implements
             uris.add(attachedUri);
         }
 
-        if (PermissionsUtils.checkRequestMainPermissions(activity)) {
-            PermissionsUtils.startMainPermissionRequest(activity);
+        if (PermissionsUtils.INSTANCE.checkRequestMainPermissions(activity)) {
+            PermissionsUtils.INSTANCE.startMainPermissionRequest(activity);
         } else if (Account.INSTANCE.getPrimary() &&
-                !PermissionsUtils.isDefaultSmsApp(activity)) {
-            PermissionsUtils.setDefaultSmsApp(activity);
+                !PermissionsUtils.INSTANCE.isDefaultSmsApp(activity)) {
+            PermissionsUtils.INSTANCE.setDefaultSmsApp(activity);
         } else if (message.length() > 0 || uris.size() > 0) {
             if (Settings.INSTANCE.getDelayedSendingTimeout() != 0) {
                 changeDelayedSendingComponents(true);

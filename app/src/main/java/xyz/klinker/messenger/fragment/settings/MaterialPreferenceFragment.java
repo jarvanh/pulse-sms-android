@@ -22,6 +22,6 @@ public abstract class MaterialPreferenceFragment extends PreferenceFragment {
         ListView list = (ListView) view.findViewById(android.R.id.list);
         list.setBackgroundColor(getResources().getColor(R.color.drawerBackground));
         list.setDivider(new ColorDrawable(getResources().getColor(R.color.background)));
-        list.setDividerHeight(DensityUtil.toDp(getActivity(), 1));
+        list.setDividerHeight(DensityUtil.INSTANCE.toDp(getActivity(), 1));
     }
 }

@@ -25,7 +25,7 @@ public class MediaParserService extends IntentService {
         mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId);
         mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, text.trim());
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             context.startForegroundService(mediaParser);
         } else {
             context.startService(mediaParser);
@@ -43,7 +43,7 @@ public class MediaParserService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.MEDIA_PARSE_CHANNEL_ID)
                     .setContentTitle(getString(R.string.media_parse_text))
@@ -82,7 +82,7 @@ public class MediaParserService extends IntentService {
             MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.getData(), message.getType());
         }
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             stopForeground(true);
         }
     }

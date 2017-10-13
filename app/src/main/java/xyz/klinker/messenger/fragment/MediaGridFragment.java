@@ -76,16 +76,15 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
     private void setUpToolbar() {
         getActivity().setTitle(conversation.getTitle());
 
-        Settings settings = Settings.get(getActivity());
         Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
 
         if (toolbar != null) {
-            if (settings.useGlobalThemeColor) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 toolbar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
-                ActivityUtils.setStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark());
+                ActivityUtils.INSTANCE.setStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark());
             } else {
                 toolbar.setBackgroundColor(conversation.getColors().getColor());
-                ActivityUtils.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
+                ActivityUtils.INSTANCE.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
             }
         }
     }

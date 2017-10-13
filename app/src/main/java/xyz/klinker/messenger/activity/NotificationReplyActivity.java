@@ -138,7 +138,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         sendButton = (ImageButton) findViewById(R.id.send_button);
         conversationIndicator = (TextView) findViewById(R.id.conversation_indicator);
         
-        if (Settings.get(this).baseTheme == BaseTheme.BLACK) {
+        if (Settings.INSTANCE.getBaseTheme() == BaseTheme.BLACK) {
             messagesInitialHolder.setBackgroundColor(Color.BLACK);
             messagesMore.setBackgroundColor(Color.BLACK);
         }
@@ -244,7 +244,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = DensityUtil.toDp(this, 4);
+        params.topMargin = DensityUtil.INSTANCE.toDp(this, 4);
         params.bottomMargin = params.topMargin;
         tv.setLayoutParams(params);
 
@@ -255,8 +255,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
         if (conversation.getImageUri() == null) {
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 image.setImageBitmap(ContactImageCreator.INSTANCE.getLetterPicture(this, conversation));
-            } else if (Settings.get(this).useGlobalThemeColor) {
-                image.setImageDrawable(new ColorDrawable(Settings.get(this).mainColorSet.getColor()));
+            } else if (Settings.INSTANCE.getUseGlobalThemeColor()) {
+                image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColor()));
             } else {
                 image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
@@ -270,8 +270,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     // region setup sendbar
     private void setupSendBar() {
-        Settings settings = Settings.get(this);
-        if (settings.useGlobalThemeColor) {
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
             sendBar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
             conversationIndicator.setTextColor(Settings.INSTANCE.getMainColorSet().getColor());
             conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
@@ -301,7 +300,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         });
 
 
-        new KeyboardLayoutHelper(this).applyLayout(messageInput);
+        new KeyboardLayoutHelper().applyLayout(messageInput);
         messageInput.setHint(getString(R.string.type_message));
         messageInput.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -364,7 +363,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         messagesMore.setOnClickListener(v -> messagesInitialHolder.performClick());
 
         if (getResources().getBoolean(R.bool.is_tablet)) {
-            scrollView.getLayoutParams().width = DensityUtil.toDp(this, 418);
+            scrollView.getLayoutParams().width = DensityUtil.INSTANCE.toDp(this, 418);
         }
 
         final GestureDetectorCompat detectorCompat = new GestureDetectorCompat(this,

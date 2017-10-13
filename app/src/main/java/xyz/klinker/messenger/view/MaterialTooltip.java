@@ -66,9 +66,9 @@ public class MaterialTooltip extends FrameLayout {
 
         setAlpha(0f);
 
-        setWidth(DensityUtil.toPx(context, options.width));
-        setDistanceFromStart(DensityUtil.toPx(context, options.startOffset));
-        setDistanceFromTop(DensityUtil.toPx(context, options.topOffset));
+        setWidth(DensityUtil.INSTANCE.toPx(context, options.width));
+        setDistanceFromStart(DensityUtil.INSTANCE.toPx(context, options.startOffset));
+        setDistanceFromTop(DensityUtil.INSTANCE.toPx(context, options.topOffset));
 
         gotIt.setTextColor(Color.WHITE);
         text.setText(options.text);

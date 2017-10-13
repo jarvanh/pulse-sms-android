@@ -90,7 +90,7 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             date = sms.getTimestampMillis();
         }
 
-        if (BlacklistUtils.isBlacklisted(context, address)) {
+        if (BlacklistUtils.INSTANCE.isBlacklisted(context, address)) {
             return;
         }
 

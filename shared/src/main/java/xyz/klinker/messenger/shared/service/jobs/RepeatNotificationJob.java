@@ -25,7 +25,7 @@ public class RepeatNotificationJob extends BackgroundJob {
     @SuppressLint("NewApi")
     void onRunJob(JobParameters parameters) {
         Intent intent = new Intent(this, NotificationService.class);
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             startService(intent);
         } else {
             intent.putExtra(NotificationService.EXTRA_FOREGROUND, true);

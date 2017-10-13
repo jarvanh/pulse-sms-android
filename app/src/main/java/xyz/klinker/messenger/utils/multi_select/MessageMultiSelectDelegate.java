@@ -239,7 +239,7 @@ public class MessageMultiSelectDelegate extends MultiSelector {
         try {
             ImageView image = new ImageView(activity);
             image.setImageResource(icon);
-            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0);
+            image.setPaddingRelative(0, 0, DensityUtil.INSTANCE.toDp(activity, 24), 0);
             image.setImageTintList(ColorStateList.valueOf(Color.WHITE));
             image.setAlpha(1.0f);
 

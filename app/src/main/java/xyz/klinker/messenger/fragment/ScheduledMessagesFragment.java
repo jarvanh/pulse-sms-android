@@ -117,7 +117,6 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         list.setLayoutManager(new LinearLayoutManager(activity));
         fab.setOnClickListener(view1 -> startSchedulingMessage());
 
-        Settings settings = Settings.get(activity);
         emptyView.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColorLight());
         fab.setBackgroundTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
         ColorUtils.INSTANCE.changeRecyclerOverscrollColors(list, Settings.INSTANCE.getMainColorSet().getColor());
@@ -211,7 +210,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         editText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         BaseRecipientAdapter adapter =
                 new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, activity);
-        adapter.setShowMobileOnly(Settings.get(activity).mobileOnly);
+        adapter.setShowMobileOnly(Settings.INSTANCE.getMobileOnly());
         editText.setAdapter(adapter);
 
         AlertDialog dialog = new AlertDialog.Builder(activity)

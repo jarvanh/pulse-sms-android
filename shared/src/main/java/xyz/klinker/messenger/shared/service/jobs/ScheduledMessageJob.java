@@ -84,7 +84,7 @@ public class ScheduledMessageJob extends BackgroundJob {
 
                     // display a notification
                     String body = "<b>" + message.getTitle() + ": </b>" + message.getData();
-                    Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+                    Intent open = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
                     open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     PendingIntent pendingOpen = PendingIntent.getActivity(this, 0, open,
                             PendingIntent.FLAG_UPDATE_CURRENT);

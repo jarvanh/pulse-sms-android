@@ -163,7 +163,7 @@ public class AccountPurchaseActivity extends AppCompatActivity {
     }
 
     private void quickViewReveal(View view, long delay) {
-        view.setTranslationX(-1 * DensityUtil.toDp(this, 16));
+        view.setTranslationX(-1 * DensityUtil.INSTANCE.toDp(this, 16));
         view.setAlpha(0f);
         view.setVisibility(View.VISIBLE);
 

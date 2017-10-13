@@ -94,13 +94,13 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
             address = sms.getOriginatingAddress();
         }
 
-        if (BlacklistUtils.isBlacklisted(context, address)) {
+        if (BlacklistUtils.INSTANCE.isBlacklisted(context, address)) {
             return;
         }
 
         long conversationId = insertSms(context, handler, address, body);
 
-        if (conversationId != -1L && PermissionsUtils.isDefaultSmsApp(context)) {
+        if (conversationId != -1L && PermissionsUtils.INSTANCE.isDefaultSmsApp(context)) {
             context.startService(new Intent(context, NotificationService.class));
         }
     }

@@ -34,6 +34,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
@@ -152,14 +153,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
 
             TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
-            tryIt.setTextColor(Settings.get(activity).mainColorSet.getColor());
+            tryIt.setTextColor(Settings.INSTANCE.getMainColorSet().getColor());
 
             tryIt.setOnClickListener(v -> {
                 if (sectionCounts.size() > 0) {
                     sectionCounts.remove(0);
                 }
 
-                Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                Settings.INSTANCE.setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
 
                 tryIt.postDelayed(() -> {
@@ -173,7 +174,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     sectionCounts.remove(0);
                 }
 
-                Settings.get(activity).setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
+                Settings.INSTANCE.setValue(activity, activity.getString(R.string.pref_show_text_online_on_conversation_list), false);
                 notifyItemRemoved(0);
                 AnalyticsHelper.convoListNotNow(activity);
             });
@@ -250,9 +251,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
-        Settings settings = Settings.get(holder.itemView.getContext());
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
-            if (settings.useGlobalThemeColor) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 if (Settings.INSTANCE.getMainColorSet().getColorLight() == Color.WHITE) {
                     holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
                 } else {
@@ -264,7 +264,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            int colorToInspect = settings.useGlobalThemeColor ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
+            int colorToInspect = Settings.INSTANCE.getUseGlobalThemeColor() ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
@@ -497,10 +497,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         if (Build.FINGERPRINT.equals("robolectric")) {
             return false;
         } else {
-            Settings settings = Settings.get(activity);
             return !Account.INSTANCE.exists() &&
-                    settings.showTextOnlineOnConversationList &&
-                    Math.abs(settings.installTime - new Date().getTime()) > TimeUtils.MINUTE * 15;
+                    Settings.INSTANCE.getShowTextOnlineOnConversationList() &&
+                    Math.abs(Settings.INSTANCE.getInstallTime() - new Date().getTime()) > TimeUtils.MINUTE * 15;
         }
     }
 }

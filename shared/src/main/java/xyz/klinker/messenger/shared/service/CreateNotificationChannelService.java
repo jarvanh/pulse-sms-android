@@ -22,7 +22,7 @@ public class CreateNotificationChannelService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return;
         }
 

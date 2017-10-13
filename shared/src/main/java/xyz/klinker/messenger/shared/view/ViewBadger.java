@@ -33,7 +33,7 @@ public class ViewBadger extends TextView {
     private void init(Context context, View target) {
         this.context = context;
 
-        int paddingPixels = DensityUtil.toDp(context, 1);
+        int paddingPixels = DensityUtil.INSTANCE.toDp(context, 1);
 
         setTextSize(10);
         setTypeface(Typeface.DEFAULT_BOLD);
@@ -71,7 +71,7 @@ public class ViewBadger extends TextView {
     }
 
     private ShapeDrawable getDefaultBackground() {
-        int r = DensityUtil.toDp(context, CORNER_RADIUS);
+        int r = DensityUtil.INSTANCE.toDp(context, CORNER_RADIUS);
         float[] outerR = new float[] {r, r, r, r, r, r, r, r};
 
         RoundRectShape rr = new RoundRectShape(outerR, null, null);

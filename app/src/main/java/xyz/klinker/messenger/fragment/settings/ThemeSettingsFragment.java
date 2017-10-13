@@ -3,6 +3,8 @@ package xyz.klinker.messenger.fragment.settings;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 
+import java.util.Set;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -30,7 +32,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
     @Override
     public void onStop() {
         super.onStop();
-        Settings.get(getActivity()).forceUpdate(getActivity());
+        Settings.INSTANCE.forceUpdate(getActivity());
     }
 
     private void initBaseTheme() {
@@ -92,10 +94,8 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_global_accent_color));
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            Settings settings = Settings.get(getActivity());
-
             ColorUtils.INSTANCE.animateToolbarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColor(), (int) o);
-            settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
+            Settings.INSTANCE.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
             Settings.INSTANCE.getMainColorSet().setColor((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryThemeColor(Account.INSTANCE.getAccountId(), (int) o);
@@ -109,10 +109,8 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         });
 
         darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
-            Settings settings = Settings.get(getActivity());
-
             ColorUtils.INSTANCE.animateStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark(), (int) o);
-            settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
+            Settings.INSTANCE.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
             Settings.INSTANCE.getMainColorSet().setColorDark((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryDarkThemeColor(Account.INSTANCE.getAccountId(), (int) o);
@@ -121,9 +119,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         });
 
         accentColorPreference.setOnPreferenceChangeListener((preference13, o) -> {
-            Settings settings = Settings.get(getActivity());
-
-            settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
+            Settings.INSTANCE.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
             Settings.INSTANCE.getMainColorSet().setColorAccent((int) o);
 
             ApiUtils.INSTANCE.updateAccentThemeColor(Account.INSTANCE.getAccountId(), (int) o);

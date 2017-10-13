@@ -50,7 +50,7 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
         String action = intent.getAction();
         if (action != null && action.equals(OPEN_ACTION)) {
             long itemId = intent.getLongExtra(EXTRA_ITEM_ID, 0);
-            Intent openConversation = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+            Intent openConversation = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
             openConversation.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), itemId);
             openConversation.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(openConversation);
@@ -81,10 +81,10 @@ public class MessengerAppWidgetProvider extends AppWidgetProvider {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
-            Intent compose = ActivityUtils.buildForComponent(ActivityUtils.COMPOSE_ACTIVITY);
+            Intent compose = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getCOMPOSE_ACTIVITY());
             PendingIntent pendingCompose = PendingIntent.getActivity(context, 0, compose, 0);
 
-            Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+            Intent open = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
             open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingOpen = PendingIntent.getActivity(context, 0, open, 0);
 

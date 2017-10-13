@@ -52,8 +52,8 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     }
 
     private void requestPermissions() {
-        if (PermissionsUtils.checkRequestMainPermissions(this)) {
-            PermissionsUtils.startMainPermissionRequest(this);
+        if (PermissionsUtils.INSTANCE.checkRequestMainPermissions(this)) {
+            PermissionsUtils.INSTANCE.startMainPermissionRequest(this);
         } else {
             startLogin();
         }
@@ -63,7 +63,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         try {
-            if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
+            if (PermissionsUtils.INSTANCE.processPermissionRequest(this, requestCode, permissions, grantResults)) {
                 startLogin();
             } else {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);

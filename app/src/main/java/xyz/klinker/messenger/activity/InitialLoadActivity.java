@@ -82,8 +82,8 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void requestPermissions() {
-        if (PermissionsUtils.checkRequestMainPermissions(this)) {
-            PermissionsUtils.startMainPermissionRequest(this);
+        if (PermissionsUtils.INSTANCE.checkRequestMainPermissions(this)) {
+            PermissionsUtils.INSTANCE.startMainPermissionRequest(this);
         } else {
             startLogin();
         }
@@ -93,7 +93,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         try {
-            if (PermissionsUtils.processPermissionRequest(this, requestCode, permissions, grantResults)) {
+            if (PermissionsUtils.INSTANCE.processPermissionRequest(this, requestCode, permissions, grantResults)) {
                 startLogin();
             } else {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -106,7 +106,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         if (requestCode == SETUP_REQUEST) {
-            Settings.get(this).forceUpdate(this);
+            Settings.INSTANCE.forceUpdate(this);
 
             if (responseCode == RESULT_CANCELED) {
                 if (!startUploadAfterSync) {
@@ -191,7 +191,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     }
 
     private void close() {
-        Settings.get(this).setValue(this, getString(R.string.pref_first_start), false);
+        Settings.INSTANCE.setValue(this, getString(R.string.pref_first_start), false);
 
         if (TvUtils.hasTouchscreen(this)) {
             startActivity(new Intent(this, MessengerActivity.class));

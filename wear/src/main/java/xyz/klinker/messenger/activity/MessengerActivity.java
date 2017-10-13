@@ -89,8 +89,8 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
     }
 
     private void requestPermissions() {
-        if (PermissionsUtils.checkRequestMainPermissions(this)) {
-            PermissionsUtils.startMainPermissionRequest(this);
+        if (PermissionsUtils.INSTANCE.checkRequestMainPermissions(this)) {
+            PermissionsUtils.INSTANCE.startMainPermissionRequest(this);
         }
     }
 

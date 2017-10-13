@@ -84,7 +84,7 @@ public class DashclockExtension extends DashClockExtension {
     }
 
     private Intent getIntent(List<Conversation> conversations) {
-        final Intent intent = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+        final Intent intent = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
 
         if (conversations.size() == 1) {
             intent.setData(Uri.parse("https://messenger.klinkerapps.com/" + conversations.get(0).getId()));

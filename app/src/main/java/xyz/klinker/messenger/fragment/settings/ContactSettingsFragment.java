@@ -85,14 +85,14 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         setUpNotificationChannels();
         setUpColors();
 
-        if (Settings.get(getActivity()).useGlobalThemeColor) {
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
             // remove the color customizations since they don't apply to anything except group messages
             PreferenceCategory customizationCategory = (PreferenceCategory)
                     findPreference(getString(R.string.pref_contact_customization_group));
             getPreferenceScreen().removePreference(customizationCategory);
         }
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             // remove the LED customizations since the user won't be able to configure this here, they will
             // have to go through channels instead.
             // The ringtone pref has been converted to push them to notification channel settings
@@ -125,7 +125,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 .putString(getString(R.string.pref_contact_group_name), conversation.getTitle())
                 .putString(getString(R.string.pref_contact_ringtone),
                         conversation.getRingtoneUri() == null ?
-                                Settings.get(getActivity()).ringtone :
+                                Settings.INSTANCE.getRingtone() :
                                 conversation.getRingtoneUri())
                 .putInt(getString(R.string.pref_contact_primary_color), conversation.getColors().getColor())
                 .putInt(getString(R.string.pref_contact_primary_dark_color), conversation.getColors().getColorDark())
@@ -143,16 +143,15 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
         getActivity().setTitle(conversation.getTitle());
 
-        Settings settings = Settings.get(getActivity());
         Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
 
         if (toolbar != null) {
-            if (settings.useGlobalThemeColor) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 toolbar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
-                ActivityUtils.setStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark());
+                ActivityUtils.INSTANCE.setStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark());
             } else {
                 toolbar.setBackgroundColor(conversation.getColors().getColor());
-                ActivityUtils.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
+                ActivityUtils.INSTANCE.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
             }
         }
     }
@@ -271,7 +270,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         Preference channelPref = findPreference(getString(R.string.pref_contact_notification_channel));
         Preference restoreDefaultsPref = findPreference(getString(R.string.pref_contact_notification_channel_restore_default));
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             channelPref.setOnPreferenceClickListener(preference12 -> {
                 NotificationUtils.createNotificationChannel(getActivity(), conversation);
 

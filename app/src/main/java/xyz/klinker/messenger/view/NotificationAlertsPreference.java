@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import java.util.Set;
+
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
@@ -69,7 +71,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setPositiveButton(R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setNegativeButton(R.string.test, (dialogInterface, i) -> makeTestNotification());
 
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             layout.findViewById(R.id.vibrate).setVisibility(View.GONE);
             layout.findViewById(R.id.ringtone).setVisibility(View.GONE);
             layout.findViewById(R.id.heads_up).setVisibility(View.GONE);
@@ -96,11 +98,11 @@ public class NotificationAlertsPreference extends Preference implements
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
                 if (uri != null && callChangeListener(uri.toString())) {
-                    Settings.get(getContext()).ringtone = uri.toString();
-                    Settings.get(getContext()).setValue(getContext(), getContext().getString(R.string.pref_ringtone), uri.toString());
+                    Settings.INSTANCE.setRingtone(uri.toString());
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_ringtone), uri.toString());
                 } else {
-                    Settings.get(getContext()).ringtone = "";
-                    Settings.get(getContext()).setValue(getContext(), getContext().getString(R.string.pref_ringtone), "");
+                    Settings.INSTANCE.setRingtone("");
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_ringtone), "");
                 }
             }
 
@@ -111,8 +113,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void repeatClicked() {
-        final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
+        final SharedPreferences prefs = Settings.INSTANCE.getSharedPrefs(getContext());
         final String currentPattern = prefs.getString(getContext().getString(R.string.pref_repeat_notifications), "never");
 
         int actual = 0;
@@ -128,7 +129,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.repeat, actual, (dialogInterface, i) -> {
                     String newRepeat = getContext().getResources().getStringArray(R.array.repeat_values)[i];
 
-                    settings.setValue(getContext(), getContext().getString(R.string.pref_repeat_notifications), newRepeat);
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_repeat_notifications), newRepeat);
                     ApiUtils.INSTANCE.updateRepeatNotifications(Account.INSTANCE.getAccountId(), newRepeat);
 
                     dialogInterface.dismiss();
@@ -136,8 +137,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void wakeClicked() {
-        final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
+        final SharedPreferences prefs = Settings.INSTANCE.getSharedPrefs(getContext());
         final String current = prefs.getString(getContext().getString(R.string.pref_wake_screen), "off");
 
         int actual = 0;
@@ -153,7 +153,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
-                    settings.setValue(getContext(), getContext().getString(R.string.pref_wake_screen), newVal);
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_wake_screen), newVal);
                     ApiUtils.INSTANCE.updateWakeScreen(Account.INSTANCE.getAccountId(), newVal);
 
                     dialogInterface.dismiss();
@@ -161,8 +161,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void headsUpClicked() {
-        final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
+        final SharedPreferences prefs = Settings.INSTANCE.getSharedPrefs(getContext());
         final String current = prefs.getString(getContext().getString(R.string.pref_heads_up), "on");
 
         int actual = 0;
@@ -178,7 +177,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.wake_screen, actual, (dialogInterface, i) -> {
                     String newVal = getContext().getResources().getStringArray(R.array.wake_screen_values)[i];
 
-                    settings.setValue(getContext(), getContext().getString(R.string.pref_heads_up), newVal);
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_heads_up), newVal);
                     ApiUtils.INSTANCE.updateHeadsUp(Account.INSTANCE.getAccountId(), newVal);
 
                     dialogInterface.dismiss();
@@ -186,8 +185,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void vibrateClicked() {
-        final Settings settings = Settings.get(getContext());
-        final SharedPreferences prefs = settings.getSharedPrefs(getContext());
+        final SharedPreferences prefs = Settings.INSTANCE.getSharedPrefs(getContext());
         final String currentPattern = prefs.getString(getContext().getString(R.string.pref_vibrate), "vibrate_default");
 
         int actual = 0;
@@ -203,7 +201,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setSingleChoiceItems(R.array.vibrate, actual, (dialogInterface, i) -> {
                     String newPattern = getContext().getResources().getStringArray(R.array.vibrate_values)[i];
 
-                    settings.setValue(getContext(), getContext().getString(R.string.pref_vibrate), newPattern);
+                    Settings.INSTANCE.setValue(getContext(), getContext().getString(R.string.pref_vibrate), newPattern);
                     ApiUtils.INSTANCE.updateVibrate(Account.INSTANCE.getAccountId(), newPattern);
 
                     dialogInterface.dismiss();
@@ -211,11 +209,10 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void ringtoneClicked() {
-        Settings settings = Settings.get(getContext());
-
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        String ringtone = Settings.INSTANCE.getRingtone();
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
-                settings.ringtone != null && !settings.ringtone.isEmpty() ? Uri.parse(settings.ringtone) : null);
+                ringtone != null && !ringtone.isEmpty() ? Uri.parse(ringtone) : null);
 
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
@@ -228,8 +225,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private void makeTestNotification() {
-        Settings settings = Settings.get(getContext());
-        VibratePattern vibratePattern = settings.vibrate;
+        VibratePattern vibratePattern = Settings.INSTANCE.getVibrate();
 
         NotificationUtils.createTestChannel(getContext());
 
@@ -239,7 +235,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setColor(Settings.INSTANCE.getMainColorSet().getColor())
-                .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setPriority(Settings.INSTANCE.getHeadsUp() ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());
 
@@ -268,7 +264,7 @@ public class NotificationAlertsPreference extends Preference implements
     }
 
     private Uri getRingtone() {
-        String globalUri = Settings.get(getContext()).ringtone;
+        String globalUri = Settings.INSTANCE.getRingtone();
         if (globalUri != null && globalUri.isEmpty()) {
             return null;
         } if (globalUri == null) {

@@ -80,9 +80,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
 
         holder.conversation = conversation;
 
-        Settings settings = Settings.get(holder.itemView.getContext());
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
-            if (settings.useGlobalThemeColor) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 if (Settings.INSTANCE.getMainColorSet().getColorLight()== Color.WHITE) {
                     holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
                 } else {
@@ -94,7 +93,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            int colorToInspect = settings.useGlobalThemeColor ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
+            int colorToInspect = Settings.INSTANCE.getUseGlobalThemeColor() ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {

@@ -105,7 +105,7 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         boolean foreground = false;
-        if (intent != null && intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.isAndroidO()) {
+        if (intent != null && intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.INSTANCE.isAndroidO()) {
             foreground = true;
             Notification notification = new NotificationCompat.Builder(this,
                     NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
@@ -537,7 +537,7 @@ public class NotificationService extends IntentService {
             // on older versions, we have to show the reply activity button as an action and add the remote input to it
             // this will allow it to be used on android wear (we will have to handle this from the activity)
             // as well as have a reply quick action button.
-            Intent reply = ActivityUtils.buildForComponent(ActivityUtils.NOTIFICATION_REPLY);
+            Intent reply = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getNOTIFICATION_REPLY());
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
             reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pendingReply = PendingIntent.getActivity(this,
@@ -622,7 +622,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+        Intent open = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
         open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.getId());
         open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_FROM_NOTIFICATION(), true);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -771,7 +771,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingDelete = PendingIntent.getService(this, 0,
                 delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+        Intent open = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this, 0,
                 open, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -898,7 +898,7 @@ public class NotificationService extends IntentService {
 
     @TargetApi(Build.VERSION_CODES.O)
     private static String getNotificationChannel(Context context, long conversationId) {
-        if (!AndroidVersionUtil.isAndroidO()) {
+        if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
             return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID;
         }
 

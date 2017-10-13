@@ -539,7 +539,7 @@ public class ConversationListFragment extends Fragment
         }
 
         if (!Settings.INSTANCE.getUseGlobalThemeColor()) {
-            ActivityUtils.setTaskDescription(activity,
+            ActivityUtils.INSTANCE.setTaskDescription(activity,
                     viewHolder.conversation.getTitle(), viewHolder.conversation.getColors().getColor());
         }
         
@@ -591,7 +591,7 @@ public class ConversationListFragment extends Fragment
         ColorUtils.INSTANCE.adjustDrawerColor(color.getColorDark(), activity);
 
         ColorUtils.INSTANCE.changeRecyclerOverscrollColors(recyclerView, color.getColor());
-        ActivityUtils.setTaskDescription(activity);
+        ActivityUtils.INSTANCE.setTaskDescription(activity);
 
         if (updateInfo != null) {
             ConversationListUpdatedReceiver.sendBroadcast(activity, updateInfo);

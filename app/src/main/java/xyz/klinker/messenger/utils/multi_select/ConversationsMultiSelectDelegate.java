@@ -208,7 +208,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
     @Override
     protected void refreshHolder(SelectableHolder holder) {
         if (holder == null || !(holder instanceof ConversationViewHolder) || !isSelectable() ||
-                Settings.get(fragment.getActivity()).baseTheme != BaseTheme.BLACK) {
+                Settings.INSTANCE.getBaseTheme() != BaseTheme.BLACK) {
             super.refreshHolder(holder);
             return;
         }
@@ -234,7 +234,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
     public boolean tapSelection(SelectableHolder holder) {
         boolean result = super.tapSelection(holder);
 
-        if (mode != null && Settings.get(fragment.getActivity()).baseTheme != BaseTheme.BLACK) {
+        if (mode != null && Settings.INSTANCE.getBaseTheme() != BaseTheme.BLACK) {
             mode.invalidate();
         }
 
@@ -246,7 +246,7 @@ public class ConversationsMultiSelectDelegate extends MultiSelector {
         try {
             ImageView image = new ImageView(activity);
             image.setImageResource(icon);
-            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0);
+            image.setPaddingRelative(0, 0, DensityUtil.INSTANCE.toDp(activity, 24), 0);
             image.setImageTintList(ColorStateList.valueOf(Color.WHITE));
             image.setAlpha(1.0f);
             

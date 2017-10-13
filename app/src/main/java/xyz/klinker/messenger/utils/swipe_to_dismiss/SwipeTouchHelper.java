@@ -28,7 +28,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 public class SwipeTouchHelper extends ItemTouchHelper {
 
     public SwipeTouchHelper(ConversationListAdapter adapter, Context context) {
-        super(Settings.get(context).swipeDelete ? new SwipeDeleteSimpleCallback(adapter) : new SwipeSimpleCallback(adapter));
+        super(Settings.INSTANCE.getSwipeDelete() ? new SwipeDeleteSimpleCallback(adapter) : new SwipeSimpleCallback(adapter));
     }
 
     public SwipeTouchHelper(SwipeSimpleCallback callback) {

@@ -77,7 +77,7 @@ public class ImageViewerFragment extends Fragment {
             player.setSource(Uri.parse(data));
 
             // TODO: Let's use the conversation color here unless it is a global theme
-            player.setThemeColor(Settings.get(getActivity()).mainColorSet.getColor());
+            player.setThemeColor(Settings.INSTANCE.getMainColorSet().getColor());
 
             if (MimeType.INSTANCE.isAudio(mimeType)) {
                 view.findViewById(R.id.audio).setVisibility(View.VISIBLE);

@@ -73,7 +73,7 @@ class DynamicShortcutUtils(private val context: Context) {
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun createIcon(bitmap: Bitmap): Icon {
-        if (AndroidVersionUtil.isAndroidO()) {
+        if (AndroidVersionUtil.isAndroidO) {
             return Icon.createWithAdaptiveBitmap(bitmap)
         } else {
             val circleBitmap = ImageUtils.clipToCircle(bitmap)

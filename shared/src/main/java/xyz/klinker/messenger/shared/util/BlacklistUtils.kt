@@ -14,37 +14,37 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util;
+package xyz.klinker.messenger.shared.util
 
-import android.content.Context;
-import android.database.Cursor;
+import android.content.Context
+import android.database.Cursor
 
-import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.model.Blacklist;
+import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.model.Blacklist
 
 /**
  * Helper for checking whether or not a contact is blacklisted.
  */
-public class BlacklistUtils {
+object BlacklistUtils {
 
-    public static boolean isBlacklisted(Context context, String number) {
-        DataSource source = DataSource.INSTANCE;
-        Cursor cursor = source.getBlacklists(context);
+    fun isBlacklisted(context: Context, number: String): Boolean {
+        val source = DataSource
+        val cursor = source.getBlacklists(context)
 
         if (cursor.moveToFirst()) {
-            int numberIndex = cursor.getColumnIndex(Blacklist.Companion.getCOLUMN_PHONE_NUMBER());
+            val numberIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER)
 
             do {
-                String blacklisted = cursor.getString(numberIndex);
+                val blacklisted = cursor.getString(numberIndex)
                 if (PhoneNumberUtils.checkEquality(number, blacklisted)) {
-                    CursorUtil.closeSilent(cursor);
-                    return true;
+                    CursorUtil.closeSilent(cursor)
+                    return true
                 }
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext())
         }
 
-        CursorUtil.closeSilent(cursor);
-        return false;
+        cursor.closeSilent()
+        return false
     }
 
 }

@@ -150,12 +150,12 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         Settings settings = Settings.INSTANCE;
         findViewById(R.id.toolbar_holder).setBackgroundColor(settings.getMainColorSet().getColor());
         toolbar.setBackgroundColor(settings.getMainColorSet().getColor());
-        ActivityUtils.setStatusBarColor(this, settings.getMainColorSet().getColorDark());
+        ActivityUtils.INSTANCE.setStatusBarColor(this, settings.getMainColorSet().getColorDark());
         fab.setBackgroundTintList(ColorStateList.valueOf(settings.getMainColorSet().getColorAccent()));
         contactEntry.setHighlightColor(settings.getMainColorSet().getColorAccent());
         ColorUtils.INSTANCE.setCursorDrawableColor(contactEntry, settings.getMainColorSet().getColorAccent());
 
-        ActivityUtils.setTaskDescription(this);
+        ActivityUtils.INSTANCE.setTaskDescription(this);
         ColorUtils.INSTANCE.checkBlackBackground(this);
 
         if (!ColorUtils.INSTANCE.isColorDark(settings.getMainColorSet().getColor())) {
@@ -443,7 +443,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             if (extras != null && extras.containsKey("sms_body")) {
                 setupSend(extras.getString("sms_body"), MimeType.INSTANCE.getTEXT_PLAIN(), false);
             } else if (data != null) {
-                String body = NonStandardUriUtils.getQueryParams(data).get("body");
+                String body = NonStandardUriUtils.INSTANCE.getQueryParams(data).get("body");
                 if (data.contains("smsto:")) {
                     String to = data.replace("smsto:", "");
                     if (to.contains("?")) {

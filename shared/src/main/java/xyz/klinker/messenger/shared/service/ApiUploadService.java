@@ -170,7 +170,7 @@ public class ApiUploadService extends Service {
 
             int successPages = 0;
             int expectedPages = 0;
-            List<List<MessageBody>> pages = PaginationUtils.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
+            List<List<MessageBody>> pages = PaginationUtils.INSTANCE.getPages(messages, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<MessageBody> page : pages) {
                 AddMessagesRequest request = new AddMessagesRequest(account.getAccountId(), page.toArray(new MessageBody[0]));
@@ -284,7 +284,7 @@ public class ApiUploadService extends Service {
 
             int successPages = 0;
             int expectedPages = 0;
-            List<List<ContactBody>> pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE);
+            List<List<ContactBody>> pages = PaginationUtils.INSTANCE.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE);
 
             for (List<ContactBody> page : pages) {
                 AddContactRequest request = new AddContactRequest(account.getAccountId(), page.toArray(new ContactBody[0]));

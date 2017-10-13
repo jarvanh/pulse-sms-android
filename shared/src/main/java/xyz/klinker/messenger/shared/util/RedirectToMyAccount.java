@@ -14,7 +14,7 @@ public class RedirectToMyAccount extends AppCompatActivity {
 
         overridePendingTransition(0,0);
 
-        Intent messengerActivity = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
+        Intent messengerActivity = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getMESSENGER_ACTIVITY());
         messengerActivity.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_START_MY_ACCOUNT(), true);
         startActivity(messengerActivity);
 

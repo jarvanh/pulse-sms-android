@@ -92,11 +92,11 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
 
         message.setTextSize(settings.largeFont);
         timestamp.setTextSize(settings.smallFont);
-        timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+        timestamp.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), settings.mediumFont));
 
         if (contact != null) {
             contact.setTextSize(settings.smallFont);
-            contact.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
+            contact.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), settings.mediumFont));
         }
 
         if ((color != -1 && messageHolder != null) ||

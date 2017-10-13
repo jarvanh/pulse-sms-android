@@ -14,7 +14,7 @@ public class ComposeTileService extends TileService {
     @Override
     public void onClick() {
         try {
-            Intent compose = ActivityUtils.buildForComponent(ActivityUtils.COMPOSE_ACTIVITY);
+            Intent compose = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getCOMPOSE_ACTIVITY());
             startActivityAndCollapse(compose);
         } catch (Exception e) {
             e.printStackTrace();
