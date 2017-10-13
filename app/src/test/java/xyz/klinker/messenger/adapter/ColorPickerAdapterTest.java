@@ -62,9 +62,9 @@ public class ColorPickerAdapterTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        color1 = ColorSet.RED(RuntimeEnvironment.application);
-        color2 = ColorSet.PINK(RuntimeEnvironment.application);
-        color3 = ColorSet.PURPLE(RuntimeEnvironment.application);
+        color1 = ColorSet.Companion.RED(RuntimeEnvironment.application);
+        color2 = ColorSet.Companion.PINK(RuntimeEnvironment.application);
+        color3 = ColorSet.Companion.PURPLE(RuntimeEnvironment.application);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class ColorPickerAdapterTest extends MessengerRobolectricSuite {
 
         adapter.getView(1, view, viewGroup);
 
-        verify(colorPreviewButton).setInnerColor(color2.color);
-        verify(colorPreviewButton).setOuterColor(color2.colorAccent);
+        verify(colorPreviewButton).setInnerColor(color2.getColor());
+        verify(colorPreviewButton).setOuterColor(color2.getColorAccent());
         verify(frameLayout, times(1)).addView(any(View.class));
     }
 
@@ -101,8 +101,8 @@ public class ColorPickerAdapterTest extends MessengerRobolectricSuite {
 
         adapter.getView(0, view, viewGroup);
 
-        verify(colorPreviewButton).setInnerColor(color1.color);
-        verify(colorPreviewButton).setOuterColor(color1.colorAccent);
+        verify(colorPreviewButton).setInnerColor(color1.getColor());
+        verify(colorPreviewButton).setOuterColor(color1.getColorAccent());
         verify(frameLayout, times(1)).addView(any(View.class));
     }
 

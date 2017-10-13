@@ -38,10 +38,10 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         conversation.fillFromCursor(cursor);
 
         assertEquals(1, conversation.getId());
-        assertEquals(Color.RED, conversation.getColors().color);
-        assertEquals(Color.BLUE, conversation.getColors().colorDark);
-        assertEquals(Color.YELLOW, conversation.getColors().colorLight);
-        assertEquals(Color.GREEN, conversation.getColors().colorAccent);
+        assertEquals(Color.RED, conversation.getColors().getColor());
+        assertEquals(Color.BLUE, conversation.getColors().getColorDark());
+        assertEquals(Color.YELLOW, conversation.getColors().getColorLight());
+        assertEquals(Color.GREEN, conversation.getColors().getColorAccent());
         assertEquals(Color.WHITE, conversation.getLedColor());
         assertTrue(conversation.getPinned());
         assertTrue(conversation.getRead());

@@ -343,10 +343,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 1,
-                ColorSet.INDIGO(context).color,
-                ColorSet.INDIGO(context).colorDark,
-                ColorSet.INDIGO(context).colorLight,
-                ColorSet.INDIGO(context).colorAccent,
+                ColorSet.Companion.INDIGO(context).getColor(),
+                ColorSet.Companion.INDIGO(context).getColorDark(),
+                ColorSet.Companion.INDIGO(context).getColorLight(),
+                ColorSet.Companion.INDIGO(context).getColorAccent(),
                 1,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60),
@@ -359,10 +359,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 2,
-                ColorSet.RED(context).color,
-                ColorSet.RED(context).colorDark,
-                ColorSet.RED(context).colorLight,
-                ColorSet.RED(context).colorAccent,
+                ColorSet.Companion.RED(context).getColor(),
+                ColorSet.Companion.RED(context).getColorDark(),
+                ColorSet.Companion.RED(context).getColorLight(),
+                ColorSet.Companion.RED(context).getColorAccent(),
                 1,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 12),
@@ -375,10 +375,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 3,
-                ColorSet.PINK(context).color,
-                ColorSet.PINK(context).colorDark,
-                ColorSet.PINK(context).colorLight,
-                ColorSet.PINK(context).colorAccent,
+                ColorSet.Companion.PINK(context).getColor(),
+                ColorSet.Companion.PINK(context).getColorDark(),
+                ColorSet.Companion.PINK(context).getColorLight(),
+                ColorSet.Companion.PINK(context).getColorAccent(),
                 0,
                 0,
                 System.currentTimeMillis() - (1000 * 60),
@@ -391,10 +391,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 4,
-                ColorSet.BLUE(context).color,
-                ColorSet.BLUE(context).colorDark,
-                ColorSet.BLUE(context).colorLight,
-                ColorSet.BLUE(context).colorAccent,
+                ColorSet.Companion.BLUE(context).getColor(),
+                ColorSet.Companion.BLUE(context).getColorDark(),
+                ColorSet.Companion.BLUE(context).getColorLight(),
+                ColorSet.Companion.BLUE(context).getColorAccent(),
                 0,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 24),
@@ -407,10 +407,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 5,
-                ColorSet.GREEN(context).color,
-                ColorSet.GREEN(context).colorDark,
-                ColorSet.GREEN(context).colorLight,
-                ColorSet.GREEN(context).colorAccent,
+                ColorSet.Companion.GREEN(context).getColor(),
+                ColorSet.Companion.GREEN(context).getColorDark(),
+                ColorSet.Companion.GREEN(context).getColorLight(),
+                ColorSet.Companion.GREEN(context).getColorAccent(),
                 0,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 24),
@@ -423,10 +423,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 6,
-                ColorSet.BROWN(context).color,
-                ColorSet.BROWN(context).colorDark,
-                ColorSet.BROWN(context).colorLight,
-                ColorSet.BROWN(context).colorAccent,
+                ColorSet.Companion.BROWN(context).getColor(),
+                ColorSet.Companion.BROWN(context).getColorDark(),
+                ColorSet.Companion.BROWN(context).getColorLight(),
+                ColorSet.Companion.BROWN(context).getColorAccent(),
                 0,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 55),
@@ -439,10 +439,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[]{
                 7,
-                ColorSet.PURPLE(context).color,
-                ColorSet.PURPLE(context).colorDark,
-                ColorSet.PURPLE(context).colorLight,
-                ColorSet.PURPLE(context).colorAccent,
+                ColorSet.Companion.PURPLE(context).getColor(),
+                ColorSet.Companion.PURPLE(context).getColorDark(),
+                ColorSet.Companion.PURPLE(context).getColorLight(),
+                ColorSet.Companion.PURPLE(context).getColorAccent(),
                 0,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 78),
@@ -455,10 +455,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
         cursor.addRow(new Object[] {
                 8,
-                ColorSet.PURPLE(context).color,
-                ColorSet.PURPLE(context).colorDark,
-                ColorSet.PURPLE(context).colorLight,
-                ColorSet.PURPLE(context).colorAccent,
+                ColorSet.Companion.PURPLE(context).getColor(),
+                ColorSet.Companion.PURPLE(context).getColorDark(),
+                ColorSet.Companion.PURPLE(context).getColorLight(),
+                ColorSet.Companion.PURPLE(context).getColorAccent(),
                 0,
                 1,
                 System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 8),
@@ -473,10 +473,10 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) - 2);
         cursor.addRow(new Object[] {
                 9,
-                ColorSet.PURPLE(context).color,
-                ColorSet.PURPLE(context).colorDark,
-                ColorSet.PURPLE(context).colorLight,
-                ColorSet.PURPLE(context).colorAccent,
+                ColorSet.Companion.PURPLE(context).getColor(),
+                ColorSet.Companion.PURPLE(context).getColorDark(),
+                ColorSet.Companion.PURPLE(context).getColorLight(),
+                ColorSet.Companion.PURPLE(context).getColorAccent(),
                 0,
                 0,
                 cal.getTimeInMillis(),

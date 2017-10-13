@@ -190,10 +190,10 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Contact contact = source.getContact(context, "5159911493");
         assertEquals("5159911493", contact.getPhoneNumber());
         assertEquals("Lucas Klinker", contact.getName());
-        assertEquals(2, contact.getColors().color);
-        assertEquals(3, contact.getColors().colorDark);
-        assertEquals(4, contact.getColors().colorLight);
-        assertEquals(5, contact.getColors().colorAccent);
+        assertEquals(2, contact.getColors().getColor());
+        assertEquals(3, contact.getColors().getColorDark());
+        assertEquals(4, contact.getColors().getColorLight());
+        assertEquals(5, contact.getColors().getColorAccent());
     }
 
     @Test
