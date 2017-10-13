@@ -97,8 +97,7 @@ public class MessageListStylingHelper {
     public MessageListStylingHelper setBackground(View messageHolder, String mimeType) {
         if (MimeType.INSTANCE.isExpandedMedia(mimeType) || currentType == Message.Companion.getTYPE_INFO() || messageHolder == null) {
 
-        } else if (FeatureFlags.get(messageHolder.getContext()).REMOVE_IMAGE_BORDERS &&
-                (mimeType.contains("image") || mimeType.contains("video"))) {
+        } else if (mimeType.contains("image") || mimeType.contains("video")) {
             messageHolder.setBackground(null);
         } else {
             int background;

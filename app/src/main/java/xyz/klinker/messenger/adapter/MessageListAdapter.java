@@ -128,7 +128,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             ignoreSendingStatus = false;
         }
 
-        if (Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REENABLE_SENDING_STATUS_ON_NON_PRIMARY) {
+        if (Build.FINGERPRINT.equals("robolectric") || FeatureFlags.INSTANCE.getREENABLE_SENDING_STATUS_ON_NON_PRIMARY()) {
             ignoreSendingStatus = false;
         }
 
@@ -220,7 +220,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
 
             int linkColor = accentColor;
-            if (FeatureFlags.get(holder.itemView.getContext()).WHITE_LINK_TEXT && message.getType() == Message.Companion.getTYPE_RECEIVED()) {
+            if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                 if (ColorUtils.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
                     linkColor = holder.itemView.getContext().getResources().getColor(R.color.lightText);
                 } else {
@@ -489,14 +489,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             String mimeType = messages.getString(messages.getColumnIndex(Message.Companion.getCOLUMN_MIME_TYPE()));
 
             if (ignoreSendingStatus && type == Message.Companion.getTYPE_SENDING()) {
-                if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
-                        mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
+                if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
                     type = Message.Companion.getTYPE_IMAGE_SENT();
                 } else {
                     type = Message.Companion.getTYPE_SENT();
                 }
-            } else if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
-                    mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
+            } else if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
                 if (type == Message.Companion.getTYPE_RECEIVED()) {
                     type = Message.Companion.getTYPE_IMAGE_RECEIVED();
                 } else if (type == Message.Companion.getTYPE_SENDING()) {

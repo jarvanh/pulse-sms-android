@@ -138,9 +138,9 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
-                        Settings.get(holder.itemView.getContext()).mainColorSet.colorLight));
+                        Settings.get(holder.itemView.getContext()).mainColorSet.getColorLight()));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().color));
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {

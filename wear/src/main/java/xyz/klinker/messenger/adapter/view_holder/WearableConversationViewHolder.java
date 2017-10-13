@@ -78,7 +78,7 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
             }
 
             ((CircleImageView) unreadIndicator).setImageDrawable(
-                    new ColorDrawable(Settings.get(itemView.getContext()).mainColorSet.color));
+                    new ColorDrawable(Settings.get(itemView.getContext()).mainColorSet.getColor()));
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);

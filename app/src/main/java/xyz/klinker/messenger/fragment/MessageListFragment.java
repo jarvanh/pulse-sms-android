@@ -1711,27 +1711,20 @@ public class MessageListFragment extends Fragment implements
     public void onContactAttached(String firstName, String lastName, String phone) {
         onBackPressed();
 
-        if (FeatureFlags.get(getActivity()).V_2_6_0) {
-            new AlertDialog.Builder(getActivity())
-                    .setItems(R.array.attach_contact_options, (dialogInterface, i) -> {
-                        switch (i) {
-                            case 0:
-                                try {
-                                    Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
-                                    attachContact(contactFile);
-                                } catch (Exception e) { }
-                                break;
-                            case 1:
-                                messageEntry.setText(firstName + " " + lastName + ": " + phone);
-                                break;
-                        }
-                    }).show();
-        } else {
-            try {
-                Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
-                attachContact(contactFile);
-            } catch (Exception e) { }
-        }
+        new AlertDialog.Builder(getActivity())
+                .setItems(R.array.attach_contact_options, (dialogInterface, i) -> {
+                    switch (i) {
+                        case 0:
+                            try {
+                                Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
+                                attachContact(contactFile);
+                            } catch (Exception e) { }
+                            break;
+                        case 1:
+                            messageEntry.setText(firstName + " " + lastName + ": " + phone);
+                            break;
+                    }
+                }).show();
     }
 
     @Override

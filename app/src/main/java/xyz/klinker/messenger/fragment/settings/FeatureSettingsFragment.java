@@ -48,7 +48,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
                     return true;
                 });
 
-        if (!FeatureFlags.get(getActivity()).SECURE_PRIVATE) {
+        if (!FeatureFlags.INSTANCE.getSECURE_PRIVATE()) {
             getPreferenceScreen().removePreference(preference);
         }
     }
@@ -62,7 +62,7 @@ public class FeatureSettingsFragment extends MaterialPreferenceFragment {
                     return true;
                 });
 
-        if (!FeatureFlags.get(getActivity()).QUICK_COMPOSE) {
+        if (!FeatureFlags.INSTANCE.getQUICK_COMPOSE()) {
             getPreferenceScreen().removePreference(preference);
         }
     }

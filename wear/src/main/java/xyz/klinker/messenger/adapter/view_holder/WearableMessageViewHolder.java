@@ -102,7 +102,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         if ((color != -1 && messageHolder != null) ||
                 settings.useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
             if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).mainColorSet.color;
+                color = Settings.get(itemView.getContext()).mainColorSet.getColor();
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));

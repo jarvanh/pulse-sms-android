@@ -78,7 +78,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
 
-        actionDrawer.setBackgroundColor(conversation.getColors().color);
+        actionDrawer.setBackgroundColor(conversation.getColors().getColor());
         actionDrawer.setOnMenuItemClickListener(menuItem -> {
             actionDrawer.closeDrawer();
 
@@ -114,9 +114,9 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            adapter = new WearableMessageListAdapter(this, manager, null, settings.mainColorSet.color, settings.mainColorSet.colorAccent, conversation.getPhoneNumbers().contains(", "));
+            adapter = new WearableMessageListAdapter(this, manager, null, settings.mainColorSet.getColor(), settings.mainColorSet.getColorAccent(), conversation.isGroup());
         } else {
-            adapter = new WearableMessageListAdapter(this, manager, null, conversation.getColors().color, conversation.getColors().colorAccent, conversation.getPhoneNumbers().contains(", "));
+            adapter = new WearableMessageListAdapter(this, manager, null, conversation.getColors().getColor(), conversation.getColors().getColorAccent(), conversation.isGroup());
         }
 
         recyclerView.setLayoutManager(manager);

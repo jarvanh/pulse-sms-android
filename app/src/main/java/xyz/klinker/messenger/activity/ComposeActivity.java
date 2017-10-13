@@ -124,10 +124,6 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             }
         });
 
-        if (!FeatureFlags.get(this).V_2_6_0) {
-            bottomNavigation.setVisibility(View.GONE);
-        }
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             dismissKeyboard();

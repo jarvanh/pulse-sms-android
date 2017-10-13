@@ -831,7 +831,6 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private static void writeFeatureFlag(JSONObject json, Context context)
             throws JSONException {
-        FeatureFlags flags = FeatureFlags.get(context);
 
         String identifier = json.getString("id");
         boolean value = json.getBoolean("value");
@@ -839,14 +838,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         if (!value) {
             // if we are turning the flag off, we want to do it for everyone immediately
-            flags.updateFlag(identifier, false);
+            FeatureFlags.INSTANCE.updateFlag(context, identifier, false);
         } else {
             Random rand = new Random();
             int random = rand.nextInt(100) + 1; // between 1 - 100
 
             if (random <= rolloutPercent) {
                 // they made it in the staged rollout!
-                flags.updateFlag(identifier, true);
+                FeatureFlags.INSTANCE.updateFlag(context, identifier, true);
             }
 
             // otherwise, don't do anything. We don't want to turn the flag off for those

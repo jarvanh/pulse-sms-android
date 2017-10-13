@@ -1,0 +1,23 @@
+package xyz.klinker.messenger.shared.util
+
+import android.content.Context
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.FeatureFlags
+
+object KotlinObjectInitializers {
+
+    fun initializeObjects(context: Context) {
+
+        try {
+            ApiUtils.environment = context.getString(R.string.environment)
+        } catch (e: Exception) {
+            ApiUtils.environment = "release"
+        }
+
+        Account.init(context)
+        FeatureFlags.init(context)
+        EmojiInitializer.initializeEmojiCompat(context)
+    }
+}

@@ -31,6 +31,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme;
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService;
 import xyz.klinker.messenger.shared.service.FirebaseResetService;
+import xyz.klinker.messenger.shared.util.KotlinObjectInitializers;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;
@@ -53,19 +54,14 @@ public class MessengerApplication extends FirebaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        try {
-            ApiUtils.INSTANCE.setEnvironment(getString(R.string.environment));
-        } catch (Exception e) {
-            ApiUtils.INSTANCE.setEnvironment("release");
-        }
+        KotlinObjectInitializers.INSTANCE.initializeObjects(this);
 
         enableSecurity();
-        Account.INSTANCE.init(this);
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if (theme.getIsDark() || TimeUtils.isNight()) {
+        } else if (theme.isDark() || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }

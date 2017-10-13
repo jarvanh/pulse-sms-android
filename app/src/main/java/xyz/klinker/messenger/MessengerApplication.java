@@ -45,6 +45,7 @@ import xyz.klinker.messenger.shared.service.FirebaseResetService;
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil;
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils;
 import xyz.klinker.messenger.shared.util.EmojiInitializer;
+import xyz.klinker.messenger.shared.util.KotlinObjectInitializers;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService.EXTRA_DATA;
@@ -67,15 +68,10 @@ public class MessengerApplication extends FirebaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        try {
-            ApiUtils.INSTANCE.setEnvironment(getString(R.string.environment));
-        } catch (Exception e) {
-            ApiUtils.INSTANCE.setEnvironment("release");
-        }
+        KotlinObjectInitializers.INSTANCE.initializeObjects(this);
 
         enableSecurity();
         Account.INSTANCE.init(this);
-        EmojiInitializer.INSTANCE.initializeEmojiCompat(getApplicationContext());
 
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {

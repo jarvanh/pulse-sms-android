@@ -91,7 +91,7 @@ public class SendUtils {
 
     public Uri send(Context context, String text, String[] addresses, Uri data,
                            String mimeType) {
-        if (FeatureFlags.get(context).NEVER_SEND_FROM_WATCH && WearableCheck.isAndroidWear(context)) {
+        if (FeatureFlags.INSTANCE.getNEVER_SEND_FROM_WATCH() && WearableCheck.isAndroidWear(context)) {
             return data;
         }
 
