@@ -21,8 +21,8 @@ public class MessageCountHelper {
      */
     public static String getMessageCounterText(Settings settings, MmsSettings mmsSettings, String text) {
         boolean stripUnicode = settings.stripUnicode;
-        boolean convertToMMS = mmsSettings.convertLongMessagesToMMS;
-        int convertAfterXMessages = mmsSettings.numberOfMessagesBeforeMms;
+        boolean convertToMMS = mmsSettings.getConvertLongMessagesToMMS();
+        int convertAfterXMessages = mmsSettings.getNumberOfMessagesBeforeMms();
         int numberOfMessages = 0;
         int charRemaining = 0;
 

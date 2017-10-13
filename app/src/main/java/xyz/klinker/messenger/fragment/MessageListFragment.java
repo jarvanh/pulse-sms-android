@@ -762,10 +762,9 @@ public class MessageListFragment extends Fragment implements
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
             Settings settings = Settings.get(activity);
-            MmsSettings mmsSettings = MmsSettings.get(activity);
             String text = messageEntry.getText().toString();
 
-            counter.setText(MessageCountHelper.getMessageCounterText(settings, mmsSettings, text));
+            counter.setText(MessageCountHelper.getMessageCounterText(settings, MmsSettings.INSTANCE, text));
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }
@@ -1405,7 +1404,7 @@ public class MessageListFragment extends Fragment implements
 
         prepareAttachHolder(2);
         new Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
-                .maxFileSize(MmsSettings.get(activity).maxImageSize)
+                .maxFileSize(MmsSettings.INSTANCE.getMaxImageSize())
                 .start();
     }
 
@@ -1419,7 +1418,7 @@ public class MessageListFragment extends Fragment implements
         MaterialCamera camera = new MaterialCamera(activity)
                 .saveDir(activity.getFilesDir().getPath())
                 .qualityProfile(MaterialCamera.QUALITY_LOW)
-                .maxAllowedFileSize(MmsSettings.get(activity).maxImageSize)
+                .maxAllowedFileSize(MmsSettings.INSTANCE.getMaxImageSize())
                 .allowRetry(false)
                 .autoSubmit(true)
                 .showPortraitWarning(false);
@@ -1892,7 +1891,7 @@ public class MessageListFragment extends Fragment implements
 
     public void startVideoEncoding(final Uri uri, AndroidStandardFormatStrategy.Encoding encoding) {
         File original = new File(uri.getPath());
-        if (original.length() < MmsSettings.get(activity).maxImageSize) {
+        if (original.length() < MmsSettings.INSTANCE.getMaxImageSize()) {
             attachImage(uri);
             attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
             editImage.setVisibility(View.GONE);

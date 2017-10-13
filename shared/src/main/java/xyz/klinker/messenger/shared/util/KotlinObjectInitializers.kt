@@ -5,6 +5,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.data.MmsSettings
 
 object KotlinObjectInitializers {
 
@@ -18,6 +19,7 @@ object KotlinObjectInitializers {
 
         Account.init(context)
         FeatureFlags.init(context)
+        MmsSettings.init(context)
         EmojiInitializer.initializeEmojiCompat(context)
     }
 }

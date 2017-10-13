@@ -145,7 +145,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                         ignoreNotification = true;
                     }
 
-                    if (MmsSettings.get(context).autoSaveMedia &&
+                    if (MmsSettings.INSTANCE.getAutoSaveMedia() &&
                             !MimeType.INSTANCE.getTEXT_PLAIN().equals(message.getMimeType())) {
                         try {
                             new MediaSaver(context).saveMedia(message);
@@ -227,11 +227,10 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
     @Override
     public MmscInformation getMmscInfoForReceptionAck() {
-        MmsSettings settings = MmsSettings.get(context);
-        if (settings.mmscUrl != null && !settings.mmscUrl.isEmpty() &&
-                settings.mmsProxy != null && !settings.mmsProxy.isEmpty() &&
-                settings.mmsPort != null && !settings.mmsPort.isEmpty()) {
-            return new MmscInformation(settings.mmscUrl, settings.mmsProxy, Integer.parseInt(settings.mmsPort));
+        if (MmsSettings.INSTANCE.getMmscUrl() != null && !MmsSettings.INSTANCE.getMmscUrl().isEmpty() &&
+                MmsSettings.INSTANCE.getMmsProxy() != null && !MmsSettings.INSTANCE.getMmsProxy().isEmpty() &&
+                MmsSettings.INSTANCE.getMmsPort() != null && !MmsSettings.INSTANCE.getMmsPort().isEmpty()) {
+            return new MmscInformation(MmsSettings.INSTANCE.getMmscUrl(), MmsSettings.INSTANCE.getMmsProxy(), Integer.parseInt(MmsSettings.INSTANCE.getMmsPort()));
         } else {
             return null;
         }

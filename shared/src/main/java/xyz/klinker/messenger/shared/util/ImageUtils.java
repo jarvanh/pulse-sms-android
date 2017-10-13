@@ -255,9 +255,10 @@ public class ImageUtils {
             Bitmap scaled = generateBitmap(byteArr, arraySize, largerSide, scaleAmount);
             scaled = rotateBasedOnExifData(context, uri, scaled);
             File file = createFileFromBitmap(context, fileName, scaled, mimeType);
-            Log.v("ImageUtils", "file size: " + file.length() + ", mms size limit: " + MmsSettings.get(context).maxImageSize);
+            long maxImageSize = MmsSettings.INSTANCE.getMaxImageSize();
+            Log.v("ImageUtils", "file size: " + file.length() + ", mms size limit: " + maxImageSize);
 
-            while (scaleAmount < 16 && file.length() > MmsSettings.get(context).maxImageSize) {
+            while (scaleAmount < 16 && file.length() > maxImageSize) {
                 scaled.recycle();
 
                 scaleAmount = scaleAmount * 2;
@@ -265,7 +266,7 @@ public class ImageUtils {
                 scaled = rotateBasedOnExifData(context, uri, scaled);
                 file = createFileFromBitmap(context, fileName, scaled, mimeType);
 
-                Log.v("ImageUtils", "downsampling again. file size: " + file.length() + ", mms size limit: " + MmsSettings.get(context).maxImageSize);
+                Log.v("ImageUtils", "downsampling again. file size: " + file.length() + ", mms size limit: " + maxImageSize);
             }
 
             return ImageUtils.createContentUri(context, file);

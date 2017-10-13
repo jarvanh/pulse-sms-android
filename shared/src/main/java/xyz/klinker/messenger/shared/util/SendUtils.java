@@ -100,28 +100,27 @@ public class SendUtils {
             text += "\n" + appSettings.signature;
         }
 
-        MmsSettings mmsSettings = MmsSettings.get(context);
         Settings settings = new Settings();
         settings.setDeliveryReports(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .deliveryReports);
-        settings.setSendLongAsMms(mmsSettings.convertLongMessagesToMMS);
-        settings.setSendLongAsMmsAfter(mmsSettings.numberOfMessagesBeforeMms);
-        settings.setGroup(mmsSettings.groupMMS);
+        settings.setSendLongAsMms(MmsSettings.INSTANCE.getConvertLongMessagesToMMS());
+        settings.setSendLongAsMmsAfter(MmsSettings.INSTANCE.getNumberOfMessagesBeforeMms());
+        settings.setGroup(MmsSettings.INSTANCE.getGroupMMS());
         settings.setStripUnicode(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .stripUnicode);
         settings.setPreText(xyz.klinker.messenger.shared.data.Settings.get(context)
                 .giffgaffDeliveryReports ? "*0#" : "");
         settings.setSplit(forceSplitMessage || shouldSplitMessages(context));
 
-        if (mmsSettings.overrideSystemAPN) {
+        if (MmsSettings.INSTANCE.getOverrideSystemAPN()) {
             settings.setUseSystemSending(false);
 
-            settings.setMmsc(mmsSettings.mmscUrl);
-            settings.setProxy(mmsSettings.mmsProxy);
-            settings.setPort(mmsSettings.mmsPort);
-            settings.setAgent(mmsSettings.userAgent);
-            settings.setUserProfileUrl(mmsSettings.userAgentProfileUrl);
-            settings.setUaProfTagName(mmsSettings.userAgentProfileTagName);
+            settings.setMmsc(MmsSettings.INSTANCE.getMmscUrl());
+            settings.setProxy(MmsSettings.INSTANCE.getMmsProxy());
+            settings.setPort(MmsSettings.INSTANCE.getMmsPort());
+            settings.setAgent(MmsSettings.INSTANCE.getUserAgent());
+            settings.setUserProfileUrl(MmsSettings.INSTANCE.getUserAgentProfileUrl());
+            settings.setUaProfTagName(MmsSettings.INSTANCE.getUserAgentProfileTagName());
         }
 
         if (subscriptionId != null && subscriptionId != 0 && subscriptionId != -1) {

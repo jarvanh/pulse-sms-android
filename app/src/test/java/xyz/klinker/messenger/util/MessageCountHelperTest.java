@@ -32,7 +32,7 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
 
     @Test
     public void neverConvertToMMS() {
-        mmsSettings.convertLongMessagesToMMS = false;
+        mmsSettings.setConvertLongMessagesToMMS(false);
 
         assertEquals(null, MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_LONGER_MESSAGE));
@@ -41,8 +41,8 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
 
     @Test
     public void withConvertingToMMSAfterOneMessage() {
-        mmsSettings.convertLongMessagesToMMS = true;
-        mmsSettings.numberOfMessagesBeforeMms = 1;
+        mmsSettings.setConvertLongMessagesToMMS(true);
+        mmsSettings.setNumberOfMessagesBeforeMms(1);
 
         assertEquals(null, MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_LONGER_MESSAGE));
@@ -52,8 +52,8 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
 
     @Test
     public void withConvertingToMMSAfterTwoMessages() {
-        mmsSettings.convertLongMessagesToMMS = true;
-        mmsSettings.numberOfMessagesBeforeMms = 2;
+        mmsSettings.setConvertLongMessagesToMMS(true);
+        mmsSettings.setNumberOfMessagesBeforeMms(2);
 
         assertEquals(null, MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_LONGER_MESSAGE));
@@ -63,8 +63,8 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
 
     @Test
     public void withConvertingToMMSAfterThreeMessages() {
-        mmsSettings.convertLongMessagesToMMS = true;
-        mmsSettings.numberOfMessagesBeforeMms = 3;
+        mmsSettings.setConvertLongMessagesToMMS(true);
+        mmsSettings.setNumberOfMessagesBeforeMms(3);
 
         assertEquals(null, MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.getMessageCounterText(settings, mmsSettings, ONE_LONGER_MESSAGE));

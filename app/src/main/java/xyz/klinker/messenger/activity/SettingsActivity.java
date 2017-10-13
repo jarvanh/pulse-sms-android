@@ -157,7 +157,7 @@ public class SettingsActivity extends AbstractSettingsActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
-            MmsSettings.get(this).forceUpdate(this);
+            MmsSettings.INSTANCE.forceUpdate(this);
         }
 
         super.onBackPressed();
