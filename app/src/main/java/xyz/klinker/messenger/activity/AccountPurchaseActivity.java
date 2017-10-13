@@ -42,16 +42,16 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         setUpInitialLayout();
 
         Settings settings = Settings.get(this);
-        if (settings.mainColorSet.color == Color.WHITE) {
-            findViewById(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color);
-            findViewById(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color);
+        if (settings.mainColorSet.getColor() == Color.WHITE) {
+            findViewById(R.id.initial_layout).setBackgroundColor(ColorSet.Companion.TEAL(this).getColor());
+            findViewById(R.id.purchase_layout).setBackgroundColor(ColorSet.Companion.TEAL(this).getColor());
             ((TextView)findViewById(R.id.try_it))
-                    .setTextColor(ColorStateList.valueOf(ColorSet.TEAL(this).color));
+                    .setTextColor(ColorStateList.valueOf(ColorSet.Companion.TEAL(this).getColor()));
         } else {
-            findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.color);
-            findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.color);
+            findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.getColor());
+            findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.getColor());
             ((TextView)findViewById(R.id.try_it))
-                    .setTextColor(ColorStateList.valueOf(settings.mainColorSet.color));
+                    .setTextColor(ColorStateList.valueOf(settings.mainColorSet.getColor()));
         }
 
         new Handler().postDelayed(this::circularRevealIn, 100);

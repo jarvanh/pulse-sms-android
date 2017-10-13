@@ -26,30 +26,30 @@ public class SmsMmsUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void createIdMatcherSingleNumber() {
-        assertEquals("4211555", SmsMmsUtils.createIdMatcher("+15154211555").sevenLetter);
+        assertEquals("4211555", SmsMmsUtils.createIdMatcher("+15154211555").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherWithCharacters() {
-        assertEquals("9911493", SmsMmsUtils.createIdMatcher("+(515) (991)-1493").sevenLetterNoFormatting);
+        assertEquals("9911493", SmsMmsUtils.createIdMatcher("+(515) (991)-1493").getSevenLetterNoFormatting());
     }
 
     @Test
     public void createIdMatcherMultipleNumbers() {
         assertEquals("419672648085329911493",
-                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493").sevenLetter);
+                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherEmail() {
         assertEquals("jklinker1@gmail.com",
-                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com").sevenLetter);
+                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherForSpacedWeirdNumbers() {
-        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210").sevenLetter,
-                SmsMmsUtils.createIdMatcher("1 987-654-3210").sevenLetter);
+        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210").getSevenLetter(),
+                SmsMmsUtils.createIdMatcher("1 987-654-3210").getSevenLetter());
     }
 
     @Test

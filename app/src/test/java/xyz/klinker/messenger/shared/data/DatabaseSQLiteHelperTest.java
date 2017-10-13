@@ -81,12 +81,12 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
     }
 
     private void verifyDropStatement() {
-        verify(database).execSQL("drop table if exists " + Contact.TABLE);
-        verify(database).execSQL("drop table if exists " + Conversation.TABLE);
-        verify(database).execSQL("drop table if exists " + Draft.TABLE);
-        verify(database).execSQL("drop table if exists " + Message.TABLE);
-        verify(database).execSQL("drop table if exists " + ScheduledMessage.TABLE);
-        verify(database).execSQL("drop table if exists " + Blacklist.TABLE);
+        verify(database).execSQL("drop table if exists " + Contact.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Conversation.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Draft.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Message.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + ScheduledMessage.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Blacklist.Companion.getTABLE());
         verifyNoMoreInteractions(database);
     }
 

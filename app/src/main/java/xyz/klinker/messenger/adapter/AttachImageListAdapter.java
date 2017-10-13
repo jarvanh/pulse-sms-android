@@ -62,59 +62,59 @@ public class AttachImageListAdapter extends RecyclerView.Adapter<ImageViewHolder
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
         if (position == 0) {
-            holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            holder.image.setImageResource(R.drawable.ic_photo_gallery);
-            holder.image.setBackgroundColor(colorForMediaTile);
+            holder.getImage().setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            holder.getImage().setImageResource(R.drawable.ic_photo_gallery);
+            holder.getImage().setBackgroundColor(colorForMediaTile);
 
-            holder.image.setOnClickListener(view -> {
+            holder.getImage().setOnClickListener(view -> {
                 if (callback != null) {
                     callback.onGalleryPicker();
                 }
             });
 
-            if (holder.playButton.getVisibility() != View.GONE) {
-                holder.playButton.setVisibility(View.GONE);
+            if (holder.getPlayButton().getVisibility() != View.GONE) {
+                holder.getPlayButton().setVisibility(View.GONE);
             }
 
-            if (holder.selectedCheckmarkLayout.getVisibility() != View.GONE) {
-                holder.selectedCheckmarkLayout.setVisibility(View.GONE);
+            if (holder.getSelectedCheckmarkLayout().getVisibility() != View.GONE) {
+                holder.getSelectedCheckmarkLayout().setVisibility(View.GONE);
             }
         } else {
             images.moveToPosition(position - 1);
             File file = new File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)));
             Uri uri = Uri.fromFile(file);
 
-            holder.image.setOnClickListener(view -> {
+            holder.getImage().setOnClickListener(view -> {
                 if (callback != null) {
-                    callback.onImageSelected(holder.uri, holder.mimeType);
+                    callback.onImageSelected(holder.getUri(), holder.getMimeType());
                 }
 
-                if (holder.selectedCheckmarkLayout.getVisibility() != View.VISIBLE) {
-                    holder.selectedCheckmarkLayout.setVisibility(View.VISIBLE);
+                if (holder.getSelectedCheckmarkLayout().getVisibility() != View.VISIBLE) {
+                    holder.getSelectedCheckmarkLayout().setVisibility(View.VISIBLE);
                 } else {
-                    holder.selectedCheckmarkLayout.setVisibility(View.GONE);
+                    holder.getSelectedCheckmarkLayout().setVisibility(View.GONE);
                 }
             });
 
-            holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE));
-            holder.uri = uri;
-            holder.image.setBackgroundColor(Color.TRANSPARENT);
-            Glide.with(holder.image.getContext())
+            holder.setMimeType(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)));
+            holder.setUri(uri);
+            holder.getImage().setBackgroundColor(Color.TRANSPARENT);
+            Glide.with(holder.getImage().getContext())
                     .load(uri)
                     .apply(new RequestOptions().centerCrop())
-                    .into(holder.image);
+                    .into(holder.getImage());
 
-            if (holder.mimeType != null && holder.mimeType.contains("video") && holder.playButton.getVisibility() == View.GONE) {
-                holder.playButton.setVisibility(View.VISIBLE);
-            } else if (holder.playButton.getVisibility() != View.GONE) {
-                holder.playButton.setVisibility(View.GONE);
+            if (holder.getMimeType() != null && holder.getMimeType().contains("video") && holder.getPlayButton().getVisibility() == View.GONE) {
+                holder.getPlayButton().setVisibility(View.VISIBLE);
+            } else if (holder.getPlayButton().getVisibility() != View.GONE) {
+                holder.getPlayButton().setVisibility(View.GONE);
             }
 
-            if (holder.selectedCheckmarkLayout.getVisibility() != View.VISIBLE &&
-                    callback.isCurrentlySelected(holder.uri, holder.mimeType)) {
-                holder.selectedCheckmarkLayout.setVisibility(View.VISIBLE);
-            } else if (holder.selectedCheckmarkLayout.getVisibility() != View.GONE) {
-                holder.selectedCheckmarkLayout.setVisibility(View.GONE);
+            if (holder.getSelectedCheckmarkLayout().getVisibility() != View.VISIBLE &&
+                    callback.isCurrentlySelected(holder.getUri(), holder.getMimeType())) {
+                holder.getSelectedCheckmarkLayout().setVisibility(View.VISIBLE);
+            } else if (holder.getSelectedCheckmarkLayout().getVisibility() != View.GONE) {
+                holder.getSelectedCheckmarkLayout().setVisibility(View.GONE);
             }
         }
     }

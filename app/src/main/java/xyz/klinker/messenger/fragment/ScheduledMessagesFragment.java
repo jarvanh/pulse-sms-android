@@ -118,9 +118,9 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         fab.setOnClickListener(view1 -> startSchedulingMessage());
 
         Settings settings = Settings.get(activity);
-        emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
+        emptyView.setBackgroundColor(settings.mainColorSet.getColorLight());
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.getColor());
 
         return view;
     }
@@ -133,8 +133,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
         if (getArguments() != null && getArguments().getString(ARG_TITLE) != null &&
                 getArguments().getString(ARG_PHONE_NUMBERS) != null) {
             ScheduledMessage message = new ScheduledMessage();
-            message.to = getArguments().getString(ARG_PHONE_NUMBERS);
-            message.title = getArguments().getString(ARG_TITLE);
+            message.setTo(getArguments().getString(ARG_PHONE_NUMBERS));
+            message.setTitle(getArguments().getString(ARG_TITLE));
             displayDateDialog(message);
         }
 
@@ -228,15 +228,15 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                             title.append(", ");
                         }
 
-                        message.to = to.toString();
-                        message.title = title.toString();
+                        message.setTo(to.toString());
+                        message.setTitle(title.toString());
 
-                        message.to = message.to.substring(0, message.to.length() - 2);
-                        message.title = message.title.substring(0, message.title.length() - 2);
+                        message.setTo(message.getTo().substring(0, message.getTo().length() - 2));
+                        message.setTitle(message.getTitle().substring(0, message.getTitle().length() - 2));
                     } else if (editText.getText().length() > 0) {
-                        message.to = PhoneNumberUtils.clearFormatting(editText
-                                .getText().toString());
-                        message.title = message.to;
+                        message.setTo(PhoneNumberUtils.clearFormatting(editText
+                                .getText().toString()));
+                        message.setTitle(message.getTo());
                     } else {
                         displayNameDialog(message);
                         return;
@@ -264,8 +264,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(context, (datePicker, year, month, day) -> {
-            message.timestamp = new GregorianCalendar(year, month, day)
-                    .getTimeInMillis();
+            message.setTimestamp(new GregorianCalendar(year, month, day)
+                    .getTimeInMillis());
             displayTimeDialog(message);
         },
                 calendar.get(Calendar.YEAR),
@@ -281,10 +281,10 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         Calendar calendar = Calendar.getInstance();
         new TimePickerDialog(activity, (timePicker, hourOfDay, minute) -> {
-            message.timestamp += (1000 * 60 * 60 * hourOfDay);
-            message.timestamp += (1000 * 60 * minute);
+            message.setTimestamp(message.getTimestamp() + (1000 * 60 * 60 * hourOfDay));
+            message.setTimestamp(message.getTimestamp() + (1000 * 60 * minute));
 
-            if (message.timestamp > System.currentTimeMillis()) {
+            if (message.getTimestamp() > System.currentTimeMillis()) {
                 displayMessageDialog(message);
             } else {
                 Toast.makeText(activity, R.string.scheduled_message_in_future,
@@ -309,8 +309,8 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                 .setView(layout)
                 .setPositiveButton(R.string.add, (dialogInterface, i) -> {
                     if (editText.getText().length() > 0) {
-                        message.data = editText.getText().toString();
-                        message.mimeType = MimeType.TEXT_PLAIN;
+                        message.setData(editText.getText().toString());
+                        message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
                         saveMessage(message);
                     } else {
                         displayMessageDialog(message);

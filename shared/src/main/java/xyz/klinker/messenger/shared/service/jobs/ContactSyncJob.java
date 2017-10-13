@@ -63,8 +63,8 @@ public class ContactSyncJob extends BackgroundJob {
         for (int i = 0; i < contactsList.size(); i++) {
             Contact c = contactsList.get(i);
             c.encrypt(account.getEncryptor());
-            ContactBody contactBody = new ContactBody(c.phoneNumber, c.name, c.colors.color,
-                    c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent);
+            ContactBody contactBody = new ContactBody(c.getPhoneNumber(), c.getName(), c.getColors().getColor(),
+                    c.getColors().getColorDark(), c.getColors().getColorLight(), c.getColors().getColorAccent());
 
             contacts[i] = contactBody;
         }

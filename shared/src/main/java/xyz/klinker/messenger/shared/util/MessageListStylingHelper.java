@@ -41,10 +41,10 @@ public class MessageListStylingHelper {
 
     public MessageListStylingHelper calculateAdjacentItems(Cursor cursor, int currentPosition) {
         if (columnTimestamp == -1) {
-            columnTimestamp = cursor.getColumnIndex(Message.COLUMN_TIMESTAMP);
+            columnTimestamp = cursor.getColumnIndex(Message.Companion.getCOLUMN_TIMESTAMP());
         }
         if (columnType == -1) {
-            columnType = cursor.getColumnIndex(Message.COLUMN_TYPE);
+            columnType = cursor.getColumnIndex(Message.Companion.getCOLUMN_TYPE());
         }
 
         cursor.moveToPosition(currentPosition);
@@ -66,7 +66,7 @@ public class MessageListStylingHelper {
             nextTimestamp = cursor.getLong(columnTimestamp);
             isJustSentMessage = false;
         } else {
-            isJustSentMessage = currentType != Message.TYPE_RECEIVED;
+            isJustSentMessage = currentType != Message.Companion.getTYPE_RECEIVED();
             nextType = -1;
             nextTimestamp = System.currentTimeMillis();
         }
@@ -95,7 +95,7 @@ public class MessageListStylingHelper {
     }
 
     public MessageListStylingHelper setBackground(View messageHolder, String mimeType) {
-        if (MimeType.isExpandedMedia(mimeType) || currentType == Message.TYPE_INFO || messageHolder == null) {
+        if (MimeType.INSTANCE.isExpandedMedia(mimeType) || currentType == Message.Companion.getTYPE_INFO() || messageHolder == null) {
 
         } else if (FeatureFlags.get(messageHolder.getContext()).REMOVE_IMAGE_BORDERS &&
                 (mimeType.contains("image") || mimeType.contains("video"))) {
@@ -129,13 +129,13 @@ public class MessageListStylingHelper {
     @DrawableRes
     private int dialogSquareBackground() {
         if (currentType == lastType && !TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)) {
-            if (currentType == Message.TYPE_RECEIVED) {
+            if (currentType == Message.Companion.getTYPE_RECEIVED()) {
                 return R.drawable.message_received_group_background;
             } else {
                 return R.drawable.message_sent_group_background;
             }
         } else {
-            if (currentType == Message.TYPE_RECEIVED) {
+            if (currentType == Message.Companion.getTYPE_RECEIVED()) {
                 return R.drawable.message_received_background;
             } else {
                 return R.drawable.message_sent_background;
@@ -150,7 +150,7 @@ public class MessageListStylingHelper {
 
         if (currentType == lastType && currentType == nextType && !displayLastTimestamp && !displayNextTimestamp) {
             // both corners
-            if (currentType == Message.TYPE_RECEIVED) {
+            if (currentType == Message.Companion.getTYPE_RECEIVED()) {
                 return R.drawable.message_circle_received_group_both_background;
             } else {
                 return R.drawable.message_circle_sent_group_both_background;
@@ -158,7 +158,7 @@ public class MessageListStylingHelper {
         } else if ((currentType == lastType && currentType != nextType && !displayLastTimestamp) ||
                 (currentType == nextType && currentType == lastType && displayNextTimestamp)) {
             // top corner bubble
-            if (currentType == Message.TYPE_RECEIVED) {
+            if (currentType == Message.Companion.getTYPE_RECEIVED()) {
                 return R.drawable.message_circle_received_group_top_background;
             } else {
                 return R.drawable.message_circle_sent_group_top_background;
@@ -166,7 +166,7 @@ public class MessageListStylingHelper {
         } else if ((currentType == nextType && currentType != lastType && !displayNextTimestamp) ||
                 (currentType == nextType && currentType == lastType && displayLastTimestamp)) {
             // bottom corner bubble
-            if (currentType == Message.TYPE_RECEIVED) {
+            if (currentType == Message.Companion.getTYPE_RECEIVED()) {
                 return R.drawable.message_circle_received_group_bottom_background;
             } else {
                 return R.drawable.message_circle_sent_group_bottom_background;

@@ -63,12 +63,12 @@ public class ImageViewerFragment extends Fragment {
         String data = getArguments().getString(ARG_DATA_URI);
         String mimeType = getArguments().getString(ARG_DATA_MIME_TYPE);
 
-        if (MimeType.isStaticImage(mimeType)) {
+        if (MimeType.INSTANCE.isStaticImage(mimeType)) {
             Glide.with(getActivity())
                     .load(Uri.parse(data))
                     .apply(new RequestOptions().fitCenter())
                     .into(photo);
-        } else if (MimeType.isVideo(mimeType) || MimeType.isAudio(mimeType)) {
+        } else if (MimeType.INSTANCE.isVideo(mimeType) || MimeType.INSTANCE.isAudio(mimeType)) {
             player.setVisibility(View.VISIBLE);
             photo.setVisibility(View.GONE);
             player.setCallback(new EasyVideoCallbackAdapter());
@@ -77,9 +77,9 @@ public class ImageViewerFragment extends Fragment {
             player.setSource(Uri.parse(data));
 
             // TODO: Let's use the conversation color here unless it is a global theme
-            player.setThemeColor(Settings.get(getActivity()).mainColorSet.color);
+            player.setThemeColor(Settings.get(getActivity()).mainColorSet.getColor());
 
-            if (MimeType.isAudio(mimeType)) {
+            if (MimeType.INSTANCE.isAudio(mimeType)) {
                 view.findViewById(R.id.audio).setVisibility(View.VISIBLE);
                 player.setHideControlsOnPlay(false);
             }

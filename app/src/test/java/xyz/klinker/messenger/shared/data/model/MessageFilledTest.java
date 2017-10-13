@@ -34,36 +34,36 @@ public class MessageFilledTest extends MessengerRobolectricSuite {
         cursor.moveToFirst();
         message.fillFromCursor(cursor);
 
-        assertEquals(1, message.id);
-        assertEquals(1, message.conversationId);
-        assertEquals(Message.TYPE_RECEIVED, message.type);
-        assertEquals("Do you want to go to summerfest this weekend?", message.data);
-        assertEquals(1001L, message.timestamp);
-        assertEquals("text/plain", message.mimeType);
-        assertEquals(true, message.seen);
-        assertEquals(true, message.read);
-        assertEquals("Luke Klinker", message.from);
-        assertEquals(null, message.color);
+        assertEquals(1, message.getId());
+        assertEquals(1, message.getConversationId());
+        assertEquals(Message.Companion.getTYPE_RECEIVED(), message.getType());
+        assertEquals("Do you want to go to summerfest this weekend?", message.getData());
+        assertEquals(1001L, message.getTimestamp());
+        assertEquals("text/plain", message.getMimeType());
+        assertEquals(true, message.getSeen());
+        assertEquals(true, message.getRead());
+        assertEquals("Luke Klinker", message.getFrom());
+        assertEquals(null, message.getColor());
     }
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Message.COLUMN_ID,
-                Message.COLUMN_CONVERSATION_ID,
-                Message.COLUMN_TYPE,
-                Message.COLUMN_DATA,
-                Message.COLUMN_TIMESTAMP,
-                Message.COLUMN_MIME_TYPE,
-                Message.COLUMN_READ,
-                Message.COLUMN_SEEN,
-                Message.COLUMN_FROM,
-                Message.COLUMN_COLOR
+                Message.Companion.getCOLUMN_ID(),
+                Message.Companion.getCOLUMN_CONVERSATION_ID(),
+                Message.Companion.getCOLUMN_TYPE(),
+                Message.Companion.getCOLUMN_DATA(),
+                Message.Companion.getCOLUMN_TIMESTAMP(),
+                Message.Companion.getCOLUMN_MIME_TYPE(),
+                Message.Companion.getCOLUMN_READ(),
+                Message.Companion.getCOLUMN_SEEN(),
+                Message.Companion.getCOLUMN_FROM(),
+                Message.Companion.getCOLUMN_COLOR()
         });
 
         cursor.addRow(new Object[]{
                 1,
                 1,
-                Message.TYPE_RECEIVED,
+                Message.Companion.getTYPE_RECEIVED(),
                 "Do you want to go to summerfest this weekend?",
                 1001L,
                 "text/plain",

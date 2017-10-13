@@ -264,16 +264,16 @@ public class MessageMultiSelectDelegate extends MultiSelector {
             return "";
         }
 
-        if (MimeType.isExpandedMedia(message.mimeType)) {
-            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
-                YouTubePreview preview = YouTubePreview.build(message.data);
-                return preview != null ? preview.url + "\n\n" + preview.title : "";
-            } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
-                ArticlePreview preview = ArticlePreview.build(message.data);
-                return preview != null ? preview.webUrl + "\n\n" + preview.title : "";
+        if (MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
+            if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
+                YouTubePreview preview = YouTubePreview.Companion.build(message.getData());
+                return preview != null ? preview.getUrl() + "\n\n" + preview.getTitle() : "";
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
+                ArticlePreview preview = ArticlePreview.Companion.build(message.getData());
+                return preview != null ? preview.getWebUrl() + "\n\n" + preview.getTitle() : "";
             }
         }
 
-        return message.data;
+        return message.getData();
     }
 }

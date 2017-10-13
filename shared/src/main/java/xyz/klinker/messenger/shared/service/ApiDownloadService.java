@@ -117,7 +117,7 @@ public class ApiDownloadService extends Service {
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                 .setOngoing(true)
                 .build();
 
@@ -237,14 +237,14 @@ public class ApiDownloadService extends Service {
                     return;
                 }
 
-                conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
+                conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), this));
 
-                Bitmap image = ImageUtils.getContactImage(conversation.imageUri, this);
-                if (conversation.imageUri != null &&
+                Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), this);
+                if (conversation.getImageUri() != null &&
                          image == null) {
-                    conversation.imageUri = null;
-                } else if (conversation.imageUri != null) {
-                    conversation.imageUri += "/photo";
+                    conversation.setImageUri(null);
+                } else if (conversation.getImageUri() != null) {
+                    conversation.setImageUri(conversation.getImageUri() + "/photo");
                 }
 
                 if (image != null) {
@@ -279,19 +279,19 @@ public class ApiDownloadService extends Service {
 
                 try {
                     conversation.decrypt(encryptionUtils);
-                    conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this);
+                    conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), this));
 
-                    if (conversation.imageUri != null &&
-                            ImageUtils.getContactImage(conversation.imageUri, this) == null) {
-                        conversation.imageUri = null;
-                    } else if (conversation.imageUri != null) {
-                        conversation.imageUri += "/photo";
+                    if (conversation.getImageUri() != null &&
+                            ImageUtils.getContactImage(conversation.getImageUri(), this) == null) {
+                        conversation.setImageUri(null);
+                    } else if (conversation.getImageUri() != null) {
+                        conversation.setImageUri(conversation.getImageUri() + "/photo");
                     }
 
                     source.insertConversation(this, conversation, false);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + conversation.id);
+                    Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + conversation.getId());
                 }
             }
 
@@ -404,7 +404,7 @@ public class ApiDownloadService extends Service {
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                 .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
 
@@ -446,14 +446,14 @@ public class ApiDownloadService extends Service {
                 processing++;
 
                 final File file = new File(getFilesDir(),
-                        message.id + MimeType.getExtension(message.mimeType));
+                        message.getId() + MimeType.INSTANCE.getExtension(message.getMimeType()));
 
-                Log.v(TAG, "started downloading " + message.id);
+                Log.v(TAG, "started downloading " + message.getId());
 
-                apiUtils.downloadFileFromFirebase(account.getAccountId(), file, message.id, encryptionUtils, () -> {
+                apiUtils.downloadFileFromFirebase(account.getAccountId(), file, message.getId(), encryptionUtils, () -> {
                     completedMediaDownloads++;
 
-                    source.updateMessageData(this, message.id, Uri.fromFile(file).toString());
+                    source.updateMessageData(this, message.getId(), Uri.fromFile(file).toString());
                     builder.setProgress(mediaCount, completedMediaDownloads, false);
 
                     if (completedMediaDownloads >= mediaCount) {

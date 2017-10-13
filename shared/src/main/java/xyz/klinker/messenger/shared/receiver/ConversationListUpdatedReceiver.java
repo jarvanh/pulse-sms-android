@@ -80,8 +80,8 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
 
         IConversationListAdapter adapter = fragment.getAdapter();
         int adapterPosition = adapter.findPositionForConversationId(conversationId);
-        boolean insertToday = adapter.getCountForSection(SectionType.TODAY) == 0;
-        int pinnedCount = adapter.getCountForSection(SectionType.PINNED);
+        boolean insertToday = adapter.getCountForSection(SectionType.Companion.getTODAY()) == 0;
+        int pinnedCount = adapter.getCountForSection(SectionType.Companion.getPINNED());
         List<Conversation> conversations = adapter.getConversations();
         List<SectionType> sectionTypes = adapter.getSectionCounts();
 
@@ -95,7 +95,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
         } else {
             int position = -1;
             for (int i = 0; i < conversations.size(); i++) {
-                if (conversations.get(i).id == conversationId) {
+                if (conversations.get(i).getId() == conversationId) {
                     position = i;
                     break;
                 }
@@ -111,15 +111,15 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 Conversation conversation = conversations.get(position);
 
                 if (title != null) {
-                    conversation.title = title;
+                    conversation.setTitle(title);
                 }
 
                 if (snippet != null) {
-                    conversation.snippet = snippet;
+                    conversation.setSnippet(snippet);
                 }
 
                 if (intent.hasExtra(EXTRA_READ)) {
-                    conversation.read = read;
+                    conversation.setRead(read);
                 }
 
                 adapter.notifyItemChanged(adapterPosition);
@@ -130,15 +130,15 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
                 adapter.removeItem(adapterPosition, ReorderType.NEITHER);
 
                 if (title != null) {
-                    conversation.title = title;
+                    conversation.setTitle(title);
                 }
 
                 if (snippet != null) {
-                    conversation.snippet = snippet;
+                    conversation.setSnippet(snippet);
                 }
 
                 if (intent.hasExtra(EXTRA_READ)) {
-                    conversation.read = read;
+                    conversation.setRead(read);
                 }
 
                 conversations.add(pinnedCount, conversation);
@@ -150,7 +150,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
             // conversations exist. if they do, then insert today in the second slot, if not then
             // insert it into the first slot.
 
-            SectionType type = new SectionType(SectionType.TODAY, 1);
+            SectionType type = new SectionType(SectionType.Companion.getTODAY(), 1);
             if (pinnedCount == 0) {
                 sectionTypes.add(0, type);
                 adapter.notifyItemRangeInserted(0, 2);
@@ -162,10 +162,10 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
             }
         } else {
             if (pinnedCount == 0) {
-                sectionTypes.get(0).count++;
+                sectionTypes.get(0).setCount(sectionTypes.get(0).getCount() + 1);
                 adapter.notifyItemInserted(1);
             } else {
-                sectionTypes.get(1).count++;
+                sectionTypes.get(1).setCount(sectionTypes.get(1).getCount() + 1);
 
                 // add 2 here for the pinned header and today header
                 adapter.notifyItemInserted(pinnedCount + 2);
@@ -186,7 +186,7 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
             if (snippet == null) {
                 Conversation conversation = DataSource.INSTANCE.getConversation(context, conversationId);
                 if (conversation != null) {
-                    snippet = conversation.snippet;
+                    snippet = conversation.getSnippet();
                 }
             }
         } catch (Exception e) {
@@ -216,8 +216,8 @@ public class ConversationListUpdatedReceiver extends BroadcastReceiver {
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
     public static void sendBroadcast(Context context, ConversationUpdateInfo updateInfo) {
-        sendBroadcast(context, updateInfo.conversationId, updateInfo.snippet, updateInfo.read);
-        Log.v("conversation_broadcast", "broadcasting new update info: " + updateInfo.snippet);
+        sendBroadcast(context, updateInfo.getConversationId(), updateInfo.getSnippet(), updateInfo.getRead());
+        Log.v("conversation_broadcast", "broadcasting new update info: " + updateInfo.getSnippet());
     }
 
     /**

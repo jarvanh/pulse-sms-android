@@ -62,7 +62,7 @@ public class DashclockExtension extends DashClockExtension {
 
     private String getExpandedStatus(List<Conversation> conversations) {
         if (conversations.size() == 1) {
-            return conversations.get(0).title;
+            return conversations.get(0).getTitle();
         } else {
             return getResources().getQuantityString(R.plurals.new_conversations,
                     conversations.size(), conversations.size());
@@ -71,11 +71,11 @@ public class DashclockExtension extends DashClockExtension {
 
     private String getBody(List<Conversation> conversations) {
         if (conversations.size() == 1) {
-            return conversations.get(0).snippet;
+            return conversations.get(0).getSnippet();
         } else if (conversations.size() > 1) {
-            StringBuilder builder = new StringBuilder(conversations.get(0).title);
+            StringBuilder builder = new StringBuilder(conversations.get(0).getTitle());
             for (int i = 1; i < conversations.size(); i++) {
-                builder.append(", ").append(conversations.get(i).title);
+                builder.append(", ").append(conversations.get(i).getTitle());
             }
             return builder.toString();
         } else {
@@ -87,7 +87,7 @@ public class DashclockExtension extends DashClockExtension {
         final Intent intent = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
 
         if (conversations.size() == 1) {
-            intent.setData(Uri.parse("https://messenger.klinkerapps.com/" + conversations.get(0).id));
+            intent.setData(Uri.parse("https://messenger.klinkerapps.com/" + conversations.get(0).getId()));
         }
 
         return intent;

@@ -45,18 +45,18 @@ public class MediaGridAdapter extends RecyclerView.Adapter<ImageViewHolder> {
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        Uri image = Uri.parse(mediaMessages.get(position).data);
-        holder.image.setOnClickListener(view -> {
+        Uri image = Uri.parse(mediaMessages.get(position).getData());
+        holder.getImage().setOnClickListener(view -> {
             if (callback != null) {
                 callback.onSelected(mediaMessages, holder.getAdapterPosition());
             }
         });
 
-        holder.image.setBackgroundColor(Color.TRANSPARENT);
-        Glide.with(holder.image.getContext())
+        holder.getImage().setBackgroundColor(Color.TRANSPARENT);
+        Glide.with(holder.getImage().getContext())
                 .load(image)
                 .apply(new RequestOptions().centerCrop())
-                .into(holder.image);
+                .into(holder.getImage());
     }
 
     @Override

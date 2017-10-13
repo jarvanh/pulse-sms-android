@@ -34,14 +34,14 @@ public class BlacklistFillTest extends MessengerRobolectricSuite {
         cursor.moveToFirst();
         blacklist.fillFromCursor(cursor);
 
-        assertEquals(1, blacklist.id);
-        assertEquals("5154224558", blacklist.phoneNumber);
+        assertEquals(1, blacklist.getId());
+        assertEquals("5154224558", blacklist.getPhoneNumber());
     }
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Blacklist.COLUMN_ID,
-                Blacklist.COLUMN_PHONE_NUMBER,
+                Blacklist.Companion.getCOLUMN_ID(),
+                Blacklist.Companion.getCOLUMN_PHONE_NUMBER(),
         });
 
         cursor.addRow(new Object[]{

@@ -65,7 +65,7 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
     private void loadConversation() {
         DataSource source = getDataSource();
         conversation = source.getConversation(getActivity(), getArguments().getLong(ARG_CONVERSATION_ID));
-        messages = source.getMediaMessages(getActivity(), conversation.id);
+        messages = source.getMediaMessages(getActivity(), conversation.getId());
     }
 
     @VisibleForTesting
@@ -74,18 +74,18 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
     }
 
     private void setUpToolbar() {
-        getActivity().setTitle(conversation.title);
+        getActivity().setTitle(conversation.getTitle());
 
         Settings settings = Settings.get(getActivity());
         Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
 
         if (toolbar != null) {
             if (settings.useGlobalThemeColor) {
-                toolbar.setBackgroundColor(settings.mainColorSet.color);
-                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.colorDark);
+                toolbar.setBackgroundColor(settings.mainColorSet.getColor());
+                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.getColorDark());
             } else {
-                toolbar.setBackgroundColor(conversation.colors.color);
-                ActivityUtils.setStatusBarColor(getActivity(), conversation.colors.colorDark);
+                toolbar.setBackgroundColor(conversation.getColors().getColor());
+                ActivityUtils.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
             }
         }
     }
@@ -95,7 +95,7 @@ public class MediaGridFragment extends Fragment implements MediaSelectedListener
     public void onSelected(List<Message> messageList, int selectedPosition) {
         Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
         intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, getArguments().getLong(ARG_CONVERSATION_ID));
-        intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageList.get(selectedPosition).id);
+        intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageList.get(selectedPosition).getId());
         startActivity(intent);
     }
 }

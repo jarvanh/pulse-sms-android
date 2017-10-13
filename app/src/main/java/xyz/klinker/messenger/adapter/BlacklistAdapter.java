@@ -64,8 +64,8 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistViewHolder> 
 
     @Override
     public void onBindViewHolder(BlacklistViewHolder holder, int position) {
-        String number = getItem(position).phoneNumber;
-        holder.text.setText(PhoneNumberUtils.format(number));
+        String number = getItem(position).getPhoneNumber();
+        holder.getText().setText(PhoneNumberUtils.format(number));
     }
 
     @Override

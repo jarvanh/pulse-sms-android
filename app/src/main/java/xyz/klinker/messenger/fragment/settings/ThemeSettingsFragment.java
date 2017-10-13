@@ -94,9 +94,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         preference.setOnPreferenceChangeListener((preference1, o) -> {
             Settings settings = Settings.get(getActivity());
 
-            ColorUtils.animateToolbarColor(getActivity(), settings.mainColorSet.color, (int) o);
+            ColorUtils.animateToolbarColor(getActivity(), settings.mainColorSet.getColor(), (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
-            settings.mainColorSet.color = (int) o;
+            settings.mainColorSet.setColor((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
@@ -104,16 +104,16 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         });
 
         preference.setColorSelectedListener(colors -> {
-            darkColorPreference.setColor(colors.colorDark);
-            accentColorPreference.setColor(colors.colorAccent);
+            darkColorPreference.setColor(colors.getColorDark());
+            accentColorPreference.setColor(colors.getColorAccent());
         });
 
         darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
             Settings settings = Settings.get(getActivity());
 
-            ColorUtils.animateStatusBarColor(getActivity(), settings.mainColorSet.colorDark, (int) o);
+            ColorUtils.animateStatusBarColor(getActivity(), settings.mainColorSet.getColorDark(), (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
-            settings.mainColorSet.colorDark = (int) o;
+            settings.mainColorSet.setColorDark((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryDarkThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
@@ -124,7 +124,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             Settings settings = Settings.get(getActivity());
 
             settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
-            settings.mainColorSet.colorAccent = (int) o;
+            settings.mainColorSet.setColorAccent((int) o);
 
             ApiUtils.INSTANCE.updateAccentThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 

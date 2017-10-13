@@ -96,7 +96,7 @@ public class NewMessagesCheckService extends IntentService {
                 int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
                 long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
 
-                if (messageType != Message.TYPE_RECEIVED) {
+                if (messageType != Message.Companion.getTYPE_RECEIVED()) {
                     // sent message don't show a signature in the app, but they would be written to the internal database with one
                     // received messages don't need to worry about this, and shouldn't. If you send yourself a message, then it would come
                     // in with a signature, if this was applied to received messages, then that received message would get duplicated
@@ -109,16 +109,16 @@ public class NewMessagesCheckService extends IntentService {
                     if (!alreadyInDatabase(pulseMessages, messageBody, messageType)) {
                         Message message = new Message();
 
-                        message.type = messageType;
-                        message.data = messageBody;
-                        message.timestamp = messageTimestamp;
-                        message.mimeType = MimeType.TEXT_PLAIN;
-                        message.read = true;
-                        message.seen = true;
-                        if (messageType != Message.TYPE_RECEIVED) {
-                            message.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+                        message.setType(messageType);
+                        message.setData(messageBody);
+                        message.setTimestamp(messageTimestamp);
+                        message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+                        message.setRead(true);
+                        message.setSeen(true);
+                        if (messageType != Message.Companion.getTYPE_RECEIVED()) {
+                            message.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
                         } else {
-                            message.sentDeviceId = -1L;
+                            message.setSentDeviceId(-1L);
                         }
 
                         messagesToInsert.add(message);
@@ -127,7 +127,7 @@ public class NewMessagesCheckService extends IntentService {
                     } else {
                         Message message = messageStatusNeedsUpdatedToSent(pulseMessages, messageBody, messageType);
                         if (message !=  null) {
-                            DataSource.INSTANCE.updateMessageType(this, message.id, Message.TYPE_SENT);
+                            DataSource.INSTANCE.updateMessageType(this, message.getId(), Message.Companion.getTYPE_SENT());
                         }
                     }
                 }
@@ -173,8 +173,8 @@ public class NewMessagesCheckService extends IntentService {
 
     private boolean alreadyInDatabase(List<Message> messages, String bodyToSearch, int newMessageType) {
         for (Message message : messages) {
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN) && (typesAreEqual(newMessageType, message.type)) &&
-                    bodyToSearch.trim().contains(message.data.trim())) {
+            if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) && (typesAreEqual(newMessageType, message.getType())) &&
+                    bodyToSearch.trim().contains(message.getData().trim())) {
                 return true;
             }
         }
@@ -183,13 +183,13 @@ public class NewMessagesCheckService extends IntentService {
     }
 
     private Message messageStatusNeedsUpdatedToSent(List<Message> messages, String bodyToSearch, int newMessageType) {
-        if (newMessageType != Message.TYPE_SENT) {
+        if (newMessageType != Message.Companion.getTYPE_SENT()) {
             return null;
         }
 
         for (Message message : messages) {
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN) &&  message.type == Message.TYPE_SENDING &&
-                    message.data.trim().equals(bodyToSearch.trim())) {
+            if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) &&  message.getType() == Message.Companion.getTYPE_SENDING() &&
+                    message.getData().trim().equals(bodyToSearch.trim())) {
                 return message;
             }
         }
@@ -199,12 +199,12 @@ public class NewMessagesCheckService extends IntentService {
 
     @VisibleForTesting
     public static boolean typesAreEqual(int newMessageType, int oldMessageType) {
-        if (newMessageType == Message.TYPE_ERROR) {
-            return oldMessageType == Message.TYPE_ERROR;
-        } else if (newMessageType == Message.TYPE_RECEIVED) {
-            return oldMessageType == Message.TYPE_RECEIVED;
+        if (newMessageType == Message.Companion.getTYPE_ERROR()) {
+            return oldMessageType == Message.Companion.getTYPE_ERROR();
+        } else if (newMessageType == Message.Companion.getTYPE_RECEIVED()) {
+            return oldMessageType == Message.Companion.getTYPE_RECEIVED();
         } else {
-            return oldMessageType != Message.TYPE_RECEIVED;
+            return oldMessageType != Message.Companion.getTYPE_RECEIVED();
         }
     }
 }

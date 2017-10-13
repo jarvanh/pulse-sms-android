@@ -45,10 +45,10 @@ public class AudioWrapper {
                 if (channel != null) {
                     tone = channel.getSound();
                 } else {
-                    tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+                    tone = NotificationService.getRingtone(context, conversation.getRingtoneUri());
                 }
             } else {
-                tone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+                tone = NotificationService.getRingtone(context, conversation.getRingtoneUri());
             }
 
             if (tone != null) {

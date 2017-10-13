@@ -123,11 +123,11 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Message message) {
         dismissKeyboard();
 
-        DataSource.INSTANCE.archiveConversation(activity, message.conversationId, false);
+        DataSource.INSTANCE.archiveConversation(activity, message.getConversationId(), false);
 
         Intent intent = new Intent(activity, MessengerActivity.class);
-        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), message.conversationId);
-        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_MESSAGE_ID(), message.id);
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), message.getConversationId());
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_MESSAGE_ID(), message.getId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
@@ -136,12 +136,12 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onSearchSelected(Conversation conversation) {
         dismissKeyboard();
 
-        if (conversation.archive) {
-            DataSource.INSTANCE.archiveConversation(activity, conversation.id, false);
+        if (conversation.getArchive()) {
+            DataSource.INSTANCE.archiveConversation(activity, conversation.getId(), false);
         }
 
         Intent intent = new Intent(activity, MessengerActivity.class);
-        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.id);
+        intent.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.getId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }

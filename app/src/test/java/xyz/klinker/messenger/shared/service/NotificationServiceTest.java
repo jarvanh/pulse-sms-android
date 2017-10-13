@@ -84,16 +84,16 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         List<NotificationConversation> conversations = NotificationService.getUnseenConversations(service, source);
 
         assertEquals(3, conversations.size());
-        assertEquals("Luke Klinker", conversations.get(2).title);
-        assertEquals(3, conversations.get(2).messages.size());
-        assertEquals("Hey what's up?", conversations.get(2).messages.get(0).data);
-        assertEquals("Yo, you around?", conversations.get(2).messages.get(1).data);
-        assertEquals("Hello?", conversations.get(2).messages.get(2).data);
-        assertEquals("Aaron Klinker", conversations.get(1).title);
-        assertEquals(1, conversations.get(1).messages.size());
-        assertEquals("Can we hang out tonight?", conversations.get(1).messages.get(0).data);
-        assertEquals(1, conversations.get(0).messages.size());
-        assertEquals("image/jpg", conversations.get(0).messages.get(0).mimeType);
+        assertEquals("Luke Klinker", conversations.get(2).getTitle());
+        assertEquals(3, conversations.get(2).getMessages().size());
+        assertEquals("Hey what's up?", conversations.get(2).getMessages().get(0).getData());
+        assertEquals("Yo, you around?", conversations.get(2).getMessages().get(1).getData());
+        assertEquals("Hello?", conversations.get(2).getMessages().get(2).getData());
+        assertEquals("Aaron Klinker", conversations.get(1).getTitle());
+        assertEquals(1, conversations.get(1).getMessages().size());
+        assertEquals("Can we hang out tonight?", conversations.get(1).getMessages().get(0).getData());
+        assertEquals(1, conversations.get(0).getMessages().size());
+        assertEquals("image/jpg", conversations.get(0).getMessages().get(0).getMimeType());
     }
 
     @Test
@@ -128,12 +128,12 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     private Cursor getUnseenCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Message.COLUMN_ID,
-                Message.COLUMN_CONVERSATION_ID,
-                Message.COLUMN_DATA,
-                Message.COLUMN_MIME_TYPE,
-                Message.COLUMN_TIMESTAMP,
-                Message.COLUMN_FROM
+                Message.Companion.getCOLUMN_ID(),
+                Message.Companion.getCOLUMN_CONVERSATION_ID(),
+                Message.Companion.getCOLUMN_DATA(),
+                Message.Companion.getCOLUMN_MIME_TYPE(),
+                Message.Companion.getCOLUMN_TIMESTAMP(),
+                Message.Companion.getCOLUMN_FROM()
         });
 
         cursor.addRow(new Object[]{
@@ -186,25 +186,25 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     private Conversation getConversation1() {
         Conversation conversation = new Conversation();
-        conversation.title = "Luke Klinker";
-        conversation.phoneNumbers = "test";
-        conversation.timestamp = 1;
+        conversation.setTitle("Luke Klinker");
+        conversation.setPhoneNumbers("test");
+        conversation.setTimestamp(1);
         return conversation;
     }
 
     private Conversation getConversation2() {
         Conversation conversation = new Conversation();
-        conversation.title = "Aaron Klinker";
-        conversation.phoneNumbers = "test";
-        conversation.timestamp = 2;
+        conversation.setTitle("Aaron Klinker");
+        conversation.setPhoneNumbers("test");
+        conversation.setTimestamp(2);
         return conversation;
     }
 
     private Conversation getConversation3() {
         Conversation conversation = new Conversation();
-        conversation.title = "Andrew Klinker";
-        conversation.phoneNumbers = "test";
-        conversation.timestamp = 3;
+        conversation.setTitle("Andrew Klinker");
+        conversation.setPhoneNumbers("test");
+        conversation.setTimestamp(3);
         return conversation;
     }
 

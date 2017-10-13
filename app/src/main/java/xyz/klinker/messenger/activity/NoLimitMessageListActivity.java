@@ -40,8 +40,8 @@ public class NoLimitMessageListActivity extends AppCompatActivity {
                 .replace(R.id.message_list_container, MessageListFragment.newInstance(conversation, -1, false))
                 .commit();
 
-        ActivityUtils.setStatusBarColor(this, conversation.colors.colorDark);
-        ActivityUtils.setTaskDescription(this, conversation.title, conversation.colors.color);
+        ActivityUtils.setStatusBarColor(this, conversation.getColors().getColorDark());
+        ActivityUtils.setTaskDescription(this, conversation.getTitle(), conversation.getColors().getColor());
     }
 
 }

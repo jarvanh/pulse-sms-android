@@ -120,10 +120,10 @@ public class ImageUtils {
      * @param context      the current context.
      */
     public static void fillConversationColors(Conversation conversation, Context context) {
-        if (conversation.imageUri == null) {
-            conversation.colors = ColorUtils.getRandomMaterialColor(context);
+        if (conversation.getImageUri() == null) {
+            conversation.setColors(ColorUtils.getRandomMaterialColor(context));
         } else {
-            Bitmap bitmap = ImageUtils.getContactImage(conversation.imageUri, context);
+            Bitmap bitmap = ImageUtils.getContactImage(conversation.getImageUri(), context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
 
             if (bitmap != null) {
@@ -131,14 +131,14 @@ public class ImageUtils {
             }
 
             if (colors != null) {
-                conversation.colors = colors;
-                conversation.imageUri = Uri
-                        .withAppendedPath(Uri.parse(conversation.imageUri),
+                conversation.setColors(colors);
+                conversation.setImageUri(Uri
+                        .withAppendedPath(Uri.parse(conversation.getImageUri()),
                                 ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
-                        .toString();
+                        .toString());
             } else {
-                conversation.colors = ColorUtils.getRandomMaterialColor(context);
-                conversation.imageUri = null;
+                conversation.setColors(ColorUtils.getRandomMaterialColor(context));
+                conversation.setImageUri(null);
             }
         }
     }
@@ -151,7 +151,7 @@ public class ImageUtils {
      */
     public static void fillContactColors(Contact contact, String imageUri, Context context) {
         if (imageUri == null) {
-            contact.colors = ColorUtils.getRandomMaterialColor(context);
+            contact.setColors(ColorUtils.getRandomMaterialColor(context));
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(imageUri, context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
@@ -161,9 +161,9 @@ public class ImageUtils {
             }
 
             if (colors != null) {
-                contact.colors = colors;
+                contact.setColors(colors);
             } else {
-                contact.colors = ColorUtils.getRandomMaterialColor(context);
+                contact.setColors(ColorUtils.getRandomMaterialColor(context));
             }
         }
     }
@@ -243,7 +243,7 @@ public class ImageUtils {
 
             String fileName = "image-" + new Date().getTime();
 
-            if (mimeType.equals(MimeType.IMAGE_PNG)) {
+            if (mimeType.equals(MimeType.INSTANCE.getIMAGE_PNG())) {
                 fileName += ".png";
             } else {
                 fileName += ".jpg";
@@ -324,7 +324,7 @@ public class ImageUtils {
             }
 
             out = new FileOutputStream(file);
-            bitmap.compress(mimeType.equals(MimeType.IMAGE_PNG) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
+            bitmap.compress(mimeType.equals(MimeType.INSTANCE.getIMAGE_PNG()) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
                     75, out);
         } catch (IOException e) {
             Log.e("Scale to Send", "failed to write output stream", e);

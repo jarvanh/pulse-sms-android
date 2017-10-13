@@ -32,7 +32,7 @@ public class CreateNotificationChannelService extends IntentService {
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .build();

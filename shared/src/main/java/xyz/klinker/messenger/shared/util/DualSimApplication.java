@@ -38,9 +38,9 @@ public class DualSimApplication {
                 final Conversation conversation = DataSource.INSTANCE.getConversation(context, conversationId);
 
                 boolean set = false;
-                if (conversation != null && conversation.simSubscriptionId != null) {
+                if (conversation != null && conversation.getSimSubscriptionId() != null) {
                     for (int i = 0; i < subscriptions.size(); i++) {
-                        if (subscriptions.get(i).getSubscriptionId() == conversation.simSubscriptionId) {
+                        if (subscriptions.get(i).getSubscriptionId() == conversation.getSimSubscriptionId()) {
                             set = true;
                             badger.setText(String.valueOf(subscriptions.get(i).getSimSlotIndex() + 1));
                         }
@@ -71,8 +71,8 @@ public class DualSimApplication {
             SubscriptionInfo info = subscriptions.get(i);
 
             active[i + 1] = formatSimString(info);
-            if (conversation.simSubscriptionId != null &&
-                    info.getSubscriptionId() == conversation.simSubscriptionId) {
+            if (conversation.getSimSubscriptionId() != null &&
+                    info.getSubscriptionId() == conversation.getSimSubscriptionId()) {
                 selected = i + 1;
             }
         }
@@ -81,11 +81,10 @@ public class DualSimApplication {
                 .setTitle(context.getString(R.string.select_sim))
                 .setSingleChoiceItems(active, selected, (dialogInterface, i) -> {
                     if (i == 0) {
-                        conversation.simSubscriptionId = -1;
+                        conversation.setSimSubscriptionId(-1);
                         badger.setText("1");
                     } else {
-                        conversation.simSubscriptionId =
-                                subscriptions.get(i - 1).getSubscriptionId();
+                        conversation.setSimSubscriptionId(subscriptions.get(i - 1).getSubscriptionId());
                         badger.setText(String.valueOf(i));
                     }
 

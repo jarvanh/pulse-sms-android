@@ -66,7 +66,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
         }
 
         if (conversationId == fragment.getConversationId()) {
-            if (messageType == Message.TYPE_RECEIVED) {
+            if (messageType == Message.Companion.getTYPE_RECEIVED()) {
                 fragment.setShouldPullDrafts(false);
                 fragment.loadMessages(true);
             } else {
@@ -75,7 +75,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
             fragment.setDismissOnStartup();
 
-            if (Settings.get(context).soundEffects && messageType == Message.TYPE_RECEIVED &&
+            if (Settings.get(context).soundEffects && messageType == Message.Companion.getTYPE_RECEIVED() &&
                     NotificationService.CONVERSATION_ID_OPEN == conversationId) {
                 new Thread(() -> {
                     try {
@@ -88,7 +88,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
             }
 
             if (newMessageText != null) {
-                if (messageType == Message.TYPE_SENDING || messageType == Message.TYPE_SENT) {
+                if (messageType == Message.Companion.getTYPE_SENDING() || messageType == Message.Companion.getTYPE_SENT()) {
                     fragment.setConversationUpdateInfo(context.getString(R.string.you) + ": " + newMessageText);
                 } else {
                     fragment.setConversationUpdateInfo(newMessageText);
@@ -101,17 +101,17 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
     public static void sendBroadcast(Context context, long conversationId) {
-        sendBroadcast(context, conversationId, null, Message.TYPE_SENT);
+        sendBroadcast(context, conversationId, null, Message.Companion.getTYPE_SENT());
     }
 
     /**
      * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
      */
     public static void sendBroadcast(Context context, Message message) {
-        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            sendBroadcast(context, message.conversationId, message.data, message.type);
+        if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+            sendBroadcast(context, message.getConversationId(), message.getData(), message.getType());
         } else {
-            sendBroadcast(context, message.conversationId);
+            sendBroadcast(context, message.getConversationId());
         }
     }
 

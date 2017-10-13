@@ -120,7 +120,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         }
 
         Link highlight = new Link(pattern)
-                .setTextColor(ColorSet.DEFAULT(holder.itemView.getContext()).colorAccent)
+                .setTextColor(ColorSet.Companion.DEFAULT(holder.itemView.getContext()).getColorAccent())
                 .setHighlightAlpha(0.4f)
                 .setUnderlined(false)
                 .setBold(true);
@@ -129,17 +129,17 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             final Conversation conversation = conversations.get(relativePosition);
 
             ConversationViewHolder h = (ConversationViewHolder) holder;
-            h.name.setText(conversation.title);
-            h.summary.setText(conversation.snippet);
+            h.name.setText(conversation.getTitle());
+            h.summary.setText(conversation.getSnippet());
 
             LinkBuilder.on(h.name)
                     .addLink(highlight)
                     .build();
 
-            if (conversation.imageUri == null) {
-                h.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+            if (conversation.getImageUri() == null) {
+                h.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
                 if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                    h.imageLetter.setText(conversation.title.substring(0, 1));
+                    h.imageLetter.setText(conversation.getTitle().substring(0, 1));
                     h.groupIcon.setVisibility(View.GONE);
                 } else {
                     h.groupIcon.setVisibility(View.VISIBLE);
@@ -148,7 +148,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             } else {
                 h.imageLetter.setText(null);
                 Glide.with(h.image.getContext())
-                        .load(Uri.parse(conversation.imageUri))
+                        .load(Uri.parse(conversation.getImageUri()))
                         .into(h.image);
             }
 
@@ -169,17 +169,17 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             final Message message = messages.get(relativePosition);
 
             MessageViewHolder h = (MessageViewHolder) holder;
-            h.messageId = message.id;
-            h.message.setText(message.data);
+            h.messageId = message.getId();
+            h.message.setText(message.getData());
 
-            String timestamp = TimeUtils.formatTimestamp(h.timestamp.getContext(), message.timestamp);
-            if (message.from != null && !message.from.isEmpty()) {
+            String timestamp = TimeUtils.formatTimestamp(h.timestamp.getContext(), message.getTimestamp());
+            if (message.getFrom() != null && !message.getFrom().isEmpty()) {
                 //noinspection AndroidLintSetTextI18n
-                h.timestamp.setText(timestamp + " - " + message.from +
-                        " (" + message.nullableConvoTitle + ")");
+                h.timestamp.setText(timestamp + " - " + message.getFrom() +
+                        " (" + message.getNullableConvoTitle() + ")");
             } else {
                 //noinspection AndroidLintSetTextI18n
-                h.timestamp.setText(timestamp + " - " + message.nullableConvoTitle);
+                h.timestamp.setText(timestamp + " - " + message.getNullableConvoTitle());
             }
 
             h.timestamp.setSingleLine(true);
@@ -232,19 +232,19 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             Settings settings = Settings.get(parent.getContext());
 
-            if (viewType == Message.TYPE_RECEIVED) {
+            if (viewType == Message.Companion.getTYPE_RECEIVED()) {
                 layoutId = settings.rounderBubbles ? R.layout.message_received_round : R.layout.message_received;
-                color = ColorSet.DEFAULT(parent.getContext()).color;
+                color = ColorSet.Companion.DEFAULT(parent.getContext()).getColor();
             } else {
                 color = -1;
 
-                if (viewType == Message.TYPE_SENDING) {
+                if (viewType == Message.Companion.getTYPE_SENDING()) {
                     layoutId = settings.rounderBubbles ? R.layout.message_sending_round : R.layout.message_sending;
-                } else if (viewType == Message.TYPE_ERROR) {
+                } else if (viewType == Message.Companion.getTYPE_ERROR()) {
                     layoutId = settings.rounderBubbles ? R.layout.message_error_round : R.layout.message_error;
-                } else if (viewType == Message.TYPE_DELIVERED) {
+                } else if (viewType == Message.Companion.getTYPE_DELIVERED()) {
                     layoutId = settings.rounderBubbles ? R.layout.message_delivered_round : R.layout.message_delivered;
-                } else if (viewType == Message.TYPE_INFO) {
+                } else if (viewType == Message.Companion.getTYPE_INFO()) {
                     layoutId = R.layout.message_info;
                 } else {
                     layoutId = settings.rounderBubbles ? R.layout.message_sent_round : R.layout.message_sent;
@@ -274,7 +274,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             //noinspection ResourceType
             return VIEW_TYPE_CONVERSATION;
         } else {
-            return messages.get(relativePosition).type;
+            return messages.get(relativePosition).getType();
         }
     }
 

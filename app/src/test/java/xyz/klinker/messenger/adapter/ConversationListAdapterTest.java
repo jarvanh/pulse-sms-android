@@ -97,18 +97,18 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     public void sectionCounts() {
         List<SectionType> sectionCounts = adapter.getSections();
 
-        assertEquals(SectionType.PINNED, sectionCounts.get(0).type);
-        assertEquals(2, sectionCounts.get(0).count);
-        assertEquals(SectionType.TODAY, sectionCounts.get(1).type);
-        assertEquals(1, sectionCounts.get(1).count);
-        assertEquals(SectionType.YESTERDAY, sectionCounts.get(2).type);
-        assertEquals(2, sectionCounts.get(2).count);
-        assertEquals(SectionType.LAST_WEEK, sectionCounts.get(3).type);
-        assertEquals(2, sectionCounts.get(3).count);
-        assertEquals(SectionType.LAST_MONTH, sectionCounts.get(4).type);
-        assertEquals(1, sectionCounts.get(4).count);
-        assertEquals(SectionType.OLDER, sectionCounts.get(5).type);
-        assertEquals(1, sectionCounts.get(5).count);
+        assertEquals(SectionType.Companion.getPINNED(), sectionCounts.get(0).getType());
+        assertEquals(2, sectionCounts.get(0).getCount());
+        assertEquals(SectionType.Companion.getTODAY(), sectionCounts.get(1).getType());
+        assertEquals(1, sectionCounts.get(1).getCount());
+        assertEquals(SectionType.Companion.getYESTERDAY(), sectionCounts.get(2).getType());
+        assertEquals(2, sectionCounts.get(2).getCount());
+        assertEquals(SectionType.Companion.getLAST_WEEK(), sectionCounts.get(3).getType());
+        assertEquals(2, sectionCounts.get(3).getCount());
+        assertEquals(SectionType.Companion.getLAST_MONTH(), sectionCounts.get(4).getType());
+        assertEquals(1, sectionCounts.get(4).getCount());
+        assertEquals(SectionType.Companion.getOLDER(), sectionCounts.get(5).getType());
+        assertEquals(1, sectionCounts.get(5).getCount());
     }
 
     @Test
@@ -326,19 +326,19 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     private List<Conversation> getFakeConversations(Context context) {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Conversation.COLUMN_ID,
-                Conversation.COLUMN_COLOR,
-                Conversation.COLUMN_COLOR_DARK,
-                Conversation.COLUMN_COLOR_LIGHT,
-                Conversation.COLUMN_COLOR_ACCENT,
-                Conversation.COLUMN_PINNED,
-                Conversation.COLUMN_READ,
-                Conversation.COLUMN_TIMESTAMP,
-                Conversation.COLUMN_TITLE,
-                Conversation.COLUMN_PHONE_NUMBERS,
-                Conversation.COLUMN_SNIPPET,
-                Conversation.COLUMN_RINGTONE,
-                Conversation.COLUMN_MUTE
+                Conversation.Companion.getCOLUMN_ID(),
+                Conversation.Companion.getCOLUMN_COLOR(),
+                Conversation.Companion.getCOLUMN_COLOR_DARK(),
+                Conversation.Companion.getCOLUMN_COLOR_LIGHT(),
+                Conversation.Companion.getCOLUMN_COLOR_ACCENT(),
+                Conversation.Companion.getCOLUMN_PINNED(),
+                Conversation.Companion.getCOLUMN_READ(),
+                Conversation.Companion.getCOLUMN_TIMESTAMP(),
+                Conversation.Companion.getCOLUMN_TITLE(),
+                Conversation.Companion.getCOLUMN_PHONE_NUMBERS(),
+                Conversation.Companion.getCOLUMN_SNIPPET(),
+                Conversation.Companion.getCOLUMN_RINGTONE(),
+                Conversation.Companion.getCOLUMN_MUTE()
         });
 
         cursor.addRow(new Object[]{

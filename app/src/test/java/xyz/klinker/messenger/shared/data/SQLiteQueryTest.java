@@ -78,8 +78,8 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertContact() {
         Contact contact = new Contact();
-        contact.name = "Aaron K";
-        contact.phoneNumber = "5155725868";
+        contact.setName("Aaron K");
+        contact.setPhoneNumber("5155725868");
 
         int initialSize = source.getContacts(context).getCount();
         source.insertContact(context, contact, false);
@@ -107,7 +107,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                names.add(cursor.getString(cursor.getColumnIndex(Contact.COLUMN_NAME)));
+                names.add(cursor.getString(cursor.getColumnIndex(Contact.Companion.getCOLUMN_NAME())));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -137,7 +137,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContacts(context, "5159911493");
 
         assertEquals(1, contacts.size());
-        assertEquals("Luke K", contacts.get(0).name);
+        assertEquals("Luke K", contacts.get(0).getName());
     }
 
     @Test
@@ -145,8 +145,8 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContacts(context, "5159911493, 5154224558");
 
         assertEquals(2, contacts.size());
-        assertEquals("Jake K", contacts.get(0).name);
-        assertEquals("Luke K", contacts.get(1).name);
+        assertEquals("Jake K", contacts.get(0).getName());
+        assertEquals("Luke K", contacts.get(1).getName());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContactsByNames(context, "Luke K");
 
         assertEquals(1, contacts.size());
-        assertEquals("5159911493", contacts.get(0).phoneNumber);
+        assertEquals("5159911493", contacts.get(0).getPhoneNumber());
     }
 
     @Test
@@ -174,26 +174,26 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         List<Contact> contacts = source.getContactsByNames(context, "Luke K, Jake K");
 
         assertEquals(2, contacts.size());
-        assertEquals("5154224558", contacts.get(0).phoneNumber);
-        assertEquals("5159911493", contacts.get(1).phoneNumber);
+        assertEquals("5154224558", contacts.get(0).getPhoneNumber());
+        assertEquals("5159911493", contacts.get(1).getPhoneNumber());
     }
 
     @Test
     public void getContact() {
         Contact contact = source.getContact(context, "5159911493");
-        assertEquals("Luke K", contact.name);
+        assertEquals("Luke K", contact.getName());
     }
 
     @Test
     public void updateContact() {
         source.updateContact(context, "5159911493", "Lucas Klinker", 2, 3, 4, 5, false);
         Contact contact = source.getContact(context, "5159911493");
-        assertEquals("5159911493", contact.phoneNumber);
-        assertEquals("Lucas Klinker", contact.name);
-        assertEquals(2, contact.colors.color);
-        assertEquals(3, contact.colors.colorDark);
-        assertEquals(4, contact.colors.colorLight);
-        assertEquals(5, contact.colors.colorAccent);
+        assertEquals("5159911493", contact.getPhoneNumber());
+        assertEquals("Lucas Klinker", contact.getName());
+        assertEquals(2, contact.getColors().color);
+        assertEquals(3, contact.getColors().colorDark);
+        assertEquals(4, contact.getColors().colorLight);
+        assertEquals(5, contact.getColors().colorAccent);
     }
 
     @Test
@@ -245,18 +245,18 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertConversation() {
         Conversation conversation = new Conversation();
-        conversation.pinned = false;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis();
-        conversation.snippet = "test conversation";
-        conversation.ringtoneUri = null;
-        conversation.phoneNumbers = "5154224558";
-        conversation.title = "test";
-        conversation.imageUri = null;
-        conversation.idMatcher = "24558";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis());
+        conversation.setSnippet("test conversation");
+        conversation.setRingtoneUri(null);
+        conversation.setPhoneNumbers("5154224558");
+        conversation.setTitle("test");
+        conversation.setImageUri(null);
+        conversation.setIdMatcher("24558");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
 
         int initialSize = source.getUnarchivedConversations(context).getCount();
         source.insertConversation(context, conversation, false);
@@ -272,7 +272,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.Companion.getCOLUMN_TITLE())));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -290,7 +290,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.Companion.getCOLUMN_TITLE())));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -342,7 +342,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void getConversation() {
         Conversation conversation = source.getConversation(context, 1L);
-        assertEquals("Luke Klinker", conversation.title);
+        assertEquals("Luke Klinker", conversation.getTitle());
     }
 
     @Test
@@ -377,34 +377,34 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     public void archiveConversation() {
         source.archiveConversation(context, 1, true, false);
         Conversation conversation = source.getConversation(context, 1);
-        assertEquals(true, conversation.archive);
+        assertEquals(true, conversation.getArchive());
 
         source.archiveConversation(context, 1, false, false);
         conversation = source.getConversation(context, 1);
-        assertEquals(false, conversation.archive);
+        assertEquals(false, conversation.getArchive());
     }
 
     @Test
     public void updateConversation() {
         source.updateConversation(context, 1, false, System.currentTimeMillis(), "test updated message",
-                MimeType.TEXT_PLAIN, false, false);
+                MimeType.INSTANCE.getTEXT_PLAIN(), false, false);
         Conversation conversation = source.getConversation(context, 1);
-        assertEquals("test updated message", conversation.snippet);
+        assertEquals("test updated message", conversation.getSnippet());
     }
 
     @Test
     public void updateConversationSettings() {
         source.updateConversationTitle(context, 1, "test title", false);
         Conversation conversation = source.getConversation(context, 1);
-        assertEquals("test title", conversation.title);
+        assertEquals("test title", conversation.getTitle());
     }
 
     @Test
     public void updateConversationImage() {
         source.updateConversation(context, 1, false, System.currentTimeMillis(), "test updated message",
-                MimeType.IMAGE_PNG, false, false);
+                MimeType.INSTANCE.getIMAGE_PNG(), false, false);
         Conversation conversation = source.getConversation(context, 1);
-        assertEquals("", conversation.snippet);
+        assertEquals("", conversation.getSnippet());
     }
 
     @Test
@@ -465,16 +465,16 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateMessageType() {
-        source.updateMessageType(context, 1, Message.TYPE_SENT, false);
+        source.updateMessageType(context, 1, Message.Companion.getTYPE_SENT(), false);
         Cursor messages = source.getMessages(context, 1L);
         messages.moveToLast();
-        assertEquals(Message.TYPE_SENT, messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE)));
+        assertEquals(Message.Companion.getTYPE_SENT(), messages.getInt(messages.getColumnIndex(Message.Companion.getCOLUMN_TYPE())));
     }
 
     @Test
     public void insertSentMessage() {
         int initialMessageSize = source.getMessages(context, 1L).getCount();
-        source.insertSentMessage("1111111", "test", MimeType.TEXT_PLAIN, context, false);
+        source.insertSentMessage("1111111", "test", MimeType.INSTANCE.getTEXT_PLAIN(), context, false);
         int newMessageSize = source.getMessages(context, 1L).getCount();
 
         assertEquals(1, newMessageSize - initialMessageSize);
@@ -509,7 +509,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("1111111", conversation.phoneNumbers);
+        assertEquals("1111111", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -541,7 +541,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 3333333", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("3333333, 1111111", conversation.phoneNumbers);
+        assertEquals("3333333, 1111111", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -549,7 +549,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 3333333, ", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("3333333, 1111111", conversation.phoneNumbers);
+        assertEquals("3333333, 1111111", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -575,7 +575,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "4444444, 4444444", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("4444444", conversation.phoneNumbers);
+        assertEquals("4444444", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -610,7 +610,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("2222222, 1111111", conversation.phoneNumbers);
+        assertEquals("2222222, 1111111", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -618,7 +618,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222,", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("2222222, 1111111", conversation.phoneNumbers);
+        assertEquals("2222222, 1111111", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -632,7 +632,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Cursor conversation = source.getUnarchivedConversations(context);
         conversation.moveToFirst();
         assertEquals("You: test message", conversation
-                .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
+                .getString(conversation.getColumnIndex(Conversation.Companion.getCOLUMN_SNIPPET())));
     }
 
     @Test
@@ -660,16 +660,16 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     private Message getFakeMessage() {
         Message m = new Message();
-        m.conversationId = 2;
-        m.type = Message.TYPE_SENT;
-        m.data = "test message";
-        m.timestamp = System.currentTimeMillis();
-        m.mimeType = "text/plain";
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.sentDeviceId = 1;
+        m.setConversationId(2);
+        m.setType(Message.Companion.getTYPE_SENT());
+        m.setData("test message");
+        m.setTimestamp(System.currentTimeMillis());
+        m.setMimeType("text/plain");
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSentDeviceId(1);
         return m;
     }
 
@@ -712,10 +712,10 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertDraftObject() {
         Draft draft = new Draft();
-        draft.id = 10524;
-        draft.conversationId = 1;
-        draft.data = "test";
-        draft.mimeType = "text/plain";
+        draft.setId(10524);
+        draft.setConversationId(1);
+        draft.setData("test");
+        draft.setMimeType("text/plain");
 
         int initialSize = source.getDrafts(context, 1).size();
         long id = source.insertDraft(context, draft, false);
@@ -752,7 +752,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertBlacklist() {
         Blacklist blacklist = new Blacklist();
-        blacklist.phoneNumber = "5154224558";
+        blacklist.setPhoneNumber("5154224558");
         int initialSize = source.getBlacklists(context).getCount();
         source.insertBlacklist(context, blacklist, false);
         int finalSize = source.getBlacklists(context).getCount();
@@ -777,11 +777,11 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void insertScheduledMessage() {
         ScheduledMessage message = new ScheduledMessage();
-        message.title = "Jake Klinker";
-        message.to = "515-422-4558";
-        message.data = "hey!";
-        message.mimeType = "text/plain";
-        message.timestamp = 1;
+        message.setTitle("Jake Klinker");
+        message.setTo("515-422-4558");
+        message.setData("hey!");
+        message.setMimeType("text/plain");
+        message.setTimestamp(1);
 
         int initialSize = source.getScheduledMessages(context).getCount();
         source.insertScheduledMessage(context, message, false);

@@ -208,18 +208,18 @@ public class NotificationUtils {
     private static NotificationChannel createChannel(Context context, Conversation conversation) {
         Settings settings = Settings.get(context);
 
-        NotificationChannel channel = new NotificationChannel(conversation.id + "", conversation.title,
+        NotificationChannel channel = new NotificationChannel(conversation.getId() + "", conversation.getTitle(),
                 settings.headsUp ? NotificationManager.IMPORTANCE_HIGH : NotificationManager.IMPORTANCE_DEFAULT);
         channel.setGroup("conversations");
         channel.enableLights(true);
-        channel.setLightColor(conversation.ledColor);
+        channel.setLightColor(conversation.getLedColor());
         channel.setBypassDnd(false);
         channel.setShowBadge(true);
-        channel.setVibrationPattern(Settings.get(context).vibrate.pattern);
-        channel.setLockscreenVisibility(conversation.privateNotifications ?
+        channel.setVibrationPattern(Settings.get(context).vibrate.getPattern());
+        channel.setLockscreenVisibility(conversation.getPrivateNotifications() ?
                 Notification.VISIBILITY_PRIVATE : Notification.VISIBILITY_PUBLIC);
 
-        Uri ringtone = NotificationService.getRingtone(context, conversation.ringtoneUri);
+        Uri ringtone = NotificationService.getRingtone(context, conversation.getRingtoneUri());
         if (ringtone != null) {
             channel.setSound(ringtone, new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION).build());

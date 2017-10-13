@@ -397,7 +397,7 @@ public class  MessengerActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                         .setText(PhoneNumberUtils.format(PhoneNumberUtils.getMyPhoneNumber(this)));
 
-                if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
+                if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.getColorDark())) {
                     ((TextView) findViewById(R.id.drawer_header_my_name))
                             .setTextColor(getResources().getColor(R.color.lightToolbarTextColor));
                     ((TextView) findViewById(R.id.drawer_header_my_phone_number))
@@ -422,7 +422,7 @@ public class  MessengerActivity extends AppCompatActivity
             return;
         }
 
-        if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.colorDark)) {
+        if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.getColorDark())) {
             snooze.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }
 
@@ -485,8 +485,8 @@ public class  MessengerActivity extends AppCompatActivity
     private void configureGlobalColors() {
         final Settings settings = Settings.get(this);
 
-        toolbar.setBackgroundColor(settings.mainColorSet.color);
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
+        toolbar.setBackgroundColor(settings.mainColorSet.getColor());
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
 
         int[][] states = new int[][] {
                 new int[] {-android.R.attr.state_checked },
@@ -496,22 +496,22 @@ public class  MessengerActivity extends AppCompatActivity
         String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
         int[] iconColors = new int[] {
                 Color.parseColor("#77" + baseColor),
-                settings.mainColorSet.colorAccent
+                settings.mainColorSet.getColorAccent()
         };
 
         int[] textColors = new int[] {
                 Color.parseColor("#DD" + baseColor),
-                settings.mainColorSet.colorAccent
+                settings.mainColorSet.getColorAccent()
         };
 
         navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
         navigationView.setItemTextColor(new ColorStateList(states, textColors));
         navigationView.post(() -> {
-            ColorUtils.adjustStatusBarColor(settings.mainColorSet.colorDark, MessengerActivity.this);
+            ColorUtils.adjustStatusBarColor(settings.mainColorSet.getColorDark(), MessengerActivity.this);
 
             View header = navigationView.findViewById(R.id.header);
             if (header != null) {
-                header.setBackgroundColor(settings.mainColorSet.colorDark);
+                header.setBackgroundColor(settings.mainColorSet.getColorDark());
             }
         });
     }
@@ -886,7 +886,7 @@ public class  MessengerActivity extends AppCompatActivity
     public boolean callContact() {
         if (conversationListFragment.isExpanded()) {
             String uri = "tel:" +
-                    conversationListFragment.getExpandedItem().conversation.phoneNumbers;
+                    conversationListFragment.getExpandedItem().conversation.getPhoneNumbers();
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse(uri));
             try {
@@ -902,7 +902,7 @@ public class  MessengerActivity extends AppCompatActivity
             ArchivedConversationListFragment frag = (ArchivedConversationListFragment) otherFragment;
             if (frag.isExpanded()) {
                 String uri = "tel:" +
-                        frag.getExpandedItem().conversation.phoneNumbers;
+                        frag.getExpandedItem().conversation.getPhoneNumbers();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(uri));
                 try {
@@ -933,20 +933,20 @@ public class  MessengerActivity extends AppCompatActivity
         }
 
         if (conversation != null) {
-            String[] names = ContactUtils.findContactNames(conversation.phoneNumbers, this).split(", ");
-            String[] numbers = conversation.phoneNumbers.split(", ");
+            String[] names = ContactUtils.findContactNames(conversation.getPhoneNumbers(), this).split(", ");
+            String[] numbers = conversation.getPhoneNumbers().split(", ");
             List<Conversation> conversations = new ArrayList<>();
 
             for (int i = 0; i < numbers.length; i++) {
                 Conversation c = new Conversation();
-                c.title = i < names.length ? names[i] : "";
-                c.phoneNumbers = numbers[i];
-                c.imageUri = ContactUtils.findImageUri(numbers[i], this);
-                c.colors = conversation.colors;
+                c.setTitle(i < names.length ? names[i] : "");
+                c.setPhoneNumbers(numbers[i]);
+                c.setImageUri(ContactUtils.findImageUri(numbers[i], this));
+                c.setColors(conversation.getColors());
 
-                Bitmap image = ImageUtils.getContactImage(c.imageUri, this);
-                if (c.imageUri != null && image == null) {
-                    c.imageUri = null;
+                Bitmap image = ImageUtils.getContactImage(c.getImageUri(), this);
+                if (c.getImageUri() != null && image == null) {
+                    c.setImageUri(null);
                 }
 
                 if (image != null) {
@@ -990,14 +990,14 @@ public class  MessengerActivity extends AppCompatActivity
                 try {
                     intent = new Intent(Intent.ACTION_VIEW);
                     Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                            String.valueOf(ContactUtils.findContactId(conversation.phoneNumbers,
+                            String.valueOf(ContactUtils.findContactId(conversation.getPhoneNumbers(),
                                     MessengerActivity.this)));
                     intent.setData(uri);
                 } catch (NoSuchElementException e) {
                     e.printStackTrace();
                     try {
                         intent = new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT);
-                        intent.setData(Uri.parse("tel:" + conversation.phoneNumbers));
+                        intent.setData(Uri.parse("tel:" + conversation.getPhoneNumbers()));
                     } catch (ActivityNotFoundException ex) {
                         intent = null;
                     }
@@ -1011,8 +1011,8 @@ public class  MessengerActivity extends AppCompatActivity
             } else {
                 final Intent editRecipients = new Intent(MessengerActivity.this, ComposeActivity.class);
                 editRecipients.setAction(ComposeActivity.ACTION_EDIT_RECIPIENTS);
-                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title);
-                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers);
+                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.getTitle());
+                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.getPhoneNumbers());
 
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)
@@ -1099,15 +1099,15 @@ public class  MessengerActivity extends AppCompatActivity
                     .setPositiveButton(android.R.string.ok, null)
                     .setNegativeButton(R.string.menu_copy_phone_number, (dialogInterface, i) -> {
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("phone_number", conversation.phoneNumbers);
+                        ClipData clip = ClipData.newPlainText("phone_number", conversation.getPhoneNumbers());
                         clipboard.setPrimaryClip(clip);
                     });
 
-            Cursor messages = source.getMessages(this, conversation.id);
+            Cursor messages = source.getMessages(this, conversation.getId());
 
             if (messages.getCount() > MessageListFragment.MESSAGE_LIMIT) {
                 builder.setNegativeButton(R.string.menu_view_full_conversation, (dialogInterface, i) -> {
-                    NoLimitMessageListActivity.start(this, conversation.id);
+                    NoLimitMessageListActivity.start(this, conversation.getId());
                 });
             }
 
@@ -1128,7 +1128,7 @@ public class  MessengerActivity extends AppCompatActivity
             fragment.onSwipeToArchive(conversation);
             clickNavigationItem(R.id.drawer_mute_contacts);
             return displayFragmentWithBackStack(
-                    BlacklistFragment.newInstance(conversation.phoneNumbers));
+                    BlacklistFragment.newInstance(conversation.getPhoneNumbers()));
         } else {
             return false;
         }
@@ -1141,8 +1141,8 @@ public class  MessengerActivity extends AppCompatActivity
             fragment.getExpandedItem().itemView.performClick();
             clickNavigationItem(R.id.drawer_schedule);
             return displayFragmentWithBackStack(
-                    ScheduledMessagesFragment.newInstance(conversation.title,
-                            conversation.phoneNumbers));
+                    ScheduledMessagesFragment.newInstance(conversation.getTitle(),
+                            conversation.getPhoneNumbers()));
         } else {
             return false;
         }

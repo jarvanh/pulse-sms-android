@@ -94,7 +94,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         this.sectionCounts = new ArrayList<>();
 
         if (showHeaderAboutTextingOnline()) {
-            sectionCounts.add(new SectionType(SectionType.CARD_ABOUT_ONLINE, 0));
+            sectionCounts.add(new SectionType(SectionType.Companion.getCARD_ABOUT_ONLINE(), 0));
             AnalyticsHelper.convoListCardShown(activity);
         }
 
@@ -105,12 +105,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             Conversation conversation = convos.get(i);
             this.conversations.add(conversation);
 
-            if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                    (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
-                    (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
-                    (currentSection == SectionType.LAST_WEEK && TimeUtils.isLastWeek(conversation.timestamp)) ||
-                    (currentSection == SectionType.LAST_MONTH && TimeUtils.isLastMonth(conversation.timestamp)) ||
-                    (currentSection == SectionType.OLDER)) {
+            if ((currentSection == SectionType.Companion.getPINNED() && conversation.getPinned()) ||
+                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.isToday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.isYesterday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.isLastWeek(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.isLastMonth(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getOLDER())) {
                 currentCount++;
             } else {
                 if (currentCount != 0) {
@@ -138,12 +138,12 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     @Override
     public int getItemCount(int section) {
-        return sectionCounts.get(section).count;
+        return sectionCounts.get(section).getCount();
     }
 
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
-        if (sectionCounts.get(section).type == SectionType.CARD_ABOUT_ONLINE) {
+        if (sectionCounts.get(section).getType() == SectionType.Companion.getCARD_ABOUT_ONLINE()) {
             if (holder.header.getVisibility() != View.GONE)
                 holder.header.setVisibility(View.GONE);
             if (holder.headerDone.getVisibility() != View.GONE)
@@ -152,7 +152,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
 
             TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
-            tryIt.setTextColor(Settings.get(activity).mainColorSet.color);
+            tryIt.setTextColor(Settings.get(activity).mainColorSet.getColor());
 
             tryIt.setOnClickListener(v -> {
                 if (sectionCounts.size() > 0) {
@@ -186,15 +186,15 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.headerCardForTextOnline.setVisibility(View.GONE);
 
             String text;
-            if (sectionCounts.get(section).type == SectionType.PINNED) {
+            if (sectionCounts.get(section).getType() == SectionType.Companion.getPINNED()) {
                 text = holder.header.getContext().getString(R.string.pinned);
-            } else if (sectionCounts.get(section).type == SectionType.TODAY) {
+            } else if (sectionCounts.get(section).getType() == SectionType.Companion.getTODAY()) {
                 text = holder.header.getContext().getString(R.string.today);
-            } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
+            } else if (sectionCounts.get(section).getType() == SectionType.Companion.getYESTERDAY()) {
                 text = holder.header.getContext().getString(R.string.yesterday);
-            } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
+            } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_WEEK()) {
                 text = holder.header.getContext().getString(R.string.last_week);
-            } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
+            } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_MONTH()) {
                 text = holder.header.getContext().getString(R.string.last_month);
             } else {
                 text = holder.header.getContext().getString(R.string.older);
@@ -204,7 +204,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
             if (holder.headerDone != null) {
                 holder.headerDone.setOnClickListener(
-                        getHeaderDoneClickListener(text, sectionCounts.get(section).type)
+                        getHeaderDoneClickListener(text, sectionCounts.get(section).getType())
                 );
                 holder.headerDone.setOnLongClickListener(
                         getHeaderDoneLongClickListener(text)
@@ -251,22 +251,22 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         holder.position = absolutePosition;
 
         Settings settings = Settings.get(holder.itemView.getContext());
-        if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
+        if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (settings.useGlobalThemeColor) {
-                if (settings.mainColorSet.colorLight == Color.WHITE) {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorDark));
+                if (settings.mainColorSet.getColorLight() == Color.WHITE) {
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorDark()));
                 } else {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorLight));
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorLight()));
                 }
-            } else if (conversation.colors.color == Color.WHITE) {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.colorDark));
+            } else if (conversation.getColors().getColor() == Color.WHITE) {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.colors.color;
+            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColors().getColor();
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                holder.imageLetter.setText(conversation.title.substring(0, 1));
+                holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
                 }
@@ -282,7 +282,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     holder.groupIcon.setVisibility(View.VISIBLE);
                 }
 
-                if (conversation.phoneNumbers.contains(",")) {
+                if (conversation.getPhoneNumbers().contains(",")) {
                     holder.groupIcon.setImageResource(R.drawable.ic_group);
                 } else {
                     holder.groupIcon.setImageResource(R.drawable.ic_person);
@@ -301,16 +301,16 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             }
 
             Glide.with(holder.image.getContext())
-                    .load(Uri.parse(conversation.imageUri))
+                    .load(Uri.parse(conversation.getImageUri()))
                     .into(holder.image);
         }
 
-        holder.name.setText(conversation.title);
-        if (conversation.privateNotifications || conversation.snippet == null ||
-                conversation.snippet.contains("file://") || conversation.snippet.contains("content://")) {
+        holder.name.setText(conversation.getTitle());
+        if (conversation.getPrivateNotifications() || conversation.getSnippet() == null ||
+                conversation.getSnippet().contains("file://") || conversation.getSnippet().contains("content://")) {
             holder.summary.setText("");
         } else {
-            holder.summary.setText(conversation.snippet);
+            holder.summary.setText(conversation.getSnippet());
         }
 
         // read not muted
@@ -318,19 +318,19 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         // muted not read
         // read and muted
 //        if (conversation.read && conversation.mute && (holder.isBold() || !holder.isItalic())) {
-        if (conversation.read && conversation.mute) {
+        if (conversation.getRead() && conversation.getMute()) {
             // should be italic
             holder.setTypeface(false, true);
 //        } else if (conversation.mute && !conversation.read && (!holder.isItalic() || !holder.isBold())) {
-        } else if (conversation.mute && !conversation.read) {
+        } else if (conversation.getMute() && !conversation.getRead()) {
             // should be just italic
             holder.setTypeface(true, true);
 //        } else if (!conversation.mute && conversation.read && (holder.isItalic() || holder.isBold())) {
-        } else if (!conversation.mute && conversation.read) {
+        } else if (!conversation.getMute() && conversation.getRead()) {
             // should be not italic and not bold
             holder.setTypeface(false, false);
 //        } else if (!conversation.mute && !conversation.read && (holder.isItalic() || !holder.isBold())) {
-        } else if (!conversation.mute && !conversation.read) {
+        } else if (!conversation.getMute() && !conversation.getRead()) {
             // should be bold, not italic
             holder.setTypeface(true, false);
         }
@@ -369,18 +369,18 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         int currentTotal = 0;
 
         for (SectionType type : sectionCounts) {
-            currentTotal += type.count + 1; // +1 for the header above the section
+            currentTotal += type.getCount() + 1; // +1 for the header above the section
 
             if (position < currentTotal) {
                 position -= headersAbove;
 
                 SectionType section = sectionCounts.get(headersAbove - 1);
-                section.count -= 1;
+                section.setCount(section.getCount() - 1);
 
                 sectionCounts.set(headersAbove - 1, section);
                 Conversation deletedConversation = conversations.remove(position);
 
-                if (section.count == 0) {
+                if (section.getCount() == 0) {
                     sectionCounts.remove(headersAbove - 1);
                     notifyItemRangeRemoved(originalPosition - 1, 2);
                     removedHeader = true;
@@ -408,7 +408,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         int conversationPosition = -1;
 
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(i) != null && conversations.get(i).id == conversationId) {
+            if (conversations.get(i) != null && conversations.get(i).getId() == conversationId) {
                 conversationPosition = i;
                 break;
             }
@@ -421,7 +421,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         int totalSectionsCount = 0;
 
         for (int i = 0; i < sectionCounts.size(); i++) {
-            totalSectionsCount += sectionCounts.get(i).count;
+            totalSectionsCount += sectionCounts.get(i).getCount();
 
             if (conversationPosition < totalSectionsCount) {
                 break;
@@ -438,13 +438,13 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         int totalSectionsCount = 0;
 
         for (int i = 0; i < sectionCounts.size(); i++) {
-            totalSectionsCount += sectionCounts.get(i).count;
+            totalSectionsCount += sectionCounts.get(i).getCount();
 
             if (position <= (totalSectionsCount + headersAbove)) {
                 headersAbove++;
                 break;
             } else {
-                if (sectionCounts.get(i).count != 0) {
+                if (sectionCounts.get(i).getCount() != 0) {
                     // only add the header if it has more than 0 items, otherwise it isn't shown
                     headersAbove++;
                 }
@@ -462,8 +462,8 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
 
     public int getCountForSection(int sectionType) {
         for (int i = 0; i < sectionCounts.size(); i++) {
-            if (sectionCounts.get(i).type == sectionType) {
-                return sectionCounts.get(i).count;
+            if (sectionCounts.get(i).getType() == sectionType) {
+                return sectionCounts.get(i).getCount();
             }
         }
 

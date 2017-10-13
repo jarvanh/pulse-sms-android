@@ -64,8 +64,8 @@ public class MediaSaver {
 
     private void saveMessage(Message message) {
         final String directory = MmsSettings.get(context).saveDirectory;
-        final String extension = MimeType.getExtension(message.mimeType);
-        final String fileName = "media-" + message.timestamp;
+        final String extension = MimeType.INSTANCE.getExtension(message.getMimeType());
+        final String fileName = "media-" + message.getTimestamp();
         File dst = new File(directory, fileName + extension);
 
         int count = 1;
@@ -80,9 +80,9 @@ public class MediaSaver {
             e.printStackTrace();
         }
 
-        if (MimeType.isStaticImage(message.mimeType)) {
+        if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
             try {
-                Bitmap bmp = ImageUtils.getBitmap(context, message.data);
+                Bitmap bmp = ImageUtils.getBitmap(context, message.getData());
                 FileOutputStream stream = new FileOutputStream(dst);
                 bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream);
                 stream.close();
@@ -92,7 +92,7 @@ public class MediaSaver {
                 ContentValues values = new ContentValues(3);
 
                 values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                values.put(MediaStore.Images.Media.MIME_TYPE, message.mimeType);
+                values.put(MediaStore.Images.Media.MIME_TYPE, message.getMimeType());
                 values.put(MediaStore.MediaColumns.DATA, dst.getPath());
 
                 context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
@@ -108,7 +108,7 @@ public class MediaSaver {
             }
         } else {
             try {
-                InputStream in = context.getContentResolver().openInputStream(Uri.parse(message.data));
+                InputStream in = context.getContentResolver().openInputStream(Uri.parse(message.getData()));
                 FileUtils.copy(in, dst);
                 makeToast(R.string.saved);
             } catch (IOException | SecurityException e) {

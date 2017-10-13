@@ -123,7 +123,7 @@ public class ContactUtils {
                 cursor = context.getContentResolver().query(ContactsContract.Data.CONTENT_URI,
                         new String[]{ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID},
                         ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "=?",
-                        new String[] { conversations.get(i).id + "" }, null);
+                        new String[] { conversations.get(i).getId() + "" }, null);
 
                 if (cursor != null && cursor.moveToFirst() && cursor.getCount() < 150) {
                     String phoneNumbers = "";
@@ -135,7 +135,7 @@ public class ContactUtils {
                     } while (cursor.moveToNext());
 
                     if (phoneNumbers.length() > 0) {
-                        conversations.get(i).phoneNumbers = phoneNumbers.substring(0, phoneNumbers.length() - 2);
+                        conversations.get(i).setPhoneNumbers(phoneNumbers.substring(0, phoneNumbers.length() - 2));
                     } else {
                         conversations.remove(i);
                         i--;
@@ -341,11 +341,11 @@ public class ContactUtils {
     }
 
     public static boolean shouldDisplayContactLetter(Conversation conversation) {
-        if (conversation.title.length() == 0 || conversation.title.contains(", ") ||
-                conversation.phoneNumbers.contains(", ")) {
+        if (conversation.getTitle().length() == 0 || conversation.getTitle().contains(", ") ||
+                conversation.getPhoneNumbers().contains(", ")) {
             return false;
         } else {
-            String firstLetter = conversation.title.substring(0, 1);
+            String firstLetter = conversation.getTitle().substring(0, 1);
 
             // if the first letter is a character and not a number or + or something weird, show it.
             if (Pattern.compile("[\\p{L}]").matcher(firstLetter).find()) {
@@ -381,14 +381,14 @@ public class ContactUtils {
             do {
                 Contact contact = new Contact();
 
-                contact.name = cursor.getString(0);
-                contact.phoneNumber = cursor.getString(1);
+                contact.setName(cursor.getString(0));
+                contact.setPhoneNumber(cursor.getString(1));
 
-                ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
+                ColorSet colorSet = getColorsFromConversation(conversations, contact.getName());
                 if (colorSet != null) {
-                    contact.colors = colorSet;
+                    contact.setColors(colorSet);
                 } else {
-                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.getPhoneNumber(), context), context);
                 }
 
                 contacts.add(contact);
@@ -443,14 +443,14 @@ public class ContactUtils {
                 do {
                     Contact contact = new Contact();
 
-                    contact.name = cursor.getString(0);
-                    contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)));
+                    contact.setName(cursor.getString(0));
+                    contact.setPhoneNumber(PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1))));
 
-                    ColorSet colorSet = getColorsFromConversation(conversations, contact.name);
+                    ColorSet colorSet = getColorsFromConversation(conversations, contact.getName());
                     if (colorSet != null) {
-                        contact.colors = colorSet;
+                        contact.setColors(colorSet);
                     } else {
-                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context);
+                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.getPhoneNumber(), context), context);
                     }
 
                     contacts.add(contact);
@@ -475,8 +475,8 @@ public class ContactUtils {
      */
     private static ColorSet getColorsFromConversation(List<Conversation> conversations, String name) {
         for (Conversation conversation : conversations) {
-            if (conversation.title.equals(name)) {
-                return conversation.colors;
+            if (conversation.getTitle().equals(name)) {
+                return conversation.getColors();
             }
         }
 
@@ -503,13 +503,13 @@ public class ContactUtils {
 
             if (contact == null) {
                 contact = new Contact();
-                contact.name = number;
-                contact.phoneNumber = number;
-                contact.colors = ColorUtils.getRandomMaterialColor(context);
+                contact.setName(number);
+                contact.setPhoneNumber(number);
+                contact.setColors(ColorUtils.getRandomMaterialColor(context));
                 dataSource.insertContact(context, contact);
             }
 
-            contactMap.put(contact.name, contact);
+            contactMap.put(contact.getName(), contact);
         }
 
         return contactMap;
@@ -531,7 +531,7 @@ public class ContactUtils {
 
         for (String name : names) {
             Contact contact = getContactFromListByName(contacts, name);
-            contactMap.put(contact.name, contact);
+            contactMap.put(contact.getName(), contact);
         }
 
         return contactMap;
@@ -539,7 +539,7 @@ public class ContactUtils {
 
     private static Contact getContactFromListByName(List<Contact> list, String name) {
         for (Contact contact : list) {
-            if (contact.name.equals(name)) {
+            if (contact.getName().equals(name)) {
                 return contact;
             }
         }
@@ -549,7 +549,7 @@ public class ContactUtils {
 
     private static Contact getContactFromList(List<Contact> list, String number) {
         for (Contact contact : list) {
-            if (PhoneNumberUtils.checkEquality(contact.phoneNumber, number)) {
+            if (PhoneNumberUtils.checkEquality(contact.getPhoneNumber(), number)) {
                 return contact;
             }
         }

@@ -91,27 +91,27 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
         Conversation item = conversations.get(position);
 
-        if (item.title == null) {
-            item.title = "";
+        if (item.getTitle() == null) {
+            item.setTitle("");
         }
 
-        if (item.snippet == null) {
-            item.snippet = "";
+        if (item.getSnippet() == null) {
+            item.setSnippet("");
         }
 
-        if (!item.read) {
-            item.title = "<b>" + item.title + "</b>";
-            item.snippet = "<b>" + item.snippet + "</b>";
+        if (!item.getRead()) {
+            item.setTitle("<b>" + item.getTitle() + "</b>");
+            item.setSnippet("<b>" + item.getSnippet() + "</b>");
         }
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_item);
 
-        Bitmap image = ImageUtils.getBitmap(context, item.imageUri);
+        Bitmap image = ImageUtils.getBitmap(context, item.getImageUri());
         if (image == null) {
-            image = ImageUtils.createColoredBitmap(item.colors.color);
+            image = ImageUtils.createColoredBitmap(item.getColors().getColor());
 
             if (ContactUtils.shouldDisplayContactLetter(item)) {
-                rv.setTextViewText(R.id.image_letter, item.title.substring(0, 1));
+                rv.setTextViewText(R.id.image_letter, item.getTitle().substring(0, 1));
             } else {
                 rv.setTextViewText(R.id.image_letter, null);
             }
@@ -121,18 +121,18 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
         image = ImageUtils.clipToCircle(image);
 
-        rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.title));
-        rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet));
+        rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.getTitle()));
+        rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.getSnippet()));
         rv.setImageViewBitmap(R.id.picture, image);
 
-        if (item.read) {
+        if (item.getRead()) {
             rv.setViewVisibility(R.id.unread_indicator, View.GONE);
         } else {
             rv.setViewVisibility(R.id.unread_indicator, View.VISIBLE);
         }
 
         Bundle extras = new Bundle();
-        extras.putLong(MessengerAppWidgetProvider.EXTRA_ITEM_ID, item.id);
+        extras.putLong(MessengerAppWidgetProvider.EXTRA_ITEM_ID, item.getId());
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
         rv.setOnClickFillInIntent(R.id.widget_item, fillInIntent);
@@ -153,7 +153,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
     @Override
     public long getItemId(int position) {
         if (conversations.size() > 0 && position < conversations.size()) {
-            return conversations.get(position).id;
+            return conversations.get(position).getId();
         } else {
             return 0;
         }

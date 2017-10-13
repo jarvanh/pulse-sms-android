@@ -93,21 +93,21 @@ public class SmsMmsUtils {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Conversation conversation = new Conversation();
-                conversation.id = cursor.getLong(0);
-                conversation.pinned = false;
-                conversation.read = cursor.getInt(5) == 1;
-                conversation.timestamp = cursor.getLong(1);
-                conversation.snippet = cursor.getString(4);
-                conversation.ringtoneUri = null;
-                conversation.phoneNumbers = ContactUtils.findContactNumbers(cursor.getString(3), context);
-                conversation.title = ContactUtils.findContactNames(conversation.phoneNumbers, context);
-                conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-                conversation.idMatcher = createIdMatcher(conversation.phoneNumbers).getDefault();
-                conversation.mute = false;
-                conversation.privateNotifications = false;
-                conversation.ledColor = Color.WHITE;
+                conversation.setId(cursor.getLong(0));
+                conversation.setPinned(false);
+                conversation.setRead(cursor.getInt(5) == 1);
+                conversation.setTimestamp(cursor.getLong(1));
+                conversation.setSnippet(cursor.getString(4));
+                conversation.setRingtoneUri(null);
+                conversation.setPhoneNumbers(ContactUtils.findContactNumbers(cursor.getString(3), context));
+                conversation.setTitle(ContactUtils.findContactNames(conversation.getPhoneNumbers(), context));
+                conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), context));
+                conversation.setIdMatcher(createIdMatcher(conversation.getPhoneNumbers()).getDefault());
+                conversation.setMute(false);
+                conversation.setPrivateNotifications(false);
+                conversation.setLedColor(Color.WHITE);
                 ImageUtils.fillConversationColors(conversation, context);
-                conversation.simSubscriptionId = -1;
+                conversation.setSimSubscriptionId(-1);
 
                 conversations.add(conversation);
             } while (cursor.moveToNext() && conversations.size() < INITIAL_CONVERSATION_LIMIT);
@@ -298,16 +298,16 @@ public class SmsMmsUtils {
         if (isSms(messages)) {
             if (messages.getString(1) != null) {
                 ContentValues message = new ContentValues(9);
-                message.put(Message.COLUMN_ID, DataSource.INSTANCE.generateId());
-                message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
-                message.put(Message.COLUMN_TYPE, getSmsMessageType(messages));
-                message.put(Message.COLUMN_DATA, messages.getString(1).trim());
-                message.put(Message.COLUMN_TIMESTAMP, messages.getLong(2));
-                message.put(Message.COLUMN_MIME_TYPE, MimeType.TEXT_PLAIN);
-                message.put(Message.COLUMN_READ, messages.getInt(3));
-                message.put(Message.COLUMN_SEEN, true);
-                message.put(Message.COLUMN_FROM, (String) null);
-                message.put(Message.COLUMN_COLOR, (Integer) null);
+                message.put(Message.Companion.getCOLUMN_ID(), DataSource.INSTANCE.generateId());
+                message.put(Message.Companion.getCOLUMN_CONVERSATION_ID(), conversationId);
+                message.put(Message.Companion.getCOLUMN_TYPE(), getSmsMessageType(messages));
+                message.put(Message.Companion.getCOLUMN_DATA(), messages.getString(1).trim());
+                message.put(Message.Companion.getCOLUMN_TIMESTAMP(), messages.getLong(2));
+                message.put(Message.Companion.getCOLUMN_MIME_TYPE(), MimeType.INSTANCE.getTEXT_PLAIN());
+                message.put(Message.Companion.getCOLUMN_READ(), messages.getInt(3));
+                message.put(Message.Companion.getCOLUMN_SEEN(), true);
+                message.put(Message.Companion.getCOLUMN_FROM(), (String) null);
+                message.put(Message.Companion.getCOLUMN_COLOR(), (Integer) null);
 
                 values.add(message);
             }
@@ -334,20 +334,20 @@ public class SmsMmsUtils {
                     String partId = query.getString(0);
                     String mimeType = query.getString(1);
 
-                    if (mimeType != null && MimeType.isSupported(mimeType)) {
+                    if (mimeType != null && MimeType.INSTANCE.isSupported(mimeType)) {
                         ContentValues message = new ContentValues(9);
-                        message.put(Message.COLUMN_CONVERSATION_ID, conversationId);
-                        message.put(Message.COLUMN_TYPE, type);
-                        message.put(Message.COLUMN_MIME_TYPE, mimeType);
-                        message.put(Message.COLUMN_TIMESTAMP, messages
+                        message.put(Message.Companion.getCOLUMN_CONVERSATION_ID(), conversationId);
+                        message.put(Message.Companion.getCOLUMN_TYPE(), type);
+                        message.put(Message.Companion.getCOLUMN_MIME_TYPE(), mimeType);
+                        message.put(Message.Companion.getCOLUMN_TIMESTAMP(), messages
                                 .getLong(messages.getColumnIndex(Telephony.Sms.DATE)) * 1000);
-                        message.put(Message.COLUMN_READ, messages
+                        message.put(Message.Companion.getCOLUMN_READ(), messages
                                 .getInt(messages.getColumnIndex(Telephony.Sms.READ)));
-                        message.put(Message.COLUMN_SEEN, true);
-                        message.put(Message.COLUMN_FROM, from);
-                        message.put(Message.COLUMN_COLOR, (Integer) null);
+                        message.put(Message.Companion.getCOLUMN_SEEN(), true);
+                        message.put(Message.Companion.getCOLUMN_FROM(), from);
+                        message.put(Message.Companion.getCOLUMN_COLOR(), (Integer) null);
 
-                        if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+                        if (mimeType.equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
                             String data = query.getString(2);
                             String text;
                             if (data != null) {
@@ -361,11 +361,11 @@ public class SmsMmsUtils {
                             }
 
                             if (text.trim().length() != 0) {
-                                message.put(Message.COLUMN_DATA, text.trim());
+                                message.put(Message.Companion.getCOLUMN_DATA(), text.trim());
                                 values.add(message);
                             }
                         } else {
-                            message.put(Message.COLUMN_DATA, "content://mms/part/" + partId);
+                            message.put(Message.Companion.getCOLUMN_DATA(), "content://mms/part/" + partId);
                             values.add(message);
                         }
                     }
@@ -405,25 +405,25 @@ public class SmsMmsUtils {
         if (status == Telephony.Sms.STATUS_NONE ||
                 internalType == Telephony.Sms.MESSAGE_TYPE_INBOX) {
             if (internalType == Telephony.Sms.MESSAGE_TYPE_INBOX) {
-                return Message.TYPE_RECEIVED;
+                return Message.Companion.getTYPE_RECEIVED();
             } else if (internalType == Telephony.Sms.MESSAGE_TYPE_FAILED) {
-                return Message.TYPE_ERROR;
+                return Message.Companion.getTYPE_ERROR();
             } else if (internalType == Telephony.Sms.MESSAGE_TYPE_OUTBOX) {
-                return Message.TYPE_SENDING;
+                return Message.Companion.getTYPE_SENDING();
             } else if (internalType == Telephony.Sms.MESSAGE_TYPE_SENT) {
-                return Message.TYPE_SENT;
+                return Message.Companion.getTYPE_SENT();
             } else {
-                return Message.TYPE_SENT;
+                return Message.Companion.getTYPE_SENT();
             }
         } else {
             if (status == Telephony.Sms.STATUS_COMPLETE) {
-                return Message.TYPE_DELIVERED;
+                return Message.Companion.getTYPE_DELIVERED();
             } else if (status == Telephony.Sms.STATUS_PENDING) {
-                return Message.TYPE_SENT;
+                return Message.Companion.getTYPE_SENT();
             } else if (status == Telephony.Sms.STATUS_FAILED) {
-                return Message.TYPE_ERROR;
+                return Message.Companion.getTYPE_ERROR();
             } else {
-                return Message.TYPE_SENT;
+                return Message.Companion.getTYPE_SENT();
             }
         }
     }
@@ -439,15 +439,15 @@ public class SmsMmsUtils {
         int internalType = message.getInt(message.getColumnIndex(Telephony.Mms.MESSAGE_BOX));
 
         if (internalType == Telephony.Mms.MESSAGE_BOX_INBOX) {
-            return Message.TYPE_RECEIVED;
+            return Message.Companion.getTYPE_RECEIVED();
         } else if (internalType == Telephony.Mms.MESSAGE_BOX_FAILED) {
-            return Message.TYPE_ERROR;
+            return Message.Companion.getTYPE_ERROR();
         } else if (internalType == Telephony.Mms.MESSAGE_BOX_OUTBOX) {
-            return Message.TYPE_SENDING;
+            return Message.Companion.getTYPE_SENDING();
         } else if (internalType == Telephony.Mms.MESSAGE_BOX_SENT) {
-            return Message.TYPE_SENT;
+            return Message.Companion.getTYPE_SENT();
         } else {
-            return Message.TYPE_SENT;
+            return Message.Companion.getTYPE_SENT();
         }
     }
 

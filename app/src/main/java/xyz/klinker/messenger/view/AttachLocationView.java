@@ -106,7 +106,7 @@ public class AttachLocationView extends FrameLayout implements OnMapReadyCallbac
                         public void onSnapshotReady(Bitmap bitmap) {
                             File file = new File(getFileName());
                             FileUtils.writeBitmap(file, bitmap);
-                            imageListener.onImageSelected(Uri.fromFile(file), MimeType.IMAGE_JPEG);
+                            imageListener.onImageSelected(Uri.fromFile(file), MimeType.INSTANCE.getIMAGE_JPEG());
                         }
                     });
                 }

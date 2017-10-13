@@ -144,7 +144,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertContact() {
         Contact contact = new Contact();
-        contact.phoneNumber = "1234";
+        contact.setPhoneNumber("1234");
 
         source.insertContact(context, contact, false);
         verify(database).insert(eq("contact"), eq((String) null), any(ContentValues.class));
@@ -286,7 +286,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void deleteConversation() {
         Conversation conversation = new Conversation();
-        conversation.id = 1;
+        conversation.setId(1);
         source.deleteConversation(context, conversation, false);
 
         verify(database).delete("conversation", "_id=?", new String[]{"1"});
@@ -422,7 +422,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateMessageType() {
-        source.updateMessageType(context, 1, Message.TYPE_SENT, false);
+        source.updateMessageType(context, 1, Message.Companion.getTYPE_SENT(), false);
         verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>?"),
                 eq(new String[]{"1", "0"}));
     }
@@ -430,7 +430,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertMessage() {
         Message message = new Message();
-        message.data = "test";
+        message.setData("test");
 
         source.insertMessage(context, message, 1, false, false);
 
@@ -526,10 +526,10 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void insertDraftObject() {
         Draft draft = new Draft();
-        draft.id = 1;
-        draft.conversationId = 1;
-        draft.data = "test";
-        draft.mimeType = "text/plain";
+        draft.setId(1);
+        draft.setConversationId(1);
+        draft.setData("test");
+        draft.setMimeType("text/plain");
 
         source.insertDraft(context, draft, false);
 
@@ -590,115 +590,115 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         List<Conversation> conversations = new ArrayList<>();
 
         Conversation conversation = new Conversation();
-        conversation.title = "Luke Klinker";
-        conversation.phoneNumbers = "(515) 991-1493";
+        conversation.setTitle("Luke Klinker");
+        conversation.setPhoneNumbers("(515) 991-1493");
 //        conversation.colors.color = resources.getColor(R.color.materialIndigo);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
-        conversation.pinned = true;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60);
-        conversation.snippet = "So maybe not going to be able to get platinum huh?";
-        conversation.idMatcher = "11493";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(true);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60));
+        conversation.setSnippet("So maybe not going to be able to get platinum huh?");
+        conversation.setIdMatcher("11493");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Matt Swiontek";
-        conversation.phoneNumbers = "(708) 928-0846";
+        conversation.setTitle("Matt Swiontek");
+        conversation.setPhoneNumbers("(708) 928-0846");
 //        conversation.colors.color = resources.getColor(R.color.materialRed);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialRedDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
-        conversation.pinned = true;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 12);
-        conversation.snippet = "Whoops ya idk what happened but anysho drive safe";
-        conversation.idMatcher = "80846";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(true);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 12));
+        conversation.setSnippet("Whoops ya idk what happened but anysho drive safe");
+        conversation.setIdMatcher("80846");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Kris Klinker";
-        conversation.phoneNumbers = "(515) 419-6726";
+        conversation.setTitle("Kris Klinker");
+        conversation.setPhoneNumbers("(515) 419-6726");
 //        conversation.colors.color = resources.getColor(R.color.materialPink);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialPinkDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
-        conversation.pinned = false;
-        conversation.read = false;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 20);
-        conversation.snippet = "Will probably be there from 6:30-9, just stop by when you can!";
-        conversation.idMatcher = "96726";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(false);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 20));
+        conversation.setSnippet("Will probably be there from 6:30-9, just stop by when you can!");
+        conversation.setIdMatcher("96726");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Andrew Klinker";
-        conversation.phoneNumbers = "(515) 991-8235";
+        conversation.setTitle("Andrew Klinker");
+        conversation.setPhoneNumbers("(515) 991-8235");
 //        conversation.colors.color = resources.getColor(R.color.materialBlue);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialBlueDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
-        conversation.pinned = false;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 26);
-        conversation.snippet = "Just finished, it was a lot of fun";
-        conversation.idMatcher = "18235";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 26));
+        conversation.setSnippet("Just finished, it was a lot of fun");
+        conversation.setIdMatcher("18235");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Aaron Klinker";
-        conversation.phoneNumbers = "(515) 556-7749";
+        conversation.setTitle("Aaron Klinker");
+        conversation.setPhoneNumbers("(515) 556-7749");
 //        conversation.colors.color = resources.getColor(R.color.materialGreen);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialGreenDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
-        conversation.pinned = false;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 32);
-        conversation.snippet = "Yeah I'll do it when I get home";
-        conversation.idMatcher = "67749";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 32));
+        conversation.setSnippet("Yeah I'll do it when I get home");
+        conversation.setIdMatcher("67749");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Mike Klinker";
-        conversation.phoneNumbers = "(515) 480-8532";
+        conversation.setTitle("Mike Klinker");
+        conversation.setPhoneNumbers("(515) 480-8532");
 //        conversation.colors.color = resources.getColor(R.color.materialBrown);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialBrownDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
-        conversation.pinned = false;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 55);
-        conversation.snippet = "Yeah so hiking around in some place called beaver meadows now.";
-        conversation.idMatcher = "08532";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 55));
+        conversation.setSnippet("Yeah so hiking around in some place called beaver meadows now.");
+        conversation.setIdMatcher("08532");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         conversation = new Conversation();
-        conversation.title = "Ben Madden";
-        conversation.phoneNumbers = "(847) 609-0939";
+        conversation.setTitle("Ben Madden");
+        conversation.setPhoneNumbers("(847) 609-0939");
 //        conversation.colors.color = resources.getColor(R.color.materialPurple);
 //        conversation.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
-        conversation.pinned = false;
-        conversation.read = true;
-        conversation.timestamp = System.currentTimeMillis() - (1000 * 60 * 60 * 78);
-        conversation.snippet = "Maybe they'll run into each other on the way back... idk";
-        conversation.idMatcher = "90939";
-        conversation.mute = false;
-        conversation.privateNotifications = false;
-        conversation.ledColor = Color.WHITE;
+        conversation.setPinned(false);
+        conversation.setRead(true);
+        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 78));
+        conversation.setSnippet("Maybe they'll run into each other on the way back... idk");
+        conversation.setIdMatcher("90939");
+        conversation.setMute(false);
+        conversation.setPrivateNotifications(false);
+        conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
         return conversations;
@@ -708,8 +708,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         List<Contact> contacts = new ArrayList<>();
 
         Contact contact = new Contact();
-        contact.name = "Luke Klinker";
-        contact.phoneNumber = "(515) 991-1493";
+        contact.setName("Luke Klinker");
+        contact.setPhoneNumber("(515) 991-1493");
 //        contact.colors.color = resources.getColor(R.color.materialIndigo);
 //        contact.colors.colorDark = resources.getColor(R.color.materialIndigoDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialIndigoLight);
@@ -717,8 +717,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Matt Swiontek";
-        contact.phoneNumber = "(708) 928-0846";
+        contact.setName("Matt Swiontek");
+        contact.setPhoneNumber("(708) 928-0846");
 //        contact.colors.color = resources.getColor(R.color.materialRed);
 //        contact.colors.colorDark = resources.getColor(R.color.materialRedDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialRedLight);
@@ -726,8 +726,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Kris Klinker";
-        contact.phoneNumber = "(515) 419-6726";
+        contact.setName("Kris Klinker");
+        contact.setPhoneNumber("(515) 419-6726");
 //        contact.colors.color = resources.getColor(R.color.materialPink);
 //        contact.colors.colorDark = resources.getColor(R.color.materialPinkDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialPinkLight);
@@ -735,8 +735,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Andrew Klinker";
-        contact.phoneNumber = "(515) 991-8235";
+        contact.setName("Andrew Klinker");
+        contact.setPhoneNumber("(515) 991-8235");
 //        contact.colors.color = resources.getColor(R.color.materialBlue);
 //        contact.colors.colorDark = resources.getColor(R.color.materialBlueDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialBlueLight);
@@ -744,8 +744,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Aaron Klinker";
-        contact.phoneNumber = "(515) 556-7749";
+        contact.setName("Aaron Klinker");
+        contact.setPhoneNumber("(515) 556-7749");
 //        contact.colors.color = resources.getColor(R.color.materialGreen);
 //        contact.colors.colorDark = resources.getColor(R.color.materialGreenDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialGreenLight);
@@ -753,8 +753,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Mike Klinker";
-        contact.phoneNumber = "(515) 480-8532";
+        contact.setName("Mike Klinker");
+        contact.setPhoneNumber("(515) 480-8532");
 //        contact.colors.color = resources.getColor(R.color.materialBrown);
 //        contact.colors.colorDark = resources.getColor(R.color.materialBrownDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialBrownLight);
@@ -762,8 +762,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
-        contact.name = "Ben Madden";
-        contact.phoneNumber = "(847) 609-0939";
+        contact.setName("Ben Madden");
+        contact.setPhoneNumber("(847) 609-0939");
 //        contact.colors.color = resources.getColor(R.color.materialPurple);
 //        contact.colors.colorDark = resources.getColor(R.color.materialPurpleDark);
 //        contact.colors.colorLight = resources.getColor(R.color.materialPurpleLight);

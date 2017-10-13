@@ -46,8 +46,8 @@ public class ColorPickerAdapter extends ArrayAdapter<ColorSet> {
         ColorSet color = colors.get(position);
         final FrameLayout frame = getFrameLayout();
         final ColorPreviewButton button = getColorPreviewButton();
-        button.setInnerColor(color.color);
-        button.setOuterColor(color.colorAccent);
+        button.setInnerColor(color.getColor());
+        button.setOuterColor(color.getColorAccent());
         frame.addView(button);
 
         button.setOnClickListener(v -> {

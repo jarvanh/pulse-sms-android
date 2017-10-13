@@ -80,26 +80,26 @@ public class ReplyService extends IntentService {
         }
 
         Message m = new Message();
-        m.conversationId = conversationId;
-        m.type = Message.TYPE_SENDING;
-        m.data = reply;
-        m.timestamp = System.currentTimeMillis();
-        m.mimeType = MimeType.TEXT_PLAIN;
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+        m.setConversationId(conversationId);
+        m.setType(Message.Companion.getTYPE_SENDING());
+        m.setData(reply);
+        m.setTimestamp(System.currentTimeMillis());
+        m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+        m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
         long messageId = source.insertMessage(this, m, conversationId, true);
         source.readConversation(this, conversationId);
 
-        Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
+        Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.getPhoneNumbers() + "\"");
 
-        new SendUtils(conversation.simSubscriptionId)
-                .send(this, reply, conversation.phoneNumbers);
+        new SendUtils(conversation.getSimSubscriptionId())
+                .send(this, reply, conversation.getPhoneNumbers());
         MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
 
         // cancel the notification we just replied to or

@@ -50,7 +50,7 @@ public class MediaParserService extends IntentService {
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setProgress(0, 0, true)
                     .setLocalOnly(true)
-                    .setColor(ColorSet.DEFAULT(this).color)
+                    .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                     .setOngoing(true)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .build();
@@ -79,7 +79,7 @@ public class MediaParserService extends IntentService {
         Message message = parser.parse(conversationId);
         if (message != null) {
             DataSource.INSTANCE.insertMessage(this, message, conversationId, true);
-            MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type);
+            MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.getData(), message.getType());
         }
 
         if (AndroidVersionUtil.isAndroidO()) {

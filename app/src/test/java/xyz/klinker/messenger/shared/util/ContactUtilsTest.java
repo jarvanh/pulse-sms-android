@@ -22,48 +22,48 @@ public class ContactUtilsTest extends MessengerSuite {
     @Test
     public void shouldShowImageLetter() {
         Conversation conversation = new Conversation();
-        conversation.phoneNumbers = "555";
+        conversation.setPhoneNumbers("555");
 
-        conversation.title = "test";
+        conversation.setTitle("test");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
 
-        conversation.title = "Test";
+        conversation.setTitle("Test");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
 
-        conversation.title = "Żółć";
+        conversation.setTitle("Żółć");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
 
-        conversation.title = "Ὀδυσσεύς";
+        conversation.setTitle("Ὀδυσσεύς");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
 
-        conversation.title = "原田雅彦";
+        conversation.setTitle("原田雅彦");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(true));
     }
 
     @Test
     public void shouldNotShowImageLetter() {
         Conversation conversation = new Conversation();
-        conversation.phoneNumbers = "1, 1";
+        conversation.setPhoneNumbers("1, 1");
 
-        conversation.title = " test";
+        conversation.setTitle(" test");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = "5.";
+        conversation.setTitle("5.");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = ".j4";
+        conversation.setTitle(".j4");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = "+1";
+        conversation.setTitle("+1");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = "-";
+        conversation.setTitle("-");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = "'";
+        conversation.setTitle("'");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
 
-        conversation.title = ":";
+        conversation.setTitle(":");
         assertThat(ContactUtils.shouldDisplayContactLetter(conversation), Matchers.is(false));
     }
 }

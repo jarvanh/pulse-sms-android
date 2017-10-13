@@ -61,7 +61,7 @@ public class ContactSettingsActivity extends AbstractSettingsActivity {
         super.onStart();
 
         if (fragment.conversation != null) {
-            ActivityUtils.setTaskDescription(this, fragment.conversation.title, fragment.conversation.colors.color);
+            ActivityUtils.setTaskDescription(this, fragment.conversation.getTitle(), fragment.conversation.getColors().getColor());
         }
     }
 

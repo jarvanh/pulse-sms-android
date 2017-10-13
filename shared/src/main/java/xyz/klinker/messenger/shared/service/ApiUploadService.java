@@ -113,7 +113,7 @@ public class ApiUploadService extends Service {
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                 .setOngoing(true)
                 .build();
         startForeground(MESSAGE_UPLOAD_ID, notification);
@@ -157,14 +157,14 @@ public class ApiUploadService extends Service {
 
                 // instead of sending the URI, we'll upload these images to firebase and retrieve
                 // them on another device based on account id and message id.
-                if (!m.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    m.data = "firebase " + firebaseNumber;
+                if (!m.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                    m.setData("firebase " + firebaseNumber);
                     firebaseNumber++;
                 }
 
                 m.encrypt(encryptionUtils);
-                MessageBody message = new MessageBody(m.id, m.conversationId, m.type, m.data,
-                        m.timestamp, m.mimeType, m.read, m.seen, m.from, m.color, "-1", m.simPhoneNumber);
+                MessageBody message = new MessageBody(m.getId(), m.getConversationId(), m.getType(), m.getData(),
+                        m.getTimestamp(), m.getMimeType(), m.getRead(), m.getSeen(), m.getFrom(), m.getColor(), "-1", m.getSimPhoneNumber());
                 messages.add(message);
             } while (cursor.moveToNext());
 
@@ -210,10 +210,10 @@ public class ApiUploadService extends Service {
                 Conversation c = new Conversation();
                 c.fillFromCursor(cursor);
                 c.encrypt(encryptionUtils);
-                ConversationBody conversation = new ConversationBody(c.id, c.colors.color,
-                        c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.ledColor, c.pinned,
-                        c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri,
-                        /*c.imageUri*/null, c.idMatcher, c.mute, c.archive, c.privateNotifications);
+                ConversationBody conversation = new ConversationBody(c.getId(), c.getColors().getColor(),
+                        c.getColors().getColorDark(), c.getColors().getColorLight(), c.getColors().getColorAccent(), c.getLedColor(), c.getPinned(),
+                        c.getRead(), c.getTimestamp(), c.getTitle(), c.getPhoneNumbers(), c.getSnippet(), c.getRingtoneUri(),
+                        /*c.imageUri*/null, c.getIdMatcher(), c.getMute(), c.getArchive(), c.getPrivateNotifications());
 
                 conversations[cursor.getPosition()] = conversation;
             } while (cursor.moveToNext());
@@ -277,8 +277,8 @@ public class ApiUploadService extends Service {
                 Contact c = new Contact();
                 c.fillFromCursor(cursor);
                 c.encrypt(encryptionUtils);
-                ContactBody contact = new ContactBody(c.phoneNumber, c.name, c.colors.color,
-                        c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent);
+                ContactBody contact = new ContactBody(c.getPhoneNumber(), c.getName(), c.getColors().getColor(),
+                        c.getColors().getColorDark(), c.getColors().getColorLight(), c.getColors().getColorAccent());
                 contacts.add(contact);
             } while (cursor.moveToNext());
 
@@ -324,7 +324,7 @@ public class ApiUploadService extends Service {
                 Blacklist b = new Blacklist();
                 b.fillFromCursor(cursor);
                 b.encrypt(encryptionUtils);
-                BlacklistBody blacklist = new BlacklistBody(b.id, b.phoneNumber);
+                BlacklistBody blacklist = new BlacklistBody(b.getId(), b.getPhoneNumber());
 
                 blacklists[cursor.getPosition()] = blacklist;
             } while (cursor.moveToNext());
@@ -361,8 +361,8 @@ public class ApiUploadService extends Service {
                 ScheduledMessage m = new ScheduledMessage();
                 m.fillFromCursor(cursor);
                 m.encrypt(encryptionUtils);
-                ScheduledMessageBody message = new ScheduledMessageBody(m.id, m.to, m.data,
-                        m.mimeType, m.timestamp, m.title);
+                ScheduledMessageBody message = new ScheduledMessageBody(m.getId(), m.getTo(), m.getData(),
+                        m.getMimeType(), m.getTimestamp(), m.getTitle());
 
                 messages[cursor.getPosition()] = message;
             } while (cursor.moveToNext());
@@ -400,7 +400,7 @@ public class ApiUploadService extends Service {
                 Draft d = new Draft();
                 d.fillFromCursor(cursor);
                 d.encrypt(encryptionUtils);
-                DraftBody draft = new DraftBody(d.id, d.conversationId, d.data, d.mimeType);
+                DraftBody draft = new DraftBody(d.getId(), d.getConversationId(), d.getData(), d.getMimeType());
 
                 drafts[cursor.getPosition()] = draft;
             } while (cursor.moveToNext());
@@ -435,7 +435,7 @@ public class ApiUploadService extends Service {
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)
                 .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                 .setOngoing(true);
         final NotificationManagerCompat manager = NotificationManagerCompat.from(this);
         startForeground(MESSAGE_UPLOAD_ID, builder.build());
@@ -467,10 +467,10 @@ public class ApiUploadService extends Service {
                 Message message = new Message();
                 message.fillFromCursor(media);
 
-                Log.v(TAG, "started uploading " + message.id);
+                Log.v(TAG, "started uploading " + message.getId());
 
-                byte[] bytes = BinaryUtils.getMediaBytes(this, message.data, message.mimeType, true);
-                apiUtils.uploadBytesToFirebase(account.getAccountId(), bytes, message.id, encryptionUtils, () -> {
+                byte[] bytes = BinaryUtils.getMediaBytes(this, message.getData(), message.getMimeType(), true);
+                apiUtils.uploadBytesToFirebase(account.getAccountId(), bytes, message.getId(), encryptionUtils, () -> {
                     completedMediaUploads++;
 
                     builder.setProgress(mediaCount, completedMediaUploads, false);

@@ -89,7 +89,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         String text = messageInput.getText().toString();
         if (!text.isEmpty() && sendButton.isEnabled()) {
             DataSource source = DataSource.INSTANCE;
-            source.insertDraft(this, conversationId, text, MimeType.TEXT_PLAIN);
+            source.insertDraft(this, conversationId, text, MimeType.INSTANCE.getTEXT_PLAIN());
         }
 
         hideKeyboard();
@@ -170,9 +170,9 @@ public class NotificationReplyActivity extends AppCompatActivity {
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
                     .showSoftInput(messageInput, InputMethodManager.SHOW_FORCED);
 
-            NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.id);
+            NotificationManagerCompat.from(NotificationReplyActivity.this).cancel((int) conversation.getId());
             ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
-                    Account.INSTANCE.getDeviceId(), conversation.id);
+                    Account.INSTANCE.getDeviceId(), conversation.getId());
         }, 300);
     }
 
@@ -191,7 +191,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 Message message = new Message();
                 message.fillFromCursor(cursor);
 
-                if (!MimeType.isExpandedMedia(message.mimeType)) {
+                if (!MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
                     messages.add(message);
                 }
             } while (cursor.moveToPrevious() && messages.size() < PREV_MESSAGES_TOTAL);
@@ -217,26 +217,26 @@ public class NotificationReplyActivity extends AppCompatActivity {
         tv.setTextColor(getResources().getColor(R.color.primaryText));
 
         String string;
-        if (message.type == Message.TYPE_RECEIVED) {
-            string = "<b>" + (message.from != null ? message.from : conversation.title) + ":</b> ";
+        if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
+            string = "<b>" + (message.getFrom() != null ? message.getFrom() : conversation.getTitle()) + ":</b> ";
         } else {
             string = getString(R.string.you) + ": ";
         }
 
-        if (MimeType.isAudio(message.mimeType)) {
+        if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
             string += "<i>" + getString(R.string.audio_message) + "</i>";
-        } else if (MimeType.isVideo(message.mimeType)) {
+        } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
             string += "<i>" + getString(R.string.video_message) + "</i>";
-        } else if (MimeType.isVcard(message.mimeType)) {
+        } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
             string += "<i>" + getString(R.string.contact_card) + "</i>";
-        } else if (MimeType.isStaticImage(message.mimeType)) {
+        } else if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
             string += "<i>" + getString(R.string.picture_message) + "</i>";
-        } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+        } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
             string += "<i>" + getString(R.string.gif_message) + "</i>";
-        } else if (MimeType.isExpandedMedia(message.mimeType)) {
+        } else if (MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
             string += "<i>" + getString(R.string.media) + "</i>";
         } else {
-            string += message.data;
+            string += message.getData();
         }
 
         tv.setText(Html.fromHtml(string));
@@ -252,17 +252,17 @@ public class NotificationReplyActivity extends AppCompatActivity {
     }
 
     private void showContactImage() {
-        if (conversation.imageUri == null) {
+        if (conversation.getImageUri() == null) {
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                image.setImageBitmap(ContactImageCreator.getLetterPicture(this, conversation));
+                image.setImageBitmap(ContactImageCreator.INSTANCE.getLetterPicture(this, conversation));
             } else if (Settings.get(this).useGlobalThemeColor) {
-                image.setImageDrawable(new ColorDrawable(Settings.get(this).mainColorSet.color));
+                image.setImageDrawable(new ColorDrawable(Settings.get(this).mainColorSet.getColor()));
             } else {
-                image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+                image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
         } else {
             Glide.with(this)
-                    .load(Uri.parse(conversation.imageUri))
+                    .load(Uri.parse(conversation.getImageUri()))
                     .into(image);
         }
     }
@@ -272,18 +272,18 @@ public class NotificationReplyActivity extends AppCompatActivity {
     private void setupSendBar() {
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            sendBar.setBackgroundColor(settings.mainColorSet.color);
-            conversationIndicator.setTextColor(settings.mainColorSet.color);
+            sendBar.setBackgroundColor(settings.mainColorSet.getColor());
+            conversationIndicator.setTextColor(settings.mainColorSet.getColor());
             conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
-                    .setTintList(ColorStateList.valueOf(settings.mainColorSet.color));
+                    .setTintList(ColorStateList.valueOf(settings.mainColorSet.getColor()));
         } else {
-            sendBar.setBackgroundColor(conversation.colors.color);
-            conversationIndicator.setTextColor(conversation.colors.color);
+            sendBar.setBackgroundColor(conversation.getColors().getColor());
+            conversationIndicator.setTextColor(conversation.getColors().getColor());
             conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
-                    .setTintList(ColorStateList.valueOf(conversation.colors.color));
+                    .setTintList(ColorStateList.valueOf(conversation.getColors().getColor()));
         }
 
-        conversationIndicator.setText(getString(R.string.conversation_with, conversation.title));
+        conversationIndicator.setText(getString(R.string.conversation_with, conversation.getTitle()));
         conversationIndicator.setOnClickListener(v -> scrollView.smoothScrollTo(0, 0));
 
         sendButton.setEnabled(false);
@@ -381,27 +381,27 @@ public class NotificationReplyActivity extends AppCompatActivity {
         final String message = messageInput.getText().toString().trim();
 
         final Message m = new Message();
-        m.conversationId = conversationId;
-        m.type = Message.TYPE_SENDING;
-        m.data = message;
-        m.timestamp = System.currentTimeMillis();
-        m.mimeType = MimeType.TEXT_PLAIN;
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+        m.setConversationId(conversationId);
+        m.setType(Message.Companion.getTYPE_SENDING());
+        m.setData(message);
+        m.setTimestamp(System.currentTimeMillis());
+        m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+        m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
         // we don't have to check zero length, since the button is disabled if zero length
         DataSource source = DataSource.INSTANCE;
-        final long messageId = source.insertMessage(this, m, m.conversationId, true);
+        final long messageId = source.insertMessage(this, m, m.getConversationId(), true);
         source.readConversation(this, conversationId);
 
         new Thread(() -> {
-            new SendUtils(conversation.simSubscriptionId)
-                    .send(NotificationReplyActivity.this, message,conversation.phoneNumbers);
+            new SendUtils(conversation.getSimSubscriptionId())
+                    .send(NotificationReplyActivity.this, message, conversation.getPhoneNumbers());
             MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
         }).start();
 

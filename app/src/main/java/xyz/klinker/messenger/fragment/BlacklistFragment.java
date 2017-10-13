@@ -85,9 +85,9 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
         emptyView = view.findViewById(R.id.empty_view);
 
         Settings settings = Settings.get(activity);
-        emptyView.setBackgroundColor(settings.mainColorSet.colorLight);
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.color);
+        emptyView.setBackgroundColor(settings.mainColorSet.getColorLight());
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+        ColorUtils.changeRecyclerOverscrollColors(list, settings.mainColorSet.getColor());
 
         return view;
     }
@@ -157,7 +157,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                         Blacklist blacklist = new Blacklist();
-                        blacklist.phoneNumber = cleared;
+                        blacklist.setPhoneNumber(cleared);
 
                         if (activity != null) {
                             DataSource.INSTANCE.insertBlacklist(activity, blacklist);
@@ -187,7 +187,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     @Override
     public void onClick(int position) {
         Blacklist blacklist = adapter.getItem(position);
-        removeBlacklist(blacklist.id, blacklist.phoneNumber);
+        removeBlacklist(blacklist.getId(), blacklist.getPhoneNumber());
     }
 
 }

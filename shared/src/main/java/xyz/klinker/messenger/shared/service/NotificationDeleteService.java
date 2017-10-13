@@ -43,8 +43,8 @@ public class NotificationDeleteService extends IntentService {
 
         if (latest == null) {
             source.deleteConversation(this, conversationId);
-        } else if (latest.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            source.updateConversation(this, conversationId, true, latest.timestamp, latest.data, latest.mimeType, false);
+        } else if (latest.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+            source.updateConversation(this, conversationId, true, latest.getTimestamp(), latest.getData(), latest.getMimeType(), false);
         }
 
         // cancel the notification we just replied to or
@@ -63,7 +63,7 @@ public class NotificationDeleteService extends IntentService {
                 conversationId);
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId,
-                (latest != null && latest.mimeType.equals(MimeType.TEXT_PLAIN)) ? latest.data : "",
+                (latest != null && latest.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) ? latest.getData() : "",
                 true);
 
         new UnreadBadger(this).writeCountFromDatabase();

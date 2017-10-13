@@ -131,8 +131,8 @@ public class ConversationListFragment extends Fragment
         loadConversations();
 
         Settings settings = Settings.get(activity);
-        empty.setBackgroundColor(settings.mainColorSet.colorLight);
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.mainColorSet.color);
+        empty.setBackgroundColor(settings.mainColorSet.getColorLight());
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.mainColorSet.getColor());
 
         multiSelector = new ConversationsMultiSelectDelegate(this);
 
@@ -372,7 +372,7 @@ public class ConversationListFragment extends Fragment
         deleteSnackbar.show();
 
         if (conversation != null) {
-            NotificationManagerCompat.from(activity).cancel((int) conversation.id);
+            NotificationManagerCompat.from(activity).cancel((int) conversation.getId());
         }
 
         // for some reason, if this is done immediately then the final snackbar will not be
@@ -391,7 +391,7 @@ public class ConversationListFragment extends Fragment
                 for (Conversation conversation : copiedList) {
                     if (conversation != null && activity != null) { // there are those blank convos that get populated with a new one
                         dataSource.deleteConversation(activity, conversation);
-                        SmsMmsUtils.deleteConversation(activity, conversation.phoneNumbers);
+                        SmsMmsUtils.deleteConversation(activity, conversation.getPhoneNumbers());
                     }
                 }
 
@@ -408,7 +408,7 @@ public class ConversationListFragment extends Fragment
 
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
         if (activity != null) {
-            dataSource.archiveConversation(activity, conversation.id);
+            dataSource.archiveConversation(activity, conversation.getId());
         }
     }
 
@@ -443,7 +443,7 @@ public class ConversationListFragment extends Fragment
         SnackbarAnimationFix.apply(archiveSnackbar);
         archiveSnackbar.show();
 
-        NotificationManagerCompat.from(activity).cancel((int) conversation.id);
+        NotificationManagerCompat.from(activity).cancel((int) conversation.getId());
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -486,25 +486,16 @@ public class ConversationListFragment extends Fragment
         new Thread(() -> {
             for (Conversation conversation : allConversations) {
                 boolean shouldRead = false;
-                switch (sectionType) {
-                    case SectionType.PINNED:
-                        shouldRead = conversation.pinned;
-                        break;
-                    case SectionType.TODAY:
-                        shouldRead = TimeUtils.isToday(conversation.timestamp);
-                        break;
-                    case SectionType.YESTERDAY:
-                        shouldRead = TimeUtils.isYesterday(conversation.timestamp);
-                        break;
-                    case SectionType.LAST_WEEK:
-                        shouldRead = TimeUtils.isLastWeek(conversation.timestamp);
-                        break;
-                    case SectionType.LAST_MONTH:
-                        shouldRead = TimeUtils.isLastMonth(conversation.timestamp);
-                        break;
-                    default:
-                        shouldRead = false;
-                        break;
+                if (sectionType == SectionType.Companion.getPINNED()) {
+                    shouldRead = conversation.getPinned();
+                } else if (sectionType == SectionType.Companion.getTODAY()) {
+                    shouldRead = TimeUtils.isToday(conversation.getTimestamp());
+                } else if (sectionType == SectionType.Companion.getYESTERDAY()) {
+                    shouldRead = TimeUtils.isYesterday(conversation.getTimestamp());
+                } else if (sectionType == SectionType.Companion.getLAST_WEEK()) {
+                    shouldRead = TimeUtils.isLastWeek(conversation.getTimestamp());
+                } else if (sectionType == SectionType.Companion.getLAST_MONTH()) {
+                    shouldRead = TimeUtils.isLastMonth(conversation.getTimestamp());
                 }
 
                 if (shouldRead) {
@@ -550,7 +541,7 @@ public class ConversationListFragment extends Fragment
 
         if (!Settings.get(activity).useGlobalThemeColor) {
             ActivityUtils.setTaskDescription(activity,
-                    viewHolder.conversation.title, viewHolder.conversation.colors.color);
+                    viewHolder.conversation.getTitle(), viewHolder.conversation.getColors().getColor());
         }
         
         checkUnreadCount();
@@ -597,10 +588,10 @@ public class ConversationListFragment extends Fragment
         }
 
         ColorSet color = Settings.get(activity).mainColorSet;
-        ColorUtils.adjustStatusBarColor(color.colorDark, activity);
-        ColorUtils.adjustDrawerColor(color.colorDark, activity);
+        ColorUtils.adjustStatusBarColor(color.getColorDark(), activity);
+        ColorUtils.adjustDrawerColor(color.getColorDark(), activity);
 
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.color);
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.getColor());
         ActivityUtils.setTaskDescription(activity);
 
         if (updateInfo != null) {
@@ -638,7 +629,7 @@ public class ConversationListFragment extends Fragment
 
     public long getExpandedId() {
         if (expandedConversation != null) {
-            return expandedConversation.conversation.id;
+            return expandedConversation.conversation.getId();
         } else {
             return 0;
         }
@@ -653,16 +644,16 @@ public class ConversationListFragment extends Fragment
             return;
         }
 
-        expandedConversation.conversation.timestamp = m.timestamp;
-        expandedConversation.conversation.read = m.read;
+        expandedConversation.conversation.setTimestamp(m.getTimestamp());
+        expandedConversation.conversation.setRead(m.getRead());
 
-        if (m.mimeType != null && m.mimeType.equals("text/plain")) {
-            expandedConversation.conversation.snippet = m.data;
-            expandedConversation.summary.setText(m.data);
+        if (m.getMimeType() != null && m.getMimeType().equals("text/plain")) {
+            expandedConversation.conversation.setSnippet(m.getData());
+            expandedConversation.summary.setText(m.getData());
         }
 
         setConversationUpdateInfo(new ConversationUpdateInfo(
-                expandedConversation.conversation.id, getString(R.string.you) + ": " + m.data, true));
+                expandedConversation.conversation.getId(), getString(R.string.you) + ": " + m.getData(), true));
     }
 
     public ConversationListAdapter getAdapter() {

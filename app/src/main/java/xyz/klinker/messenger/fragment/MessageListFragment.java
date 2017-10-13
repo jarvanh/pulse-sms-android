@@ -257,17 +257,17 @@ public class MessageListFragment extends Fragment implements
         MessageListFragment fragment = new MessageListFragment();
 
         Bundle args = new Bundle();
-        args.putString(ARG_TITLE, conversation.title);
-        args.putString(ARG_PHONE_NUMBERS, conversation.phoneNumbers);
-        args.putInt(ARG_COLOR, conversation.colors.color);
-        args.putInt(ARG_COLOR_DARKER, conversation.colors.colorDark);
-        args.putInt(ARG_COLOR_ACCENT, conversation.colors.colorAccent);
+        args.putString(ARG_TITLE, conversation.getTitle());
+        args.putString(ARG_PHONE_NUMBERS, conversation.getPhoneNumbers());
+        args.putInt(ARG_COLOR, conversation.getColors().getColor());
+        args.putInt(ARG_COLOR_DARKER, conversation.getColors().getColorDark());
+        args.putInt(ARG_COLOR_ACCENT, conversation.getColors().getColorAccent());
         args.putBoolean(ARG_IS_GROUP, conversation.isGroup());
-        args.putLong(ARG_CONVERSATION_ID, conversation.id);
-        args.putBoolean(ARG_MUTE_CONVERSATION, conversation.mute);
-        args.putBoolean(ARG_READ, conversation.read);
-        args.putString(ARG_IMAGE_URI, conversation.imageUri);
-        args.putBoolean(ARG_IS_ARCHIVED, conversation.archive);
+        args.putLong(ARG_CONVERSATION_ID, conversation.getId());
+        args.putBoolean(ARG_MUTE_CONVERSATION, conversation.getMute());
+        args.putBoolean(ARG_READ, conversation.getRead());
+        args.putString(ARG_IMAGE_URI, conversation.getImageUri());
+        args.putBoolean(ARG_IS_ARCHIVED, conversation.getArchive());
         args.putBoolean(ARG_LIMIT_MESSAGES, limitMessages);
 
         if (messageToOpenId != -1) {
@@ -462,7 +462,7 @@ public class MessageListFragment extends Fragment implements
             }
 
             source.insertDraft(activity, getConversationId(),
-                    messageEntry.getText().toString(), MimeType.TEXT_PLAIN);
+                    messageEntry.getText().toString(), MimeType.INSTANCE.getTEXT_PLAIN());
         } else if (messageEntry.getText() != null && messageEntry.getText().length() == 0 && textChanged) {
             if (drafts.size() > 0) {
                 source.deleteDrafts(activity, getConversationId());
@@ -506,11 +506,11 @@ public class MessageListFragment extends Fragment implements
 
         Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.mainColorSet.color);
-            send.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-            messageEntry.setHighlightColor(settings.mainColorSet.colorAccent);
+            toolbar.setBackgroundColor(settings.mainColorSet.getColor());
+            send.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+            messageEntry.setHighlightColor(settings.mainColorSet.getColorAccent());
         }
 
         if (bundle == null) {
@@ -811,8 +811,8 @@ public class MessageListFragment extends Fragment implements
         boolean colorButtonsDark = false;
         Settings settings = Settings.get(activity);
         if (settings.useGlobalThemeColor) {
-            attachButtonHolder.setBackgroundColor(settings.mainColorSet.color);
-            if (!ColorUtils.isColorDark(settings.mainColorSet.color)) {
+            attachButtonHolder.setBackgroundColor(settings.mainColorSet.getColor());
+            if (!ColorUtils.isColorDark(settings.mainColorSet.getColor())) {
                 colorButtonsDark = true;
             }
         } else {
@@ -894,7 +894,7 @@ public class MessageListFragment extends Fragment implements
                                 activity, true, true, true, false),
                         true)
                 .setHandleColour(settings.useGlobalThemeColor ?
-                        settings.mainColorSet.color : getArguments().getInt(ARG_COLOR))
+                        settings.mainColorSet.getColor() : getArguments().getInt(ARG_COLOR))
                 .setFastScrollSnapPercent(.05f);
 
         messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -1123,7 +1123,7 @@ public class MessageListFragment extends Fragment implements
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
                     Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.colorAccent :
+                            Settings.get(activity).mainColorSet.getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
@@ -1138,27 +1138,27 @@ public class MessageListFragment extends Fragment implements
 
     private void setDrafts(List<Draft> drafts) {
         for (Draft draft : drafts) {
-            if (draft.mimeType.equals(MimeType.TEXT_PLAIN)) {
+            if (draft.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
                 textChanged = true;
-                messageEntry.setText(draft.data);
+                messageEntry.setText(draft.getData());
                 messageEntry.setSelection(messageEntry.getText().length());
-            } else if (MimeType.isStaticImage(draft.mimeType)) {
-                attachImage(Uri.parse(draft.data));
-            } else if (draft.mimeType.equals(MimeType.IMAGE_GIF)) {
-                attachImage(Uri.parse(draft.data));
-                attachedMimeType = draft.mimeType;
+            } else if (MimeType.INSTANCE.isStaticImage(draft.getMimeType())) {
+                attachImage(Uri.parse(draft.getData()));
+            } else if (draft.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
+                attachImage(Uri.parse(draft.getData()));
+                attachedMimeType = draft.getMimeType();
                 editImage.setVisibility(View.GONE);
-            } else if (draft.mimeType.contains("audio/")) {
-                attachAudio(Uri.parse(draft.data));
-                attachedMimeType = draft.mimeType;
+            } else if (draft.getMimeType().contains("audio/")) {
+                attachAudio(Uri.parse(draft.getData()));
+                attachedMimeType = draft.getMimeType();
                 editImage.setVisibility(View.GONE);
-            } else if (draft.mimeType.contains("video/")) {
-                attachImage(Uri.parse(draft.data));
-                attachedMimeType = draft.mimeType;
+            } else if (draft.getMimeType().contains("video/")) {
+                attachImage(Uri.parse(draft.getData()));
+                attachedMimeType = draft.getMimeType();
                 editImage.setVisibility(View.GONE);
-            } else if (draft.mimeType.equals(MimeType.TEXT_VCARD)) {
-                attachContact(Uri.parse(draft.data));
-                attachedMimeType = draft.mimeType;
+            } else if (draft.getMimeType().equals(MimeType.INSTANCE.getTEXT_VCARD())) {
+                attachContact(Uri.parse(draft.getData()));
+                attachedMimeType = draft.getMimeType();
                 editImage.setVisibility(View.GONE);
             }
         }
@@ -1250,26 +1250,26 @@ public class MessageListFragment extends Fragment implements
 
         final String message = messageEntry.getText().toString().trim();
         final String mimeType = attachedMimeType != null ?
-                attachedMimeType : MimeType.TEXT_PLAIN;
+                attachedMimeType : MimeType.INSTANCE.getTEXT_PLAIN();
 
         if ((message.length() > 0 || uris.size() > 0) && activity != null) {
             Conversation conversation = source.getConversation(activity, getConversationId());
 
             final Message m = new Message();
-            m.conversationId = getConversationId();
-            m.type = Message.TYPE_SENDING;
-            m.data = message;
-            m.timestamp = System.currentTimeMillis();
-            m.mimeType = MimeType.TEXT_PLAIN;
-            m.read = true;
-            m.seen = true;
-            m.from = null;
-            m.color = null;
-            m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
-                    DualSimUtils.get(activity).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-            m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+            m.setConversationId(getConversationId());
+            m.setType(Message.Companion.getTYPE_SENDING());
+            m.setData(message);
+            m.setTimestamp(System.currentTimeMillis());
+            m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+            m.setRead(true);
+            m.setSeen(true);
+            m.setFrom(null);
+            m.setColor(null);
+            m.setSimPhoneNumber(conversation != null && conversation.getSimSubscriptionId() != null ?
+                    DualSimUtils.get(activity).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+            m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
-            if (adapter != null && adapter.getItemViewType(0) == Message.TYPE_INFO) {
+            if (adapter != null && adapter.getItemViewType(0) == Message.Companion.getTYPE_INFO()) {
                 source.deleteMessage(activity, adapter.getItemId(0));
             }
 
@@ -1291,46 +1291,46 @@ public class MessageListFragment extends Fragment implements
             boolean loadMessages = false;
 
             if (message.length() != 0) {
-                source.insertMessage(activity, m, m.conversationId);
+                source.insertMessage(activity, m, m.getConversationId());
                 loadMessages = true;
             }
 
             if (uris.size() > 0) {
-                m.data = uris.get(0).toString();
-                m.mimeType = mimeType;
+                m.setData(uris.get(0).toString());
+                m.setMimeType(mimeType);
 
-                if (m.id != 0) {
-                    m.id = 0;
+                if (m.getId() != 0) {
+                    m.setId(0);
                 }
 
-                m.id = source.insertMessage(activity, m, m.conversationId, true);
+                m.setId(source.insertMessage(activity, m, m.getConversationId(), true));
 
                 loadMessages = true;
             }
 
             new Thread(() -> {
-                Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                Uri imageUri = new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
                         .setForceNoSignature(forceNoSignature)
                         .send(activity, message, getArguments().getString(ARG_PHONE_NUMBERS),
                                 uris.size() > 0 ? uris.get(0) : null, mimeType);
-                MarkAsSentJob.Companion.scheduleNextRun(activity, m.id);
+                MarkAsSentJob.Companion.scheduleNextRun(activity, m.getId());
 
                 if (imageUri != null && activity != null) {
-                    source.updateMessageData(activity, m.id, imageUri.toString());
+                    source.updateMessageData(activity, m.getId(), imageUri.toString());
                 }
             }).start();
 
             if (uris.size() > 1) {
                 for (int i = 1; i < uris.size(); i++) {
                     final Uri sendUri = uris.get(i);
-                    m.data = sendUri.toString();
-                    m.mimeType = mimeType;
-                    m.id = 0;
+                    m.setData(sendUri.toString());
+                    m.setMimeType(mimeType);
+                    m.setId(0);
 
-                    final long newId = source.insertMessage(activity, m, m.conversationId, true);
+                    final long newId = source.insertMessage(activity, m, m.getConversationId(), true);
 
                     new Thread(() -> {
-                        Uri imageUri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+                        Uri imageUri = new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
                                 .setForceNoSignature(forceNoSignature)
                                 .send(activity, message, getArguments().getString(ARG_PHONE_NUMBERS),
                                         sendUri, mimeType);
@@ -1375,7 +1375,7 @@ public class MessageListFragment extends Fragment implements
                     attachHolder != null) {
                 attachHolder.addView(new AttachImageView(activity, this,
                         Settings.get(activity).useGlobalThemeColor ?
-                                Settings.get(activity).mainColorSet.color :
+                                Settings.get(activity).mainColorSet.getColor() :
                                 getArguments().getInt(ARG_COLOR)));
             } else {
                 attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
@@ -1425,7 +1425,7 @@ public class MessageListFragment extends Fragment implements
                 .showPortraitWarning(false);
 
         if (Settings.get(activity).useGlobalThemeColor) {
-            camera.primaryColor(Settings.get(activity).mainColorSet.color);
+            camera.primaryColor(Settings.get(activity).mainColorSet.getColor());
         } else {
             camera.primaryColor(getArguments().getInt(ARG_COLOR));
         }
@@ -1449,7 +1449,7 @@ public class MessageListFragment extends Fragment implements
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new RecordAudioView(activity, this,
                     Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.colorAccent :
+                            Settings.get(activity).mainColorSet.getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1473,7 +1473,7 @@ public class MessageListFragment extends Fragment implements
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachLocationView(activity, this, this,
                     Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.colorAccent :
+                            Settings.get(activity).mainColorSet.getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
@@ -1492,7 +1492,7 @@ public class MessageListFragment extends Fragment implements
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachContactView(activity, this,
                     Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.color :
+                            Settings.get(activity).mainColorSet.getColor() :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1539,7 +1539,7 @@ public class MessageListFragment extends Fragment implements
             if (resultCode == RESULT_OK) {
                 Log.v("video result", "saved to " + data.getDataString());
                 attachImage(data.getData());
-                attachedMimeType = MimeType.VIDEO_MP4;
+                attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
                 editImage.setVisibility(View.GONE);
 
                 selectedImageUris.clear();
@@ -1555,7 +1555,7 @@ public class MessageListFragment extends Fragment implements
             if (resultCode == RESULT_OK) {
                 Log.v("gif result", "saved to " + data.getDataString());
                 attachImage(data.getData());
-                attachedMimeType = MimeType.IMAGE_GIF;
+                attachedMimeType = MimeType.INSTANCE.getIMAGE_GIF();
                 editImage.setVisibility(View.GONE);
 
                 selectedImageUris.clear();
@@ -1566,14 +1566,14 @@ public class MessageListFragment extends Fragment implements
             onBackPressed();
             Uri uri = data.getData();
             String uriString = data.getDataString();
-            String mimeType = MimeType.IMAGE_JPEG;
+            String mimeType = MimeType.INSTANCE.getIMAGE_JPEG();
             if (uriString.contains("content://")) {
                 mimeType = activity.getContentResolver().getType(uri);
             }
 
             attachImage(uri);
-            if (mimeType != null && mimeType.equals(MimeType.IMAGE_GIF)) {
-                attachedMimeType = MimeType.IMAGE_GIF;
+            if (mimeType != null && mimeType.equals(MimeType.INSTANCE.getIMAGE_GIF())) {
+                attachedMimeType = MimeType.INSTANCE.getIMAGE_GIF();
                 editImage.setVisibility(View.GONE);
             }
 
@@ -1647,7 +1647,7 @@ public class MessageListFragment extends Fragment implements
             onBackPressed();
         }
 
-        if (MimeType.isStaticImage(mimeType)) {
+        if (MimeType.INSTANCE.isStaticImage(mimeType)) {
             if (!selectedImageUris.contains(uri.toString())) {
                 attachImage(uri);
                 selectedImageUris.add(uri.toString());
@@ -1671,7 +1671,7 @@ public class MessageListFragment extends Fragment implements
                 selectedImageCount.setVisibility(View.GONE);
                 editImage.setVisibility(View.VISIBLE);
             }
-        } else if (MimeType.isVideo(mimeType)) {
+        } else if (MimeType.INSTANCE.isVideo(mimeType)) {
             startVideoEncoding(uri);
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
@@ -1679,9 +1679,9 @@ public class MessageListFragment extends Fragment implements
             if (attachHolder.getVisibility() == View.VISIBLE) {
                 attach.performClick();
             }
-        } else if (mimeType.equals(MimeType.IMAGE_GIF)) {
+        } else if (mimeType.equals(MimeType.INSTANCE.getIMAGE_GIF())) {
             attachImage(uri);
-            attachedMimeType = MimeType.IMAGE_GIF;
+            attachedMimeType = MimeType.INSTANCE.getIMAGE_GIF();
             editImage.setVisibility(View.GONE);
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
@@ -1752,7 +1752,7 @@ public class MessageListFragment extends Fragment implements
 
         clearAttachedData();
         attachedUri = uri;
-        attachedMimeType = MimeType.IMAGE_JPG;
+        attachedMimeType = MimeType.INSTANCE.getIMAGE_JPG();
 
         attachedImageHolder.setVisibility(View.VISIBLE);
 
@@ -1774,7 +1774,7 @@ public class MessageListFragment extends Fragment implements
     private void attachAudio(Uri uri) {
         clearAttachedData();
         attachedUri = uri;
-        attachedMimeType = MimeType.AUDIO_MP4;
+        attachedMimeType = MimeType.INSTANCE.getAUDIO_MP4();
         editImage.setVisibility(View.GONE);
 
         attachedImageHolder.setVisibility(View.VISIBLE);
@@ -1785,7 +1785,7 @@ public class MessageListFragment extends Fragment implements
     private void attachContact(Uri uri) {
         clearAttachedData();
         attachedUri = uri;
-        attachedMimeType = MimeType.TEXT_VCARD;
+        attachedMimeType = MimeType.INSTANCE.getTEXT_VCARD();
         editImage.setVisibility(View.GONE);
 
         attachedImageHolder.setVisibility(View.VISIBLE);
@@ -1901,7 +1901,7 @@ public class MessageListFragment extends Fragment implements
         File original = new File(uri.getPath());
         if (original.length() < MmsSettings.get(activity).maxImageSize) {
             attachImage(uri);
-            attachedMimeType = MimeType.VIDEO_MP4;
+            attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
             editImage.setVisibility(View.GONE);
         } else {
             final File file;
@@ -1959,7 +1959,7 @@ public class MessageListFragment extends Fragment implements
                 @Override
                 public void onTranscodeCompleted() {
                     attachImage(ImageUtils.createContentUri(activity, file));
-                    attachedMimeType = MimeType.VIDEO_MP4;
+                    attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
                     editImage.setVisibility(View.GONE);
 
                     try {
@@ -1980,16 +1980,16 @@ public class MessageListFragment extends Fragment implements
     public boolean onCommitContent(InputContentInfoCompat inputContentInfo, int flags, Bundle opts) {
         String mime = inputContentInfo.getDescription().getMimeType(0);
 
-        if (mime.equals(MimeType.IMAGE_GIF)) {
+        if (mime.equals(MimeType.INSTANCE.getIMAGE_GIF())) {
             attachImage(inputContentInfo.getContentUri());
-            attachedMimeType = MimeType.IMAGE_GIF;
+            attachedMimeType = MimeType.INSTANCE.getIMAGE_GIF();
             editImage.setVisibility(View.GONE);
         } else if (mime.contains("image/")) {
             attachImage(inputContentInfo.getContentUri());
-            attachedMimeType = MimeType.IMAGE_PNG;
-        } else if (mime.contains(MimeType.VIDEO_MP4)) {
+            attachedMimeType = MimeType.INSTANCE.getIMAGE_PNG();
+        } else if (mime.contains(MimeType.INSTANCE.getVIDEO_MP4())) {
             attachImage(inputContentInfo.getContentUri());
-            attachedMimeType = MimeType.VIDEO_MP4;
+            attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
             editImage.setVisibility(View.GONE);
         }
 

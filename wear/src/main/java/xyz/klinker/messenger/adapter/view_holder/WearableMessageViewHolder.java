@@ -100,7 +100,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         }
 
         if ((color != -1 && messageHolder != null) ||
-                settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
+                settings.useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
             if (settings.useGlobalThemeColor) {
                 color = Settings.get(itemView.getContext()).mainColorSet.color;
             }
@@ -119,7 +119,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
 
         if (image != null) {
             image.setOnClickListener(v -> {
-                if (mimeType != null && MimeType.isVcard(mimeType)) {
+                if (mimeType != null && MimeType.INSTANCE.isVcard(mimeType)) {
                     Uri uri = Uri.parse(message.getText().toString());
                     if (message.getText().toString().contains("file://")) {
                         uri = ImageUtils.createContentUri(itemView.getContext(), uri);
@@ -127,14 +127,14 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setDataAndType(uri, MimeType.TEXT_VCARD);
+                    intent.setDataAndType(uri, MimeType.INSTANCE.getTEXT_VCARD());
                     itemView.getContext().startActivity(intent);
-                } else if (mimeType != null && mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
+                } else if (mimeType != null && mimeType.equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
 //                        YouTubePreview preview = YouTubePreview.build(data);
 //                        if (preview != null) {
 //                            itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
 //                        }
-                } else if (mimeType != null && mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                } else if (mimeType != null && mimeType.equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
                     startArticle();
                 } else {
 //                    Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
@@ -170,9 +170,9 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
                 .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
                 .build();
 
-        ArticlePreview preview = ArticlePreview.build(data);
+        ArticlePreview preview = ArticlePreview.Companion.build(data);
         if (preview != null) {
-            intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+            intent.launchUrl(itemView.getContext(), Uri.parse(preview.getWebUrl()));
         }
     }
 }

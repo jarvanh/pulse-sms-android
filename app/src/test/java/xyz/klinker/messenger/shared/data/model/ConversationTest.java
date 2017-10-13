@@ -50,13 +50,13 @@ public class ConversationTest {
 
     @Test
     public void isGroup() {
-        conversation.phoneNumbers = "1, 2, 3";
+        conversation.setPhoneNumbers("1, 2, 3");
         assertTrue(conversation.isGroup());
     }
 
     @Test
     public void isNotGroup() {
-        conversation.phoneNumbers = "1";
+        conversation.setPhoneNumbers("1");
         assertFalse(conversation.isGroup());
     }
 

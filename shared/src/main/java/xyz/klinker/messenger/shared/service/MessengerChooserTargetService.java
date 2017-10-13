@@ -69,11 +69,11 @@ public class MessengerChooserTargetService extends ChooserTargetService {
         Conversation conversation = new Conversation();
         conversation.fillFromCursor(cursor);
 
-        Bitmap image = ImageUtils.getBitmap(this, conversation.imageUri);
+        Bitmap image = ImageUtils.getBitmap(this, conversation.getImageUri());
 
         final Icon targetIcon;
         if (image == null) {
-            Bitmap color = ContactImageCreator.getLetterPicture(this, conversation);
+            Bitmap color = ContactImageCreator.INSTANCE.getLetterPicture(this, conversation);
             targetIcon = Icon.createWithBitmap(color);
         } else {
             targetIcon = Icon.createWithBitmap(ImageUtils.clipToCircle(image));
@@ -83,9 +83,9 @@ public class MessengerChooserTargetService extends ChooserTargetService {
 //                ((float) (cursor.getCount() - cursor.getPosition() + 1) / (cursor.getCount() + 1.0f));
         final Bundle targetExtras = new Bundle();
         targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
-                cursor.getColumnIndex(Conversation.COLUMN_ID)));
+                cursor.getColumnIndex(Conversation.Companion.getCOLUMN_ID())));
 
-        return new ChooserTarget(conversation.title, targetIcon, 1.0f,
+        return new ChooserTarget(conversation.getTitle(), targetIcon, 1.0f,
                 componentName, targetExtras);
 
     }

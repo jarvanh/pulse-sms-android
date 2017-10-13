@@ -32,7 +32,7 @@ public class ArticleParser extends MediaParser {
 
     @Override
     protected String getMimeType() {
-        return MimeType.MEDIA_ARTICLE;
+        return MimeType.INSTANCE.getMEDIA_ARTICLE();
     }
 
     @Override
@@ -40,12 +40,12 @@ public class ArticleParser extends MediaParser {
         ArticleUtils utils = new ArticleUtils(ARTICLE_API_KEY);
         Article article = utils.fetchArticle(context, matchedText);
 
-        ArticlePreview preview = ArticlePreview.build(article);
+        ArticlePreview preview = ArticlePreview.Companion.build(article);
         return preview != null && article != null && article.isArticle && article.image != null &&
                 article.title != null && !article.title.isEmpty() &&
                 article.description != null && !article.description.isEmpty() &&
-                preview.title != null && !preview.title.isEmpty() &&
-                preview.description != null && !preview.description.isEmpty() ?
+                preview.getTitle() != null && !preview.getTitle().isEmpty() &&
+                preview.getDescription() != null && !preview.getDescription().isEmpty() ?
 
                 preview.toString() : null;
     }

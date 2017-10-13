@@ -58,13 +58,13 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         ColorSet set = Settings.get(context).mainColorSet;
         endMark = context.getDrawable(R.drawable.ic_archive);
 
-        if (set.colorLight == Color.WHITE) {
-            endSwipeBackground = new ColorDrawable(set.colorDark);
+        if (set.getColorLight() == Color.WHITE) {
+            endSwipeBackground = new ColorDrawable(set.getColorDark());
         } else {
-            endSwipeBackground = new ColorDrawable(set.colorLight);
+            endSwipeBackground = new ColorDrawable(set.getColorLight());
         }
 
-        if (ColorUtils.isColorDark(set.colorLight)) {
+        if (ColorUtils.isColorDark(set.getColorLight())) {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));
@@ -75,13 +75,13 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
         ColorSet set = Settings.get(context).mainColorSet;
         startMark = getArchiveItem(context);
 
-        if (set.colorLight == Color.WHITE) {
-            startSwipeBackground = new ColorDrawable(set.colorDark);
+        if (set.getColorLight() == Color.WHITE) {
+            startSwipeBackground = new ColorDrawable(set.getColorDark());
         } else {
-            startSwipeBackground = new ColorDrawable(set.colorLight);
+            startSwipeBackground = new ColorDrawable(set.getColorLight());
         }
 
-        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.colorLight)) {
+        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.getColorLight())) {
             startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));

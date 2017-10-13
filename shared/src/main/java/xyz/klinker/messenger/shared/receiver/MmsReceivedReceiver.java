@@ -118,35 +118,35 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
             for (ContentValues value : values) {
                 Message message = new Message();
-                message.type = value.getAsInteger(Message.COLUMN_TYPE);
-                message.data = value.getAsString(Message.COLUMN_DATA).trim();
-                message.timestamp = value.getAsLong(Message.COLUMN_TIMESTAMP);
-                message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE);
-                message.read = false;
-                message.seen = false;
-                message.from = ContactUtils.findContactNames(from, context);
-                message.simPhoneNumber = DualSimUtils.get(context).getAvailableSims().isEmpty() ? null : to;
-                message.sentDeviceId = -1L;
+                message.setType(value.getAsInteger(Message.Companion.getCOLUMN_TYPE()));
+                message.setData(value.getAsString(Message.Companion.getCOLUMN_DATA()).trim());
+                message.setTimestamp(value.getAsLong(Message.Companion.getCOLUMN_TIMESTAMP()));
+                message.setMimeType(value.getAsString(Message.Companion.getCOLUMN_MIME_TYPE()));
+                message.setRead(false);
+                message.setSeen(false);
+                message.setFrom(ContactUtils.findContactNames(from, context));
+                message.setSimPhoneNumber(DualSimUtils.get(context).getAvailableSims().isEmpty() ? null : to);
+                message.setSentDeviceId(-1L);
 
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    snippet = message.data;
+                if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                    snippet = message.getData();
                 }
 
                 if (!phoneNumbers.contains(",")) {
-                    message.from = null;
+                    message.setFrom(null);
                 }
 
                 if (SmsReceivedReceiver.shouldSaveMessages(context, source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
 
                     Conversation conversation = source.getConversation(context, conversationId);
-                    if (conversation != null && conversation.mute) {
+                    if (conversation != null && conversation.getMute()) {
                         source.seenConversation(context, conversationId);
                         ignoreNotification = true;
                     }
 
                     if (MmsSettings.get(context).autoSaveMedia &&
-                            !MimeType.TEXT_PLAIN.equals(message.mimeType)) {
+                            !MimeType.INSTANCE.getTEXT_PLAIN().equals(message.getMimeType())) {
                         try {
                             new MediaSaver(context).saveMedia(message);
                         } catch (Exception e) {
@@ -173,18 +173,18 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
     @VisibleForTesting
     protected String getPhoneNumbers(String from, String to, List<String> myPossiblePhoneNumbers, Context context) {
         String[] toNumbers = to.split(", ");
-        String fromMatcher = SmsMmsUtils.createIdMatcher(from).sevenLetterNoFormatting;
+        String fromMatcher = SmsMmsUtils.createIdMatcher(from).getSevenLetterNoFormatting();
 
         StringBuilder builder = new StringBuilder();
         
         for (String number : toNumbers) {
             String contactName = ContactUtils.findContactNames(number, context);
-            String idMatcher = SmsMmsUtils.createIdMatcher(number).sevenLetterNoFormatting;
+            String idMatcher = SmsMmsUtils.createIdMatcher(number).getSevenLetterNoFormatting();
 
             boolean matchesFromNumber = idMatcher.equals(fromMatcher);
             boolean matchesMyNumber = false;
             for (String myNumber : myPossiblePhoneNumbers) {
-                String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetterNoFormatting;
+                String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).getSevenLetterNoFormatting();
                 if (myIdMatcher.equals(idMatcher)) {
                     matchesMyNumber = true;
                 }
@@ -212,11 +212,11 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
 
     private boolean isReceivingMessageFromThemself(Context context, String from) {
         List<String> myPossiblePhoneNumbers = PhoneNumberUtils.getMyPossiblePhoneNumbers(context);
-        String fromMatcher = SmsMmsUtils.createIdMatcher(from).sevenLetter;
+        String fromMatcher = SmsMmsUtils.createIdMatcher(from).getSevenLetter();
 
         boolean myNumberMatches = false;
         for (String myNumber : myPossiblePhoneNumbers) {
-            String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).sevenLetter;
+            String myIdMatcher = SmsMmsUtils.createIdMatcher(myNumber).getSevenLetter();
             if (myIdMatcher.equals(fromMatcher)) {
                 myNumberMatches = true;
             }

@@ -112,7 +112,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         if (messageId != -1) {
             for (int i = 0; i < messages.size(); i++) {
-                if (messages.get(i).id == messageId) {
+                if (messages.get(i).getId() == messageId) {
                     viewPager.setCurrentItem(i, false);
                     break;
                 }
@@ -170,13 +170,13 @@ public class ImageViewerActivity extends AppCompatActivity {
 
     private void shareMessage(Message message) {
         Uri contentUri =
-                ImageUtils.createContentUri(this, Uri.parse(message.data));
+                ImageUtils.createContentUri(this, Uri.parse(message.getData()));
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        shareIntent.setType(message.mimeType);
+        shareIntent.setType(message.getMimeType());
         startActivity(Intent.createChooser(shareIntent,
                 getResources().getText(R.string.share_content)));
     }

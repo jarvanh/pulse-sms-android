@@ -34,18 +34,18 @@ public class DraftFillTest extends MessengerRobolectricSuite {
         cursor.moveToFirst();
         draft.fillFromCursor(cursor);
 
-        assertEquals(1, draft.id);
-        assertEquals(1, draft.conversationId);
-        assertEquals("Do you want to go to summerfest this weekend?", draft.data);
-        assertEquals("text/plain", draft.mimeType);
+        assertEquals(1, draft.getId());
+        assertEquals(1, draft.getConversationId());
+        assertEquals("Do you want to go to summerfest this weekend?", draft.getData());
+        assertEquals("text/plain", draft.getMimeType());
     }
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Draft.COLUMN_ID,
-                Draft.COLUMN_CONVERSATION_ID,
-                Draft.COLUMN_DATA,
-                Draft.COLUMN_MIME_TYPE
+                Draft.Companion.getCOLUMN_ID(),
+                Draft.Companion.getCOLUMN_CONVERSATION_ID(),
+                Draft.Companion.getCOLUMN_DATA(),
+                Draft.Companion.getCOLUMN_MIME_TYPE()
         });
 
         cursor.addRow(new Object[]{

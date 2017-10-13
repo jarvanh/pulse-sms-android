@@ -37,14 +37,14 @@ class DynamicShortcutUtils(private val context: Context) {
                 val category = HashSet<String>()
                 category.add("android.shortcut.conversation")
 
-                val id = if (conversation.title == null || conversation.title.isEmpty())
+                val id = if (conversation.title == null || conversation.title!!.isEmpty())
                     conversation.id.toString() + ""
                 else conversation.title
 
                 val info = ShortcutInfo.Builder(context, id)
                         .setIntent(messenger)
                         .setRank(infos.size)
-                        .setShortLabel(if (conversation.title.isEmpty()) "No title" else conversation.title)
+                        .setShortLabel(if (conversation.title?.isEmpty() == true) "No title" else conversation.title)
                         .setCategories(category)
                         .setIcon(getIcon(conversation))
                         .build()

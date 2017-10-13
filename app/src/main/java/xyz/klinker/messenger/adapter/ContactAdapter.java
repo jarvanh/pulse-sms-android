@@ -81,22 +81,22 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
         holder.conversation = conversation;
 
         Settings settings = Settings.get(holder.itemView.getContext());
-        if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
+        if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (settings.useGlobalThemeColor) {
-                if (settings.mainColorSet.colorLight == Color.WHITE) {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorDark));
+                if (settings.mainColorSet.getColorLight()== Color.WHITE) {
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorDark()));
                 } else {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.colorLight));
+                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorLight()));
                 }
-            } else if (conversation.colors.color == Color.WHITE) {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.colorDark));
+            } else if (conversation.getColors().getColor() == Color.WHITE) {
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.colors.color;
+            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColors().getColor();
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                holder.imageLetter.setText(conversation.title.substring(0, 1));
+                holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
                 }
@@ -114,7 +114,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                         holder.groupIcon.setVisibility(View.VISIBLE);
                     }
 
-                    if (conversation.phoneNumbers.contains(",")) {
+                    if (conversation.getPhoneNumbers().contains(",")) {
                         holder.groupIcon.setImageResource(R.drawable.ic_group);
                     } else {
                         holder.groupIcon.setImageResource(R.drawable.ic_person);
@@ -128,8 +128,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 }
             }
         } else {
-            if (!conversation.imageUri.endsWith("/photo")) {
-                conversation.imageUri = conversation.imageUri + "/photo";
+            if (!conversation.getImageUri().endsWith("/photo")) {
+                conversation.setImageUri(conversation.getImageUri() + "/photo");
             }
 
             holder.imageLetter.setText(null);
@@ -138,12 +138,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
             }
 
             Glide.with(holder.image.getContext())
-                    .load(Uri.parse(conversation.imageUri))
+                    .load(Uri.parse(conversation.getImageUri()))
                     .into(holder.image);
         }
 
-        holder.name.setText(conversation.title);
-        holder.summary.setText(PhoneNumberUtils.format(conversation.phoneNumbers));
+        holder.name.setText(conversation.getTitle());
+        holder.summary.setText(PhoneNumberUtils.format(conversation.getPhoneNumbers()));
     }
 
     @Override

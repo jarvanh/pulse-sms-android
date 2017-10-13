@@ -83,7 +83,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
                         .setBigContentTitle(getString(R.string.no_subscription_found))
                         .setSummaryText(getString(R.string.cancelled_subscription_error)))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setColor(ColorSet.DEFAULT(this).color);
+                .setColor(ColorSet.Companion.DEFAULT(this).getColor());
 
         Intent renew = new Intent(this, RedirectToMyAccount.class);
 

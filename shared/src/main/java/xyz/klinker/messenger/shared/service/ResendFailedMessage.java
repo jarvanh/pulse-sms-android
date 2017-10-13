@@ -39,28 +39,28 @@ public class ResendFailedMessage extends IntentService {
             return;
         }
 
-        Conversation conversation = source.getConversation(this, original.conversationId);
+        Conversation conversation = source.getConversation(this, original.getConversationId());
 
         Message m = new Message();
-        m.conversationId = original.conversationId;
-        m.type = Message.TYPE_SENDING;
-        m.data = original.data;
-        m.timestamp = original.timestamp;
-        m.mimeType = original.mimeType;
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(this)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+        m.setConversationId(original.getConversationId());
+        m.setType(Message.Companion.getTYPE_SENDING());
+        m.setData(original.getData());
+        m.setTimestamp(original.getTimestamp());
+        m.setMimeType(original.getMimeType());
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(this)
+                .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+        m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
         source.deleteMessage(this, messageId);
-        messageId = source.insertMessage(this, m, m.conversationId, true);
+        messageId = source.insertMessage(this, m, m.getConversationId(), true);
 
-        new SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
+        new SendUtils(conversation.getSimSubscriptionId()).setForceSplitMessage(true)
                 .setRetryFailedMessages(false)
-                .send(this, m.data, conversation.phoneNumbers);
+                .send(this, m.getData(), conversation.getPhoneNumbers());
         MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
     }
 }

@@ -53,15 +53,15 @@ public class MmsSentReceiver extends com.klinker.android.send_message.MmsSentRec
             DataSource source = DataSource.INSTANCE;
 
             for (ContentValues values : mmsParts) {
-                Cursor messages = source.searchMessages(context, values.getAsLong(Message.COLUMN_TIMESTAMP));
+                Cursor messages = source.searchMessages(context, values.getAsLong(Message.Companion.getCOLUMN_TIMESTAMP()));
                 if (messages.moveToFirst()) {
                     do {
                         Message m = new Message();
                         m.fillFromCursor(messages);
 
-                        if (m.type == Message.TYPE_SENDING) {
-                            source.updateMessageType(context, m.id, Message.TYPE_SENT);
-                            MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId);
+                        if (m.getType() == Message.Companion.getTYPE_SENDING()) {
+                            source.updateMessageType(context, m.getId(), Message.Companion.getTYPE_SENT());
+                            MessageListUpdatedReceiver.sendBroadcast(context, m.getConversationId());
                         }
                     } while (messages.moveToNext());
                 }

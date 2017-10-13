@@ -94,10 +94,10 @@ public class SmsDeliveredReceiver extends DeliveredReceiver {
 
             if (messages != null && messages.moveToFirst()) {
                 long id = messages.getLong(0);
-                source.updateMessageType(context, id, error ? Message.TYPE_ERROR : Message.TYPE_DELIVERED);
+                source.updateMessageType(context, id, error ? Message.Companion.getTYPE_ERROR() : Message.Companion.getTYPE_DELIVERED());
 
                 long conversationId = messages
-                        .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                        .getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_CONVERSATION_ID()));
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
             }
 

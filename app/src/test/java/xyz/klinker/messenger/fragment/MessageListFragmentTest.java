@@ -35,11 +35,11 @@ public class MessageListFragmentTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         Conversation conversation = new Conversation();
-        conversation.title = "Luke Klinker";
-        conversation.phoneNumbers = "(515) 991-1493";
-        conversation.colors.color = Color.RED;
-        conversation.colors.colorDark = Color.BLUE;
-        conversation.colors.colorAccent = Color.YELLOW;
+        conversation.setTitle("Luke Klinker");
+        conversation.setPhoneNumbers("(515) 991-1493");
+        conversation.getColors().color = Color.RED;
+        conversation.getColors().colorDark = Color.BLUE;
+        conversation.getColors().colorAccent = Color.YELLOW;
 
         fragment = startFragment(MessageListFragment.newInstance(conversation));
     }

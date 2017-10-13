@@ -42,14 +42,14 @@ public class UpdateUtils {
 
         if (sharedPreferences.getBoolean("v2.5.0.1", true)) {
             String colorSetName = sharedPreferences.getString(context.getString(R.string.pref_global_color_theme), "default");
-            ColorSet legacyGlobalTheme = ColorSet.getFromString(context, colorSetName);
+            ColorSet legacyGlobalTheme = ColorSet.Companion.getFromString(context, colorSetName);
 
             sharedPreferences.edit()
                     .putBoolean("v2.5.0.1", false)
-                    .putInt(context.getString(R.string.pref_global_primary_color), legacyGlobalTheme.color)
-                    .putInt(context.getString(R.string.pref_global_primary_dark_color), legacyGlobalTheme.colorDark)
-                    .putInt(context.getString(R.string.pref_global_primary_light_color), legacyGlobalTheme.colorLight)
-                    .putInt(context.getString(R.string.pref_global_accent_color), legacyGlobalTheme.colorAccent)
+                    .putInt(context.getString(R.string.pref_global_primary_color), legacyGlobalTheme.getColor())
+                    .putInt(context.getString(R.string.pref_global_primary_dark_color), legacyGlobalTheme.getColorDark())
+                    .putInt(context.getString(R.string.pref_global_primary_light_color), legacyGlobalTheme.getColorLight())
+                    .putInt(context.getString(R.string.pref_global_accent_color), legacyGlobalTheme.getColorAccent())
                     .putBoolean(context.getString(R.string.pref_apply_theme_globally), !colorSetName.equals("default"))
                     .commit();
 

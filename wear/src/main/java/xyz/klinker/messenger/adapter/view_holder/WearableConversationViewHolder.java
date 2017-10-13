@@ -49,7 +49,7 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (conversation != null) {
-                    MessageListActivity.startActivity(itemView.getContext(), conversation.id);
+                    MessageListActivity.startActivity(itemView.getContext(), conversation.getId());
 
                     if (unreadIndicator != null && unreadIndicator.getVisibility() == View.VISIBLE) {
                         setTypeface(false, isItalic());

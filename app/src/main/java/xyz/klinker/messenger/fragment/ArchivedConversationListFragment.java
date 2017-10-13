@@ -38,7 +38,7 @@ public class ArchivedConversationListFragment extends ConversationListFragment {
     // unarchive instead of archive when the snackbar is dismissed
     @Override
     protected void performArchiveOperation(DataSource dataSource, Conversation conversation) {
-        dataSource.unarchiveConversation(activity, conversation.id);
+        dataSource.unarchiveConversation(activity, conversation.getId());
     }
 
     // always consume the back event and send us to the conversation list

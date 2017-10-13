@@ -19,10 +19,10 @@ public class SwipeDeleteSimpleCallback extends SwipeSimpleCallback {
 
     @Override
     protected void setupEndSwipe(Context context) {
-        endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.colorAccent);
+        endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.getColorAccent());
         endMark = context.getDrawable(R.drawable.ic_delete_sweep);
 
-        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.colorAccent)) {
+        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.getColorAccent())) {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));

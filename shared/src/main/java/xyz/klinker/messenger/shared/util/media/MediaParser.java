@@ -35,17 +35,17 @@ public abstract class MediaParser {
 
     public Message parse(long conversationId) {
         Message message = new Message();
-        message.conversationId = conversationId;
-        message.timestamp = System.currentTimeMillis();
-        message.type = Message.TYPE_MEDIA;
-        message.read = false;
-        message.seen = false;
-        message.mimeType = getMimeType();
-        message.data = buildBody(matchedText);
-        message.sentDeviceId = -1L;
+        message.setConversationId(conversationId);
+        message.setTimestamp(System.currentTimeMillis());
+        message.setType(Message.Companion.getTYPE_MEDIA());
+        message.setRead(false);
+        message.setSeen(false);
+        message.setMimeType(getMimeType());
+        message.setData(buildBody(matchedText));
+        message.setSentDeviceId(-1L);
 
         matchedText = null;
 
-        return message.data == null ? null : message;
+        return message.getData() == null ? null : message;
     }
 }

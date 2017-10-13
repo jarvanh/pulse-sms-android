@@ -78,7 +78,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
         registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.getIntentFilter());
 
-        actionDrawer.setBackgroundColor(conversation.colors.color);
+        actionDrawer.setBackgroundColor(conversation.getColors().color);
         actionDrawer.setOnMenuItemClickListener(menuItem -> {
             actionDrawer.closeDrawer();
 
@@ -114,9 +114,9 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            adapter = new WearableMessageListAdapter(this, manager, null, settings.mainColorSet.color, settings.mainColorSet.colorAccent, conversation.phoneNumbers.contains(", "));
+            adapter = new WearableMessageListAdapter(this, manager, null, settings.mainColorSet.color, settings.mainColorSet.colorAccent, conversation.getPhoneNumbers().contains(", "));
         } else {
-            adapter = new WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent, conversation.phoneNumbers.contains(", "));
+            adapter = new WearableMessageListAdapter(this, manager, null, conversation.getColors().color, conversation.getColors().colorAccent, conversation.getPhoneNumbers().contains(", "));
         }
 
         recyclerView.setLayoutManager(manager);
@@ -133,7 +133,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
     @Override
     public void loadMessages(boolean addedNewMessage) {
         new Thread(() -> {
-            final Cursor cursor = source.getMessages(this, conversation.id);
+            final Cursor cursor = source.getMessages(this, conversation.getId());
             runOnUiThread(() -> {
                 if (adapter.getMessages() == null) {
                     adapter.setMessages(cursor);
@@ -146,7 +146,7 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
     @Override
     public long getConversationId() {
-        return conversation.id;
+        return conversation.getId();
     }
 
     @Override
@@ -165,10 +165,10 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
     }
 
     private void dismissNotification() {
-        NotificationManagerCompat.from(this).cancel((int) conversation.id);
+        NotificationManagerCompat.from(this).cancel((int) conversation.getId());
 
         ApiUtils.INSTANCE.dismissNotification(Account.INSTANCE.getAccountId(),
-                Account.INSTANCE.getDeviceId(), conversation.id);
+                Account.INSTANCE.getDeviceId(), conversation.getId());
 
         NotificationUtils.cancelGroupedNotificationWithNoContent(this);
     }
@@ -185,25 +185,25 @@ public class MessageListActivity extends AppCompatActivity implements IMessageLi
 
     private void sendMessage(String text) {
         final Message m = new Message();
-        m.conversationId = getConversationId();
-        m.type = Message.TYPE_SENDING;
-        m.data = text;
-        m.timestamp = System.currentTimeMillis();
-        m.mimeType = MimeType.TEXT_PLAIN;
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.simPhoneNumber = conversation != null && conversation.simSubscriptionId != null ?
-                DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+        m.setConversationId(getConversationId());
+        m.setType(Message.Companion.getTYPE_SENDING());
+        m.setData(text);
+        m.setTimestamp(System.currentTimeMillis());
+        m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSimPhoneNumber(conversation != null && conversation.getSimSubscriptionId() != null ?
+                DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+        m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
         if (text.length() != 0) {
-            source.insertMessage(this, m, m.conversationId);
+            source.insertMessage(this, m, m.getConversationId());
             loadMessages();
 
-            new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                    .send(this, m.data, conversation.phoneNumbers, null, MimeType.TEXT_PLAIN);
+            new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
+                    .send(this, m.getData(), conversation.getPhoneNumbers(), null, MimeType.INSTANCE.getTEXT_PLAIN());
         }
     }
 

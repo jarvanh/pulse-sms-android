@@ -106,8 +106,8 @@ public class SettingsActivity extends AbstractSettingsActivity {
 
         // sets it to teal if there is no color selected
         Settings settings = Settings.get(this);
-        getToolbar().setBackgroundColor(settings.mainColorSet.color);
-        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
+        getToolbar().setBackgroundColor(settings.mainColorSet.getColor());
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.getColorDark());
 
         ColorUtils.checkBlackBackground(this);
     }
@@ -123,8 +123,8 @@ public class SettingsActivity extends AbstractSettingsActivity {
         super.onStart();
 
         Settings settings = Settings.get(this);
-        getToolbar().setBackgroundColor(settings.mainColorSet.color);
-        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
+        getToolbar().setBackgroundColor(settings.mainColorSet.getColor());
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.getColorDark());
 
         ActivityUtils.setTaskDescription(this);
     }

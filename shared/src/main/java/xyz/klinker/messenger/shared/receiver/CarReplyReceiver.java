@@ -49,26 +49,26 @@ public class CarReplyReceiver extends BroadcastReceiver {
 
         Conversation conversation = source.getConversation(context, conversationId);
         Message m = new Message();
-        m.conversationId = conversationId;
-        m.type = Message.TYPE_SENDING;
-        m.data = reply;
-        m.timestamp = System.currentTimeMillis();
-        m.mimeType = MimeType.TEXT_PLAIN;
-        m.read = true;
-        m.seen = true;
-        m.from = null;
-        m.color = null;
-        m.simPhoneNumber = conversation.simSubscriptionId != null ? DualSimUtils.get(context)
-                .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId) : null;
-        m.sentDeviceId = Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L;
+        m.setConversationId(conversationId);
+        m.setType(Message.Companion.getTYPE_SENDING());
+        m.setData(reply);
+        m.setTimestamp(System.currentTimeMillis());
+        m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        m.setRead(true);
+        m.setSeen(true);
+        m.setFrom(null);
+        m.setColor(null);
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(context)
+                .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+        m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
         long messageId = source.insertMessage(context, m, conversationId, true);
         source.readConversation(context, conversationId);
 
-        Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.phoneNumbers + "\"");
+        Log.v(TAG, "sending message \"" + reply + "\" to \"" + conversation.getPhoneNumbers() + "\"");
 
-        new SendUtils(conversation.simSubscriptionId)
-                .send(context, reply, conversation.phoneNumbers);
+        new SendUtils(conversation.getSimSubscriptionId())
+                .send(context, reply, conversation.getPhoneNumbers());
         MarkAsSentJob.Companion.scheduleNextRun(context, messageId);
 
         // cancel the notification we just replied to or

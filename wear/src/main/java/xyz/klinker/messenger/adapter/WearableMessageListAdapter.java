@@ -86,21 +86,21 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         }
 
         boolean rounder = Settings.get(parent.getContext()).rounderBubbles;
-        if (viewType == Message.TYPE_RECEIVED) {
+        if (viewType == Message.Companion.getTYPE_RECEIVED()) {
             layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;
         } else {
             color = -1;
 
-            if (viewType == Message.TYPE_SENDING) {
+            if (viewType == Message.Companion.getTYPE_SENDING()) {
                 layoutId = rounder ? R.layout.message_sending_round : R.layout.message_sending;
-            } else if (viewType == Message.TYPE_ERROR) {
+            } else if (viewType == Message.Companion.getTYPE_ERROR()) {
                 layoutId = rounder ? R.layout.message_error_round : R.layout.message_error;
-            } else if (viewType == Message.TYPE_DELIVERED) {
+            } else if (viewType == Message.Companion.getTYPE_DELIVERED()) {
                 layoutId = rounder ? R.layout.message_delivered_round : R.layout.message_delivered;
-            } else if (viewType == Message.TYPE_INFO) {
+            } else if (viewType == Message.Companion.getTYPE_INFO()) {
                 layoutId = R.layout.message_info;
-            } else if (viewType == Message.TYPE_MEDIA) {
+            } else if (viewType == Message.Companion.getTYPE_MEDIA()) {
                 layoutId = R.layout.message_media;
             } else {
                 layoutId = rounder ? R.layout.message_sent_round : R.layout.message_sent;
@@ -112,7 +112,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
 
         messages.moveToFirst();
         WearableMessageViewHolder holder = new WearableMessageViewHolder(view, color,
-                messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
+                messages.getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_CONVERSATION_ID())),
                 viewType, timestampHeight);
 
         holder.setColors(receivedColor, accentColor);
@@ -136,27 +136,27 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         Message message = new Message();
         message.fillFromCursor(messages);
 
-        holder.messageId = message.id;
-        holder.mimeType = message.mimeType;
-        holder.data = message.data;
+        holder.messageId = message.getId();
+        holder.mimeType = message.getMimeType();
+        holder.data = message.getData();
 
-        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            holder.message.setText(message.data);
+        if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+            holder.message.setText(message.getData());
 
             setGone(holder.image);
             setVisible(holder.message);
-        } else if (!MimeType.isExpandedMedia(message.mimeType)) {
+        } else if (!MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
             holder.image.setImageDrawable(null);
 
-            if (MimeType.isStaticImage(message.mimeType)) {
-                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+            if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
+                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                     R.drawable.ic_image_sending : R.drawable.ic_image);
-            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
-                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
+                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                         R.drawable.ic_image_sending : R.drawable.ic_image);
-            } else if (MimeType.isVideo(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
                 Drawable placeholder;
-                if (getItemViewType(position) != Message.TYPE_RECEIVED) {
+                if (getItemViewType(position) != Message.Companion.getTYPE_RECEIVED()) {
                     placeholder = holder.image.getContext()
                             .getDrawable(R.drawable.ic_play_sent);
                 } else {
@@ -166,7 +166,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
 
                 Glide.with(holder.image.getContext())
                         .asBitmap()
-                        .load(Uri.parse(message.data))
+                        .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .error(placeholder)
                                 .placeholder(placeholder)
@@ -180,26 +180,26 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                                 holder.image.setImageBitmap(bitmap);
                             }
                         });
-            } else if (MimeType.isAudio(message.mimeType)) {
-                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+            } else if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
+                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                         R.drawable.ic_audio_sent : R.drawable.ic_audio);
-            } else if (MimeType.isVcard(message.mimeType)) {
-                holder.message.setText(message.data);
-                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+            } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
+                holder.message.setText(message.getData());
+                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                         R.drawable.ic_contacts_sent : R.drawable.ic_contacts);
             } else {
-                Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
+                Log.v("MessageListAdapter", "unused mime type: " + message.getMimeType());
             }
 
             setGone(holder.message);
             setVisible(holder.image);
         } else {
-            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
-                YouTubePreview preview = YouTubePreview.build(message.data);
+            if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
+                YouTubePreview preview = YouTubePreview.Companion.build(message.getData());
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
                             .asBitmap()
-                            .load(Uri.parse(preview.thumbnail))
+                            .load(Uri.parse(preview.getThumbnail()))
                             .apply(new RequestOptions()
                                     .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                                     .fitCenter())
@@ -212,7 +212,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                                 }
                             });
 
-                    holder.contact.setText(preview.title);
+                    holder.contact.setText(preview.getTitle());
                     holder.title.setText("YouTube");
 
                     setGone(holder.image);
@@ -227,22 +227,22 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                     setGone(holder.timestamp);
                     setGone(holder.title);
                 }
-            } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_TWITTER())) {
 
-            } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
-                ArticlePreview preview = ArticlePreview.build(message.data);
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
+                ArticlePreview preview = ArticlePreview.Companion.build(message.getData());
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
                             .asBitmap()
-                            .load(Uri.parse(message.data))
+                            .load(Uri.parse(message.getData()))
                             .apply(new RequestOptions()
                                     .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                                     .fitCenter())
                             .into(holder.clippedImage);
 
-                    holder.contact.setText(preview.title);
-                    holder.message.setText(preview.description);
-                    holder.title.setText(preview.domain);
+                    holder.contact.setText(preview.getTitle());
+                    holder.message.setText(preview.getDescription());
+                    holder.title.setText(preview.getDomain());
 
                     setGone(holder.image);
                     setVisible(holder.clippedImage);
@@ -261,32 +261,32 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
             setVisible(holder.image);
         }
 
-        if (message.simPhoneNumber != null) {
+        if (message.getSimPhoneNumber() != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
-                    message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
+                    message.getTimestamp()) + " (SIM " + message.getSimPhoneNumber() + ")");
         } else {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
-                    message.timestamp));
+                    message.getTimestamp()));
         }
 
         if (!isGroup) {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .setMargins(holder.itemView)
-                    .setBackground(holder.messageHolder, message.mimeType)
+                    .setBackground(holder.messageHolder, message.getMimeType())
                     .applyTimestampHeight(holder.timestamp, timestampHeight);
         } else {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .applyTimestampHeight(holder.timestamp, timestampHeight);
         }
 
-        if (isGroup && holder.contact != null && message.from != null) {
+        if (isGroup && holder.contact != null && message.getFrom() != null) {
             if (holder.contact.getVisibility() == View.GONE) {
                 holder.contact.setVisibility(View.VISIBLE);
             }
 
             int label = holder.timestamp.getLayoutParams().height > 0 ?
                     R.string.message_from_bullet : R.string.message_from;
-            holder.contact.setText(holder.contact.getResources().getString(label, message.from));
+            holder.contact.setText(holder.contact.getResources().getString(label, message.getFrom()));
         }
     }
 
@@ -306,9 +306,9 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         }
 
         messages.moveToPosition(position);
-        int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
-        if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
-            type = Message.TYPE_SENT;
+        int type = messages.getInt(messages.getColumnIndex(Message.Companion.getCOLUMN_TYPE()));
+        if (ignoreSendingStatus && type == Message.Companion.getTYPE_SENDING()) {
+            type = Message.Companion.getTYPE_SENT();
         }
 
         return type;
@@ -332,7 +332,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         }
 
         messages.moveToPosition(position);
-        return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
+        return messages.getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_ID()));
     }
 
     public void setMessages(Cursor cursor) {

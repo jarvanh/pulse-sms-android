@@ -49,12 +49,12 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
             Conversation conversation = convos.get(i);
             this.conversations.add(conversation);
 
-            if ((currentSection == SectionType.PINNED && conversation.pinned) ||
-                    (currentSection == SectionType.TODAY && TimeUtils.isToday(conversation.timestamp)) ||
-                    (currentSection == SectionType.YESTERDAY && TimeUtils.isYesterday(conversation.timestamp)) ||
-                    (currentSection == SectionType.LAST_WEEK && TimeUtils.isLastWeek(conversation.timestamp)) ||
-                    (currentSection == SectionType.LAST_MONTH && TimeUtils.isLastMonth(conversation.timestamp)) ||
-                    (currentSection == SectionType.OLDER)) {
+            if ((currentSection == SectionType.Companion.getPINNED() && conversation.getPinned()) ||
+                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.isToday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.isYesterday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.isLastWeek(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.isLastMonth(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getOLDER())) {
                 currentCount++;
             } else {
                 if (currentCount != 0) {
@@ -78,22 +78,22 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
 
     @Override
     public int getItemCount(int section) {
-        return sectionCounts.get(section).count;
+        return sectionCounts.get(section).getCount();
     }
 
     @Override
     public void onBindHeaderViewHolder(WearableConversationViewHolder holder, int section) {
         String text;
 
-        if (sectionCounts.get(section).type == SectionType.PINNED) {
+        if (sectionCounts.get(section).getType() == SectionType.Companion.getPINNED()) {
             text = holder.header.getContext().getString(R.string.pinned);
-        } else if (sectionCounts.get(section).type == SectionType.TODAY) {
+        } else if (sectionCounts.get(section).getType() == SectionType.Companion.getTODAY()) {
             text = holder.header.getContext().getString(R.string.today);
-        } else if (sectionCounts.get(section).type == SectionType.YESTERDAY) {
+        } else if (sectionCounts.get(section).getType() == SectionType.Companion.getYESTERDAY()) {
             text = holder.header.getContext().getString(R.string.yesterday);
-        } else if (sectionCounts.get(section).type == SectionType.LAST_WEEK) {
+        } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_WEEK()) {
             text = holder.header.getContext().getString(R.string.last_week);
-        } else if (sectionCounts.get(section).type == SectionType.LAST_MONTH) {
+        } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_MONTH()) {
             text = holder.header.getContext().getString(R.string.last_month);
         } else {
             text = holder.header.getContext().getString(R.string.older);
@@ -135,16 +135,16 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         holder.conversation = conversation;
         holder.position = absolutePosition;
 
-        if (conversation.imageUri == null || conversation.imageUri.isEmpty()) {
+        if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
                 holder.image.setImageDrawable(new ColorDrawable(
                         Settings.get(holder.itemView.getContext()).mainColorSet.colorLight));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.colors.color));
+                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().color));
             }
 
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                holder.imageLetter.setText(conversation.title.substring(0, 1));
+                holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
                 }
@@ -154,7 +154,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
                     holder.groupIcon.setVisibility(View.VISIBLE);
                 }
 
-                if (conversation.phoneNumbers.contains(",")) {
+                if (conversation.getPhoneNumbers().contains(",")) {
                     holder.groupIcon.setImageResource(R.drawable.ic_group);
                 } else {
                     holder.groupIcon.setImageResource(R.drawable.ic_person);
@@ -167,32 +167,32 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
             }
 
             Glide.with(holder.image.getContext())
-                    .load(Uri.parse(conversation.imageUri))
+                    .load(Uri.parse(conversation.getImageUri()))
                     .into(holder.image);
         }
 
-        holder.name.setText(conversation.title);
-        if (conversation.privateNotifications || conversation.snippet == null ||
-                conversation.snippet.contains("file://") || conversation.snippet.contains("content://")) {
+        holder.name.setText(conversation.getTitle());
+        if (conversation.getPrivateNotifications() || conversation.getSnippet() == null ||
+                conversation.getSnippet().contains("file://") || conversation.getSnippet().contains("content://")) {
             holder.summary.setText("");
         } else {
-            holder.summary.setText(conversation.snippet);
+            holder.summary.setText(conversation.getSnippet());
         }
 
         // read not muted
         // not read, not muted
         // muted not read
         // read and muted
-        if (conversation.read && conversation.mute && (holder.isBold() || !holder.isItalic())) {
+        if (conversation.getRead() && conversation.getMute() && (holder.isBold() || !holder.isItalic())) {
             // should be italic
             holder.setTypeface(false, true);
-        } else if (conversation.mute && !conversation.read && (!holder.isItalic() || !holder.isBold())) {
+        } else if (conversation.getMute() && !conversation.getRead() && (!holder.isItalic() || !holder.isBold())) {
             // should be just italic
             holder.setTypeface(true, true);
-        } else if (!conversation.mute && conversation.read && (holder.isItalic() || holder.isBold())) {
+        } else if (!conversation.getMute() && conversation.getRead() && (holder.isItalic() || holder.isBold())) {
             // should be not italic and not bold
             holder.setTypeface(false, false);
-        } else if (!conversation.mute && !conversation.read && (holder.isItalic() || !holder.isBold())) {
+        } else if (!conversation.getMute() && !conversation.getRead() && (holder.isItalic() || !holder.isBold())) {
             // should be bold, not italic
             holder.setTypeface(true, false);
         }
@@ -213,7 +213,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         int conversationPosition = -1;
 
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(i) != null && conversations.get(i).id == id) {
+            if (conversations.get(i) != null && conversations.get(i).getId() == id) {
                 conversationPosition = i;
                 break;
             }
@@ -226,7 +226,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         int totalSectionsCount = 0;
 
         for (int i = 0; i < sectionCounts.size(); i++) {
-            totalSectionsCount += sectionCounts.get(i).count;
+            totalSectionsCount += sectionCounts.get(i).getCount();
 
             if (conversationPosition < totalSectionsCount) {
                 break;
@@ -240,8 +240,8 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
 
     public int getCountForSection(int sectionType) {
         for (int i = 0; i < sectionCounts.size(); i++) {
-            if (sectionCounts.get(i).type == sectionType) {
-                return sectionCounts.get(i).count;
+            if (sectionCounts.get(i).getType() == sectionType) {
+                return sectionCounts.get(i).getCount();
             }
         }
 

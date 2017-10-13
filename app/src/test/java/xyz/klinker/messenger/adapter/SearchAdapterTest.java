@@ -129,42 +129,42 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     @Test
     public void createViewHolderMessageReceived() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_RECEIVED);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_RECEIVED());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
     @Test
     public void createViewHolderMessageSending() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_SENDING);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_SENDING());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
     @Test
     public void createViewHolderMessageError() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_ERROR);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_ERROR());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
     @Test
     public void createViewHolderMessageDelivered() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_DELIVERED);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_DELIVERED());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
     @Test
     public void createViewHolderMessageInfo() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_INFO);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_INFO());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
     @Test
     public void createViewHolderMessageSent() {
         ViewGroup group = new LinearLayout(Robolectric.setupActivity(Activity.class));
-        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.TYPE_SENT);
+        RecyclerView.ViewHolder holder = adapter.onCreateViewHolder(group, Message.Companion.getTYPE_SENT());
         assertTrue(holder instanceof MessageViewHolder);
     }
 
@@ -182,10 +182,10 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     @Test
     public void getItemViewTypeMessage() {
         Message message = new Message();
-        message.type = Message.TYPE_RECEIVED;
+        message.setType(Message.Companion.getTYPE_RECEIVED());
 
         when(messages.get(anyInt())).thenReturn(message);
-        assertEquals(Message.TYPE_RECEIVED, adapter.getItemViewType(1, 0, 0));
+        assertEquals(Message.Companion.getTYPE_RECEIVED(), adapter.getItemViewType(1, 0, 0));
     }
 
 }

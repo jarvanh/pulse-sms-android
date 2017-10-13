@@ -112,7 +112,7 @@ public class NotificationService extends IntentService {
                     .setContentTitle(getString(R.string.repeat_interval))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setLocalOnly(true)
-                    .setColor(ColorSet.DEFAULT(this).color)
+                    .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                     .setOngoing(false)
                     .build();
             startForeground(FOREGROUND_NOTIFICATION_ID, notification);
@@ -131,7 +131,7 @@ public class NotificationService extends IntentService {
                 if (conversations.size() > 1) {
                     List<String> rows = new ArrayList<>();
                     for (NotificationConversation conversation : conversations) {
-                        rows.add("<b>" + conversation.title + "</b>  " + conversation.snippet);
+                        rows.add("<b>" + conversation.getTitle() + "</b>  " + conversation.getSnippet());
                     }
 
                     giveSummaryNotification(conversations, rows);
@@ -184,19 +184,19 @@ public class NotificationService extends IntentService {
         if (unseenMessages.moveToFirst()) {
             do {
                 long conversationId = unseenMessages
-                        .getLong(unseenMessages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
+                        .getLong(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_CONVERSATION_ID()));
                 long id = unseenMessages
-                        .getLong(unseenMessages.getColumnIndex(Message.COLUMN_ID));
+                        .getLong(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_ID()));
                 String data = unseenMessages
-                        .getString(unseenMessages.getColumnIndex(Message.COLUMN_DATA));
+                        .getString(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_DATA()));
                 String mimeType = unseenMessages
-                        .getString(unseenMessages.getColumnIndex(Message.COLUMN_MIME_TYPE));
+                        .getString(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_MIME_TYPE()));
                 long timestamp = unseenMessages
-                        .getLong(unseenMessages.getColumnIndex(Message.COLUMN_TIMESTAMP));
+                        .getLong(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_TIMESTAMP()));
                 String from = unseenMessages
-                        .getString(unseenMessages.getColumnIndex(Message.COLUMN_FROM));
+                        .getString(unseenMessages.getColumnIndex(Message.Companion.getCOLUMN_FROM()));
 
-                if (!MimeType.isExpandedMedia(mimeType)) {
+                if (!MimeType.INSTANCE.isExpandedMedia(mimeType)) {
                     int conversationIndex = keys.indexOf(conversationId);
                     NotificationConversation conversation = null;
 
@@ -204,28 +204,28 @@ public class NotificationService extends IntentService {
                         Conversation c = source.getConversation(context, conversationId);
                         if (c != null) {
                             conversation = new NotificationConversation();
-                            conversation.id = c.id;
-                            conversation.unseenMessageId = id;
-                            conversation.title = c.title;
-                            conversation.snippet = c.snippet;
-                            conversation.imageUri = c.imageUri;
-                            conversation.color = c.colors.color;
-                            conversation.ringtoneUri = c.ringtoneUri;
-                            conversation.ledColor = c.ledColor;
-                            conversation.timestamp = c.timestamp;
-                            conversation.mute = c.mute;
-                            conversation.phoneNumbers = c.phoneNumbers;
-                            conversation.groupConversation = c.phoneNumbers.contains(",");
+                            conversation.setId(c.getId());
+                            conversation.setUnseenMessageId(id);
+                            conversation.setTitle(c.getTitle());
+                            conversation.setSnippet(c.getSnippet());
+                            conversation.setImageUri(c.getImageUri());
+                            conversation.setColor(c.getColors().getColor());
+                            conversation.setRingtoneUri(c.getRingtoneUri());
+                            conversation.setLedColor(c.getLedColor());
+                            conversation.setTimestamp(c.getTimestamp());
+                            conversation.setMute(c.getMute());
+                            conversation.setPhoneNumbers(c.getPhoneNumbers());
+                            conversation.setGroupConversation(c.getPhoneNumbers().contains(","));
 
-                            if (c.privateNotifications) {
-                                conversation.title = context.getString(R.string.new_message);
-                                conversation.imageUri = null;
-                                conversation.ringtoneUri = null;
-                                conversation.color = Settings.get(context).mainColorSet.color;
-                                conversation.privateNotification = true;
-                                conversation.ledColor = Color.WHITE;
+                            if (c.getPrivateNotifications()) {
+                                conversation.setTitle(context.getString(R.string.new_message));
+                                conversation.setImageUri(null);
+                                conversation.setRingtoneUri(null);
+                                conversation.setColor(Settings.get(context).mainColorSet.getColor());
+                                conversation.setPrivateNotification(true);
+                                conversation.setLedColor(Color.WHITE);
                             } else {
-                                conversation.privateNotification = false;
+                                conversation.setPrivateNotification(false);
                             }
 
                             conversations.add(conversation);
@@ -236,7 +236,7 @@ public class NotificationService extends IntentService {
                     }
 
                     if (conversation != null) {
-                        conversation.messages.add(new NotificationMessage(id, data, mimeType, timestamp, from));
+                        conversation.getMessages().add(new NotificationMessage(id, data, mimeType, timestamp, from));
                     }
                 }
             } while (unseenMessages.moveToNext());
@@ -245,7 +245,7 @@ public class NotificationService extends IntentService {
         CursorUtil.closeSilent(unseenMessages);
 
         Collections.sort(conversations, (result1, result2) ->
-                new Date(result2.timestamp).compareTo(new Date(result1.timestamp)));
+                new Date(result2.getTimestamp()).compareTo(new Date(result1.getTimestamp())));
 
         return conversations;
     }
@@ -255,7 +255,7 @@ public class NotificationService extends IntentService {
      */
     private void giveConversationNotification(NotificationConversation conversation, int conversationIndex, int numConversations) {
         Bitmap contactImage = ImageUtils.clipToCircle(
-                ImageUtils.getBitmap(this, conversation.imageUri));
+                ImageUtils.getBitmap(this, conversation.getImageUri()));
 
         try {
             float height = getResources().getDimension(android.R.dimen.notification_large_icon_height);
@@ -264,32 +264,32 @@ public class NotificationService extends IntentService {
         } catch (Exception e) { }
 
         VibratePattern vibratePattern = Settings.get(this).vibrate;
-        boolean shouldVibrate = !shouldAlertOnce(conversation.messages) && conversationIndex == 0;
+        boolean shouldVibrate = !shouldAlertOnce(conversation.getMessages()) && conversationIndex == 0;
         int defaults = 0;
         if (shouldVibrate && vibratePattern == VibratePattern.DEFAULT) {
             defaults = Notification.DEFAULT_VIBRATE;
         }
 
-        if (conversation.ledColor == Color.WHITE) {
+        if (conversation.getLedColor() == Color.WHITE) {
             defaults = defaults | Notification.DEFAULT_LIGHTS;
         }
 
         Settings settings = Settings.get(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                    getNotificationChannel(this, conversation.id))
-                .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
-                .setContentTitle(conversation.title)
+                    getNotificationChannel(this, conversation.getId()))
+                .setSmallIcon(!conversation.getGroupConversation() ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
+                .setContentTitle(conversation.getTitle())
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColor())
                 .setDefaults(defaults)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setLargeIcon(contactImage)
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
-                .setTicker(getString(R.string.notification_ticker, conversation.title))
+                .setTicker(getString(R.string.notification_ticker, conversation.getTitle()))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
-                .setWhen(conversation.timestamp);
+                .setWhen(conversation.getTimestamp());
 
         if (numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto")) {
             // this is necessary for moto's active display, for some reason
@@ -298,26 +298,26 @@ public class NotificationService extends IntentService {
             builder.setGroupSummary(false);
         }
 
-        if (conversation.ledColor != Color.WHITE) {
-            builder.setLights(conversation.ledColor, 1000, 500);
+        if (conversation.getLedColor() != Color.WHITE) {
+            builder.setLights(conversation.getLedColor(), 1000, 500);
         }
 
-        Uri sound = getRingtone(this, conversation.ringtoneUri);
+        Uri sound = getRingtone(this, conversation.getRingtoneUri());
         if (conversationIndex == 0) {
             if (sound != null) {
                 builder.setSound(sound);
             }
 
-            if (vibratePattern.pattern != null) {
-                builder.setVibrate(vibratePattern.pattern);
+            if (vibratePattern.getPattern() != null) {
+                builder.setVibrate(vibratePattern.getPattern());
             } else if (vibratePattern == VibratePattern.OFF) {
                 builder.setVibrate(new long[0]);
             }
         }
 
         try {
-            if (!conversation.groupConversation) {
-                builder.addPerson("tel:" + conversation.phoneNumbers);
+            if (!conversation.getGroupConversation()) {
+                builder.addPerson("tel:" + conversation.getPhoneNumbers());
             }
         } catch (Exception e) { }
 
@@ -329,85 +329,85 @@ public class NotificationService extends IntentService {
             // build a messaging style notification for Android Nougat
             messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
 
-            if (conversation.groupConversation) {
+            if (conversation.getGroupConversation()) {
                 ((NotificationCompat.MessagingStyle) messagingStyle)
-                        .setConversationTitle(conversation.title);
+                        .setConversationTitle(conversation.getTitle());
             }
 
             MockableDataSourceWrapper source = getDataSource(this);
-            List<Message> messages = source.getMessages(this, conversation.id, 10);
+            List<Message> messages = source.getMessages(this, conversation.getId(), 10);
 
             for (int i = messages.size() - 1; i >= 0; i--) {
                 Message message = messages.get(i);
 
                 String from = null;
-                if (message.type == Message.TYPE_RECEIVED) {
+                if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                     // we split it so that we only get the first name,
                     // if there is more than one
 
-                    if (message.from != null) {
+                    if (message.getFrom() != null) {
                         // it is most likely a group message.
-                        from = message.from;
+                        from = message.getFrom();
                     } else {
-                        from = conversation.title;
+                        from = conversation.getTitle();
                     }
                 }
 
                 String messageText = "";
-                if (MimeType.isAudio(message.mimeType)) {
+                if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
                     messageText += "<i>" + getString(R.string.audio_message) + "</i>";
-                } else if (MimeType.isVideo(message.mimeType)) {
+                } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
                     messageText += "<i>" + getString(R.string.video_message) + "</i>";
-                } else if (MimeType.isVcard(message.mimeType)) {
+                } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
                     messageText += "<i>" + getString(R.string.contact_card) + "</i>";
-                } else if (MimeType.isStaticImage(message.mimeType)) {
+                } else if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
                     messageText += "<i>" + getString(R.string.picture_message) + "</i>";
-                } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+                } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
                     messageText += "<i>" + getString(R.string.gif_message) + "</i>";
-                } else if (MimeType.isExpandedMedia(message.mimeType)) {
+                } else if (MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
                     messageText += "<i>" + getString(R.string.media) + "</i>";
                 } else {
-                    messageText += message.data;
+                    messageText += message.getData();
                 }
 
                 ((NotificationCompat.MessagingStyle) messagingStyle)
-                        .addMessage(Html.fromHtml(messageText), message.timestamp, from);
+                        .addMessage(Html.fromHtml(messageText), message.getTimestamp(), from);
             }
         }
 
         StringBuilder text = new StringBuilder();
-        if (conversation.messages.size() > 1 && conversation.messages.get(0).from != null) {
+        if (conversation.getMessages().size() > 1 && conversation.getMessages().get(0).getFrom() != null) {
             inboxStyle = new NotificationCompat.InboxStyle();
 
-            for (NotificationMessage message : conversation.messages) {
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    String line = "<b>" + message.from + ":</b>  " + message.data;
+            for (NotificationMessage message : conversation.getMessages()) {
+                if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                    String line = "<b>" + message.getFrom() + ":</b>  " + message.getData();
                     text.append(line);
                     text.append("\n");
                     inboxStyle.addLine(Html.fromHtml(line));
                 } else {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.data));
+                            .bigPicture(ImageUtils.getBitmap(this, message.getData()));
                 }
             }
         } else {
-            for (int i = 0; i < conversation.messages.size(); i++) {
-                NotificationMessage message = conversation.messages.get(i);
+            for (int i = 0; i < conversation.getMessages().size(); i++) {
+                NotificationMessage message = conversation.getMessages().get(i);
 
-                if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                    if (message.from != null) {
+                if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                    if (message.getFrom() != null) {
                         text.append("<b>");
-                        text.append(message.from);
+                        text.append(message.getFrom());
                         text.append(":</b>  ");
-                        text.append(conversation.messages.get(i).data);
+                        text.append(conversation.getMessages().get(i).getData());
                         text.append("\n");
                     } else {
-                        text.append(conversation.messages.get(i).data);
+                        text.append(conversation.getMessages().get(i).getData());
                         text.append("<br/>");
                     }
-                } else if (MimeType.isStaticImage(message.mimeType)) {
+                } else if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.data));
+                            .bigPicture(ImageUtils.getBitmap(this, message.getData()));
                 }
             }
         }
@@ -417,7 +417,7 @@ public class NotificationService extends IntentService {
             content = content.substring(0, content.length() - 5);
         }
 
-        if (!conversation.privateNotification) {
+        if (!conversation.getPrivateNotification()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 builder.setContentText(Html.fromHtml(content, 0));
             } else {
@@ -438,13 +438,13 @@ public class NotificationService extends IntentService {
         }
 
         NotificationCompat.Builder publicVersion = new NotificationCompat.Builder(this,
-                    getNotificationChannel(this, conversation.id))
-                .setSmallIcon(!conversation.groupConversation ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
+                    getNotificationChannel(this, conversation.getId()))
+                .setSmallIcon(!conversation.getGroupConversation() ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(getResources().getQuantityString(R.plurals.new_conversations, 1, 1))
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
-                        conversation.messages.size(), conversation.messages.size()))
+                        conversation.getMessages().size(), conversation.getMessages().size()))
                 .setLargeIcon(null)
-                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.color : conversation.color)
+                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColor())
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
@@ -452,8 +452,8 @@ public class NotificationService extends IntentService {
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
-        if (conversation.ledColor != Color.WHITE) {
-            builder.setLights(conversation.ledColor, 1000, 500);
+        if (conversation.getLedColor() != Color.WHITE) {
+            builder.setLights(conversation.getLedColor(), 1000, 500);
         }
 
         if (conversationIndex == 0) {
@@ -461,8 +461,8 @@ public class NotificationService extends IntentService {
                 builder.setSound(sound);
             }
 
-            if (vibratePattern.pattern != null) {
-                builder.setVibrate(vibratePattern.pattern);
+            if (vibratePattern.getPattern() != null) {
+                builder.setVibrate(vibratePattern.getPattern());
             } else if (vibratePattern == VibratePattern.OFF) {
                 builder.setVibrate(new long[0]);
             }
@@ -476,10 +476,10 @@ public class NotificationService extends IntentService {
         }
 
         try {
-            if (!conversation.groupConversation) {
-                publicVersion.addPerson("tel:" + conversation.phoneNumbers);
+            if (!conversation.getGroupConversation()) {
+                publicVersion.addPerson("tel:" + conversation.getPhoneNumbers());
             } else {
-                for (String number : conversation.phoneNumbers.split(", ")) {
+                for (String number : conversation.getPhoneNumbers().split(", ")) {
                     publicVersion.addPerson("tel:" + number);
                 }
             }
@@ -492,7 +492,7 @@ public class NotificationService extends IntentService {
         // will the action be shown on phones or only on wear devices? If it is shown on phones, is
         // it only shown on Nougat+ where these actions can be accepted?
         RemoteInput remoteInput = new RemoteInput.Builder(ReplyService.EXTRA_REPLY)
-                .setLabel(getString(R.string.reply_to, conversation.title))
+                .setLabel(getString(R.string.reply_to, conversation.getTitle()))
                 .setChoices(getResources().getStringArray(R.array.reply_choices))
                 .setAllowFreeFormInput(true)
                 .build();
@@ -500,10 +500,10 @@ public class NotificationService extends IntentService {
 
         // Android wear extender (add a second page with message history
         NotificationCompat.BigTextStyle secondPageStyle = new NotificationCompat.BigTextStyle();
-        secondPageStyle.setBigContentTitle(conversation.title)
+        secondPageStyle.setBigContentTitle(conversation.getTitle())
                 .bigText(getWearableSecondPageConversation(conversation));
         NotificationCompat.Builder wear =
-                new NotificationCompat.Builder(this, getNotificationChannel(this, conversation.id))
+                new NotificationCompat.Builder(this, getNotificationChannel(this, conversation.getId()))
                         .setStyle(secondPageStyle);
 
         NotificationCompat.WearableExtender wearableExtender =
@@ -518,9 +518,9 @@ public class NotificationService extends IntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !DEBUG_QUICK_REPLY) {
             // with Android N, we only need to show the the reply service intent through the wearable extender
             Intent reply = new Intent(this, ReplyService.class);
-            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
             pendingReply = PendingIntent.getService(this,
-                    (int) conversation.id, reply, PendingIntent.FLAG_UPDATE_CURRENT);
+                    (int) conversation.getId(), reply, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     getString(R.string.reply), pendingReply)
@@ -529,7 +529,7 @@ public class NotificationService extends IntentService {
                     .extend(actionExtender)
                     .build();
 
-            if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+            if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
                 builder.addAction(action);
             }
 
@@ -539,10 +539,10 @@ public class NotificationService extends IntentService {
             // this will allow it to be used on android wear (we will have to handle this from the activity)
             // as well as have a reply quick action button.
             Intent reply = ActivityUtils.buildForComponent(ActivityUtils.NOTIFICATION_REPLY);
-            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
             reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pendingReply = PendingIntent.getActivity(this,
-                    (int) conversation.id, reply, PendingIntent.FLAG_UPDATE_CURRENT);
+                    (int) conversation.getId(), reply, PendingIntent.FLAG_UPDATE_CURRENT);
 
             if (DEBUG_QUICK_REPLY) {
                 // if we are debugging, the assumption is that we are on android N, we have to be stop showing
@@ -553,7 +553,7 @@ public class NotificationService extends IntentService {
                         .setAllowGeneratedReplies(true)
                         .build();
 
-                if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
                     builder.addAction(action);
                 }
 
@@ -564,16 +564,16 @@ public class NotificationService extends IntentService {
                         getString(R.string.reply), pendingReply)
                         .build();
 
-                if (!conversation.privateNotification && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
                     builder.addAction(action);
                 }
 
                 Intent wearReply = new Intent(this, ReplyService.class);
                 Bundle extras = new Bundle();
-                extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.id);
+                extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
                 wearReply.putExtras(extras);
                 PendingIntent wearPendingReply = PendingIntent.getService(this,
-                        (int) conversation.id + 1, wearReply, PendingIntent.FLAG_UPDATE_CURRENT);
+                        (int) conversation.getId() + 1, wearReply, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 NotificationCompat.Action wearAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         getString(R.string.reply), wearPendingReply)
@@ -585,21 +585,21 @@ public class NotificationService extends IntentService {
             }
         }
 
-        if (!conversation.groupConversation && settings.notificationActions.contains(NotificationAction.CALL)
+        if (!conversation.getGroupConversation() && settings.notificationActions.contains(NotificationAction.CALL)
                 && (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary())) {
             Intent call = new Intent(this, NotificationCallService.class);
-            call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
-            call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers);
-            PendingIntent callPending = PendingIntent.getService(this, (int) conversation.id,
+            call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId());
+            call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.getPhoneNumbers());
+            PendingIntent callPending = PendingIntent.getService(this, (int) conversation.getId(),
                     call, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_call_dark, getString(R.string.call), callPending));
         }
 
         Intent deleteMessage = new Intent(this, NotificationDeleteService.class);
-        deleteMessage.putExtra(NotificationDeleteService.EXTRA_CONVERSATION_ID, conversation.id);
-        deleteMessage.putExtra(NotificationDeleteService.EXTRA_MESSAGE_ID, conversation.unseenMessageId);
-        PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.id,
+        deleteMessage.putExtra(NotificationDeleteService.EXTRA_CONVERSATION_ID, conversation.getId());
+        deleteMessage.putExtra(NotificationDeleteService.EXTRA_MESSAGE_ID, conversation.getUnseenMessageId());
+        PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.getId(),
                 deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (settings.notificationActions.contains(NotificationAction.DELETE)) {
@@ -607,8 +607,8 @@ public class NotificationService extends IntentService {
         }
 
         Intent read = new Intent(this, NotificationMarkReadService.class);
-        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id);
-        PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.id,
+        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId());
+        PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.getId(),
                 read, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (settings.notificationActions.contains(NotificationAction.READ)) {
@@ -619,44 +619,44 @@ public class NotificationService extends IntentService {
         wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_delete_white, getString(R.string.delete), pendingDeleteMessage));
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
-        delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.id);
-        PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.id,
+        delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.getId());
+        PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
-        open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.id);
+        open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), conversation.getId());
         open.putExtra(MessengerActivityExtras.INSTANCE.getEXTRA_FROM_NOTIFICATION(), true);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingOpen = PendingIntent.getActivity(this,
-                (int) conversation.id, open, PendingIntent.FLAG_UPDATE_CURRENT);
+                (int) conversation.getId(), open, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setDeleteIntent(pendingDelete);
         builder.setContentIntent(pendingOpen);
 
         Intent carReply = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_REPLY")
-                .putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
+                .putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId())
                 .setPackage("xyz.klinker.messenger");
-        PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.id,
+        PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 carReply, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent carRead = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_READ")
-                .putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
+                .putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId())
                 .setPackage("xyz.klinker.messenger");
-        PendingIntent pendingCarRead = PendingIntent.getBroadcast(this, (int) conversation.id,
+        PendingIntent pendingCarRead = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 carRead, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Android Auto extender
         NotificationCompat.CarExtender.UnreadConversation.Builder car = new
-                NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
+                NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.getTitle())
                 .setReadPendingIntent(pendingCarRead)
                 .setReplyAction(pendingCarReply, remoteInput)
-                .setLatestTimestamp(conversation.timestamp);
+                .setLatestTimestamp(conversation.getTimestamp());
 
-        for (NotificationMessage message : conversation.messages) {
-            if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                car.addMessage(message.data);
+        for (NotificationMessage message : conversation.getMessages()) {
+            if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                car.addMessage(message.getData());
             } else {
                 car.addMessage(getString(R.string.new_mms_message));
             }
@@ -666,11 +666,11 @@ public class NotificationService extends IntentService {
         builder.extend(new NotificationCompat.CarExtender().setUnreadConversation(car.build()));
         builder.extend(wearableExtender);
 
-        if (CONVERSATION_ID_OPEN == conversation.id) {
+        if (CONVERSATION_ID_OPEN == conversation.getId()) {
             // skip this notification since we are already on the conversation.
             skipSummaryNotification = true;
         } else {
-            NotificationManagerCompat.from(this).notify((int) conversation.id, builder.build());
+            NotificationManagerCompat.from(this).notify((int) conversation.getId(), builder.build());
         }
 
         if (!TvUtils.hasTouchscreen(this)) {
@@ -703,7 +703,7 @@ public class NotificationService extends IntentService {
             NotificationMessage one = messages.get(messages.size() - 2);
             NotificationMessage two = messages.get(messages.size() - 1);
 
-            if (Math.abs(one.timestamp - two.timestamp) > TimeUtils.SECOND * 30) {
+            if (Math.abs(one.getTimestamp() - two.getTimestamp()) > TimeUtils.SECOND * 30) {
                 return false;
             }
         }
@@ -720,10 +720,10 @@ public class NotificationService extends IntentService {
                                          List<String> rows) {
         StringBuilder summaryBuilder = new StringBuilder();
         for (int i = 0; i < conversations.size(); i++) {
-            if (conversations.get(i).privateNotification) {
+            if (conversations.get(i).getPrivateNotification()) {
                 summaryBuilder.append(getString(R.string.new_message));
             } else {
-                summaryBuilder.append(conversations.get(i).title);
+                summaryBuilder.append(conversations.get(i).getTitle());
             }
             
             summaryBuilder.append(", ");
@@ -763,7 +763,7 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).mainColorSet.color)
+                .setColor(Settings.get(this).mainColorSet.getColor())
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
@@ -786,12 +786,12 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).mainColorSet.color)
+                .setColor(Settings.get(this).mainColorSet.getColor())
                 .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
-                .setWhen(conversations.get(conversations.size() - 1).timestamp)
+                .setWhen(conversations.get(conversations.size() - 1).getTimestamp())
                 .setStyle(style)
                 .setPublicVersion(publicVersion)
                 .setDeleteIntent(pendingDelete)
@@ -805,34 +805,34 @@ public class NotificationService extends IntentService {
 
     private Spanned getWearableSecondPageConversation(NotificationConversation conversation) {
         MockableDataSourceWrapper source = getDataSource(this);
-        List<Message> messages = source.getMessages(this, conversation.id, 10);
+        List<Message> messages = source.getMessages(this, conversation.getId(), 10);
 
         String you = getString(R.string.you);
         StringBuilder builder = new StringBuilder();
 
         for (Message message : messages) {
             String messageText = "";
-            if (MimeType.isAudio(message.mimeType)) {
+            if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
                 messageText += "<i>" + getString(R.string.audio_message) + "</i>";
-            } else if (MimeType.isVideo(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
                 messageText += "<i>" + getString(R.string.video_message) + "</i>";
-            } else if (MimeType.isVcard(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
                 messageText += "<i>" + getString(R.string.contact_card) + "</i>";
-            } else if (MimeType.isStaticImage(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
                 messageText += "<i>" + getString(R.string.picture_message) + "</i>";
-            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
                 messageText += "<i>" + getString(R.string.gif_message) + "</i>";
-            } else if (MimeType.isExpandedMedia(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
                 messageText += "<i>" + getString(R.string.media) + "</i>";
             } else {
-                messageText += message.data;
+                messageText += message.getData();
             }
 
-            if (message.type == Message.TYPE_RECEIVED) {
-                if (message.from != null) {
-                    builder.append("<b>" + message.from + "</b>  " + messageText + "<br>");
+            if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
+                if (message.getFrom() != null) {
+                    builder.append("<b>" + message.getFrom() + "</b>  " + messageText + "<br>");
                 } else {
-                    builder.append("<b>" + conversation.title + "</b>  " + messageText + "<br>");
+                    builder.append("<b>" + conversation.getTitle() + "</b>  " + messageText + "<br>");
                 }
             } else {
                 builder.append("<b>" + you + "</b>  " + messageText + "<br>");

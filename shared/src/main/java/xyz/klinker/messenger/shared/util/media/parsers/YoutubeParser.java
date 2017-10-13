@@ -38,7 +38,7 @@ public class YoutubeParser extends MediaParser {
 
     @Override
     protected String getMimeType() {
-        return MimeType.MEDIA_YOUTUBE_V2;
+        return MimeType.INSTANCE.getMEDIA_YOUTUBE_V2();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class YoutubeParser extends MediaParser {
         }
 
         JSONObject apiResponse = queryApi(videoId);
-        YouTubePreview preview = YouTubePreview.build(apiResponse);
+        YouTubePreview preview = YouTubePreview.Companion.build(apiResponse);
         return preview != null ? preview.toString() : null;
     }
 

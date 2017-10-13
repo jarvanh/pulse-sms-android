@@ -107,14 +107,14 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
     private long insertSms(Context context, Handler handler, String address, String body) {
         Message message = new Message();
-        message.type = Message.TYPE_RECEIVED;
-        message.data = body.trim();
-        message.timestamp = System.currentTimeMillis();
-        message.mimeType = MimeType.TEXT_PLAIN;
-        message.read = false;
-        message.seen = false;
-        message.simPhoneNumber = null;
-        message.sentDeviceId = -1L;
+        message.setType(Message.Companion.getTYPE_RECEIVED());
+        message.setData(body.trim());
+        message.setTimestamp(System.currentTimeMillis());
+        message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        message.setRead(false);
+        message.setSeen(false);
+        message.setSimPhoneNumber(null);
+        message.setSentDeviceId(-1L);
 
         DataSource source = DataSource.INSTANCE;
 
@@ -125,10 +125,10 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
             handler.post(() -> {
                 ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId);
-                MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type);
+                MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.getData(), message.getType());
             });
 
-            if (conversation.mute) {
+            if (conversation.getMute()) {
                 source.seenConversation(context, conversationId);
 
                 // don't run the notification service
@@ -143,7 +143,7 @@ public class SmsReceivedNonDefaultReceiver extends BroadcastReceiver {
 
     public static boolean shouldSaveMessages(Context context, DataSource source, Message message) {
         try {
-            List<Message> search = source.searchMessagesAsList(context, message.data, 1);
+            List<Message> search = source.searchMessagesAsList(context, message.getData(), 1);
             if (search.isEmpty()) {
                 return true;
             }

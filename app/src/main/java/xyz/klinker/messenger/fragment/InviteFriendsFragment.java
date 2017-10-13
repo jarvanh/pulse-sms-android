@@ -102,22 +102,22 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                 do {
                     try {
                         Conversation conversation = new Conversation();
-                        conversation.title = cursor.getString(1);
-                        conversation.phoneNumbers = PhoneNumberUtils
-                                .clearFormatting(cursor.getString(2));
-                        conversation.imageUri = ContactUtils
-                                .findImageUri(conversation.phoneNumbers, activity);
-                        conversation.simSubscriptionId = -1;
+                        conversation.setTitle(cursor.getString(1));
+                        conversation.setPhoneNumbers(PhoneNumberUtils
+                                .clearFormatting(cursor.getString(2)));
+                        conversation.setImageUri(ContactUtils
+                                .findImageUri(conversation.getPhoneNumbers(), activity));
+                        conversation.setSimSubscriptionId(-1);
 
-                        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, activity);
+                        Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), activity);
                         if (image == null) {
-                            conversation.imageUri = null;
+                            conversation.setImageUri(null);
                         } else {
                             image.recycle();
                         }
 
                         if (contacts.size() == 0 ||
-                                !conversation.title.equals(contacts.get(contacts.size() - 1).title)) {
+                                !conversation.getTitle().equals(contacts.get(contacts.size() - 1).getTitle())) {
                             contacts.add(conversation);
                         }
                     } catch (NullPointerException e) {

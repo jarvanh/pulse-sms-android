@@ -40,7 +40,7 @@ public class ImageViewerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Message message = messages.get(position);
-        return ImageViewerFragment.newInstance(message.data, message.mimeType);
+        return ImageViewerFragment.newInstance(message.getData(), message.getMimeType());
     }
 
     @Override

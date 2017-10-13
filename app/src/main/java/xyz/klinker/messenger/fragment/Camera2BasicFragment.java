@@ -1032,7 +1032,7 @@ public class Camera2BasicFragment extends Fragment
                 mFragment.getUiHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.IMAGE_JPEG);
+                        mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.INSTANCE.getIMAGE_JPEG());
                     }
                 });
             }

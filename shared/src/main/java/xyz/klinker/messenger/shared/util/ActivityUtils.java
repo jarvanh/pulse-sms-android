@@ -50,7 +50,7 @@ public class ActivityUtils {
     public static void setTaskDescription(Activity activity) {
         Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
-                activity.getString(R.string.app_name), bm, Settings.get(activity).mainColorSet.color);
+                activity.getString(R.string.app_name), bm, Settings.get(activity).mainColorSet.getColor());
 
         activity.setTaskDescription(td);
     }

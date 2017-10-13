@@ -63,15 +63,15 @@ public class ScheduledMessagesAdapter extends RecyclerView.Adapter<ScheduledMess
     public void onBindViewHolder(ScheduledMessageViewHolder holder, int position) {
         final ScheduledMessage message = getItem(position);
 
-        if (message.title == null || message.title.isEmpty()) {
-            holder.titleDate.setText(message.to + " - " + formatter.format(new Date(message.timestamp)));
+        if (message.getTitle() == null || message.getTitle().isEmpty()) {
+            holder.getTitleDate().setText(message.getTo() + " - " + formatter.format(new Date(message.getTimestamp())));
         } else {
-            holder.titleDate.setText(message.title + " - " + formatter.format(new Date(message.timestamp)));
+            holder.getTitleDate().setText(message.getTitle() + " - " + formatter.format(new Date(message.getTimestamp())));
         }
         
-        holder.message.setText(message.data);
+        holder.getMessage().setText(message.getData());
 
-        holder.messageHolder.setOnClickListener(view -> { if (listener != null) listener.onClick(message); });
+        holder.getMessageHolder().setOnClickListener(view -> { if (listener != null) listener.onClick(message); });
         holder.itemView.setOnClickListener(view -> { if (listener != null) listener.onClick(message); });
     }
 

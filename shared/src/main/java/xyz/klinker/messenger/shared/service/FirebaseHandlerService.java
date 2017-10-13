@@ -275,76 +275,76 @@ public class FirebaseHandlerService extends WakefulIntentService {
             Conversation conversation = source.getConversation(context, getLong(json, "conversation_id"));
 
             final Message message = new Message();
-            message.id = id;
-            message.conversationId = conversation == null ? getLong(json, "conversation_id") : conversation.id;
-            message.type = json.getInt("type");
-            message.timestamp = getLong(json, "timestamp");
-            message.read = json.getBoolean("read");
-            message.seen = json.getBoolean("seen");
-            message.simPhoneNumber = conversation == null || conversation.simSubscriptionId == null ? null :
-                    DualSimUtils.get(context).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId);
+            message.setId(id);
+            message.setConversationId(conversation == null ? getLong(json, "conversation_id") : conversation.getId());
+            message.setType(json.getInt("type"));
+            message.setTimestamp(getLong(json, "timestamp"));
+            message.setRead(json.getBoolean("read"));
+            message.setSeen(json.getBoolean("seen"));
+            message.setSimPhoneNumber(conversation == null || conversation.getSimSubscriptionId() == null ? null :
+                    DualSimUtils.get(context).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()));
 
             if (json.has("sent_device")) {
                 try {
-                    message.sentDeviceId = json.getLong("sent_device");
+                    message.setSentDeviceId(json.getLong("sent_device"));
                 } catch (Exception e) {
-                    message.sentDeviceId = -1L;
+                    message.setSentDeviceId(-1L);
                 }
             } else {
-                message.sentDeviceId = -1L;
+                message.setSentDeviceId(-1L);
             }
 
             try {
-                message.data = encryptionUtils.decrypt(json.getString("data"));
-                message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
-                message.from = encryptionUtils.decrypt(json.has("from") ? json.getString("from") : null);
+                message.setData(encryptionUtils.decrypt(json.getString("data")));
+                message.setMimeType(encryptionUtils.decrypt(json.getString("mime_type")));
+                message.setFrom(encryptionUtils.decrypt(json.has("from") ? json.getString("from") : null));
             } catch (Exception e) {
                 Log.v(TAG, "error adding message, from decyrption.");
-                message.data = context.getString(R.string.error_decrypting);
-                message.mimeType = MimeType.TEXT_PLAIN;
-                message.from = null;
+                message.setData(context.getString(R.string.error_decrypting));
+                message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+                message.setFrom(null);
             }
 
             if (json.has("color") && !json.getString("color").equals("null")) {
-                message.color = json.getInt("color");
+                message.setColor(json.getInt("color"));
             }
 
-            if (message.data.equals("firebase -1") &&
-                    !message.mimeType.equals(MimeType.TEXT_PLAIN)) {
+            if (message.getData().equals("firebase -1") &&
+                    !message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
                 Log.v(TAG, "downloading binary from firebase");
 
                 addMessageAfterFirebaseDownload(context, encryptionUtils, message);
                 return;
             }
 
-            long messageId = source.insertMessage(context, message, message.conversationId, true, false);
+            long messageId = source.insertMessage(context, message, message.getConversationId(), true, false);
             Log.v(TAG, "added message");
 
-            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+            if (!Utils.isDefaultSmsApp(context) && message.getType() == Message.Companion.getTYPE_SENDING()) {
                 new Thread(() -> {
                     try { Thread.sleep(500); } catch (Exception e) {}
-                    DataSource.INSTANCE.updateMessageType(context, id, Message.TYPE_SENT, true);
+                    DataSource.INSTANCE.updateMessageType(context, id, Message.Companion.getTYPE_SENT(), true);
                 }).start();
             }
 
-            boolean isSending = message.type == Message.TYPE_SENDING;
+            boolean isSending = message.getType() == Message.Companion.getTYPE_SENDING();
 
             if (!Utils.isDefaultSmsApp(context) && isSending) {
-                message.type = Message.TYPE_SENT;
+                message.setType(Message.Companion.getTYPE_SENT());
             }
 
             if (Account.INSTANCE.getPrimary() && isSending) {
-                conversation = source.getConversation(context, message.conversationId);
+                conversation = source.getConversation(context, message.getConversationId());
 
                 if (conversation != null) {
-                    if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                        new SendUtils(conversation.simSubscriptionId)
-                                .send(context, message.data, conversation.phoneNumbers);
+                    if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                        new SendUtils(conversation.getSimSubscriptionId())
+                                .send(context, message.getData(), conversation.getPhoneNumbers());
                         MarkAsSentJob.Companion.scheduleNextRun(context, messageId);
                     } else {
-                        new SendUtils(conversation.simSubscriptionId)
-                                .send(context, "", conversation.phoneNumbers,
-                                Uri.parse(message.data), message.mimeType);
+                        new SendUtils(conversation.getSimSubscriptionId())
+                                .send(context, "", conversation.getPhoneNumbers(),
+                                Uri.parse(message.getData()), message.getMimeType());
                         MarkAsSentJob.Companion.scheduleNextRun(context, messageId);
                     }
                 } else {
@@ -355,15 +355,15 @@ public class FirebaseHandlerService extends WakefulIntentService {
             }
 
             MessageListUpdatedReceiver.sendBroadcast(context, message);
-            ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
-                    message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
-                    message.type != Message.TYPE_RECEIVED);
+            ConversationListUpdatedReceiver.sendBroadcast(context, message.getConversationId(),
+                    message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) ? message.getData() : "",
+                    message.getType() != Message.Companion.getTYPE_RECEIVED());
 
-            if (message.type == Message.TYPE_RECEIVED) {
+            if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                 context.startService(new Intent(context, NotificationService.class));
             } else if (isSending) {
-                source.readConversation(context, message.conversationId, false);
-                NotificationManagerCompat.from(context).cancel((int) message.conversationId);
+                source.readConversation(context, message.getConversationId(), false);
+                NotificationManagerCompat.from(context).cancel((int) message.getConversationId());
             }
         } else {
             Log.v(TAG, "message already exists, not doing anything with it");
@@ -374,35 +374,35 @@ public class FirebaseHandlerService extends WakefulIntentService {
         ApiUtils apiUtils = ApiUtils.INSTANCE;
         apiUtils.saveFirebaseFolderRef(Account.INSTANCE.getAccountId());
         final File file = new File(context.getFilesDir(),
-                message.id + MimeType.getExtension(message.mimeType));
+                message.getId() + MimeType.INSTANCE.getExtension(message.getMimeType()));
 
         final DataSource source = DataSource.INSTANCE;
 
-        source.insertMessage(context, message, message.conversationId, false, false);
+        source.insertMessage(context, message, message.getConversationId(), false, false);
         Log.v(TAG, "added message");
 
-        final boolean isSending = message.type == Message.TYPE_SENDING;
+        final boolean isSending = message.getType() == Message.Companion.getTYPE_SENDING();
 
         if (!Utils.isDefaultSmsApp(context) && isSending) {
-            message.type = Message.TYPE_SENT;
+            message.setType(Message.Companion.getTYPE_SENT());
         }
 
         FirebaseDownloadCallback callback = () -> {
-            message.data = Uri.fromFile(file).toString();
-            source.updateMessageData(context, message.id, message.data);
-            MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId);
+            message.setData(Uri.fromFile(file).toString());
+            source.updateMessageData(context, message.getId(), message.getData());
+            MessageListUpdatedReceiver.sendBroadcast(context, message.getConversationId());
 
             if (Account.INSTANCE.getPrimary() && isSending) {
-                Conversation conversation = source.getConversation(context, message.conversationId);
+                Conversation conversation = source.getConversation(context, message.getConversationId());
 
                 if (conversation != null) {
-                    if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-                        new SendUtils(conversation.simSubscriptionId)
-                                .send(context, message.data, conversation.phoneNumbers);
+                    if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+                        new SendUtils(conversation.getSimSubscriptionId())
+                                .send(context, message.getData(), conversation.getPhoneNumbers());
                     } else {
-                        new SendUtils(conversation.simSubscriptionId)
-                                .send(context, "", conversation.phoneNumbers,
-                                    Uri.parse(message.data), message.mimeType);
+                        new SendUtils(conversation.getSimSubscriptionId())
+                                .send(context, "", conversation.getPhoneNumbers(),
+                                    Uri.parse(message.getData()), message.getMimeType());
                     }
                 } else {
                     Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers");
@@ -411,24 +411,24 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 Log.v(TAG, "sent message");
             }
 
-            if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
-                source.updateMessageType(context, message.id, Message.TYPE_SENT, false);
+            if (!Utils.isDefaultSmsApp(context) && message.getType() == Message.Companion.getTYPE_SENDING()) {
+                source.updateMessageType(context, message.getId(), Message.Companion.getTYPE_SENT(), false);
             }
 
             MessageListUpdatedReceiver.sendBroadcast(context, message);
-            ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
-                    message.mimeType.equals(MimeType.TEXT_PLAIN) ? message.data : "",
-                    message.type != Message.TYPE_RECEIVED);
+            ConversationListUpdatedReceiver.sendBroadcast(context, message.getConversationId(),
+                    message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) ? message.getData() : "",
+                    message.getType() != Message.Companion.getTYPE_RECEIVED());
 
-            if (message.type == Message.TYPE_RECEIVED) {
+            if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                 context.startService(new Intent(context, NotificationService.class));
             } else if (isSending) {
-                source.readConversation(context, message.conversationId, false);
-                NotificationManagerCompat.from(context).cancel((int) message.conversationId);
+                source.readConversation(context, message.getConversationId(), false);
+                NotificationManagerCompat.from(context).cancel((int) message.getConversationId());
             }
         };
 
-        apiUtils.downloadFileFromFirebase(Account.INSTANCE.getAccountId(), file, message.id, encryptionUtils, callback, 0);
+        apiUtils.downloadFileFromFirebase(Account.INSTANCE.getAccountId(), file, message.getId(), encryptionUtils, callback, 0);
 
     }
 
@@ -475,32 +475,32 @@ public class FirebaseHandlerService extends WakefulIntentService {
     private static void addConversation(JSONObject json, DataSource source, Context context, EncryptionUtils encryptionUtils)
             throws JSONException {
         Conversation conversation = new Conversation();
-        conversation.id = getLong(json, "id");
-        conversation.colors.color = json.getInt("color");
-        conversation.colors.colorDark = json.getInt("color_dark");
-        conversation.colors.colorLight = json.getInt("color_light");
-        conversation.colors.colorAccent = json.getInt("color_accent");
-        conversation.ledColor = json.getInt("led_color");
-        conversation.pinned = json.getBoolean("pinned");
-        conversation.read = json.getBoolean("read");
-        conversation.timestamp = getLong(json, "timestamp");
-        conversation.title = encryptionUtils.decrypt(json.getString("title"));
-        conversation.phoneNumbers = encryptionUtils.decrypt(json.getString("phone_numbers"));
-        conversation.snippet = encryptionUtils.decrypt(json.getString("snippet"));
-        conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
-                json.getString("ringtone") : null);
-        conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context);
-        conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"));
-        conversation.mute = json.getBoolean("mute");
-        conversation.archive = json.getBoolean("archive");
-        conversation.simSubscriptionId = -1;
+        conversation.setId(getLong(json, "id"));
+        conversation.getColors().setColor(json.getInt("color"));
+        conversation.getColors().setColorDark(json.getInt("color_dark"));
+        conversation.getColors().setColorLight(json.getInt("color_light"));
+        conversation.getColors().setColorAccent(json.getInt("color_accent"));
+        conversation.setLedColor(json.getInt("led_color"));
+        conversation.setPinned(json.getBoolean("pinned"));
+        conversation.setRead(json.getBoolean("read"));
+        conversation.setTimestamp(getLong(json, "timestamp"));
+        conversation.setTitle(encryptionUtils.decrypt(json.getString("title")));
+        conversation.setPhoneNumbers(encryptionUtils.decrypt(json.getString("phone_numbers")));
+        conversation.setSnippet(encryptionUtils.decrypt(json.getString("snippet")));
+        conversation.setRingtoneUri(encryptionUtils.decrypt(json.has("ringtone") ?
+                json.getString("ringtone") : null));
+        conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), context));
+        conversation.setIdMatcher(encryptionUtils.decrypt(json.getString("id_matcher")));
+        conversation.setMute(json.getBoolean("mute"));
+        conversation.setArchive(json.getBoolean("archive"));
+        conversation.setSimSubscriptionId(-1);
 
-        Bitmap image = ImageUtils.getContactImage(conversation.imageUri, context);
-        if (conversation.imageUri != null &&
+        Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), context);
+        if (conversation.getImageUri() != null &&
                 image == null) {
-            conversation.imageUri = null;
-        } else if (conversation.imageUri != null) {
-            conversation.imageUri += "/photo";
+            conversation.setImageUri(null);
+        } else if (conversation.getImageUri() != null) {
+            conversation.setImageUri(conversation.getImageUri() + "/photo");
         }
 
         if (image != null) {
@@ -518,12 +518,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
             throws JSONException {
         try {
             Contact contact = new Contact();
-            contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
-            contact.name = encryptionUtils.decrypt(json.getString("name"));
-            contact.colors.color = json.getInt("color");
-            contact.colors.colorDark = json.getInt("color_dark");
-            contact.colors.colorLight = json.getInt("color_light");
-            contact.colors.colorAccent = json.getInt("color_accent");
+            contact.setPhoneNumber(encryptionUtils.decrypt(json.getString("phone_number")));
+            contact.setName(encryptionUtils.decrypt(json.getString("name")));
+            contact.getColors().setColor(json.getInt("color"));
+            contact.getColors().setColorDark(json.getInt("color_dark"));
+            contact.getColors().setColorLight(json.getInt("color_light"));
+            contact.getColors().setColorAccent(json.getInt("color_accent"));
 
             source.updateContact(context, contact, false);
             Log.v(TAG, "updated contact");
@@ -549,12 +549,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         try {
             Contact contact = new Contact();
-            contact.phoneNumber = encryptionUtils.decrypt(json.getString("phone_number"));
-            contact.name = encryptionUtils.decrypt(json.getString("name"));
-            contact.colors.color = json.getInt("color");
-            contact.colors.colorDark = json.getInt("color_dark");
-            contact.colors.colorLight = json.getInt("color_light");
-            contact.colors.colorAccent = json.getInt("color_accent");
+            contact.setPhoneNumber(encryptionUtils.decrypt(json.getString("phone_number")));
+            contact.setName(encryptionUtils.decrypt(json.getString("name")));
+            contact.getColors().setColor(json.getInt("color"));
+            contact.getColors().setColorDark(json.getInt("color_dark"));
+            contact.getColors().setColorLight(json.getInt("color_light"));
+            contact.getColors().setColorAccent(json.getInt("color_accent"));
 
             source.insertContact(context, contact, false);
             Log.v(TAG, "added contact");
@@ -570,26 +570,26 @@ public class FirebaseHandlerService extends WakefulIntentService {
             throws JSONException {
         try {
             Conversation conversation = new Conversation();
-            conversation.id = getLong(json, "id");
-            conversation.title = encryptionUtils.decrypt(json.getString("title"));
-            conversation.colors.color = json.getInt("color");
-            conversation.colors.colorDark = json.getInt("color_dark");
-            conversation.colors.colorLight = json.getInt("color_light");
-            conversation.colors.colorAccent = json.getInt("color_accent");
-            conversation.ledColor = json.getInt("led_color");
-            conversation.pinned = json.getBoolean("pinned");
-            conversation.ringtoneUri = encryptionUtils.decrypt(json.has("ringtone") ?
-                    json.getString("ringtone") : null);
-            conversation.mute = json.getBoolean("mute");
-            conversation.read = json.getBoolean("read");
-            conversation.read = json.getBoolean("read");
-            conversation.archive = json.getBoolean("archive");
-            conversation.privateNotifications = json.getBoolean("private_notifications");
+            conversation.setId(getLong(json, "id"));
+            conversation.setTitle(encryptionUtils.decrypt(json.getString("title")));
+            conversation.getColors().setColor(json.getInt("color"));
+            conversation.getColors().setColorDark(json.getInt("color_dark"));
+            conversation.getColors().setColorLight(json.getInt("color_light"));
+            conversation.getColors().setColorAccent(json.getInt("color_accent"));
+            conversation.setLedColor(json.getInt("led_color"));
+            conversation.setPinned(json.getBoolean("pinned"));
+            conversation.setRingtoneUri(encryptionUtils.decrypt(json.has("ringtone") ?
+                    json.getString("ringtone") : null));
+            conversation.setMute(json.getBoolean("mute"));
+            conversation.setRead(json.getBoolean("read"));
+            conversation.setRead(json.getBoolean("read"));
+            conversation.setArchive(json.getBoolean("archive"));
+            conversation.setPrivateNotifications(json.getBoolean("private_notifications"));
 
             source.updateConversationSettings(context, conversation, false);
 
-            if (conversation.read) {
-                source.readConversation(context, conversation.id, false);
+            if (conversation.getRead()) {
+                source.readConversation(context, conversation.getId(), false);
             }
             Log.v(TAG, "updated conversation");
         } catch (RuntimeException e) {
@@ -618,7 +618,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     json.getBoolean("read"),
                     getLong(json, "timestamp"),
                     encryptionUtils.decrypt(json.getString("snippet")),
-                    MimeType.TEXT_PLAIN,
+                    MimeType.INSTANCE.getTEXT_PLAIN(),
                     json.getBoolean("archive"),
                     false
             );
@@ -643,8 +643,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
             Conversation conversation = source.getConversation(context, id);
             source.readConversation(context, id, false);
 
-            if (conversation != null && !conversation.read) {
-                ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.snippet, true);
+            if (conversation != null && !conversation.getRead()) {
+                ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.getSnippet(), true);
             }
 
             Log.v(TAG, "read conversation");
@@ -671,10 +671,10 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
     private static void addDraft(JSONObject json, DataSource source, Context context, EncryptionUtils encryptionUtils) throws JSONException {
         Draft draft = new Draft();
-        draft.id = getLong(json, "id");
-        draft.conversationId = getLong(json, "conversation_id");
-        draft.data = encryptionUtils.decrypt(json.getString("data"));
-        draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
+        draft.setId(getLong(json, "id"));
+        draft.setConversationId(getLong(json, "conversation_id"));
+        draft.setData(encryptionUtils.decrypt(json.getString("data")));
+        draft.setMimeType(encryptionUtils.decrypt(json.getString("mime_type")));
 
         source.insertDraft(context, draft, false);
         Log.v(TAG, "added draft");
@@ -697,8 +697,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
         phoneNumber = encryptionUtils.decrypt(phoneNumber);
 
         Blacklist blacklist = new Blacklist();
-        blacklist.id = id;
-        blacklist.phoneNumber = phoneNumber;
+        blacklist.setId(id);
+        blacklist.setPhoneNumber(phoneNumber);
         source.insertBlacklist(context, blacklist, false);
         Log.v(TAG, "added blacklist");
     }
@@ -712,12 +712,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
     private static void addScheduledMessage(JSONObject json, DataSource source, Context context, EncryptionUtils encryptionUtils)
             throws JSONException {
         ScheduledMessage message = new ScheduledMessage();
-        message.id = getLong(json, "id");
-        message.to = encryptionUtils.decrypt(json.getString("to"));
-        message.data = encryptionUtils.decrypt(json.getString("data"));
-        message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
-        message.timestamp = getLong(json, "timestamp");
-        message.title = encryptionUtils.decrypt(json.getString("title"));
+        message.setId(getLong(json, "id"));
+        message.setTo(encryptionUtils.decrypt(json.getString("to")));
+        message.setData(encryptionUtils.decrypt(json.getString("data")));
+        message.setMimeType(encryptionUtils.decrypt(json.getString("mime_type")));
+        message.setTimestamp(getLong(json, "timestamp"));
+        message.setTitle(encryptionUtils.decrypt(json.getString("title")));
 
         source.insertScheduledMessage(context, message, false);
         ScheduledMessageJob.scheduleNextRun(context, source);
@@ -727,12 +727,12 @@ public class FirebaseHandlerService extends WakefulIntentService {
     private static void updatedScheduledMessage(JSONObject json, DataSource source, Context context, EncryptionUtils encryptionUtils)
             throws JSONException {
         ScheduledMessage message = new ScheduledMessage();
-        message.id = getLong(json, "id");
-        message.to = encryptionUtils.decrypt(json.getString("to"));
-        message.data = encryptionUtils.decrypt(json.getString("data"));
-        message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"));
-        message.timestamp = getLong(json, "timestamp");
-        message.title = encryptionUtils.decrypt(json.getString("title"));
+        message.setId(getLong(json, "id"));
+        message.setTo(encryptionUtils.decrypt(json.getString("to")));
+        message.setData(encryptionUtils.decrypt(json.getString("data")));
+        message.setMimeType(encryptionUtils.decrypt(json.getString("mime_type")));
+        message.setTimestamp(getLong(json, "timestamp"));
+        message.setTitle(encryptionUtils.decrypt(json.getString("title")));
 
         source.updateScheduledMessage(context, message, false);
         ScheduledMessageJob.scheduleNextRun(context, source);
@@ -756,8 +756,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
             source.readConversation(context, conversationId, false);
-            if (conversation != null && !conversation.read) {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.snippet, true);
+            if (conversation != null && !conversation.getRead()) {
+                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.getSnippet(), true);
             }
 
             NotificationManagerCompat.from(context).cancel((int) conversationId);
@@ -875,25 +875,25 @@ public class FirebaseHandlerService extends WakefulIntentService {
         }
 
         Message message = new Message();
-        message.type = Message.TYPE_SENDING;
-        message.data = text;
-        message.timestamp = System.currentTimeMillis();
-        message.mimeType = MimeType.TEXT_PLAIN;
-        message.read = true;
-        message.seen = true;
-        message.simPhoneNumber = DualSimUtils.get(context).getDefaultPhoneNumber();
+        message.setType(Message.Companion.getTYPE_SENDING());
+        message.setData(text);
+        message.setTimestamp(System.currentTimeMillis());
+        message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        message.setRead(true);
+        message.setSeen(true);
+        message.setSimPhoneNumber(DualSimUtils.get(context).getDefaultPhoneNumber());
 
         if (json.has("sent_device")) {
-            message.sentDeviceId = json.getLong("sent_device");
+            message.setSentDeviceId(json.getLong("sent_device"));
         } else {
-            message.sentDeviceId = 0;
+            message.setSentDeviceId(0);
         }
 
         long conversationId = source.insertMessage(message, to, context, true);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                .send(context, message.data, to);
+        new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
+                .send(context, message.getData(), to);
     }
     
     private static long getLong(JSONObject json, String identifier) {
@@ -912,7 +912,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setColor(Settings.get(context).mainColorSet.color);
+                .setColor(Settings.get(context).mainColorSet.getColor());
 
         NotificationManagerCompat.from(context).notify(INFORMATION_NOTIFICATION_ID, builder.build());
     }

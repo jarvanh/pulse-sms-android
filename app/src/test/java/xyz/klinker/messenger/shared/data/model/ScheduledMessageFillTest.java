@@ -34,22 +34,22 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
         cursor.moveToFirst();
         message.fillFromCursor(cursor);
 
-        assertEquals(1, message.id);
-        assertEquals("luke", message.title);
-        assertEquals("5159911493", message.to);
-        assertEquals("Do you want to go to summerfest this weekend?", message.data);
-        assertEquals("text/plain", message.mimeType);
-        assertEquals(1001L, message.timestamp);
+        assertEquals(1, message.getId());
+        assertEquals("luke", message.getTitle());
+        assertEquals("5159911493", message.getTo());
+        assertEquals("Do you want to go to summerfest this weekend?", message.getData());
+        assertEquals("text/plain", message.getMimeType());
+        assertEquals(1001L, message.getTimestamp());
     }
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                ScheduledMessage.COLUMN_ID,
-                ScheduledMessage.COLUMN_TITLE,
-                ScheduledMessage.COLUMN_TO,
-                ScheduledMessage.COLUMN_DATA,
-                ScheduledMessage.COLUMN_MIME_TYPE,
-                ScheduledMessage.COLUMN_TIMESTAMP
+                ScheduledMessage.Companion.getCOLUMN_ID(),
+                ScheduledMessage.Companion.getCOLUMN_TITLE(),
+                ScheduledMessage.Companion.getCOLUMN_TO(),
+                ScheduledMessage.Companion.getCOLUMN_DATA(),
+                ScheduledMessage.Companion.getCOLUMN_MIME_TYPE(),
+                ScheduledMessage.Companion.getCOLUMN_TIMESTAMP()
         });
 
         cursor.addRow(new Object[]{

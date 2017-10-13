@@ -125,14 +125,14 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     private long insertSms(Context context, Handler handler, String address, String body, int simSlot) {
         Message message = new Message();
-        message.type = Message.TYPE_RECEIVED;
-        message.data = body.trim();
-        message.timestamp = System.currentTimeMillis();
-        message.mimeType = MimeType.TEXT_PLAIN;
-        message.read = false;
-        message.seen = false;
-        message.simPhoneNumber = DualSimUtils.get(context).getNumberFromSimSlot(simSlot);
-        message.sentDeviceId = -1L;
+        message.setType(Message.Companion.getTYPE_RECEIVED());
+        message.setData(body.trim());
+        message.setTimestamp(System.currentTimeMillis());
+        message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+        message.setRead(false);
+        message.setSeen(false);
+        message.setSimPhoneNumber(DualSimUtils.get(context).getNumberFromSimSlot(simSlot));
+        message.setSentDeviceId(-1L);
 
         final DataSource source = DataSource.INSTANCE;
 
@@ -150,10 +150,10 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
             Conversation conversation = source.getConversation(context, conversationId);
             handler.post(() -> {
                 ConversationListUpdatedReceiver.sendBroadcast(context, fConvoId, body, NotificationService.CONVERSATION_ID_OPEN == fConvoId);
-                MessageListUpdatedReceiver.sendBroadcast(context, fConvoId, message.data, message.type);
+                MessageListUpdatedReceiver.sendBroadcast(context, fConvoId, message.getData(), message.getType());
             });
 
-            if (conversation != null && conversation.mute) {
+            if (conversation != null && conversation.getMute()) {
                 source.seenConversation(context, conversationId);
                 // don't run the notification service
                 return -1;
@@ -167,11 +167,11 @@ public class SmsReceivedReceiver extends BroadcastReceiver {
 
     public static boolean shouldSaveMessages(Context context, DataSource source, Message message) {
         try {
-            List<Message> search = source.searchMessagesAsList(context, message.data, 1);
+            List<Message> search = source.searchMessagesAsList(context, message.getData(), 1);
             if (!search.isEmpty()) {
                 Message inDatabase = search.get(0);
-                if (inDatabase.data.equals(message.data) && inDatabase.type == Message.TYPE_RECEIVED &&
-                        (message.timestamp - inDatabase.timestamp) < (TimeUtils.MINUTE * 10)) {
+                if (inDatabase.getData().equals(message.getData()) && inDatabase.getType() == Message.Companion.getTYPE_RECEIVED() &&
+                        (message.getTimestamp() - inDatabase.getTimestamp()) < (TimeUtils.MINUTE * 10)) {
                     return false;
                 }
             }

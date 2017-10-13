@@ -63,7 +63,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
     public void setUp() {
         receiver = new ConversationListUpdatedReceiver(fragment);
         context = RuntimeEnvironment.application;
-        today = new SectionType(SectionType.TODAY, 1);
+        today = new SectionType(SectionType.Companion.getTODAY(), 1);
 
         when(fragment.isAdded()).thenReturn(true);
         when(fragment.getExpandedId()).thenReturn(0L);
@@ -128,13 +128,13 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
     public void noConversationAndTodayAndNoPinned() {
         when(sectionTypes.get(0)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(-1);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(0);
 
         receiver.onReceive(context, intent);
 
         verify(conversations).add(0, null);
-        assertEquals(2, today.count);
+        assertEquals(2, today.getCount());
         verify(adapter).notifyItemInserted(1);
     }
 
@@ -142,85 +142,85 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
     public void noConversationAndTodayAndPinned() {
         when(sectionTypes.get(1)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(-1);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(2);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(2);
 
         receiver.onReceive(context, intent);
 
         verify(conversations).add(2, null);
-        assertEquals(2, today.count);
+        assertEquals(2, today.getCount());
         verify(adapter).notifyItemInserted(4);
     }
 
     @Test
     public void conversationAndNoTodayAndNoPinned() {
-        conversations.get(1).id = 1;
+        conversations.get(1).setId(1);
         when(adapter.findPositionForConversationId(1)).thenReturn(3);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(0);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(0);
 
         receiver.onReceive(context, intent);
 
         verify(adapter).removeItem(3, ReorderType.NEITHER);
         verify(conversations).add(eq(0), any(Conversation.class));
-        verify(sectionTypes).add(0, new SectionType(SectionType.TODAY, 1));
+        verify(sectionTypes).add(0, new SectionType(SectionType.Companion.getTODAY(), 1));
         verify(adapter).notifyItemRangeInserted(0, 2);
     }
 
     @Test
     public void conversationAndNoTodayAndPinned() {
-        conversations.get(2).id = 1;
+        conversations.get(2).setId(1);
         when(adapter.findPositionForConversationId(1)).thenReturn(5);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(0);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(1);
 
         receiver.onReceive(context, intent);
 
         verify(adapter).removeItem(5, ReorderType.NEITHER);
         verify(conversations).add(eq(1), any(Conversation.class));
-        verify(sectionTypes).add(1, new SectionType(SectionType.TODAY, 1));
+        verify(sectionTypes).add(1, new SectionType(SectionType.Companion.getTODAY(), 1));
         verify(adapter).notifyItemRangeInserted(2, 2);
     }
 
     @Test
     public void conversationAndTodayAndNoPinned() {
-        conversations.get(1).id = 1;
+        conversations.get(1).setId(1);
         when(sectionTypes.get(0)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(4);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(0);
 
         receiver.onReceive(context, intent);
 
         verify(adapter).removeItem(4, ReorderType.NEITHER);
         verify(conversations).add(eq(0), any(Conversation.class));
-        assertEquals(2, today.count);
+        assertEquals(2, today.getCount());
         verify(adapter).notifyItemInserted(1);
     }
 
     @Test
     public void conversationAndTodayAndPinned() {
-        conversations.get(2).id = 1;
+        conversations.get(2).setId(1);
         when(sectionTypes.get(1)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(6);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(1);
 
         receiver.onReceive(context, intent);
 
         verify(adapter).removeItem(6, ReorderType.NEITHER);
         verify(conversations).add(eq(1), any(Conversation.class));
-        assertEquals(2, today.count);
+        assertEquals(2, today.getCount());
         verify(adapter).notifyItemInserted(3);
     }
 
     @Test
     public void conversationAlreadyAtTopWithPinned() {
-        conversations.get(2).id = 1;
+        conversations.get(2).setId(1);
         when(sectionTypes.get(1)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(4);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(2);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(2);
 
         receiver.onReceive(context, intent);
 
@@ -229,11 +229,11 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
     @Test
     public void conversationAlreadyAtTopAndIsPinned() {
-        conversations.get(1).id = 1;
+        conversations.get(1).setId(1);
         when(sectionTypes.get(1)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(2);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(2);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(2);
 
         receiver.onReceive(context, intent);
 
@@ -242,11 +242,11 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
     @Test
     public void conversationAlreadyAtTopWithNoPinned() {
-        conversations.get(0).id = 1;
+        conversations.get(0).setId(1);
         when(sectionTypes.get(0)).thenReturn(today);
         when(adapter.findPositionForConversationId(1)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.TODAY)).thenReturn(1);
-        when(adapter.getCountForSection(SectionType.PINNED)).thenReturn(0);
+        when(adapter.getCountForSection(SectionType.Companion.getTODAY())).thenReturn(1);
+        when(adapter.getCountForSection(SectionType.Companion.getPINNED())).thenReturn(0);
 
         receiver.onReceive(context, intent);
 

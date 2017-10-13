@@ -63,47 +63,47 @@ public class ColorUtils {
 
         switch (num) {
             case 0:
-                return ColorSet.RED(context);
+                return ColorSet.Companion.RED(context);
             case 1:
-                return ColorSet.PINK(context);
+                return ColorSet.Companion.PINK(context);
             case 2:
-                return ColorSet.PURPLE(context);
+                return ColorSet.Companion.PURPLE(context);
             case 3:
-                return ColorSet.DEEP_PURPLE(context);
+                return ColorSet.Companion.DEEP_PURPLE(context);
             case 4:
-                return ColorSet.INDIGO(context);
+                return ColorSet.Companion.INDIGO(context);
             case 5:
-                return ColorSet.BLUE(context);
+                return ColorSet.Companion.BLUE(context);
             case 6:
-                return ColorSet.LIGHT_BLUE(context);
+                return ColorSet.Companion.LIGHT_BLUE(context);
             case 7:
-                return ColorSet.CYAN(context);
+                return ColorSet.Companion.CYAN(context);
             case 8:
-                return ColorSet.GREEN(context);
+                return ColorSet.Companion.GREEN(context);
             case 9:
-                return ColorSet.LIGHT_GREEN(context);
+                return ColorSet.Companion.LIGHT_GREEN(context);
             case 10:
-                return ColorSet.AMBER(context);
+                return ColorSet.Companion.AMBER(context);
             case 11:
-                return ColorSet.ORANGE(context);
+                return ColorSet.Companion.ORANGE(context);
             case 12:
-                return ColorSet.DEEP_ORANGE(context);
+                return ColorSet.Companion.DEEP_ORANGE(context);
             case 13:
-                return ColorSet.BROWN(context);
+                return ColorSet.Companion.BROWN(context);
             case 14:
-                return ColorSet.GREY(context);
+                return ColorSet.Companion.GREY(context);
             case 15:
-                return ColorSet.BLUE_GREY(context);
+                return ColorSet.Companion.BLUE_GREY(context);
             case 16:
-                return ColorSet.TEAL(context);
+                return ColorSet.Companion.TEAL(context);
             case 17:
-                //return ColorSet.LIME(context);
+                //return ColorSet.Companion.LIME(context);
             case 18:
-                //return ColorSet.YELLOW(context);
+                //return ColorSet.Companion.YELLOW(context);
             case 19:
-                //return ColorSet.WHITE(context);
+                //return ColorSet.Companion.WHITE(context);
             default:
-                return ColorSet.TEAL(context);
+                return ColorSet.Companion.TEAL(context);
         }
     }
 
@@ -126,7 +126,7 @@ public class ColorUtils {
         }
 
         if (Settings.get(activity).useGlobalThemeColor) {
-            color = Settings.get(activity).mainColorSet.colorDark;
+            color = Settings.get(activity).mainColorSet.getColorDark();
         }
 
         if (!activity.getResources().getBoolean(R.bool.pin_drawer)) {
@@ -171,7 +171,7 @@ public class ColorUtils {
      */
     public static void adjustDrawerColor(int color, boolean isGroup, Activity activity) {
         if (Settings.get(activity).useGlobalThemeColor) {
-            color = Settings.get(activity).mainColorSet.colorDark;
+            color = Settings.get(activity).mainColorSet.getColorDark();
         }
 
         final View revealView = activity.findViewById(R.id.navigation_view).findViewById(R.id.header_reveal);
@@ -244,7 +244,7 @@ public class ColorUtils {
      */
     public static void setCursorDrawableColor(EditText editText, int color) {
         if (Settings.get(editText.getContext()).useGlobalThemeColor) {
-            color = Settings.get(editText.getContext()).mainColorSet.colorAccent;
+            color = Settings.get(editText.getContext()).mainColorSet.getColorAccent();
         }
 
         try {
@@ -279,7 +279,7 @@ public class ColorUtils {
      */
     public static void colorTextSelectionHandles(TextView view, int color) {
         if (Settings.get(view.getContext()).useGlobalThemeColor) {
-            color = Settings.get(view.getContext()).mainColorSet.colorAccent;
+            color = Settings.get(view.getContext()).mainColorSet.getColorAccent();
         }
 
         try {
@@ -328,7 +328,7 @@ public class ColorUtils {
     public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, int color) {
         final int colorWithGlobalCalculated;
         if (Settings.get(recyclerView.getContext()).useGlobalThemeColor) {
-            colorWithGlobalCalculated = Settings.get(recyclerView.getContext()).mainColorSet.color;
+            colorWithGlobalCalculated = Settings.get(recyclerView.getContext()).mainColorSet.getColor();
         } else {
             colorWithGlobalCalculated = color;
         }
@@ -404,26 +404,26 @@ public class ColorUtils {
 
     public static List<ColorSet> getColors(Context context) {
         List<ColorSet> colors = new ArrayList<>();
-        colors.add(ColorSet.RED(context));
-        colors.add(ColorSet.PINK(context));
-        colors.add(ColorSet.PURPLE(context));
-        colors.add(ColorSet.DEEP_PURPLE(context));
-        colors.add(ColorSet.INDIGO(context));
-        colors.add(ColorSet.BLUE(context));
-        colors.add(ColorSet.LIGHT_BLUE(context));
-        colors.add(ColorSet.CYAN(context));
-        colors.add(ColorSet.TEAL(context));
-        colors.add(ColorSet.GREEN(context));
-        colors.add(ColorSet.LIGHT_GREEN(context));
-        colors.add(ColorSet.LIME(context));
-        colors.add(ColorSet.YELLOW(context));
-        colors.add(ColorSet.AMBER(context));
-        colors.add(ColorSet.ORANGE(context));
-        colors.add(ColorSet.DEEP_ORANGE(context));
-        colors.add(ColorSet.BROWN(context));
-        colors.add(ColorSet.GREY(context));
-        colors.add(ColorSet.BLUE_GREY(context));
-        colors.add(ColorSet.WHITE(context));
+        colors.add(ColorSet.Companion.RED(context));
+        colors.add(ColorSet.Companion.PINK(context));
+        colors.add(ColorSet.Companion.PURPLE(context));
+        colors.add(ColorSet.Companion.DEEP_PURPLE(context));
+        colors.add(ColorSet.Companion.INDIGO(context));
+        colors.add(ColorSet.Companion.BLUE(context));
+        colors.add(ColorSet.Companion.LIGHT_BLUE(context));
+        colors.add(ColorSet.Companion.CYAN(context));
+        colors.add(ColorSet.Companion.TEAL(context));
+        colors.add(ColorSet.Companion.GREEN(context));
+        colors.add(ColorSet.Companion.LIGHT_GREEN(context));
+        colors.add(ColorSet.Companion.LIME(context));
+        colors.add(ColorSet.Companion.YELLOW(context));
+        colors.add(ColorSet.Companion.AMBER(context));
+        colors.add(ColorSet.Companion.ORANGE(context));
+        colors.add(ColorSet.Companion.DEEP_ORANGE(context));
+        colors.add(ColorSet.Companion.BROWN(context));
+        colors.add(ColorSet.Companion.GREY(context));
+        colors.add(ColorSet.Companion.BLUE_GREY(context));
+        colors.add(ColorSet.Companion.WHITE(context));
         return colors;
     }
 

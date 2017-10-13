@@ -59,10 +59,10 @@ public class HeadlessSmsSendService extends Service {
             }
 
             DataSource source = DataSource.INSTANCE;
-            long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.TEXT_PLAIN, this);
+            long conversationId = source.insertSentMessage(phoneNumbers.toString(), text, MimeType.INSTANCE.getTEXT_PLAIN(), this);
             Conversation conversation = source.getConversation(this, conversationId);
 
-            new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+            new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
                     .send(this, text, addresses);
         } catch (Exception e) {
 

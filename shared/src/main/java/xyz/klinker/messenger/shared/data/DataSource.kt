@@ -526,7 +526,7 @@ object DataSource {
      * @param colorLight     the new light color (null if we don't want to update it)
      * @param colorAccent    the new accent color (null if we don't want to update it)
      */
-    @JvmOverloads fun updateContact(context: Context, phoneNumber: String, name: String?, color: Int?, colorDark: Int?,
+    @JvmOverloads fun updateContact(context: Context, phoneNumber: String?, name: String?, color: Int?, colorDark: Int?,
                       colorLight: Int?, colorAccent: Int?, useApi: Boolean = true) {
         val values = ContentValues()
 
@@ -1026,7 +1026,7 @@ object DataSource {
      * @param snippetMime    the snippet's mime type.
      */
     @JvmOverloads fun updateConversation(context: Context, conversationId: Long, read: Boolean, timestamp: Long,
-                           snippet: String, snippetMime: String?, archive: Boolean, useApi: Boolean = true) {
+                           snippet: String?, snippetMime: String?, archive: Boolean, useApi: Boolean = true) {
         var snippet = snippet
         val values = ContentValues(4)
         values.put(Conversation.COLUMN_READ, read)
@@ -1186,7 +1186,7 @@ object DataSource {
 
         if (conversation.isGroup) {
             builder.append("<b>Number of Members: </b>")
-            builder.append(conversation.phoneNumbers.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().size)
+            builder.append(conversation.phoneNumbers?.split(", ".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()?.size)
             builder.append("<br/>")
         }
 

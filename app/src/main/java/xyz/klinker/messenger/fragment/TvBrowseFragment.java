@@ -52,7 +52,7 @@ public class TvBrowseFragment extends BrowseSupportFragment {
 
                 ArrayObjectAdapter customFragmentAdapter = new ArrayObjectAdapter();
                 customFragmentAdapter.add(MessageListFragment.newInstance(conversation));
-                ListRow customFragmentRow = new ListRow(new HeaderItem(conversation.title),
+                ListRow customFragmentRow = new ListRow(new HeaderItem(conversation.getTitle()),
                         customFragmentAdapter);
                 adapter.add(customFragmentRow);
             } while (conversations.moveToNext());

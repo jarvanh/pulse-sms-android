@@ -87,10 +87,10 @@ public class MessageViewHolder extends SwappingHolder {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (type == Message.TYPE_INFO || fragment.getMultiSelect() == null ||
+            if (type == Message.Companion.getTYPE_INFO() || fragment.getMultiSelect() == null ||
                     fragment.getMultiSelect().tapSelection(MessageViewHolder.this)) {
                 return;
-            } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+            } else if (mimeType.equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
                 startArticle();
                 return;
             }
@@ -121,8 +121,8 @@ public class MessageViewHolder extends SwappingHolder {
                 return true;
             }
 
-            if (MimeType.isExpandedMedia(mimeType) || (message != null && message.getVisibility() == View.VISIBLE && type != Message.TYPE_ERROR &&
-                    fragment.getMultiSelect() != null && type != Message.TYPE_INFO)) {
+            if (MimeType.INSTANCE.isExpandedMedia(mimeType) || (message != null && message.getVisibility() == View.VISIBLE && type != Message.Companion.getTYPE_ERROR() &&
+                    fragment.getMultiSelect() != null && type != Message.Companion.getTYPE_INFO())) {
 
                 if (!fragment.getMultiSelect().isSelectable()) {
                     // start the multi-select
@@ -136,7 +136,7 @@ public class MessageViewHolder extends SwappingHolder {
 
             String[] items;
             if (message != null && message.getVisibility() == View.VISIBLE) {
-                if (type == Message.TYPE_ERROR) {
+                if (type == Message.Companion.getTYPE_ERROR()) {
                     items = new String[5];
                     items[4] = view.getContext().getString(R.string.resend);
                 } else {
@@ -223,7 +223,7 @@ public class MessageViewHolder extends SwappingHolder {
         // done from the adapter, since we have the ability to change emoji sizes
         // message.setTextSize(settings.largeFont);
 
-        if (type != Message.TYPE_MEDIA && type != Message.TYPE_IMAGE_SENDING) {
+        if (type != Message.Companion.getTYPE_MEDIA() && type != Message.Companion.getTYPE_IMAGE_SENDING()) {
             timestamp.setTextSize(settings.smallFont);
             timestamp.setHeight(DensityUtil.spToPx(itemView.getContext(), settings.mediumFont));
 
@@ -234,9 +234,9 @@ public class MessageViewHolder extends SwappingHolder {
         }
 
         if ((color != Integer.MIN_VALUE && messageHolder != null) ||
-                settings.useGlobalThemeColor && type == Message.TYPE_RECEIVED) {
+                settings.useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
             if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).mainColorSet.color;
+                color = Settings.get(itemView.getContext()).mainColorSet.getColor();
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -258,7 +258,7 @@ public class MessageViewHolder extends SwappingHolder {
                     return;
                 }
 
-                if (mimeType != null && MimeType.isVcard(mimeType)) {
+                if (mimeType != null && MimeType.INSTANCE.isVcard(mimeType)) {
                     Uri uri = Uri.parse(message.getText().toString());
                     if (message.getText().toString().contains("file://")) {
                         uri = ImageUtils.createContentUri(itemView.getContext(), uri);
@@ -266,7 +266,7 @@ public class MessageViewHolder extends SwappingHolder {
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setDataAndType(uri, MimeType.TEXT_VCARD);
+                    intent.setDataAndType(uri, MimeType.INSTANCE.getTEXT_VCARD());
 
                     try {
                         itemView.getContext().startActivity(intent);
@@ -274,12 +274,12 @@ public class MessageViewHolder extends SwappingHolder {
                         e.printStackTrace();
                     }
 
-                } else if (mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
-                    YouTubePreview preview = YouTubePreview.build(data);
+                } else if (mimeType.equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
+                    YouTubePreview preview = YouTubePreview.Companion.build(data);
                     if (preview != null) {
-                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.url)));
+                        itemView.getContext().startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(preview.getUrl())));
                     }
-                } else if (mimeType.equals(MimeType.MEDIA_ARTICLE)) {
+                } else if (mimeType.equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
                     startArticle();
                 } else {
                     Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
@@ -330,13 +330,13 @@ public class MessageViewHolder extends SwappingHolder {
                     Message m = source.getMessage(itemView.getContext(), messageId);
 
                     if (m != null) {
-                        long conversationId = m.conversationId;
+                        long conversationId = m.getConversationId();
                         source.deleteMessage(itemView.getContext(), messageId);
                         MessageListUpdatedReceiver.sendBroadcast(itemView.getContext(), conversationId);
                     }
 
                     if (messageDeletedListener != null && m != null) {
-                        messageDeletedListener.onMessageDeleted(itemView.getContext(), m.conversationId,
+                        messageDeletedListener.onMessageDeleted(itemView.getContext(), m.getConversationId(),
                                 getAdapterPosition());
                     }
                 })
@@ -361,13 +361,13 @@ public class MessageViewHolder extends SwappingHolder {
         Message message = getMessage(messageId);
 
         Uri contentUri =
-                ImageUtils.createContentUri(itemView.getContext(), Uri.parse(message.data));
+                ImageUtils.createContentUri(itemView.getContext(), Uri.parse(message.getData()));
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        shareIntent.setType(message.mimeType);
+        shareIntent.setType(message.getMimeType());
         itemView.getContext().startActivity(Intent.createChooser(shareIntent,
                 itemView.getContext().getResources().getText(R.string.share_content)));
     }
@@ -378,8 +378,8 @@ public class MessageViewHolder extends SwappingHolder {
         if (message != null) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, message.data);
-            shareIntent.setType(message.mimeType);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message.getData());
+            shareIntent.setType(message.getMimeType());
             itemView.getContext().startActivity(Intent.createChooser(shareIntent,
                     itemView.getContext().getResources().getText(R.string.share_content)));
         }
@@ -403,13 +403,13 @@ public class MessageViewHolder extends SwappingHolder {
                 .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
                 .build();
 
-        ArticlePreview preview = ArticlePreview.build(data);
+        ArticlePreview preview = ArticlePreview.Companion.build(data);
         if (preview != null) {
             if (Settings.get(itemView.getContext()).internalBrowser) {
-                intent.launchUrl(itemView.getContext(), Uri.parse(preview.webUrl));
+                intent.launchUrl(itemView.getContext(), Uri.parse(preview.getWebUrl()));
             } else {
                 Intent url = new Intent(Intent.ACTION_VIEW);
-                url.setData(Uri.parse(preview.webUrl));
+                url.setData(Uri.parse(preview.getWebUrl()));
                 itemView.getContext().startActivity(url);
             }
         }

@@ -111,7 +111,7 @@ public class ColorPreference extends Preference {
                 colors, view -> {
                     ColorPreference.this.dialog.hide();
                     ColorSet color = colors.get((int) view.getTag());
-                    setColor(color.color);
+                    setColor(color.getColor());
 
                     if (colorSelectedListener != null) {
                         colorSelectedListener.onColorSelected(color);

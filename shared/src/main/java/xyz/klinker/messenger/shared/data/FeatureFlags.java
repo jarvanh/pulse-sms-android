@@ -17,7 +17,7 @@ import xyz.klinker.messenger.shared.R;
  * of the flag.
  */
 public class FeatureFlags {
-    // region static initialization
+
     private static volatile FeatureFlags featureFlags;
     public static synchronized FeatureFlags get(Context context) {
         if (featureFlags == null) {
@@ -26,8 +26,7 @@ public class FeatureFlags {
 
         return featureFlags;
     }
-    //endregion
-    // region feature flag strings
+
     private static final String FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications";
     private static final String FLAG_ANDROID_WEAR_SECOND_PAGE = "wear_second_page";
     private static final String FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification";
@@ -68,7 +67,6 @@ public class FeatureFlags {
     private static final String FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status";
     private static final String FLAG_V_2_6_0 = "flag_v_2_6_0";
     private static final String FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch";
-    // endregion
 
     private static final String[] ALWAYS_ON_FLAGS = new String[] {
 

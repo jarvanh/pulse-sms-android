@@ -151,27 +151,27 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
 
         boolean rounder = Settings.get(parent.getContext()).rounderBubbles;
-        if (viewType == Message.TYPE_RECEIVED) {
+        if (viewType == Message.Companion.getTYPE_RECEIVED()) {
             layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;
         } else {
             color = Integer.MIN_VALUE;
 
-            if (viewType == Message.TYPE_SENDING) {
+            if (viewType == Message.Companion.getTYPE_SENDING()) {
                 layoutId = rounder ? R.layout.message_sending_round : R.layout.message_sending;
-            } else if (viewType == Message.TYPE_ERROR) {
+            } else if (viewType == Message.Companion.getTYPE_ERROR()) {
                 layoutId = rounder ? R.layout.message_error_round : R.layout.message_error;
-            } else if (viewType == Message.TYPE_DELIVERED) {
+            } else if (viewType == Message.Companion.getTYPE_DELIVERED()) {
                 layoutId = rounder ? R.layout.message_delivered_round : R.layout.message_delivered;
-            } else if (viewType == Message.TYPE_INFO) {
+            } else if (viewType == Message.Companion.getTYPE_INFO()) {
                 layoutId = R.layout.message_info;
-            } else if (viewType == Message.TYPE_MEDIA) {
+            } else if (viewType == Message.Companion.getTYPE_MEDIA()) {
                 layoutId = R.layout.message_media;
-            } else if (viewType == Message.TYPE_IMAGE_SENDING) {
+            } else if (viewType == Message.Companion.getTYPE_IMAGE_SENDING()) {
                 layoutId = rounder ? R.layout.message_image_sending_round : R.layout.message_image_sending;
-            } else if (viewType == Message.TYPE_IMAGE_SENT) {
+            } else if (viewType == Message.Companion.getTYPE_IMAGE_SENT()) {
                 layoutId = rounder ? R.layout.message_image_sent_round : R.layout.message_image_sent;
-            } else if (viewType == Message.TYPE_IMAGE_RECEIVED) {
+            } else if (viewType == Message.Companion.getTYPE_IMAGE_RECEIVED()) {
                 layoutId = rounder ? R.layout.message_image_received_round : R.layout.message_image_received;
             } else {
                 layoutId = rounder ? R.layout.message_sent_round : R.layout.message_sent;
@@ -183,7 +183,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
         messages.moveToFirst();
         MessageViewHolder holder = new MessageViewHolder(fragment, view, fromColorMapper != null && fromColorMapper.size() > 1 ? Integer.MIN_VALUE : color,
-                messages.getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID)),
+                messages.getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_CONVERSATION_ID())),
                 viewType, timestampHeight, this);
 
         holder.setColors(receivedColor, accentColor);
@@ -203,16 +203,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         Message message = new Message();
         message.fillFromCursor(messages);
 
-        holder.messageId = message.id;
-        holder.mimeType = message.mimeType;
-        holder.data = message.data;
+        holder.messageId = message.getId();
+        holder.mimeType = message.getMimeType();
+        holder.data = message.getData();
 
         int backgroundColor = colorMessage(holder, message);
 
-        if (message.mimeType.equals(MimeType.TEXT_PLAIN)) {
-            holder.message.setText(message.data);
+        if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
+            holder.message.setText(message.getData());
 
-            if (!message.data.isEmpty() && message.data.replaceAll(Regex.EMOJI, "").isEmpty()) {
+            if (!message.getData().isEmpty() && message.getData().replaceAll(Regex.EMOJI, "").isEmpty()) {
                 // enlarge emojis
                 holder.message.setTextSize(35);
             } else {
@@ -220,7 +220,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             }
 
             int linkColor = accentColor;
-            if (FeatureFlags.get(holder.itemView.getContext()).WHITE_LINK_TEXT && message.type == Message.TYPE_RECEIVED) {
+            if (FeatureFlags.get(holder.itemView.getContext()).WHITE_LINK_TEXT && message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                 if (ColorUtils.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
                     linkColor = holder.itemView.getContext().getResources().getColor(R.color.lightText);
                 } else {
@@ -299,32 +299,32 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             setGone(holder.image);
             setVisible(holder.message);
-        } else if (!MimeType.isExpandedMedia(message.mimeType)) {
+        } else if (!MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
             holder.image.setImageDrawable(null);
             holder.image.setMinimumWidth(imageWidth);
             holder.image.setMinimumHeight(imageHeight);
 
-            if (MimeType.isStaticImage(message.mimeType)) {
+            if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
+                        .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                             .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .fitCenter())
                         .into(holder.image);
-            } else if (message.mimeType.equals(MimeType.IMAGE_GIF)) {
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
                 holder.image.setMaxWidth(holder.image.getContext()
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
+                        .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                                 .fitCenter())
                         .into(holder.image);
-            } else if (MimeType.isVideo(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
                 Drawable placeholder;
-                if (getItemViewType(position) != Message.TYPE_RECEIVED) {
+                if (getItemViewType(position) != Message.Companion.getTYPE_RECEIVED()) {
                     placeholder = holder.image.getContext()
                             .getDrawable(R.drawable.ic_play_sent);
                 } else {
@@ -334,7 +334,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                 Glide.with(holder.image.getContext())
                         .asBitmap()
-                        .load(Uri.parse(message.data))
+                        .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .error(placeholder)
                                 .placeholder(placeholder)
@@ -349,9 +349,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                                 holder.image.setImageBitmap(resource);
                             }
                         });
-            } else if (MimeType.isAudio(message.mimeType)) {
+            } else if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
                 Drawable placeholder;
-                if (getItemViewType(position) != Message.TYPE_RECEIVED) {
+                if (getItemViewType(position) != Message.Companion.getTYPE_RECEIVED()) {
                     placeholder = holder.image.getContext()
                             .getDrawable(R.drawable.ic_audio_sent);
                 } else {
@@ -360,28 +360,28 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
 
                 Glide.with(holder.image.getContext())
-                        .load(Uri.parse(message.data))
+                        .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .error(placeholder)
                                 .placeholder(placeholder))
                         .into(holder.image);
-            } else if (MimeType.isVcard(message.mimeType)) {
-                holder.message.setText(message.data);
-                holder.image.setImageResource(getItemViewType(position) != Message.TYPE_RECEIVED ?
+            } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
+                holder.message.setText(message.getData());
+                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                         R.drawable.ic_contacts_sent : R.drawable.ic_contacts);
             } else {
-                Log.v("MessageListAdapter", "unused mime type: " + message.mimeType);
+                Log.v("MessageListAdapter", "unused mime type: " + message.getMimeType());
             }
 
             setGone(holder.message);
             setVisible(holder.image);
         } else {
-            if (message.mimeType.equals(MimeType.MEDIA_YOUTUBE_V2)) {
-                YouTubePreview preview = YouTubePreview.build(message.data);
+            if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
+                YouTubePreview preview = YouTubePreview.Companion.build(message.getData());
                 if (preview != null) {
                     Glide.with(holder.image.getContext())
                             .asBitmap()
-                            .load(Uri.parse(preview.thumbnail))
+                            .load(Uri.parse(preview.getThumbnail()))
                             .apply(new RequestOptions()
                                     .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                                     .fitCenter())
@@ -394,7 +394,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                                 }
                             });
 
-                    holder.contact.setText(preview.title);
+                    holder.contact.setText(preview.getTitle());
                     holder.title.setText("YouTube");
 
                     setGone(holder.image);
@@ -409,22 +409,22 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     setGone(holder.timestamp);
                     setGone(holder.title);
                 }
-            } else if (message.mimeType.equals(MimeType.MEDIA_TWITTER)) {
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_TWITTER())) {
 
-            } else if (message.mimeType.equals(MimeType.MEDIA_ARTICLE)) {
-                ArticlePreview preview = ArticlePreview.build(message.data);
+            } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
+                ArticlePreview preview = ArticlePreview.Companion.build(message.getData());
                 if (preview != null) {
                     Glide.with(holder.clippedImage.getContext())
                             .asBitmap()
-                            .load(Uri.parse(preview.imageUrl))
+                            .load(Uri.parse(preview.getImageUrl()))
                             .apply(new RequestOptions()
                                     .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
                                     .fitCenter())
                             .into(holder.clippedImage);
 
-                    holder.contact.setText(preview.title);
-                    holder.message.setText(preview.description);
-                    holder.title.setText(preview.domain);
+                    holder.contact.setText(preview.getTitle());
+                    holder.message.setText(preview.getDescription());
+                    holder.title.setText(preview.getDomain());
 
                     setGone(holder.image);
                     setVisible(holder.clippedImage);
@@ -443,32 +443,32 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             setVisible(holder.image);
         }
 
-        if (message.simPhoneNumber != null) {
+        if (message.getSimPhoneNumber() != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
-                    message.timestamp) + " (SIM " + message.simPhoneNumber + ")");
+                    message.getTimestamp()) + " (SIM " + message.getSimPhoneNumber() + ")");
         } else if (holder.timestamp != null) {
             holder.timestamp.setText(TimeUtils.formatTimestamp(holder.itemView.getContext(),
-                    message.timestamp));
+                    message.getTimestamp()));
         }
 
         if (!isGroup) {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .setMargins(holder.itemView)
-                    .setBackground(holder.messageHolder, message.mimeType)
+                    .setBackground(holder.messageHolder, message.getMimeType())
                     .applyTimestampHeight(holder.timestamp, timestampHeight);
         } else {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .applyTimestampHeight(holder.timestamp, timestampHeight);
         }
 
-        if (isGroup && holder.contact != null && message.from != null) {
+        if (isGroup && holder.contact != null && message.getFrom() != null) {
             if (holder.contact.getVisibility() == View.GONE) {
                 holder.contact.setVisibility(View.VISIBLE);
             }
 
             int label = holder.timestamp.getLayoutParams().height > 0 ?
                     R.string.message_from_bullet : R.string.message_from;
-            holder.contact.setText(holder.contact.getResources().getString(label, message.from));
+            holder.contact.setText(holder.contact.getResources().getString(label, message.getFrom()));
         }
     }
 
@@ -485,24 +485,24 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     public int getItemViewType(int position) {
         try {
             messages.moveToPosition(position);
-            int type = messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE));
-            String mimeType = messages.getString(messages.getColumnIndex(Message.COLUMN_MIME_TYPE));
+            int type = messages.getInt(messages.getColumnIndex(Message.Companion.getCOLUMN_TYPE()));
+            String mimeType = messages.getString(messages.getColumnIndex(Message.Companion.getCOLUMN_MIME_TYPE()));
 
-            if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
+            if (ignoreSendingStatus && type == Message.Companion.getTYPE_SENDING()) {
                 if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
                         mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
-                    type = Message.TYPE_IMAGE_SENT;
+                    type = Message.Companion.getTYPE_IMAGE_SENT();
                 } else {
-                    type = Message.TYPE_SENT;
+                    type = Message.Companion.getTYPE_SENT();
                 }
             } else if ((Build.FINGERPRINT.equals("robolectric") || FeatureFlags.get(fragment.getActivity()).REMOVE_IMAGE_BORDERS) &&
                     mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
-                if (type == Message.TYPE_RECEIVED) {
-                    type = Message.TYPE_IMAGE_RECEIVED;
-                } else if (type == Message.TYPE_SENDING) {
-                    type = Message.TYPE_IMAGE_SENDING;
+                if (type == Message.Companion.getTYPE_RECEIVED()) {
+                    type = Message.Companion.getTYPE_IMAGE_RECEIVED();
+                } else if (type == Message.Companion.getTYPE_SENDING()) {
+                    type = Message.Companion.getTYPE_IMAGE_SENDING();
                 } else {
-                    type = Message.TYPE_IMAGE_SENT;
+                    type = Message.Companion.getTYPE_IMAGE_SENT();
                 }
             }
 
@@ -519,7 +519,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
 
         messages.moveToPosition(position);
-        long millis = messages.getLong(messages.getColumnIndex(Message.COLUMN_TIMESTAMP));
+        long millis = messages.getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_TIMESTAMP()));
         return new Date(millis);
     }
 
@@ -538,7 +538,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
     public long getItemId(int position) {
         try {
             messages.moveToPosition(position);
-            return messages.getLong(messages.getColumnIndex(Message.COLUMN_ID));
+            return messages.getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_ID()));
         } catch (Exception e) {
             return -1L;
         }
@@ -577,7 +577,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 } else if (recycler != null && messages.moveToLast()) {
                     Message message = new Message();
                     message.fillFromCursor(messages);
-                    if (message.type == Message.TYPE_RECEIVED) {
+                    if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
                         String text = recycler.getContext().getString(R.string.new_message);
                         snackbar = Snackbar
                                 .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
@@ -613,13 +613,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             Message message = messageList.get(0);
 
             Conversation conversation = source.getConversation(context, conversationId);
-            source.updateConversation(context, conversationId, true, message.timestamp,
-                    message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING ?
-                            context.getString(R.string.you) + ": " + message.data : message.data,
-                    message.mimeType, conversation != null && conversation.archive);
+            source.updateConversation(context, conversationId, true, message.getTimestamp(),
+                    message.getType() == Message.Companion.getTYPE_SENT() || message.getType() == Message.Companion.getTYPE_SENDING() ?
+                            context.getString(R.string.you) + ": " + message.getData() : message.getData(),
+                    message.getMimeType(), conversation != null && conversation.getArchive());
 
-            fragment.setConversationUpdateInfo(message.type == Message.TYPE_SENDING ?
-                    context.getString(R.string.you) + ": " + message.data : message.data);
+            fragment.setConversationUpdateInfo(message.getType() == Message.Companion.getTYPE_SENDING() ?
+                    context.getString(R.string.you) + ": " + message.getData() : message.getData());
         }
     }
 
@@ -633,12 +633,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             return Integer.MIN_VALUE;
         }
 
-        if (message.type == Message.TYPE_RECEIVED &&
+        if (message.getType() == Message.Companion.getTYPE_RECEIVED() &&
                 fromColorMapper != null && fromColorMapper.size() > 1) { // size > 1 so we know it is a group convo
-            if (fromColorMapper.containsKey(message.from)) {
+            if (fromColorMapper.containsKey(message.getFrom())) {
                 // group convo, color them differently
                 // this is the usual result
-                int color = fromColorMapper.get(message.from).colors.color;
+                int color = fromColorMapper.get(message.getFrom()).getColors().getColor();
                 holder.messageHolder.setBackgroundTintList(
                         ColorStateList.valueOf(color));
                 holder.color = color;
@@ -652,10 +652,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
 
                 return color;
-            } else if (fromColorMapperByName != null && fromColorMapperByName.containsKey(message.from)) {
+            } else if (fromColorMapperByName != null && fromColorMapperByName.containsKey(message.getFrom())) {
                 // group convo, color them differently
                 // this is the usual result
-                int color = fromColorMapperByName.get(message.from).colors.color;
+                int color = fromColorMapperByName.get(message.getFrom()).getColors().getColor();
                 holder.messageHolder.setBackgroundTintList(
                         ColorStateList.valueOf(color));
                 holder.color = color;
@@ -673,29 +673,29 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 // group convo without the contact here.. uh oh. Could happen if the conversation
                 // title doesn't match the message from database column.
                 final Contact contact = new Contact();
-                contact.name = message.from;
-                contact.phoneNumber = message.from;
-                contact.colors = ColorUtils.getRandomMaterialColor(holder.itemView.getContext());
+                contact.setName(message.getFrom());
+                contact.setPhoneNumber(message.getFrom());
+                contact.setColors(ColorUtils.getRandomMaterialColor(holder.itemView.getContext()));
 
                 if (fromColorMapper == null) {
                     fromColorMapper = new HashMap<>();
                 }
 
-                fromColorMapper.put(message.from, contact);
+                fromColorMapper.put(message.getFrom(), contact);
 
                 // then write it to the database for later
                 new Thread(() -> {
                     final Context context = holder.itemView.getContext();
                     DataSource source = DataSource.INSTANCE;
 
-                    if (contact.phoneNumber != null) {
-                        int originalLength = contact.phoneNumber.length();
-                        int newLength = contact.phoneNumber.replaceAll("[0-9]", "").length();
+                    if (contact.getPhoneNumber() != null) {
+                        int originalLength = contact.getPhoneNumber().length();
+                        int newLength = contact.getPhoneNumber().replaceAll("[0-9]", "").length();
                         if (originalLength == newLength) {
                             // all letters, so we should use the contact name to find the phone number
-                            List<Contact> contacts = source.getContactsByNames(context, contact.name);
+                            List<Contact> contacts = source.getContactsByNames(context, contact.getName());
                             if (contacts.size() > 0) {
-                                contact.phoneNumber = contacts.get(0).phoneNumber;
+                                contact.setPhoneNumber(contacts.get(0).getPhoneNumber());
                             }
                         }
 
@@ -703,7 +703,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     }
                 }).start();
 
-                return contact.colors.color;
+                return contact.getColors().getColor();
             }
         }
 

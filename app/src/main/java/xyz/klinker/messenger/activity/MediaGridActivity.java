@@ -39,7 +39,7 @@ public class MediaGridActivity extends AbstractSettingsActivity {
     @Override
     public void onStart() {
         super.onStart();
-        ActivityUtils.setTaskDescription(this, fragment.conversation.title, fragment.conversation.colors.color);
+        ActivityUtils.setTaskDescription(this, fragment.conversation.getTitle(), fragment.conversation.getColors().getColor());
     }
 
     @Override

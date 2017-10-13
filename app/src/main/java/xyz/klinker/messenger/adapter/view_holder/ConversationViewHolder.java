@@ -98,7 +98,7 @@ public class ConversationViewHolder extends SwappingHolder {
 
                 if (header == null) {
                     try {
-                        adapter.getConversations().get(position).read = true;
+                        adapter.getConversations().get(position).setRead(true);
                     } catch (Exception e) {
                     }
 
@@ -111,7 +111,7 @@ public class ConversationViewHolder extends SwappingHolder {
 
                 if (contactClickedListener != null) {
                     contactClickedListener.onClicked(
-                            conversation.title, conversation.phoneNumbers, conversation.imageUri);
+                            conversation.getTitle(), conversation.getPhoneNumbers(), conversation.getImageUri());
                 }
 
                 if (checkBox != null) {
@@ -182,7 +182,7 @@ public class ConversationViewHolder extends SwappingHolder {
                 unreadIndicator.setVisibility(View.VISIBLE);
             }
 
-            int color = Settings.get(itemView.getContext()).mainColorSet.color;
+            int color = Settings.get(itemView.getContext()).mainColorSet.getColor();
             if (color == Color.WHITE) {
                 color = unreadIndicator.getContext().getResources().getColor(R.color.lightToolbarTextColor);
             } else if (color == Color.BLACK && Settings.get(unreadIndicator.getContext()).baseTheme == BaseTheme.BLACK) {

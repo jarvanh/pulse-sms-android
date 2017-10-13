@@ -20,7 +20,7 @@ public class ArticleParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void mimeType() {
-        assertThat(parser.getMimeType(), Matchers.is(MimeType.MEDIA_ARTICLE));
+        assertThat(parser.getMimeType(), Matchers.is(MimeType.INSTANCE.getMEDIA_ARTICLE()));
     }
 
     @Test

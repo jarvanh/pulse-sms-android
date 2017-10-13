@@ -65,7 +65,7 @@ public class ScheduledMessageJob extends BackgroundJob {
         if (messages.moveToFirst()) {
             do {
                 long timestamp = messages.getLong(
-                        messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP));
+                        messages.getColumnIndex(ScheduledMessage.Companion.getCOLUMN_TIMESTAMP()));
 
                 // if message scheduled to be sent in less than 5 mins in the future,
                 // or more than 60 in the past
@@ -75,15 +75,15 @@ public class ScheduledMessageJob extends BackgroundJob {
                     message.fillFromCursor(messages);
 
                     // delete, insert and send
-                    source.deleteScheduledMessage(this, message.id);
-                    long conversationId = source.insertSentMessage(message.to, message.data, message.mimeType, this);
+                    source.deleteScheduledMessage(this, message.getId());
+                    long conversationId = source.insertSentMessage(message.getTo(), message.getData(), message.getMimeType(), this);
                     Conversation conversation = source.getConversation(this, conversationId);
 
-                    new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
-                            .send(this, message.data, message.to);
+                    new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
+                            .send(this, message.getData(), message.getTo());
 
                     // display a notification
-                    String body = "<b>" + message.title + ": </b>" + message.data;
+                    String body = "<b>" + message.getTitle() + ": </b>" + message.getData();
                     Intent open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY);
                     open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     PendingIntent pendingOpen = PendingIntent.getActivity(this, 0, open,
@@ -93,12 +93,12 @@ public class ScheduledMessageJob extends BackgroundJob {
                             .setSmallIcon(R.drawable.ic_stat_notify)
                             .setContentTitle(getString(R.string.scheduled_message_sent))
                             .setContentText(Html.fromHtml(body))
-                            .setColor(ColorSet.DEFAULT(this).color)
+                            .setColor(ColorSet.Companion.DEFAULT(this).getColor())
                             .setAutoCancel(true)
                             .setContentIntent(pendingOpen)
                             .build();
                     NotificationManagerCompat.from(this)
-                            .notify(5555 + (int) message.id, notification);
+                            .notify(5555 + (int) message.getId(), notification);
 
                     Log.v("scheduled message", "message was sent and notification given");
                 }
@@ -125,7 +125,7 @@ public class ScheduledMessageJob extends BackgroundJob {
         List<ScheduledMessage> messages = source.getScheduledMessagesAsList(context);
 
         if (messages.size() > 0) {
-            long timeout = messages.get(0).timestamp - new Date().getTime();
+            long timeout = messages.get(0).getTimestamp() - new Date().getTime();
 
             ComponentName component = new ComponentName(context, ScheduledMessageJob.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)

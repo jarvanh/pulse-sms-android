@@ -120,18 +120,18 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         }
 
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
-                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.privateNotifications)
-                .putString(getString(R.string.pref_contact_group_name), conversation.title)
+                .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.getPinned())
+                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.getPrivateNotifications())
+                .putString(getString(R.string.pref_contact_group_name), conversation.getTitle())
                 .putString(getString(R.string.pref_contact_ringtone),
-                        conversation.ringtoneUri == null ?
+                        conversation.getRingtoneUri() == null ?
                                 Settings.get(getActivity()).ringtone :
-                                conversation.ringtoneUri)
-                .putInt(getString(R.string.pref_contact_primary_color), conversation.colors.color)
-                .putInt(getString(R.string.pref_contact_primary_dark_color), conversation.colors.colorDark)
-                .putInt(getString(R.string.pref_contact_primary_light_color), conversation.colors.colorLight)
-                .putInt(getString(R.string.pref_contact_accent_color), conversation.colors.colorAccent)
-                .putInt(getString(R.string.pref_contact_led_color), conversation.ledColor)
+                                conversation.getRingtoneUri())
+                .putInt(getString(R.string.pref_contact_primary_color), conversation.getColors().getColor())
+                .putInt(getString(R.string.pref_contact_primary_dark_color), conversation.getColors().getColorDark())
+                .putInt(getString(R.string.pref_contact_primary_light_color), conversation.getColors().getColorLight())
+                .putInt(getString(R.string.pref_contact_accent_color), conversation.getColors().getColorAccent())
+                .putInt(getString(R.string.pref_contact_led_color), conversation.getLedColor())
                 .apply();
     }
 
@@ -141,18 +141,18 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
             return;
         }
 
-        getActivity().setTitle(conversation.title);
+        getActivity().setTitle(conversation.getTitle());
 
         Settings settings = Settings.get(getActivity());
         Toolbar toolbar = ((AbstractSettingsActivity) getActivity()).getToolbar();
 
         if (toolbar != null) {
             if (settings.useGlobalThemeColor) {
-                toolbar.setBackgroundColor(settings.mainColorSet.color);
-                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.colorDark);
+                toolbar.setBackgroundColor(settings.mainColorSet.getColor());
+                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.getColorDark());
             } else {
-                toolbar.setBackgroundColor(conversation.colors.color);
-                ActivityUtils.setStatusBarColor(getActivity(), conversation.colors.colorDark);
+                toolbar.setBackgroundColor(conversation.getColors().getColor());
+                ActivityUtils.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
             }
         }
     }
@@ -160,10 +160,10 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     private void setUpPin() {
         SwitchPreference preference = (SwitchPreference)
                 findPreference(getString(R.string.pref_contact_pin_conversation));
-        preference.setChecked(conversation.pinned);
+        preference.setChecked(conversation.getPinned());
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            conversation.pinned = (boolean) o;
+            conversation.setPinned((boolean) o);
             return true;
         });
     }
@@ -171,12 +171,12 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     private void setUpMute() {
         SwitchPreference preference = (SwitchPreference)
                 findPreference(getString(R.string.pref_contact_mute_conversation));
-        preference.setChecked(conversation.mute);
-        enableNotificationBasedOnMute(conversation.mute);
+        preference.setChecked(conversation.getMute());
+        enableNotificationBasedOnMute(conversation.getMute());
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            conversation.mute = (boolean) o;
-            enableNotificationBasedOnMute(conversation.mute);
+            conversation.setMute((boolean) o);
+            enableNotificationBasedOnMute(conversation.getMute());
 
             return true;
         });
@@ -195,7 +195,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 ringtone.setEnabled(false);
             }
 
-            conversation.privateNotifications = false;
+            conversation.setPrivateNotifications(false);
         } else {
             if (privateNotifications != null) {
                 privateNotifications.setEnabled(true);
@@ -210,10 +210,10 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
     private void setUpPrivate() {
         SwitchPreference preference = (SwitchPreference)
                 findPreference(getString(R.string.pref_contact_private_conversation));
-        preference.setChecked(conversation.privateNotifications);
+        preference.setChecked(conversation.getPrivateNotifications());
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            conversation.privateNotifications = (boolean) o;
+            conversation.setPrivateNotifications((boolean) o);
             return true;
         });
     }
@@ -228,10 +228,10 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         }
 
         preference.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        preference.setSummary(conversation.title);
+        preference.setSummary(conversation.getTitle());
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            conversation.title = (String) o;
-            preference1.setSummary(conversation.title);
+            conversation.setTitle((String) o);
+            preference1.setSummary(conversation.getTitle());
             return true;
         });
     }
@@ -247,8 +247,8 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         preference.setOnPreferenceClickListener(preference1 -> {
             final Intent editRecipients = new Intent(getActivity(), ComposeActivity.class);
             editRecipients.setAction(ComposeActivity.ACTION_EDIT_RECIPIENTS);
-            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title);
-            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers);
+            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.getTitle());
+            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.getPhoneNumbers());
 
             startActivity(editRecipients);
             return true;
@@ -260,7 +260,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_contact_ringtone));
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            conversation.ringtoneUri = (String) o;
+            conversation.setRingtoneUri((String) o);
             Log.v("conversation_ringtone", "new ringtone: " + o);
 
             return true;
@@ -276,7 +276,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 NotificationUtils.createNotificationChannel(getActivity(), conversation);
 
                 Intent intent = new Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
-                intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, conversation.id + "");
+                intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, conversation.getId() + "");
                 intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
                 startActivity(intent);
 
@@ -284,7 +284,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
             });
 
             restoreDefaultsPref.setOnPreferenceClickListener(preference12 -> {
-                NotificationUtils.deleteChannel(getActivity(), conversation.id);
+                NotificationUtils.deleteChannel(getActivity(), conversation.getId());
                 return true;
             });
         } else {
@@ -306,29 +306,29 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_contact_led_color));
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            ColorUtils.animateToolbarColor(getActivity(), conversation.colors.color, (int) o);
-            conversation.colors.color = (int) o;
+            ColorUtils.animateToolbarColor(getActivity(), conversation.getColors().getColor(), (int) o);
+            conversation.getColors().setColor((int) o);
             return true;
         });
 
         preference.setColorSelectedListener(colors -> {
-            darkColorPreference.setColor(colors.colorDark);
-            accentColorPreference.setColor(colors.colorAccent);
+            darkColorPreference.setColor(colors.getColorDark());
+            accentColorPreference.setColor(colors.getColorAccent());
         });
 
         darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
-            ColorUtils.animateStatusBarColor(getActivity(), conversation.colors.colorDark, (int) o);
-            conversation.colors.colorDark = (int) o;
+            ColorUtils.animateStatusBarColor(getActivity(), conversation.getColors().getColorDark(), (int) o);
+            conversation.getColors().setColorDark((int) o);
             return true;
         });
 
         accentColorPreference.setOnPreferenceChangeListener((preference13, o) -> {
-            conversation.colors.colorAccent = (int) o;
+            conversation.getColors().setColorAccent((int) o);
             return true;
         });
 
         ledColorPreference.setOnPreferenceChangeListener((preference14, newValue) -> {
-            conversation.ledColor = (int) newValue;
+            conversation.setLedColor((int) newValue);
             return true;
         });
     }
@@ -338,15 +338,15 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         source.updateConversationSettings(getActivity(), conversation);
 
         List<Contact> contactList;
-        if (conversation.phoneNumbers.contains(", ")) {
-            contactList = source.getContactsByNames(getActivity(), conversation.title);
+        if (conversation.getPhoneNumbers().contains(", ")) {
+            contactList = source.getContactsByNames(getActivity(), conversation.getTitle());
         } else {
-            contactList = source.getContacts(getActivity(), conversation.phoneNumbers);
+            contactList = source.getContacts(getActivity(), conversation.getPhoneNumbers());
         }
 
         if (contactList.size() == 1) {
             // it is an individual conversation and we have the contact in our database! Yay.
-            contactList.get(0).colors = conversation.colors;
+            contactList.get(0).setColors(conversation.getColors());
             source.updateContact(getActivity(), contactList.get(0));
         }
     }

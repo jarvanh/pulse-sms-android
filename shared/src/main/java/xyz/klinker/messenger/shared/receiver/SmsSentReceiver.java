@@ -122,8 +122,8 @@ public class SmsSentReceiver extends SentReceiver {
             if (messages != null && messages.moveToFirst()) {
                 long id = messages.getLong(0);
                 long conversationId = messages
-                        .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID));
-                String data = messages.getString(messages.getColumnIndex(Message.COLUMN_DATA));
+                        .getLong(messages.getColumnIndex(Message.Companion.getCOLUMN_CONVERSATION_ID()));
+                String data = messages.getString(messages.getColumnIndex(Message.Companion.getCOLUMN_DATA()));
 
                 markMessage(source, context, error, id, conversationId, data);
             } else {
@@ -131,8 +131,8 @@ public class SmsSentReceiver extends SentReceiver {
                 List<Message> messageList = source.getNumberOfMessages(context, 10);
                 boolean markedAsSent = false;
                 for (Message m : messageList) {
-                    if (StripAccents.stripAccents(m.data).equals(body) && m.type == Message.TYPE_SENDING) {
-                        markMessage(source, context, error, m.id, m.conversationId, m.data);
+                    if (StripAccents.stripAccents(m.getData()).equals(body) && m.getType() == Message.Companion.getTYPE_SENDING()) {
+                        markMessage(source, context, error, m.getId(), m.getConversationId(), m.getData());
                         markedAsSent = true;
                         break;
                     }
@@ -142,9 +142,9 @@ public class SmsSentReceiver extends SentReceiver {
                     Set<Long> conversationIds = new HashSet<>();
 
                     for (Message m : messageList) {
-                        if (m.type == Message.TYPE_SENDING) {
-                            source.updateMessageType(context, m.id, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
-                            conversationIds.add(m.conversationId);
+                        if (m.getType() == Message.Companion.getTYPE_SENDING()) {
+                            source.updateMessageType(context, m.getId(), error ? Message.Companion.getTYPE_ERROR() : Message.Companion.getTYPE_SENT());
+                            conversationIds.add(m.getConversationId());
                         }
                     }
 
@@ -161,7 +161,7 @@ public class SmsSentReceiver extends SentReceiver {
     }
 
     private void markMessage(DataSource source, Context context, boolean error, long messageId, long conversationId, String data) {
-        source.updateMessageType(context, messageId, error ? Message.TYPE_ERROR : Message.TYPE_SENT);
+        source.updateMessageType(context, messageId, error ? Message.Companion.getTYPE_ERROR() : Message.Companion.getTYPE_SENT());
 
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId);
 
@@ -184,7 +184,7 @@ public class SmsSentReceiver extends SentReceiver {
                         .setSmallIcon(R.drawable.ic_stat_notify)
                         .setContentTitle(context.getString(R.string.message_sending_failed))
                         .setContentText(data)
-                        .setColor(ColorSet.DEFAULT(context).color)
+                        .setColor(ColorSet.Companion.DEFAULT(context).getColor())
                         .setAutoCancel(true)
                         .setContentIntent(pendingOpen);
 
@@ -208,9 +208,9 @@ public class SmsSentReceiver extends SentReceiver {
             Set<Long> conversationIds = new HashSet<>();
 
             for (Message m : messageList) {
-                if (m.type == Message.TYPE_SENDING) {
-                    source.updateMessageType(context, m.id, Message.TYPE_SENT);
-                    conversationIds.add(m.conversationId);
+                if (m.getType() == Message.Companion.getTYPE_SENDING()) {
+                    source.updateMessageType(context, m.getId(), Message.Companion.getTYPE_SENT());
+                    conversationIds.add(m.getConversationId());
                 }
             }
 

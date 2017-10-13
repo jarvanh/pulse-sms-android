@@ -32,7 +32,7 @@ public class BlacklistUtils {
         Cursor cursor = source.getBlacklists(context);
 
         if (cursor.moveToFirst()) {
-            int numberIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER);
+            int numberIndex = cursor.getColumnIndex(Blacklist.Companion.getCOLUMN_PHONE_NUMBER());
 
             do {
                 String blacklisted = cursor.getString(numberIndex);

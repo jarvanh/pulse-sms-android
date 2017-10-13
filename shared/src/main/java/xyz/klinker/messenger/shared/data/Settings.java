@@ -374,10 +374,10 @@ public class Settings {
             notificationActions.add(NotificationAction.DELETE);
         }
 
-        this.mainColorSet = ColorSet.create(
-                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_color), ColorSet.DEFAULT(context).color),
-                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_dark_color), ColorSet.DEFAULT(context).colorDark),
-                sharedPrefs.getInt(context.getString(R.string.pref_global_accent_color), ColorSet.DEFAULT(context).colorAccent)
+        this.mainColorSet = ColorSet.Companion.create(
+                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_color), ColorSet.Companion.DEFAULT(context).getColor()),
+                sharedPrefs.getInt(context.getString(R.string.pref_global_primary_dark_color), ColorSet.Companion.DEFAULT(context).getColorDark()),
+                sharedPrefs.getInt(context.getString(R.string.pref_global_accent_color), ColorSet.Companion.DEFAULT(context).getColorAccent())
         );
     }
 

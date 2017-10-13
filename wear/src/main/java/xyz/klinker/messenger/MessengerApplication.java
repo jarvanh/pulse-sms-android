@@ -65,7 +65,7 @@ public class MessengerApplication extends FirebaseApplication {
         BaseTheme theme = Settings.get(this).baseTheme;
         if (theme == BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if (theme.isDark || TimeUtils.isNight()) {
+        } else if (theme.getIsDark() || TimeUtils.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }

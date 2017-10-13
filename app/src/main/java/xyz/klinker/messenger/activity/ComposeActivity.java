@@ -102,7 +102,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         setTitle(" ");
 
         recyclerView = (RecyclerView) findViewById(R.id.recent_contacts);
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, Settings.get(this).mainColorSet.color);
+        ColorUtils.changeRecyclerOverscrollColors(recyclerView, Settings.get(this).mainColorSet.getColor());
 
         contactEntry = (RecipientEditTextView) findViewById(R.id.contact_entry);
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -112,7 +112,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         contactEntry.setAdapter(adapter);
 
         bottomNavigation = (BottomBar) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setActiveTabColor(Settings.get(this).mainColorSet.colorAccent);
+        bottomNavigation.setActiveTabColor(Settings.get(this).mainColorSet.getColorAccent());
         bottomNavigation.setOnTabSelectListener(item -> {
             switch (item) {
                 case R.id.tab_recents:
@@ -152,17 +152,17 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         displayRecents();
 
         Settings settings = Settings.get(this);
-        findViewById(R.id.toolbar_holder).setBackgroundColor(settings.mainColorSet.color);
-        toolbar.setBackgroundColor(settings.mainColorSet.color);
-        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.colorDark);
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.colorAccent));
-        contactEntry.setHighlightColor(settings.mainColorSet.colorAccent);
-        ColorUtils.setCursorDrawableColor(contactEntry, settings.mainColorSet.colorAccent);
+        findViewById(R.id.toolbar_holder).setBackgroundColor(settings.mainColorSet.getColor());
+        toolbar.setBackgroundColor(settings.mainColorSet.getColor());
+        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.getColorDark());
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+        contactEntry.setHighlightColor(settings.mainColorSet.getColorAccent());
+        ColorUtils.setCursorDrawableColor(contactEntry, settings.mainColorSet.getColorAccent());
 
         ActivityUtils.setTaskDescription(this);
         ColorUtils.checkBlackBackground(this);
 
-        if (!ColorUtils.isColorDark(settings.mainColorSet.color)) {
+        if (!ColorUtils.isColorDark(settings.mainColorSet.getColor())) {
             contactEntry.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
             contactEntry.setHintTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }
@@ -197,7 +197,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
                 if (conversations != null) {
                     for (int i = 0; i < conversations.size(); i++) {
-                        if (conversations.get(i).phoneNumbers.contains(", ")) {
+                        if (conversations.get(i).getPhoneNumbers().contains(", ")) {
                             groups.add(conversations.get(i));
                         }
                     }
@@ -272,13 +272,13 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         if (conversationId == null) {
             Message message = new Message();
-            message.type = Message.TYPE_INFO;
-            message.data = getString(R.string.no_messages_with_contact);
-            message.timestamp = System.currentTimeMillis();
-            message.mimeType = MimeType.TEXT_PLAIN;
-            message.read = true;
-            message.seen = true;
-            message.sentDeviceId = -1;
+            message.setType(Message.Companion.getTYPE_INFO());
+            message.setData(getString(R.string.no_messages_with_contact));
+            message.setTimestamp(System.currentTimeMillis());
+            message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+            message.setRead(true);
+            message.setSeen(true);
+            message.setSentDeviceId(-1);
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
         } else {
@@ -304,7 +304,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         
         Conversation conversation = DataSource.INSTANCE.getConversation(this, conversationId);
-        if (conversation != null && conversation.archive) {
+        if (conversation != null && conversation.getArchive()) {
             DataSource.INSTANCE.unarchiveConversation(this, conversationId);
         }
 
@@ -376,7 +376,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             String data = intent.getStringExtra("sms_body");
             
             if (data != null) {
-                setupSend(data, MimeType.TEXT_PLAIN, false);
+                setupSend(data, MimeType.INSTANCE.getTEXT_PLAIN(), false);
             }
             
             if (!numbers.isEmpty()) {
@@ -390,9 +390,9 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
             boolean image = false;
             try {
-                if (mimeType.equals(MimeType.TEXT_PLAIN)) {
+                if (mimeType.equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
                     data = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-                } else if (MimeType.isVcard(mimeType)) {
+                } else if (MimeType.INSTANCE.isVcard(mimeType)) {
                     fab.setImageResource(R.drawable.ic_send);
                     isVcard = true;
                     data = getIntent().getParcelableExtra(Intent.EXTRA_STREAM).toString();
@@ -405,7 +405,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     if (data.equals("null")) {
                         image = true;
                     } else {
-                        mimeType = MimeType.TEXT_PLAIN;
+                        mimeType = MimeType.INSTANCE.getTEXT_PLAIN();
                     }
                 } else {
                     image = true;
@@ -447,7 +447,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             Bundle extras = getIntent().getExtras();
             String data = getIntent().getDataString();
             if (extras != null && extras.containsKey("sms_body")) {
-                setupSend(extras.getString("sms_body"), MimeType.TEXT_PLAIN, false);
+                setupSend(extras.getString("sms_body"), MimeType.INSTANCE.getTEXT_PLAIN(), false);
             } else if (data != null) {
                 String body = NonStandardUriUtils.getQueryParams(data).get("body");
                 if (data.contains("smsto:")) {
@@ -458,7 +458,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     to = URLDecoder.decode(to);
 
                     if (body != null) {
-                        applyShare(MimeType.TEXT_PLAIN, body, to);
+                        applyShare(MimeType.INSTANCE.getTEXT_PLAIN(), body, to);
                     } else {
                         showConversation(to);
                     }
@@ -470,7 +470,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                     to = URLDecoder.decode(to);
 
                     if (body != null) {
-                        applyShare(MimeType.TEXT_PLAIN, body, to);
+                        applyShare(MimeType.INSTANCE.getTEXT_PLAIN(), body, to);
                     } else {
                         showConversation(to);
                     }
@@ -499,7 +499,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         long conversationId = source.insertSentMessage(phoneNumbers, data, mimeType, this);
         Conversation conversation = source.getConversation(this, conversationId);
 
-        Uri uri = new SendUtils(conversation != null ? conversation.simSubscriptionId : null)
+        Uri uri = new SendUtils(conversation != null ? conversation.getSimSubscriptionId() : null)
                 .send(this, "", phoneNumbers, Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(this, data);
 
@@ -515,8 +515,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         DataSource source = DataSource.INSTANCE;
         Conversation conversation = source.getConversation(this, conversationId);
 
-        Uri uri = new SendUtils(conversation.simSubscriptionId)
-                .send(this, "", conversation.phoneNumbers, Uri.parse(data), mimeType);
+        Uri uri = new SendUtils(conversation.getSimSubscriptionId())
+                .send(this, "", conversation.getPhoneNumbers(), Uri.parse(data), mimeType);
         Cursor cursor = source.searchMessages(this, data);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -538,13 +538,13 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         if (conversationId == null) {
             Message message = new Message();
-            message.type = Message.TYPE_INFO;
-            message.data = getString(R.string.no_messages_with_contact);
-            message.timestamp = System.currentTimeMillis();
-            message.mimeType = MimeType.TEXT_PLAIN;
-            message.read = true;
-            message.seen = true;
-            message.sentDeviceId = -1;
+            message.setType(Message.Companion.getTYPE_INFO());
+            message.setData(getString(R.string.no_messages_with_contact));
+            message.setTimestamp(System.currentTimeMillis());
+            message.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+            message.setRead(true);
+            message.setSeen(true);
+            message.setSentDeviceId(-1);
 
             conversationId = source.insertMessage(message, phoneNumbers, this);
         }

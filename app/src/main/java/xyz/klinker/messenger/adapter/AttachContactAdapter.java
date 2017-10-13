@@ -37,15 +37,15 @@ public class AttachContactAdapter extends RecyclerView.Adapter<AttachContactView
     @Override
     public void onBindViewHolder(AttachContactViewHolder holder, int position) {
         final Conversation contact = contacts.get(position);
-        holder.name.setText(contact.title);
+        holder.getName().setText(contact.getTitle());
         Glide.with(holder.itemView.getContext())
-                .load(contact.imageUri)
-                .into(holder.picture);
+                .load(contact.getImageUri())
+                .into(holder.getPicture());
 
         if (listener != null) {
-            holder.picture.setOnClickListener(view -> {
-                String name = contact.title;
-                String phone = contact.phoneNumbers;
+            holder.getPicture().setOnClickListener(view -> {
+                String name = contact.getTitle();
+                String phone = contact.getPhoneNumbers();
 
                 String firstName = "";
                 String lastName = "";
@@ -67,7 +67,7 @@ public class AttachContactAdapter extends RecyclerView.Adapter<AttachContactView
 
     public void setContacts(List<Conversation> contacts) {
         for (Conversation c : contacts) {
-            if (!c.phoneNumbers.contains(",") && c.imageUri != null && !c.imageUri.isEmpty()) {
+            if (!c.getPhoneNumbers().contains(",") && c.getImageUri() != null && !c.getImageUri().isEmpty()) {
                 this.contacts.add(c);
             }
         }

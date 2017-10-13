@@ -37,43 +37,43 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         cursor.moveToFirst();
         conversation.fillFromCursor(cursor);
 
-        assertEquals(1, conversation.id);
-        assertEquals(Color.RED, conversation.colors.color);
-        assertEquals(Color.BLUE, conversation.colors.colorDark);
-        assertEquals(Color.YELLOW, conversation.colors.colorLight);
-        assertEquals(Color.GREEN, conversation.colors.colorAccent);
-        assertEquals(Color.WHITE, conversation.ledColor);
-        assertTrue(conversation.pinned);
-        assertTrue(conversation.read);
-        assertEquals(1000L, conversation.timestamp);
-        assertEquals("Luke Klinker", conversation.title);
-        assertEquals("So maybe not going to be able to get platinum huh?", conversation.snippet);
-        assertEquals("uri", conversation.ringtoneUri);
-        assertEquals("image_uri", conversation.imageUri);
-        assertEquals("11493", conversation.idMatcher);
-        assertFalse(conversation.mute);
-        assertFalse(conversation.privateNotifications);
+        assertEquals(1, conversation.getId());
+        assertEquals(Color.RED, conversation.getColors().color);
+        assertEquals(Color.BLUE, conversation.getColors().colorDark);
+        assertEquals(Color.YELLOW, conversation.getColors().colorLight);
+        assertEquals(Color.GREEN, conversation.getColors().colorAccent);
+        assertEquals(Color.WHITE, conversation.getLedColor());
+        assertTrue(conversation.getPinned());
+        assertTrue(conversation.getRead());
+        assertEquals(1000L, conversation.getTimestamp());
+        assertEquals("Luke Klinker", conversation.getTitle());
+        assertEquals("So maybe not going to be able to get platinum huh?", conversation.getSnippet());
+        assertEquals("uri", conversation.getRingtoneUri());
+        assertEquals("image_uri", conversation.getImageUri());
+        assertEquals("11493", conversation.getIdMatcher());
+        assertFalse(conversation.getMute());
+        assertFalse(conversation.getPrivateNotifications());
     }
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Conversation.COLUMN_ID,
-                Conversation.COLUMN_COLOR,
-                Conversation.COLUMN_COLOR_DARK,
-                Conversation.COLUMN_COLOR_LIGHT,
-                Conversation.COLUMN_COLOR_ACCENT,
-                Conversation.COLUMN_LED_COLOR,
-                Conversation.COLUMN_PINNED,
-                Conversation.COLUMN_READ,
-                Conversation.COLUMN_TIMESTAMP,
-                Conversation.COLUMN_TITLE,
-                Conversation.COLUMN_PHONE_NUMBERS,
-                Conversation.COLUMN_SNIPPET,
-                Conversation.COLUMN_RINGTONE,
-                Conversation.COLUMN_IMAGE_URI,
-                Conversation.COLUMN_ID_MATCHER,
-                Conversation.COLUMN_MUTE,
-                Conversation.COLUMN_PRIVATE_NOTIFICATIONS
+                Conversation.Companion.getCOLUMN_ID(),
+                Conversation.Companion.getCOLUMN_COLOR(),
+                Conversation.Companion.getCOLUMN_COLOR_DARK(),
+                Conversation.Companion.getCOLUMN_COLOR_LIGHT(),
+                Conversation.Companion.getCOLUMN_COLOR_ACCENT(),
+                Conversation.Companion.getCOLUMN_LED_COLOR(),
+                Conversation.Companion.getCOLUMN_PINNED(),
+                Conversation.Companion.getCOLUMN_READ(),
+                Conversation.Companion.getCOLUMN_TIMESTAMP(),
+                Conversation.Companion.getCOLUMN_TITLE(),
+                Conversation.Companion.getCOLUMN_PHONE_NUMBERS(),
+                Conversation.Companion.getCOLUMN_SNIPPET(),
+                Conversation.Companion.getCOLUMN_RINGTONE(),
+                Conversation.Companion.getCOLUMN_IMAGE_URI(),
+                Conversation.Companion.getCOLUMN_ID_MATCHER(),
+                Conversation.Companion.getCOLUMN_MUTE(),
+                Conversation.Companion.getCOLUMN_PRIVATE_NOTIFICATIONS()
         });
 
         cursor.addRow(new Object[]{

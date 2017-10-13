@@ -46,7 +46,7 @@ public class InviteFriendsAdapter extends ContactAdapter {
         super.onBindViewHolder(holder, position);
 
         Conversation conversation = getConversations().get(position);
-        if (phoneNumbers.contains(conversation.phoneNumbers)) {
+        if (phoneNumbers.contains(conversation.getPhoneNumbers())) {
             holder.checkBox.setChecked(true);
         } else {
             holder.checkBox.setChecked(false);
