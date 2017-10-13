@@ -20,7 +20,7 @@ public class MessageCountHelper {
      * @return a string to be applied to the counter TextView
      */
     public static String getMessageCounterText(Settings settings, MmsSettings mmsSettings, String text) {
-        boolean stripUnicode = settings.stripUnicode;
+        boolean stripUnicode = settings.getStripUnicode();
         boolean convertToMMS = mmsSettings.getConvertLongMessagesToMMS();
         int convertAfterXMessages = mmsSettings.getNumberOfMessagesBeforeMms();
         int numberOfMessages = 0;

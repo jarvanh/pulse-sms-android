@@ -221,7 +221,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             int linkColor = accentColor;
             if (message.getType() == Message.Companion.getTYPE_RECEIVED()) {
-                if (ColorUtils.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
+                if (ColorUtils.INSTANCE.isColorDark(backgroundColor != Integer.MIN_VALUE ? backgroundColor : receivedColor)) {
                     linkColor = holder.itemView.getContext().getResources().getColor(R.color.lightText);
                 } else {
                     linkColor = holder.itemView.getContext().getResources().getColor(R.color.darkText);
@@ -642,7 +642,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 holder.color = color;
 
                 if (holder.message != null) {
-                    if (!ColorUtils.isColorDark(color)) {
+                    if (!ColorUtils.INSTANCE.isColorDark(color)) {
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
                     } else {
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
@@ -659,7 +659,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 holder.color = color;
 
                 if (holder.message != null) {
-                    if (!ColorUtils.isColorDark(color)) {
+                    if (!ColorUtils.INSTANCE.isColorDark(color)) {
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
                     } else {
                         holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
@@ -673,7 +673,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 final Contact contact = new Contact();
                 contact.setName(message.getFrom());
                 contact.setPhoneNumber(message.getFrom());
-                contact.setColors(ColorUtils.getRandomMaterialColor(holder.itemView.getContext()));
+                contact.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(holder.itemView.getContext()));
 
                 if (fromColorMapper == null) {
                     fromColorMapper = new HashMap<>();

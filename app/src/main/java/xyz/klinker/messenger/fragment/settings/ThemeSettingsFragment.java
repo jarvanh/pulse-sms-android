@@ -94,9 +94,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         preference.setOnPreferenceChangeListener((preference1, o) -> {
             Settings settings = Settings.get(getActivity());
 
-            ColorUtils.animateToolbarColor(getActivity(), settings.mainColorSet.getColor(), (int) o);
+            ColorUtils.INSTANCE.animateToolbarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColor(), (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_color), (int) o);
-            settings.mainColorSet.setColor((int) o);
+            Settings.INSTANCE.getMainColorSet().setColor((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
@@ -111,9 +111,9 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
         darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
             Settings settings = Settings.get(getActivity());
 
-            ColorUtils.animateStatusBarColor(getActivity(), settings.mainColorSet.getColorDark(), (int) o);
+            ColorUtils.INSTANCE.animateStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark(), (int) o);
             settings.setValue(getActivity(), getString(R.string.pref_global_primary_dark_color), (int) o);
-            settings.mainColorSet.setColorDark((int) o);
+            Settings.INSTANCE.getMainColorSet().setColorDark((int) o);
 
             ApiUtils.INSTANCE.updatePrimaryDarkThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 
@@ -124,7 +124,7 @@ public class ThemeSettingsFragment extends MaterialPreferenceFragment {
             Settings settings = Settings.get(getActivity());
 
             settings.setValue(getActivity(), getString(R.string.pref_global_accent_color), (int) o);
-            settings.mainColorSet.setColorAccent((int) o);
+            Settings.INSTANCE.getMainColorSet().setColorAccent((int) o);
 
             ApiUtils.INSTANCE.updateAccentThemeColor(Account.INSTANCE.getAccountId(), (int) o);
 

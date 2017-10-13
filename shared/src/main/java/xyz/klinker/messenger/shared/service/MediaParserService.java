@@ -71,7 +71,7 @@ public class MediaParserService extends IntentService {
         }
 
         MediaParser parser = createParser(this, text);
-        if (parser == null || (!Settings.get(this).internalBrowser && parser instanceof ArticleParser)) {
+        if (parser == null || (!Settings.INSTANCE.getInternalBrowser() && parser instanceof ArticleParser)) {
             stopForeground(true);
             return;
         }

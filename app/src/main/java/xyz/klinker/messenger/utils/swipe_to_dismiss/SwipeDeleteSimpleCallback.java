@@ -22,7 +22,7 @@ public class SwipeDeleteSimpleCallback extends SwipeSimpleCallback {
         endSwipeBackground = new ColorDrawable(Settings.get(context).mainColorSet.getColorAccent());
         endMark = context.getDrawable(R.drawable.ic_delete_sweep);
 
-        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.getColorAccent())) {
+        if (ColorUtils.INSTANCE.isColorDark(Settings.get(context).mainColorSet.getColorAccent())) {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));

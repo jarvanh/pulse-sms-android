@@ -102,17 +102,17 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         setTitle(" ");
 
         recyclerView = (RecyclerView) findViewById(R.id.recent_contacts);
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, Settings.get(this).mainColorSet.getColor());
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(recyclerView, Settings.INSTANCE.getMainColorSet().getColor());
 
         contactEntry = (RecipientEditTextView) findViewById(R.id.contact_entry);
         contactEntry.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         BaseRecipientAdapter adapter =
                 new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, this);
-        adapter.setShowMobileOnly(Settings.get(this).mobileOnly);
+        adapter.setShowMobileOnly(Settings.INSTANCE.getMobileOnly());
         contactEntry.setAdapter(adapter);
 
         bottomNavigation = (BottomBar) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setActiveTabColor(Settings.get(this).mainColorSet.getColorAccent());
+        bottomNavigation.setActiveTabColor(Settings.INSTANCE.getMainColorSet().getColorAccent());
         bottomNavigation.setOnTabSelectListener(item -> {
             switch (item) {
                 case R.id.tab_recents:
@@ -147,18 +147,18 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         handleIntent();
         displayRecents();
 
-        Settings settings = Settings.get(this);
-        findViewById(R.id.toolbar_holder).setBackgroundColor(settings.mainColorSet.getColor());
-        toolbar.setBackgroundColor(settings.mainColorSet.getColor());
-        ActivityUtils.setStatusBarColor(this, settings.mainColorSet.getColorDark());
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
-        contactEntry.setHighlightColor(settings.mainColorSet.getColorAccent());
-        ColorUtils.setCursorDrawableColor(contactEntry, settings.mainColorSet.getColorAccent());
+        Settings settings = Settings.INSTANCE;
+        findViewById(R.id.toolbar_holder).setBackgroundColor(settings.getMainColorSet().getColor());
+        toolbar.setBackgroundColor(settings.getMainColorSet().getColor());
+        ActivityUtils.setStatusBarColor(this, settings.getMainColorSet().getColorDark());
+        fab.setBackgroundTintList(ColorStateList.valueOf(settings.getMainColorSet().getColorAccent()));
+        contactEntry.setHighlightColor(settings.getMainColorSet().getColorAccent());
+        ColorUtils.INSTANCE.setCursorDrawableColor(contactEntry, settings.getMainColorSet().getColorAccent());
 
         ActivityUtils.setTaskDescription(this);
-        ColorUtils.checkBlackBackground(this);
+        ColorUtils.INSTANCE.checkBlackBackground(this);
 
-        if (!ColorUtils.isColorDark(settings.mainColorSet.getColor())) {
+        if (!ColorUtils.INSTANCE.isColorDark(settings.getMainColorSet().getColor())) {
             contactEntry.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
             contactEntry.setHintTextColor(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }
@@ -311,10 +311,9 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_compose, menu);
-        Settings settings = Settings.get(this);
 
         MenuItem item = menu.findItem(R.id.menu_mobile_only);
-        item.setChecked(settings.mobileOnly);
+        item.setChecked(Settings.INSTANCE.getMobileOnly());
 
         return true;
     }
@@ -328,12 +327,11 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 return true;
             case R.id.menu_mobile_only:
                 boolean newValue = !item.isChecked();
-                Settings settings = Settings.get(this);
 
                 item.setChecked(newValue);
 
-                settings.setValue(this, getString(R.string.pref_mobile_only), newValue);
-                settings.forceUpdate(this);
+                Settings.INSTANCE.setValue(this, getString(R.string.pref_mobile_only), newValue);
+                Settings.INSTANCE.forceUpdate(this);
 
                 contactEntry.getAdapter().setShowMobileOnly(item.isChecked());
                 contactEntry.getAdapter().notifyDataSetChanged();

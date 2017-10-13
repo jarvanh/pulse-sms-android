@@ -505,7 +505,7 @@ public class ContactUtils {
                 contact = new Contact();
                 contact.setName(number);
                 contact.setPhoneNumber(number);
-                contact.setColors(ColorUtils.getRandomMaterialColor(context));
+                contact.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
                 dataSource.insertContact(context, contact);
             }
 

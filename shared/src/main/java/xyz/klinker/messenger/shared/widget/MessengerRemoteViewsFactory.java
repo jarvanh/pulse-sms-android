@@ -45,7 +45,7 @@ public class MessengerRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
     public MessengerRemoteViewsFactory(Context context) {
         this.context = context;
-        this.settings = Settings.get(context);
+        this.settings = Settings.INSTANCE;
     }
 
     @Override

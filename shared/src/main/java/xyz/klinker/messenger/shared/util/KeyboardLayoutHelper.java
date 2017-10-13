@@ -14,12 +14,12 @@ public class KeyboardLayoutHelper {
     private KeyboardLayout layout;
 
     public KeyboardLayoutHelper(Context context) {
-        this(Settings.get(context));
+        this(Settings.INSTANCE);
     }
 
     @VisibleForTesting
     KeyboardLayoutHelper(Settings settings) {
-        this.layout = settings.keyboardLayout;
+        this.layout = settings.getKeyboardLayout();
     }
 
     public void applyLayout(EditText editText) {

@@ -53,7 +53,7 @@ public class ContactSettingsActivity extends AbstractSettingsActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ColorUtils.checkBlackBackground(this);
+        ColorUtils.INSTANCE.checkBlackBackground(this);
     }
 
     @Override

@@ -37,7 +37,7 @@ class CustomSnoozeFragment : TabletOptimizedBottomSheetDialogFragment() {
     private fun snooze() {
         val snoozeTil = System.currentTimeMillis() + minutesTime + hoursTime
 
-        Settings.get(activity).setValue(activity, getString(R.string.pref_snooze), snoozeTil)
+        Settings.setValue(activity, getString(R.string.pref_snooze), snoozeTil)
         ApiUtils.updateSnooze(Account.accountId, snoozeTil)
 
         dismiss()

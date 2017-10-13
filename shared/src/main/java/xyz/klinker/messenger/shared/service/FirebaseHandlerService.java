@@ -771,21 +771,22 @@ public class FirebaseHandlerService extends WakefulIntentService {
         String type = json.getString("type");
 
         if (pref != null && type != null && json.has("value")) {
+            Settings settings = Settings.INSTANCE;
             switch (type.toLowerCase(Locale.getDefault())) {
                 case "boolean":
-                    Settings.get(context).setValue(context, pref, json.getBoolean("value"));
+                    settings.setValue(context, pref, json.getBoolean("value"));
                     break;
                 case "long":
-                    Settings.get(context).setValue(context, pref, getLong(json, "value"));
+                    settings.setValue(context, pref, getLong(json, "value"));
                     break;
                 case "int":
-                    Settings.get(context).setValue(context, pref, json.getInt("value"));
+                    settings.setValue(context, pref, json.getInt("value"));
                     break;
                 case "string":
-                    Settings.get(context).setValue(context, pref, json.getString("value"));
+                    settings.setValue(context, pref, json.getString("value"));
                     break;
                 case "set":
-                    Settings.get(context).setValue(context, pref, SetUtils.createSet(json.getString("value")));
+                    settings.setValue(context, pref, SetUtils.createSet(json.getString("value")));
                     break;
             }
         }
@@ -911,7 +912,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setColor(Settings.get(context).mainColorSet.getColor());
+                .setColor(Settings.INSTANCE.getMainColorSet().getColor());
 
         NotificationManagerCompat.from(context).notify(INFORMATION_NOTIFICATION_ID, builder.build());
     }

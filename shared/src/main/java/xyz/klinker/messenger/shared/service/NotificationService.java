@@ -119,7 +119,7 @@ public class NotificationService extends IntentService {
         }
 
         try {
-            long snoozeTil = Settings.get(this).snooze;
+            long snoozeTil = Settings.INSTANCE.getSnooze();
             if (snoozeTil > System.currentTimeMillis()) {
                 return;
             }
@@ -148,12 +148,11 @@ public class NotificationService extends IntentService {
                     NotificationManagerCompat.from(this).cancel(SUMMARY_ID);
                 }
 
-                Settings settings = Settings.get(this);
-                if (settings.repeatNotifications != -1) {
-                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + settings.repeatNotifications);
+                if (Settings.INSTANCE.getRepeatNotifications() != -1) {
+                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + Settings.INSTANCE.getRepeatNotifications());
                 }
 
-                if (Settings.get(this).wakeScreen) {
+                if (Settings.INSTANCE.getWakeScreen()) {
                     try {
                         Thread.sleep(600);
                     } catch (Exception e) { }
@@ -221,7 +220,7 @@ public class NotificationService extends IntentService {
                                 conversation.setTitle(context.getString(R.string.new_message));
                                 conversation.setImageUri(null);
                                 conversation.setRingtoneUri(null);
-                                conversation.setColor(Settings.get(context).mainColorSet.getColor());
+                                conversation.setColor(Settings.INSTANCE.getMainColorSet().getColor());
                                 conversation.setPrivateNotification(true);
                                 conversation.setLedColor(Color.WHITE);
                             } else {
@@ -263,7 +262,7 @@ public class NotificationService extends IntentService {
             contactImage = Bitmap.createScaledBitmap(contactImage, (int) width, (int) height, true);
         } catch (Exception e) { }
 
-        VibratePattern vibratePattern = Settings.get(this).vibrate;
+        VibratePattern vibratePattern = Settings.INSTANCE.getVibrate();
         boolean shouldVibrate = !shouldAlertOnce(conversation.getMessages()) && conversationIndex == 0;
         int defaults = 0;
         if (shouldVibrate && vibratePattern == VibratePattern.DEFAULT) {
@@ -274,18 +273,18 @@ public class NotificationService extends IntentService {
             defaults = defaults | Notification.DEFAULT_LIGHTS;
         }
 
-        Settings settings = Settings.get(this);
+        Settings settings = Settings.INSTANCE;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
                     getNotificationChannel(this, conversation.getId()))
                 .setSmallIcon(!conversation.getGroupConversation() ? R.drawable.ic_stat_notify : R.drawable.ic_stat_notify_group)
                 .setContentTitle(conversation.getTitle())
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColor())
+                .setColor(settings.getUseGlobalThemeColor() ? settings.getMainColorSet().getColor() : conversation.getColor())
                 .setDefaults(defaults)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setLargeIcon(contactImage)
-                .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setPriority(settings.getHeadsUp() ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(getString(R.string.notification_ticker, conversation.getTitle()))
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
@@ -325,7 +324,7 @@ public class NotificationService extends IntentService {
         NotificationCompat.InboxStyle inboxStyle = null;
         NotificationCompat.Style messagingStyle = null;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && settings.historyInNotifications) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && settings.getHistoryInNotifications()) {
             // build a messaging style notification for Android Nougat
             messagingStyle = new NotificationCompat.MessagingStyle(getString(R.string.you));
 
@@ -444,11 +443,11 @@ public class NotificationService extends IntentService {
                 .setContentText(getResources().getQuantityString(R.plurals.new_messages,
                         conversation.getMessages().size(), conversation.getMessages().size()))
                 .setLargeIcon(null)
-                .setColor(settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColor())
+                .setColor(settings.getUseGlobalThemeColor() ? settings.getMainColorSet().getColor() : conversation.getColor())
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setDefaults(defaults)
-                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setPriority(settings.getHeadsUp() ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setGroup(numConversations > 1 || ALWAYS_SET_GROUP_KEY ? GROUP_KEY_MESSAGES : null)
                 .setVisibility(Notification.VISIBILITY_PUBLIC);
 
@@ -529,7 +528,7 @@ public class NotificationService extends IntentService {
                     .extend(actionExtender)
                     .build();
 
-            if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
+            if (!conversation.getPrivateNotification() && settings.getNotificationActions().contains(NotificationAction.REPLY)) {
                 builder.addAction(action);
             }
 
@@ -553,7 +552,7 @@ public class NotificationService extends IntentService {
                         .setAllowGeneratedReplies(true)
                         .build();
 
-                if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                if (!conversation.getPrivateNotification() && settings.getNotificationActions().contains(NotificationAction.REPLY)) {
                     builder.addAction(action);
                 }
 
@@ -564,7 +563,7 @@ public class NotificationService extends IntentService {
                         getString(R.string.reply), pendingReply)
                         .build();
 
-                if (!conversation.getPrivateNotification() && settings.notificationActions.contains(NotificationAction.REPLY)) {
+                if (!conversation.getPrivateNotification() && settings.getNotificationActions().contains(NotificationAction.REPLY)) {
                     builder.addAction(action);
                 }
 
@@ -585,7 +584,7 @@ public class NotificationService extends IntentService {
             }
         }
 
-        if (!conversation.getGroupConversation() && settings.notificationActions.contains(NotificationAction.CALL)
+        if (!conversation.getGroupConversation() && settings.getNotificationActions().contains(NotificationAction.CALL)
                 && (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary())) {
             Intent call = new Intent(this, NotificationCallService.class);
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId());
@@ -602,7 +601,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.getId(),
                 deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (settings.notificationActions.contains(NotificationAction.DELETE)) {
+        if (settings.getNotificationActions().contains(NotificationAction.DELETE)) {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_delete_dark, getString(R.string.delete), pendingDeleteMessage));
         }
 
@@ -611,7 +610,7 @@ public class NotificationService extends IntentService {
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.getId(),
                 read, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (settings.notificationActions.contains(NotificationAction.READ)) {
+        if (settings.getNotificationActions().contains(NotificationAction.READ)) {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_done_dark, getString(R.string.read), pendingRead));
         }
 
@@ -763,8 +762,8 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).mainColorSet.getColor())
-                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setColor(Settings.INSTANCE.getMainColorSet().getColor())
+                .setPriority(Settings.INSTANCE.getHeadsUp() ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .build();
 
@@ -786,8 +785,8 @@ public class NotificationService extends IntentService {
                 .setGroupSummary(true)
                 .setAutoCancel(AUTO_CANCEL)
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(Settings.get(this).mainColorSet.getColor())
-                .setPriority(Settings.get(this).headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
+                .setColor(Settings.INSTANCE.getMainColorSet().getColor())
+                .setPriority(Settings.INSTANCE.getHeadsUp() ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setTicker(title)
                 .setVisibility(Notification.VISIBILITY_PRIVATE)
@@ -849,7 +848,7 @@ public class NotificationService extends IntentService {
 
     public static Uri getRingtone(Context context, String conversationRingtone) {
         try {
-            String globalUri = Settings.get(context).ringtone;
+            String globalUri = Settings.INSTANCE.getRingtone();
 
             if (conversationRingtone == null || conversationRingtone.contains("default") ||
                     conversationRingtone.equals("content://settings/system/notification_sound")) {

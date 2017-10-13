@@ -41,17 +41,16 @@ public class AccountPurchaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account_purchase);
         setUpInitialLayout();
 
-        Settings settings = Settings.get(this);
-        if (settings.mainColorSet.getColor() == Color.WHITE) {
+        if (Settings.INSTANCE.getMainColorSet().getColor() == Color.WHITE) {
             findViewById(R.id.initial_layout).setBackgroundColor(ColorSet.Companion.TEAL(this).getColor());
             findViewById(R.id.purchase_layout).setBackgroundColor(ColorSet.Companion.TEAL(this).getColor());
             ((TextView)findViewById(R.id.try_it))
                     .setTextColor(ColorStateList.valueOf(ColorSet.Companion.TEAL(this).getColor()));
         } else {
-            findViewById(R.id.initial_layout).setBackgroundColor(settings.mainColorSet.getColor());
-            findViewById(R.id.purchase_layout).setBackgroundColor(settings.mainColorSet.getColor());
+            findViewById(R.id.initial_layout).setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+            findViewById(R.id.purchase_layout).setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
             ((TextView)findViewById(R.id.try_it))
-                    .setTextColor(ColorStateList.valueOf(settings.mainColorSet.getColor()));
+                    .setTextColor(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColor()));
         }
 
         new Handler().postDelayed(this::circularRevealIn, 100);

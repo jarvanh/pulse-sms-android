@@ -148,8 +148,8 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
 
         if (toolbar != null) {
             if (settings.useGlobalThemeColor) {
-                toolbar.setBackgroundColor(settings.mainColorSet.getColor());
-                ActivityUtils.setStatusBarColor(getActivity(), settings.mainColorSet.getColorDark());
+                toolbar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+                ActivityUtils.setStatusBarColor(getActivity(), Settings.INSTANCE.getMainColorSet().getColorDark());
             } else {
                 toolbar.setBackgroundColor(conversation.getColors().getColor());
                 ActivityUtils.setStatusBarColor(getActivity(), conversation.getColors().getColorDark());
@@ -306,7 +306,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
                 findPreference(getString(R.string.pref_contact_led_color));
 
         preference.setOnPreferenceChangeListener((preference1, o) -> {
-            ColorUtils.animateToolbarColor(getActivity(), conversation.getColors().getColor(), (int) o);
+            ColorUtils.INSTANCE.animateToolbarColor(getActivity(), conversation.getColors().getColor(), (int) o);
             conversation.getColors().setColor((int) o);
             return true;
         });
@@ -317,7 +317,7 @@ public class ContactSettingsFragment extends MaterialPreferenceFragment {
         });
 
         darkColorPreference.setOnPreferenceChangeListener((preference12, o) -> {
-            ColorUtils.animateStatusBarColor(getActivity(), conversation.getColors().getColorDark(), (int) o);
+            ColorUtils.INSTANCE.animateStatusBarColor(getActivity(), conversation.getColors().getColorDark(), (int) o);
             conversation.getColors().setColorDark((int) o);
             return true;
         });

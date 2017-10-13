@@ -86,7 +86,7 @@ public class MessengerApplication extends FirebaseApplication {
     }
 
     public void refreshDynamicShortcuts() {
-        if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1() && !Settings.get(this).firstStart) {
+        if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1() && !Settings.get(this).getFirstStart()) {
             new Thread(() -> {
                 try {
                     Thread.sleep(10 * TimeUtils.SECOND);

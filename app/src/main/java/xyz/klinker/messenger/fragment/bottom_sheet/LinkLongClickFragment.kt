@@ -58,11 +58,11 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
             val intent = ArticleIntent.Builder(contentView.context, ArticleParser.ARTICLE_API_KEY)
                     .setToolbarColor(mainColor)
                     .setAccentColor(accentColor)
-                    .setTheme(if (Settings.get(contentView.context).isCurrentlyDarkTheme)
+                    .setTheme(if (Settings.isCurrentlyDarkTheme)
                         ArticleIntent.THEME_DARK
                     else
                         ArticleIntent.THEME_LIGHT)
-                    .setTextSize(Settings.get(contentView.context).mediumFont + 1)
+                    .setTextSize(Settings.mediumFont + 1)
                     .build()
 
             intent.launchUrl(contentView.context, Uri.parse(link))

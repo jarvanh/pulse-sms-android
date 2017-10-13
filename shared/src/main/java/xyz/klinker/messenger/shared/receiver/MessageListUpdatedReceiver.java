@@ -75,7 +75,7 @@ public class MessageListUpdatedReceiver extends BroadcastReceiver {
 
             fragment.setDismissOnStartup();
 
-            if (Settings.get(context).soundEffects && messageType == Message.Companion.getTYPE_RECEIVED() &&
+            if (Settings.INSTANCE.getSoundEffects() && messageType == Message.Companion.getTYPE_RECEIVED() &&
                     NotificationService.CONVERSATION_ID_OPEN == conversationId) {
                 new Thread(() -> {
                     try {

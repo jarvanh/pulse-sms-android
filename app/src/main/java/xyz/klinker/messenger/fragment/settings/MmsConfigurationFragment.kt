@@ -43,7 +43,7 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
 
     override fun onStop() {
         super.onStop()
-        Settings.get(activity).forceUpdate(activity)
+        Settings.forceUpdate(activity)
     }
 
 

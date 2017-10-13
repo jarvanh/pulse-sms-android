@@ -86,7 +86,7 @@ public class ColorPreference extends Preference {
 
         color = PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(getKey(), 0);
 
-        setSummary(ColorUtils.convertToHex(color));
+        setSummary(ColorUtils.INSTANCE.convertToHex(color));
         setOnPreferenceClickListener(preference -> {
             displayPicker();
             return true;
@@ -106,7 +106,7 @@ public class ColorPreference extends Preference {
         picker.setHistory(color);
         picker.setColor(color);
 
-        final List<ColorSet> colors = ColorUtils.getColors(getContext());
+        final List<ColorSet> colors = ColorUtils.INSTANCE.getColors(getContext());
         ColorPickerAdapter adapter = new ColorPickerAdapter(getContext(),
                 colors, view -> {
                     ColorPreference.this.dialog.hide();
@@ -166,7 +166,7 @@ public class ColorPreference extends Preference {
         CircleImageView circle = (CircleImageView) LayoutInflater.from(getContext())
                 .inflate(R.layout.preference_color, widgetFrameView, true).findViewById(R.id.color);
         circle.setImageDrawable(new ColorDrawable(color));
-        setSummary(ColorUtils.convertToHex(color));
+        setSummary(ColorUtils.INSTANCE.convertToHex(color));
     }
 
 }

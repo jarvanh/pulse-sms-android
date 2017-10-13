@@ -121,7 +121,7 @@ public class ImageUtils {
      */
     public static void fillConversationColors(Conversation conversation, Context context) {
         if (conversation.getImageUri() == null) {
-            conversation.setColors(ColorUtils.getRandomMaterialColor(context));
+            conversation.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(conversation.getImageUri(), context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
@@ -137,7 +137,7 @@ public class ImageUtils {
                                 ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
                         .toString());
             } else {
-                conversation.setColors(ColorUtils.getRandomMaterialColor(context));
+                conversation.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
                 conversation.setImageUri(null);
             }
         }
@@ -151,7 +151,7 @@ public class ImageUtils {
      */
     public static void fillContactColors(Contact contact, String imageUri, Context context) {
         if (imageUri == null) {
-            contact.setColors(ColorUtils.getRandomMaterialColor(context));
+            contact.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
         } else {
             Bitmap bitmap = ImageUtils.getContactImage(imageUri, context);
             ColorSet colors = ImageUtils.extractColorSet(context, bitmap);
@@ -163,7 +163,7 @@ public class ImageUtils {
             if (colors != null) {
                 contact.setColors(colors);
             } else {
-                contact.setColors(ColorUtils.getRandomMaterialColor(context));
+                contact.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
             }
         }
     }
@@ -177,7 +177,7 @@ public class ImageUtils {
      * palette).
      */
     public static ColorSet extractColorSet(Context context, Bitmap bitmap) {
-        return ColorUtils.getRandomMaterialColor(context);
+        return ColorUtils.INSTANCE.getRandomMaterialColor(context);
 //        try {
 //            Palette p = Palette.from(bitmap).generate();
 //

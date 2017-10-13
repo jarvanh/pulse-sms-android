@@ -253,10 +253,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         Settings settings = Settings.get(holder.itemView.getContext());
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (settings.useGlobalThemeColor) {
-                if (settings.mainColorSet.getColorLight() == Color.WHITE) {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorDark()));
+                if (Settings.INSTANCE.getMainColorSet().getColorLight() == Color.WHITE) {
+                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
                 } else {
-                    holder.image.setImageDrawable(new ColorDrawable(settings.mainColorSet.getColorLight()));
+                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorLight()));
                 }
             } else if (conversation.getColors().getColor() == Color.WHITE) {
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
@@ -264,14 +264,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            int colorToInspect = settings.useGlobalThemeColor ? settings.mainColorSet.getColor() : conversation.getColors().getColor();
+            int colorToInspect = settings.useGlobalThemeColor ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
             if (ContactUtils.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);
                 }
 
-                if (ColorUtils.isColorDark(colorToInspect)) {
+                if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
                     holder.imageLetter.setTextColor(Color.WHITE);
                 } else {
                     holder.imageLetter.setTextColor(lightToolbarTextColor);
@@ -288,7 +288,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     holder.groupIcon.setImageResource(R.drawable.ic_person);
                 }
 
-                if (ColorUtils.isColorDark(colorToInspect)) {
+                if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
                     holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 } else {
                     holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));

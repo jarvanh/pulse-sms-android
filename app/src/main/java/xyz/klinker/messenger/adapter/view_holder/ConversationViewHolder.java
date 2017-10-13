@@ -136,18 +136,16 @@ public class ConversationViewHolder extends SwappingHolder {
             return false;
         });
 
-        Settings settings = Settings.get(itemView.getContext());
-
         if (header != null) {
-            header.setTextSize(settings.smallFont);
+            header.setTextSize(Settings.INSTANCE.getSmallFont());
         }
 
         if (name!= null && summary != null) {
-            name.setTextSize(settings.largeFont);
-            summary.setTextSize(settings.mediumFont);
+            name.setTextSize(Settings.INSTANCE.getLargeFont());
+            summary.setTextSize(Settings.INSTANCE.getMediumFont());
         }
 
-        if (settings.smallFont == 10 && conversationImageHolder != null) {
+        if (Settings.INSTANCE.getSmallFont() == 10 && conversationImageHolder != null) {
             // user selected small font from the settings
             int fourtyDp = DensityUtil.toDp(itemView.getContext(), 40);
             conversationImageHolder.getLayoutParams().height = fourtyDp;
@@ -158,9 +156,10 @@ public class ConversationViewHolder extends SwappingHolder {
             itemView.invalidate();
         }
 
-        if (settings.baseTheme == BaseTheme.BLACK && headerBackground != null) {
+        BaseTheme theme = Settings.INSTANCE.getBaseTheme();
+        if (theme == BaseTheme.BLACK && headerBackground != null) {
             headerBackground.setBackgroundColor(Color.BLACK);
-        } else if (settings.baseTheme == BaseTheme.BLACK) {
+        } else if (theme == BaseTheme.BLACK) {
             itemView.setBackgroundColor(Color.BLACK);
         }
     }
@@ -182,10 +181,10 @@ public class ConversationViewHolder extends SwappingHolder {
                 unreadIndicator.setVisibility(View.VISIBLE);
             }
 
-            int color = Settings.get(itemView.getContext()).mainColorSet.getColor();
+            int color = Settings.INSTANCE.getMainColorSet().getColor();
             if (color == Color.WHITE) {
                 color = unreadIndicator.getContext().getResources().getColor(R.color.lightToolbarTextColor);
-            } else if (color == Color.BLACK && Settings.get(unreadIndicator.getContext()).baseTheme == BaseTheme.BLACK) {
+            } else if (color == Color.BLACK && Settings.INSTANCE.getBaseTheme() == BaseTheme.BLACK) {
                 color = unreadIndicator.getContext().getResources().getColor(android.R.color.white);
             }
             

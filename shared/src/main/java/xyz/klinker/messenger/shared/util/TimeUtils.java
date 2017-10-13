@@ -205,7 +205,7 @@ public class TimeUtils {
     }
 
     public static void setupNightTheme(AppCompatActivity activity) {
-        BaseTheme base = Settings.get(activity).baseTheme;
+        BaseTheme base = Settings.INSTANCE.getBaseTheme();
 
         if (!base.isDark()) {
             boolean isNight = TimeUtils.isNight() && base != BaseTheme.ALWAYS_LIGHT;

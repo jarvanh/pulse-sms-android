@@ -13,8 +13,8 @@ import xyz.klinker.android.floating_tutorial.TutorialPage
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.DensityUtil
+import xyz.klinker.messenger.shared.util.isDarkColor
 
 class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
 
@@ -40,10 +40,10 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
 
 
                 val topText = findViewById<View>(R.id.top_text) as TextView
-                val primaryColor = Settings.get(getActivity()).mainColorSet.color
+                val primaryColor = Settings.mainColorSet.color
 
                 topText.setBackgroundColor(primaryColor)
-                if (!ColorUtils.isColorDark(primaryColor)) {
+                if (!primaryColor.isDarkColor()) {
                     topText.setTextColor(resources.getColor(R.color.tutorial_light_background_indicator))
                 }
             }

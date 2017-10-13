@@ -272,10 +272,10 @@ public class NotificationReplyActivity extends AppCompatActivity {
     private void setupSendBar() {
         Settings settings = Settings.get(this);
         if (settings.useGlobalThemeColor) {
-            sendBar.setBackgroundColor(settings.mainColorSet.getColor());
-            conversationIndicator.setTextColor(settings.mainColorSet.getColor());
+            sendBar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+            conversationIndicator.setTextColor(Settings.INSTANCE.getMainColorSet().getColor());
             conversationIndicator.getCompoundDrawablesRelative()[2] // drawable end
-                    .setTintList(ColorStateList.valueOf(settings.mainColorSet.getColor()));
+                    .setTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColor()));
         } else {
             sendBar.setBackgroundColor(conversation.getColors().getColor());
             conversationIndicator.setTextColor(conversation.getColors().getColor());

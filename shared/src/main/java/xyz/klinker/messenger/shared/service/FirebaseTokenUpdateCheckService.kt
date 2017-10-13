@@ -20,8 +20,7 @@ class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
            return
         }
 
-        val sharedPrefs = Settings.get(this).getSharedPrefs(this)
-
+        val sharedPrefs = Settings.getSharedPrefs(this)
         val currentToken = FirebaseInstanceId.getInstance().token
         val storedToken = sharedPrefs.getString(TOKEN_PREF_KEY, null)
 

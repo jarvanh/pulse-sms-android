@@ -108,7 +108,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
             this.color = color;
 
-            if (!ColorUtils.isColorDark(color)) {
+            if (!ColorUtils.INSTANCE.isColorDark(color)) {
                 textColor = itemView.getContext().getResources().getColor(R.color.darkText);
             } else {
                 textColor = itemView.getContext().getResources().getColor(R.color.lightText);

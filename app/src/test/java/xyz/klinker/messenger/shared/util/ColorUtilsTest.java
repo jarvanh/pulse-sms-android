@@ -29,13 +29,13 @@ public class ColorUtilsTest extends MessengerRobolectricSuite {
     @Test
     public void noRandomOutOfBounds() {
         for (int i = 0; i < 100; i++) {
-            ColorUtils.getRandomMaterialColor(RuntimeEnvironment.application);
+            ColorUtils.INSTANCE.getRandomMaterialColor(RuntimeEnvironment.application);
         }
     }
 
     @Test
     public void convertToHex() {
-        assertEquals("#F44336", ColorUtils.convertToHex(RuntimeEnvironment.application
+        assertEquals("#F44336", ColorUtils.INSTANCE.convertToHex(RuntimeEnvironment.application
                 .getResources().getColor(R.color.materialRed)));
     }
 

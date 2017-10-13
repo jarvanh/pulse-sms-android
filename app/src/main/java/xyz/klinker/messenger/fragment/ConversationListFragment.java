@@ -130,9 +130,8 @@ public class ConversationListFragment extends Fragment
 
         loadConversations();
 
-        Settings settings = Settings.get(activity);
-        empty.setBackgroundColor(settings.mainColorSet.getColorLight());
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, settings.mainColorSet.getColor());
+        empty.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColorLight());
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(recyclerView, Settings.INSTANCE.getMainColorSet().getColor());
 
         multiSelector = new ConversationsMultiSelectDelegate(this);
 
@@ -539,7 +538,7 @@ public class ConversationListFragment extends Fragment
             e.printStackTrace();
         }
 
-        if (!Settings.get(activity).useGlobalThemeColor) {
+        if (!Settings.INSTANCE.getUseGlobalThemeColor()) {
             ActivityUtils.setTaskDescription(activity,
                     viewHolder.conversation.getTitle(), viewHolder.conversation.getColors().getColor());
         }
@@ -587,11 +586,11 @@ public class ConversationListFragment extends Fragment
 
         }
 
-        ColorSet color = Settings.get(activity).mainColorSet;
-        ColorUtils.adjustStatusBarColor(color.getColorDark(), activity);
-        ColorUtils.adjustDrawerColor(color.getColorDark(), activity);
+        ColorSet color = Settings.INSTANCE.getMainColorSet();
+        ColorUtils.INSTANCE.adjustStatusBarColor(color.getColorDark(), activity);
+        ColorUtils.INSTANCE.adjustDrawerColor(color.getColorDark(), activity);
 
-        ColorUtils.changeRecyclerOverscrollColors(recyclerView, color.getColor());
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(recyclerView, color.getColor());
         ActivityUtils.setTaskDescription(activity);
 
         if (updateInfo != null) {

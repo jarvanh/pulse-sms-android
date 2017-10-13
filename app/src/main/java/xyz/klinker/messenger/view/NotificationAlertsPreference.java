@@ -238,7 +238,7 @@ public class NotificationAlertsPreference extends Preference implements
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setColor(settings.mainColorSet.getColor())
+                .setColor(Settings.INSTANCE.getMainColorSet().getColor())
                 .setPriority(settings.headsUp ? Notification.PRIORITY_MAX : Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
                 .setWhen(System.currentTimeMillis());

@@ -13,11 +13,11 @@ object ContactImageCreator {
 
     fun getLetterPicture(context: Context, conversation: Conversation): Bitmap {
         var backgroundColor = conversation.colors.color
-        if (Settings.get(context).useGlobalThemeColor) {
-            backgroundColor = Settings.get(context).mainColorSet.color
+        if (Settings.useGlobalThemeColor) {
+            backgroundColor = Settings.mainColorSet.color
         }
 
-        if (conversation.title!!.length == 0 || conversation.title!!.contains(", ")) {
+        if (conversation.title!!.isEmpty() || conversation.title!!.contains(", ")) {
             val color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888)
             color.eraseColor(backgroundColor)
             return ImageUtils.clipToCircle(color)
@@ -38,7 +38,7 @@ object ContactImageCreator {
 
         val textPaint = Paint()
         textPaint.style = Paint.Style.FILL
-        textPaint.color = if (ColorUtils.isColorDark(backgroundColor))
+        textPaint.color = if (backgroundColor.isDarkColor())
             context.resources.getColor(android.R.color.white)
         else
             context.resources.getColor(R.color.lightToolbarTextColor)

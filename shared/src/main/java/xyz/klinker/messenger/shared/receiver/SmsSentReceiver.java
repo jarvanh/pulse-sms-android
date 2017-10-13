@@ -111,9 +111,9 @@ public class SmsSentReceiver extends SentReceiver {
             String body = message.getString(message.getColumnIndex(Telephony.Sms.BODY));
             message.close();
 
-            Settings settings = Settings.get(context);
-            if (settings.signature != null && !settings.signature.isEmpty()) {
-                body = body.replace("\n" + settings.signature, "");
+            Settings settings = Settings.INSTANCE;
+            if (settings.getSignature() != null && !settings.getSignature().isEmpty()) {
+                body = body.replace("\n" + settings.getSignature(), "");
             }
 
             DataSource source = DataSource.INSTANCE;

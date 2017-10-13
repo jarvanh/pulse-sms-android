@@ -153,7 +153,7 @@ public class  MessengerActivity extends AppCompatActivity
 
         new UpdateUtils(this).checkForUpdate();
 
-        if (Settings.get(this).isCurrentlyDarkTheme()) {
+        if (Settings.INSTANCE.isCurrentlyDarkTheme()) {
             getWindow().setNavigationBarColor(Color.BLACK);
         }
 
@@ -214,7 +214,7 @@ public class  MessengerActivity extends AppCompatActivity
         new PromotionUtils(this).checkPromotions();
         new UnreadBadger(this).clearCount();
 
-        ColorUtils.checkBlackBackground(this);
+        ColorUtils.INSTANCE.checkBlackBackground(this);
         ActivityUtils.setTaskDescription(this);
 
         if (!Build.FINGERPRINT.contains("robolectric")) {
@@ -361,7 +361,7 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private boolean checkInitialStart() {
-        return Settings.get(this).firstStart;
+        return Settings.INSTANCE.getFirstStart();
     }
 
     private void initToolbar() {
@@ -397,7 +397,7 @@ public class  MessengerActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.drawer_header_my_phone_number))
                         .setText(PhoneNumberUtils.format(PhoneNumberUtils.getMyPhoneNumber(this)));
 
-                if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.getColorDark())) {
+                if (!ColorUtils.INSTANCE.isColorDark(Settings.INSTANCE.getMainColorSet().getColorDark())) {
                     ((TextView) findViewById(R.id.drawer_header_my_name))
                             .setTextColor(getResources().getColor(R.color.lightToolbarTextColor));
                     ((TextView) findViewById(R.id.drawer_header_my_phone_number))
@@ -422,14 +422,13 @@ public class  MessengerActivity extends AppCompatActivity
             return;
         }
 
-        if (!ColorUtils.isColorDark(Settings.get(this).mainColorSet.getColorDark())) {
+        if (!ColorUtils.INSTANCE.isColorDark(Settings.INSTANCE.getMainColorSet().getColorDark())) {
             snooze.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightToolbarTextColor)));
         }
 
         snooze.setOnClickListener(view -> {
             PopupMenu menu = new PopupMenu(MessengerActivity.this, view);
-            boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
-                    System.currentTimeMillis();
+            boolean currentlySnoozed = Settings.INSTANCE.getSnooze() > System.currentTimeMillis();
             menu.inflate(currentlySnoozed ? R.menu.snooze_off : R.menu.snooze);
             menu.setOnMenuItemClickListener(item -> {
                 long snoozeTil;
@@ -464,7 +463,7 @@ public class  MessengerActivity extends AppCompatActivity
                         break;
                 }
 
-                Settings.get(getApplicationContext()).setValue(getApplicationContext(),
+                Settings.INSTANCE.setValue(getApplicationContext(),
                         getString(R.string.pref_snooze), snoozeTil);
                 ApiUtils.INSTANCE.updateSnooze(Account.INSTANCE.getAccountId(), snoozeTil);
                 snoozeIcon();
@@ -483,10 +482,8 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private void configureGlobalColors() {
-        final Settings settings = Settings.get(this);
-
-        toolbar.setBackgroundColor(settings.mainColorSet.getColor());
-        fab.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
+        toolbar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+        fab.setBackgroundTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
 
         int[][] states = new int[][] {
                 new int[] {-android.R.attr.state_checked },
@@ -496,22 +493,22 @@ public class  MessengerActivity extends AppCompatActivity
         String baseColor = getResources().getBoolean(R.bool.is_night) ? "FFFFFF" : "000000";
         int[] iconColors = new int[] {
                 Color.parseColor("#77" + baseColor),
-                settings.mainColorSet.getColorAccent()
+                Settings.INSTANCE.getMainColorSet().getColorAccent()
         };
 
         int[] textColors = new int[] {
                 Color.parseColor("#DD" + baseColor),
-                settings.mainColorSet.getColorAccent()
+                Settings.INSTANCE.getMainColorSet().getColorAccent()
         };
 
         navigationView.setItemIconTintList(new ColorStateList(states, iconColors));
         navigationView.setItemTextColor(new ColorStateList(states, textColors));
         navigationView.post(() -> {
-            ColorUtils.adjustStatusBarColor(settings.mainColorSet.getColorDark(), MessengerActivity.this);
+            ColorUtils.INSTANCE.adjustStatusBarColor(Settings.INSTANCE.getMainColorSet().getColorDark(), MessengerActivity.this);
 
             View header = navigationView.findViewById(R.id.header);
             if (header != null) {
-                header.setBackgroundColor(settings.mainColorSet.getColorDark());
+                header.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColorDark());
             }
         });
     }
@@ -831,12 +828,12 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private boolean displaySettings() {
-        SettingsActivity.startGlobalSettings(this);
+        SettingsActivity.Companion.startGlobalSettings(this);
         return true;
     }
 
     private boolean displayFeatureSettings() {
-        SettingsActivity.startFeatureSettings(this);
+        SettingsActivity.Companion.startFeatureSettings(this);
         return true;
     }
 
@@ -1272,8 +1269,7 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     public void snoozeIcon() {
-        boolean currentlySnoozed = Settings.get(getApplicationContext()).snooze >
-                System.currentTimeMillis();
+        boolean currentlySnoozed = Settings.INSTANCE.getSnooze() > System.currentTimeMillis();
         ImageButton snooze = (ImageButton) findViewById(R.id.snooze);
 
         try {

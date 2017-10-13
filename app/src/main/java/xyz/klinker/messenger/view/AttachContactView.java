@@ -79,7 +79,7 @@ public class AttachContactView extends FrameLayout {
         });
 
         final RecyclerView recentsList = (RecyclerView) findViewById(R.id.recycler_view);
-        ColorUtils.changeRecyclerOverscrollColors(recentsList, color);
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(recentsList, color);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recentsList.setLayoutManager(layoutManager);

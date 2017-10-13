@@ -35,7 +35,6 @@ class UpdateUtils(private val context: Activity) {
 
     fun checkForUpdate(): Boolean {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val settings = Settings.get(context)
 
         val storedAppVersion = sharedPreferences.getInt("app_version", 0)
 
@@ -52,7 +51,7 @@ class UpdateUtils(private val context: Activity) {
                     .putBoolean(context.getString(R.string.pref_apply_theme_globally), colorSetName != "default")
                     .commit()
 
-            settings.forceUpdate(context)
+            Settings.forceUpdate(context)
         }
 
         if (sharedPreferences.getBoolean("v2.5.4.2", true)) {

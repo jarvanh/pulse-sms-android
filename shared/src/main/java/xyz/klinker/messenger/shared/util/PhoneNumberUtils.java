@@ -143,9 +143,9 @@ public class PhoneNumberUtils {
 
         if (useSettings) {
             xyz.klinker.messenger.shared.data.Settings settings =
-                    xyz.klinker.messenger.shared.data.Settings.get(context);
-            if (settings.phoneNumber != null) {
-                numbers.add(settings.phoneNumber);
+                    xyz.klinker.messenger.shared.data.Settings.INSTANCE;
+            if (settings.getPhoneNumber() != null) {
+                numbers.add(settings.getPhoneNumber());
             }
         }
 

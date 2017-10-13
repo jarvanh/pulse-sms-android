@@ -22,7 +22,7 @@ public class CleanupOldMessagesJob extends BackgroundJob {
 
     @Override
     protected void onRunJob(JobParameters parameters) {
-        long timeout = Settings.get(this).cleanupMessagesTimeout;
+        long timeout = Settings.INSTANCE.getCleanupMessagesTimeout();
         if (timeout > 0) {
             DataSource.INSTANCE.cleanupOldMessages(this, System.currentTimeMillis() - timeout);
         }

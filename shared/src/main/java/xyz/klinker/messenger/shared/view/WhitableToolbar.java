@@ -60,7 +60,7 @@ public class WhitableToolbar extends Toolbar {
     }
 
     public int getTextColor() {
-        if (backgroundColor == Integer.MIN_VALUE || ColorUtils.isColorDark(backgroundColor)) {
+        if (backgroundColor == Integer.MIN_VALUE || ColorUtils.INSTANCE.isColorDark(backgroundColor)) {
             return Color.WHITE;
         } else {
             return getResources().getColor(R.color.lightToolbarTextColor);

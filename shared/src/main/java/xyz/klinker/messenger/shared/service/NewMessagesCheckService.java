@@ -57,13 +57,13 @@ public class NewMessagesCheckService extends IntentService {
             return;
         }
 
-        SharedPreferences sharedPreferences = Settings.get(this).getSharedPrefs(this);
+        SharedPreferences sharedPreferences = Settings.INSTANCE.getSharedPrefs(this);
         long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
         long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.SECOND * 5);
 
         String appSignature;
-        if (!Settings.get(this).signature.isEmpty()) {
-            appSignature = "\n" + Settings.get(this).signature;
+        if (!Settings.INSTANCE.getSignature().isEmpty()) {
+            appSignature = "\n" + Settings.INSTANCE.getSignature();
 
             if (!FeatureFlags.INSTANCE.getCHECK_NEW_MESSAGES_WITH_SIGNATURE()) {
                 // issues with this duplicating sent messages that I hadn't worked out. Disable for now
@@ -162,8 +162,7 @@ public class NewMessagesCheckService extends IntentService {
 
     public static void writeLastRun(Context context) {
         try {
-            Settings.get(context).getSharedPrefs(context)
-                    .edit()
+            Settings.INSTANCE.getSharedPrefs(context).edit()
                     .putLong("new_message_check_last_run", System.currentTimeMillis())
                     .apply();
         } catch (Exception e) {

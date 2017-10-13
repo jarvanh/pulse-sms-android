@@ -13,7 +13,7 @@ import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 object EmojiInitializer {
 
     fun initializeEmojiCompat(context: Context) {
-        val fontRequest = when (Settings.get(context).emojiStyle) {
+        val fontRequest = when (Settings.emojiStyle) {
             EmojiStyle.ANDROID_O -> createAndroidODownloadRequest()
             else -> null
         }

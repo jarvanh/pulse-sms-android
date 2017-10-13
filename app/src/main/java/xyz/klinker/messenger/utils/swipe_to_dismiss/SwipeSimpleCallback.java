@@ -64,7 +64,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
             endSwipeBackground = new ColorDrawable(set.getColorLight());
         }
 
-        if (ColorUtils.isColorDark(set.getColorLight())) {
+        if (ColorUtils.INSTANCE.isColorDark(set.getColorLight())) {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             endMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));
@@ -81,7 +81,7 @@ public class SwipeSimpleCallback extends ItemTouchHelper.SimpleCallback {
             startSwipeBackground = new ColorDrawable(set.getColorLight());
         }
 
-        if (ColorUtils.isColorDark(Settings.get(context).mainColorSet.getColorLight())) {
+        if (ColorUtils.INSTANCE.isColorDark(Settings.get(context).mainColorSet.getColorLight())) {
             startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.deleteIcon)));
         } else {
             startMark.setTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.lightToolbarTextColor)));

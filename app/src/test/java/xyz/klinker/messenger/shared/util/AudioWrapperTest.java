@@ -30,15 +30,15 @@ public class AudioWrapperTest extends MessengerSuite {
     @Test
     public void shouldWorkOnAndroidDevice() {
         when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
-        assertThat(AudioWrapper.shouldPlaySound(context), is(true));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(true));
     }
 
     @Test
     public void shouldNotWorkOnNonTouchscreenDevices() {
         when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_WATCH);
-        assertThat(AudioWrapper.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
 
         when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_TELEVISION);
-        assertThat(AudioWrapper.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
     }
 }

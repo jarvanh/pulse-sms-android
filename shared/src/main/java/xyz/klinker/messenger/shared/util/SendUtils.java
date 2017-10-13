@@ -95,21 +95,18 @@ public class SendUtils {
             return data;
         }
 
-        xyz.klinker.messenger.shared.data.Settings appSettings = xyz.klinker.messenger.shared.data.Settings.get(context);
-        if (!appSettings.signature.isEmpty() && !forceNoSignature) {
-            text += "\n" + appSettings.signature;
+        xyz.klinker.messenger.shared.data.Settings appSettings = xyz.klinker.messenger.shared.data.Settings.INSTANCE;
+        if (!appSettings.getSignature().isEmpty() && !forceNoSignature) {
+            text += "\n" + appSettings.getSignature();
         }
 
         Settings settings = new Settings();
-        settings.setDeliveryReports(xyz.klinker.messenger.shared.data.Settings.get(context)
-                .deliveryReports);
+        settings.setDeliveryReports(appSettings.getDeliveryReports());
         settings.setSendLongAsMms(MmsSettings.INSTANCE.getConvertLongMessagesToMMS());
         settings.setSendLongAsMmsAfter(MmsSettings.INSTANCE.getNumberOfMessagesBeforeMms());
         settings.setGroup(MmsSettings.INSTANCE.getGroupMMS());
-        settings.setStripUnicode(xyz.klinker.messenger.shared.data.Settings.get(context)
-                .stripUnicode);
-        settings.setPreText(xyz.klinker.messenger.shared.data.Settings.get(context)
-                .giffgaffDeliveryReports ? "*0#" : "");
+        settings.setStripUnicode(appSettings.getStripUnicode());
+        settings.setPreText(appSettings.getGiffgaffDeliveryReports() ? "*0#" : "");
         settings.setSplit(forceSplitMessage || shouldSplitMessages(context));
 
         if (MmsSettings.INSTANCE.getOverrideSystemAPN()) {

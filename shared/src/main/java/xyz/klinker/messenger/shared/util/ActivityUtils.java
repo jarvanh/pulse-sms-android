@@ -50,7 +50,7 @@ public class ActivityUtils {
     public static void setTaskDescription(Activity activity) {
         Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher);
         ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
-                activity.getString(R.string.app_name), bm, Settings.get(activity).mainColorSet.getColor());
+                activity.getString(R.string.app_name), bm, Settings.INSTANCE.getMainColorSet().getColor());
 
         activity.setTaskDescription(td);
     }
@@ -68,7 +68,7 @@ public class ActivityUtils {
     }
 
     public static void setUpLightStatusBar(Activity activity, int color) {
-        if (!ColorUtils.isColorDark(color)) {
+        if (!ColorUtils.INSTANCE.isColorDark(color)) {
             activateLightStatusBar(activity, true);
         } else {
             activateLightStatusBar(activity, false);

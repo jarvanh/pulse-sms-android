@@ -12,7 +12,7 @@ class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: Attri
     : AppCompatTextView(context, attrs, defStyleAttr) {
 
     private val useEmojiCompat: Boolean
-        get() = Settings.get(context).emojiStyle != EmojiStyle.DEFAULT
+        get() = Settings.emojiStyle != EmojiStyle.DEFAULT
 
     private var helper: EmojiTextViewHelper? = null
     private val emojiHelper: EmojiTextViewHelper

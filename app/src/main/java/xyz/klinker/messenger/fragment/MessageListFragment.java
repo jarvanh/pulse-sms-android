@@ -102,6 +102,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
@@ -385,7 +386,7 @@ public class MessageListFragment extends Fragment implements
             view.invalidate();
         }
 
-        if (Settings.get(activity).rounderBubbles) {
+        if (Settings.INSTANCE.getRounderBubbles()) {
             messageEntry.setBackground(activity.getResources().getDrawable(R.drawable.message_circle));
         }
     }
@@ -504,13 +505,12 @@ public class MessageListFragment extends Fragment implements
             messageEntry.setHint(R.string.type_message);
         }
 
-        Settings settings = Settings.get(activity);
-        if (settings.useGlobalThemeColor) {
-            toolbar.setBackgroundColor(settings.mainColorSet.getColor());
-            send.setBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
-            sendProgress.setProgressTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
-            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(settings.mainColorSet.getColorAccent()));
-            messageEntry.setHighlightColor(settings.mainColorSet.getColorAccent());
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
+            toolbar.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+            send.setBackgroundTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
+            sendProgress.setProgressTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
+            sendProgress.setProgressBackgroundTintList(ColorStateList.valueOf(Settings.INSTANCE.getMainColorSet().getColorAccent()));
+            messageEntry.setHighlightColor(Settings.INSTANCE.getMainColorSet().getColorAccent());
         }
 
         if (bundle == null) {
@@ -560,7 +560,7 @@ public class MessageListFragment extends Fragment implements
             setNameAndDrawerColor(activity);
         }
 
-        ColorUtils.adjustStatusBarColor(colorDarker, activity);
+        ColorUtils.INSTANCE.adjustStatusBarColor(colorDarker, activity);
 
         new Handler().postDelayed(() -> {
             if (shouldLimitMessages()) {
@@ -604,8 +604,8 @@ public class MessageListFragment extends Fragment implements
                 setNameAndDrawerColor(activity);
             }
 
-            ColorUtils.setCursorDrawableColor(messageEntry, colorAccent);
-            ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent);
+            ColorUtils.INSTANCE.setCursorDrawableColor(messageEntry, colorAccent);
+            ColorUtils.INSTANCE.colorTextSelectionHandles(messageEntry, colorAccent);
         }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
 
         if (!TvUtils.hasTouchscreen(activity)) {
@@ -644,7 +644,7 @@ public class MessageListFragment extends Fragment implements
                         .into(image);
             }
 
-            ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity);
+            ColorUtils.INSTANCE.adjustDrawerColor(colorDarker, isGroup, activity);
         }
 
         NavigationView nav = (NavigationView) activity.findViewById(R.id.navigation_view);
@@ -664,13 +664,13 @@ public class MessageListFragment extends Fragment implements
 
     private void initSendbar() {
         new KeyboardLayoutHelper(activity).applyLayout(messageEntry);
-        messageEntry.setTextSize(Settings.get(activity).largeFont);
+        messageEntry.setTextSize(Settings.INSTANCE.getLargeFont());
 
         messageEntry.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             boolean handled = false;
 
             if ((keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
-                    Settings.get(activity).keyboardLayout != KeyboardLayout.ENTER &&
+                    Settings.INSTANCE.getKeyboardLayout() != KeyboardLayout.ENTER &&
                     keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) ||
                     actionId == EditorInfo.IME_ACTION_SEND) {
                 requestPermissionThenSend();
@@ -688,7 +688,7 @@ public class MessageListFragment extends Fragment implements
             }
         });
 
-        final boolean sendOnEnter = Settings.get(activity).keyboardLayout == KeyboardLayout.SEND;
+        final boolean sendOnEnter = Settings.INSTANCE.getKeyboardLayout() == KeyboardLayout.SEND;
         messageEntry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -718,7 +718,7 @@ public class MessageListFragment extends Fragment implements
         sendProgress.setProgressTintMode(PorterDuff.Mode.SRC_IN);
         send.setOnClickListener(view -> requestPermissionThenSend());
 
-        String signature = Settings.get(activity).signature;
+        String signature = Settings.INSTANCE.getSignature();
         if (signature != null && !signature.isEmpty()) {
             send.setOnLongClickListener(view -> {
                 requestPermissionThenSend(true);
@@ -761,10 +761,9 @@ public class MessageListFragment extends Fragment implements
 
     private void changeCounterText() {
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
-            Settings settings = Settings.get(activity);
             String text = messageEntry.getText().toString();
 
-            counter.setText(MessageCountHelper.getMessageCounterText(settings, MmsSettings.INSTANCE, text));
+            counter.setText(MessageCountHelper.getMessageCounterText(Settings.INSTANCE, MmsSettings.INSTANCE, text));
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }
@@ -808,15 +807,14 @@ public class MessageListFragment extends Fragment implements
         attachContact.setOnClickListener(view -> attachContact());
 
         boolean colorButtonsDark = false;
-        Settings settings = Settings.get(activity);
-        if (settings.useGlobalThemeColor) {
-            attachButtonHolder.setBackgroundColor(settings.mainColorSet.getColor());
-            if (!ColorUtils.isColorDark(settings.mainColorSet.getColor())) {
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
+            attachButtonHolder.setBackgroundColor(Settings.INSTANCE.getMainColorSet().getColor());
+            if (!ColorUtils.INSTANCE.isColorDark(Settings.INSTANCE.getMainColorSet().getColor())) {
                 colorButtonsDark = true;
             }
         } else {
             attachButtonHolder.setBackgroundColor(getArguments().getInt(ARG_COLOR));
-            if (!ColorUtils.isColorDark(getArguments().getInt(ARG_COLOR))) {
+            if (!ColorUtils.INSTANCE.isColorDark(getArguments().getInt(ARG_COLOR))) {
                 colorButtonsDark = true;
             }
         }
@@ -881,19 +879,18 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initRecycler() {
-        ColorUtils.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(messageList, getArguments().getInt(ARG_COLOR));
 
         manager = new LinearLayoutManager(activity);
         manager.setStackFromEnd(true);
         messageList.setLayoutManager(manager);
         adapter = null;
 
-        final Settings settings = Settings.get(activity);
         dragScrollBar.setIndicator(new DateAndTimeIndicator(
                                 activity, true, true, true, false),
                         true)
-                .setHandleColour(settings.useGlobalThemeColor ?
-                        settings.mainColorSet.getColor() : getArguments().getInt(ARG_COLOR))
+                .setHandleColour(Settings.INSTANCE.getUseGlobalThemeColor() ?
+                        Settings.INSTANCE.getMainColorSet().getColor() : getArguments().getInt(ARG_COLOR))
                 .setFastScrollSnapPercent(.05f);
 
         messageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -1121,8 +1118,8 @@ public class MessageListFragment extends Fragment implements
             adapter.addMessage(messageList, messages);
         } else {
             adapter = new MessageListAdapter(messages, getArguments().getInt(ARG_COLOR),
-                    Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.getColorAccent() :
+                    Settings.INSTANCE.getUseGlobalThemeColor() ?
+                            Settings.INSTANCE.getMainColorSet().getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT),
                     getArguments().getBoolean(ARG_IS_GROUP), manager, this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
@@ -1198,12 +1195,11 @@ public class MessageListFragment extends Fragment implements
                 !PermissionsUtils.isDefaultSmsApp(activity)) {
             PermissionsUtils.setDefaultSmsApp(activity);
         } else if (message.length() > 0 || uris.size() > 0) {
-            Settings settings = Settings.get(activity);
-            if (settings.delayedSendingTimeout != 0) {
+            if (Settings.INSTANCE.getDelayedSendingTimeout() != 0) {
                 changeDelayedSendingComponents(true);
             }
 
-            delayedSendingHandler.postDelayed(() -> sendMessage(uris, forceNoSignature), settings.delayedSendingTimeout);
+            delayedSendingHandler.postDelayed(() -> sendMessage(uris, forceNoSignature), Settings.INSTANCE.getDelayedSendingTimeout());
         }
     }
 
@@ -1224,17 +1220,17 @@ public class MessageListFragment extends Fragment implements
             send.setImageResource(R.drawable.ic_close);
             send.setOnClickListener((view) -> changeDelayedSendingComponents(false));
 
-            final Settings settings = Settings.get(activity);
-            sendProgress.setMax((int) settings.delayedSendingTimeout / 10);
+            long delayedSendingTimeout = Settings.INSTANCE.getDelayedSendingTimeout();
+            sendProgress.setMax((int) delayedSendingTimeout / 10);
 
-            delayedTimer = new CountDownTimer(settings.delayedSendingTimeout, 10) {
+            delayedTimer = new CountDownTimer(delayedSendingTimeout, 10) {
                 @Override
                 public void onFinish() {
                 }
 
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    sendProgress.setProgress((int) (settings.delayedSendingTimeout - millisUntilFinished) / 10);
+                    sendProgress.setProgress((int) (delayedSendingTimeout - millisUntilFinished) / 10);
                 }
             }.start();
         }
@@ -1373,8 +1369,8 @@ public class MessageListFragment extends Fragment implements
                     Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     attachHolder != null) {
                 attachHolder.addView(new AttachImageView(activity, this,
-                        Settings.get(activity).useGlobalThemeColor ?
-                                Settings.get(activity).mainColorSet.getColor() :
+                        Settings.INSTANCE.getUseGlobalThemeColor() ?
+                                Settings.INSTANCE.getMainColorSet().getColor() :
                                 getArguments().getInt(ARG_COLOR)));
             } else {
                 attachPermissionRequest(PERMISSION_STORAGE_REQUEST,
@@ -1423,8 +1419,8 @@ public class MessageListFragment extends Fragment implements
                 .autoSubmit(true)
                 .showPortraitWarning(false);
 
-        if (Settings.get(activity).useGlobalThemeColor) {
-            camera.primaryColor(Settings.get(activity).mainColorSet.getColor());
+        if (Settings.INSTANCE.getUseGlobalThemeColor()) {
+            camera.primaryColor(Settings.INSTANCE.getMainColorSet().getColor());
         } else {
             camera.primaryColor(getArguments().getInt(ARG_COLOR));
         }
@@ -1447,8 +1443,8 @@ public class MessageListFragment extends Fragment implements
                 ContextCompat.checkSelfPermission(activity,
                         Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new RecordAudioView(activity, this,
-                    Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.getColorAccent() :
+                    Settings.INSTANCE.getUseGlobalThemeColor() ?
+                            Settings.INSTANCE.getMainColorSet().getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,
@@ -1471,8 +1467,8 @@ public class MessageListFragment extends Fragment implements
                 ContextCompat.checkSelfPermission(activity,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachLocationView(activity, this, this,
-                    Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.getColorAccent() :
+                    Settings.INSTANCE.getUseGlobalThemeColor() ?
+                            Settings.INSTANCE.getMainColorSet().getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT)));
         } else {
             attachPermissionRequest(PERMISSION_LOCATION_REQUEST,
@@ -1490,8 +1486,8 @@ public class MessageListFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(new AttachContactView(activity, this,
-                    Settings.get(activity).useGlobalThemeColor ?
-                            Settings.get(activity).mainColorSet.getColor() :
+                    Settings.INSTANCE.getUseGlobalThemeColor() ?
+                            Settings.INSTANCE.getMainColorSet().getColor() :
                             getArguments().getInt(ARG_COLOR)));
         } else {
             attachPermissionRequest(PERMISSION_AUDIO_REQUEST,

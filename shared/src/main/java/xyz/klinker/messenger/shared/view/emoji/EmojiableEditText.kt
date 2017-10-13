@@ -12,7 +12,7 @@ import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 open class EmojiableEditText : AppCompatEditText {
 
     private val useEmojiCompat: Boolean
-        get() = Settings.get(context).emojiStyle != EmojiStyle.DEFAULT
+        get() = Settings.emojiStyle != EmojiStyle.DEFAULT
 
     private var mEmojiEditTextHelper: EmojiEditTextHelper? = null
     private val emojiEditTextHelper: EmojiEditTextHelper

@@ -51,7 +51,7 @@ public class AttachImageView extends RecyclerView {
     }
 
     private void init(final int color) {
-        ColorUtils.changeRecyclerOverscrollColors(this, color);
+        ColorUtils.INSTANCE.changeRecyclerOverscrollColors(this, color);
         final Handler handler = new Handler();
 
         new Thread(() -> {

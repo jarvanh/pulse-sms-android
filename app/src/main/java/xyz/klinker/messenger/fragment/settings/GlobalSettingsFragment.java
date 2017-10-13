@@ -75,7 +75,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     private void initThemeRedirect() {
         findPreference(getString(R.string.pref_theme_settings))
                 .setOnPreferenceClickListener(preference -> {
-                    SettingsActivity.startThemeSettings(getActivity());
+                    SettingsActivity.Companion.startThemeSettings(getActivity());
                     return false;
                 });
     }
@@ -83,7 +83,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
     private void initMmsConfigurationRedirect() {
         findPreference(getString(R.string.pref_mms_configuration))
                 .setOnPreferenceClickListener(preference -> {
-                    SettingsActivity.startMmsSettings(getActivity());
+                    SettingsActivity.Companion.startMmsSettings(getActivity());
                     return false;
                 });
     }
