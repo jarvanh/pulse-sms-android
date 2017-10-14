@@ -70,44 +70,44 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         val adapterPosition = adapter.findPositionForConversationId(conversationId)
         val insertToday = adapter.getCountForSection(SectionType.TODAY) == 0
         val pinnedCount = adapter.getCountForSection(SectionType.PINNED)
-        val conversations = adapter.conversations
-        val sectionTypes = adapter.sectionCounts
 
-        val removeEmpty = conversations.isEmpty()
+        val removeEmpty = adapter.conversations.isEmpty()
 
         if (adapterPosition == -1) {
             val conversation = DataSource.getConversation(context, conversationId)
 
             // need to insert after the pinned conversations
-            if (conversation != null) conversations.add(pinnedCount, conversation)
+            if (conversation != null) adapter.conversations.add(pinnedCount, conversation)
         } else {
-            val position = conversations.indices.firstOrNull { conversations[it].id == conversationId } ?: -1
+            val position = (0 until adapter.conversations.size).firstOrNull { adapter.conversations[it].id == conversationId }
+                    ?: -1
             if (position == -1) {
                 return
             }
 
+            Log.v("ConversationListUpdated", "position: " + position)
+
             if (position <= pinnedCount) {
                 // if it is already pinned or the top item that isn't pinned, just mark the read
                 // and snippet changes
-                val conversation = conversations[position]
 
                 if (title != null) {
-                    conversation.title = title
+                    adapter.conversations[position].title = title
                 }
 
                 if (snippet != null) {
-                    conversation.snippet = snippet
+                    adapter.conversations[position].snippet = snippet
                 }
 
                 if (intent.hasExtra(EXTRA_READ)) {
-                    conversation.read = read
+                    adapter.conversations[position].read = read
                 }
 
                 adapter.notifyItemChanged(adapterPosition)
                 return
             } else {
                 // remove, update, and reinsert conversation to appropriate place
-                val conversation = conversations[position]
+                val conversation = adapter.conversations[position]
                 adapter.removeItem(adapterPosition, ReorderType.NEITHER)
 
                 if (title != null) {
@@ -122,7 +122,7 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
                     conversation.read = read
                 }
 
-                conversations.add(pinnedCount, conversation)
+                adapter.conversations.add(pinnedCount, conversation)
             }
         }
 
@@ -133,20 +133,20 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
             val type = SectionType(SectionType.TODAY, 1)
             if (pinnedCount == 0) {
-                sectionTypes.add(0, type)
+                adapter.sectionCounts.add(0, type)
                 adapter.notifyItemRangeInserted(0, 2)
             } else {
-                sectionTypes.add(1, type)
+                adapter.sectionCounts.add(1, type)
 
                 // add one to pinned count to include the header
                 adapter.notifyItemRangeInserted(pinnedCount + 1, 2)
             }
         } else {
             if (pinnedCount == 0) {
-                sectionTypes[0].count = sectionTypes[0].count + 1
+                adapter.sectionCounts[0].count = adapter.sectionCounts[0].count + 1
                 adapter.notifyItemInserted(1)
             } else {
-                sectionTypes[1].count = sectionTypes[1].count + 1
+                adapter.sectionCounts[1].count = adapter.sectionCounts[1].count + 1
 
                 // add 2 here for the pinned header and today header
                 adapter.notifyItemInserted(pinnedCount + 2)
