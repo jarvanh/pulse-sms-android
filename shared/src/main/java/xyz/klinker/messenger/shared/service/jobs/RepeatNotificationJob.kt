@@ -16,7 +16,7 @@ import java.util.*
 class RepeatNotificationJob : BackgroundJob() {
 
     @SuppressLint("NewApi")
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
         val intent = Intent(this, NotificationService::class.java)
         if (!AndroidVersionUtil.isAndroidO) {
             startService(intent)

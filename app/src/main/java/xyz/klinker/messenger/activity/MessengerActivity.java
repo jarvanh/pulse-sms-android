@@ -274,12 +274,12 @@ public class  MessengerActivity extends AppCompatActivity
         getIntent().setData(null);
 
         registerReceiver(refreshAllReceiver,
-                new IntentFilter(NewMessagesCheckService.REFRESH_WHOLE_CONVERSATION_LIST));
+                new IntentFilter(NewMessagesCheckService.Companion.getREFRESH_WHOLE_CONVERSATION_LIST()));
 
         if (!startImportOrLoad) {
             new Handler().postDelayed(() -> {
                 startService(new Intent(this, FirebaseTokenUpdateCheckService.class));
-                NewMessagesCheckService.startService(MessengerActivity.this);
+                NewMessagesCheckService.Companion.startService(MessengerActivity.this);
             }, 3000);
         } else {
             startImportOrLoad = false;

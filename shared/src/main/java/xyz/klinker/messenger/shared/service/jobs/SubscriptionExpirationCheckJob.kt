@@ -44,7 +44,7 @@ class SubscriptionExpirationCheckJob : BackgroundJob() {
             }
         }
 
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
 //        billing = BillingHelper(this)
 //
 //        if (Account.exists() && Account.primary && Account.subscriptionType !== Account.SubscriptionType.LIFETIME) {

@@ -21,7 +21,7 @@ import java.util.*
  */
 class MarkAsSentJob : BackgroundJob() {
 
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
         val messages = DataSource.getNewerSendingMessagesAsList(
                 this,
                 System.currentTimeMillis() - TimeUtils.MINUTE * 5)

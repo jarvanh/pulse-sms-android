@@ -36,7 +36,7 @@ class SignoutJob : BackgroundJob() {
             }
         }
 
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
 //        billing = BillingHelper(this)
 //
 //        // Only need to manage this on the primary device

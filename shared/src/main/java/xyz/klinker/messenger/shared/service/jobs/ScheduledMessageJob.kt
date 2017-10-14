@@ -41,7 +41,7 @@ import java.util.*
  */
 class ScheduledMessageJob : BackgroundJob() {
 
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
         val source = DataSource
         val messages = source.getScheduledMessages(this)
 

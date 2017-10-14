@@ -11,7 +11,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils
 
 class CleanupOldMessagesJob : BackgroundJob() {
 
-    override fun onRunJob(parameters: JobParameters) {
+    override fun onRunJob(parameters: JobParameters?) {
         val timeout = Settings.cleanupMessagesTimeout
         if (timeout > 0) {
             DataSource.cleanupOldMessages(this, System.currentTimeMillis() - timeout)
