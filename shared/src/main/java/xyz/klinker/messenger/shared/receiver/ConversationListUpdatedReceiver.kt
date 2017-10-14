@@ -51,8 +51,6 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
     }
 
-    fun <E> getMutableList(list: List<E>) = list.toMutableList()
-
     @Throws(Exception::class)
     private fun handleReceiver(context: Context, intent: Intent) {
         if (!fragment.isAdded) {
@@ -72,8 +70,8 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         val adapterPosition = adapter.findPositionForConversationId(conversationId)
         val insertToday = adapter.getCountForSection(SectionType.TODAY) == 0
         val pinnedCount = adapter.getCountForSection(SectionType.PINNED)
-        val conversations = getMutableList(adapter.conversations)
-        val sectionTypes = getMutableList(adapter.sectionCounts)
+        val conversations = adapter.conversations
+        val sectionTypes = adapter.sectionCounts
 
         val removeEmpty = conversations.isEmpty()
 
@@ -81,13 +79,9 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
             val conversation = DataSource.getConversation(context, conversationId)
 
             // need to insert after the pinned conversations
-            if (conversation != null) {
-                conversations.add(pinnedCount, conversation)
-            }
+            if (conversation != null) conversations.add(pinnedCount, conversation)
         } else {
-            val position = conversations.indices.firstOrNull { conversations[it].id == conversationId }
-                    ?: -1
-
+            val position = conversations.indices.firstOrNull { conversations[it].id == conversationId } ?: -1
             if (position == -1) {
                 return
             }
@@ -163,7 +157,6 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
             fragment.checkEmptyViewDisplay()
         }
     }
-
 
     fun shouldIgnoreSnippet(snippet: String?) = if (snippet!!.contains("img.youtube.com")) {
         true

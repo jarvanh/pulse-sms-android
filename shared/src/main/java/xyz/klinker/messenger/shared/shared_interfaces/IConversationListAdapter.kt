@@ -6,8 +6,8 @@ import xyz.klinker.messenger.shared.data.pojo.ReorderType
 
 interface IConversationListAdapter {
 
-    val conversations: List<Conversation>
-    val sectionCounts: List<SectionType>
+    val conversations: MutableList<Conversation>
+    val sectionCounts: MutableList<SectionType>
 
     fun findPositionForConversationId(id: Long): Int
     fun getCountForSection(sectionType: Int): Int

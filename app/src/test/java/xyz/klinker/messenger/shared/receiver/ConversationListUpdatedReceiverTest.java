@@ -76,9 +76,6 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         when(adapter.getConversations()).thenReturn(conversations);
         when(adapter.getSectionCounts()).thenReturn(sectionTypes);
 
-        doReturn(conversations).when(receiver).getMutableList(conversations);
-        doReturn(sectionTypes).when(receiver).getMutableList(sectionTypes);
-
         setFakeConversations();
     }
 
