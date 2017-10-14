@@ -963,7 +963,7 @@ public class Camera2BasicFragment extends Fragment
             }
             case R.id.fullscreen: {
                 Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startCamera.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.getUriForPhotoCaptureIntent(getActivity()));
+                startCamera.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.INSTANCE.getUriForPhotoCaptureIntent(getActivity()));
                 getActivity().startActivityForResult(startCamera, MessageListFragment.RESULT_CAPTURE_IMAGE_REQUEST);
 
                 break;

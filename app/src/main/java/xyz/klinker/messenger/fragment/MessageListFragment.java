@@ -1036,8 +1036,8 @@ public class MessageListFragment extends Fragment implements
 
                 if (!getArguments().getBoolean(ARG_IS_GROUP)) {
                     String number = getArguments().getString(ARG_PHONE_NUMBERS);
-                    final String name = ContactUtils.findContactNames(number, activity);
-                    String photoUri = ContactUtils.findImageUri(number, activity);
+                    final String name = ContactUtils.INSTANCE.findContactNames(number, activity);
+                    String photoUri = ContactUtils.INSTANCE.findImageUri(number, activity);
                     if (photoUri != null && !photoUri.isEmpty()) {
                         photoUri += "/photo";
                     }
@@ -1079,7 +1079,7 @@ public class MessageListFragment extends Fragment implements
 
     private Map<String, Contact> fillMapByName(String title, List<Contact> contacts) {
         try {
-            return title != null && title.contains(", ") ? ContactUtils.getMessageFromMappingByTitle(
+            return title != null && title.contains(", ") ? ContactUtils.INSTANCE.getMessageFromMappingByTitle(
                     title, contacts
             ) : new HashMap<>();
         } catch (Exception e) {
@@ -1089,7 +1089,7 @@ public class MessageListFragment extends Fragment implements
 
     private Map<String, Contact> fillMapByNumber(String numbers, List<Contact> contacts) {
         try {
-            return ContactUtils.getMessageFromMapping(
+            return ContactUtils.INSTANCE.getMessageFromMapping(
                     numbers, contacts, source, activity
             );
         } catch (Exception e) {
@@ -1575,7 +1575,7 @@ public class MessageListFragment extends Fragment implements
             selectedImageUris.clear();
             selectedImageCount.setVisibility(View.GONE);
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
-            Uri uri = ImageUtils.getUriForLatestPhoto(activity);
+            Uri uri = ImageUtils.INSTANCE.getUriForLatestPhoto(activity);
             onBackPressed();
             attachImage(uri);
 
@@ -1946,7 +1946,7 @@ public class MessageListFragment extends Fragment implements
 
                 @Override
                 public void onTranscodeCompleted() {
-                    attachImage(ImageUtils.createContentUri(activity, file));
+                    attachImage(ImageUtils.INSTANCE.createContentUri(activity, file));
                     attachedMimeType = MimeType.INSTANCE.getVIDEO_MP4();
                     editImage.setVisibility(View.GONE);
 

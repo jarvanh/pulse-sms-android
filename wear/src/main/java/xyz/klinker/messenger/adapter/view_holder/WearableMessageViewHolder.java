@@ -120,7 +120,7 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
                 if (mimeType != null && MimeType.INSTANCE.isVcard(mimeType)) {
                     Uri uri = Uri.parse(message.getText().toString());
                     if (message.getText().toString().contains("file://")) {
-                        uri = ImageUtils.createContentUri(itemView.getContext(), uri);
+                        uri = ImageUtils.INSTANCE.createContentUri(itemView.getContext(), uri);
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);

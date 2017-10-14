@@ -237,9 +237,9 @@ public class ApiDownloadService extends Service {
                     return;
                 }
 
-                conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), this));
+                conversation.setImageUri(ContactUtils.INSTANCE.findImageUri(conversation.getPhoneNumbers(), this));
 
-                Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), this);
+                Bitmap image = ImageUtils.INSTANCE.getContactImage(conversation.getImageUri(), this);
                 if (conversation.getImageUri() != null &&
                          image == null) {
                     conversation.setImageUri(null);
@@ -279,10 +279,10 @@ public class ApiDownloadService extends Service {
 
                 try {
                     conversation.decrypt(encryptionUtils);
-                    conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), this));
+                    conversation.setImageUri(ContactUtils.INSTANCE.findImageUri(conversation.getPhoneNumbers(), this));
 
                     if (conversation.getImageUri() != null &&
-                            ImageUtils.getContactImage(conversation.getImageUri(), this) == null) {
+                            ImageUtils.INSTANCE.getContactImage(conversation.getImageUri(), this) == null) {
                         conversation.setImageUri(null);
                     } else if (conversation.getImageUri() != null) {
                         conversation.setImageUri(conversation.getImageUri() + "/photo");

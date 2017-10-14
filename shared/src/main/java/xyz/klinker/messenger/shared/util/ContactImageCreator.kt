@@ -11,7 +11,11 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 
 object ContactImageCreator {
 
-    fun getLetterPicture(context: Context, conversation: Conversation): Bitmap {
+    fun getLetterPicture(context: Context?, conversation: Conversation): Bitmap? {
+        if (context == null) {
+            return null
+        }
+
         var backgroundColor = conversation.colors.color
         if (Settings.useGlobalThemeColor) {
             backgroundColor = Settings.mainColorSet.color

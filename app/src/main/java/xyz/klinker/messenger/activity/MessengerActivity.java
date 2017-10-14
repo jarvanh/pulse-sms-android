@@ -930,7 +930,7 @@ public class  MessengerActivity extends AppCompatActivity
         }
 
         if (conversation != null) {
-            String[] names = ContactUtils.findContactNames(conversation.getPhoneNumbers(), this).split(", ");
+            String[] names = ContactUtils.INSTANCE.findContactNames(conversation.getPhoneNumbers(), this).split(", ");
             String[] numbers = conversation.getPhoneNumbers().split(", ");
             List<Conversation> conversations = new ArrayList<>();
 
@@ -938,10 +938,10 @@ public class  MessengerActivity extends AppCompatActivity
                 Conversation c = new Conversation();
                 c.setTitle(i < names.length ? names[i] : "");
                 c.setPhoneNumbers(numbers[i]);
-                c.setImageUri(ContactUtils.findImageUri(numbers[i], this));
+                c.setImageUri(ContactUtils.INSTANCE.findImageUri(numbers[i], this));
                 c.setColors(conversation.getColors());
 
-                Bitmap image = ImageUtils.getContactImage(c.getImageUri(), this);
+                Bitmap image = ImageUtils.INSTANCE.getContactImage(c.getImageUri(), this);
                 if (c.getImageUri() != null && image == null) {
                     c.setImageUri(null);
                 }
@@ -959,7 +959,7 @@ public class  MessengerActivity extends AppCompatActivity
                 try {
                     intent = new Intent(Intent.ACTION_VIEW);
                     Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                            String.valueOf(ContactUtils.findContactId(phoneNumber,
+                            String.valueOf(ContactUtils.INSTANCE.findContactId(phoneNumber,
                                     MessengerActivity.this)));
                     intent.setData(uri);
                 } catch (NoSuchElementException e) {
@@ -987,7 +987,7 @@ public class  MessengerActivity extends AppCompatActivity
                 try {
                     intent = new Intent(Intent.ACTION_VIEW);
                     Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                            String.valueOf(ContactUtils.findContactId(conversation.getPhoneNumbers(),
+                            String.valueOf(ContactUtils.INSTANCE.findContactId(conversation.getPhoneNumbers(),
                                     MessengerActivity.this)));
                     intent.setData(uri);
                 } catch (NoSuchElementException e) {

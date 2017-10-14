@@ -175,7 +175,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                                ImageUtils.overlayBitmap(holder.image.getContext(),
+                                ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
                                         bitmap, R.drawable.ic_play);
                                 holder.image.setImageBitmap(bitmap);
                             }
@@ -206,7 +206,7 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                                    ImageUtils.overlayBitmap(holder.image.getContext(),
+                                    ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
                                             bitmap, R.drawable.ic_play);
                                     holder.clippedImage.setImageBitmap(bitmap);
                                 }

@@ -189,7 +189,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
         new Thread(() -> {
 
             if (groups == null) {
-                groups = ContactUtils.queryContactGroups(ComposeActivity.this);
+                groups = ContactUtils.INSTANCE.queryContactGroups(ComposeActivity.this);
 
                 if (conversations != null) {
                     for (int i = 0; i < conversations.size(); i++) {
@@ -587,7 +587,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 for (int i = 0; i < names.length; i++) {
                     String name = names[i];
                     String number = numbers[i];
-                    String image = ContactUtils.findImageUri(number, this) + "/photo";
+                    String image = ContactUtils.INSTANCE.findImageUri(number, this) + "/photo";
 
                     contactEntry.submitItem(name, number, Uri.parse(image));
                 }
@@ -595,8 +595,8 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 // case 2
                 for (int i = 0; i < numbers.length; i++) {
                     String number = numbers[i];
-                    String name = ContactUtils.findContactNames(number, this);
-                    String image = ContactUtils.findImageUri(number, this) + "/photo";
+                    String name = ContactUtils.INSTANCE.findContactNames(number, this);
+                    String image = ContactUtils.INSTANCE.findImageUri(number, this) + "/photo";
 
                     contactEntry.submitItem(name, number, Uri.parse(image));
                 }

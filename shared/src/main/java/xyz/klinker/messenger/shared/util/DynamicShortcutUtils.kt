@@ -57,27 +57,27 @@ class DynamicShortcutUtils(private val context: Context) {
     }
 
     private fun getIcon(conversation: Conversation): Icon? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val image = ImageUtils.getBitmap(context, conversation.imageUri)
 
             if (image != null) {
-                return createIcon(image)
+                createIcon(image)
             } else {
                 val color = ContactImageCreator.getLetterPicture(context, conversation)
-                return createIcon(color)
+                createIcon(color)
             }
         } else {
-            return null
+            null
         }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun createIcon(bitmap: Bitmap): Icon {
-        if (AndroidVersionUtil.isAndroidO) {
-            return Icon.createWithAdaptiveBitmap(bitmap)
+    private fun createIcon(bitmap: Bitmap?): Icon {
+        return if (AndroidVersionUtil.isAndroidO) {
+            Icon.createWithAdaptiveBitmap(bitmap)
         } else {
             val circleBitmap = ImageUtils.clipToCircle(bitmap)
-            return Icon.createWithBitmap(circleBitmap)
+            Icon.createWithBitmap(circleBitmap)
         }
     }
 }

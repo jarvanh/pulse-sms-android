@@ -344,7 +344,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                ImageUtils.overlayBitmap(holder.image.getContext(),
+                                ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
                                         resource, R.drawable.ic_play);
                                 holder.image.setImageBitmap(resource);
                             }
@@ -388,7 +388,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                                    ImageUtils.overlayBitmap(holder.image.getContext(),
+                                    ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
                                             bitmap, R.drawable.ic_play);
                                     holder.clippedImage.setImageBitmap(bitmap);
                                 }

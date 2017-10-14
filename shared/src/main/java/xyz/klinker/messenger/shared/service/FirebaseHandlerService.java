@@ -489,13 +489,13 @@ public class FirebaseHandlerService extends WakefulIntentService {
         conversation.setSnippet(encryptionUtils.decrypt(json.getString("snippet")));
         conversation.setRingtoneUri(encryptionUtils.decrypt(json.has("ringtone") ?
                 json.getString("ringtone") : null));
-        conversation.setImageUri(ContactUtils.findImageUri(conversation.getPhoneNumbers(), context));
+        conversation.setImageUri(ContactUtils.INSTANCE.findImageUri(conversation.getPhoneNumbers(), context));
         conversation.setIdMatcher(encryptionUtils.decrypt(json.getString("id_matcher")));
         conversation.setMute(json.getBoolean("mute"));
         conversation.setArchive(json.getBoolean("archive"));
         conversation.setSimSubscriptionId(-1);
 
-        Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), context);
+        Bitmap image = ImageUtils.INSTANCE.getContactImage(conversation.getImageUri(), context);
         if (conversation.getImageUri() != null &&
                 image == null) {
             conversation.setImageUri(null);

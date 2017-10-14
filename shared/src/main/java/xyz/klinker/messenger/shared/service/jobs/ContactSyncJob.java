@@ -48,7 +48,7 @@ public class ContactSyncJob extends BackgroundJob {
 
         DataSource source = DataSource.INSTANCE;
 
-        List<Contact> contactsList = ContactUtils.queryNewContacts(this, source, since);
+        List<Contact> contactsList = ContactUtils.INSTANCE.queryNewContacts(this, source, since);
         if (contactsList.size() == 0) {
             writeUpdateTimestamp(sharedPrefs);
             scheduleNextRun(this);

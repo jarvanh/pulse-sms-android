@@ -143,7 +143,7 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
-            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+            if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);

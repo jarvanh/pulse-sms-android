@@ -69,14 +69,14 @@ public class MessengerChooserTargetService extends ChooserTargetService {
         Conversation conversation = new Conversation();
         conversation.fillFromCursor(cursor);
 
-        Bitmap image = ImageUtils.getBitmap(this, conversation.getImageUri());
+        Bitmap image = ImageUtils.INSTANCE.getBitmap(this, conversation.getImageUri());
 
         final Icon targetIcon;
         if (image == null) {
             Bitmap color = ContactImageCreator.INSTANCE.getLetterPicture(this, conversation);
             targetIcon = Icon.createWithBitmap(color);
         } else {
-            targetIcon = Icon.createWithBitmap(ImageUtils.clipToCircle(image));
+            targetIcon = Icon.createWithBitmap(ImageUtils.INSTANCE.clipToCircle(image));
         }
 
 //        final float targetRanking = cursor.getCount() == 1 ? 1.0f :

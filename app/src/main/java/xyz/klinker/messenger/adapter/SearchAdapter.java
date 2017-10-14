@@ -138,7 +138,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
 
             if (conversation.getImageUri() == null) {
                 h.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
-                if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+                if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
                     h.imageLetter.setText(conversation.getTitle().substring(0, 1));
                     h.groupIcon.setVisibility(View.GONE);
                 } else {

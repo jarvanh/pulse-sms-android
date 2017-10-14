@@ -249,7 +249,7 @@ object DataSource {
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, generateId())
             values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).default)
+            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default)
             values.put(Contact.COLUMN_NAME, contact.name)
             values.put(Contact.COLUMN_COLOR, contact.colors.color)
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -285,7 +285,7 @@ object DataSource {
 
         values.put(Contact.COLUMN_ID, contact.id)
         values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber).default)
+        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default)
         values.put(Contact.COLUMN_NAME, contact.name)
         values.put(Contact.COLUMN_COLOR, contact.colors.color)
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -2056,7 +2056,7 @@ object DataSource {
         writeUnreadCount(context)
 
         try {
-            SmsMmsUtils.markConversationRead(context, getConversation(context, conversationId)!!.phoneNumbers)
+            SmsMmsUtils.markConversationRead(context, getConversation(context, conversationId)!!.phoneNumbers!!)
         } catch (e: NullPointerException) {
             // thrown in robolectric tests
         }
@@ -2109,7 +2109,7 @@ object DataSource {
 
         try {
             for (conversation in conversations) {
-                SmsMmsUtils.markConversationRead(context, conversation.phoneNumbers)
+                SmsMmsUtils.markConversationRead(context, conversation.phoneNumbers!!)
             }
         } catch (e: NullPointerException) {
             // thrown in robolectric tests

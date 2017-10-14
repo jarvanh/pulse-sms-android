@@ -26,51 +26,51 @@ public class SmsMmsUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void createIdMatcherSingleNumber() {
-        assertEquals("4211555", SmsMmsUtils.createIdMatcher("+15154211555").getSevenLetter());
+        assertEquals("4211555", SmsMmsUtils.INSTANCE.createIdMatcher("+15154211555").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherWithCharacters() {
-        assertEquals("9911493", SmsMmsUtils.createIdMatcher("+(515) (991)-1493").getSevenLetterNoFormatting());
+        assertEquals("9911493", SmsMmsUtils.INSTANCE.createIdMatcher("+(515) (991)-1493").getSevenLetterNoFormatting());
     }
 
     @Test
     public void createIdMatcherMultipleNumbers() {
         assertEquals("419672648085329911493",
-                SmsMmsUtils.createIdMatcher("5154196726, 5154808532, 5159911493").getSevenLetter());
+                SmsMmsUtils.INSTANCE.createIdMatcher("5154196726, 5154808532, 5159911493").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherEmail() {
         assertEquals("jklinker1@gmail.com",
-                SmsMmsUtils.createIdMatcher("jklinker1@gmail.com").getSevenLetter());
+                SmsMmsUtils.INSTANCE.createIdMatcher("jklinker1@gmail.com").getSevenLetter());
     }
 
     @Test
     public void createIdMatcherForSpacedWeirdNumbers() {
-        assertEquals(SmsMmsUtils.createIdMatcher("987 654 3210").getSevenLetter(),
-                SmsMmsUtils.createIdMatcher("1 987-654-3210").getSevenLetter());
+        assertEquals(SmsMmsUtils.INSTANCE.createIdMatcher("987 654 3210").getSevenLetter(),
+                SmsMmsUtils.INSTANCE.createIdMatcher("1 987-654-3210").getSevenLetter());
     }
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesEmpty() {
-        assertEquals("", SmsMmsUtils.stripDuplicatePhoneNumbers(null));
-        assertEquals("", SmsMmsUtils.stripDuplicatePhoneNumbers(""));
+        assertEquals("", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers(null));
+        assertEquals("", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers(""));
     }
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesSingle() {
-        assertEquals("5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493"));
+        assertEquals("5159911493", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493"));
     }
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesMultiple() {
-        assertEquals("661223, 5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493, 661223"));
+        assertEquals("661223, 5159911493", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223"));
     }
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesDuplicates() {
-        assertEquals("661223, 5159911493", SmsMmsUtils.stripDuplicatePhoneNumbers("5159911493, 661223, 661223"));
+        assertEquals("661223, 5159911493", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223, 661223"));
     }
 
 }

@@ -86,14 +86,14 @@ public class NewMessagesCheckService extends IntentService {
         DataSource source = DataSource.INSTANCE;
 
         List<Message> pulseMessages = source.getNumberOfMessages(this, 60);
-        Cursor internalMessages = SmsMmsUtils.getLatestSmsMessages(this, 20);
+        Cursor internalMessages = SmsMmsUtils.INSTANCE.getLatestSmsMessages(this, 20);
 
         List<Message> messagesToInsert = new ArrayList<>();
         List<String> addressesForMessages = new ArrayList<>();
         if (internalMessages != null && internalMessages.moveToFirst()) {
             do {
                 String messageBody = internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.BODY)).trim();
-                int messageType = SmsMmsUtils.getSmsMessageType(internalMessages);
+                int messageType = SmsMmsUtils.INSTANCE.getSmsMessageType(internalMessages);
                 long messageTimestamp = internalMessages.getLong(internalMessages.getColumnIndex(Telephony.Sms.DATE));
 
                 if (messageType != Message.Companion.getTYPE_RECEIVED()) {

@@ -390,7 +390,7 @@ public class ConversationListFragment extends Fragment
                 for (Conversation conversation : copiedList) {
                     if (conversation != null && activity != null) { // there are those blank convos that get populated with a new one
                         dataSource.deleteConversation(activity, conversation);
-                        SmsMmsUtils.deleteConversation(activity, conversation.getPhoneNumbers());
+                        SmsMmsUtils.INSTANCE.deleteConversation(activity, conversation.getPhoneNumbers());
                     }
                 }
 

@@ -61,7 +61,7 @@ class CarReplyReceiver : BroadcastReceiver() {
         val messageId = DataSource.insertMessage(context, m, conversationId, true)
         DataSource.readConversation(context, conversationId)
 
-        SendUtils(conversation.simSubscriptionId).send(context, reply, conversation.phoneNumbers)
+        SendUtils(conversation.simSubscriptionId).send(context, reply, conversation.phoneNumbers!!)
         MarkAsSentJob.scheduleNextRun(context, messageId)
 
         // cancel the notification we just replied to or

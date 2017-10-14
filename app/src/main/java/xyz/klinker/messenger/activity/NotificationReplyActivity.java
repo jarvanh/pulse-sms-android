@@ -253,7 +253,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     private void showContactImage() {
         if (conversation.getImageUri() == null) {
-            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+            if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
                 image.setImageBitmap(ContactImageCreator.INSTANCE.getLetterPicture(this, conversation));
             } else if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColor()));

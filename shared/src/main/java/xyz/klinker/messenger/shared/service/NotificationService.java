@@ -253,8 +253,8 @@ public class NotificationService extends IntentService {
      * Displays a notification for a single conversation.
      */
     private void giveConversationNotification(NotificationConversation conversation, int conversationIndex, int numConversations) {
-        Bitmap contactImage = ImageUtils.clipToCircle(
-                ImageUtils.getBitmap(this, conversation.getImageUri()));
+        Bitmap contactImage = ImageUtils.INSTANCE.clipToCircle(
+                ImageUtils.INSTANCE.getBitmap(this, conversation.getImageUri()));
 
         try {
             float height = getResources().getDimension(android.R.dimen.notification_large_icon_height);
@@ -386,7 +386,7 @@ public class NotificationService extends IntentService {
                     inboxStyle.addLine(Html.fromHtml(line));
                 } else {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.getData()));
+                            .bigPicture(ImageUtils.INSTANCE.getBitmap(this, message.getData()));
                 }
             }
         } else {
@@ -406,7 +406,7 @@ public class NotificationService extends IntentService {
                     }
                 } else if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
                     pictureStyle = new NotificationCompat.BigPictureStyle()
-                            .bigPicture(ImageUtils.getBitmap(this, message.getData()));
+                            .bigPicture(ImageUtils.INSTANCE.getBitmap(this, message.getData()));
                 }
             }
         }

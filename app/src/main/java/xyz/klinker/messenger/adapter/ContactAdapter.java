@@ -94,7 +94,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
             }
 
             int colorToInspect = Settings.INSTANCE.getUseGlobalThemeColor() ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
-            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+            if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
                 holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
                 if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
                     holder.groupIcon.setVisibility(View.GONE);

@@ -169,7 +169,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
             DataSource source = DataSource.INSTANCE;
 
-            List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
+            List<Conversation> conversations = SmsMmsUtils.INSTANCE.queryConversations(context);
             try {
                 source.insertConversations(conversations, context, InitialLoadActivity.this);
             } catch (Exception e) {
@@ -179,7 +179,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
 
             handler.post(() -> progress.setIndeterminate(true));
 
-            List<Contact> contacts = ContactUtils.queryContacts(context, source);
+            List<Contact> contacts = ContactUtils.INSTANCE.queryContacts(context, source);
             source.insertContacts(this, contacts, null);
 
             long importTime = (System.currentTimeMillis() - startTime);

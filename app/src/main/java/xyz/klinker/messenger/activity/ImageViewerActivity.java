@@ -170,7 +170,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
     private void shareMessage(Message message) {
         Uri contentUri =
-                ImageUtils.createContentUri(this, Uri.parse(message.getData()));
+                ImageUtils.INSTANCE.createContentUri(this, Uri.parse(message.getData()));
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

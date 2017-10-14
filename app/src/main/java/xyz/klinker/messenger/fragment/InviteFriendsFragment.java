@@ -105,11 +105,11 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                         conversation.setTitle(cursor.getString(1));
                         conversation.setPhoneNumbers(PhoneNumberUtils.INSTANCE
                                 .clearFormatting(cursor.getString(2)));
-                        conversation.setImageUri(ContactUtils
+                        conversation.setImageUri(ContactUtils.INSTANCE
                                 .findImageUri(conversation.getPhoneNumbers(), activity));
                         conversation.setSimSubscriptionId(-1);
 
-                        Bitmap image = ImageUtils.getContactImage(conversation.getImageUri(), activity);
+                        Bitmap image = ImageUtils.INSTANCE.getContactImage(conversation.getImageUri(), activity);
                         if (image == null) {
                             conversation.setImageUri(null);
                         } else {

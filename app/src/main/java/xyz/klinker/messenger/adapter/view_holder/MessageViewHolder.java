@@ -259,7 +259,7 @@ public class MessageViewHolder extends SwappingHolder {
                 if (mimeType != null && MimeType.INSTANCE.isVcard(mimeType)) {
                     Uri uri = Uri.parse(message.getText().toString());
                     if (message.getText().toString().contains("file://")) {
-                        uri = ImageUtils.createContentUri(itemView.getContext(), uri);
+                        uri = ImageUtils.INSTANCE.createContentUri(itemView.getContext(), uri);
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -359,7 +359,7 @@ public class MessageViewHolder extends SwappingHolder {
         Message message = getMessage(messageId);
 
         Uri contentUri =
-                ImageUtils.createContentUri(itemView.getContext(), Uri.parse(message.getData()));
+                ImageUtils.INSTANCE.createContentUri(itemView.getContext(), Uri.parse(message.getData()));
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

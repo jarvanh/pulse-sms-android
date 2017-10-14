@@ -136,12 +136,12 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
             account.setPhoneNumber(InitialLoadWearActivity.this, myPhoneNumber);
 
             DataSource source = DataSource.INSTANCE;
-            List<Conversation> conversations = SmsMmsUtils.queryConversations(context);
+            List<Conversation> conversations = SmsMmsUtils.INSTANCE.queryConversations(context);
             source.insertConversations(conversations, context, InitialLoadWearActivity.this);
 
             handler.post(() -> progress.setIndeterminate(true));
 
-            List<Contact> contacts = ContactUtils.queryContacts(context, source);
+            List<Contact> contacts = ContactUtils.INSTANCE.queryContacts(context, source);
             source.insertContacts(context, contacts, null);
 
             handler.postDelayed(() -> close(), 5000);
