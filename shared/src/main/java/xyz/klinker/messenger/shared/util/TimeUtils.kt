@@ -66,7 +66,7 @@ object TimeUtils {
         return isToday(timestamp, System.currentTimeMillis())
     }
 
-    private fun isToday(timestamp: Long, currentTime: Long): Boolean {
+    fun isToday(timestamp: Long, currentTime: Long): Boolean {
         val current = Calendar.getInstance()
         current.timeInMillis = currentTime
         zeroCalendarDay(current)
@@ -88,7 +88,7 @@ object TimeUtils {
         return isYesterday(timestamp, System.currentTimeMillis())
     }
 
-    private fun isYesterday(timestamp: Long, currentTime: Long): Boolean {
+    fun isYesterday(timestamp: Long, currentTime: Long): Boolean {
         val current = Calendar.getInstance()
         current.timeInMillis = currentTime
         zeroCalendarDay(current)
@@ -108,7 +108,7 @@ object TimeUtils {
         return isLastWeek(timestamp, System.currentTimeMillis())
     }
 
-    private fun isLastWeek(timestamp: Long, currentTime: Long): Boolean {
+    fun isLastWeek(timestamp: Long, currentTime: Long): Boolean {
         val lastWeek = Calendar.getInstance()
         lastWeek.timeInMillis = currentTime
         zeroCalendarDay(lastWeek)
@@ -124,7 +124,7 @@ object TimeUtils {
         return isLastMonth(timestamp, System.currentTimeMillis())
     }
 
-    private fun isLastMonth(timestamp: Long, currentTime: Long): Boolean {
+    fun isLastMonth(timestamp: Long, currentTime: Long): Boolean {
         val lastMonth = Calendar.getInstance()
         lastMonth.timeInMillis = currentTime
         zeroCalendarDay(lastMonth)
@@ -153,7 +153,7 @@ object TimeUtils {
         return formatTimestamp(context, timestamp, System.currentTimeMillis())
     }
 
-    private fun formatTimestamp(context: Context, timestamp: Long, currentTime: Long): String {
+    fun formatTimestamp(context: Context, timestamp: Long, currentTime: Long): String {
         val date = Date(timestamp)
         val formatted: String?
 
@@ -171,7 +171,7 @@ object TimeUtils {
         return formatted ?: ""
     }
 
-    private fun formatTime(context: Context, date: Date): String {
+    fun formatTime(context: Context, date: Date): String {
         return if (android.text.format.DateFormat.is24HourFormat(context)) {
             android.text.format.DateFormat.format("HH:mm", date).toString()
         } else {
@@ -179,7 +179,7 @@ object TimeUtils {
         }
     }
 
-    private fun isNight(cal: Calendar): Boolean {
+    fun isNight(cal: Calendar): Boolean {
         val hour = cal.get(Calendar.HOUR_OF_DAY)
         return hour <= 5 || hour >= 20
     }

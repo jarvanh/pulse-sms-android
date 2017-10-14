@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.shared.util;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,11 +26,6 @@ import xyz.klinker.messenger.MessengerSuite;
 import static org.junit.Assert.assertEquals;
 
 public class StringUtilsTest extends MessengerSuite {
-
-    @Before
-    public void setUp() {
-        StringUtils helper = new StringUtils();
-    }
 
     @Test
     public void generate32charHexString() {
@@ -93,7 +87,5 @@ public class StringUtilsTest extends MessengerSuite {
 
         assertEquals("", StringUtils.INSTANCE.buildSqlOrStatement("test", null));
         assertEquals("", StringUtils.INSTANCE.buildSqlOrStatement("test", new ArrayList<Long>()));
-
-
     }
 }

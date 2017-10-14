@@ -35,11 +35,6 @@ import static org.mockito.Mockito.when;
 
 public class ChangelogParserTest extends MessengerRobolectricSuite {
 
-    @Before
-    public void setUp() {
-        ChangelogParser utils = new ChangelogParser();
-    }
-
     @Test
     public void notNull() {
         Spanned[] items = ChangelogParser.INSTANCE.parse(RuntimeEnvironment.application);

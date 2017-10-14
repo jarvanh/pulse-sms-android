@@ -41,7 +41,7 @@ public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         receiver = Mockito.spy(new MmsReceivedReceiver());
-        Mockito.doReturn("Test name").when(receiver).getMyName(context);
+        Mockito.doReturn("Test name").when(receiver).getMyName();
         Mockito.doReturn("aaa").when(receiver).getContactName(Mockito.eq(context), Mockito.anyString());
     }
 

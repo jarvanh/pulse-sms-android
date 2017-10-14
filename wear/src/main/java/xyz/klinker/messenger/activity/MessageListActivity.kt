@@ -2,22 +2,17 @@ package xyz.klinker.messenger.activity
 
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.wearable.view.WearableRecyclerView
 import android.support.wearable.view.drawer.WearableActionDrawer
-import android.support.wearable.view.drawer.WearableDrawerLayout
-import android.view.MenuItem
 import android.view.View
-
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.WearableMessageListAdapter
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
@@ -41,9 +36,9 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
     private val adapter: WearableMessageListAdapter by lazy {
         if (Settings.useGlobalThemeColor) {
-            WearableMessageListAdapter(this, manager, null, Settings.mainColorSet.color, Settings.mainColorSet.colorAccent, conversation!!.isGroup)
+            WearableMessageListAdapter(this, manager, null, Settings.mainColorSet.color, Settings.mainColorSet.colorAccent, conversation.isGroup)
         } else {
-            WearableMessageListAdapter(this, manager, null, conversation!!.colors.color, conversation!!.colors.colorAccent, conversation!!.isGroup)
+            WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent, conversation.isGroup)
         }
     }
 
@@ -117,9 +112,8 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         }.start()
     }
 
-    override fun getConversationId(): Long {
-        return conversation.id
-    }
+    override val conversationId: Long
+        get() = conversation.id
 
     override fun setShouldPullDrafts(pull: Boolean) {
 
@@ -164,7 +158,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         m.color = null
         m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
         m.simPhoneNumber = if (conversation.simSubscriptionId != null)
-            DualSimUtils.get(this).getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
+            DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
         else
             null
 

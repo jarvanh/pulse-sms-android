@@ -34,11 +34,6 @@ import static org.mockito.Mockito.when;
 
 public class OpenSourceParserTest extends MessengerRobolectricSuite {
 
-    @Before
-    public void setUp() {
-        OpenSourceParser utils = new OpenSourceParser();
-    }
-
     @Test
     public void notNull() {
         String[] items = OpenSourceParser.INSTANCE.parse(RuntimeEnvironment.application);

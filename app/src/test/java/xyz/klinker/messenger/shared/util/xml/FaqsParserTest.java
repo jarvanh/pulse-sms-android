@@ -34,11 +34,6 @@ import static org.mockito.Mockito.when;
 
 public class FaqsParserTest extends MessengerRobolectricSuite {
 
-    @Before
-    public void setUp() {
-        FaqsParser utils = new FaqsParser();
-    }
-
     @Test
     public void notNull() {
         String[] items = FaqsParser.INSTANCE.parse(RuntimeEnvironment.application);
