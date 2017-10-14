@@ -11,7 +11,8 @@ import android.os.Build
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 object NotificationUtils {
 
@@ -210,7 +211,7 @@ object NotificationUtils {
         else
             Notification.VISIBILITY_PUBLIC
 
-        val ringtone = NotificationService.getRingtone(context, conversation.ringtoneUri)
+        val ringtone = NotificationRingtoneProvider(context).getRingtone(conversation.ringtoneUri)
         if (ringtone != null) {
             channel.setSound(ringtone, AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION).build())

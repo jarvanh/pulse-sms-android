@@ -51,7 +51,6 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver;
-import xyz.klinker.messenger.shared.service.NotificationService;
 import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment;
 import xyz.klinker.messenger.shared.util.ActivityUtils;
 import xyz.klinker.messenger.shared.util.AnimationUtils;

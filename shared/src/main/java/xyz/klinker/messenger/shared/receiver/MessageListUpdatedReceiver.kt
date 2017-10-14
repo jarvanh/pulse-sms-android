@@ -20,13 +20,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Handler
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
 import xyz.klinker.messenger.shared.util.AudioWrapper
 
@@ -65,7 +65,7 @@ class MessageListUpdatedReceiver(private val fragment: IMessageListFragment) : B
             fragment.setDismissOnStartup()
 
             if (Settings.soundEffects && messageType == Message.TYPE_RECEIVED &&
-                    NotificationService.CONVERSATION_ID_OPEN == conversationId) {
+                    NotificationConstants.CONVERSATION_ID_OPEN == conversationId) {
                 Thread {
                     try {
                         Thread.sleep(500)

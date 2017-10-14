@@ -24,6 +24,7 @@ import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 /**
  * A service to get run when a notification is dismissed.

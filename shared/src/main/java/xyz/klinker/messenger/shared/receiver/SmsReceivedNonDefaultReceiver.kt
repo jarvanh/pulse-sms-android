@@ -26,7 +26,8 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.BlacklistUtils
 import xyz.klinker.messenger.shared.util.PermissionsUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
@@ -104,7 +105,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
             val conversation = DataSource.getConversation(context, conversationId)
 
             handler.post {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationService.CONVERSATION_ID_OPEN == conversationId)
+                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationConstants.CONVERSATION_ID_OPEN == conversationId)
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type)
             }
 

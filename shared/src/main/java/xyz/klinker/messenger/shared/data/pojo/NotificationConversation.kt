@@ -2,8 +2,6 @@ package xyz.klinker.messenger.shared.data.pojo
 
 import java.util.ArrayList
 
-import xyz.klinker.messenger.shared.service.NotificationService
-
 class NotificationConversation {
     var id: Long = 0
     var unseenMessageId: Long = 0
@@ -18,5 +16,5 @@ class NotificationConversation {
     var privateNotification: Boolean = false
     var groupConversation: Boolean = false
     var phoneNumbers: String? = null
-    var messages: List<NotificationMessage> = ArrayList()
+    var messages = mutableListOf<NotificationMessage>()
 }

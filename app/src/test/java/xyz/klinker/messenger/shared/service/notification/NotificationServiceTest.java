@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.service;
+package xyz.klinker.messenger.shared.service.notification;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.util.LongSparseArray;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -32,11 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
+import xyz.klinker.messenger.shared.service.notification.NotificationService;
+import xyz.klinker.messenger.shared.service.notification.NotificationUnreadConversationQuery;
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 
@@ -48,7 +48,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 public class NotificationServiceTest extends MessengerRobolectricSuite {
 
@@ -57,6 +56,10 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     @Mock
     private MockableDataSourceWrapper source;
+    @Mock
+    private NotificationRingtoneProvider ringtoneProvider;
+    @Mock
+    private NotificationSummaryProvider summaryProvider;
 
     @Before
     public void setUp() {
@@ -70,7 +73,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     @Test
     public void shouldNotDebugNotifications() {
-        assertFalse(NotificationService.DEBUG_QUICK_REPLY);
+        assertFalse(NotificationConstants.INSTANCE.getDEBUG_QUICK_REPLY());
     }
 
     @Test
@@ -81,7 +84,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         doReturn(getConversation2()).when(source).getConversation(any(Context.class), eq(2L));
         doReturn(getConversation3()).when(source).getConversation(any(Context.class), eq(3L));
 
-        List<NotificationConversation> conversations = NotificationService.getUnseenConversations(service, source);
+        List<NotificationConversation> conversations = new NotificationUnreadConversationQuery(service).getUnseenConversations(source);
 
         assertEquals(3, conversations.size());
         assertEquals("Luke Klinker", conversations.get(2).getTitle());
@@ -104,7 +107,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         messages.add(new NotificationMessage(1, "", "", 0, ""));
         messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) + 1, ""));
 
-        assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(false));
     }
 
     @Test
@@ -115,7 +118,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         messages.add(new NotificationMessage(1, "", "", 0, ""));
         messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) - 100, ""));
 
-        assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
     }
 
     @Test
@@ -123,7 +126,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         List<NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY() - 100, ""));
 
-        assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
     }
 
     private Cursor getUnseenCursor() {

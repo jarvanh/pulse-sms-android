@@ -26,10 +26,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 
-import java.util.ArrayList
-
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 /**
  * Does the heavy lifting behind setting up the window correctly so that the service can draw

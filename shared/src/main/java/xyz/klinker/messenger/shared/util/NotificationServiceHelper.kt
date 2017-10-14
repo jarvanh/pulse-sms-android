@@ -21,7 +21,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 /**
  * When creating notifications, a single new conversation will never get the group message key on it.
@@ -68,7 +69,7 @@ object NotificationServiceHelper {
 
         return manager.activeNotifications
                 .takeWhile { statusBarNotification -> !statusBarNotification.isGroup }
-                .takeWhile { statusBarNotification -> statusBarNotification.groupKey != NotificationService.GROUP_KEY_MESSAGES }
+                .takeWhile { statusBarNotification -> statusBarNotification.groupKey != NotificationConstants.GROUP_KEY_MESSAGES }
                 .size
     }
 }

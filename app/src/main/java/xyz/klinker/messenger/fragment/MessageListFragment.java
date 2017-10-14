@@ -26,7 +26,6 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -102,7 +101,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
@@ -112,7 +110,6 @@ import xyz.klinker.messenger.adapter.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
-import xyz.klinker.messenger.shared.data.FeatureFlags;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;
 import xyz.klinker.messenger.shared.data.Settings;
@@ -123,7 +120,8 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
-import xyz.klinker.messenger.shared.service.NotificationService;
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants;
+import xyz.klinker.messenger.shared.service.notification.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
@@ -394,13 +392,13 @@ public class MessageListFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        NotificationService.CONVERSATION_ID_OPEN = getConversationId();
+        NotificationConstants.INSTANCE.setCONVERSATION_ID_OPEN(getConversationId());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        NotificationService.CONVERSATION_ID_OPEN = 0L;
+        NotificationConstants.INSTANCE.setCONVERSATION_ID_OPEN(0L);
     }
     @Override
     public void onStart() {
@@ -1064,7 +1062,7 @@ public class MessageListFragment extends Fragment implements
                     }
                 }
 
-                if (NotificationService.CONVERSATION_ID_OPEN == getConversationId()) {
+                if (NotificationConstants.INSTANCE.getCONVERSATION_ID_OPEN() == getConversationId()) {
                     Thread.sleep(1000);
 
                     // this could happen in the background, we don't want to dismiss that then!

@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.shared.util
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.UiModeManager
 import android.content.Context
@@ -10,15 +9,14 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.VisibleForTesting
 import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 import android.content.Context.UI_MODE_SERVICE
+import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
 
 class AudioWrapper {
 
@@ -43,10 +41,10 @@ class AudioWrapper {
                 if (channel != null) {
                     tone = channel.sound
                 } else {
-                    tone = NotificationService.getRingtone(context, conversation!!.ringtoneUri)
+                    tone = NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
                 }
             } else {
-                tone = NotificationService.getRingtone(context, conversation!!.ringtoneUri)
+                tone = NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
             }
 
             if (tone != null) {

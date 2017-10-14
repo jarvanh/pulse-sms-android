@@ -8,7 +8,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
@@ -21,7 +22,7 @@ class RepeatNotificationJob : BackgroundJob() {
         if (!AndroidVersionUtil.isAndroidO) {
             startService(intent)
         } else {
-            intent.putExtra(NotificationService.EXTRA_FOREGROUND, true)
+            intent.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
             startForegroundService(intent)
         }
     }

@@ -20,8 +20,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.annotation.VisibleForTesting
 
 import xyz.klinker.messenger.api.implementation.Account
@@ -30,7 +28,8 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MediaParserService
-import xyz.klinker.messenger.shared.service.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
+import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.BlacklistUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
@@ -66,7 +65,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
                 } catch (e: Exception) {
                     if (AndroidVersionUtil.isAndroidO) {
                         val foregroundNotificationService = Intent(context, NotificationService::class.java)
-                        foregroundNotificationService.putExtra(NotificationService.EXTRA_FOREGROUND, true)
+                        foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
                         context.startForegroundService(foregroundNotificationService)
                     }
                 }
