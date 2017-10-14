@@ -80,7 +80,7 @@ public class MessengerApplication extends FirebaseApplication {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
+        if (CreateNotificationChannelService.Companion.shouldRun(this)) {
             startForegroundService(new Intent(this, CreateNotificationChannelService.class));
         }
     }

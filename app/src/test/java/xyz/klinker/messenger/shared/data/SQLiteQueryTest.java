@@ -610,7 +610,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("2222222, 1111111", conversation.getPhoneNumbers());
+        assertEquals("1111111, 2222222", conversation.getPhoneNumbers());
     }
 
     @Test
@@ -618,7 +618,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         long conversationId = source.insertMessage(getFakeMessage(), "1111111, 1111111, 2222222,", context, false);
         Conversation conversation = source.getConversation(context, conversationId);
 
-        assertEquals("2222222, 1111111", conversation.getPhoneNumbers());
+        assertEquals("1111111, 2222222", conversation.getPhoneNumbers());
     }
 
     @Test

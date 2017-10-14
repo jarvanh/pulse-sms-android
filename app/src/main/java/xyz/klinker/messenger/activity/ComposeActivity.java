@@ -434,7 +434,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             setupSend(data, mimeType, isVcard);
 
             if (getIntent().getExtras() != null && getIntent().getExtras()
-                    .containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+                    .containsKey(MessengerChooserTargetService.Companion.getEXTRA_CONVO_ID())) {
                 shareWithDirectShare(data, mimeType, isVcard);
             }
         } else if (getIntent().getAction().equals(Intent.ACTION_VIEW)) {
@@ -551,7 +551,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
     }
 
     private void shareWithDirectShare(String data, String mimeType, boolean isVcard) {
-        Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.EXTRA_CONVO_ID);
+        Long conversationId = getIntent().getExtras().getLong(MessengerChooserTargetService.Companion.getEXTRA_CONVO_ID());
 
         if (isVcard) {
             sendvCard(mimeType, data, conversationId);

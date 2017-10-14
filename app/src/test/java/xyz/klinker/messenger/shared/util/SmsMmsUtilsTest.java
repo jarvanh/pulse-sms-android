@@ -65,12 +65,12 @@ public class SmsMmsUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesMultiple() {
-        assertEquals("661223, 5159911493", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223"));
+        assertEquals("5159911493, 661223", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223"));
     }
 
     @Test
     public void stripDuplicatePhoneNumbers_handlesDuplicates() {
-        assertEquals("661223, 5159911493", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223, 661223"));
+        assertEquals("5159911493, 661223", SmsMmsUtils.INSTANCE.stripDuplicatePhoneNumbers("5159911493, 661223, 661223"));
     }
 
 }

@@ -120,7 +120,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 startDatabaseSync();
                 startUploadAfterSync = true;
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                ApiDownloadService.start(this);
+                ApiDownloadService.Companion.start(this);
                 downloadReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -129,7 +129,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
                 };
 
                 registerReceiver(downloadReceiver,
-                        new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+                        new IntentFilter(ApiDownloadService.Companion.getACTION_DOWNLOAD_FINISHED()));
             } else if (responseCode == ActivateActivity.RESULT_FAILED) {
                 finish();
             }
@@ -200,7 +200,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
         }
 
         if (startUploadAfterSync) {
-            ApiUploadService.start(this);
+            ApiUploadService.Companion.start(this);
         }
 
         finish();

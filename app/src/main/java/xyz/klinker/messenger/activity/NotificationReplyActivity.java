@@ -103,7 +103,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        getIntent().putExtra(ReplyService.EXTRA_CONVERSATION_ID, intent.getLongExtra(ReplyService.EXTRA_CONVERSATION_ID, -1));
+        getIntent().putExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), intent.getLongExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), -1));
         recreate();
     }
 
@@ -118,7 +118,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
             return;
         }
 
-        conversationId = getIntent().getLongExtra(ReplyService.EXTRA_CONVERSATION_ID, -1);
+        conversationId = getIntent().getLongExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), -1);
         if (conversationId == -1) {
             finish();
             return;

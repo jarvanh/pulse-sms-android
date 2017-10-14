@@ -149,7 +149,7 @@ public class NotificationService extends IntentService {
                 }
 
                 if (Settings.INSTANCE.getRepeatNotifications() != -1) {
-                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + Settings.INSTANCE.getRepeatNotifications());
+                    RepeatNotificationJob.Companion.scheduleNextRun(this, System.currentTimeMillis() + Settings.INSTANCE.getRepeatNotifications());
                 }
 
                 if (Settings.INSTANCE.getWakeScreen()) {
@@ -490,7 +490,7 @@ public class NotificationService extends IntentService {
         // one thing to keep in mind here... my adding only a wearable extender to the notification,
         // will the action be shown on phones or only on wear devices? If it is shown on phones, is
         // it only shown on Nougat+ where these actions can be accepted?
-        RemoteInput remoteInput = new RemoteInput.Builder(ReplyService.EXTRA_REPLY)
+        RemoteInput remoteInput = new RemoteInput.Builder(ReplyService.Companion.getEXTRA_REPLY())
                 .setLabel(getString(R.string.reply_to, conversation.getTitle()))
                 .setChoices(getResources().getStringArray(R.array.reply_choices))
                 .setAllowFreeFormInput(true)
@@ -517,7 +517,7 @@ public class NotificationService extends IntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !DEBUG_QUICK_REPLY) {
             // with Android N, we only need to show the the reply service intent through the wearable extender
             Intent reply = new Intent(this, ReplyService.class);
-            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
+            reply.putExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
             pendingReply = PendingIntent.getService(this,
                     (int) conversation.getId(), reply, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -538,7 +538,7 @@ public class NotificationService extends IntentService {
             // this will allow it to be used on android wear (we will have to handle this from the activity)
             // as well as have a reply quick action button.
             Intent reply = ActivityUtils.INSTANCE.buildForComponent(ActivityUtils.INSTANCE.getNOTIFICATION_REPLY());
-            reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
+            reply.putExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
             reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pendingReply = PendingIntent.getActivity(this,
                     (int) conversation.getId(), reply, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -569,7 +569,7 @@ public class NotificationService extends IntentService {
 
                 Intent wearReply = new Intent(this, ReplyService.class);
                 Bundle extras = new Bundle();
-                extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId());
+                extras.putLong(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
                 wearReply.putExtras(extras);
                 PendingIntent wearPendingReply = PendingIntent.getService(this,
                         (int) conversation.getId() + 1, wearReply, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -587,8 +587,8 @@ public class NotificationService extends IntentService {
         if (!conversation.getGroupConversation() && settings.getNotificationActions().contains(NotificationAction.CALL)
                 && (!Account.INSTANCE.exists() || Account.INSTANCE.getPrimary())) {
             Intent call = new Intent(this, NotificationCallService.class);
-            call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId());
-            call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.getPhoneNumbers());
+            call.putExtra(NotificationMarkReadService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
+            call.putExtra(NotificationCallService.Companion.getEXTRA_PHONE_NUMBER(), conversation.getPhoneNumbers());
             PendingIntent callPending = PendingIntent.getService(this, (int) conversation.getId(),
                     call, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -596,8 +596,8 @@ public class NotificationService extends IntentService {
         }
 
         Intent deleteMessage = new Intent(this, NotificationDeleteService.class);
-        deleteMessage.putExtra(NotificationDeleteService.EXTRA_CONVERSATION_ID, conversation.getId());
-        deleteMessage.putExtra(NotificationDeleteService.EXTRA_MESSAGE_ID, conversation.getUnseenMessageId());
+        deleteMessage.putExtra(NotificationDeleteService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
+        deleteMessage.putExtra(NotificationDeleteService.Companion.getEXTRA_MESSAGE_ID(), conversation.getUnseenMessageId());
         PendingIntent pendingDeleteMessage = PendingIntent.getService(this, (int) conversation.getId(),
                 deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -606,7 +606,7 @@ public class NotificationService extends IntentService {
         }
 
         Intent read = new Intent(this, NotificationMarkReadService.class);
-        read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId());
+        read.putExtra(NotificationMarkReadService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
         PendingIntent pendingRead = PendingIntent.getService(this, (int) conversation.getId(),
                 read, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -618,7 +618,7 @@ public class NotificationService extends IntentService {
         wearableExtender.addAction(new NotificationCompat.Action(R.drawable.ic_delete_white, getString(R.string.delete), pendingDeleteMessage));
 
         Intent delete = new Intent(this, NotificationDismissedReceiver.class);
-        delete.putExtra(NotificationDismissedService.EXTRA_CONVERSATION_ID, conversation.getId());
+        delete.putExtra(NotificationDismissedService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId());
         PendingIntent pendingDelete = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 delete, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -634,14 +634,14 @@ public class NotificationService extends IntentService {
 
         Intent carReply = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_REPLY")
-                .putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.getId())
+                .putExtra(ReplyService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId())
                 .setPackage("xyz.klinker.messenger");
         PendingIntent pendingCarReply = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 carReply, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent carRead = new Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_READ")
-                .putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.getId())
+                .putExtra(NotificationMarkReadService.Companion.getEXTRA_CONVERSATION_ID(), conversation.getId())
                 .setPackage("xyz.klinker.messenger");
         PendingIntent pendingCarRead = PendingIntent.getBroadcast(this, (int) conversation.getId(),
                 carRead, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -893,7 +893,7 @@ public class NotificationService extends IntentService {
     }
 
     public static void cancelRepeats(Context context) {
-        RepeatNotificationJob.scheduleNextRun(context, 0);
+        RepeatNotificationJob.Companion.scheduleNextRun(context, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.O)

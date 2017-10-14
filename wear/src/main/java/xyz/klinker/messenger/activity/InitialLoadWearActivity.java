@@ -88,7 +88,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
                 startDatabaseSync();
                 startUploadAfterSync = true;
             } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                ApiDownloadService.start(this);
+                ApiDownloadService.Companion.start(this);
                 downloadReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -97,7 +97,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
                 };
 
                 registerReceiver(downloadReceiver,
-                        new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+                        new IntentFilter(ApiDownloadService.Companion.getACTION_DOWNLOAD_FINISHED()));
             } else if (responseCode == xyz.klinker.messenger.api.implementation.ActivateActivity.RESULT_FAILED) {
                 finish();
             }
@@ -157,7 +157,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
         startActivity(new Intent(this, MessengerActivity.class));
 
         if (startUploadAfterSync) {
-            ApiUploadService.start(this);
+            ApiUploadService.Companion.start(this);
         }
 
         finish();

@@ -266,7 +266,7 @@ public class  MessengerActivity extends AppCompatActivity
         }, 1000);
 
         if (getIntent().getBooleanExtra(INSTANCE.getEXTRA_START_MY_ACCOUNT(), false)) {
-            NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckJob.NOTIFICATION_ID);
+            NotificationManagerCompat.from(this).cancel(SubscriptionExpirationCheckJob.Companion.getNOTIFICATION_ID());
             menuItemClicked(R.id.drawer_account);
         }
 
@@ -568,7 +568,7 @@ public class  MessengerActivity extends AppCompatActivity
             return true;
         }
         
-        if (item.isChecked() || ApiDownloadService.IS_RUNNING) {
+        if (item.isChecked() || ApiDownloadService.Companion.getIS_RUNNING()) {
             return true;
         }
 
@@ -1293,9 +1293,9 @@ public class  MessengerActivity extends AppCompatActivity
             };
 
             registerReceiver(downloadReceiver,
-                    new IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED));
+                    new IntentFilter(ApiDownloadService.Companion.getACTION_DOWNLOAD_FINISHED()));
 
-            ApiDownloadService.start(this);
+            ApiDownloadService.Companion.start(this);
 
             showSnackbar(getString(R.string.downloading_and_decrypting), Snackbar.LENGTH_LONG, null, null);
         }, 1000);

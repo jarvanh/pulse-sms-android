@@ -15,10 +15,9 @@ class ContactResyncService : IntentService("ContactResyncService") {
 
     override fun onHandleIntent(intent: Intent?) {
         val encryptionUtils = Account.encryptor
-
         val startTime = System.currentTimeMillis()
-
         val removed = DataSource.deleteAllContacts(this)
+
         Log.v(TAG, "deleted all contacts: ${System.currentTimeMillis() - startTime} ms")
 
         if (removed > 0 && Account.exists() && Account.primary) {
@@ -31,7 +30,7 @@ class ContactResyncService : IntentService("ContactResyncService") {
         Log.v(TAG, "queried and inserted new contacts: ${System.currentTimeMillis() - startTime} ms")
 
         if (Account.exists() && Account.primary) {
-            ApiUploadService.uploadContacts(this, DataSource, encryptionUtils, Account, ApiUtils)
+            ApiUploadService.uploadContacts(this, encryptionUtils!!)
             Log.v(TAG, "uploaded contact changes: ${System.currentTimeMillis() - startTime} ms")
         }
     }

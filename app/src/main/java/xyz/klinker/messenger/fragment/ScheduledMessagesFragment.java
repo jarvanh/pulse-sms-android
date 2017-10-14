@@ -144,7 +144,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
     public void onStart() {
         super.onStart();
         activity.registerReceiver(scheduledMessageSent,
-                new IntentFilter(ScheduledMessageJob.BROADCAST_SCHEDULED_SENT));
+                new IntentFilter(ScheduledMessageJob.Companion.getBROADCAST_SCHEDULED_SENT()));
     }
 
     @Override
@@ -157,7 +157,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
 
         }
 
-        ScheduledMessageJob.scheduleNextRun(activity);
+        ScheduledMessageJob.Companion.scheduleNextRun(activity);
     }
 
     @Override

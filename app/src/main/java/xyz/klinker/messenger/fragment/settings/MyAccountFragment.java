@@ -188,7 +188,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         if (Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.SUBSCRIBER ||
                 Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.TRIAL) {
 
-            long signoutTime = SignoutJob.isScheduled(getActivity());
+            long signoutTime = SignoutJob.Companion.isScheduled(getActivity());
             if (signoutTime != 0L) {
                 preference.setTitle(getString(R.string.account_expiring));
                 preference.setSummary(getString(R.string.signout_time, new Date(signoutTime).toString()));
@@ -332,7 +332,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         } else if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
                 if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                    ApiUploadService.start(getActivity());
+                    ApiUploadService.Companion.start(getActivity());
                     returnToConversationsAfterLogin();
 
                     NavigationView nav = (NavigationView) getActivity().findViewById(R.id.navigation_view);
@@ -426,7 +426,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     account.getSubscriptionType().getTypeCode(), account.getSubscriptionExpiration());
         }
 
-        SubscriptionExpirationCheckJob.scheduleNextRun(getActivity());
+        SubscriptionExpirationCheckJob.Companion.scheduleNextRun(getActivity());
 
         if (getActivity() instanceof MessengerActivity) {
             ((MessengerActivity) getActivity()).displayConversations();

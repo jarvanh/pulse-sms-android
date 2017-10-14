@@ -720,7 +720,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.setTitle(encryptionUtils.decrypt(json.getString("title")));
 
         source.insertScheduledMessage(context, message, false);
-        ScheduledMessageJob.scheduleNextRun(context, source);
+        ScheduledMessageJob.Companion.scheduleNextRun(context, source);
         Log.v(TAG, "added scheduled message");
     }
 
@@ -735,14 +735,14 @@ public class FirebaseHandlerService extends WakefulIntentService {
         message.setTitle(encryptionUtils.decrypt(json.getString("title")));
 
         source.updateScheduledMessage(context, message, false);
-        ScheduledMessageJob.scheduleNextRun(context, source);
+        ScheduledMessageJob.Companion.scheduleNextRun(context, source);
         Log.v(TAG, "updated scheduled message");
     }
 
     private static void removeScheduledMessage(JSONObject json, DataSource source, Context context) throws JSONException {
         long id = getLong(json, "id");
         source.deleteScheduledMessage(context, id, false);
-        ScheduledMessageJob.scheduleNextRun(context, source);
+        ScheduledMessageJob.Companion.scheduleNextRun(context, source);
         Log.v(TAG, "removed scheduled message");
     }
 
@@ -805,8 +805,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     Account.SubscriptionType.Companion.findByTypeCode(type), expiration, false
             );
 
-            SubscriptionExpirationCheckJob.scheduleNextRun(context);
-            SignoutJob.writeSignoutTime(context, 0);
+            SubscriptionExpirationCheckJob.Companion.scheduleNextRun(context);
+            SignoutJob.Companion.writeSignoutTime(context, 0);
 
             if (fromAdmin) {
                 String content = "Enjoy the app!";
