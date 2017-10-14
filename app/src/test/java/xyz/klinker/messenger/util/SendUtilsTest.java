@@ -7,22 +7,24 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.robolectric.RuntimeEnvironment;
 
+import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.shared.util.SendUtils;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-public class SendUtilsTest extends MessengerSuite {
+public class SendUtilsTest extends MessengerRobolectricSuite {
 
     private SendUtils utils;
+    private Context context = spy(RuntimeEnvironment.application);
 
     @Mock
     private TelephonyManager telephonyManager;
-    @Mock
-    private Context context;
 
     @Before
     public void setUp() {
