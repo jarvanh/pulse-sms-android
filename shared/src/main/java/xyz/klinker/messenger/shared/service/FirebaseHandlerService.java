@@ -871,7 +871,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 to += ", ";
             }
             
-            to += PhoneNumberUtils.clearFormatting(split[i]);
+            to += PhoneNumberUtils.INSTANCE.clearFormatting(split[i]);
         }
 
         Message message = new Message();

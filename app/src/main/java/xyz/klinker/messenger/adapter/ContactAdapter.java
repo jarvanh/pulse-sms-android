@@ -142,7 +142,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
         }
 
         holder.name.setText(conversation.getTitle());
-        holder.summary.setText(PhoneNumberUtils.format(conversation.getPhoneNumbers()));
+        holder.summary.setText(PhoneNumberUtils.INSTANCE.format(conversation.getPhoneNumbers()));
     }
 
     @Override

@@ -28,80 +28,80 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void clearFormattingNone() {
-        assertEquals("5154224558", PhoneNumberUtils.clearFormatting("5154224558"));
+        assertEquals("5154224558", PhoneNumberUtils.INSTANCE.clearFormatting("5154224558"));
     }
 
     @Test
     public void clearFormattingLeavePlus() {
-        assertEquals("+15154224558", PhoneNumberUtils.clearFormatting("+15154224558"));
+        assertEquals("+15154224558", PhoneNumberUtils.INSTANCE.clearFormatting("+15154224558"));
     }
 
     @Test
     public void clearFormattingLeavePlusAndRemovesSpaces() {
-        assertEquals("+33619943924", PhoneNumberUtils.clearFormatting("+33 6 19 94 39 24"));
+        assertEquals("+33619943924", PhoneNumberUtils.INSTANCE.clearFormatting("+33 6 19 94 39 24"));
     }
 
     @Test
     public void clearFormatting() {
-        assertEquals("5154224558", PhoneNumberUtils.clearFormatting("(515) 422-4558"));
+        assertEquals("5154224558", PhoneNumberUtils.INSTANCE.clearFormatting("(515) 422-4558"));
     }
 
     @Test
     public void clearFormattingSpaces() {
-        assertEquals("15556667777", PhoneNumberUtils.clearFormatting("1 555 666 7777"));
+        assertEquals("15556667777", PhoneNumberUtils.INSTANCE.clearFormatting("1 555 666 7777"));
     }
 
     @Test
     public void clearFormattingMultipleNumbers() {
         assertEquals("5154224558,5159911493",
-                PhoneNumberUtils.clearFormatting("(515) 422-4558, (515) 991-1493"));
+                PhoneNumberUtils.INSTANCE.clearFormatting("(515) 422-4558, (515) 991-1493"));
     }
 
     @Test
     public void clearFormattingEmail() {
-        assertEquals("jklinker1@gmail.com", PhoneNumberUtils.clearFormatting("jklinker1@gmail.com"));
+        assertEquals("jklinker1@gmail.com", PhoneNumberUtils.INSTANCE.clearFormatting("jklinker1@gmail.com"));
     }
 
     @Test
     public void clearFormattingHiddenNumber() {
-        assertEquals("Yahoo", PhoneNumberUtils.clearFormatting("Yahoo"));
+        assertEquals("Yahoo", PhoneNumberUtils.INSTANCE.clearFormatting("Yahoo"));
     }
 
     @Test
     public void format() {
-        assertEquals("+1 515-422-4558", PhoneNumberUtils.format("+15154224558"));
+        assertEquals("+1 515-422-4558", PhoneNumberUtils.INSTANCE.format("+15154224558"));
     }
 
     @Test
     public void formatShorter() {
-        assertEquals("(515) 422-4558", PhoneNumberUtils.format("5154224558"));
+        assertEquals("(515) 422-4558", PhoneNumberUtils.INSTANCE.format("5154224558"));
     }
 
     @Test
     public void formatShort() {
-        assertEquals("22000", PhoneNumberUtils.format("22000"));
+        assertEquals("22000", PhoneNumberUtils.INSTANCE.format("22000"));
     }
 
     @Test
     public void equals() {
-        assertTrue(PhoneNumberUtils.checkEquality("5154224558", "5154224558"));
-        assertTrue(PhoneNumberUtils.checkEquality("5154224558", "+15154224558"));
-        assertTrue(PhoneNumberUtils.checkEquality("+1 (515) 422-4558", "5154224558"));
-        assertTrue(PhoneNumberUtils.checkEquality("Yahoo", "Yahoo"));
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("5154224558", "5154224558"));
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("5154224558", "+15154224558"));
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("+1 (515) 422-4558", "5154224558"));
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("Yahoo", "Yahoo"));
     }
 
     @Test
     public void notEquals() {
-        assertFalse(PhoneNumberUtils.checkEquality("5154224558", "5159911493"));
-        assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15159911493"));
-        assertFalse(PhoneNumberUtils.checkEquality("+15154224558", "+15254224558"));
-        assertFalse(PhoneNumberUtils.checkEquality("Jacob Klinker", "+15154224558"));
-        assertFalse(PhoneNumberUtils.checkEquality("", "GLOBE"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("5154224558", "5159911493"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("+15154224558", "+15159911493"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("+15154224558", "+15254224558"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("Jacob Klinker", "+15154224558"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("", "GLOBE"));
     }
 
     @Test
     public void notEqualsEmailAddress() {
-        assertFalse(PhoneNumberUtils.checkEquality("jklinker1@gmail.com", "+15673935130"));
+        assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("jklinker1@gmail.com", "+15673935130"));
     }
 
 }

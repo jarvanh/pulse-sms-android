@@ -122,7 +122,7 @@ public class NewMessagesCheckService extends IntentService {
                         }
 
                         messagesToInsert.add(message);
-                        addressesForMessages.add(PhoneNumberUtils.clearFormatting(
+                        addressesForMessages.add(PhoneNumberUtils.INSTANCE.clearFormatting(
                                 internalMessages.getString(internalMessages.getColumnIndex(Telephony.Sms.ADDRESS))));
                     } else {
                         Message message = messageStatusNeedsUpdatedToSent(pulseMessages, messageBody, messageType);
@@ -142,7 +142,7 @@ public class NewMessagesCheckService extends IntentService {
         for (int i = 0; i < messagesToInsert.size(); i++) {
             Message message = messagesToInsert.get(i);
             long conversationId = source.insertMessage(message,
-                    PhoneNumberUtils.clearFormatting(addressesForMessages.get(i)), this);
+                    PhoneNumberUtils.INSTANCE.clearFormatting(addressesForMessages.get(i)), this);
 
             if (!conversationsToRefresh.contains(conversationId)) {
                 conversationsToRefresh.add(conversationId);

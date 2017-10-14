@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,9 +35,7 @@ import static org.junit.Assert.assertEquals;
 public class MmsReceivedReceiverTest extends MessengerRobolectricSuite {
 
     private MmsReceivedReceiver receiver;
-    
-    @Mock
-    private Context context;
+    private Context context = Mockito.spy(RuntimeEnvironment.application);
 
     @Before
     public void setUp() {

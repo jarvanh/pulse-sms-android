@@ -167,7 +167,7 @@ public class SmsMmsUtils {
         }
 
         for (String n : numbers) {
-            n = PhoneNumberUtils.clearFormatting(n);
+            n = PhoneNumberUtils.INSTANCE.clearFormatting(n);
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
                 sevenMatchersNoFormatting.add(n);
@@ -190,7 +190,7 @@ public class SmsMmsUtils {
         }
 
         for (String n : numbers) {
-            n = PhoneNumberUtils.clearFormatting(n);
+            n = PhoneNumberUtils.INSTANCE.clearFormatting(n);
             n = n.replaceAll("-","").replaceAll(" ", "").replaceAll("/+", "");
             if (n.contains("@")) {
                 eightMatchersNoFormatting.add(n);

@@ -72,7 +72,7 @@ public class ContactUtils {
 
                         if (number != null && number.moveToFirst()) {
                             String address = number.getString(number.getColumnIndex("address"));
-                            String n = PhoneNumberUtils.clearFormatting(address);
+                            String n = PhoneNumberUtils.INSTANCE.clearFormatting(address);
                             if (n != null && n.length() > 0) {
                                 numbers.add(n);
                             } else {
@@ -216,14 +216,14 @@ public class ContactUtils {
                         names += ", " + phonesCursor.getString(0).replaceAll(",", "");
                     } else {
                         try {
-                            names += ", " + PhoneNumberUtils.format(number[i]);
+                            names += ", " + PhoneNumberUtils.INSTANCE.format(number[i]);
                         } catch (Exception e) {
                             names += ", " + number;
                         }
                     }
                 } else {
                     try {
-                        names += ", " + PhoneNumberUtils.format(number[i]);
+                        names += ", " + PhoneNumberUtils.INSTANCE.format(number[i]);
                     } catch (Exception e) {
                         names += ", " + number;
                     }
@@ -444,7 +444,7 @@ public class ContactUtils {
                     Contact contact = new Contact();
 
                     contact.setName(cursor.getString(0));
-                    contact.setPhoneNumber(PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1))));
+                    contact.setPhoneNumber(PhoneNumberUtils.INSTANCE.clearFormatting(PhoneNumberUtils.INSTANCE.format(cursor.getString(1))));
 
                     ColorSet colorSet = getColorsFromConversation(conversations, contact.getName());
                     if (colorSet != null) {
@@ -549,7 +549,7 @@ public class ContactUtils {
 
     private static Contact getContactFromList(List<Contact> list, String number) {
         for (Contact contact : list) {
-            if (PhoneNumberUtils.checkEquality(contact.getPhoneNumber(), number)) {
+            if (PhoneNumberUtils.INSTANCE.checkEquality(contact.getPhoneNumber(), number)) {
                 return contact;
             }
         }

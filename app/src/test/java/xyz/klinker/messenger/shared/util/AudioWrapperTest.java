@@ -7,20 +7,21 @@ import android.content.res.Configuration;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.robolectric.RuntimeEnvironment;
 
+import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.MessengerSuite;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 
-public class AudioWrapperTest extends MessengerSuite {
+public class AudioWrapperTest extends MessengerRobolectricSuite {
+
+    private Context context = spy(RuntimeEnvironment.application);
 
     @Mock
     private UiModeManager manager;
-
-    @Mock
-    private Context context;
 
     @Before
     public void setUp() {

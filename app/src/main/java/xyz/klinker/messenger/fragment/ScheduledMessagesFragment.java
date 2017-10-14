@@ -221,7 +221,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                         StringBuilder title = new StringBuilder();
 
                         for (DrawableRecipientChip chip : editText.getRecipients()) {
-                            to.append(PhoneNumberUtils.clearFormatting(chip.getEntry().getDestination()));
+                            to.append(PhoneNumberUtils.INSTANCE.clearFormatting(chip.getEntry().getDestination()));
                             title.append(chip.getEntry().getDisplayName());
                             to.append(", ");
                             title.append(", ");
@@ -233,7 +233,7 @@ public class ScheduledMessagesFragment extends Fragment implements ScheduledMess
                         message.setTo(message.getTo().substring(0, message.getTo().length() - 2));
                         message.setTitle(message.getTitle().substring(0, message.getTitle().length() - 2));
                     } else if (editText.getText().length() > 0) {
-                        message.setTo(PhoneNumberUtils.clearFormatting(editText
+                        message.setTo(PhoneNumberUtils.INSTANCE.clearFormatting(editText
                                 .getText().toString()));
                         message.setTitle(message.getTo());
                     } else {

@@ -103,7 +103,7 @@ public class InviteFriendsFragment extends Fragment implements ContactClickedLis
                     try {
                         Conversation conversation = new Conversation();
                         conversation.setTitle(cursor.getString(1));
-                        conversation.setPhoneNumbers(PhoneNumberUtils
+                        conversation.setPhoneNumbers(PhoneNumberUtils.INSTANCE
                                 .clearFormatting(cursor.getString(2)));
                         conversation.setImageUri(ContactUtils
                                 .findImageUri(conversation.getPhoneNumbers(), activity));

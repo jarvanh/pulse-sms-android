@@ -47,7 +47,7 @@ public class HeadlessSmsSendService extends Service {
                 return START_NOT_STICKY;
             }
 
-            String[] addresses = PhoneNumberUtils.parseAddress(Uri.decode(intent.getDataString()));
+            String[] addresses = PhoneNumberUtils.INSTANCE.parseAddress(Uri.decode(intent.getDataString()));
             String text = getText(intent);
 
             StringBuilder phoneNumbers = new StringBuilder();

@@ -275,7 +275,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             phoneNumbers.setHighlightAlpha(.4f);
             phoneNumbers.setOnClickListener(clickedText -> {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText)));
+                intent.setData(Uri.parse("tel:" + PhoneNumberUtils.INSTANCE.clearFormatting(clickedText)));
                 holder.message.getContext().startActivity(intent);
             });
 

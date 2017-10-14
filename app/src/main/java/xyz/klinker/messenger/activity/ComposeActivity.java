@@ -244,7 +244,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
 
         if (chips.length > 0) {
             for (int i = 0; i < chips.length; i++) {
-                phoneNumbers.append(PhoneNumberUtils
+                phoneNumbers.append(PhoneNumberUtils.INSTANCE
                         .clearFormatting(chips[i].getEntry().getDestination()));
                 if (i != chips.length - 1) {
                     phoneNumbers.append(", ");
@@ -355,7 +355,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             String title = intent.getStringExtra(EXTRA_EDIT_RECIPIENTS_TITLE);
             contactEntry.post(() -> onClicked(title, phoneNumbers, null));
         } else if (intent.getAction().equals(Intent.ACTION_SENDTO)) {
-            String[] phoneNumbers = PhoneNumberUtils
+            String[] phoneNumbers = PhoneNumberUtils.INSTANCE
                     .parseAddress(Uri.decode(getIntent().getDataString()));
 
             StringBuilder builder = new StringBuilder();

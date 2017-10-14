@@ -141,8 +141,8 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     }
 
     private void addBlacklist(String phoneNumber) {
-        final String cleared = PhoneNumberUtils.clearFormatting(phoneNumber);
-        String formatted = PhoneNumberUtils.format(cleared);
+        final String cleared = PhoneNumberUtils.INSTANCE.clearFormatting(phoneNumber);
+        String formatted = PhoneNumberUtils.INSTANCE.format(cleared);
 
         if (cleared.length() == 0) {
             new AlertDialog.Builder(activity)
@@ -170,7 +170,7 @@ public class BlacklistFragment extends Fragment implements BlacklistClickedListe
     }
 
     private void removeBlacklist(final long id, String number) {
-        String message = getString(R.string.remove_blacklist, PhoneNumberUtils.format(number));
+        String message = getString(R.string.remove_blacklist, PhoneNumberUtils.INSTANCE.format(number));
 
         new AlertDialog.Builder(activity)
                 .setMessage(message)

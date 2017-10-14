@@ -615,7 +615,7 @@ public class MessageListFragment extends Fragment implements
 
     private void setNameAndDrawerColor(Activity activity) {
         String name = getArguments().getString(ARG_TITLE);
-        String phoneNumber = PhoneNumberUtils.format(getArguments().getString(ARG_PHONE_NUMBERS));
+        String phoneNumber = PhoneNumberUtils.INSTANCE.format(getArguments().getString(ARG_PHONE_NUMBERS));
         int colorDarker = getArguments().getInt(ARG_COLOR_DARKER);
         boolean isGroup = getArguments().getBoolean(ARG_IS_GROUP);
         String imageUri = getArguments().getString(ARG_IMAGE_URI);
@@ -1043,7 +1043,7 @@ public class MessageListFragment extends Fragment implements
                     }
 
                     if (!name.equals(getArguments().getString(ARG_TITLE)) &&
-                            !PhoneNumberUtils.checkEquality(name, number)) {
+                            !PhoneNumberUtils.INSTANCE.checkEquality(name, number)) {
                         Log.v(TAG, "contact name and conversation name do not match, updating");
                         source.updateConversationTitle(activity,
                                 getArguments().getLong(ARG_CONVERSATION_ID), name);

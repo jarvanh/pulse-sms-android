@@ -85,8 +85,6 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
                 return
             }
 
-            Log.v("ConversationListUpdated", "position: " + position)
-
             if (position <= pinnedCount) {
                 // if it is already pinned or the top item that isn't pinned, just mark the read
                 // and snippet changes

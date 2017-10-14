@@ -129,7 +129,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
             long startTime = System.currentTimeMillis();
 
             String myName = getName();
-            String myPhoneNumber = PhoneNumberUtils.format(getPhoneNumber());
+            String myPhoneNumber = PhoneNumberUtils.INSTANCE.format(getPhoneNumber());
 
             final Account account = Account.INSTANCE;
             account.setName(InitialLoadWearActivity.this, myName);
@@ -187,7 +187,7 @@ public class InitialLoadWearActivity extends Activity implements ProgressUpdateL
 
     private String getPhoneNumber() {
         try {
-            return PhoneNumberUtils.clearFormatting(Utils.getMyPhoneNumber(this));
+            return PhoneNumberUtils.INSTANCE.clearFormatting(Utils.getMyPhoneNumber(this));
         } catch (Exception e) {
             return "";
         }
