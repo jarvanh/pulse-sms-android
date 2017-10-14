@@ -60,7 +60,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
         updatedReceiver = MessageListUpdatedReceiver(this)
         registerReceiver(updatedReceiver,
-                MessageListUpdatedReceiver.getIntentFilter())
+                MessageListUpdatedReceiver.intentFilter)
 
         actionDrawer.setBackgroundColor(conversation.colors.color)
         actionDrawer.setOnMenuItemClickListener { menuItem ->

@@ -117,8 +117,8 @@ public class ReplyService extends IntentService {
 
         CursorUtil.closeSilent(unseenMessages);
 
-        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
-        MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
+        ConversationListUpdatedReceiver.Companion.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
+        MessageListUpdatedReceiver.Companion.sendBroadcast(this, conversationId);
         MessengerAppWidgetProvider.Companion.refreshWidget(this);
     }
 

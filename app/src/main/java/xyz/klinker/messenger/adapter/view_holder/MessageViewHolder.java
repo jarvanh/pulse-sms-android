@@ -330,7 +330,7 @@ public class MessageViewHolder extends SwappingHolder {
                     if (m != null) {
                         long conversationId = m.getConversationId();
                         source.deleteMessage(itemView.getContext(), messageId);
-                        MessageListUpdatedReceiver.sendBroadcast(itemView.getContext(), conversationId);
+                        MessageListUpdatedReceiver.Companion.sendBroadcast(itemView.getContext(), conversationId);
                     }
 
                     if (messageDeletedListener != null && m != null) {

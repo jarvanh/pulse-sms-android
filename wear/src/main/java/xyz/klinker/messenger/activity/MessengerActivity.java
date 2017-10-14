@@ -57,7 +57,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
 
         updatedReceiver = new ConversationListUpdatedReceiver(this);
         registerReceiver(updatedReceiver,
-                ConversationListUpdatedReceiver.getIntentFilter());
+                ConversationListUpdatedReceiver.Companion.getIntentFilter());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
         long convoId = getIntent().getLongExtra(MessengerActivityExtras.INSTANCE.getEXTRA_CONVERSATION_ID(), -1L);
 
         if (convoId != -1L) {
-            ConversationListUpdatedReceiver.sendBroadcast(this, convoId, null, true);
+            ConversationListUpdatedReceiver.Companion.sendBroadcast(this, convoId, null, true);
             MessageListActivity.Companion.startActivity(this, convoId);
         }
     }

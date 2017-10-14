@@ -50,7 +50,7 @@ public class NotificationMarkReadService extends IntentService {
                 Account.INSTANCE.getDeviceId(),
                 conversationId);
 
-        ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation == null ? "" : conversation.getSnippet(), true);
+        ConversationListUpdatedReceiver.Companion.sendBroadcast(context, conversationId, conversation == null ? "" : conversation.getSnippet(), true);
 
         new UnreadBadger(context).writeCountFromDatabase();
         MessengerAppWidgetProvider.Companion.refreshWidget(context);

@@ -354,8 +354,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 Log.v(TAG, "sent message");
             }
 
-            MessageListUpdatedReceiver.sendBroadcast(context, message);
-            ConversationListUpdatedReceiver.sendBroadcast(context, message.getConversationId(),
+            MessageListUpdatedReceiver.Companion.sendBroadcast(context, message);
+            ConversationListUpdatedReceiver.Companion.sendBroadcast(context, message.getConversationId(),
                     message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) ? message.getData() : "",
                     message.getType() != Message.Companion.getTYPE_RECEIVED());
 
@@ -390,7 +390,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
         FirebaseDownloadCallback callback = () -> {
             message.setData(Uri.fromFile(file).toString());
             source.updateMessageData(context, message.getId(), message.getData());
-            MessageListUpdatedReceiver.sendBroadcast(context, message.getConversationId());
+            MessageListUpdatedReceiver.Companion.sendBroadcast(context, message.getConversationId());
 
             if (Account.INSTANCE.getPrimary() && isSending) {
                 Conversation conversation = source.getConversation(context, message.getConversationId());
@@ -415,8 +415,8 @@ public class FirebaseHandlerService extends WakefulIntentService {
                 source.updateMessageType(context, message.getId(), Message.Companion.getTYPE_SENT(), false);
             }
 
-            MessageListUpdatedReceiver.sendBroadcast(context, message);
-            ConversationListUpdatedReceiver.sendBroadcast(context, message.getConversationId(),
+            MessageListUpdatedReceiver.Companion.sendBroadcast(context, message);
+            ConversationListUpdatedReceiver.Companion.sendBroadcast(context, message.getConversationId(),
                     message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN()) ? message.getData() : "",
                     message.getType() != Message.Companion.getTYPE_RECEIVED());
 
@@ -440,7 +440,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         Message message = source.getMessage(context, id);
         if (message != null) {
-            MessageListUpdatedReceiver.sendBroadcast(context, message);
+            MessageListUpdatedReceiver.Companion.sendBroadcast(context, message);
         }
 
         Log.v(TAG, "updated message type");
@@ -454,7 +454,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
 
         Message message = source.getMessage(context, id);
         if (message != null) {
-            MessageListUpdatedReceiver.sendBroadcast(context, message);
+            MessageListUpdatedReceiver.Companion.sendBroadcast(context, message);
         }
 
         Log.v(TAG, "updated message type");
@@ -644,7 +644,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             source.readConversation(context, id, false);
 
             if (conversation != null && !conversation.getRead()) {
-                ConversationListUpdatedReceiver.sendBroadcast(context, id, conversation.getSnippet(), true);
+                ConversationListUpdatedReceiver.Companion.sendBroadcast(context, id, conversation.getSnippet(), true);
             }
 
             Log.v(TAG, "read conversation");
@@ -757,7 +757,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
             // don't want to mark as read if this device was the one that sent the dismissal fcm message
             source.readConversation(context, conversationId, false);
             if (conversation != null && !conversation.getRead()) {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.getSnippet(), true);
+                ConversationListUpdatedReceiver.Companion.sendBroadcast(context, conversationId, conversation.getSnippet(), true);
             }
 
             NotificationManagerCompat.from(context).cancel((int) conversationId);

@@ -404,8 +404,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
             MarkAsSentJob.Companion.scheduleNextRun(this, messageId);
         }).start();
 
-        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);
-        MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
+        ConversationListUpdatedReceiver.Companion.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);
+        MessageListUpdatedReceiver.Companion.sendBroadcast(this, conversationId);
         MessengerAppWidgetProvider.Companion.refreshWidget(this);
     }
 

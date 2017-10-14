@@ -377,7 +377,7 @@ public class MessageListFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         updatedReceiver = new MessageListUpdatedReceiver(this);
         activity.registerReceiver(updatedReceiver,
-                MessageListUpdatedReceiver.getIntentFilter());
+                MessageListUpdatedReceiver.Companion.getIntentFilter());
 
         if (extraMarginLeft != 0 || extraMarginTop != 0) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)

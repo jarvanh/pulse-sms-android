@@ -150,7 +150,7 @@ public class NewMessagesCheckService extends IntentService {
         }
 
         for (Long conversationId : conversationsToRefresh) {
-            MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
+            MessageListUpdatedReceiver.Companion.sendBroadcast(this, conversationId);
         }
 
         if (conversationsToRefresh.size() > 0) {

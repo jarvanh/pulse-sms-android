@@ -143,7 +143,7 @@ public class ConversationListFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         updatedReceiver = new ConversationListUpdatedReceiver(this);
         activity.registerReceiver(updatedReceiver,
-                ConversationListUpdatedReceiver.getIntentFilter());
+                ConversationListUpdatedReceiver.Companion.getIntentFilter());
     }
 
     @Override
@@ -594,12 +594,12 @@ public class ConversationListFragment extends Fragment
         ActivityUtils.INSTANCE.setTaskDescription(activity);
 
         if (updateInfo != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(activity, updateInfo);
+            ConversationListUpdatedReceiver.Companion.sendBroadcast(activity, updateInfo);
             updateInfo = null;
         }
 
         if (newConversationTitle != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(activity, contractedId, newConversationTitle);
+            ConversationListUpdatedReceiver.Companion.sendBroadcast(activity, contractedId, newConversationTitle);
             newConversationTitle = null;
         }
 

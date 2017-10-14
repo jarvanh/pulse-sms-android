@@ -106,7 +106,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_VERSION"
     compile "com.github.bumptech.glide:glide:$GLIDE_VERSION"
 
-    compile 'com.klinkerapps:android-smsmms:4.2.2'
+    compile 'com.klinkerapps:android-smsmms:4.2.3'
     compile 'com.klinkerapps:link_builder:1.5.2'
     compile 'com.klinkerapps:android-chips:1.2.0@aar'
     compile 'com.klinkerapps:android-transcoder:1.0.1'

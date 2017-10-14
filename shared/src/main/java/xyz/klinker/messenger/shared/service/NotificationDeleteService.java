@@ -62,7 +62,7 @@ public class NotificationDeleteService extends IntentService {
                 Account.INSTANCE.getDeviceId(),
                 conversationId);
 
-        ConversationListUpdatedReceiver.sendBroadcast(this, conversationId,
+        ConversationListUpdatedReceiver.Companion.sendBroadcast(this, conversationId,
                 (latest != null && latest.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) ? latest.getData() : "",
                 true);
 
