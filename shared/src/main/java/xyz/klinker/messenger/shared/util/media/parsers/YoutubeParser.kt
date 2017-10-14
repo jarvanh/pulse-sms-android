@@ -14,7 +14,7 @@ import xyz.klinker.messenger.shared.data.YouTubePreview
 import xyz.klinker.messenger.shared.util.UrlConnectionReader
 import xyz.klinker.messenger.shared.util.media.MediaParser
 
-class YoutubeParser(context: Context) : MediaParser(context) {
+class YoutubeParser(context: Context?) : MediaParser(context) {
 
     override val patternMatcher: Pattern
         get() = Pattern.compile("(youtu.be\\/[^?\\s]*)|(youtube.com\\/watch\\?v=[^&\\s]*)")

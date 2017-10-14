@@ -51,6 +51,8 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
     }
 
+    fun <E> getMutableList(list: List<E>) = list.toMutableList()
+
     @Throws(Exception::class)
     private fun handleReceiver(context: Context, intent: Intent) {
         if (!fragment.isAdded) {
@@ -70,8 +72,8 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         val adapterPosition = adapter.findPositionForConversationId(conversationId)
         val insertToday = adapter.getCountForSection(SectionType.TODAY) == 0
         val pinnedCount = adapter.getCountForSection(SectionType.PINNED)
-        val conversations = adapter.conversations.toMutableList()
-        val sectionTypes = adapter.sectionCounts.toMutableList()
+        val conversations = getMutableList(adapter.conversations)
+        val sectionTypes = getMutableList(adapter.sectionCounts)
 
         val removeEmpty = conversations.isEmpty()
 
@@ -163,10 +165,9 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
     }
 
 
-    fun shouldIgnoreSnippet(snippet: String?) =
-            if (snippet!!.contains("img.youtube.com")) {
-                true
-            } else snippet.contains("{") && snippet.contains("}")
+    fun shouldIgnoreSnippet(snippet: String?) = if (snippet!!.contains("img.youtube.com")) {
+        true
+    } else snippet.contains("{") && snippet.contains("}")
 
     companion object {
 

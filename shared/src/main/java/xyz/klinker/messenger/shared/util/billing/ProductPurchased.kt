@@ -6,7 +6,7 @@ import java.util.ArrayList
 
 import xyz.klinker.messenger.shared.util.TimeUtils
 
-class ProductPurchased(val type: ProductType, val productId: String) {
+class ProductPurchased(val type: ProductType?, val productId: String) {
 
     val expiration: Long
         get() = getExpiration(this.productId)

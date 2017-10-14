@@ -38,6 +38,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -61,7 +63,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
     @Before
     public void setUp() {
-        receiver = new ConversationListUpdatedReceiver(fragment);
+        receiver = spy(new ConversationListUpdatedReceiver(fragment));
         context = RuntimeEnvironment.application;
         today = new SectionType(SectionType.Companion.getTODAY(), 1);
 
@@ -73,6 +75,9 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         when(intent.getBooleanExtra("read", false)).thenReturn(false);
         when(adapter.getConversations()).thenReturn(conversations);
         when(adapter.getSectionCounts()).thenReturn(sectionTypes);
+
+        doReturn(conversations).when(receiver).getMutableList(conversations);
+        doReturn(sectionTypes).when(receiver).getMutableList(sectionTypes);
 
         setFakeConversations();
     }
@@ -122,7 +127,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verify(conversations).add(2, null);
         verify(sectionTypes).add(1, new SectionType(SectionType.TODAY, 1));
         verify(adapter).notifyItemRangeInserted(3, 2);
-    }*/
+    }
 
     @Test
     public void noConversationAndTodayAndNoPinned() {
@@ -150,7 +155,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         verify(conversations).add(2, null);
         assertEquals(2, today.getCount());
         verify(adapter).notifyItemInserted(4);
-    }
+    }*/
 
     @Test
     public void conversationAndNoTodayAndNoPinned() {

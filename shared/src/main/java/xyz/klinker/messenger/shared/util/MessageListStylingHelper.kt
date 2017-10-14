@@ -13,7 +13,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 
-class MessageListStylingHelper(context: Context) {
+class MessageListStylingHelper(context: Context?) {
 
     private val eightDp: Int = DensityUtil.toDp(context, 8)
 

@@ -9,7 +9,7 @@ import java.util.regex.Pattern
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.model.Message
 
-abstract class MediaParser(protected var context: Context) {
+abstract class MediaParser(protected var context: Context?) {
     protected var matchedText: String? = null
 
     protected abstract val patternMatcher: Pattern

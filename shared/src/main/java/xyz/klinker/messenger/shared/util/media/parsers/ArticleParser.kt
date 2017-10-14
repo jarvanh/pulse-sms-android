@@ -12,7 +12,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.util.Regex
 import xyz.klinker.messenger.shared.util.media.MediaParser
 
-class ArticleParser(context: Context) : MediaParser(context) {
+class ArticleParser(context: Context?) : MediaParser(context) {
 
     override val patternMatcher: Pattern
         get() = Regex.WEB_URL
