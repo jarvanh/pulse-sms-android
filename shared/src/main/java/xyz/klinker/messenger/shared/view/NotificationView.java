@@ -64,7 +64,7 @@ public class NotificationView {
     private void init(NotificationWindowManager manager) {
         this.manager = manager;
 
-        LayoutInflater inflater = LayoutInflater.from(manager.getContext());
+        LayoutInflater inflater = LayoutInflater.from(manager.getService());
         this.view = inflater.inflate(R.layout.notification_view, null, false);
         this.icon = (ImageView) view.findViewById(R.id.icon);
         this.text = (TextView) view.findViewById(R.id.text);

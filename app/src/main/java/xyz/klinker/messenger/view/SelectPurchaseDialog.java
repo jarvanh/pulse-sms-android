@@ -36,16 +36,16 @@ public class SelectPurchaseDialog extends AlertDialog.Builder {
         View root = LayoutInflater.from(context).inflate(R.layout.dialog_select_purchase, null);
 
         root.findViewById(R.id.lifetime).setOnClickListener(view ->
-                selectPurchase(ProductAvailable.createLifetime()));
+                selectPurchase(ProductAvailable.Companion.createLifetime()));
 
         root.findViewById(R.id.yearly).setOnClickListener(view ->
-                selectPurchase(ProductAvailable.createYearly()));
+                selectPurchase(ProductAvailable.Companion.createYearly()));
 
         root.findViewById(R.id.three_months).setOnClickListener(view ->
-                selectPurchase(ProductAvailable.createThreeMonth()));
+                selectPurchase(ProductAvailable.Companion.createThreeMonth()));
 
         root.findViewById(R.id.monthly).setOnClickListener(view ->
-                selectPurchase(ProductAvailable.createMonthly()));
+                selectPurchase(ProductAvailable.Companion.createMonthly()));
 
         setView(root);
     }

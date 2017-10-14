@@ -190,7 +190,7 @@ public class ConversationListFragment extends Fragment
             s.setAction(actionLabel, listener);
         }
 
-        SnackbarAnimationFix.apply(s);
+        SnackbarAnimationFix.INSTANCE.apply(s);
         s.show();
     }
 
@@ -367,7 +367,7 @@ public class ConversationListFragment extends Fragment
                         dismissDeleteSnackbar(activity, currentSize);
                     }
                 });
-        SnackbarAnimationFix.apply(deleteSnackbar);
+        SnackbarAnimationFix.INSTANCE.apply(deleteSnackbar);
         deleteSnackbar.show();
 
         if (conversation != null) {
@@ -439,7 +439,7 @@ public class ConversationListFragment extends Fragment
                         dismissArchiveSnackbar(activity, currentSize);
                     }
                 });
-        SnackbarAnimationFix.apply(archiveSnackbar);
+        SnackbarAnimationFix.INSTANCE.apply(archiveSnackbar);
         archiveSnackbar.show();
 
         NotificationManagerCompat.from(activity).cancel((int) conversation.getId());
@@ -475,7 +475,7 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onMarkSectionAsRead(String text, final int sectionType) {
         Snackbar snackbar = Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, text.toLowerCase(Locale.US)), Snackbar.LENGTH_LONG);
-        SnackbarAnimationFix.apply(snackbar);
+        SnackbarAnimationFix.INSTANCE.apply(snackbar);
         snackbar.show();
 
         final List<Conversation> allConversations = adapter.getConversations();
@@ -488,13 +488,13 @@ public class ConversationListFragment extends Fragment
                 if (sectionType == SectionType.Companion.getPINNED()) {
                     shouldRead = conversation.getPinned();
                 } else if (sectionType == SectionType.Companion.getTODAY()) {
-                    shouldRead = TimeUtils.isToday(conversation.getTimestamp());
+                    shouldRead = TimeUtils.INSTANCE.isToday(conversation.getTimestamp());
                 } else if (sectionType == SectionType.Companion.getYESTERDAY()) {
-                    shouldRead = TimeUtils.isYesterday(conversation.getTimestamp());
+                    shouldRead = TimeUtils.INSTANCE.isYesterday(conversation.getTimestamp());
                 } else if (sectionType == SectionType.Companion.getLAST_WEEK()) {
-                    shouldRead = TimeUtils.isLastWeek(conversation.getTimestamp());
+                    shouldRead = TimeUtils.INSTANCE.isLastWeek(conversation.getTimestamp());
                 } else if (sectionType == SectionType.Companion.getLAST_MONTH()) {
-                    shouldRead = TimeUtils.isLastMonth(conversation.getTimestamp());
+                    shouldRead = TimeUtils.INSTANCE.isLastMonth(conversation.getTimestamp());
                 }
 
                 if (shouldRead) {

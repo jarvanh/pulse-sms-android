@@ -389,7 +389,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         m.setSeen(true);
         m.setFrom(null);
         m.setColor(null);
-        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.Companion.get(this)
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.INSTANCE
                 .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
         m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
@@ -406,7 +406,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + message, true);
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
-        MessengerAppWidgetProvider.refreshWidget(this);
+        MessengerAppWidgetProvider.Companion.refreshWidget(this);
     }
 
     private boolean handleWearableReply() {

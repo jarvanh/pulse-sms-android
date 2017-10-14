@@ -76,7 +76,7 @@ public class MessengerApplication extends FirebaseApplication {
         BaseTheme theme = Settings.INSTANCE.getBaseTheme();
         if (theme == BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if (theme.isDark() || TimeUtils.isNight()) {
+        } else if (theme.isDark() || TimeUtils.INSTANCE.isNight()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
@@ -89,7 +89,7 @@ public class MessengerApplication extends FirebaseApplication {
         if (!"robolectric".equals(Build.FINGERPRINT) && BuildCompat.isAtLeastNMR1() && !Settings.INSTANCE.getFirstStart()) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(10 * TimeUtils.SECOND);
+                    Thread.sleep(10 * TimeUtils.INSTANCE.getSECOND());
                     DataSource source = DataSource.INSTANCE;
 
                     List<Conversation> conversations = source.getPinnedConversationsAsList(this);

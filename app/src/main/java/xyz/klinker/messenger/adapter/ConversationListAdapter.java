@@ -107,10 +107,10 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
             this.conversations.add(conversation);
 
             if ((currentSection == SectionType.Companion.getPINNED() && conversation.getPinned()) ||
-                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.isToday(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.isYesterday(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.isLastWeek(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.isLastMonth(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.INSTANCE.isToday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.INSTANCE.isYesterday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.INSTANCE.isLastWeek(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.INSTANCE.isLastMonth(conversation.getTimestamp())) ||
                     (currentSection == SectionType.Companion.getOLDER())) {
                 currentCount++;
             } else {
@@ -499,7 +499,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         } else {
             return !Account.INSTANCE.exists() &&
                     Settings.INSTANCE.getShowTextOnlineOnConversationList() &&
-                    Math.abs(Settings.INSTANCE.getInstallTime() - new Date().getTime()) > TimeUtils.MINUTE * 15;
+                    Math.abs(Settings.INSTANCE.getInstallTime() - new Date().getTime()) > TimeUtils.INSTANCE.getMINUTE() * 15;
         }
     }
 }

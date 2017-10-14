@@ -85,7 +85,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
 
         requestPermissions();
         ColorUtils.INSTANCE.checkBlackBackground(this);
-        TimeUtils.setupNightTheme(this);
+        TimeUtils.INSTANCE.setupNightTheme(this);
     }
 
     private void requestPermissions() {

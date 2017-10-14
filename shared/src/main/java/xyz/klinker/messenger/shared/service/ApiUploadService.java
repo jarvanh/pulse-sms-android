@@ -108,7 +108,7 @@ public class ApiUploadService extends Service {
     }
 
     private void uploadData() {
-        Notification notification = new NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+        Notification notification = new NotificationCompat.Builder(this, NotificationUtils.INSTANCE.getSTATUS_NOTIFICATIONS_CHANNEL_ID())
                 .setContentTitle(getString(R.string.encrypting_and_uploading))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)
@@ -430,7 +430,7 @@ public class ApiUploadService extends Service {
      * Media will be uploaded after the messages finish uploading
      */
     private void uploadMedia() {
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationUtils.INSTANCE.getSTATUS_NOTIFICATIONS_CHANNEL_ID())
                 .setContentTitle(getString(R.string.encrypting_and_uploading_media))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)

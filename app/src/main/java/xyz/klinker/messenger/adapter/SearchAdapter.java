@@ -172,7 +172,7 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             h.messageId = message.getId();
             h.message.setText(message.getData());
 
-            String timestamp = TimeUtils.formatTimestamp(h.timestamp.getContext(), message.getTimestamp());
+            String timestamp = TimeUtils.INSTANCE.formatTimestamp(h.timestamp.getContext(), message.getTimestamp());
             if (message.getFrom() != null && !message.getFrom().isEmpty()) {
                 //noinspection AndroidLintSetTextI18n
                 h.timestamp.setText(timestamp + " - " + message.getFrom() +

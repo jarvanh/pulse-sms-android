@@ -101,7 +101,7 @@ public class BillingHelper {
         querySkus.putStringArrayList("ITEM_ID_LIST", productIds);
 
         try {
-            return ProductAvailable.createFromBundle(type,
+            return ProductAvailable.Companion.createFromBundle(type,
                     billingService.getSkuDetails(3, context.getPackageName(), type.getIdentifier(), querySkus));
         } catch (Exception e) {
             return new ArrayList<>();
@@ -120,7 +120,7 @@ public class BillingHelper {
 
     private List<ProductPurchased> queryPurchasedProducts(ProductType type) {
         try {
-            return ProductPurchased.createFromBundle(type,
+            return ProductPurchased.Companion.createFromBundle(type,
                     billingService.getPurchases(3, context.getPackageName(), type.getIdentifier(), null));
         } catch (Exception e) {
             return new ArrayList<>();

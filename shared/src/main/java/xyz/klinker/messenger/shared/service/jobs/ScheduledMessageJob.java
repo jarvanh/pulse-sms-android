@@ -69,8 +69,8 @@ public class ScheduledMessageJob extends BackgroundJob {
 
                 // if message scheduled to be sent in less than 5 mins in the future,
                 // or more than 60 in the past
-                if (timestamp > System.currentTimeMillis() - (TimeUtils.HOUR) &&
-                        timestamp < System.currentTimeMillis() + (TimeUtils.MINUTE * 5)) {
+                if (timestamp > System.currentTimeMillis() - (TimeUtils.INSTANCE.getHOUR()) &&
+                        timestamp < System.currentTimeMillis() + (TimeUtils.INSTANCE.getMINUTE() * 5)) {
                     ScheduledMessage message = new ScheduledMessage();
                     message.fillFromCursor(messages);
 
@@ -130,7 +130,7 @@ public class ScheduledMessageJob extends BackgroundJob {
             ComponentName component = new ComponentName(context, ScheduledMessageJob.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(timeout)
-                    .setOverrideDeadline(timeout + TimeUtils.MINUTE)
+                    .setOverrideDeadline(timeout + TimeUtils.INSTANCE.getMINUTE())
                     .setRequiresCharging(false)
                     .setRequiresDeviceIdle(false);
 

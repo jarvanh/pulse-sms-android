@@ -43,7 +43,7 @@ public class SimpleSubscriptionCheckService extends IntentService {
         if (best.getProductId().equals("lifetime")) {
             writeLifetimeSubscriber();
         } else {
-            writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
+            writeNewExpirationToAccount(new Date().getTime() + best.getExpiration());
         }
     }
 

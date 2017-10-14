@@ -193,7 +193,7 @@ public class InitialLoadActivity extends AppCompatActivity implements ProgressUp
     private void close() {
         Settings.INSTANCE.setValue(this, getString(R.string.pref_first_start), false);
 
-        if (TvUtils.hasTouchscreen(this)) {
+        if (TvUtils.INSTANCE.hasTouchscreen(this)) {
             startActivity(new Intent(this, MessengerActivity.class));
         } else {
             startActivity(new Intent(this, MessengerTvActivity.class));

@@ -70,7 +70,7 @@ public class MessengerTvActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        TimeUtils.setupNightTheme(this);
+        TimeUtils.INSTANCE.setupNightTheme(this);
     }
 
 }

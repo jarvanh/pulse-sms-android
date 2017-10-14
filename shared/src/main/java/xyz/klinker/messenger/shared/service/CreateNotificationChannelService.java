@@ -27,7 +27,7 @@ public class CreateNotificationChannelService extends IntentService {
         }
 
         Notification notification = new NotificationCompat.Builder(this,
-                NotificationUtils.GENERAL_CHANNEL_ID)
+                NotificationUtils.INSTANCE.getGENERAL_CHANNEL_ID())
                 .setContentTitle(getString(R.string.downloading_and_decrypting))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setProgress(0, 0, true)
@@ -38,7 +38,7 @@ public class CreateNotificationChannelService extends IntentService {
                 .build();
         startForeground(FOREGROUND_ID, notification);
 
-        NotificationUtils.createNotificationChannels(this);
+        NotificationUtils.INSTANCE.createNotificationChannels(this);
 
         stopForeground(true);
     }

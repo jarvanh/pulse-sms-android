@@ -40,7 +40,7 @@ public class DashclockExtension extends DashClockExtension {
         }
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MessengerAppWidgetProvider.REFRESH_ACTION);
+        filter.addAction(MessengerAppWidgetProvider.Companion.getREFRESH_ACTION());
         registerReceiver(update, filter);
     }
 

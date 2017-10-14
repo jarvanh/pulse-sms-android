@@ -1,0 +1,227 @@
+/*
+ * Copyright (C) 2017 Luke Klinker
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package xyz.klinker.messenger.shared.util
+
+import android.content.Context
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
+import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import java.text.SimpleDateFormat
+import java.util.*
+
+/**
+ * Helper for working with timestamps on messages.
+ */
+object TimeUtils {
+
+    val SECOND: Long = 1000
+    val MINUTE = SECOND * 60
+    val HOUR = MINUTE * 60
+    val DAY = HOUR * 24
+    val YEAR = DAY * 365
+
+    val TWO_WEEKS = DAY * 14
+
+    /**
+     * Gets whether or not we are currently in the night time. This is defined as before 6 AM or
+     * after 10 PM.
+     */
+    val isNight: Boolean
+        get() = isNight(Calendar.getInstance())
+
+    /**
+     * If the next timestamp is more than 15 minutes away, we will display it on the message.
+     *
+     * @param timestamp     the current message's timestamp.
+     * @param nextTimestamp the next message's timestamp. This should be larger than timestamp.
+     * @return true if we should display the timestamp, false otherwise.
+     */
+    fun shouldDisplayTimestamp(timestamp: Long, nextTimestamp: Long): Boolean {
+        return nextTimestamp >= timestamp + 15 * MINUTE
+    }
+
+    /**
+     * Checks whether the timestamp is on the same calendar day as today.
+     *
+     * @param timestamp the timestamp to check.
+     * @return true if same calendar day, false otherwise.
+     */
+    fun isToday(timestamp: Long): Boolean {
+        return isToday(timestamp, System.currentTimeMillis())
+    }
+
+    private fun isToday(timestamp: Long, currentTime: Long): Boolean {
+        val current = Calendar.getInstance()
+        current.timeInMillis = currentTime
+        zeroCalendarDay(current)
+
+        val time = Calendar.getInstance()
+        time.timeInMillis = timestamp
+        zeroCalendarDay(time)
+
+        return current.timeInMillis == time.timeInMillis
+    }
+
+    /**
+     * Checks whether the timestamp is on the same calendar day as yesterday.
+     *
+     * @param timestamp the timestamp to check.
+     * @return if if yesterday, false otherwise.
+     */
+    fun isYesterday(timestamp: Long): Boolean {
+        return isYesterday(timestamp, System.currentTimeMillis())
+    }
+
+    private fun isYesterday(timestamp: Long, currentTime: Long): Boolean {
+        val current = Calendar.getInstance()
+        current.timeInMillis = currentTime
+        zeroCalendarDay(current)
+        current.set(Calendar.DAY_OF_YEAR, current.get(Calendar.DAY_OF_YEAR) - 1)
+
+        val time = Calendar.getInstance()
+        time.timeInMillis = timestamp
+        zeroCalendarDay(time)
+
+        return current.timeInMillis == time.timeInMillis
+    }
+
+    /**
+     * Checks whether the timestamp is within the last week.
+     */
+    fun isLastWeek(timestamp: Long): Boolean {
+        return isLastWeek(timestamp, System.currentTimeMillis())
+    }
+
+    private fun isLastWeek(timestamp: Long, currentTime: Long): Boolean {
+        val lastWeek = Calendar.getInstance()
+        lastWeek.timeInMillis = currentTime
+        zeroCalendarDay(lastWeek)
+        lastWeek.set(Calendar.WEEK_OF_YEAR, lastWeek.get(Calendar.WEEK_OF_YEAR) - 1)
+
+        return timestamp > lastWeek.timeInMillis && timestamp < currentTime
+    }
+
+    /**
+     * Checks whether the timestamp is within the last month.
+     */
+    fun isLastMonth(timestamp: Long): Boolean {
+        return isLastMonth(timestamp, System.currentTimeMillis())
+    }
+
+    private fun isLastMonth(timestamp: Long, currentTime: Long): Boolean {
+        val lastMonth = Calendar.getInstance()
+        lastMonth.timeInMillis = currentTime
+        zeroCalendarDay(lastMonth)
+        lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH) - 1)
+
+        return timestamp > lastMonth.timeInMillis && timestamp < currentTime
+    }
+
+    private fun zeroCalendarDay(calendar: Calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+    }
+
+    /**
+     * Formats the timestamp in a different way depending upon how long ago it was. Times within
+     * 1 day will be just the timestamp (eg 7:30 PM). Times within 7 days will be the day and
+     * the timestamp (eg Sun, 8:22 AM). Times older than that will be the date and the time
+     * (eg 7/4/2016 12:25 PM). These will be formatted according to the device's default locale.
+     *
+     * @param timestamp the timestamp to format.
+     * @return the formatted string.
+     */
+    fun formatTimestamp(context: Context, timestamp: Long): String {
+        return formatTimestamp(context, timestamp, System.currentTimeMillis())
+    }
+
+    private fun formatTimestamp(context: Context, timestamp: Long, currentTime: Long): String {
+        val date = Date(timestamp)
+        val formatted: String?
+
+        formatted = when {
+            timestamp > currentTime - 2 * MINUTE -> context.getString(R.string.now)
+            timestamp > currentTime - DAY -> formatTime(context, date)
+            timestamp > currentTime - 7 * DAY -> SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
+                    formatTime(context, date)
+            timestamp > currentTime - YEAR -> SimpleDateFormat("MMM d", Locale.getDefault()).format(date) + ", " +
+                    formatTime(context, date)
+            else -> SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date) + ", " +
+                    formatTime(context, date)
+        }
+
+        return formatted ?: ""
+    }
+
+    private fun formatTime(context: Context, date: Date): String {
+        return if (android.text.format.DateFormat.is24HourFormat(context)) {
+            android.text.format.DateFormat.format("HH:mm", date).toString()
+        } else {
+            android.text.format.DateFormat.format("h:mm a", date).toString()
+        }
+    }
+
+    private fun isNight(cal: Calendar): Boolean {
+        val hour = cal.get(Calendar.HOUR_OF_DAY)
+        return hour <= 5 || hour >= 20
+    }
+
+    fun setupNightTheme(activity: AppCompatActivity) {
+        val base = Settings.baseTheme
+
+        if (!base.isDark) {
+            val isNight = TimeUtils.isNight && base !== BaseTheme.ALWAYS_LIGHT
+            activity.delegate.setLocalNightMode(if (isNight)
+                AppCompatDelegate.MODE_NIGHT_YES
+            else
+                AppCompatDelegate.MODE_NIGHT_NO)
+            AppCompatDelegate.setDefaultNightMode(if (isNight)
+                AppCompatDelegate.MODE_NIGHT_YES
+            else
+                AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
+    /**
+     * How many seconds until the given hour, tomorrow.
+     *
+     * @param hour 24 hour format
+     * @return seconds until that hour
+     */
+    fun millisUntilHourInTheNextDay(hour: Int): Int {
+        return millisUntilHourInTheNextDay(hour, Calendar.getInstance().timeInMillis)
+    }
+
+    fun millisUntilHourInTheNextDay(hour: Int, currentTime: Long): Int {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(currentTime)
+
+        // force the calendar to 3 in the morning, on the next day.
+        calendar.add(Calendar.DAY_OF_YEAR, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+
+        val lookingFor = calendar.timeInMillis
+
+        return (lookingFor - currentTime).toInt()
+    }
+}

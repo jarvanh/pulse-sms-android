@@ -262,10 +262,10 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
         }
 
         if (message.getSimPhoneNumber() != null) {
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.timestamp.getContext(),
                     message.getTimestamp()) + " (SIM " + message.getSimPhoneNumber() + ")");
         } else {
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.timestamp.getContext(),
                     message.getTimestamp()));
         }
 

@@ -111,7 +111,7 @@ public class GlobalSettingsFragment extends MaterialPreferenceFragment {
         actions.setOnPreferenceChangeListener((preference, o) -> {
             Set<String> options = (Set<String>) o;
             ApiUtils.INSTANCE.updateNotificationActions(Account.INSTANCE.getAccountId(),
-                    SetUtils.stringify(options));
+                    SetUtils.INSTANCE.stringify(options));
             return true;
         });
     }

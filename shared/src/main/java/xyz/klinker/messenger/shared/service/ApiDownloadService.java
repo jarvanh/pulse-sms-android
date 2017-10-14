@@ -112,7 +112,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadData() {
         Notification notification = new NotificationCompat.Builder(this,
-                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                NotificationUtils.INSTANCE.getSTATUS_NOTIFICATIONS_CHANNEL_ID())
                 .setContentTitle(getString(R.string.downloading_and_decrypting))
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
@@ -399,7 +399,7 @@ public class ApiDownloadService extends Service {
 
     private void downloadMedia() {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                NotificationUtils.INSTANCE.getSTATUS_NOTIFICATIONS_CHANNEL_ID())
                 .setContentTitle(getString(R.string.decrypting_and_downloading_media))
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)

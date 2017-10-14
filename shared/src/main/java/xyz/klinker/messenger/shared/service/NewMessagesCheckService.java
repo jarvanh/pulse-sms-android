@@ -59,7 +59,7 @@ public class NewMessagesCheckService extends IntentService {
 
         SharedPreferences sharedPreferences = Settings.INSTANCE.getSharedPrefs(this);
         long lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L);
-        long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.SECOND * 5);
+        long fiveSecondsBefore = System.currentTimeMillis() - (TimeUtils.INSTANCE.getSECOND() * 5);
 
         String appSignature;
         if (!Settings.INSTANCE.getSignature().isEmpty()) {

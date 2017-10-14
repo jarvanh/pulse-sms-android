@@ -218,7 +218,7 @@ public class  MessengerActivity extends AppCompatActivity
         ActivityUtils.INSTANCE.setTaskDescription(this);
 
         if (!Build.FINGERPRINT.contains("robolectric")) {
-            TimeUtils.setupNightTheme(this);
+            TimeUtils.INSTANCE.setupNightTheme(this);
         }
 
         initDrawer();
@@ -303,7 +303,7 @@ public class  MessengerActivity extends AppCompatActivity
     @Override
     public void onStop() {
         super.onStop();
-        MessengerAppWidgetProvider.refreshWidget(this);
+        MessengerAppWidgetProvider.Companion.refreshWidget(this);
 
         try {
             unregisterReceiver(refreshAllReceiver);
@@ -580,7 +580,7 @@ public class  MessengerActivity extends AppCompatActivity
             if (item.getItemId() == R.id.drawer_conversation) {
                 setTitle(R.string.app_title);
             } else if (item.isCheckable()) {
-                setTitle(StringUtils.titleize(item.getTitle().toString()));
+                setTitle(StringUtils.INSTANCE.titleize(item.getTitle().toString()));
             }
         }
 

@@ -45,7 +45,7 @@ public class MediaParserService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (AndroidVersionUtil.INSTANCE.isAndroidO()) {
             Notification notification = new NotificationCompat.Builder(this,
-                    NotificationUtils.MEDIA_PARSE_CHANNEL_ID)
+                    NotificationUtils.INSTANCE.getMEDIA_PARSE_CHANNEL_ID())
                     .setContentTitle(getString(R.string.media_parse_text))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setProgress(0, 0, true)

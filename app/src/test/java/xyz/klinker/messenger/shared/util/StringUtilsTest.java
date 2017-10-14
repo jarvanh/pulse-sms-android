@@ -36,7 +36,7 @@ public class StringUtilsTest extends MessengerSuite {
     @Test
     public void generate32charHexString() {
         for (int i = 0; i < 10; i++) {
-            String hex = StringUtils.generateHexString(32);
+            String hex = StringUtils.INSTANCE.generateHexString(32);
             assertEquals(32, hex.length());
         }
     }
@@ -44,16 +44,16 @@ public class StringUtilsTest extends MessengerSuite {
     @Test
     public void generate20charHexString() {
         for (int i = 0; i < 10; i++) {
-            String hex = StringUtils.generateHexString(20);
+            String hex = StringUtils.INSTANCE.generateHexString(20);
             assertEquals(20, hex.length());
         }
     }
 
     @Test
     public void capitalizeCharacters() {
-        assertEquals("Conversation List", StringUtils.titleize("Conversation list"));
-        assertEquals("Scheduled Messages", StringUtils.titleize("Scheduled messages"));
-        assertEquals("Help & Feedback", StringUtils.titleize("Help & feedback"));
+        assertEquals("Conversation List", StringUtils.INSTANCE.titleize("Conversation list"));
+        assertEquals("Scheduled Messages", StringUtils.INSTANCE.titleize("Scheduled messages"));
+        assertEquals("Help & Feedback", StringUtils.INSTANCE.titleize("Help & feedback"));
     }
 
     @Test
@@ -64,9 +64,9 @@ public class StringUtilsTest extends MessengerSuite {
         longs.add(3L);
         longs.add(4L);
 
-        assertEquals("1,2,3,4", StringUtils.join(longs, ","));
-        assertEquals("", StringUtils.join(null, ","));
-        assertEquals("", StringUtils.join(new ArrayList<Long>(), ","));
+        assertEquals("1,2,3,4", StringUtils.INSTANCE.join(longs, ","));
+        assertEquals("", StringUtils.INSTANCE.join(null, ","));
+        assertEquals("", StringUtils.INSTANCE.join(new ArrayList<Long>(), ","));
     }
 
     @Test
@@ -77,22 +77,22 @@ public class StringUtilsTest extends MessengerSuite {
         longs.add(3L);
         longs.add(4L);
 
-        assertEquals("test=1 OR test=2 OR test=3 OR test=4", StringUtils.buildSqlOrStatement("test", longs));
+        assertEquals("test=1 OR test=2 OR test=3 OR test=4", StringUtils.INSTANCE.buildSqlOrStatement("test", longs));
 
         longs = new ArrayList<>();
         longs.add(1L);
 
-        assertEquals("test=1", StringUtils.buildSqlOrStatement("test", longs));
+        assertEquals("test=1", StringUtils.INSTANCE.buildSqlOrStatement("test", longs));
 
         longs = new ArrayList<>();
         longs.add(1L);
         longs.add(2L);
 
-        assertEquals("test=1 OR test=2", StringUtils.buildSqlOrStatement("test", longs));
+        assertEquals("test=1 OR test=2", StringUtils.INSTANCE.buildSqlOrStatement("test", longs));
 
 
-        assertEquals("", StringUtils.buildSqlOrStatement("test", null));
-        assertEquals("", StringUtils.buildSqlOrStatement("test", new ArrayList<Long>()));
+        assertEquals("", StringUtils.INSTANCE.buildSqlOrStatement("test", null));
+        assertEquals("", StringUtils.INSTANCE.buildSqlOrStatement("test", new ArrayList<Long>()));
 
 
     }

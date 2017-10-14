@@ -136,7 +136,7 @@ public class MmsReceivedReceiver extends com.klinker.android.send_message.MmsRec
                     message.setFrom(null);
                 }
 
-                if (SmsReceivedReceiver.shouldSaveMessages(context, source, message)) {
+                if (SmsReceivedReceiver.Companion.shouldSaveMessages(context, source, message)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context);
 
                     Conversation conversation = source.getConversation(context, conversationId);

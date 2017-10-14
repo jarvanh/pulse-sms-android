@@ -50,10 +50,10 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
             this.conversations.add(conversation);
 
             if ((currentSection == SectionType.Companion.getPINNED() && conversation.getPinned()) ||
-                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.isToday(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.isYesterday(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.isLastWeek(conversation.getTimestamp())) ||
-                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.isLastMonth(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getTODAY() && TimeUtils.INSTANCE.isToday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getYESTERDAY() && TimeUtils.INSTANCE.isYesterday(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_WEEK() && TimeUtils.INSTANCE.isLastWeek(conversation.getTimestamp())) ||
+                    (currentSection == SectionType.Companion.getLAST_MONTH() && TimeUtils.INSTANCE.isLastMonth(conversation.getTimestamp())) ||
                     (currentSection == SectionType.Companion.getOLDER())) {
                 currentCount++;
             } else {

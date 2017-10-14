@@ -86,7 +86,7 @@ public class ContactSyncJob extends BackgroundJob {
     public static void scheduleNextRun(Context context) {
         ComponentName component = new ComponentName(context, ContactSyncJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
-                .setMinimumLatency(TimeUtils.millisUntilHourInTheNextDay(2)) // 2 AM
+                .setMinimumLatency(TimeUtils.INSTANCE.millisUntilHourInTheNextDay(2)) // 2 AM
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(true);
 

@@ -1,7 +1,5 @@
 package xyz.klinker.messenger.shared.service.jobs;
 
-import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -51,7 +49,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
             if (isExpired()) {
                 Log.v(TAG, "service is expired");
                 makeSignoutNotification();
-                SignoutJob.writeSignoutTime(this, new Date().getTime() + (TimeUtils.DAY * 2));
+                SignoutJob.writeSignoutTime(this, new Date().getTime() + (TimeUtils.INSTANCE.getDAY() * 2));
             } else {
                 Log.v(TAG, "not expired, scheduling the next refresh");
                 scheduleNextRun(this);
@@ -120,7 +118,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
             if (best.getProductId().equals("lifetime")) {
                 writeLifetimeSubscriber();
             } else {
-                writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
+                writeNewExpirationToAccount(new Date().getTime() + best.getExpiration());
             }
 
             return false;
@@ -158,7 +156,7 @@ public class SubscriptionExpirationCheckJob extends BackgroundJob {
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         long currentTime = new Date().getTime();
-        long expiration = account.getSubscriptionExpiration() + TimeUtils.DAY;
+        long expiration = account.getSubscriptionExpiration() + TimeUtils.INSTANCE.getDAY();
 
         ComponentName component = new ComponentName(context, SubscriptionExpirationCheckJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)

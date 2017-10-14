@@ -86,7 +86,7 @@ object Settings {
     val isCurrentlyDarkTheme: Boolean
         get() = when {
             baseTheme === BaseTheme.ALWAYS_LIGHT -> false
-            baseTheme === BaseTheme.DAY_NIGHT -> TimeUtils.isNight()
+            baseTheme === BaseTheme.DAY_NIGHT -> TimeUtils.isNight
             else -> true
         }
 

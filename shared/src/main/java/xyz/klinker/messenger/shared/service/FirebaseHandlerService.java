@@ -786,7 +786,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     settings.setValue(context, pref, json.getString("value"));
                     break;
                 case "set":
-                    settings.setValue(context, pref, SetUtils.createSet(json.getString("value")));
+                    settings.setValue(context, pref, SetUtils.INSTANCE.createSet(json.getString("value")));
                     break;
             }
         }
@@ -815,7 +815,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
                     content = "Expiration: " + new Date(expiration).toString();
                 }
 
-                notifyUser(context, "Subscription Updated: " + StringUtils.titleize(account.getSubscriptionType().name()), content);
+                notifyUser(context, "Subscription Updated: " + StringUtils.INSTANCE.titleize(account.getSubscriptionType().name()), content);
             }
         }
     }
@@ -906,7 +906,7 @@ public class FirebaseHandlerService extends WakefulIntentService {
     }
 
     private static void notifyUser(Context context, String title, String content) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NotificationUtils.GENERAL_CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NotificationUtils.INSTANCE.getGENERAL_CHANNEL_ID())
                 .setContentTitle(title)
                 .setContentText(content)
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))

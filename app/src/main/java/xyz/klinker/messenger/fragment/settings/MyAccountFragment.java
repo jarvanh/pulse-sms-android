@@ -36,7 +36,6 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.AccountPurchaseActivity;
 import xyz.klinker.messenger.activity.InitialLoadActivity;
 import xyz.klinker.messenger.activity.MessengerActivity;
-import xyz.klinker.messenger.activity.OnBoardingPayActivity;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;
@@ -54,7 +53,6 @@ import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable;
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased;
 import xyz.klinker.messenger.shared.util.billing.PurchasedItemCallback;
-import xyz.klinker.messenger.view.SelectPurchaseDialog;
 
 /**
  * Fragment for displaying information about the user's account. We can display different stats
@@ -322,14 +320,14 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
         if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
             Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId);
-            if (productId.equals(ProductAvailable.createLifetime().getProductId())) {
-                purchaseProduct(ProductAvailable.createLifetime());
-            } else if (productId.equals(ProductAvailable.createYearly().getProductId())) {
-                purchaseProduct(ProductAvailable.createYearly());
-            } else if (productId.equals(ProductAvailable.createThreeMonth().getProductId())) {
-                purchaseProduct(ProductAvailable.createThreeMonth());
-            } else if (productId.equals(ProductAvailable.createMonthly().getProductId())) {
-                purchaseProduct(ProductAvailable.createMonthly());
+            if (productId.equals(ProductAvailable.Companion.createLifetime().getProductId())) {
+                purchaseProduct(ProductAvailable.Companion.createLifetime());
+            } else if (productId.equals(ProductAvailable.Companion.createYearly().getProductId())) {
+                purchaseProduct(ProductAvailable.Companion.createYearly());
+            } else if (productId.equals(ProductAvailable.Companion.createThreeMonth().getProductId())) {
+                purchaseProduct(ProductAvailable.Companion.createThreeMonth());
+            } else if (productId.equals(ProductAvailable.Companion.createMonthly().getProductId())) {
+                purchaseProduct(ProductAvailable.Companion.createMonthly());
             }
         } else if (!billing.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
@@ -432,7 +430,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
 
         if (getActivity() instanceof MessengerActivity) {
             ((MessengerActivity) getActivity()).displayConversations();
-            getActivity().setTitle(StringUtils.titleize(getString(R.string.app_name)));
+            getActivity().setTitle(StringUtils.INSTANCE.titleize(getString(R.string.app_name)));
         } else {
             getActivity().recreate();
         }
@@ -465,7 +463,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                     startLoginActivity();
                 } else {
                     // they switched their subscription, lets write the new timeout to their account.
-                    long newExperation = ProductPurchased.getExperation(product.getProductId());
+                    long newExperation = ProductPurchased.Companion.getExpiration(product.getProductId());
 
                     if (product.getProductId().contains("lifetime")) {
                         Account.INSTANCE.updateSubscription(getActivity(), Account.SubscriptionType.LIFETIME, new Date(newExperation));

@@ -608,7 +608,7 @@ public class MessageListFragment extends Fragment implements
             ColorUtils.INSTANCE.colorTextSelectionHandles(messageEntry, colorAccent);
         }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION() + 50);
 
-        if (!TvUtils.hasTouchscreen(activity)) {
+        if (!TvUtils.INSTANCE.hasTouchscreen(activity)) {
             appBarLayout.setVisibility(View.GONE);
         }
     }
@@ -832,7 +832,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initAttachHolder() {
-        if (!TvUtils.hasTouchscreen(activity)) {
+        if (!TvUtils.INSTANCE.hasTouchscreen(activity)) {
             attach.setVisibility(View.GONE);
             send.setNextFocusDownId(R.id.message_entry);
         }
@@ -918,7 +918,7 @@ public class MessageListFragment extends Fragment implements
                         Account.INSTANCE.getDeviceId(),
                         getConversationId());
 
-                NotificationUtils.cancelGroupedNotificationWithNoContent(activity);
+                NotificationUtils.INSTANCE.cancelGroupedNotificationWithNoContent(activity);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1261,7 +1261,7 @@ public class MessageListFragment extends Fragment implements
             m.setFrom(null);
             m.setColor(null);
             m.setSimPhoneNumber(conversation != null && conversation.getSimSubscriptionId() != null ?
-                    DualSimUtils.Companion.get(activity).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+                    DualSimUtils.INSTANCE.getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
             m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
             if (adapter != null && adapter.getItemViewType(0) == Message.Companion.getTYPE_INFO()) {
@@ -1349,7 +1349,7 @@ public class MessageListFragment extends Fragment implements
             if (notificationActive()) {
                 NotificationManagerCompat.from(activity)
                         .cancel((int) getConversationId());
-                NotificationUtils.cancelGroupedNotificationWithNoContent(activity);
+                NotificationUtils.INSTANCE.cancelGroupedNotificationWithNoContent(activity);
             }
         }
     }
@@ -1711,7 +1711,7 @@ public class MessageListFragment extends Fragment implements
                     switch (i) {
                         case 0:
                             try {
-                                Uri contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone);
+                                Uri contactFile = VCardWriter.INSTANCE.writeContactCard(activity, firstName, lastName, phone);
                                 attachContact(contactFile);
                             } catch (Exception e) { }
                             break;

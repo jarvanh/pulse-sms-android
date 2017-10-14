@@ -33,7 +33,7 @@ public class CleanupOldMessagesJob extends BackgroundJob {
     public static void scheduleNextRun(Context context) {
         ComponentName component = new ComponentName(context, CleanupOldMessagesJob.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
-                .setMinimumLatency(TimeUtils.millisUntilHourInTheNextDay(3)) // 3 AM
+                .setMinimumLatency(TimeUtils.INSTANCE.millisUntilHourInTheNextDay(3)) // 3 AM
                 .setRequiresCharging(true)
                 .setRequiresDeviceIdle(true);
 

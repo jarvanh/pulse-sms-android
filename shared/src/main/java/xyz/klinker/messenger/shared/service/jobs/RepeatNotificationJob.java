@@ -42,7 +42,7 @@ public class RepeatNotificationJob extends BackgroundJob {
             ComponentName component = new ComponentName(context, RepeatNotificationJob.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, component)
                     .setMinimumLatency(timeout)
-                    .setOverrideDeadline(timeout + (TimeUtils.SECOND * 15))
+                    .setOverrideDeadline(timeout + (TimeUtils.INSTANCE.getSECOND() * 15))
                     .setRequiresCharging(false)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setRequiresDeviceIdle(false);

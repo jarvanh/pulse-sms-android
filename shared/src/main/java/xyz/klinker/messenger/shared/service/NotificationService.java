@@ -108,7 +108,7 @@ public class NotificationService extends IntentService {
         if (intent != null && intent.getBooleanExtra(EXTRA_FOREGROUND, false) && AndroidVersionUtil.INSTANCE.isAndroidO()) {
             foreground = true;
             Notification notification = new NotificationCompat.Builder(this,
-                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                    NotificationUtils.INSTANCE.getSTATUS_NOTIFICATIONS_CHANNEL_ID())
                     .setContentTitle(getString(R.string.repeat_interval))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setLocalOnly(true)
@@ -163,7 +163,7 @@ public class NotificationService extends IntentService {
                 }
             }
 
-            MessengerAppWidgetProvider.refreshWidget(this);
+            MessengerAppWidgetProvider.Companion.refreshWidget(this);
 
             if (foreground) {
                 stopForeground(true);
@@ -672,7 +672,7 @@ public class NotificationService extends IntentService {
             NotificationManagerCompat.from(this).notify((int) conversation.getId(), builder.build());
         }
 
-        if (!TvUtils.hasTouchscreen(this)) {
+        if (!TvUtils.INSTANCE.hasTouchscreen(this)) {
 //            if (notificationWindowManager == null) {
 //                notificationWindowManager = new NotificationWindowManager(this);
 //            }
@@ -702,7 +702,7 @@ public class NotificationService extends IntentService {
             NotificationMessage one = messages.get(messages.size() - 2);
             NotificationMessage two = messages.get(messages.size() - 1);
 
-            if (Math.abs(one.getTimestamp() - two.getTimestamp()) > TimeUtils.SECOND * 30) {
+            if (Math.abs(one.getTimestamp() - two.getTimestamp()) > TimeUtils.INSTANCE.getSECOND() * 30) {
                 return false;
             }
         }
@@ -755,7 +755,7 @@ public class NotificationService extends IntentService {
         }
 
         Notification publicVersion = new NotificationCompat.Builder(this,
-                    NotificationUtils.MESSAGE_GROUP_SUMMARY_CHANNEL_ID)
+                NotificationUtils.INSTANCE.getMESSAGE_GROUP_SUMMARY_CHANNEL_ID())
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
                 .setGroup(GROUP_KEY_MESSAGES)
@@ -777,7 +777,7 @@ public class NotificationService extends IntentService {
                 open, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this,
-                    NotificationUtils.MESSAGE_GROUP_SUMMARY_CHANNEL_ID)
+                NotificationUtils.INSTANCE.getMESSAGE_GROUP_SUMMARY_CHANNEL_ID())
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle(title)
                 .setContentText(summary)
@@ -899,14 +899,14 @@ public class NotificationService extends IntentService {
     @TargetApi(Build.VERSION_CODES.O)
     private static String getNotificationChannel(Context context, long conversationId) {
         if (!AndroidVersionUtil.INSTANCE.isAndroidO()) {
-            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID;
+            return NotificationUtils.INSTANCE.getDEFAULT_CONVERSATION_CHANNEL_ID();
         }
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (manager.getNotificationChannel(conversationId + "") != null) {
             return conversationId + "";
         } else {
-            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID;
+            return NotificationUtils.INSTANCE.getDEFAULT_CONVERSATION_CHANNEL_ID();
         }
     }
 }

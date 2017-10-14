@@ -100,9 +100,9 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanThirtySeconds() {
         List<NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationMessage(1, "", "", 1000, ""));
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY(), ""));
         messages.add(new NotificationMessage(1, "", "", 0, ""));
-        messages.add(new NotificationMessage(1, "", "", (TimeUtils.SECOND * 30) + 1, ""));
+        messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) + 1, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(false));
     }
@@ -111,9 +111,9 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanThirtySeconds() {
         List<NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationMessage(1, "", "", 1000, ""));
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY(), ""));
         messages.add(new NotificationMessage(1, "", "", 0, ""));
-        messages.add(new NotificationMessage(1, "", "", (TimeUtils.SECOND * 30) - 100, ""));
+        messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }
@@ -121,7 +121,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Test
     public void smallMessageListsShouldOnlyAlertOnce() {
         List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.DAY - 100, ""));
+        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY() - 100, ""));
 
         assertThat(service.shouldAlertOnce(messages), Matchers.is(true));
     }

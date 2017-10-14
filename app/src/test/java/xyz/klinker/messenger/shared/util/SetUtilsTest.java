@@ -18,7 +18,7 @@ public class SetUtilsTest extends MessengerSuite {
         set.add("test 1");
         set.add("test 2");
 
-        String result = SetUtils.stringify(set);
+        String result = SetUtils.INSTANCE.stringify(set);
         assertTrue(result.contains("test 1"));
         assertTrue(result.contains("test 2"));
         assertEquals("", result.replace("test 1", "").replace("test 2", "").replace(",", ""));
@@ -27,19 +27,19 @@ public class SetUtilsTest extends MessengerSuite {
     @Test
     public void shouldStringifyEmptySet() {
         Set<String> set = new HashSet<>();
-        assertEquals("", SetUtils.stringify(set));
+        assertEquals("", SetUtils.INSTANCE.stringify(set));
     }
 
     @Test
     public void shouldStringifyNullSet() {
         Set<String> set = null;
-        assertEquals("", SetUtils.stringify(set));
+        assertEquals("", SetUtils.INSTANCE.stringify(set));
     }
 
     @Test
     public void shouldCreateSet() {
         String str = "test 1,test 2";
-        Set<String> set = SetUtils.createSet(str);
+        Set<String> set = SetUtils.INSTANCE.createSet(str);
 
         assertTrue(set.contains("test 1"));
         assertTrue(set.contains("test 2"));
@@ -52,11 +52,11 @@ public class SetUtilsTest extends MessengerSuite {
 
     @Test
     public void shouldCreateSetFromEmptyString() {
-        assertEquals(0, SetUtils.createSet("").size());
+        assertEquals(0, SetUtils.INSTANCE.createSet("").size());
     }
 
     @Test
     public void shouldCreateSetFromNullString() {
-        assertEquals(0, SetUtils.createSet(null).size());
+        assertEquals(0, SetUtils.INSTANCE.createSet(null).size());
     }
 }

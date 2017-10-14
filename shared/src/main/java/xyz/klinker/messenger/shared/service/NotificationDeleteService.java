@@ -67,6 +67,6 @@ public class NotificationDeleteService extends IntentService {
                 true);
 
         new UnreadBadger(this).writeCountFromDatabase();
-        MessengerAppWidgetProvider.refreshWidget(this);
+        MessengerAppWidgetProvider.Companion.refreshWidget(this);
     }
 }

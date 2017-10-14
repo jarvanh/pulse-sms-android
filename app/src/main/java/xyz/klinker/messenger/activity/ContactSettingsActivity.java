@@ -44,7 +44,7 @@ public class ContactSettingsActivity extends AbstractSettingsActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fragment = ContactSettingsFragment.newInstance(
+        fragment = ContactSettingsFragment.Companion.newInstance(
                 getIntent().getLongExtra(EXTRA_CONVERSATION_ID, -1));
 
         getFragmentManager().beginTransaction()
@@ -60,8 +60,8 @@ public class ContactSettingsActivity extends AbstractSettingsActivity {
     public void onStart() {
         super.onStart();
 
-        if (fragment.conversation != null) {
-            ActivityUtils.INSTANCE.setTaskDescription(this, fragment.conversation.getTitle(), fragment.conversation.getColors().getColor());
+        if (fragment.getConversation() != null) {
+            ActivityUtils.INSTANCE.setTaskDescription(this, fragment.getConversation().getTitle(), fragment.getConversation().getColors().getColor());
         }
     }
 

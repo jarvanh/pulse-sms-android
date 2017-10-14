@@ -212,7 +212,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
             holder.message.setText(message.getData());
 
-            if (!message.getData().isEmpty() && message.getData().replaceAll(Regex.EMOJI, "").isEmpty()) {
+            if (!message.getData().isEmpty() && message.getData().replaceAll(Regex.INSTANCE.getEMOJI(), "").isEmpty()) {
                 // enlarge emojis
                 holder.message.setTextSize(35);
             } else {
@@ -228,7 +228,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
             }
 
-            Link urls = new Link(Regex.WEB_URL);
+            Link urls = new Link(Regex.INSTANCE.getWEB_URL());
             urls.setTextColor(linkColor);
             urls.setHighlightAlpha(.4f);
 
@@ -270,7 +270,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 }
             });
 
-            Link phoneNumbers = new Link(Regex.PHONE);
+            Link phoneNumbers = new Link(Regex.INSTANCE.getPHONE());
             phoneNumbers.setTextColor(linkColor);
             phoneNumbers.setHighlightAlpha(.4f);
             phoneNumbers.setOnClickListener(clickedText -> {
@@ -444,10 +444,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         }
 
         if (message.getSimPhoneNumber() != null) {
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.timestamp.getContext(),
+            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.timestamp.getContext(),
                     message.getTimestamp()) + " (SIM " + message.getSimPhoneNumber() + ")");
         } else if (holder.timestamp != null) {
-            holder.timestamp.setText(TimeUtils.formatTimestamp(holder.itemView.getContext(),
+            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.itemView.getContext(),
                     message.getTimestamp()));
         }
 
@@ -588,7 +588,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                             e.printStackTrace();
                         }
 
-                        SnackbarAnimationFix.apply(snackbar);
+                        SnackbarAnimationFix.INSTANCE.apply(snackbar);
                         snackbar.show();
                     }
                 }

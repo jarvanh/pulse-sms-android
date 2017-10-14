@@ -87,10 +87,10 @@ public class AccountPurchaseActivity extends AppCompatActivity {
             revealedPurchaseOptions = true;
         }
 
-        monthly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthly()));
-        threeMonth.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()));
-        yearly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()));
-        lifetime.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.createLifetime()));
+        monthly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.Companion.createMonthly()));
+        threeMonth.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.Companion.createThreeMonth()));
+        yearly.setOnClickListener(view -> warnOfPlayStoreSubscriptionProcess(ProductAvailable.Companion.createYearly()));
+        lifetime.setOnClickListener(view -> finishWithPurchaseResult(ProductAvailable.Companion.createLifetime()));
     }
 
     private void finishWithPurchaseResult(ProductAvailable product) {

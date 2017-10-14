@@ -119,7 +119,7 @@ public class ReplyService extends IntentService {
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId, getString(R.string.you) + ": " + reply, true);
         MessageListUpdatedReceiver.sendBroadcast(this, conversationId);
-        MessengerAppWidgetProvider.refreshWidget(this);
+        MessengerAppWidgetProvider.Companion.refreshWidget(this);
     }
 
 }

@@ -55,28 +55,28 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void shouldNotDisplayTimestamp() {
-        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (5 * MINUTE)));
-        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + SECOND));
-        assertFalse(TimeUtils.shouldDisplayTimestamp(current, current + (14 * MINUTE) + (59 * SECOND)));
+        assertFalse(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + (5 * MINUTE)));
+        assertFalse(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + SECOND));
+        assertFalse(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + (14 * MINUTE) + (59 * SECOND)));
     }
 
     @Test
     public void shouldDisplayTimestamp() {
-        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (15 * MINUTE)));
-        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + HOUR));
-        assertTrue(TimeUtils.shouldDisplayTimestamp(current, current + (2 * DAY)));
+        assertTrue(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + (15 * MINUTE)));
+        assertTrue(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + HOUR));
+        assertTrue(TimeUtils.INSTANCE.shouldDisplayTimestamp(current, current + (2 * DAY)));
     }
 
     @Test
     public void displayTimeAsNow() {
-        assertEquals("Now", TimeUtils.formatTimestamp(context, current));
+        assertEquals("Now", TimeUtils.INSTANCE.formatTimestamp(context, current));
     }
 
     @Test
     public void displayTimeAsShort() {
         long time = current - (5 * HOUR);
         assertEquals(DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time)),
-                TimeUtils.formatTimestamp(context, time));
+                TimeUtils.INSTANCE.formatTimestamp(context, time));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long time = current - (2 * DAY);
         String expected = new SimpleDateFormat("E").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
-        assertEquals(expected, TimeUtils.formatTimestamp(context, time));
+        assertEquals(expected, TimeUtils.INSTANCE.formatTimestamp(context, time));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long time = current - (8 * DAY);
         String expected = new SimpleDateFormat("MMM d").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
-        assertEquals(expected, TimeUtils.formatTimestamp(context, time));
+        assertEquals(expected, TimeUtils.INSTANCE.formatTimestamp(context, time));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long time = current - (400 * DAY);
         String expected = new SimpleDateFormat("MMM d, yyyy").format(new Date(time)) + ", " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date(time));
-        assertEquals(expected, TimeUtils.formatTimestamp(context, time));
+        assertEquals(expected, TimeUtils.INSTANCE.formatTimestamp(context, time));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (8 * HOUR);
 
-        assertEquals("12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
+        assertEquals("12:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (8 * HOUR) - (3 * DAY);
 
-        assertEquals("Sun, 12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
+        assertEquals("Sun, 12:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (8 * HOUR) - (8 * DAY);
 
-        assertEquals("Jul 5, 12:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
+        assertEquals("Jul 5, 12:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
     }
 
     @Test
@@ -132,24 +132,24 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (400 * DAY);
 
-        assertEquals("Jun 9, 2015, 8:23 AM", TimeUtils.formatTimestamp(context, timestamp, currentTime));
+        assertEquals("Jun 9, 2015, 8:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
     }
 
     @Test
     public void isToday() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertTrue(TimeUtils.isToday(
+        assertTrue(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 12, 12, 22, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isToday(
+        assertTrue(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 12, 0, 4, 56).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isToday(
+        assertTrue(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 12, 17, 52, 16).getTimeInMillis(),
                 currentTime
         ));
@@ -159,17 +159,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isNotToday() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertFalse(TimeUtils.isToday(
+        assertFalse(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 11, 23, 12, 5).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isToday(
+        assertFalse(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 11, 7, 56, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isToday(
+        assertFalse(TimeUtils.INSTANCE.isToday(
                 new GregorianCalendar(2016, 7, 13, 15, 45, 26).getTimeInMillis(),
                 currentTime
         ));
@@ -179,17 +179,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isYesterday() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertTrue(TimeUtils.isYesterday(
+        assertTrue(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 11, 12, 22, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isYesterday(
+        assertTrue(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 11, 0, 4, 56).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isYesterday(
+        assertTrue(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 11, 17, 52, 16).getTimeInMillis(),
                 currentTime
         ));
@@ -199,17 +199,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isNotYesterday() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertFalse(TimeUtils.isYesterday(
+        assertFalse(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 12, 23, 12, 5).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isYesterday(
+        assertFalse(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 10, 7, 56, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isYesterday(
+        assertFalse(TimeUtils.INSTANCE.isYesterday(
                 new GregorianCalendar(2016, 7, 13, 15, 45, 26).getTimeInMillis(),
                 currentTime
         ));
@@ -219,22 +219,22 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isLastWeek() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertTrue(TimeUtils.isLastWeek(
+        assertTrue(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 10, 12, 22, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isLastWeek(
+        assertTrue(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 7, 0, 4, 56).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isLastWeek(
+        assertTrue(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 6, 17, 52, 16).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isLastWeek(
+        assertTrue(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 12, 11, 52, 16).getTimeInMillis(),
                 currentTime
         ));
@@ -244,17 +244,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isNotLastWeek() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertFalse(TimeUtils.isLastWeek(
+        assertFalse(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 12, 23, 12, 5).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isLastWeek(
+        assertFalse(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 7, 4, 7, 56, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isLastWeek(
+        assertFalse(TimeUtils.INSTANCE.isLastWeek(
                 new GregorianCalendar(2016, 5, 13, 15, 45, 26).getTimeInMillis(),
                 currentTime
         ));
@@ -264,17 +264,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isLastMonth() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertTrue(TimeUtils.isLastMonth(
+        assertTrue(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2016, 7, 11, 12, 22, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isLastMonth(
+        assertTrue(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2016, 7, 1, 0, 4, 56).getTimeInMillis(),
                 currentTime
         ));
 
-        assertTrue(TimeUtils.isLastMonth(
+        assertTrue(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2016, 6, 13, 17, 52, 16).getTimeInMillis(),
                 currentTime
         ));
@@ -284,17 +284,17 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     public void isNotLastMonth() {
         long currentTime = new GregorianCalendar(2016, 7, 12, 15, 45, 26).getTimeInMillis();
 
-        assertFalse(TimeUtils.isLastMonth(
+        assertFalse(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2016, 7, 12, 23, 12, 5).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isLastMonth(
+        assertFalse(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2015, 7, 10, 7, 56, 0).getTimeInMillis(),
                 currentTime
         ));
 
-        assertFalse(TimeUtils.isLastMonth(
+        assertFalse(TimeUtils.INSTANCE.isLastMonth(
                 new GregorianCalendar(2016, 5, 13, 15, 45, 26).getTimeInMillis(),
                 currentTime
         ));
@@ -302,18 +302,18 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
 
     @Test
     public void isNight() {
-        assertTrue(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 2, 30)));
-        assertTrue(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 5, 59)));
-        assertTrue(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 22, 0)));
-        assertTrue(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 23, 59)));
+        assertTrue(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 2, 30)));
+        assertTrue(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 5, 59)));
+        assertTrue(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 22, 0)));
+        assertTrue(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 23, 59)));
     }
 
     @Test
     public void isNotNight() {
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 6, 0)));
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 13, 30)));
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 15, 50)));
-        assertFalse(TimeUtils.isNight(new GregorianCalendar(2016, 8, 16, 19, 59)));
+        assertFalse(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 6, 0)));
+        assertFalse(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 13, 30)));
+        assertFalse(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 15, 50)));
+        assertFalse(TimeUtils.INSTANCE.isNight(new GregorianCalendar(2016, 8, 16, 19, 59)));
     }
 
     @Test
@@ -322,7 +322,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long time = 1490893200000L;
 
         // 3 AM is 15 hours away. 3600 * 15 = 54000 seconds
-        assertEquals(54000000, TimeUtils.millisUntilHourInTheNextDay(3, time));
+        assertEquals(54000000, TimeUtils.INSTANCE.millisUntilHourInTheNextDay(3, time));
     }
 
 }

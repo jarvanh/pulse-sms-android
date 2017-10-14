@@ -1,15 +1,11 @@
 package xyz.klinker.messenger.shared.service.jobs;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.IntentService;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -17,8 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import xyz.klinker.messenger.api.implementation.Account;
-import xyz.klinker.messenger.api.implementation.ApiUtils;
-import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.shared.util.billing.BillingHelper;
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased;
 
@@ -71,7 +65,7 @@ public class SignoutJob extends BackgroundJob {
             if (best.getProductId().equals("lifetime")) {
                 writeLifetimeSubscriber();
             } else {
-                writeNewExpirationToAccount(new Date().getTime() + best.getExperation());
+                writeNewExpirationToAccount(new Date().getTime() + best.getExpiration());
             }
 
             return false;
