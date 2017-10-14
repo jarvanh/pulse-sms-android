@@ -308,8 +308,8 @@ public class MessageListFragment extends Fragment implements
 
         initNonDeferredComponents(bundle);
 
-        AnimationUtils.animateConversationPeripheralIn(appBarLayout);
-        AnimationUtils.animateConversationPeripheralIn(sendBar);
+        AnimationUtils.INSTANCE.animateConversationPeripheralIn(appBarLayout);
+        AnimationUtils.INSTANCE.animateConversationPeripheralIn(sendBar);
 
         new Handler().postDelayed(() -> {
             if (!isAdded()) {
@@ -367,7 +367,7 @@ public class MessageListFragment extends Fragment implements
                 // just in case
             }
 
-        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 25);
+        }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION() + 25);
 
         return view;
     }
@@ -414,7 +414,7 @@ public class MessageListFragment extends Fragment implements
 
         new Handler().postDelayed(() -> {
             new Thread(() -> source.readConversation(activity, getConversationId())).start();
-        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION() + 50);
     }
 
     @Override
@@ -424,7 +424,7 @@ public class MessageListFragment extends Fragment implements
 
         new Handler().postDelayed(() -> {
             new Thread(() -> source.readConversation(activity, getConversationId())).start();
-        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION() + 50);
     }
 
     @Override
@@ -606,7 +606,7 @@ public class MessageListFragment extends Fragment implements
 
             ColorUtils.INSTANCE.setCursorDrawableColor(messageEntry, colorAccent);
             ColorUtils.INSTANCE.colorTextSelectionHandles(messageEntry, colorAccent);
-        }, AnimationUtils.EXPAND_CONVERSATION_DURATION + 50);
+        }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION() + 50);
 
         if (!TvUtils.hasTouchscreen(activity)) {
             appBarLayout.setVisibility(View.GONE);
@@ -1261,7 +1261,7 @@ public class MessageListFragment extends Fragment implements
             m.setFrom(null);
             m.setColor(null);
             m.setSimPhoneNumber(conversation != null && conversation.getSimSubscriptionId() != null ?
-                    DualSimUtils.get(activity).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
+                    DualSimUtils.Companion.get(activity).getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
             m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 
             if (adapter != null && adapter.getItemViewType(0) == Message.Companion.getTYPE_INFO()) {

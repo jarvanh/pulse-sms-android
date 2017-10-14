@@ -42,7 +42,7 @@ public class ChangelogParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void notNull() {
-        Spanned[] items = ChangelogParser.parse(RuntimeEnvironment.application);
+        Spanned[] items = ChangelogParser.INSTANCE.parse(RuntimeEnvironment.application);
         assertNotNull(items);
         assertTrue(items.length > 0);
     }
@@ -53,7 +53,7 @@ public class ChangelogParserTest extends MessengerRobolectricSuite {
         Resources resources = Mockito.mock(Resources.class);
         when(resources.getXml(R.xml.changelog)).thenReturn(null);
 
-        Spanned[] items = ChangelogParser.parse(activity);
+        Spanned[] items = ChangelogParser.INSTANCE.parse(activity);
         assertNull(items);
     }
 

@@ -36,7 +36,7 @@ public class ChangelogAdapterTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         Activity activity = Robolectric.setupActivity(Activity.class);
-        adapter = new ChangelogAdapter(activity, ChangelogParser.parse(activity));
+        adapter = new ChangelogAdapter(activity, ChangelogParser.INSTANCE.parse(activity));
     }
 
     @Test

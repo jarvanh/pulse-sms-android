@@ -138,7 +138,7 @@ public class AboutFragment extends MaterialPreferenceFragmentCompat {
 
         new AlertDialog.Builder(activity)
                 .setTitle(R.string.changelog)
-                .setAdapter(new ChangelogAdapter(activity, ChangelogParser.parse(activity)), null)
+                .setAdapter(new ChangelogAdapter(activity, ChangelogParser.INSTANCE.parse(activity)), null)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
@@ -150,7 +150,7 @@ public class AboutFragment extends MaterialPreferenceFragmentCompat {
         Activity activity = getActivity();
 
         new AlertDialog.Builder(activity)
-                .setAdapter(new OpenSourceAdapter(activity, OpenSourceParser.parse(activity)), null)
+                .setAdapter(new OpenSourceAdapter(activity, OpenSourceParser.INSTANCE.parse(activity)), null)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }

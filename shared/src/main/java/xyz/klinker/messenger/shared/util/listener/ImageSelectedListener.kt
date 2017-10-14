@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
+
+import android.net.Uri
 
 /**
- * Provides a callback for when text has been entered and should be displayed somewhere else.
+ * Callback for easily notifying the caller when an image has been saved so we can act on it.
  */
-public interface TextSelectedListener {
-    void onTextSelected(String text);
+interface ImageSelectedListener {
+    fun onImageSelected(uri: Uri, mimeType: String)
+    fun onGalleryPicker()
+    fun isCurrentlySelected(uri: Uri, mimeType: String): Boolean
 }

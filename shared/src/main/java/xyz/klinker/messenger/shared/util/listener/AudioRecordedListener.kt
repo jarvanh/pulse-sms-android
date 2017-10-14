@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
-import android.net.Uri;
+import android.net.Uri
 
 /**
  * Listener that provides a callback for when audio has finished recording and we need to decide
  * what to do with it.
  */
-public interface AudioRecordedListener {
-    void onRecorded(Uri uri);
+interface AudioRecordedListener {
+    fun onRecorded(uri: Uri)
 }

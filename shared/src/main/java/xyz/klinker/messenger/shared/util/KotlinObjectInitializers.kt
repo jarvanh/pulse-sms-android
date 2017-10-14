@@ -11,7 +11,6 @@ import xyz.klinker.messenger.shared.data.Settings
 object KotlinObjectInitializers {
 
     fun initializeObjects(context: Context) {
-
         try {
             ApiUtils.environment = context.getString(R.string.environment)
         } catch (e: Exception) {
@@ -22,6 +21,7 @@ object KotlinObjectInitializers {
         FeatureFlags.init(context)
         Settings.init(context)
         MmsSettings.init(context)
+        DualSimUtils.init(context)
         EmojiInitializer.initializeEmojiCompat(context)
     }
 }

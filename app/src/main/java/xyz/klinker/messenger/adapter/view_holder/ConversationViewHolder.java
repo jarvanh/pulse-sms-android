@@ -215,14 +215,14 @@ public class ConversationViewHolder extends SwappingHolder {
     private void expandConversation() {
         if (expandedListener.onConversationExpanded(this)) {
             expanded = true;
-            AnimationUtils.expandConversationListItem(itemView);
+            AnimationUtils.INSTANCE.expandConversationListItem(itemView);
         }
     }
 
     private void collapseConversation() {
         expanded = false;
         expandedListener.onConversationContracted(this);
-        AnimationUtils.contractConversationListItem(itemView);
+        AnimationUtils.INSTANCE.contractConversationListItem(itemView);
     }
 
     public void setContactClickedListener(ContactClickedListener listener) {

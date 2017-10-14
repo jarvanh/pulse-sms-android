@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
-
-import xyz.klinker.messenger.shared.data.model.Conversation;
-import xyz.klinker.messenger.shared.data.model.Message;
+package xyz.klinker.messenger.shared.util.listener
 
 /**
- * Listener for getting callbacks when an item is searched for and clicked on.
+ * Listener for getting notifications when the back button is pressed.
  */
-public interface SearchListener {
-
-    void onSearchSelected(Message message);
-
-    void onSearchSelected(Conversation conversation);
-
+interface BackPressedListener {
+    fun onBackPressed(): Boolean
 }

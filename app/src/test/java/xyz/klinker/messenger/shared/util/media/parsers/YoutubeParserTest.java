@@ -40,9 +40,9 @@ public class YoutubeParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void shouldConvertThumbnailBackToVideoUri() {
-        assertThat(YoutubeParser.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/maxresdefault.jpg"),
+        assertThat(YoutubeParser.Companion.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/maxresdefault.jpg"),
                 Matchers.is("https://youtube.com/watch?v=ohGXwX6zKow"));
-        assertThat(YoutubeParser.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/0.jpg"),
+        assertThat(YoutubeParser.Companion.getVideoUriFromThumbnail("https://img.youtube.com/vi/ohGXwX6zKow/0.jpg"),
                 Matchers.is("https://youtube.com/watch?v=ohGXwX6zKow"));
     }
 }

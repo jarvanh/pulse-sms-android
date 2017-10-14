@@ -520,7 +520,7 @@ public class ConversationListFragment extends Fragment
         }
 
         expandedConversation = viewHolder;
-        AnimationUtils.expandActivityForConversation(activity);
+        AnimationUtils.INSTANCE.expandActivityForConversation(activity);
 
         if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
@@ -558,7 +558,7 @@ public class ConversationListFragment extends Fragment
     @Override
     public void onConversationContracted(ConversationViewHolder viewHolder) {
         expandedConversation = null;
-        AnimationUtils.contractActivityFromConversation(activity);
+        AnimationUtils.INSTANCE.contractActivityFromConversation(activity);
 
         if (messageListFragment == null) {
             return;
@@ -579,7 +579,7 @@ public class ConversationListFragment extends Fragment
                 }
 
                 messageListFragment = null;
-            }, AnimationUtils.EXPAND_CONVERSATION_DURATION);
+            }, AnimationUtils.INSTANCE.getEXPAND_CONVERSATION_DURATION());
 
             messageListFragment.getView().animate().alpha(0f).setDuration(100).start();
         } catch (Exception e) {

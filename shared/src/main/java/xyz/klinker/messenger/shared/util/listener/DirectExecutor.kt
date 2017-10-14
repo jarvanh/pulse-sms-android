@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
-/**
- * Listener for getting notifications when the back button is pressed.
- */
-public interface BackPressedListener {
+import java.util.concurrent.Executor
 
-    boolean onBackPressed();
-
+class DirectExecutor : Executor {
+    override fun execute(r: Runnable) {
+        r.run()
+    }
 }

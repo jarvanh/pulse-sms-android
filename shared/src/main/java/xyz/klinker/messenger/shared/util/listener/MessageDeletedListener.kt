@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
-import xyz.klinker.messenger.shared.data.ColorSet;
+import android.content.Context
 
 /**
- * Listener for when a user chooses a color set in settings_global.
+ * Listener for when a message has been deleted and we need to make any appropriate changes.
  */
-public interface ColorSelectedListener {
-    void onColorSelected(ColorSet colors);
+interface MessageDeletedListener {
+    fun onMessageDeleted(context: Context, conversationId: Long, position: Int)
 }

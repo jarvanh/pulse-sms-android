@@ -38,7 +38,7 @@ public class OpenSourceAdapterTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         Activity activity = Robolectric.setupActivity(Activity.class);
-        adapter = new OpenSourceAdapter(activity, OpenSourceParser.parse(activity));
+        adapter = new OpenSourceAdapter(activity, OpenSourceParser.INSTANCE.parse(activity));
     }
 
     @Test

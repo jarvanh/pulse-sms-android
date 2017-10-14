@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
-import android.net.Uri;
+import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 
 /**
- * Callback for easily notifying the caller when an image has been saved so we can act on it.
+ * Listener for when a scheduled message is clicked.
  */
-public interface ImageSelectedListener {
-    void onImageSelected(Uri uri, String mimeType);
-    void onGalleryPicker();
-    boolean isCurrentlySelected(Uri uri, String mimeType);
+interface ScheduledMessageClickListener {
+    fun onClick(message: ScheduledMessage)
 }

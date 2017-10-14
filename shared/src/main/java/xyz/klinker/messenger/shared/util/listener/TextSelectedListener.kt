@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
-
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
+package xyz.klinker.messenger.shared.util.listener
 
 /**
- * Listener for when a scheduled message is clicked.
+ * Provides a callback for when text has been entered and should be displayed somewhere else.
  */
-public interface ScheduledMessageClickListener {
-    void onClick(ScheduledMessage message);
+interface TextSelectedListener {
+    fun onTextSelected(text: String)
 }

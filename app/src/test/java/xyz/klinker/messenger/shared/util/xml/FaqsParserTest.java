@@ -41,7 +41,7 @@ public class FaqsParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void notNull() {
-        String[] items = FaqsParser.parse(RuntimeEnvironment.application);
+        String[] items = FaqsParser.INSTANCE.parse(RuntimeEnvironment.application);
         assertNotNull(items);
         assertTrue(items.length > 0);
     }
@@ -52,7 +52,7 @@ public class FaqsParserTest extends MessengerRobolectricSuite {
         Resources resources = Mockito.mock(Resources.class);
         when(resources.getXml(R.xml.faqs)).thenReturn(null);
 
-        String[] items = FaqsParser.parse(activity);
+        String[] items = FaqsParser.INSTANCE.parse(activity);
         assertNull(items);
     }
 

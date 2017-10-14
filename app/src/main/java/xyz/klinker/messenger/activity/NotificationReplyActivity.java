@@ -389,7 +389,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         m.setSeen(true);
         m.setFrom(null);
         m.setColor(null);
-        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(this)
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.Companion.get(this)
                 .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
         m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
 /**
- * Listener for when a blacklist item is clicked on.
+ * Listener for progress updates.
  */
-public interface BlacklistClickedListener {
-    void onClick(int position);
+interface ProgressUpdateListener {
+    fun onProgressUpdate(current: Int, max: Int)
 }

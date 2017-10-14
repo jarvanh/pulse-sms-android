@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
+
+import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.model.Message
 
 /**
- * Callback for when a contact is clicked on a screen such as the compose screen.
+ * Listener for getting callbacks when an item is searched for and clicked on.
  */
-public interface ContactClickedListener {
-    void onClicked(String title, String phoneNumber, String imageUri);
+interface SearchListener {
+
+    fun onSearchSelected(message: Message)
+    fun onSearchSelected(conversation: Conversation)
+
 }

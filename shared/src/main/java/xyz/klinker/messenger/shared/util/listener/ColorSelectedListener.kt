@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
+
+import xyz.klinker.messenger.shared.data.ColorSet
 
 /**
- * Listener for progress updates.
+ * Listener for when a user chooses a color set in settings_global.
  */
-public interface ProgressUpdateListener {
-
-    void onProgressUpdate(int current, int max);
-
+interface ColorSelectedListener {
+    fun onColorSelected(colors: ColorSet)
 }

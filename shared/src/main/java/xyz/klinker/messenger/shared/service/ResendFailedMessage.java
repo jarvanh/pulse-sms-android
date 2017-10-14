@@ -51,7 +51,7 @@ public class ResendFailedMessage extends IntentService {
         m.setSeen(true);
         m.setFrom(null);
         m.setColor(null);
-        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.get(this)
+        m.setSimPhoneNumber(conversation.getSimSubscriptionId() != null ? DualSimUtils.INSTANCE
                 .getPhoneNumberFromSimSubscription(conversation.getSimSubscriptionId()) : null);
         m.setSentDeviceId(Account.INSTANCE.exists() ? Long.parseLong(Account.INSTANCE.getDeviceId()) : -1L);
 

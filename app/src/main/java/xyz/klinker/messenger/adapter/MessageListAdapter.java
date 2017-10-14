@@ -258,7 +258,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                     url.setData(Uri.parse(clickedText));
                     holder.itemView.getContext().startActivity(url);
                 } else {
-                    ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
+                    ArticleIntent intent = new ArticleIntent.Builder(holder.itemView.getContext(), ArticleParser.Companion.getARTICLE_API_KEY())
                             .setToolbarColor(receivedColor)
                             .setAccentColor(accentColor)
                             .setTheme(Settings.INSTANCE.isCurrentlyDarkTheme() ?

@@ -393,7 +393,7 @@ public class MessageViewHolder extends SwappingHolder {
     }
 
     private void startArticle() {
-        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
+        ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.Companion.getARTICLE_API_KEY())
                 .setToolbarColor(primaryColor)
                 .setAccentColor(accentColor)
                 .setTheme(Settings.INSTANCE.isCurrentlyDarkTheme() ?

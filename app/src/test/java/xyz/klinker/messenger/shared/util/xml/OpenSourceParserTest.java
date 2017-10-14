@@ -41,7 +41,7 @@ public class OpenSourceParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void notNull() {
-        String[] items = OpenSourceParser.parse(RuntimeEnvironment.application);
+        String[] items = OpenSourceParser.INSTANCE.parse(RuntimeEnvironment.application);
         assertNotNull(items);
         assertTrue(items.length > 0);
     }
@@ -52,7 +52,7 @@ public class OpenSourceParserTest extends MessengerRobolectricSuite {
         Resources resources = Mockito.mock(Resources.class);
         when(resources.getXml(R.xml.open_source)).thenReturn(null);
 
-        String[] items = OpenSourceParser.parse(activity);
+        String[] items = OpenSourceParser.INSTANCE.parse(activity);
         assertNull(items);
     }
 

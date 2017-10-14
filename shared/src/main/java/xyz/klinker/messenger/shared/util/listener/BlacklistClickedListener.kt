@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
+package xyz.klinker.messenger.shared.util.listener
 
-import java.util.concurrent.Executor;
-
-public class DirectExecutor implements Executor {
-    public void execute(Runnable r) {
-        r.run();
-    }
+/**
+ * Listener for when a blacklist item is clicked on.
+ */
+interface BlacklistClickedListener {
+    fun onClick(position: Int)
 }

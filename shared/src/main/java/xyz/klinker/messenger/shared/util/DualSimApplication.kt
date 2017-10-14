@@ -21,16 +21,16 @@ class DualSimApplication(private val switchSim: View) {
         var visible = false
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            val subscriptions = DualSimUtils.get(context).availableSims
+            val subscriptions = DualSimUtils.availableSims
 
-            if (subscriptions != null && subscriptions.size > 1) {
+            if (subscriptions.size > 1) {
                 visible = true
                 switchSim.visibility = View.VISIBLE
                 val badger = ViewBadger(context, switchSim)
                 val conversation = DataSource.getConversation(context, conversationId)
 
                 var set = false
-                if (conversation != null && conversation.simSubscriptionId != null) {
+                if (conversation?.simSubscriptionId != null) {
                     for (i in subscriptions.indices) {
                         if (subscriptions[i].subscriptionId == conversation.simSubscriptionId) {
                             set = true
@@ -44,7 +44,7 @@ class DualSimApplication(private val switchSim: View) {
                     badger.text = "1"
                 }
 
-                switchSim.setOnClickListener { view -> showSimSelection(subscriptions, conversation, badger) }
+                switchSim.setOnClickListener { _ -> showSimSelection(subscriptions, conversation, badger) }
             }
         }
 

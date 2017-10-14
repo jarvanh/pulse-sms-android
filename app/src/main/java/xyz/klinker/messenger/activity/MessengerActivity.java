@@ -192,8 +192,8 @@ public class  MessengerActivity extends AppCompatActivity
 
         final View content = findViewById(R.id.content);
         content.post(() -> {
-            AnimationUtils.conversationListSize = content.getHeight();
-            AnimationUtils.toolbarSize = toolbar.getHeight();
+            AnimationUtils.INSTANCE.setConversationListSize(content.getHeight());
+            AnimationUtils.INSTANCE.setToolbarSize(toolbar.getHeight());
         });
     }
 
@@ -762,8 +762,8 @@ public class  MessengerActivity extends AppCompatActivity
         if (updateConversationListSize) {
             final View content = findViewById(R.id.content);
             content.post(() -> {
-                AnimationUtils.conversationListSize = content.getHeight();
-                AnimationUtils.toolbarSize = toolbar.getHeight();
+                AnimationUtils.INSTANCE.setConversationListSize(content.getHeight());
+                AnimationUtils.INSTANCE.setToolbarSize(toolbar.getHeight());
             });
         }
         

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util.listener;
-
-import android.content.Context;
+package xyz.klinker.messenger.shared.util.listener
 
 /**
- * Listener for when a message has been deleted and we need to make any appropriate changes.
+ * Callback for when a contact is clicked on a screen such as the compose screen.
  */
-public interface MessageDeletedListener {
-    void onMessageDeleted(Context context, long conversationId, int position);
+interface ContactClickedListener {
+    fun onClicked(title: String, phoneNumber: String, imageUri: String)
 }
