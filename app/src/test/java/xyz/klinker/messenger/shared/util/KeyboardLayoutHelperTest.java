@@ -22,10 +22,6 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     private static final int DEFAULT_IME_OPTIONS = EditorInfo.IME_ACTION_SEND | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 
-    private KeyboardLayoutHelper helper;
-
-    @Mock
-    private Settings settings;
     @Mock
     private EditText editText;
 
@@ -37,30 +33,27 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptDefaultKeyboard() {
-        settings.keyboardLayout = KeyboardLayout.DEFAULT;
-        helper = new KeyboardLayoutHelper(settings);
+        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.DEFAULT);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
 
-        helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }
 
     @Test
     public void shouldAcceptEnterKeyboard() {
-        settings.keyboardLayout = KeyboardLayout.ENTER;
-        helper = new KeyboardLayoutHelper(settings);
+        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.ENTER);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
 
-        helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }
 
     @Test
     public void shouldAcceptSendKeyboard() {
-        settings.keyboardLayout = KeyboardLayout.SEND;
-        helper = new KeyboardLayoutHelper(settings);
+        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.SEND);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
 
-        helper.applyLayout(editText);
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
     }

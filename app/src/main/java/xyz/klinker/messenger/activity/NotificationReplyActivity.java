@@ -300,7 +300,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         });
 
 
-        new KeyboardLayoutHelper().applyLayout(messageInput);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(messageInput);
         messageInput.setHint(getString(R.string.type_message));
         messageInput.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }

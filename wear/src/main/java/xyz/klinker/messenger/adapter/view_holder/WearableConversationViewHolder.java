@@ -49,7 +49,7 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (conversation != null) {
-                    MessageListActivity.startActivity(itemView.getContext(), conversation.getId());
+                    MessageListActivity.Companion.startActivity(itemView.getContext(), conversation.getId());
 
                     if (unreadIndicator != null && unreadIndicator.getVisibility() == View.VISIBLE) {
                         setTypeface(false, isItalic());
@@ -78,7 +78,7 @@ public class WearableConversationViewHolder extends RecyclerView.ViewHolder {
             }
 
             ((CircleImageView) unreadIndicator).setImageDrawable(
-                    new ColorDrawable(Settings.get(itemView.getContext()).mainColorSet.getColor()));
+                    new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColor()));
         } else {
             name.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);
             summary.setTypeface(Typeface.DEFAULT, italic ? Typeface.ITALIC : Typeface.NORMAL);

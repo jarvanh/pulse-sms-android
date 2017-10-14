@@ -9,18 +9,13 @@ import android.widget.EditText
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 
-class KeyboardLayoutHelper
-internal constructor(settings: Settings) {
-
-    constructor() : this(Settings)
-
-    private val layout: KeyboardLayout = settings.keyboardLayout
+object KeyboardLayoutHelper {
 
     fun applyLayout(editText: EditText) {
         var inputType = editText.inputType
         val imeOptions = editText.imeOptions
 
-        when (layout) {
+        when (Settings.keyboardLayout) {
             KeyboardLayout.DEFAULT -> inputType = inputType or InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE
             KeyboardLayout.SEND -> { }
             KeyboardLayout.ENTER -> { }

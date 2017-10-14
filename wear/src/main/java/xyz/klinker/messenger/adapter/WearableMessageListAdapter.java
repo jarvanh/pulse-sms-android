@@ -82,10 +82,10 @@ public class WearableMessageListAdapter extends RecyclerView.Adapter<WearableMes
 
         if (timestampHeight == 0) {
             setTimestampHeight(DensityUtil.INSTANCE.spToPx(parent.getContext(),
-                    Settings.get(parent.getContext()).mediumFont + 2));
+                    Settings.INSTANCE.getMediumFont() + 2));
         }
 
-        boolean rounder = Settings.get(parent.getContext()).rounderBubbles;
+        boolean rounder = Settings.INSTANCE.getRounderBubbles();
         if (viewType == Message.Companion.getTYPE_RECEIVED()) {
             layoutId = rounder ? R.layout.message_received_round : R.layout.message_received;
             color = receivedColor;

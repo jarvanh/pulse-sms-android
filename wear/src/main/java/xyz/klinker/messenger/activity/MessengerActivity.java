@@ -109,7 +109,7 @@ public class MessengerActivity extends AppCompatActivity implements IConversatio
 
         if (convoId != -1L) {
             ConversationListUpdatedReceiver.sendBroadcast(this, convoId, null, true);
-            MessageListActivity.startActivity(this, convoId);
+            MessageListActivity.Companion.startActivity(this, convoId);
         }
     }
 

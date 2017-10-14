@@ -136,9 +136,9 @@ public class WearableConversationListAdapter extends SectionedRecyclerViewAdapte
         holder.position = absolutePosition;
 
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
-            if (Settings.get(holder.itemView.getContext()).useGlobalThemeColor) {
+            if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 holder.image.setImageDrawable(new ColorDrawable(
-                        Settings.get(holder.itemView.getContext()).mainColorSet.getColorLight()));
+                        Settings.INSTANCE.getMainColorSet().getColorLight()));
             } else {
                 holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }

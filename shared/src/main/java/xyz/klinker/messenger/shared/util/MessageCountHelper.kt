@@ -19,11 +19,11 @@ object MessageCountHelper {
      *
      * @return a string to be applied to the counter TextView
      */
-    fun getMessageCounterText(settings: Settings, mmsSettings: MmsSettings, text: String): String? {
+    fun getMessageCounterText(text: String): String? {
         var text = text
-        val stripUnicode = settings.stripUnicode
-        val convertToMMS = mmsSettings.convertLongMessagesToMMS
-        val convertAfterXMessages = mmsSettings.numberOfMessagesBeforeMms
+        val stripUnicode = Settings.stripUnicode
+        val convertToMMS = MmsSettings.convertLongMessagesToMMS
+        val convertAfterXMessages = MmsSettings.numberOfMessagesBeforeMms
         var numberOfMessages = 0
         var charRemaining = 0
 
@@ -53,7 +53,7 @@ object MessageCountHelper {
             }
         }
 
-        return if (numberOfMessages > 1 && numberOfMessages <= convertAfterXMessages) {
+        return if (numberOfMessages in 2..convertAfterXMessages) {
             formatCount(numberOfMessages, charRemaining)
         } else {
             null

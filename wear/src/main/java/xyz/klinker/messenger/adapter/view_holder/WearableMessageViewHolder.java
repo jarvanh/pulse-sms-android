@@ -88,21 +88,19 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         clippedImage = (ImageView) itemView.findViewById(R.id.clipped_image);
         messageHolder = itemView.findViewById(R.id.message_holder);
 
-        Settings settings = Settings.get(itemView.getContext());
-
-        message.setTextSize(settings.largeFont);
-        timestamp.setTextSize(settings.smallFont);
-        timestamp.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), settings.mediumFont));
+        message.setTextSize(Settings.INSTANCE.getLargeFont());
+        timestamp.setTextSize(Settings.INSTANCE.getSmallFont());
+        timestamp.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), Settings.INSTANCE.getMediumFont()));
 
         if (contact != null) {
-            contact.setTextSize(settings.smallFont);
-            contact.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), settings.mediumFont));
+            contact.setTextSize(Settings.INSTANCE.getSmallFont());
+            contact.setHeight(DensityUtil.INSTANCE.spToPx(itemView.getContext(), Settings.INSTANCE.getMediumFont()));
         }
 
-        if ((color != -1 && messageHolder != null) ||
-                settings.useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
-            if (settings.useGlobalThemeColor) {
-                color = Settings.get(itemView.getContext()).mainColorSet.getColor();
+        boolean useGlobalThemeColor = Settings.INSTANCE.getUseGlobalThemeColor();
+        if ((color != -1 && messageHolder != null) || useGlobalThemeColor && type == Message.Companion.getTYPE_RECEIVED()) {
+            if (useGlobalThemeColor) {
+                color = Settings.INSTANCE.getMainColorSet().getColor();
             }
 
             messageHolder.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -165,9 +163,9 @@ public class WearableMessageViewHolder extends RecyclerView.ViewHolder {
         ArticleIntent intent = new ArticleIntent.Builder(itemView.getContext(), ArticleParser.ARTICLE_API_KEY)
                 .setToolbarColor(primaryColor)
                 .setAccentColor(accentColor)
-                .setTheme(Settings.get(itemView.getContext()).isCurrentlyDarkTheme() ?
+                .setTheme(Settings.INSTANCE.isCurrentlyDarkTheme() ?
                         ArticleIntent.THEME_DARK : ArticleIntent.THEME_LIGHT)
-                .setTextSize(Settings.get(itemView.getContext()).mediumFont + 1)
+                .setTextSize(Settings.INSTANCE.getMediumFont() + 1)
                 .build();
 
         ArticlePreview preview = ArticlePreview.Companion.build(data);

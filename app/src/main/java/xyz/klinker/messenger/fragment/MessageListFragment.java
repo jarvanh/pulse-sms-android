@@ -663,7 +663,7 @@ public class MessageListFragment extends Fragment implements
     }
 
     private void initSendbar() {
-        new KeyboardLayoutHelper().applyLayout(messageEntry);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(messageEntry);
         messageEntry.setTextSize(Settings.INSTANCE.getLargeFont());
 
         messageEntry.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -763,7 +763,7 @@ public class MessageListFragment extends Fragment implements
         if (attachedUri == null && !getArguments().getBoolean(ARG_IS_GROUP) && !ignoreCounterText()) {
             String text = messageEntry.getText().toString();
 
-            counter.setText(MessageCountHelper.INSTANCE.getMessageCounterText(Settings.INSTANCE, MmsSettings.INSTANCE, text));
+            counter.setText(MessageCountHelper.INSTANCE.getMessageCounterText(text));
         } else {
             counter.setText(/*R.string.mms_message*/ null);
         }

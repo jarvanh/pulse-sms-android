@@ -24,7 +24,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_VERSION"
         classpath 'com.google.gms:google-services:3.1.0'
         classpath 'com.google.firebase:firebase-plugins:1.1.0'
-        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
     }
 }
@@ -38,6 +38,7 @@ allprojects {
         maven { url "https://dl.bintray.com/drummer-aidan/maven" }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "https://jitpack.io" }
+        maven { url "https://dl.bintray.com/mockito/maven" }
         flatDir { dirs "$rootProject.projectDir/shared/libs" }
     }
 }

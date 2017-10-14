@@ -39,7 +39,8 @@ public class SettingsTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        settings = spy(Settings.get(RuntimeEnvironment.application));
+        settings = spy(Settings.INSTANCE);
+        settings.init(context);
     }
 
     @Test
@@ -50,20 +51,20 @@ public class SettingsTest extends MessengerRobolectricSuite {
     @Test
     public void forceUpdate() {
         settings.forceUpdate(context);
-        verify(settings).init(any(Context.class));
+        verify(settings, atLeastOnce()).init(any(Context.class));
     }
 
     @Test
     public void setBooleanValue() {
         settings.setValue(context, "test", true);
-        verify(settings).init(any(Context.class));
+        verify(settings, atLeastOnce()).init(any(Context.class));
         assertTrue(settings.getSharedPrefs(context).getBoolean("test", false));
     }
 
     @Test
     public void setIntValue() {
         settings.setValue(context, "test", 1);
-        verify(settings).init(any(Context.class));
+        verify(settings, atLeastOnce()).init(any(Context.class));
         assertTrue(settings.getSharedPrefs(context).getInt("test", 2) == 1);
     }
 
@@ -77,7 +78,7 @@ public class SettingsTest extends MessengerRobolectricSuite {
     @Test
     public void setLongValue() {
         settings.setValue(context, "test", 111L);
-        verify(settings).init(any(Context.class));
+        verify(settings, atLeastOnce()).init(any(Context.class));
         assertEquals(111L, settings.getSharedPrefs(context).getLong("test", -1));
     }
 
@@ -86,11 +87,6 @@ public class SettingsTest extends MessengerRobolectricSuite {
         settings.setValue(context, "test", "testvalue");
         settings.removeValue(context, "test");
         assertEquals(null, settings.getSharedPrefs(context).getString("test", null));
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void cantInitializeWithBlankConstructor() {
-        Settings settings = new Settings();
     }
 
 }

@@ -6,14 +6,14 @@ import android.telephony.TelephonyManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import xyz.klinker.messenger.MessengerSuite;
 import xyz.klinker.messenger.shared.util.SendUtils;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
 public class SendUtilsTest extends MessengerSuite {
 
