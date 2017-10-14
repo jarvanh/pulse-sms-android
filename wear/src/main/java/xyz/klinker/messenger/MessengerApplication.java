@@ -88,7 +88,7 @@ public class MessengerApplication extends FirebaseApplication {
         return new FirebaseMessageHandler() {
             @Override
             public void handleMessage(Application application, String operation, String data) {
-                new Thread(() -> FirebaseHandlerService.process(application, operation, data)).start();
+                new Thread(() -> FirebaseHandlerService.Companion.process(application, operation, data)).start();
             }
 
             @Override
