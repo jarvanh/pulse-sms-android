@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.utils.listener;
+package xyz.klinker.messenger.utils.listener
 
-import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
+import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 
 /**
  * Listener for notifying an object when a conversation has been expanded or contracted.
  */
-public interface ConversationExpandedListener {
+interface ConversationExpandedListener {
 
     /**
      * Tells the listener to expand the conversation.
      *
      * @return true if the listener actually expanded, otherwise false.
      */
-    boolean onConversationExpanded(ConversationViewHolder viewHolder);
+    fun onConversationExpanded(viewHolder: ConversationViewHolder): Boolean
 
-    void onConversationContracted(ConversationViewHolder viewHolder);
+    fun onConversationContracted(viewHolder: ConversationViewHolder)
 
 }

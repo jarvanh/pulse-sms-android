@@ -2,24 +2,15 @@ package xyz.klinker.messenger.utils
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.preference.PreferenceManager
 import android.util.Log
-
-import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
-import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.ContactResyncService
-import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob
-import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob
-import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
-import xyz.klinker.messenger.shared.service.jobs.SignoutJob
-import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
+import xyz.klinker.messenger.shared.service.jobs.*
 
 class UpdateUtils(private val context: Activity) {
 

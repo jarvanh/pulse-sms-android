@@ -100,14 +100,12 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
         val toolbar = (activity as AbstractSettingsActivity).toolbar
 
-        if (toolbar != null) {
-            if (Settings.useGlobalThemeColor) {
-                toolbar.setBackgroundColor(Settings.mainColorSet.color)
-                ActivityUtils.setStatusBarColor(activity, Settings.mainColorSet.colorDark)
-            } else {
-                toolbar.setBackgroundColor(conversation.colors.color)
-                ActivityUtils.setStatusBarColor(activity, conversation.colors.colorDark)
-            }
+        if (Settings.useGlobalThemeColor) {
+            toolbar.setBackgroundColor(Settings.mainColorSet.color)
+            ActivityUtils.setStatusBarColor(activity, Settings.mainColorSet.colorDark)
+        } else {
+            toolbar.setBackgroundColor(conversation.colors.color)
+            ActivityUtils.setStatusBarColor(activity, conversation.colors.colorDark)
         }
     }
 

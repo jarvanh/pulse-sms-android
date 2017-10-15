@@ -60,7 +60,7 @@ public class TvBrowseFragment extends BrowseSupportFragment {
             setAdapter(adapter);
         }
 
-        CursorUtil.closeSilent(conversations);
+        CursorUtil.INSTANCE.closeSilent(conversations);
     }
 
 }

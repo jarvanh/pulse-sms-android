@@ -247,7 +247,7 @@ public class  MessengerActivity extends AppCompatActivity
                 new Thread(() -> {
                     Cursor c = DataSource.INSTANCE.getUnseenMessages(this);
                     int count = c.getCount();
-                    CursorUtil.closeSilent(c);
+                    CursorUtil.INSTANCE.closeSilent(c);
 
                     if (count > 1) {
                         // since the notification functionality here is not nearly as good as 7.0,
@@ -1103,7 +1103,7 @@ public class  MessengerActivity extends AppCompatActivity
                 });
             }
 
-            CursorUtil.closeSilent(messages);
+            CursorUtil.INSTANCE.closeSilent(messages);
 
             builder.show();
             return true;

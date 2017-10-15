@@ -220,7 +220,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
                 conversations.add(conversation);
             } while (cursor.moveToNext());
 
-            CursorUtil.closeSilent(cursor);
+            CursorUtil.INSTANCE.closeSilent(cursor);
             return conversations;
         }
 
@@ -501,7 +501,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             source.updateMessageData(this, cursor.getLong(0), uri.toString());
         }
 
-        CursorUtil.closeSilent(cursor);
+        CursorUtil.INSTANCE.closeSilent(cursor);
         finish();
     }
 
@@ -517,7 +517,7 @@ public class ComposeActivity extends AppCompatActivity implements ContactClicked
             source.updateMessageData(this, cursor.getLong(0), uri.toString());
         }
 
-        CursorUtil.closeSilent(cursor);
+        CursorUtil.INSTANCE.closeSilent(cursor);
         finish();
     }
 

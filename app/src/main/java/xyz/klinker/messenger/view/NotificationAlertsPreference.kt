@@ -27,11 +27,14 @@ import xyz.klinker.messenger.shared.data.pojo.VibratePattern
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
-class NotificationAlertsPreference @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : Preference(context, attrs, defStyleAttr), Preference.OnPreferenceClickListener {
+@Suppress("DEPRECATION")
+class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickListener {
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context) : super(context)
 
     init {
-        layoutResource = R.layout.preference_layout
         onPreferenceClickListener = this
     }
 

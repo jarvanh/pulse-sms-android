@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.utils.swipe_to_dismiss;
+package xyz.klinker.messenger.utils.swipe_to_dismiss
 
-import android.content.Context;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.content.Context
+import android.support.v7.widget.helper.ItemTouchHelper
 
-import xyz.klinker.messenger.adapter.ConversationListAdapter;
-import xyz.klinker.messenger.shared.data.Settings;
+import xyz.klinker.messenger.adapter.ConversationListAdapter
+import xyz.klinker.messenger.shared.data.Settings
 
 /**
  * A touch helper that uses the SwipeSimpleCallback as an impementation.
  */
-public class SwipeTouchHelper extends ItemTouchHelper {
+class SwipeTouchHelper : ItemTouchHelper {
 
-    public SwipeTouchHelper(ConversationListAdapter adapter, Context context) {
-        super(Settings.INSTANCE.getSwipeDelete() ? new SwipeDeleteSimpleCallback(adapter) : new SwipeSimpleCallback(adapter));
-    }
+    constructor(adapter: ConversationListAdapter, context: Context)
+            : super(if (Settings.swipeDelete) SwipeDeleteSimpleCallback(adapter) else SwipeSimpleCallback(adapter))
 
-    public SwipeTouchHelper(SwipeSimpleCallback callback) {
-        super(callback);
-    }
+    constructor(callback: SwipeSimpleCallback) : super(callback)
 
 }

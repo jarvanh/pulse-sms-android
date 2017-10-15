@@ -197,7 +197,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
             } while (cursor.moveToPrevious() && messages.size() < PREV_MESSAGES_TOTAL);
         }
 
-        CursorUtil.closeSilent(cursor);
+        CursorUtil.INSTANCE.closeSilent(cursor);
     }
 
     private void displayMessages() {

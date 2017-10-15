@@ -80,9 +80,9 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         messageText!!.setText(scheduledMessage!!.data)
         sendDate!!.text = format!!.format(scheduledMessage!!.timestamp)
         name.text = scheduledMessage!!.title
-        save.setOnClickListener { view -> save() }
-        delete.setOnClickListener { view -> delete() }
-        sendDate!!.setOnClickListener { view -> displayDateDialog() }
+        save.setOnClickListener { save() }
+        delete.setOnClickListener { delete() }
+        sendDate!!.setOnClickListener { displayDateDialog() }
 
         messageText!!.setSelection(messageText!!.text.length)
 
@@ -116,7 +116,7 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         val context = contextToFixDatePickerCrash
 
         val calendar = Calendar.getInstance()
-        DatePickerDialog(context, { datePicker, year, month, day ->
+        DatePickerDialog(context, { _, year, month, day ->
             scheduledMessage!!.timestamp = GregorianCalendar(year, month, day)
                     .timeInMillis
             displayTimeDialog()

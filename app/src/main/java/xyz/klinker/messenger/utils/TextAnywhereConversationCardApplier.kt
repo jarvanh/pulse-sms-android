@@ -3,14 +3,14 @@ package xyz.klinker.messenger.utils
 import xyz.klinker.messenger.fragment.ConversationListFragment
 import xyz.klinker.messenger.shared.data.SectionType
 
-class TextAnywhereConversationCardApplier(val conversationList: ConversationListFragment) {
+class TextAnywhereConversationCardApplier(private val conversationList: ConversationListFragment) {
 
     fun shouldAddCardToList(): Boolean {
         val adapter = conversationList.adapter
-        if (adapter == null || adapter.sections.size == 0) {
-            return false
+        return if (adapter == null || adapter.sections.size == 0) {
+            false
         } else {
-            return adapter.sections[0].type != SectionType.CARD_ABOUT_ONLINE &&
+            adapter.sections[0].type != SectionType.CARD_ABOUT_ONLINE &&
                     adapter.showHeaderAboutTextingOnline()
         }
     }

@@ -27,7 +27,7 @@ class CustomSnoozeFragment : TabletOptimizedBottomSheetDialogFragment() {
 
         minutes = contentView.findViewById<View>(R.id.minutes) as EditText
         hours = contentView.findViewById<View>(R.id.hours) as EditText
-        contentView.findViewById<View>(R.id.snooze).setOnClickListener { view -> snooze() }
+        contentView.findViewById<View>(R.id.snooze).setOnClickListener { snooze() }
 
         hours!!.setSelection(hours!!.text.length)
 

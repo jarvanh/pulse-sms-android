@@ -41,7 +41,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
         val openInternal = contentView.findViewById<View>(R.id.open_internal)
         val copyText = contentView.findViewById<View>(R.id.copy_text)
 
-        openExternal.setOnClickListener { view ->
+        openExternal.setOnClickListener {
             val builder = CustomTabsIntent.Builder()
             builder.setToolbarColor(mainColor)
             builder.setShowTitle(true)
@@ -54,7 +54,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
             dismiss()
         }
 
-        openInternal.setOnClickListener { view ->
+        openInternal.setOnClickListener {
             val intent = ArticleIntent.Builder(contentView.context, ArticleParser.ARTICLE_API_KEY)
                     .setToolbarColor(mainColor)
                     .setAccentColor(accentColor)
@@ -69,7 +69,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
             dismiss()
         }
 
-        copyText.setOnClickListener { view ->
+        copyText.setOnClickListener {
             val clipboard = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("messenger", link)
             clipboard.primaryClip = clip

@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.utils.swipe_to_dismiss;
+package xyz.klinker.messenger.utils.swipe_to_dismiss
 
-import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.data.model.Conversation
 
 /**
  * Interface for listening for swipe to delete actions.
  */
-public interface SwipeToDeleteListener {
+interface SwipeToDeleteListener {
 
-    void onSwipeToDelete(Conversation conversation);
-    void onSwipeToArchive(Conversation conversation);
-    void onMarkSectionAsRead(String sectionText, int sectionType);
-    void onShowMarkAsRead(String sectionText);
+    fun onSwipeToDelete(conversation: Conversation)
+    fun onSwipeToArchive(conversation: Conversation)
+    fun onMarkSectionAsRead(sectionText: String, sectionType: Int)
+    fun onShowMarkAsRead(sectionText: String)
 
 }
