@@ -166,8 +166,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
             DataSource.insertMessage(this, m, m.conversationId)
             loadMessages()
 
-            SendUtils(conversation.simSubscriptionId)
-                    .send(this, m.data, conversation.phoneNumbers, null, MimeType.TEXT_PLAIN)
+            SendUtils(conversation.simSubscriptionId).send(this, m.data!!, conversation.phoneNumbers!!, null, MimeType.TEXT_PLAIN)
         }
     }
 
