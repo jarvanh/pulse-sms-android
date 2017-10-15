@@ -40,12 +40,6 @@ public class AttachImageListAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void getItemCountNull() {
-        adapter = new AttachImageListAdapter(null, null, 1);
-        assertEquals(0, adapter.getItemCount());
-    }
-
-    @Test
     public void getItemCountZero() {
         when(cursor.getCount()).thenReturn(0);
         assertEquals(1, adapter.getItemCount());

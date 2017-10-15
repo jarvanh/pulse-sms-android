@@ -281,8 +281,8 @@ public class MessageViewHolder extends SwappingHolder {
                     startArticle();
                 } else {
                     Intent intent = new Intent(itemView.getContext(), ImageViewerActivity.class);
-                    intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId);
-                    intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId);
+                    intent.putExtra(ImageViewerActivity.Companion.getEXTRA_CONVERSATION_ID(), conversationId);
+                    intent.putExtra(ImageViewerActivity.Companion.getEXTRA_MESSAGE_ID(), messageId);
 
 //                    ActivityOptions options = ActivityOptions
 //                            .makeSceneTransitionAnimation(fragment.getActivity(), image, "image");

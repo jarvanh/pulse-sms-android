@@ -56,9 +56,13 @@ class AttachImageView(context: Context, private val callback: ImageSelectedListe
                     MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
                     where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC")
 
+            if (images == null) {
+                return@Thread
+            }
+
             handler.post {
                 layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.images_column_count))
-                adapter = AttachImageListAdapter(images, callback, color)
+                adapter = AttachImageListAdapter(images!!, callback, color)
             }
         }.start()
     }

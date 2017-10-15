@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.activity;
+package xyz.klinker.messenger.activity
 
 /**
  * Activity that is identical to the initial load activity. The only difference is that in the
  * manifest we disable the toolbar for this activity so that it isn't shown on the tv.
  */
-public class InitialLoadTvActivity extends InitialLoadActivity {
-
-}
+class InitialLoadTvActivity : InitialLoadActivity()

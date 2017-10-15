@@ -1022,7 +1022,7 @@ public class  MessengerActivity extends AppCompatActivity
     private boolean viewMedia() {
         if (conversationListFragment.isExpanded()) {
             Intent intent = new Intent(this, MediaGridActivity.class);
-            intent.putExtra(MediaGridActivity.EXTRA_CONVERSATION_ID, conversationListFragment.getExpandedId());
+            intent.putExtra(MediaGridActivity.Companion.getEXTRA_CONVERSATION_ID(), conversationListFragment.getExpandedId());
             startActivity(intent);
 
             return true;
@@ -1099,7 +1099,7 @@ public class  MessengerActivity extends AppCompatActivity
 
             if (messages.getCount() > MessageListFragment.MESSAGE_LIMIT) {
                 builder.setNegativeButton(R.string.menu_view_full_conversation, (dialogInterface, i) -> {
-                    NoLimitMessageListActivity.start(this, conversation.getId());
+                    NoLimitMessageListActivity.Companion.start(this, conversation.getId());
                 });
             }
 
@@ -1133,7 +1133,7 @@ public class  MessengerActivity extends AppCompatActivity
             fragment.getExpandedItem().itemView.performClick();
             clickNavigationItem(R.id.drawer_schedule);
             return displayFragmentWithBackStack(
-                    ScheduledMessagesFragment.newInstance(conversation.getTitle(),
+                    ScheduledMessagesFragment.Companion.newInstance(conversation.getTitle(),
                             conversation.getPhoneNumbers()));
         } else {
             return false;
@@ -1145,7 +1145,7 @@ public class  MessengerActivity extends AppCompatActivity
             final ConversationListFragment fragment = getShownConversationList();
             long conversationId = fragment.getExpandedId();
             Intent intent = new Intent(this, ContactSettingsActivity.class);
-            intent.putExtra(ContactSettingsActivity.EXTRA_CONVERSATION_ID, conversationId);
+            intent.putExtra(ContactSettingsActivity.Companion.getEXTRA_CONVERSATION_ID(), conversationId);
             startActivity(intent);
             return true;
         } else {

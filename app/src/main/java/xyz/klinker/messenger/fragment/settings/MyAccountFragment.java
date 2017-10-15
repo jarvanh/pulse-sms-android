@@ -318,7 +318,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         Settings.INSTANCE.forceUpdate(getActivity());
         if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
-            String productId = data.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA);
+            String productId = data.getStringExtra(AccountPurchaseActivity.Companion.getPRODUCT_ID_EXTRA());
             Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId);
             if (productId.equals(ProductAvailable.Companion.createLifetime().getProductId())) {
                 purchaseProduct(ProductAvailable.Companion.createLifetime());
@@ -402,7 +402,7 @@ public class MyAccountFragment extends MaterialPreferenceFragmentCompat {
                 dialog.dismiss();
 
                 Intent login = new Intent(getActivity(), InitialLoadActivity.class);
-                login.putExtra(InitialLoadActivity.UPLOAD_AFTER_SYNC, true);
+                login.putExtra(InitialLoadActivity.Companion.getUPLOAD_AFTER_SYNC(), true);
                 login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true);
                 startActivity(login);
                 getActivity().finish();

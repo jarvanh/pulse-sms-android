@@ -183,9 +183,6 @@
             android:launchMode="singleInstance"
             android:theme="@style/AppIntro" />
         <activity
-            android:name=".activity.OnBoardingPayActivity"
-            android:theme="@style/AppIntro" />
-        <activity
             android:name=".activity.InitialLoadActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize" />
         <activity

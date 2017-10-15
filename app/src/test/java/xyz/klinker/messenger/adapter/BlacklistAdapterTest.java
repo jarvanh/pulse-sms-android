@@ -16,20 +16,15 @@
 
 package xyz.klinker.messenger.adapter;
 
-import android.database.Cursor;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 public class BlacklistAdapterTest extends MessengerRobolectricSuite {
 
@@ -38,11 +33,6 @@ public class BlacklistAdapterTest extends MessengerRobolectricSuite {
     @Before
     public void setUp() {
         adapter = new BlacklistAdapter(new ArrayList<Blacklist>(), null);
-    }
-
-    @Test
-    public void nullCursorCount() {
-        assertEquals(0, new BlacklistAdapter(null, null).getItemCount());
     }
 
     @Test

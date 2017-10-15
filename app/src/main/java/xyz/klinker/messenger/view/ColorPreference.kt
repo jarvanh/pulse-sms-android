@@ -99,20 +99,19 @@ class ColorPreference : Preference {
 
         val colors = ColorUtils.getColors(context)
         val adapter = ColorPickerAdapter(context,
-                colors) { view ->
+                colors, View.OnClickListener { view ->
             this@ColorPreference.dialog?.hide()
-            val color = colors[view.tag as Int]
+            val color = colors[view!!.tag as Int]
             setColor(color.color)
 
             if (colorSelectedListener != null) {
                 colorSelectedListener!!.onColorSelected(color)
             }
-        }
+        })
 
         grid.adapter = adapter
 
-        this.dialog = AlertDialog.Builder(context)
-                .setView(dialog)
+        this.dialog = AlertDialog.Builder(context).setView(dialog)
                 .setPositiveButton(android.R.string.ok) { _, _ -> setColor(picker.color) }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
@@ -133,10 +132,7 @@ class ColorPreference : Preference {
     fun setColor(color: Int) {
         this.color = color
         setPreviewView()
-        if (onPreferenceChangeListener != null) {
-            onPreferenceChangeListener
-                    .onPreferenceChange(this@ColorPreference, color)
-        }
+        onPreferenceChangeListener?.onPreferenceChange(this@ColorPreference, color)
     }
 
     public override fun onBindView(view: View) {

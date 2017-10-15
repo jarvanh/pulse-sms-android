@@ -51,12 +51,6 @@ public class ScheduledMessagesAdapterTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void getCountNull() {
-        adapter = new ScheduledMessagesAdapter(null, null);
-        assertEquals(0, adapter.getItemCount());
-    }
-
-    @Test
     public void createViewHolder() {
         ViewGroup parent = new LinearLayout(Robolectric.setupActivity(Activity.class));
         assertNotNull(adapter.onCreateViewHolder(parent, 0));
