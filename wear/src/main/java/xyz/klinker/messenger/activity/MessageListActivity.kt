@@ -20,9 +20,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
-import xyz.klinker.messenger.shared.util.DualSimUtils
-import xyz.klinker.messenger.shared.util.NotificationUtils
-import xyz.klinker.messenger.shared.util.SendUtils
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.util.CircularOffsettingHelper
 import xyz.klinker.wear.reply.WearableReplyActivity
 
@@ -83,7 +81,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         } catch (e: Exception) {
         }
 
-        adapter.messages.close()
+        CursorUtil.closeSilent(adapter.messages)
     }
 
     private fun initRecycler() {
@@ -104,7 +102,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
             val cursor = DataSource.getMessages(this, conversation.id)
             runOnUiThread {
                 if (adapter.messages == null) {
-                    adapter.messages = cursor
+                    adapter.setCursor(cursor)
                 } else {
                     adapter.addMessage(cursor)
                 }
