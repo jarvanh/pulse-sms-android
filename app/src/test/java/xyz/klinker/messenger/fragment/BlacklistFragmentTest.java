@@ -29,7 +29,7 @@ public class BlacklistFragmentTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        fragment = startFragment(BlacklistFragment.newInstance());
+        fragment = startFragment(BlacklistFragment.Companion.newInstance());
     }
 
     @Test

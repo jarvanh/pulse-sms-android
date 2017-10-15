@@ -30,7 +30,7 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
         setUpToolbar()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_media_grid, container, false)
         val recyclerView = root.findViewById<View>(R.id.recycler_view) as RecyclerView
 

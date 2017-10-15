@@ -30,7 +30,7 @@ class ImageViewerAdapter(fm: FragmentManager, private val messages: List<Message
 
     override fun getItem(position: Int): Fragment {
         val message = messages[position]
-        return ImageViewerFragment.newInstance(message.data, message.mimeType)
+        return ImageViewerFragment.newInstance(message.data!!, message.mimeType!!)
     }
 
     override fun getCount() = messages.size

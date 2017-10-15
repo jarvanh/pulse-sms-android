@@ -38,7 +38,7 @@ class OpenSourceAdapter(context: Context, private val items: Array<String>) : Ar
 
     override fun getCount() = items.size
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var rowView = convertView
 
         if (rowView == null) {

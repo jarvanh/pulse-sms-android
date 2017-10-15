@@ -40,7 +40,7 @@ class ChangelogAdapter(context: Context, private val items: Array<Spanned>) : Ar
         return items.size
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var rowView = convertView
 
         if (rowView == null) {

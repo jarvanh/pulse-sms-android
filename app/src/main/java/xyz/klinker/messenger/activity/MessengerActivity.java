@@ -815,7 +815,7 @@ public class  MessengerActivity extends AppCompatActivity
     }
 
     private boolean displayBlacklist() {
-        return displayFragmentWithBackStack(BlacklistFragment.newInstance());
+        return displayFragmentWithBackStack(BlacklistFragment.Companion.newInstance());
     }
 
     private boolean displayInviteFriends() {
@@ -1120,7 +1120,7 @@ public class  MessengerActivity extends AppCompatActivity
             fragment.onSwipeToArchive(conversation);
             clickNavigationItem(R.id.drawer_mute_contacts);
             return displayFragmentWithBackStack(
-                    BlacklistFragment.newInstance(conversation.getPhoneNumbers()));
+                    BlacklistFragment.Companion.newInstance(conversation.getPhoneNumbers()));
         } else {
             return false;
         }
