@@ -81,22 +81,18 @@ class NotificationSummaryProvider(private val service: NotificationService) {
         return style
     }
 
-    private fun buildNotification(title: String, summary: String) = NotificationCompat.Builder(service,
-            NotificationUtils.MESSAGE_GROUP_SUMMARY_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_stat_notify_group)
-            .setContentTitle(title)
-            .setContentText(summary)
-            .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
-            .setGroupSummary(true)
-            .setAutoCancel(true)
-            .setCategory(Notification.CATEGORY_MESSAGE)
-            .setColor(Settings.mainColorSet.color)
-            .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
-            .setShowWhen(true)
-            .setTicker(title)
-            .setVisibility(Notification.VISIBILITY_PRIVATE)
+    private fun buildNotification(title: String, summary: String) =
+            buildCommonNotification(title)
+                    .setContentText(summary)
+                    .setShowWhen(true)
+                    .setTicker(title)
+                    .setVisibility(Notification.VISIBILITY_PRIVATE)
 
-    private fun buildPublicNotification(title: String) = NotificationCompat.Builder(service,
+    private fun buildPublicNotification(title: String) =
+            buildCommonNotification(title)
+                    .setVisibility(Notification.VISIBILITY_PUBLIC)
+
+    private fun buildCommonNotification(title: String) = NotificationCompat.Builder(service,
             NotificationUtils.MESSAGE_GROUP_SUMMARY_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
@@ -106,7 +102,6 @@ class NotificationSummaryProvider(private val service: NotificationService) {
             .setCategory(Notification.CATEGORY_MESSAGE)
             .setColor(Settings.mainColorSet.color)
             .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
-            .setVisibility(Notification.VISIBILITY_PUBLIC)
 
 
     private fun applyPendingIntents(builder: NotificationCompat.Builder): NotificationCompat.Builder {

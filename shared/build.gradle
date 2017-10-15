@@ -53,6 +53,8 @@ android {
         }
         release_fast {
             versionNameSuffix "-RELEASE"
+            minifyEnabled false
+            shrinkResources false
             debuggable true
         }
         release {

@@ -35,8 +35,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
-import xyz.klinker.messenger.shared.service.notification.NotificationService;
-import xyz.klinker.messenger.shared.service.notification.NotificationUnreadConversationQuery;
+import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider;
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper;
 import xyz.klinker.messenger.shared.util.TimeUtils;
 

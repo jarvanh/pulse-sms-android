@@ -24,6 +24,7 @@ import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
+import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.NotificationServiceHelper
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
@@ -32,7 +33,6 @@ import java.util.*
 /**
  * Service for displaying notifications to the user based on which conversations have not been
  * seen yet.
- *
  *
  * I used pseudocode here: http://blog.danlew.net/2017/02/07/correctly-handling-bundled-android-notifications/
  */
