@@ -177,7 +177,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 0, 0, 0);
 
-        assertNotNull(holder.conversation);
+        assertNotNull(holder.getConversation());
         verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Luke Klinker");
         verify(summary).setText("So maybe not going to be able to get platinum huh?");
@@ -191,7 +191,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 0, 0, 1);
 
-        assertNotNull(holder.conversation);
+        assertNotNull(holder.getConversation());
         verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Matt Swiontek");
         verify(summary).setText("Whoops ya idk what happened but anysho drive safe");
@@ -205,7 +205,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 1, 0, 2);
 
-        assertNotNull(holder.conversation);
+        assertNotNull(holder.getConversation());
         verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("Kris Klinker");
         verify(summary).setText("Will probably be there from 6:30-9, just stop by when you can!");
@@ -219,7 +219,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         ConversationViewHolder holder = getMockedViewHolder();
         adapter.onBindViewHolder(holder, 1, 0, 8);
 
-        assertNotNull(holder.conversation);
+        assertNotNull(holder.getConversation());
         verify(image).setImageDrawable(any(Drawable.class));
         verify(name).setText("test 2");
         verify(summary).setText("Maybe they'll run into each other on the way back... idk");
@@ -311,15 +311,15 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     private ConversationViewHolder getMockedViewHolder() {
         ConversationViewHolder holder = new ConversationViewHolder(
                 new View(RuntimeEnvironment.application), conversationExpandedListener, adapter);
-        holder.header = header;
-        holder.headerCardForTextOnline = headerDialog;
-        holder.headerDone = headerDoneButton;
-        holder.image = image;
-        holder.name = name;
-        holder.summary = summary;
-        holder.imageLetter = imageLetter;
-        holder.unreadIndicator = unreadIndicator;
-        holder.groupIcon = groupIcon;
+        holder.setHeader(header);
+        holder.setHeaderCardForTextOnline(headerDialog);
+        holder.setHeaderDone(headerDoneButton);
+        holder.setImage(image);
+        holder.setName(name);
+        holder.setSummary(summary);
+        holder.setImageLetter(imageLetter);
+        holder.setUnreadIndicator(unreadIndicator);
+        holder.setGroupIcon(groupIcon);
 
         return holder;
     }

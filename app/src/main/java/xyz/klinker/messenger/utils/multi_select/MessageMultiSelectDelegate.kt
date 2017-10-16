@@ -169,9 +169,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
     }
 
     fun clearActionMode() {
-        if (mode != null) {
-            mode!!.finish()
-        }
+        mode?.finish()
     }
 
     override fun refreshHolder(holder: SelectableHolder?) {
@@ -180,9 +178,9 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
         }
 
         val message = holder as MessageViewHolder?
-        message!!.isSelectable = mIsSelectable
+        message?.isSelectable = mIsSelectable
 
-        val isActivated = mSelections.get(message.adapterPosition)
+        val isActivated = mSelections.get(message!!.adapterPosition)
         val states: ColorStateList
         val textColor: Int
 
@@ -201,22 +199,14 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             }
         }
 
-        if (message.messageHolder != null) {
-            message.messageHolder.backgroundTintList = states
-        }
-
-        if (message.message != null) {
-            message.message.setTextColor(textColor)
-        }
+        message.messageHolder?.backgroundTintList = states
+        message.message?.setTextColor(textColor)
     }
 
     override fun tapSelection(holder: SelectableHolder): Boolean {
         val result = super.tapSelection(holder)
 
-        if (mode != null) {
-            mode!!.invalidate()
-        }
-
+        mode?.invalidate()
         return result
     }
 

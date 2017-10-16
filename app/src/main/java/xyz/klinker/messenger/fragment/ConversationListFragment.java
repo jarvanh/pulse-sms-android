@@ -522,11 +522,11 @@ public class ConversationListFragment extends Fragment
         AnimationUtils.INSTANCE.expandActivityForConversation(activity);
 
         if (getArguments() != null && getArguments().containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
-            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
+            messageListFragment = MessageListFragment.newInstance(viewHolder.getConversation(),
                     getArguments().getLong(ARG_MESSAGE_TO_OPEN_ID));
             getArguments().remove(ARG_MESSAGE_TO_OPEN_ID);
         } else {
-            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation);
+            messageListFragment = MessageListFragment.newInstance(viewHolder.getConversation());
         }
 
         try {
@@ -539,7 +539,7 @@ public class ConversationListFragment extends Fragment
 
         if (!Settings.INSTANCE.getUseGlobalThemeColor()) {
             ActivityUtils.INSTANCE.setTaskDescription(activity,
-                    viewHolder.conversation.getTitle(), viewHolder.conversation.getColors().getColor());
+                    viewHolder.getConversation().getTitle(), viewHolder.getConversation().getColors().getColor());
         }
         
         checkUnreadCount();
@@ -627,7 +627,7 @@ public class ConversationListFragment extends Fragment
 
     public long getExpandedId() {
         if (expandedConversation != null) {
-            return expandedConversation.conversation.getId();
+            return expandedConversation.getConversation().getId();
         } else {
             return 0;
         }
@@ -642,16 +642,16 @@ public class ConversationListFragment extends Fragment
             return;
         }
 
-        expandedConversation.conversation.setTimestamp(m.getTimestamp());
-        expandedConversation.conversation.setRead(m.getRead());
+        expandedConversation.getConversation().setTimestamp(m.getTimestamp());
+        expandedConversation.getConversation().setRead(m.getRead());
 
         if (m.getMimeType() != null && m.getMimeType().equals("text/plain")) {
-            expandedConversation.conversation.setSnippet(m.getData());
-            expandedConversation.summary.setText(m.getData());
+            expandedConversation.getConversation().setSnippet(m.getData());
+            expandedConversation.getSummary().setText(m.getData());
         }
 
         setConversationUpdateInfo(new ConversationUpdateInfo(
-                expandedConversation.conversation.getId(), getString(R.string.you) + ": " + m.getData(), true));
+                expandedConversation.getConversation().getId(), getString(R.string.you) + ": " + m.getData(), true));
     }
 
     public ConversationListAdapter getAdapter() {

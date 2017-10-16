@@ -160,9 +160,9 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         when(itemView.findViewById(R.id.message)).thenReturn(message);
         MessageViewHolder holder = new MessageViewHolder(fragment, itemView,
                 Color.RED, 1, 0, 0, null);
-        holder.message = message;
-        holder.timestamp = timestamp;
-        holder.image = image;
+        holder.setMessage(message);
+        holder.setTimestamp(timestamp);
+        holder.setImage(image);
 
         when(message.getText()).thenReturn("test text");
 

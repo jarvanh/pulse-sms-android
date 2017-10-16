@@ -92,13 +92,13 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
         ConversationViewHolder h = (ConversationViewHolder) holder;
 
         if (section == 0) {
-            h.header.setText(R.string.conversations);
+            h.getHeader().setText(R.string.conversations);
         } else {
-            h.header.setText(R.string.messages);
+            h.getHeader().setText(R.string.messages);
         }
 
-        if (h.headerDone != null) {
-            h.headerDone.setVisibility(View.GONE);
+        if (h.getHeaderDone() != null) {
+            h.getHeaderDone().setVisibility(View.GONE);
         }
     }
 
@@ -129,27 +129,27 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
             final Conversation conversation = conversations.get(relativePosition);
 
             ConversationViewHolder h = (ConversationViewHolder) holder;
-            h.name.setText(conversation.getTitle());
-            h.summary.setText(conversation.getSnippet());
+            h.getName().setText(conversation.getTitle());
+            h.getSummary().setText(conversation.getSnippet());
 
-            LinkBuilder.on(h.name)
+            LinkBuilder.on(h.getName())
                     .addLink(highlight)
                     .build();
 
             if (conversation.getImageUri() == null) {
-                h.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
+                h.getImage().setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
                 if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
-                    h.imageLetter.setText(conversation.getTitle().substring(0, 1));
-                    h.groupIcon.setVisibility(View.GONE);
+                    h.getImageLetter().setText(conversation.getTitle().substring(0, 1));
+                    h.getGroupIcon().setVisibility(View.GONE);
                 } else {
-                    h.groupIcon.setVisibility(View.VISIBLE);
-                    h.imageLetter.setText(null);
+                    h.getGroupIcon().setVisibility(View.VISIBLE);
+                    h.getImageLetter().setText(null);
                 }
             } else {
-                h.imageLetter.setText(null);
-                Glide.with(h.image.getContext())
+                h.getImageLetter().setText(null);
+                Glide.with(h.getImage().getContext())
                         .load(Uri.parse(conversation.getImageUri()))
-                        .into(h.image);
+                        .into(h.getImage());
             }
 
             View.OnClickListener click = view -> {
@@ -162,32 +162,32 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 h.itemView.setOnClickListener(click);
             }
 
-            if (h.name != null) {
-                h.name.setOnClickListener(click);
+            if (h.getName() != null) {
+                h.getName().setOnClickListener(click);
             }
         } else if (holder instanceof MessageViewHolder) {
             final Message message = messages.get(relativePosition);
 
             MessageViewHolder h = (MessageViewHolder) holder;
-            h.messageId = message.getId();
-            h.message.setText(message.getData());
+            h.setMessageId(message.getId());
+            h.getMessage().setText(message.getData());
 
-            String timestamp = TimeUtils.INSTANCE.formatTimestamp(h.timestamp.getContext(), message.getTimestamp());
+            String timestamp = TimeUtils.INSTANCE.formatTimestamp(h.getTimestamp().getContext(), message.getTimestamp());
             if (message.getFrom() != null && !message.getFrom().isEmpty()) {
                 //noinspection AndroidLintSetTextI18n
-                h.timestamp.setText(timestamp + " - " + message.getFrom() +
+                h.getTimestamp().setText(timestamp + " - " + message.getFrom() +
                         " (" + message.getNullableConvoTitle() + ")");
             } else {
                 //noinspection AndroidLintSetTextI18n
-                h.timestamp.setText(timestamp + " - " + message.getNullableConvoTitle());
+                h.getTimestamp().setText(timestamp + " - " + message.getNullableConvoTitle());
             }
 
-            h.timestamp.setSingleLine(true);
-            if (h.timestamp.getVisibility() != View.VISIBLE) {
-                h.timestamp.setVisibility(View.VISIBLE);
+            h.getTimestamp().setSingleLine(true);
+            if (h.getTimestamp().getVisibility() != View.VISIBLE) {
+                h.getTimestamp().setVisibility(View.VISIBLE);
             }
 
-            LinkBuilder.on(h.message)
+            LinkBuilder.on(h.getMessage())
                     .addLink(highlight)
                     .build();
 
@@ -197,18 +197,18 @@ public class SearchAdapter extends SectionedRecyclerViewAdapter {
                 }
             };
 
-            if (h.messageHolder != null) {
-                h.messageHolder.setOnClickListener(click);
+            if (h.getMessageHolder() != null) {
+                h.getMessageHolder().setOnClickListener(click);
             }
 
-            if (h.message != null) {
-                h.message.setOnClickListener(click);
+            if (h.getMessage() != null) {
+                h.getMessage().setOnClickListener(click);
             }
 
-            ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).bottomMargin = 0;
-            ((ViewGroup.MarginLayoutParams) h.message.getLayoutParams()).topMargin = -1 * topMargin;
-            ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).bottomMargin = 0;
-            ((ViewGroup.MarginLayoutParams) h.image.getLayoutParams()).topMargin = -1 * topMargin;
+            ((ViewGroup.MarginLayoutParams) h.getMessage().getLayoutParams()).bottomMargin = 0;
+            ((ViewGroup.MarginLayoutParams) h.getMessage().getLayoutParams()).topMargin = -1 * topMargin;
+            ((ViewGroup.MarginLayoutParams) h.getImage().getLayoutParams()).bottomMargin = 0;
+            ((ViewGroup.MarginLayoutParams) h.getImage().getLayoutParams()).topMargin = -1 * topMargin;
         }
 
     }

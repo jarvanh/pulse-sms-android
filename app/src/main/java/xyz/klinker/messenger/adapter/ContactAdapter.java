@@ -78,51 +78,51 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
     public void onBindViewHolder(ConversationViewHolder holder, int position) {
         Conversation conversation = conversations.get(position);
 
-        holder.conversation = conversation;
+        holder.setConversation(conversation);
 
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 if (Settings.INSTANCE.getMainColorSet().getColorLight()== Color.WHITE) {
-                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
+                    holder.getImage().setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
                 } else {
-                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorLight()));
+                    holder.getImage().setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorLight()));
                 }
             } else if (conversation.getColors().getColor() == Color.WHITE) {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
+                holder.getImage().setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
+                holder.getImage().setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
             int colorToInspect = Settings.INSTANCE.getUseGlobalThemeColor() ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
             if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
-                holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
-                if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
-                    holder.groupIcon.setVisibility(View.GONE);
+                holder.getImageLetter().setText(conversation.getTitle().substring(0, 1));
+                if (holder.getGroupIcon() != null && holder.getGroupIcon().getVisibility() != View.GONE) {
+                    holder.getGroupIcon().setVisibility(View.GONE);
                 }
 
                 if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
-                    holder.imageLetter.setTextColor(Color.WHITE);
+                    holder.getImageLetter().setTextColor(Color.WHITE);
                 } else {
-                    holder.imageLetter.setTextColor(lightToolbarTextColor);
+                    holder.getImageLetter().setTextColor(lightToolbarTextColor);
                 }
             } else {
-                holder.imageLetter.setText(null);
+                holder.getImageLetter().setText(null);
 
-                if (holder.groupIcon != null) {
-                    if (holder.groupIcon.getVisibility() != View.VISIBLE) {
-                        holder.groupIcon.setVisibility(View.VISIBLE);
+                if (holder.getGroupIcon() != null) {
+                    if (holder.getGroupIcon().getVisibility() != View.VISIBLE) {
+                        holder.getGroupIcon().setVisibility(View.VISIBLE);
                     }
 
                     if (conversation.getPhoneNumbers().contains(",")) {
-                        holder.groupIcon.setImageResource(R.drawable.ic_group);
+                        holder.getGroupIcon().setImageResource(R.drawable.ic_group);
                     } else {
-                        holder.groupIcon.setImageResource(R.drawable.ic_person);
+                        holder.getGroupIcon().setImageResource(R.drawable.ic_person);
                     }
 
                     if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
-                        holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                        holder.getGroupIcon().setImageTintList(ColorStateList.valueOf(Color.WHITE));
                     } else {
-                        holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
+                        holder.getGroupIcon().setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
                     }
                 }
             }
@@ -131,18 +131,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ConversationViewHolder>
                 conversation.setImageUri(conversation.getImageUri() + "/photo");
             }
 
-            holder.imageLetter.setText(null);
-            if (holder.groupIcon != null && holder.groupIcon.getVisibility() != View.GONE) {
-                holder.groupIcon.setVisibility(View.GONE);
+            holder.getImageLetter().setText(null);
+            if (holder.getGroupIcon() != null && holder.getGroupIcon().getVisibility() != View.GONE) {
+                holder.getGroupIcon().setVisibility(View.GONE);
             }
 
-            Glide.with(holder.image.getContext())
+            Glide.with(holder.getImage().getContext())
                     .load(Uri.parse(conversation.getImageUri()))
-                    .into(holder.image);
+                    .into(holder.getImage());
         }
 
-        holder.name.setText(conversation.getTitle());
-        holder.summary.setText(PhoneNumberUtils.INSTANCE.format(conversation.getPhoneNumbers()));
+        holder.getName().setText(conversation.getTitle());
+        holder.getSummary().setText(PhoneNumberUtils.INSTANCE.format(conversation.getPhoneNumbers()));
     }
 
     @Override

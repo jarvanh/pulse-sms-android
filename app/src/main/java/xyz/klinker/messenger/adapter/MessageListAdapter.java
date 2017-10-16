@@ -203,20 +203,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
         Message message = new Message();
         message.fillFromCursor(messages);
 
-        holder.messageId = message.getId();
-        holder.mimeType = message.getMimeType();
-        holder.data = message.getData();
+        holder.setMessageId(message.getId());
+        holder.setMimeType(message.getMimeType());
+        holder.setData(message.getData());
 
         int backgroundColor = colorMessage(holder, message);
 
         if (message.getMimeType().equals(MimeType.INSTANCE.getTEXT_PLAIN())) {
-            holder.message.setText(message.getData());
+            holder.getMessage().setText(message.getData());
 
             if (!message.getData().isEmpty() && message.getData().replaceAll(Regex.INSTANCE.getEMOJI(), "").isEmpty()) {
                 // enlarge emojis
-                holder.message.setTextSize(35);
+                holder.getMessage().setTextSize(35);
             } else {
-                holder.message.setTextSize(largeFont);
+                holder.getMessage().setTextSize(largeFont);
             }
 
             int linkColor = accentColor;
@@ -245,7 +245,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
             urls.setOnClickListener(clickedText -> {
                 if (fragment.getMultiSelect().isSelectable()) {
-                    holder.messageHolder.performClick();
+                    holder.getMessageHolder().performClick();
                     return;
                 }
 
@@ -276,7 +276,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
             phoneNumbers.setOnClickListener(clickedText -> {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + PhoneNumberUtils.INSTANCE.clearFormatting(clickedText)));
-                holder.message.getContext().startActivity(intent);
+                holder.getMessage().getContext().startActivity(intent);
             });
 
             Link emails = new Link(Patterns.EMAIL_ADDRESS);
@@ -288,187 +288,187 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
-                holder.message.getContext().startActivity(emailIntent);
+                holder.getMessage().getContext().startActivity(emailIntent);
             });
 
-            if (holder.message.getMovementMethod() == null) {
-                holder.message.setMovementMethod(new TouchableMovementMethod());
+            if (holder.getMessage().getMovementMethod() == null) {
+                holder.getMessage().setMovementMethod(new TouchableMovementMethod());
             }
 
-            LinkBuilder.on(holder.message).addLink(emails).addLink(urls).addLink(phoneNumbers).build();
+            LinkBuilder.on(holder.getMessage()).addLink(emails).addLink(urls).addLink(phoneNumbers).build();
 
-            setGone(holder.image);
-            setVisible(holder.message);
+            setGone(holder.getImage());
+            setVisible(holder.getMessage());
         } else if (!MimeType.INSTANCE.isExpandedMedia(message.getMimeType())) {
-            holder.image.setImageDrawable(null);
-            holder.image.setMinimumWidth(imageWidth);
-            holder.image.setMinimumHeight(imageHeight);
+            holder.getImage().setImageDrawable(null);
+            holder.getImage().setMinimumWidth(imageWidth);
+            holder.getImage().setMinimumHeight(imageHeight);
 
             if (MimeType.INSTANCE.isStaticImage(message.getMimeType())) {
-                Glide.with(holder.image.getContext())
+                Glide.with(holder.getImage().getContext())
                         .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
-                            .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                            .override(holder.getImage().getMaxHeight(), holder.getImage().getMaxHeight())
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .fitCenter())
-                        .into(holder.image);
+                        .into(holder.getImage());
             } else if (message.getMimeType().equals(MimeType.INSTANCE.getIMAGE_GIF())) {
-                holder.image.setMaxWidth(holder.image.getContext()
+                holder.getImage().setMaxWidth(holder.getImage().getContext()
                         .getResources().getDimensionPixelSize(R.dimen.max_gif_width));
-                Glide.with(holder.image.getContext())
+                Glide.with(holder.getImage().getContext())
                         .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
-                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .override(holder.getImage().getMaxHeight(), holder.getImage().getMaxHeight())
                                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                                 .fitCenter())
-                        .into(holder.image);
+                        .into(holder.getImage());
             } else if (MimeType.INSTANCE.isVideo(message.getMimeType())) {
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.Companion.getTYPE_RECEIVED()) {
-                    placeholder = holder.image.getContext()
+                    placeholder = holder.getImage().getContext()
                             .getDrawable(R.drawable.ic_play_sent);
                 } else {
-                    placeholder = holder.image.getContext()
+                    placeholder = holder.getImage().getContext()
                             .getDrawable(R.drawable.ic_play);
                 }
 
-                Glide.with(holder.image.getContext())
+                Glide.with(holder.getImage().getContext())
                         .asBitmap()
                         .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .error(placeholder)
                                 .placeholder(placeholder)
-                                .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                .override(holder.getImage().getMaxHeight(), holder.getImage().getMaxHeight())
                                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                                 .fitCenter())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
+                                ImageUtils.INSTANCE.overlayBitmap(holder.getImage().getContext(),
                                         resource, R.drawable.ic_play);
-                                holder.image.setImageBitmap(resource);
+                                holder.getImage().setImageBitmap(resource);
                             }
                         });
             } else if (MimeType.INSTANCE.isAudio(message.getMimeType())) {
                 Drawable placeholder;
                 if (getItemViewType(position) != Message.Companion.getTYPE_RECEIVED()) {
-                    placeholder = holder.image.getContext()
+                    placeholder = holder.getImage().getContext()
                             .getDrawable(R.drawable.ic_audio_sent);
                 } else {
-                    placeholder = holder.image.getContext()
+                    placeholder = holder.getImage().getContext()
                             .getDrawable(R.drawable.ic_audio);
                 }
 
-                Glide.with(holder.image.getContext())
+                Glide.with(holder.getImage().getContext())
                         .load(Uri.parse(message.getData()))
                         .apply(new RequestOptions()
                                 .error(placeholder)
                                 .placeholder(placeholder))
-                        .into(holder.image);
+                        .into(holder.getImage());
             } else if (MimeType.INSTANCE.isVcard(message.getMimeType())) {
-                holder.message.setText(message.getData());
-                holder.image.setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
+                holder.getMessage().setText(message.getData());
+                holder.getImage().setImageResource(getItemViewType(position) != Message.Companion.getTYPE_RECEIVED() ?
                         R.drawable.ic_contacts_sent : R.drawable.ic_contacts);
             } else {
                 Log.v("MessageListAdapter", "unused mime type: " + message.getMimeType());
             }
 
-            setGone(holder.message);
-            setVisible(holder.image);
+            setGone(holder.getMessage());
+            setVisible(holder.getImage());
         } else {
             if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_YOUTUBE_V2())) {
                 YouTubePreview preview = YouTubePreview.Companion.build(message.getData());
                 if (preview != null) {
-                    Glide.with(holder.image.getContext())
+                    Glide.with(holder.getImage().getContext())
                             .asBitmap()
                             .load(Uri.parse(preview.getThumbnail()))
                             .apply(new RequestOptions()
-                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .override(holder.getImage().getMaxHeight(), holder.getImage().getMaxHeight())
                                     .fitCenter())
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                                    ImageUtils.INSTANCE.overlayBitmap(holder.image.getContext(),
+                                    ImageUtils.INSTANCE.overlayBitmap(holder.getImage().getContext(),
                                             bitmap, R.drawable.ic_play);
-                                    holder.clippedImage.setImageBitmap(bitmap);
+                                    holder.getClippedImage().setImageBitmap(bitmap);
                                 }
                             });
 
-                    holder.contact.setText(preview.getTitle());
-                    holder.title.setText("YouTube");
+                    holder.getContact().setText(preview.getTitle());
+                    holder.getTitle().setText("YouTube");
 
-                    setGone(holder.image);
-                    setGone(holder.message);
-                    setVisible(holder.clippedImage);
-                    setVisible(holder.contact);
-                    setVisible(holder.title);
+                    setGone(holder.getImage());
+                    setGone(holder.getMessage());
+                    setVisible(holder.getClippedImage());
+                    setVisible(holder.getContact());
+                    setVisible(holder.getTitle());
                 } else {
-                    setGone(holder.clippedImage);
-                    setGone(holder.image);
-                    setGone(holder.message);
-                    setGone(holder.timestamp);
-                    setGone(holder.title);
+                    setGone(holder.getClippedImage());
+                    setGone(holder.getImage());
+                    setGone(holder.getMessage());
+                    setGone(holder.getTimestamp());
+                    setGone(holder.getTitle());
                 }
             } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_TWITTER())) {
 
             } else if (message.getMimeType().equals(MimeType.INSTANCE.getMEDIA_ARTICLE())) {
                 ArticlePreview preview = ArticlePreview.Companion.build(message.getData());
                 if (preview != null) {
-                    Glide.with(holder.clippedImage.getContext())
+                    Glide.with(holder.getClippedImage().getContext())
                             .asBitmap()
                             .load(Uri.parse(preview.getImageUrl()))
                             .apply(new RequestOptions()
-                                    .override(holder.image.getMaxHeight(), holder.image.getMaxHeight())
+                                    .override(holder.getImage().getMaxHeight(), holder.getImage().getMaxHeight())
                                     .fitCenter())
-                            .into(holder.clippedImage);
+                            .into(holder.getClippedImage());
 
-                    holder.contact.setText(preview.getTitle());
-                    holder.message.setText(preview.getDescription());
-                    holder.title.setText(preview.getDomain());
+                    holder.getContact().setText(preview.getTitle());
+                    holder.getMessage().setText(preview.getDescription());
+                    holder.getTitle().setText(preview.getDomain());
 
-                    setGone(holder.image);
-                    setVisible(holder.clippedImage);
-                    setVisible(holder.contact);
-                    setVisible(holder.message);
-                    setVisible(holder.title);
+                    setGone(holder.getImage());
+                    setVisible(holder.getClippedImage());
+                    setVisible(holder.getContact());
+                    setVisible(holder.getMessage());
+                    setVisible(holder.getTitle());
                 } else {
-                    setGone(holder.clippedImage);
-                    setGone(holder.image);
-                    setGone(holder.message);
-                    setGone(holder.timestamp);
-                    setGone(holder.title);
+                    setGone(holder.getClippedImage());
+                    setGone(holder.getImage());
+                    setGone(holder.getMessage());
+                    setGone(holder.getTimestamp());
+                    setGone(holder.getTitle());
                 }
             }
 
-            setVisible(holder.image);
+            setVisible(holder.getImage());
         }
 
         if (message.getSimPhoneNumber() != null) {
-            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.timestamp.getContext(),
+            holder.getTimestamp().setText(TimeUtils.INSTANCE.formatTimestamp(holder.getTimestamp().getContext(),
                     message.getTimestamp()) + " (SIM " + message.getSimPhoneNumber() + ")");
-        } else if (holder.timestamp != null) {
-            holder.timestamp.setText(TimeUtils.INSTANCE.formatTimestamp(holder.itemView.getContext(),
+        } else if (holder.getTimestamp() != null) {
+            holder.getTimestamp().setText(TimeUtils.INSTANCE.formatTimestamp(holder.itemView.getContext(),
                     message.getTimestamp()));
         }
 
         if (!isGroup) {
             stylingHelper.calculateAdjacentItems(messages, position)
                     .setMargins(holder.itemView)
-                    .setBackground(holder.messageHolder, message.getMimeType())
-                    .applyTimestampHeight(holder.timestamp, timestampHeight);
+                    .setBackground(holder.getMessageHolder(), message.getMimeType())
+                    .applyTimestampHeight(holder.getTimestamp(), timestampHeight);
         } else {
             stylingHelper.calculateAdjacentItems(messages, position)
-                    .applyTimestampHeight(holder.timestamp, timestampHeight);
+                    .applyTimestampHeight(holder.getTimestamp(), timestampHeight);
         }
 
-        if (isGroup && holder.contact != null && message.getFrom() != null) {
-            if (holder.contact.getVisibility() == View.GONE) {
-                holder.contact.setVisibility(View.VISIBLE);
+        if (isGroup && holder.getContact() != null && message.getFrom() != null) {
+            if (holder.getContact().getVisibility() == View.GONE) {
+                holder.getContact().setVisibility(View.VISIBLE);
             }
 
-            int label = holder.timestamp.getLayoutParams().height > 0 ?
+            int label = holder.getTimestamp().getLayoutParams().height > 0 ?
                     R.string.message_from_bullet : R.string.message_from;
-            holder.contact.setText(holder.contact.getResources().getString(label, message.getFrom()));
+            holder.getContact().setText(holder.getContact().getResources().getString(label, message.getFrom()));
         }
     }
 
@@ -637,15 +637,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 // group convo, color them differently
                 // this is the usual result
                 int color = fromColorMapper.get(message.getFrom()).getColors().getColor();
-                holder.messageHolder.setBackgroundTintList(
+                holder.getMessageHolder().setBackgroundTintList(
                         ColorStateList.valueOf(color));
-                holder.color = color;
+                holder.setColor(color);
 
-                if (holder.message != null) {
+                if (holder.getMessage() != null) {
                     if (!ColorUtils.INSTANCE.isColorDark(color)) {
-                        holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
+                        holder.getMessage().setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
                     } else {
-                        holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
+                        holder.getMessage().setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
                     }
                 }
 
@@ -654,15 +654,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>
                 // group convo, color them differently
                 // this is the usual result
                 int color = fromColorMapperByName.get(message.getFrom()).getColors().getColor();
-                holder.messageHolder.setBackgroundTintList(
+                holder.getMessageHolder().setBackgroundTintList(
                         ColorStateList.valueOf(color));
-                holder.color = color;
+                holder.setColor(color);
 
-                if (holder.message != null) {
+                if (holder.getMessage() != null) {
                     if (!ColorUtils.INSTANCE.isColorDark(color)) {
-                        holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
+                        holder.getMessage().setTextColor(holder.itemView.getContext().getResources().getColor(R.color.darkText));
                     } else {
-                        holder.message.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
+                        holder.getMessage().setTextColor(holder.itemView.getContext().getResources().getColor(R.color.lightText));
                     }
                 }
 

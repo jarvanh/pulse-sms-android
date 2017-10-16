@@ -47,11 +47,6 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
         imm?.hideSoftInputFromWindow(fab.windowToken, 0)
     }
 
-    internal fun showConversation() {
-        val phoneNumbers = activity.contactsProvider.getPhoneNumberFromContactEntry()
-        showConversation(phoneNumbers)
-    }
-
     internal fun showConversation(phoneNumbers: String) {
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 
@@ -100,5 +95,10 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
 
         activity.startActivity(open)
         activity.finish()
+    }
+
+    private fun showConversation() {
+        val phoneNumbers = activity.contactsProvider.getPhoneNumberFromContactEntry()
+        showConversation(phoneNumbers)
     }
 }

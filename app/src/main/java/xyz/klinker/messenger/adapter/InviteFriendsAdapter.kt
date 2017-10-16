@@ -35,7 +35,7 @@ class InviteFriendsAdapter(conversations: List<Conversation>, listener: ContactC
         super.onBindViewHolder(holder, position)
 
         val conversation = conversations[position]
-        holder.checkBox.isChecked = phoneNumbers.contains(conversation.phoneNumbers)
+        holder.checkBox?.isChecked = phoneNumbers.contains(conversation.phoneNumbers)
     }
 
 }

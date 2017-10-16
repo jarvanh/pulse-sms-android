@@ -59,8 +59,6 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeToDeleteListener;
  */
 public class ConversationListAdapter extends SectionedRecyclerViewAdapter<ConversationViewHolder> implements IConversationListAdapter {
 
-    private long time;
-
     private MessengerActivity activity;
     private int lightToolbarTextColor;
 
@@ -80,8 +78,6 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         this.swipeToDeleteListener = swipeToDeleteListener;
         this.conversationExpandedListener = conversationExpandedListener;
         setConversations(conversations);
-
-        time = new Date().getTime();
 
         this.multiSelector = multiSelector;
         if (this.multiSelector != null)
@@ -145,14 +141,14 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     @Override
     public void onBindHeaderViewHolder(ConversationViewHolder holder, int section) {
         if (sectionCounts.get(section).getType() == SectionType.Companion.getCARD_ABOUT_ONLINE()) {
-            if (holder.header.getVisibility() != View.GONE)
-                holder.header.setVisibility(View.GONE);
-            if (holder.headerDone.getVisibility() != View.GONE)
-                holder.headerDone.setVisibility(View.GONE);
-            if (holder.headerCardForTextOnline.getVisibility() != View.VISIBLE)
-                holder.headerCardForTextOnline.setVisibility(View.VISIBLE);
+            if (holder.getHeader().getVisibility() != View.GONE)
+                holder.getHeader().setVisibility(View.GONE);
+            if (holder.getHeaderDone().getVisibility() != View.GONE)
+                holder.getHeaderDone().setVisibility(View.GONE);
+            if (holder.getHeaderCardForTextOnline().getVisibility() != View.VISIBLE)
+                holder.getHeaderCardForTextOnline().setVisibility(View.VISIBLE);
 
-            TextView tryIt = (TextView) holder.headerCardForTextOnline.findViewById(R.id.try_it);
+            TextView tryIt = (TextView) holder.getHeaderCardForTextOnline().findViewById(R.id.try_it);
             tryIt.setTextColor(Settings.INSTANCE.getMainColorSet().getColor());
 
             tryIt.setOnClickListener(v -> {
@@ -169,7 +165,7 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                     AnalyticsHelper.convoListTryIt(activity);
                 }, 500);
             });
-            holder.headerCardForTextOnline.findViewById(R.id.not_now).setOnClickListener(v -> {
+            holder.getHeaderCardForTextOnline().findViewById(R.id.not_now).setOnClickListener(v -> {
                 if (sectionCounts.size() > 0) {
                     sectionCounts.remove(0);
                 }
@@ -179,35 +175,35 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
                 AnalyticsHelper.convoListNotNow(activity);
             });
         } else {
-            if (holder.header.getVisibility() != View.VISIBLE)
-                holder.header.setVisibility(View.VISIBLE);
-            if (holder.headerDone.getVisibility() != View.VISIBLE)
-                holder.headerDone.setVisibility(View.VISIBLE);
-            if (holder.headerCardForTextOnline.getVisibility() != View.GONE)
-                holder.headerCardForTextOnline.setVisibility(View.GONE);
+            if (holder.getHeader().getVisibility() != View.VISIBLE)
+                holder.getHeader().setVisibility(View.VISIBLE);
+            if (holder.getHeaderDone().getVisibility() != View.VISIBLE)
+                holder.getHeaderDone().setVisibility(View.VISIBLE);
+            if (holder.getHeaderCardForTextOnline().getVisibility() != View.GONE)
+                holder.getHeaderCardForTextOnline().setVisibility(View.GONE);
 
             String text;
             if (sectionCounts.get(section).getType() == SectionType.Companion.getPINNED()) {
-                text = holder.header.getContext().getString(R.string.pinned);
+                text = holder.getHeader().getContext().getString(R.string.pinned);
             } else if (sectionCounts.get(section).getType() == SectionType.Companion.getTODAY()) {
-                text = holder.header.getContext().getString(R.string.today);
+                text = holder.getHeader().getContext().getString(R.string.today);
             } else if (sectionCounts.get(section).getType() == SectionType.Companion.getYESTERDAY()) {
-                text = holder.header.getContext().getString(R.string.yesterday);
+                text = holder.getHeader().getContext().getString(R.string.yesterday);
             } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_WEEK()) {
-                text = holder.header.getContext().getString(R.string.last_week);
+                text = holder.getHeader().getContext().getString(R.string.last_week);
             } else if (sectionCounts.get(section).getType() == SectionType.Companion.getLAST_MONTH()) {
-                text = holder.header.getContext().getString(R.string.last_month);
+                text = holder.getHeader().getContext().getString(R.string.last_month);
             } else {
-                text = holder.header.getContext().getString(R.string.older);
+                text = holder.getHeader().getContext().getString(R.string.older);
             }
 
-            holder.header.setText(text);
+            holder.getHeader().setText(text);
 
-            if (holder.headerDone != null) {
-                holder.headerDone.setOnClickListener(
+            if (holder.getHeaderDone() != null) {
+                holder.getHeaderDone().setOnClickListener(
                         getHeaderDoneClickListener(text, sectionCounts.get(section).getType())
                 );
-                holder.headerDone.setOnLongClickListener(
+                holder.getHeaderDone().setOnLongClickListener(
                         getHeaderDoneLongClickListener(text)
                 );
             }
@@ -218,9 +214,9 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
     public void onViewRecycled(ConversationViewHolder holder) {
         super.onViewRecycled(holder);
 
-        if (holder.image != null) {
+        if (holder.getImage() != null) {
             try {
-                Glide.with(holder.image.getContext()).clear(holder.image);
+                Glide.with(holder.getImage().getContext()).clear(holder.getImage());
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -240,77 +236,77 @@ public class ConversationListAdapter extends SectionedRecyclerViewAdapter<Conver
         // conversation is created on the phone and the tablet gets a broadcast for it. Don't know
         // why this happens, but the situation is marked by a blank holder in the conversation list.
         if (conversation == null) {
-            holder.conversation = null;
-            holder.name.setText(null);
-            holder.summary.setText(null);
-            holder.imageLetter.setText(null);
-            Glide.with(holder.image.getContext()).clear(holder.image);
+            holder.setConversation(null);
+            holder.getName().setText(null);
+            holder.getSummary().setText(null);
+            holder.getImageLetter().setText(null);
+            Glide.with(holder.getImage().getContext()).clear(holder.getImage());
             return;
         }
 
-        holder.conversation = conversation;
-        holder.position = absolutePosition;
+        holder.setConversation(conversation);
+        holder.setAbsolutePosition(absolutePosition);
 
         if (conversation.getImageUri() == null || conversation.getImageUri().isEmpty()) {
             if (Settings.INSTANCE.getUseGlobalThemeColor()) {
                 if (Settings.INSTANCE.getMainColorSet().getColorLight() == Color.WHITE) {
-                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
+                    holder.getImage().setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorDark()));
                 } else {
-                    holder.image.setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorLight()));
+                    holder.getImage().setImageDrawable(new ColorDrawable(Settings.INSTANCE.getMainColorSet().getColorLight()));
                 }
             } else if (conversation.getColors().getColor() == Color.WHITE) {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
+                holder.getImage().setImageDrawable(new ColorDrawable(conversation.getColors().getColorDark()));
             } else {
-                holder.image.setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
+                holder.getImage().setImageDrawable(new ColorDrawable(conversation.getColors().getColor()));
             }
 
             int colorToInspect = Settings.INSTANCE.getUseGlobalThemeColor() ? Settings.INSTANCE.getMainColorSet().getColor() : conversation.getColors().getColor();
             if (ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation)) {
-                holder.imageLetter.setText(conversation.getTitle().substring(0, 1));
-                if (holder.groupIcon.getVisibility() != View.GONE) {
-                    holder.groupIcon.setVisibility(View.GONE);
+                holder.getImageLetter().setText(conversation.getTitle().substring(0, 1));
+                if (holder.getGroupIcon().getVisibility() != View.GONE) {
+                    holder.getGroupIcon().setVisibility(View.GONE);
                 }
 
                 if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
-                    holder.imageLetter.setTextColor(Color.WHITE);
+                    holder.getImageLetter().setTextColor(Color.WHITE);
                 } else {
-                    holder.imageLetter.setTextColor(lightToolbarTextColor);
+                    holder.getImageLetter().setTextColor(lightToolbarTextColor);
                 }
             } else {
-                holder.imageLetter.setText(null);
-                if (holder.groupIcon.getVisibility() != View.VISIBLE) {
-                    holder.groupIcon.setVisibility(View.VISIBLE);
+                holder.getImageLetter().setText(null);
+                if (holder.getGroupIcon().getVisibility() != View.VISIBLE) {
+                    holder.getGroupIcon().setVisibility(View.VISIBLE);
                 }
 
                 if (conversation.getPhoneNumbers().contains(",")) {
-                    holder.groupIcon.setImageResource(R.drawable.ic_group);
+                    holder.getGroupIcon().setImageResource(R.drawable.ic_group);
                 } else {
-                    holder.groupIcon.setImageResource(R.drawable.ic_person);
+                    holder.getGroupIcon().setImageResource(R.drawable.ic_person);
                 }
 
                 if (ColorUtils.INSTANCE.isColorDark(colorToInspect)) {
-                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                    holder.getGroupIcon().setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 } else {
-                    holder.groupIcon.setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
+                    holder.getGroupIcon().setImageTintList(ColorStateList.valueOf(lightToolbarTextColor));
                 }
             }
         } else {
-            holder.imageLetter.setText(null);
-            if (holder.groupIcon.getVisibility() != View.GONE) {
-                holder.groupIcon.setVisibility(View.GONE);
+            holder.getImageLetter().setText(null);
+            if (holder.getGroupIcon().getVisibility() != View.GONE) {
+                holder.getGroupIcon().setVisibility(View.GONE);
             }
 
-            Glide.with(holder.image.getContext())
+            Glide.with(holder.getImage().getContext())
                     .load(Uri.parse(conversation.getImageUri()))
-                    .into(holder.image);
+                    .into(holder.getImage());
         }
 
-        holder.name.setText(conversation.getTitle());
+        holder.getName().setText(conversation.getTitle());
         if (conversation.getPrivateNotifications() || conversation.getSnippet() == null ||
                 conversation.getSnippet().contains("file://") || conversation.getSnippet().contains("content://")) {
-            holder.summary.setText("");
+            holder.getSummary().setText("");
         } else {
-            holder.summary.setText(conversation.getSnippet());
+            holder.getSummary().setText(conversation.getSnippet());
         }
 
         // read not muted

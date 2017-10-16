@@ -880,7 +880,7 @@ public class  MessengerActivity extends AppCompatActivity
     public boolean callContact() {
         if (conversationListFragment.isExpanded()) {
             String uri = "tel:" +
-                    conversationListFragment.getExpandedItem().conversation.getPhoneNumbers();
+                    conversationListFragment.getExpandedItem().getConversation().getPhoneNumbers();
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse(uri));
             try {
@@ -896,7 +896,7 @@ public class  MessengerActivity extends AppCompatActivity
             ArchivedConversationListFragment frag = (ArchivedConversationListFragment) otherFragment;
             if (frag.isExpanded()) {
                 String uri = "tel:" +
-                        frag.getExpandedItem().conversation.getPhoneNumbers();
+                        frag.getExpandedItem().getConversation().getPhoneNumbers();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(uri));
                 try {
@@ -918,11 +918,11 @@ public class  MessengerActivity extends AppCompatActivity
         Conversation conversation = null;
 
         if (conversationListFragment != null && conversationListFragment.isExpanded()) {
-            conversation = conversationListFragment.getExpandedItem().conversation;
+            conversation = conversationListFragment.getExpandedItem().getConversation();
         } else if (otherFragment instanceof ArchivedConversationListFragment) {
             ArchivedConversationListFragment frag = (ArchivedConversationListFragment) otherFragment;
             if (frag.isExpanded()) {
-                conversation = frag.getExpandedItem().conversation;
+                conversation = frag.getExpandedItem().getConversation();
             }
         }
 
@@ -1085,7 +1085,7 @@ public class  MessengerActivity extends AppCompatActivity
     private boolean conversationInformation() {
         if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
             final ConversationListFragment fragment = getShownConversationList();
-            Conversation conversation = fragment.getExpandedItem().conversation;
+            Conversation conversation = fragment.getExpandedItem().getConversation();
             DataSource source = DataSource.INSTANCE;
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
@@ -1117,7 +1117,7 @@ public class  MessengerActivity extends AppCompatActivity
     private boolean conversationBlacklist() {
         if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
             final ConversationListFragment fragment = getShownConversationList();
-            Conversation conversation = fragment.getExpandedItem().conversation;
+            Conversation conversation = fragment.getExpandedItem().getConversation();
             fragment.getExpandedItem().itemView.performClick();
             fragment.onSwipeToArchive(conversation);
             clickNavigationItem(R.id.drawer_mute_contacts);
@@ -1131,7 +1131,7 @@ public class  MessengerActivity extends AppCompatActivity
     private boolean conversationSchedule() {
         if (conversationListFragment.isExpanded() || isArchiveConvoShowing()) {
             final ConversationListFragment fragment = getShownConversationList();
-            Conversation conversation = fragment.getExpandedItem().conversation;
+            Conversation conversation = fragment.getExpandedItem().getConversation();
             fragment.getExpandedItem().itemView.performClick();
             clickNavigationItem(R.id.drawer_schedule);
             return displayFragmentWithBackStack(

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Parcelable
-import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
@@ -135,7 +134,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             activity.shareHandler.directShare(data, intent.type, true)
         } else {
             activity.sender.fab.setImageResource(R.drawable.ic_send)
-            activity.sender.resetViews(data, intent.type, true);
+            activity.sender.resetViews(data, intent.type, true)
         }
     }
 }
