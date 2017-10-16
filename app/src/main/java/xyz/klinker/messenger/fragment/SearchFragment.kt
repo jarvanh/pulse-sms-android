@@ -29,7 +29,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
-import xyz.klinker.messenger.adapter.SearchAdapter
+import xyz.klinker.messenger.adapter.search.SearchAdapter
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation
@@ -79,7 +79,7 @@ class SearchFragment : Fragment(), SearchListener {
         }.start()
     }
 
-    private fun setSearchResults(conversations: List<Conversation>, messages: List<Message>) {
+    private fun setSearchResults(conversations: MutableList<Conversation>, messages: MutableList<Message>) {
         adapter.updateCursors(query, conversations, messages)
     }
 

@@ -17,14 +17,11 @@
 package xyz.klinker.messenger.adapter;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bignerdranch.android.multiselector.MultiSelector;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,10 +33,12 @@ import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.adapter.search.SearchAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.util.listener.SearchListener;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -60,10 +59,12 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
     private View view;
     @Mock
     private TextView textView;
+    @Mock
+    private SearchListener searchListener;
 
     @Before
     public void setUp() {
-        adapter = new SearchAdapter("test", conversations, messages, null);
+        adapter = new SearchAdapter("test", conversations, messages, searchListener);
         when(view.getContext()).thenReturn(RuntimeEnvironment.application);
     }
 
@@ -80,7 +81,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection0Null() {
-        adapter = new SearchAdapter("test", null, messages, null);
+        adapter = new SearchAdapter("test", null, messages, searchListener);
         assertEquals(0, adapter.getItemCount(0));
     }
 
@@ -92,7 +93,7 @@ public class SearchAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemCountSection1Null() {
-        adapter = new SearchAdapter("test", conversations, null, null);
+        adapter = new SearchAdapter("test", conversations, null, searchListener);
         assertEquals(0, adapter.getItemCount(1));
     }
 
