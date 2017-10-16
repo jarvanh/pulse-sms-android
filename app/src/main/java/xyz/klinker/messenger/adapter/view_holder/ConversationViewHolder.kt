@@ -50,8 +50,8 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
 
     private val conversationImageHolder: View? by lazy { itemView.findViewById<View>(R.id.image_holder) }
     private val headerBackground: View? by lazy { itemView.findViewById<View>(R.id.header_background) }
-    private val unreadIndicator: View? by lazy { itemView.findViewById<View>(R.id.unread_indicator) }
 
+    val unreadIndicator: View? by lazy { itemView.findViewById<View>(R.id.unread_indicator) }
     val header: TextView? by lazy { itemView.findViewById<View>(R.id.header) as TextView? }
     val headerDone: ImageButton? by lazy { itemView.findViewById<View>(R.id.section_done) as ImageButton? }
     val headerCardForTextOnline: View? by lazy { itemView.findViewById<View>(R.id.header_card) }

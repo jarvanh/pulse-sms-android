@@ -16,16 +16,16 @@
 
 <changelog>
 
-    <!--<version-->
-        <!--name="2.6.0"-->
-        <!--description="October 10th, 2017">-->
-        <!--<text>New compose UI that allows you to search the contact groups defined in your contacts app</text>-->
-        <!--<text>UI improvements for images and links</text>-->
-        <!--<text>Allow attaching of a contact as plain text or vCard</text>-->
-        <!--<text>Improvements to the contact search UI when composing a new message</text>-->
-        <!--<text>Prep work for future features</text>-->
-        <!--<text>Lots of bug fixes</text>-->
-    <!--</version>-->
+    <version
+        name="2.6.0"
+        description="October 16th, 2017">
+        <text>New compose UI that allows you to search the contact groups defined in your contacts app</text>
+        <text>UI improvements for images and links</text>
+        <text>Allow attaching of a contact as plain text or vCard</text>
+        <text>Improvements to the contact search UI when composing a new message</text>
+        <text>Prep work for future features</text>
+        <text>Lots of bug fixes</text>
+    </version>
 
     <version
         name="2.5.9"

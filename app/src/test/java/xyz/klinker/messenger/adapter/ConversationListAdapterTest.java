@@ -48,6 +48,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -309,17 +310,17 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
     }
 
     private ConversationViewHolder getMockedViewHolder() {
-        ConversationViewHolder holder = new ConversationViewHolder(
-                new View(RuntimeEnvironment.application), conversationExpandedListener, adapter);
-        holder.setHeader(header);
-        holder.setHeaderCardForTextOnline(headerDialog);
-        holder.setHeaderDone(headerDoneButton);
-        holder.setImage(image);
-        holder.setName(name);
-        holder.setSummary(summary);
-        holder.setImageLetter(imageLetter);
-        holder.setUnreadIndicator(unreadIndicator);
-        holder.setGroupIcon(groupIcon);
+        ConversationViewHolder holder = spy(new ConversationViewHolder(
+                new View(RuntimeEnvironment.application), conversationExpandedListener, adapter));
+        doReturn(header).when(holder).getHeader();
+        doReturn(headerDialog).when(holder).getHeaderCardForTextOnline();
+        doReturn(headerDoneButton).when(holder).getHeaderDone();
+        doReturn(image).when(holder).getImage();
+        doReturn(name).when(holder).getName();
+        doReturn(summary).when(holder).getSummary();
+        doReturn(imageLetter).when(holder).getImageLetter();
+        doReturn(unreadIndicator).when(holder).getUnreadIndicator();
+        doReturn(groupIcon).when(holder).getGroupIcon();
 
         return holder;
     }

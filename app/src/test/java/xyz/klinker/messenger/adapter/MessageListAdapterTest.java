@@ -42,6 +42,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -158,11 +159,11 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         View itemView = spy(new View(RuntimeEnvironment.application));
         when(itemView.findViewById(R.id.timestamp)).thenReturn(timestamp);
         when(itemView.findViewById(R.id.message)).thenReturn(message);
-        MessageViewHolder holder = new MessageViewHolder(fragment, itemView,
-                Color.RED, 1, 0, 0, null);
-        holder.setMessage(message);
-        holder.setTimestamp(timestamp);
-        holder.setImage(image);
+        MessageViewHolder holder = spy(new MessageViewHolder(fragment, itemView,
+                Color.RED, 1, 0, 0, null));
+        doReturn(message).when(holder).getMessage();
+        doReturn(timestamp).when(holder).getTimestamp();
+        doReturn(image).when(holder).getImage();
 
         when(message.getText()).thenReturn("test text");
 
