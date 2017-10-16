@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Parcelable
+import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
@@ -91,6 +92,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             data = intent.getStringExtra(Intent.EXTRA_TEXT)
         } else if (MimeType.isVcard(intent.type)) {
             shareVCard(intent)
+            return
         } else if (intent.clipData != null) {
             for (i in 0 until intent.clipData.itemCount) {
                 data += intent.clipData.getItemAt(i).text

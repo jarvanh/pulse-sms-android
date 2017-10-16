@@ -105,7 +105,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             }
 
             handler.post {
-                val adapter = ContactAdapter(if (conversations == null) ArrayList() else conversations, this)
+                val adapter = ContactAdapter(if (conversations == null) ArrayList() else conversations!!, this)
                 recyclerView.layoutManager = LinearLayoutManager(activity)
                 recyclerView.adapter = adapter
             }
@@ -127,7 +127,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             }
 
             handler.post {
-                val adapter = ContactAdapter(if (groups == null) ArrayList() else groups, this)
+                val adapter = ContactAdapter(if (groups == null) ArrayList() else groups!!, this)
                 recyclerView.layoutManager = LinearLayoutManager(activity)
                 recyclerView.adapter = adapter
             }

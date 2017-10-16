@@ -27,9 +27,8 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 class InviteFriendsAdapter(conversations: List<Conversation>, listener: ContactClickedListener,
                            private val phoneNumbers: List<String>) : ContactAdapter(conversations, listener) {
 
-    override fun getLayoutId(): Int {
-        return R.layout.invite_list_item
-    }
+    override val layoutId: Int
+        get() = R.layout.invite_list_item
 
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
@@ -37,5 +36,4 @@ class InviteFriendsAdapter(conversations: List<Conversation>, listener: ContactC
         val conversation = conversations[position]
         holder.checkBox?.isChecked = phoneNumbers.contains(conversation.phoneNumbers)
     }
-
 }
