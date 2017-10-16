@@ -2,12 +2,10 @@ package xyz.klinker.messenger.utils.swipe_to_dismiss
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.ConversationListAdapter
-import xyz.klinker.messenger.shared.data.ColorSet
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 

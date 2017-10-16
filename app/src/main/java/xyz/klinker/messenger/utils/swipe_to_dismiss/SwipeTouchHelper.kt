@@ -19,7 +19,7 @@ package xyz.klinker.messenger.utils.swipe_to_dismiss
 import android.content.Context
 import android.support.v7.widget.helper.ItemTouchHelper
 
-import xyz.klinker.messenger.adapter.ConversationListAdapter
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.shared.data.Settings
 
 /**

@@ -28,7 +28,7 @@ import org.robolectric.RuntimeEnvironment;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ConversationListFragment;

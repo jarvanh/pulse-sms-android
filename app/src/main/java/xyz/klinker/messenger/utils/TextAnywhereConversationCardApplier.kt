@@ -7,10 +7,10 @@ class TextAnywhereConversationCardApplier(private val conversationList: Conversa
 
     fun shouldAddCardToList(): Boolean {
         val adapter = conversationList.adapter
-        return if (adapter == null || adapter.sections.size == 0) {
+        return if (adapter == null || adapter.sectionCounts.size == 0) {
             false
         } else {
-            adapter.sections[0].type != SectionType.CARD_ABOUT_ONLINE &&
+            adapter.sectionCounts[0].type != SectionType.CARD_ABOUT_ONLINE &&
                     adapter.showHeaderAboutTextingOnline()
         }
     }
@@ -18,7 +18,7 @@ class TextAnywhereConversationCardApplier(private val conversationList: Conversa
     fun addCardToConversationList() {
         val adapter = conversationList.adapter
         if (adapter != null) {
-            adapter.sections.add(0, SectionType(SectionType.CARD_ABOUT_ONLINE, 0))
+            adapter.sectionCounts.add(0, SectionType(SectionType.CARD_ABOUT_ONLINE, 0))
             adapter.shouldShowHeadersForEmptySections(true)
             adapter.notifyItemInserted(0)
         }

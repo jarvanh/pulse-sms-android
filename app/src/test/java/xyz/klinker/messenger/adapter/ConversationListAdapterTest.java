@@ -37,6 +37,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.activity.MessengerActivity;
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.SectionType;
@@ -96,7 +97,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void sectionCounts() {
-        List<SectionType> sectionCounts = adapter.getSections();
+        List<SectionType> sectionCounts = adapter.getSectionCounts();
 
         assertEquals(SectionType.Companion.getPINNED(), sectionCounts.get(0).getType());
         assertEquals(2, sectionCounts.get(0).getCount());

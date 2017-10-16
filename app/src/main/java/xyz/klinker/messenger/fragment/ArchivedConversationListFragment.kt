@@ -6,7 +6,7 @@ import android.view.View
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
-import xyz.klinker.messenger.adapter.ConversationListAdapter
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation

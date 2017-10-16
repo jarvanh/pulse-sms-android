@@ -5,7 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.ConversationListAdapter
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.shared.data.Settings
 
 @Suppress("DEPRECATION")

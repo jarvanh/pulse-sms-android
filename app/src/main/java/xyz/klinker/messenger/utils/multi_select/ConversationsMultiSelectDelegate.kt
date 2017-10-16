@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.SelectableHolder
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.ConversationListAdapter
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.fragment.ConversationListFragment

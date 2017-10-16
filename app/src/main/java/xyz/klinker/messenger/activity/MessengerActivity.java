@@ -69,7 +69,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.compose.ComposeActivity;
 import xyz.klinker.messenger.activity.compose.ComposeConstants;
 import xyz.klinker.messenger.adapter.ContactAdapter;
-import xyz.klinker.messenger.adapter.ConversationListAdapter;
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.api.implementation.LoginActivity;

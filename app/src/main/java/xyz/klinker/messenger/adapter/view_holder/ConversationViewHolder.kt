@@ -30,8 +30,7 @@ import com.bignerdranch.android.multiselector.SwappingHolder
 
 import de.hdodenhof.circleimageview.CircleImageView
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.ConversationListAdapter
-import xyz.klinker.messenger.shared.data.ColorSet
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
@@ -39,7 +38,6 @@ import xyz.klinker.messenger.shared.util.AnimationUtils
 import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener
-import xyz.klinker.messenger.utils.multi_select.ConversationsMultiSelectDelegate
 
 @Suppress("DEPRECATION")
 /**
@@ -188,7 +186,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
         AnimationUtils.contractConversationListItem(itemView)
     }
 
-    fun setContactClickedListener(listener: ContactClickedListener) {
+    fun setContactClickedListener(listener: ContactClickedListener?) {
         this.contactClickedListener = listener
     }
 }

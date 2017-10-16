@@ -42,7 +42,7 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
  * object for easy use, the only fields that need filled are title, phoneNumbers and imageUri.
  */
 @Suppress("DEPRECATION")
-open class ContactAdapter(val conversations: List<Conversation>, private val listener: ContactClickedListener)
+open class ContactAdapter(val conversations: List<Conversation>, private val listener: ContactClickedListener?)
     : RecyclerView.Adapter<ConversationViewHolder>() {
 
     private var lightToolbarTextColor = Integer.MIN_VALUE
