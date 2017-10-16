@@ -106,7 +106,7 @@ import xyz.klinker.giphy.Giphy;
 import xyz.klinker.messenger.BuildConfig;
 import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.activity.MessengerActivity;
-import xyz.klinker.messenger.adapter.MessageListAdapter;
+import xyz.klinker.messenger.adapter.message.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.shared.data.DataSource;
@@ -121,7 +121,6 @@ import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo;
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout;
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver;
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants;
-import xyz.klinker.messenger.shared.service.notification.NotificationService;
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob;
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment;
 import xyz.klinker.messenger.shared.util.AnimationUtils;
@@ -899,8 +898,8 @@ public class MessageListFragment extends Fragment implements
                 int visibleItemCount = manager.getChildCount();
                 int totalItemCount = manager.getItemCount();
                 int pastVisibleItems = manager.findFirstVisibleItemPosition();
-                if (pastVisibleItems + visibleItemCount >= totalItemCount && adapter != null && adapter.snackbar != null) {
-                    adapter.snackbar.dismiss();
+                if (pastVisibleItems + visibleItemCount >= totalItemCount && adapter != null && adapter.getSnackbar() != null) {
+                    adapter.getSnackbar().dismiss();
                 }
             }
         });
@@ -1119,7 +1118,7 @@ public class MessageListFragment extends Fragment implements
                     Settings.INSTANCE.getUseGlobalThemeColor() ?
                             Settings.INSTANCE.getMainColorSet().getColorAccent() :
                             getArguments().getInt(ARG_COLOR_ACCENT),
-                    getArguments().getBoolean(ARG_IS_GROUP), manager, this);
+                    getArguments().getBoolean(ARG_IS_GROUP), this);
             adapter.setFromColorMapper(contactMap, contactMapByName);
 
             if (messageList != null) {

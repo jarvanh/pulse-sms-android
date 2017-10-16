@@ -52,10 +52,11 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 /**
  * View holder for working with a message.
  */
-class MessageViewHolder(private val fragment: MessageListFragment?, itemView: View,
-                        color: Int, conversationId: Long, private val type: Int, private val timestampHeight: Int,
+class MessageViewHolder(private val fragment: MessageListFragment?, itemView: View, color: Int, private val type: Int,
                         private val messageDeletedListener: MessageDeletedListener?)
     : SwappingHolder(itemView, if (fragment == null || fragment.multiSelect == null) MultiSelector() else fragment.multiSelect) {
+
+    private val timestampHeight: Int by lazy { DensityUtil.spToPx(itemView.context, Settings.mediumFont + 2)}
 
     val title: TextView by lazy { itemView.findViewById<View>(R.id.title) as TextView }
     val timestamp: TextView by lazy { itemView.findViewById<View>(R.id.timestamp) as TextView }
@@ -124,7 +125,6 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
                 } catch (e: SecurityException) {
                     e.printStackTrace()
                 }
-
             } else if (mimeType == MimeType.MEDIA_YOUTUBE_V2) {
                 val preview = YouTubePreview.build(data!!)
                 if (preview != null) {
@@ -134,7 +134,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
                 startArticle()
             } else {
                 val intent = Intent(itemView.context, ImageViewerActivity::class.java)
-                intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, conversationId)
+                intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, fragment?.conversationId)
                 intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageId)
 
                 itemView.context.startActivity(intent)

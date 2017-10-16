@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.bignerdranch.android.multiselector.SelectableHolder
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.MessageListAdapter
+import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment
