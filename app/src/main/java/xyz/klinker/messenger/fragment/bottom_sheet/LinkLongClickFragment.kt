@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.fragment.bottom_sheet
 
-import android.app.Dialog
 import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -8,9 +7,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialogFragment
-import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -18,12 +14,9 @@ import android.widget.Toast
 import java.util.Random
 
 import xyz.klinker.android.article.ArticleIntent
-import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.activity.ComposeActivity
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 
 import android.content.Context.CLIPBOARD_SERVICE

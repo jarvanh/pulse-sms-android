@@ -110,7 +110,7 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
         list.adapter = InviteFriendsAdapter(contacts, this, phoneNumbers)
     }
 
-    override fun onClicked(title: String, phoneNumber: String, imageUri: String) {
+    override fun onClicked(title: String, phoneNumber: String, imageUri: String?) {
         if (phoneNumbers.contains(phoneNumber)) {
             phoneNumbers.remove(phoneNumber)
         } else {

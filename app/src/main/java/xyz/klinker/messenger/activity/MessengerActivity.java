@@ -66,6 +66,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.activity.compose.ComposeActivity;
+import xyz.klinker.messenger.activity.compose.ComposeConstants;
 import xyz.klinker.messenger.adapter.ContactAdapter;
 import xyz.klinker.messenger.adapter.ConversationListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
@@ -1002,9 +1004,9 @@ public class  MessengerActivity extends AppCompatActivity
                 }
             } else {
                 final Intent editRecipients = new Intent(MessengerActivity.this, ComposeActivity.class);
-                editRecipients.setAction(ComposeActivity.ACTION_EDIT_RECIPIENTS);
-                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.getTitle());
-                editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.getPhoneNumbers());
+                editRecipients.setAction(ComposeConstants.INSTANCE.getACTION_EDIT_RECIPIENTS());
+                editRecipients.putExtra(ComposeConstants.INSTANCE.getEXTRA_EDIT_RECIPIENTS_TITLE(), conversation.getTitle());
+                editRecipients.putExtra(ComposeConstants.INSTANCE.getEXTRA_EDIT_RECIPIENTS_NUMBERS(), conversation.getPhoneNumbers());
 
                 new AlertDialog.Builder(this)
                         .setView(recyclerView)
@@ -1248,7 +1250,7 @@ public class  MessengerActivity extends AppCompatActivity
 
     private void ensureSearchFragment() {
         if (searchFragment == null) {
-            searchFragment = SearchFragment.newInstance();
+            searchFragment = SearchFragment.Companion.newInstance();
         }
     }
 

@@ -127,7 +127,7 @@
         </activity>
 
         <activity
-            android:name=".activity.ComposeActivity"
+            android:name=".activity.compose.ComposeActivity"
             android:exported="true"
             android:theme="@style/PulseTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" >

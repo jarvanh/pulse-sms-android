@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.activity.ComposeActivity
+import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 

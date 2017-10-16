@@ -24,7 +24,8 @@ import android.support.annotation.RequiresApi
 import android.text.InputType
 import android.util.Log
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.activity.ComposeActivity
+import xyz.klinker.messenger.activity.compose.ComposeActivity
+import xyz.klinker.messenger.activity.compose.ComposeConstants
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
@@ -190,9 +191,9 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
         preference.setOnPreferenceClickListener {
             val editRecipients = Intent(activity, ComposeActivity::class.java)
-            editRecipients.action = ComposeActivity.ACTION_EDIT_RECIPIENTS
-            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title)
-            editRecipients.putExtra(ComposeActivity.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers)
+            editRecipients.action = ComposeConstants.ACTION_EDIT_RECIPIENTS
+            editRecipients.putExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_TITLE, conversation.title)
+            editRecipients.putExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_NUMBERS, conversation.phoneNumbers)
 
             startActivity(editRecipients)
             true
@@ -292,7 +293,6 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
     }
 
     companion object {
-
         private val ARG_CONVERSATION_ID = "conversation_id"
 
         fun newInstance(conversationId: Long): ContactSettingsFragment {
