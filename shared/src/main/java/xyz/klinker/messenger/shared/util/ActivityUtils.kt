@@ -37,9 +37,9 @@ object ActivityUtils {
     val MESSENGER_ACTIVITY = ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.MessengerActivity")
     val COMPOSE_ACTIVITY = ComponentName("xyz.klinker.messenger",
-            "xyz.klinker.messenger" + ".activity.ComposeActivity")
+            "xyz.klinker.messenger" + ".activity.compose.ComposeActivity")
     val NOTIFICATION_REPLY = ComponentName("xyz.klinker.messenger",
-            "xyz.klinker.messenger" + ".activity.NotificationReplyActivity")
+            "xyz.klinker.messenger" + ".activity.notification.MarshmallowReplyActivity")
 
     fun buildForComponent(component: ComponentName): Intent {
         val intent = Intent(Intent.ACTION_MAIN)

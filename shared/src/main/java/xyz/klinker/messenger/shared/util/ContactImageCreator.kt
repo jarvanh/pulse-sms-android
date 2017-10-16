@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
@@ -11,8 +13,8 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 
 object ContactImageCreator {
 
-    fun getLetterPicture(context: Context?, conversation: Conversation): Bitmap? {
-        if (context == null) {
+    fun getLetterPicture(context: Context?, conversation: Conversation?): Bitmap? {
+        if (context == null || conversation == null) {
             return null
         }
 

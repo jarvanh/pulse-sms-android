@@ -329,8 +329,8 @@ object ContactUtils {
         }
     }
 
-    fun shouldDisplayContactLetter(conversation: Conversation) =
-            if (conversation.title!!.isEmpty() || conversation.title!!.contains(", ") ||
+    fun shouldDisplayContactLetter(conversation: Conversation?) =
+            if (conversation == null || conversation.title!!.isEmpty() || conversation.title!!.contains(", ") ||
                     conversation.phoneNumbers!!.contains(", ")) {
                 false
             } else {

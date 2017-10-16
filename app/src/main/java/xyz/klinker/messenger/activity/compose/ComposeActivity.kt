@@ -34,12 +34,12 @@ import xyz.klinker.messenger.shared.util.ColorUtils
  */
 class ComposeActivity : AppCompatActivity() {
 
-    internal val contactsProvider = ComposeContactsProvider(this)
-    internal val vCardSender = ComposeVCardSender(this)
-    internal val shareHandler = ComposeShareHandler(this)
-    internal val sender = ComposeSendHelper(this)
+    internal val contactsProvider: ComposeContactsProvider by lazy { ComposeContactsProvider(this) }
+    internal val shareHandler: ComposeShareHandler by lazy { ComposeShareHandler(this) }
+    internal val vCardSender: ComposeVCardSender by lazy { ComposeVCardSender(this) }
+    internal val sender: ComposeSendHelper by lazy { ComposeSendHelper(this) }
 
-    private val intentHandler = ComposeIntentHandler(this)
+    private val intentHandler: ComposeIntentHandler by lazy { ComposeIntentHandler(this) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -206,7 +206,7 @@
             android:theme="@style/PulseTheme.NoActionBar"
             tools:replace="android:theme" />
         <activity
-            android:name=".activity.NotificationReplyActivity"
+            android:name=".activity.notification.MarshmallowReplyActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:theme="@style/api_Theme.AppCompat.Translucent"

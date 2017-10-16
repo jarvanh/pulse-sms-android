@@ -6,7 +6,7 @@ object NotificationConstants {
     val FOREGROUND_NOTIFICATION_ID = 9934
     val SUMMARY_ID = 0
 
-    val DEBUG_QUICK_REPLY = false
+    val DEBUG_QUICK_REPLY = true
 
     var CONVERSATION_ID_OPEN: Long = 0L
 }
