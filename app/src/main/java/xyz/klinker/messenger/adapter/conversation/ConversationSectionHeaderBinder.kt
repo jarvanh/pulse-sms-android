@@ -55,7 +55,7 @@ class ConversationSectionHeaderBinder(private val adapter: ConversationListAdapt
             adapter.notifyItemRemoved(0)
 
             tryIt.postDelayed({
-                activity.menuItemClicked(R.id.drawer_account)
+                activity.navController.drawerItemClicked(R.id.drawer_account)
                 activity.clickNavigationItem(R.id.drawer_account)
                 AnalyticsHelper.convoListTryIt(activity)
             }, 500)

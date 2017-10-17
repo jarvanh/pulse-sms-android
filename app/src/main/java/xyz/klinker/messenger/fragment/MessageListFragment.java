@@ -576,7 +576,7 @@ public class MessageListFragment extends Fragment implements
 
                 image.setOnClickListener(view -> {
                     dismissKeyboard();
-                    ((MessengerActivity) activity).menuItemClicked(R.id.menu_call);
+                    ((MessengerActivity) activity).getNavController().drawerItemClicked(R.id.menu_call);
                 });
 
                 image.setOnLongClickListener(view -> {
@@ -589,7 +589,7 @@ public class MessageListFragment extends Fragment implements
 
             toolbar.setOnMenuItemClickListener(item -> {
                 dismissKeyboard();
-                ((MessengerActivity) activity).menuItemClicked(item.getItemId());
+                ((MessengerActivity) activity).getNavController().drawerItemClicked(item.getItemId());
 
                 return false;
             });

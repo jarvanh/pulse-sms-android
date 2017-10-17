@@ -348,7 +348,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 dialog.dismiss()
                 returnToConversationsAfterLogin()
 
-                (activity as MessengerActivity).startDataDownload()
+                (activity as MessengerActivity).accountController.startResyncingAccount()
 
                 val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
                 nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_account)

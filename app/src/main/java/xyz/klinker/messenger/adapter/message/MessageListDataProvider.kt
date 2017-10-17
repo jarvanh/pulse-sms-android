@@ -71,7 +71,7 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
 
         val messageList = source.getMessages(context, conversationId, 1)
         if (messageList.isEmpty()) {
-            (fragment.activity as MessengerActivity).menuItemClicked(R.id.menu_delete_conversation)
+            (fragment.activity as MessengerActivity).navController.drawerItemClicked(R.id.menu_delete_conversation)
         } else {
             val message = messageList[0]
 

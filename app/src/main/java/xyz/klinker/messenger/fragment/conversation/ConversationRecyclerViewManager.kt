@@ -71,6 +71,10 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
     }
 
     private fun setConversations(conversations: MutableList<Conversation>) {
+        if (fragment.activity == null) {
+            return
+        }
+
         if (adapter != null) {
             adapter!!.conversations = conversations
             adapter!!.notifyDataSetChanged()

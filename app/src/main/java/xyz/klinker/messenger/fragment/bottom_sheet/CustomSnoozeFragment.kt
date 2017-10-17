@@ -43,7 +43,7 @@ class CustomSnoozeFragment : TabletOptimizedBottomSheetDialogFragment() {
         dismiss()
 
         if (activity is MessengerActivity) {
-            (activity as MessengerActivity).snoozeIcon()
+            (activity as MessengerActivity).snoozeController.updateSnoozeIcon()
         }
     }
 
