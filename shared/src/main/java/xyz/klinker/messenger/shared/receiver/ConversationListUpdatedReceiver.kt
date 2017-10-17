@@ -20,15 +20,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.support.annotation.VisibleForTesting
 import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.SectionType
-import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
 import xyz.klinker.messenger.shared.data.pojo.ReorderType
-import xyz.klinker.messenger.shared.shared_interfaces.IConversationListAdapter
 import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment
 
 /**
@@ -53,7 +50,7 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
     @Throws(Exception::class)
     private fun handleReceiver(context: Context, intent: Intent) {
-        if (!fragment.isAdded) {
+        if (!fragment.isFragmentAdded) {
             return
         }
 

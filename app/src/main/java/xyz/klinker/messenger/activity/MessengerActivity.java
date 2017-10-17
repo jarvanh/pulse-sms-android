@@ -80,7 +80,7 @@ import xyz.klinker.messenger.shared.data.Settings;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment;
 import xyz.klinker.messenger.fragment.BlacklistFragment;
-import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
 import xyz.klinker.messenger.fragment.InviteFriendsFragment;
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment;
 import xyz.klinker.messenger.fragment.SearchFragment;
@@ -132,8 +132,6 @@ public class  MessengerActivity extends AppCompatActivity
     private boolean inSettings = false;
     private boolean startImportOrLoad = false;
 
-    private DataSource dataSource;
-
     private BroadcastReceiver downloadReceiver;
     private BroadcastReceiver refreshAllReceiver = new BroadcastReceiver() {
         @Override
@@ -153,8 +151,6 @@ public class  MessengerActivity extends AppCompatActivity
         if (Settings.INSTANCE.isCurrentlyDarkTheme()) {
             getWindow().setNavigationBarColor(Color.BLACK);
         }
-
-        dataSource = DataSource.INSTANCE;
 
         setContentView(R.layout.activity_messenger);
 
@@ -199,7 +195,7 @@ public class  MessengerActivity extends AppCompatActivity
         super.onPause();
 
         if (conversationListFragment != null) {
-            conversationListFragment.dismissSnackbars(this);
+            conversationListFragment.getSwipeHelper().dismissSnackbars(this);
         }
     }
 
@@ -345,7 +341,7 @@ public class  MessengerActivity extends AppCompatActivity
 
     public void showSnackbar(String text, int duration, String actionLabel, View.OnClickListener listener) {
         if (conversationListFragment != null) {
-            conversationListFragment.makeSnackbar(text, duration, actionLabel, listener);
+            conversationListFragment.getSwipeHelper().makeSnackbar(text, duration, actionLabel, listener);
         } else {
             Snackbar s = Snackbar.make(findViewById(android.R.id.content), text, duration);
 
@@ -586,20 +582,18 @@ public class  MessengerActivity extends AppCompatActivity
 
     public boolean menuItemClicked(int id) {
         if (conversationListFragment != null) {
-            conversationListFragment.dismissSnackbars(this);
+            conversationListFragment.getSwipeHelper().dismissSnackbars(this);
         }
 
         switch (id) {
             case R.id.drawer_conversation:
-                if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null
-                        && conversationListFragment.archiveSnackbar.isShown()) {
-                    conversationListFragment.archiveSnackbar.dismiss();
+                if (conversationListFragment != null) {
+                    conversationListFragment.getSwipeHelper().dismissSnackbars(this);
                 }
                 return displayConversations();
             case R.id.drawer_archived:
-                if (conversationListFragment != null && conversationListFragment.archiveSnackbar != null
-                        && conversationListFragment.archiveSnackbar.isShown()) {
-                    conversationListFragment.archiveSnackbar.dismiss();
+                if (conversationListFragment != null) {
+                    conversationListFragment.getSwipeHelper().dismissSnackbars(this);
                 }
                 return displayArchived();
             case R.id.drawer_schedule:
@@ -747,13 +741,13 @@ public class  MessengerActivity extends AppCompatActivity
 
         boolean updateConversationListSize = false;
         if (messageId != -1L && convoId != -1L) {
-            conversationListFragment = ConversationListFragment.newInstance(convoId, messageId);
+            conversationListFragment = ConversationListFragment.Companion.newInstance(convoId, messageId);
             updateConversationListSize = true;
         } else if (convoId != -1L && convoId != 0) {
-            conversationListFragment = ConversationListFragment.newInstance(convoId);
+            conversationListFragment = ConversationListFragment.Companion.newInstance(convoId);
             updateConversationListSize = true;
         } else {
-            conversationListFragment = ConversationListFragment.newInstance();
+            conversationListFragment = ConversationListFragment.Companion.newInstance();
         }
 
         if (updateConversationListSize) {
@@ -785,7 +779,7 @@ public class  MessengerActivity extends AppCompatActivity
         invalidateOptionsMenu();
         inSettings = false;
 
-        conversationListFragment = ConversationListFragment.newInstance(convo);
+        conversationListFragment = ConversationListFragment.Companion.newInstance(convo);
 
         otherFragment = null;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

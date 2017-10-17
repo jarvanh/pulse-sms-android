@@ -25,7 +25,7 @@ class MessengerActivity : AppCompatActivity(), IConversationListFragment {
 
     override val adapter: WearableConversationListAdapter by lazy { WearableConversationListAdapter(emptyList()) }
 
-    override val isAdded: Boolean
+    override val isFragmentAdded: Boolean
         get() = true
 
     override val expandedId: Long

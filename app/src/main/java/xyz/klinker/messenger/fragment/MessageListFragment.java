@@ -109,6 +109,7 @@ import xyz.klinker.messenger.activity.MessengerActivity;
 import xyz.klinker.messenger.adapter.message.MessageListAdapter;
 import xyz.klinker.messenger.api.implementation.Account;
 import xyz.klinker.messenger.api.implementation.ApiUtils;
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
 import xyz.klinker.messenger.shared.data.DataSource;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.data.MmsSettings;

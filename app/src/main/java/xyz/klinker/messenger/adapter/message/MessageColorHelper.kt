@@ -10,7 +10,7 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ColorUtils
 
 @Suppress("DEPRECATION")
-class MessageColorHelper(private val adapter: MessageListAdapter) {
+class MessageColorHelper() {
 
     private val fromColorMapper = mutableMapOf<String, Contact>()
     private val fromColorMapperByName = mutableMapOf<String, Contact>()
@@ -75,7 +75,7 @@ class MessageColorHelper(private val adapter: MessageListAdapter) {
                             if (originalLength == newLength) {
                                 // all letters, so we should use the contact name to find the phone number
                                 val contacts = source.getContactsByNames(context, contact.name)
-                                if (contacts.size > 0) {
+                                if (contacts.isNotEmpty()) {
                                     contact.phoneNumber = contacts[0].phoneNumber
                                 }
                             }

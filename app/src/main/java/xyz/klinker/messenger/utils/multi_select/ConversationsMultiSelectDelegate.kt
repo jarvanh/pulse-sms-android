@@ -16,7 +16,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
-import xyz.klinker.messenger.fragment.ConversationListFragment
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
@@ -159,7 +159,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                         source.updateConversationSettings(activity, conversation)
                     }
 
-                    fragment.loadConversations()
+                    fragment.recyclerManager.loadConversations()
                 }
                 R.id.menu_pin_conversation -> {
                     handled = true
@@ -169,7 +169,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                         source.updateConversationSettings(activity, conversation)
                     }
 
-                    fragment.loadConversations()
+                    fragment.recyclerManager.loadConversations()
                 }
             }
 

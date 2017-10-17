@@ -53,7 +53,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
     private val dataProvider: MessageListDataProvider = MessageListDataProvider(this, fragment, messages)
     private val itemBinder: MessageItemBinder = MessageItemBinder(this)
-    private val colorHelper: MessageColorHelper = MessageColorHelper(this)
+    private val colorHelper: MessageColorHelper = MessageColorHelper()
     private val stylingHelper: MessageListStylingHelper = MessageListStylingHelper(fragment.activity)
     private val linkApplier: MessageLinkApplier = MessageLinkApplier(fragment, accentColor, receivedColor)
     private val emojiEnlarger: MessageEmojiEnlarger = MessageEmojiEnlarger()

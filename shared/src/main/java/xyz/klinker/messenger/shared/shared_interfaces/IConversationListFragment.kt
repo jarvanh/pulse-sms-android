@@ -2,7 +2,7 @@ package xyz.klinker.messenger.shared.shared_interfaces
 
 interface IConversationListFragment {
 
-    val isAdded: Boolean
+    val isFragmentAdded: Boolean
     val expandedId: Long
     val adapter: IConversationListAdapter
 

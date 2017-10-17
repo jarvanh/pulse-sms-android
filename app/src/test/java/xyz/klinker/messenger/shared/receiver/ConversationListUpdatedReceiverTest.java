@@ -31,7 +31,7 @@ import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
-import xyz.klinker.messenger.fragment.ConversationListFragment;
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
 import xyz.klinker.messenger.shared.data.pojo.ReorderType;
 
 import static org.junit.Assert.assertEquals;
@@ -67,7 +67,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
         context = RuntimeEnvironment.application;
         today = new SectionType(SectionType.Companion.getTODAY(), 1);
 
-        when(fragment.isAdded()).thenReturn(true);
+        when(fragment.isFragmentAdded()).thenReturn(true);
         when(fragment.getExpandedId()).thenReturn(0L);
         when(fragment.getAdapter()).thenReturn(adapter);
         when(intent.getLongExtra("conversation_id", -1)).thenReturn(1L);
@@ -81,7 +81,7 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
     @Test
     public void fragmentNotAdded() {
-        when(fragment.isAdded()).thenReturn(false);
+        when(fragment.isFragmentAdded()).thenReturn(false);
         receiver.onReceive(context, intent);
         verifyNoMoreInteractions(adapter);
     }

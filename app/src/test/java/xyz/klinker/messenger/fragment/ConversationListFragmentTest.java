@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -30,7 +31,7 @@ public class ConversationListFragmentTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        fragment = startFragment(ConversationListFragment.newInstance());
+        fragment = startFragment(ConversationListFragment.Companion.newInstance());
     }
 
     @Test

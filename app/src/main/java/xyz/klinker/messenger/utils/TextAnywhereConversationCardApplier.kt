@@ -1,6 +1,6 @@
 package xyz.klinker.messenger.utils
 
-import xyz.klinker.messenger.fragment.ConversationListFragment
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.data.SectionType
 
 class TextAnywhereConversationCardApplier(private val conversationList: ConversationListFragment) {

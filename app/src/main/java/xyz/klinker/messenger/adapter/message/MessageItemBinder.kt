@@ -2,7 +2,6 @@ package xyz.klinker.messenger.adapter.message
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import com.bumptech.glide.Glide
@@ -98,7 +97,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
         if (preview != null) {
             Glide.with(holder.itemView.context)
                     .asBitmap()
-                    .load(Uri.parse(preview!!.thumbnail))
+                    .load(Uri.parse(preview.thumbnail))
                     .apply(RequestOptions()
                             .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                             .fitCenter())
