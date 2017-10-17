@@ -74,7 +74,9 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
             val conversation = DataSource.getConversation(context, conversationId)
 
             // need to insert after the pinned conversations
-            if (conversation != null) adapter.conversations.add(pinnedCount, conversation)
+            if (conversation != null) {
+                adapter.conversations.add(pinnedCount, conversation)
+            } else return
         } else {
             val position = (0 until adapter.conversations.size).firstOrNull { adapter.conversations[it].id == conversationId }
                     ?: -1
