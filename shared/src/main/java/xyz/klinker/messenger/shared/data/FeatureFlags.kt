@@ -66,6 +66,7 @@ object FeatureFlags {
     // 2. Set up the flag in the constructor
     // 3. Add the switch case for the flag in the updateFlag method
 
+    val SKIP_INTRO_PAGER = true
 
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false

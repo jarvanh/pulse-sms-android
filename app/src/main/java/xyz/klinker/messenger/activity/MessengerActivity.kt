@@ -152,7 +152,7 @@ class MessengerActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
             resultHandler.handle(requestCode, resultCode, data)
-            accountController.forceLoginOnTablets(requestCode)
+            accountController.startLoad(requestCode)
             super.onActivityResult(requestCode, resultCode, data)
         } catch (e: Exception) {
             e.printStackTrace()

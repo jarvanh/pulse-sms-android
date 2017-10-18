@@ -32,7 +32,7 @@ class MainNavigationController(private val activity: MessengerActivity)
     val messageActionDelegate = MainNavigationMessageListActionDelegate(activity)
 
     private val navigationView: NavigationView by lazy { activity.findViewById<View>(R.id.navigation_view) as NavigationView }
-    private val drawerLayout: DrawerLayout by lazy { activity.findViewById<View>(R.id.drawer_layout) as DrawerLayout }
+    private val drawerLayout: DrawerLayout? by lazy { activity.findViewById<View>(R.id.drawer_layout) as DrawerLayout? }
 
     var conversationListFragment: ConversationListFragment? = null
     var otherFragment: Fragment? = null
@@ -73,8 +73,8 @@ class MainNavigationController(private val activity: MessengerActivity)
     }
 
     fun openDrawer(): Boolean {
-        if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.openDrawer(GravityCompat.START)
+        if (drawerLayout != null && !drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout!!.openDrawer(GravityCompat.START)
             return true
         }
 
@@ -82,8 +82,8 @@ class MainNavigationController(private val activity: MessengerActivity)
     }
 
     fun closeDrawer(): Boolean {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        if (drawerLayout != null && drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout!!.closeDrawer(GravityCompat.START)
             return true
         }
 
@@ -97,7 +97,6 @@ class MainNavigationController(private val activity: MessengerActivity)
                 .filter { it is BackPressedListener && (it as BackPressedListener).onBackPressed() }
                 .forEach { return true }
 
-
         when {
             conversationListFragment == null -> {
                 val messageListFragment = activity.supportFragmentManager.findFragmentById(R.id.message_list_container)
@@ -109,7 +108,7 @@ class MainNavigationController(private val activity: MessengerActivity)
 
                 conversationActionDelegate.displayConversations()
                 activity.fab.show()
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 return true
             }
             inSettings -> {

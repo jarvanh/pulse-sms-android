@@ -72,7 +72,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             ignoreSendingStatus = false
         }
 
-        fragment.multiSelect?.setAdapter(this)
+        fragment.multiSelect.setAdapter(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {

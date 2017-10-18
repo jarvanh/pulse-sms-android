@@ -15,6 +15,7 @@ import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.OnboardingActivity
 import xyz.klinker.messenger.api.implementation.LoginActivity
 import xyz.klinker.messenger.shared.MessengerActivityExtras
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.ApiDownloadService
 import xyz.klinker.messenger.shared.service.FirebaseTokenUpdateCheckService
@@ -33,19 +34,23 @@ class MainAccountController(private val activity: MessengerActivity) {
 
     fun startIntroOrLogin(savedInstanceState: Bundle?) {
         if (Settings.firstStart && savedInstanceState == null) {
-            val hasTelephone = activity.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
-            val hasPhoneFeature = hasTelephone && !activity.resources.getBoolean(R.bool.is_tablet)
-            if (hasPhoneFeature) {
-                activity.startActivityForResult(
-                        Intent(activity, OnboardingActivity::class.java),
-                        MessengerActivityExtras.REQUEST_ONBOARDING
-                )
+            if (FeatureFlags.SKIP_INTRO_PAGER) {
+                startLoad(MessengerActivityExtras.REQUEST_ONBOARDING)
             } else {
-                // if it isn't a phone, then we want to go straight to the login
-                // and skip the onboarding, since they would have done it on their phone
-                val login = Intent(activity, InitialLoadActivity::class.java)
-                activity.startActivity(login)
-                activity.finish()
+                val hasTelephone = activity.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
+                val hasPhoneFeature = hasTelephone && !activity.resources.getBoolean(R.bool.is_tablet)
+                if (hasPhoneFeature) {
+                    activity.startActivityForResult(
+                            Intent(activity, OnboardingActivity::class.java),
+                            MessengerActivityExtras.REQUEST_ONBOARDING
+                    )
+                } else {
+                    // if it isn't a phone, then we want to go straight to the login
+                    // and skip the onboarding, since they would have done it on their phone
+                    val login = Intent(activity, InitialLoadActivity::class.java)
+                    activity.startActivity(login)
+                    activity.finish()
+                }
             }
 
             startImportOrLoad = true
@@ -54,7 +59,7 @@ class MainAccountController(private val activity: MessengerActivity) {
 
     // if it isn't a phone, then we want to force the login.
     // if it is a phone, they can choose to log in when they want to
-    fun forceLoginOnTablets(requestCode: Int) {
+    fun startLoad(requestCode: Int) {
         if (requestCode == MessengerActivityExtras.REQUEST_ONBOARDING) {
             val hasTelephone = activity.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
             val login = Intent(activity, InitialLoadActivity::class.java)
