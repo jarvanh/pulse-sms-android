@@ -16,16 +16,12 @@
 
 package xyz.klinker.messenger.fragment
 
-import android.database.Cursor
 import android.support.v17.leanback.widget.ArrayObjectAdapter
 import android.support.v17.leanback.widget.HeaderItem
 import android.support.v17.leanback.widget.ListRow
-
 import com.sgottard.sofa.support.BrowseSupportFragment
-
+import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.util.CursorUtil
 
 /**
  * A fragment that displays messages on the right side of the screen and conversations on the left
@@ -40,7 +36,7 @@ class TvBrowseFragment : BrowseSupportFragment() {
         DataSource.getUnarchivedConversationsAsList(activity)
                 .forEach {
                     val customFragmentAdapter = ArrayObjectAdapter()
-                    customFragmentAdapter.add(MessageListFragment.newInstance(it))
+                    customFragmentAdapter.add(MessageInstanceManager.newInstance(it))
 
                     val customFragmentRow = ListRow(HeaderItem(it.title), customFragmentAdapter)
                     adapter.add(customFragmentRow)

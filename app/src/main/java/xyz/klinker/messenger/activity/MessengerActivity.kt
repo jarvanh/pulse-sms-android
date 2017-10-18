@@ -149,7 +149,7 @@ class MessengerActivity : AppCompatActivity() {
         return navController.optionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
             resultHandler.handle(requestCode, resultCode, data)
             accountController.forceLoginOnTablets(requestCode)

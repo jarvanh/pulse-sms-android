@@ -19,6 +19,7 @@ import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment
 import xyz.klinker.messenger.shared.data.ArticlePreview
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.YouTubePreview
 import xyz.klinker.messenger.shared.data.model.Message
@@ -124,7 +125,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                     handled = true
 
                     for (id in selectedIds) {
-                        fragment.dataSource.deleteMessage(activity, id)
+                        DataSource.deleteMessage(activity, id)
                     }
 
                     adapter!!.onMessageDeleted(activity, fragment.conversationId, highestKey)
@@ -132,7 +133,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 }
                 item.itemId == R.id.menu_share_message -> {
                     handled = true
-                    val message = fragment.dataSource.getMessage(activity, selectedIds[0])
+                    val message = DataSource.getMessage(activity, selectedIds[0])
 
                     val fragment = MessageShareFragment()
                     fragment.setMessage(message)
@@ -140,7 +141,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 }
                 item.itemId == R.id.menu_copy_message -> {
                     handled = true
-                    val message = fragment.dataSource.getMessage(activity, selectedIds[0])
+                    val message = DataSource.getMessage(activity, selectedIds[0])
                     val text = MessageMultiSelectDelegate.getMessageContent(message)
 
                     val fragment = CopyMessageTextFragment(text!!)
@@ -149,7 +150,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 else -> {
                     handled = true
                     AlertDialog.Builder(activity)
-                            .setMessage(fragment.dataSource.getMessageDetails(activity, selectedIds[0]))
+                            .setMessage(DataSource.getMessageDetails(activity, selectedIds[0]))
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
                 }

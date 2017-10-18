@@ -5,6 +5,7 @@ import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
@@ -36,11 +37,11 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         AnimationUtils.expandActivityForConversation(fragment.activity)
 
         if (fragment.arguments != null && fragment.arguments.containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
-            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation,
+            messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!,
                     fragment.arguments.getLong(ARG_MESSAGE_TO_OPEN_ID))
             fragment.arguments.remove(ARG_MESSAGE_TO_OPEN_ID)
         } else {
-            messageListFragment = MessageListFragment.newInstance(viewHolder.conversation)
+            messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!)
         }
 
         try {

@@ -76,6 +76,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import xyz.klinker.messenger.R;
+import xyz.klinker.messenger.fragment.message.attach.AttachmentListener;
 import xyz.klinker.messenger.shared.data.MimeType;
 import xyz.klinker.messenger.shared.util.ImageUtils;
 import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener;
@@ -964,7 +965,7 @@ public class Camera2BasicFragment extends Fragment
             case R.id.fullscreen: {
                 Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startCamera.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.INSTANCE.getUriForPhotoCaptureIntent(getActivity()));
-                getActivity().startActivityForResult(startCamera, MessageListFragment.RESULT_CAPTURE_IMAGE_REQUEST);
+                getActivity().startActivityForResult(startCamera, AttachmentListener.Companion.getRESULT_CAPTURE_IMAGE_REQUEST());
 
                 break;
             }

@@ -134,7 +134,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         NotificationUtils.cancelGroupedNotificationWithNoContent(this)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         val result = WearableReplyActivity.getResultText(data)

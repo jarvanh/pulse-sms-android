@@ -18,8 +18,8 @@ import xyz.klinker.messenger.activity.compose.ComposeConstants
 import xyz.klinker.messenger.adapter.ContactAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.fragment.BlacklistFragment
-import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.fragment.message.load.MessageListLoader
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.ContactUtils
@@ -250,7 +250,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
             val messages = source.getMessages(activity, conversation.id)
 
-            if (messages.count > MessageListFragment.MESSAGE_LIMIT) {
+            if (messages.count > MessageListLoader.MESSAGE_LIMIT) {
                 builder.setNegativeButton(R.string.menu_view_full_conversation) { _, _ ->
                     NoLimitMessageListActivity.start(activity, conversation.id) }
             }

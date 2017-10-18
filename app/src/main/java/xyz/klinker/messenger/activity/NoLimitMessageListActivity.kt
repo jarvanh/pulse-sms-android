@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.util.ActivityUtils
 
@@ -24,7 +24,7 @@ class NoLimitMessageListActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.message_list_container, MessageListFragment.newInstance(conversation, -1, false))
+                .replace(R.id.message_list_container, MessageInstanceManager.newInstance(conversation, -1, false))
                 .commit()
 
         ActivityUtils.setStatusBarColor(this, conversation.colors.colorDark)
