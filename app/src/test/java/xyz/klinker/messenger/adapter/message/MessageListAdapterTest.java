@@ -38,6 +38,7 @@ import xyz.klinker.messenger.adapter.message.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -72,6 +73,8 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
     private RecyclerView recycler;
     @Mock
     private LinearLayoutManager layoutManager;
+    @Mock
+    private MessageMultiSelectDelegate multiSelect;
 
     @Before
     public void setUp() {
@@ -80,8 +83,9 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         when(timestamp.getLayoutParams()).thenReturn(params);
         when(timestamp.getContext()).thenReturn(context);
         when(recycler.getLayoutManager()).thenReturn(layoutManager);
+        when(fragment.getMultiSelect()).thenReturn(multiSelect);
 
-        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false,fragment);
+        adapter = new MessageListAdapter(getFakeMessages(), Color.BLUE, Color.RED, false, fragment);
     }
 
     @Test
