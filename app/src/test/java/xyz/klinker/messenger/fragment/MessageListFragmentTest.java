@@ -23,6 +23,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.fragment.message.MessageInstanceManager;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 
 import static org.junit.Assert.assertNotNull;
@@ -41,7 +42,7 @@ public class MessageListFragmentTest extends MessengerRobolectricSuite {
         conversation.getColors().setColorDark(Color.BLUE);
         conversation.getColors().setColorAccent(Color.YELLOW);
 
-        fragment = startFragment(MessageListFragment.newInstance(conversation));
+        fragment = startFragment(MessageInstanceManager.Companion.newInstance(conversation, -1, true));
     }
 
     @Test @Ignore

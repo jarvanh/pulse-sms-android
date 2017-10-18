@@ -108,7 +108,6 @@ class MessageListUpdatedReceiver(private val fragment: IMessageListFragment) : B
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
          */
-        @JvmOverloads
         fun sendBroadcast(context: Context, conversationId: Long, newMessageText: String? = null, messageType: Int = Message.TYPE_SENT) {
             val intent = Intent(ACTION_UPDATED)
             intent.putExtra(ARG_CONVERSATION_ID, conversationId)

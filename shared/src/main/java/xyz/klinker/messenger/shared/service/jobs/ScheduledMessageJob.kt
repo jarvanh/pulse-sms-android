@@ -98,7 +98,6 @@ class ScheduledMessageJob : BackgroundJob() {
         val BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE"
         private val JOB_ID = 5424
 
-        @JvmOverloads
         fun scheduleNextRun(context: Context, source: DataSource = DataSource) {
             val account = Account
             if (account.exists() && !account.primary) {

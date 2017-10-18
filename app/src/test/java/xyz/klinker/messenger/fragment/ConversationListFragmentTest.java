@@ -31,7 +31,7 @@ public class ConversationListFragmentTest extends MessengerRobolectricSuite {
 
     @Before
     public void setUp() {
-        fragment = startFragment(ConversationListFragment.Companion.newInstance());
+        fragment = startFragment(ConversationListFragment.Companion.newInstance(-1, -1));
     }
 
     @Test

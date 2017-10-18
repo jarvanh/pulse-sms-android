@@ -35,7 +35,11 @@ import xyz.klinker.messenger.R
  * look like.
  */
 @SuppressLint("ClickableViewAccessibility")
-class ColorPreviewButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+class ColorPreviewButton : View {
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context) : super(context)
 
     private var innerSize: Float = 0.toFloat()
     private var currentOuterSize: Float = 0.toFloat()

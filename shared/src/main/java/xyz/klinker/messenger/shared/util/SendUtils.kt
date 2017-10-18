@@ -39,7 +39,7 @@ import java.util.*
 /**
  * Utility for helping to send messages.
  */
-class SendUtils @JvmOverloads constructor(private val subscriptionId: Int? = null) {
+class SendUtils constructor(private val subscriptionId: Int? = null) {
     private var forceNoSignature = false
     private var forceSplitMessage = false
     private var retryOnFailedMessages = true
@@ -59,12 +59,10 @@ class SendUtils @JvmOverloads constructor(private val subscriptionId: Int? = nul
         return this
     }
 
-    @JvmOverloads
     fun send(context: Context, text: String, addresses: String, data: Uri? = null, mimeType: String? = null): Uri? {
         return send(context, text, addresses.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray(), data, mimeType)
     }
 
-    @JvmOverloads
     fun send(context: Context, text: String, addresses: Array<String>, data: Uri? = null, mimeType: String? = null): Uri? {
         var text = text
         var data = data

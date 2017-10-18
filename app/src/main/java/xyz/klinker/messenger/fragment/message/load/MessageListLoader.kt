@@ -73,7 +73,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         })
     }
 
-    @JvmOverloads fun loadMessages(addedNewMessage: Boolean = false) {
+    fun loadMessages(addedNewMessage: Boolean = false) {
         val handler = Handler()
         Thread {
             PerformanceProfiler.logEvent("loading messages")

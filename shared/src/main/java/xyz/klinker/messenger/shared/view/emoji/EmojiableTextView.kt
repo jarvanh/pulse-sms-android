@@ -8,8 +8,11 @@ import android.util.AttributeSet
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 
-class EmojiableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : AppCompatTextView(context, attrs, defStyleAttr) {
+class EmojiableTextView : AppCompatTextView {
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context) : super(context)
 
     private val useEmojiCompat: Boolean
         get() = Settings.emojiStyle != EmojiStyle.DEFAULT

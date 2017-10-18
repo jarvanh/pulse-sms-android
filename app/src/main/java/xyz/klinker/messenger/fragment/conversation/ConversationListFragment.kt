@@ -175,7 +175,6 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
         get() = recyclerManager.recyclerView
 
     companion object {
-        @JvmOverloads
         fun newInstance(conversationToOpenId: Long = -1, messageToOpenId: Long = -1): ConversationListFragment {
             val fragment = ConversationListFragment()
             val bundle = Bundle()
