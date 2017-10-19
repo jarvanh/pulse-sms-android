@@ -64,7 +64,7 @@ class MainNavigationController(private val activity: MessengerActivity)
                 if (!Account.exists()) {
                     navigationView.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting)
                 }
-            } catch (e: NullPointerException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -112,7 +112,7 @@ class MainNavigationController(private val activity: MessengerActivity)
                 return true
             }
             inSettings -> {
-                drawerItemClicked(R.id.drawer_conversation)
+                onNavigationItemSelected(R.id.drawer_conversation)
                 return true
             }
             else -> return false
