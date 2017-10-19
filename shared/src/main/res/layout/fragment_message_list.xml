@@ -21,18 +21,18 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:id="@+id/app_bar_layout"
             android:alpha="0"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:translationY="32dp">
 
             <xyz.klinker.messenger.shared.view.WhitableToolbar
@@ -46,16 +46,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/message_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/message_list"
-                android:layout_marginStart="@dimen/message_list_padding"
                 android:layout_marginEnd="@dimen/message_list_padding"
+                android:layout_marginStart="@dimen/message_list_padding"
                 android:alpha="0"
                 android:scrollbars="none"
                 tools:ignore="NestedWeights" />
@@ -63,32 +63,32 @@
             <com.turingtechnologies.materialscrollbar.TouchScrollBar
                 android:id="@+id/drag_scrollbar"
                 android:layout_width="wrap_content"
-                app:msb_recyclerView="@id/message_list"
-                app:msb_lightOnTouch="true"
-                app:msb_hideDelayInMilliseconds="700"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                app:msb_hideDelayInMilliseconds="700"
+                app:msb_lightOnTouch="true"
+                app:msb_recyclerView="@id/message_list" />
 
         </RelativeLayout>
 
         <FrameLayout
+            android:id="@+id/attached_image_holder"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight=".33"
-            android:id="@+id/attached_image_holder"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/message_list_padding"
             android:layout_marginTop="8dp"
+            android:layout_weight=".33"
             android:visibility="gone">
 
             <ImageView
+                android:id="@+id/attached_image"
                 android:layout_width="@dimen/attached_image_size"
                 android:layout_height="match_parent"
-                android:id="@+id/attached_image"
-                android:contentDescription="@string/attached_image"
-                android:layout_marginStart="12dp"
                 android:layout_marginEnd="48dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
+                android:contentDescription="@string/attached_image"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
@@ -97,36 +97,36 @@
                 android:layout_marginEnd="48dp">
 
                 <ImageView
+                    android:id="@+id/remove_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="12dp"
                     android:background="@color/colorPrimary"
+                    android:contentDescription="@string/remove_image"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_close"
-                    android:id="@+id/remove_image"
-                    android:contentDescription="@string/remove_image" />
+                    android:src="@drawable/ic_close" />
 
                 <ImageView
+                    android:id="@+id/edit_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_gravity="bottom"
                     android:layout_marginEnd="12dp"
                     android:background="@color/colorPrimary"
+                    android:contentDescription="@string/edit_image"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_edit"
-                    android:layout_gravity="bottom"
-                    android:id="@+id/edit_image"
                     android:padding="3dp"
-                    android:contentDescription="@string/edit_image" />
+                    android:src="@drawable/ic_edit" />
 
                 <TextView
                     android:id="@+id/selected_images"
-                    android:visibility="gone"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:textSize="15sp"
-                    android:textColor="@android:color/white"
                     android:background="@color/colorPrimary"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -138,31 +138,31 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:indeterminate="true"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
         <LinearLayout
+            android:id="@+id/send_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/message_list_padding"
             android:layout_marginEnd="@dimen/message_list_padding"
-            android:padding="8dp"
-            android:gravity="center_vertical|start"
-            android:clipToPadding="false"
-            android:id="@+id/send_bar"
+            android:layout_marginStart="@dimen/message_list_padding"
             android:alpha="0"
+            android:clipToPadding="false"
+            android:gravity="center_vertical|start"
+            android:orientation="horizontal"
+            android:padding="8dp"
             android:translationY="-32dp">
 
             <ImageButton
+                android:id="@+id/select_sim"
                 android:layout_width="32dp"
                 android:layout_height="48dp"
-                android:src="@drawable/ic_sim"
                 android:background="?selectableItemBackgroundBorderless"
-                android:tint="@color/secondaryText"
-                android:id="@+id/select_sim"
                 android:clickable="true"
-                android:visibility="gone"
-                android:contentDescription="@string/select_sim" />
+                android:contentDescription="@string/select_sim"
+                android:src="@drawable/ic_sim"
+                android:tint="@color/secondaryText"
+                android:visibility="gone" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -170,54 +170,54 @@
                 android:layout_marginEnd="8dp">
 
                 <ImageButton
+                    android:id="@+id/attach"
                     android:layout_width="32dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_attach"
+                    android:layout_gravity="center_vertical|start"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:tint="@color/secondaryText"
-                    android:id="@+id/attach"
                     android:clickable="true"
                     android:contentDescription="@string/attach"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/ic_attach"
+                    android:tint="@color/secondaryText" />
 
                 <TextView
+                    android:id="@+id/text_counter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:gravity="center_horizontal"
                     android:layout_marginBottom="2dp"
-                    android:textSize="12sp"
-                    android:id="@+id/text_counter"
-                    android:textColor="@color/secondaryText" />
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="12sp" />
 
             </FrameLayout>
 
             <xyz.klinker.messenger.view.ImageKeyboardEditText
+                android:id="@+id/message_entry"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
                 android:layout_weight="1"
-                android:hint="@string/type_message_to"
                 android:background="@drawable/message_sent"
                 android:backgroundTint="@color/drawerBackground"
-                android:padding="8dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="18dp"
-                android:textSize="16sp"
-                android:id="@+id/message_entry"
-                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                android:hint="@string/type_message_to"
                 android:imeOptions="actionSend|flagNoExtractUi"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                android:maxLines="@integer/message_list_fragment_line_entry_count"
+                android:minHeight="40dp"
+                android:padding="8dp"
+                android:paddingEnd="18dp"
+                android:paddingStart="8dp"
                 android:scrollHorizontally="false"
-                android:maxLines="@integer/message_list_fragment_line_entry_count" />
+                android:textSize="16sp" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/send"
-                android:src="@drawable/ic_send"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/send_message"
+                android:src="@drawable/ic_send"
                 app:elevation="0dp"
                 app:fabSize="mini"
                 app:rippleColor="@android:color/white" />

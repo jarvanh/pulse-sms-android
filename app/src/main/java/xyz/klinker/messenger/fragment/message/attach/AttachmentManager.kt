@@ -29,10 +29,10 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     var attachedMimeType: String? = null
     val selectedImageUris = mutableListOf<String>()
 
-    private val editImage: View? by lazy { fragment.rootView!!.findViewById<View>(R.id.edit_image) }
+    private val editImage: View? by lazy { fragment.rootView?.findViewById<View>(R.id.edit_image) }
     private val removeImage: View by lazy { fragment.rootView!!.findViewById<View>(R.id.remove_image) }
     private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
-    private val attachLayout: View? by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_layout) }
+    private val attachLayout: View? by lazy { fragment.rootView?.findViewById<View>(R.id.attach_layout) }
     private val attachedImage: ImageView by lazy { fragment.rootView!!.findViewById<View>(R.id.attached_image) as ImageView }
     private val attachedImageHolder: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attached_image_holder) }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }

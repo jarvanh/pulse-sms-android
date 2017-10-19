@@ -15,16 +15,19 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <EditText
+        android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/edit_text"
         android:hint="@null"
-        android:inputType="textCapSentences|textAutoComplete|textAutoCorrect|textMultiLine" />
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="textCapSentences|textAutoComplete|textAutoCorrect|textMultiLine"
+        android:maxLines="8"
+        android:scrollHorizontally="false" />
 
 </FrameLayout>
