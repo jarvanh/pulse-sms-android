@@ -30,7 +30,7 @@ import xyz.klinker.messenger.R
  */
 class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
 
-    override fun onCreatePreferences(bundle: Bundle, s: String) {
+    override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.help_and_feedback)
 
         findPreference(getString(R.string.pref_help_faqs))

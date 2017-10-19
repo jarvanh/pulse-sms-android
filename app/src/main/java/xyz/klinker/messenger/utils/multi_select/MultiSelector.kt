@@ -191,12 +191,10 @@ open class MultiSelector : com.bignerdranch.android.multiselector.MultiSelector(
      *
      * @param savedStates Saved state bundle, probably from a fragment or activity.
      */
-
-    override fun restoreSelectionStates(savedStates: Bundle) {
-        val selectedPositions = savedStates.getIntegerArrayList(SELECTION_POSITIONS)
+    override fun restoreSelectionStates(savedStates: Bundle?) {
+        val selectedPositions = savedStates?.getIntegerArrayList(SELECTION_POSITIONS)
         restoreSelections(selectedPositions)
-        mIsSelectable = savedStates.getBoolean(SELECTIONS_STATE)
-
+        mIsSelectable = savedStates?.getBoolean(SELECTIONS_STATE) == true
     }
 
     private fun restoreSelections(selected: List<Int>?) {

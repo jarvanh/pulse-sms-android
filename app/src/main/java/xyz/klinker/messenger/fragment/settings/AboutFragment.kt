@@ -57,7 +57,7 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
     private val deviceInfo: String
         get() = Build.MANUFACTURER + ", " + Build.MODEL
 
-    override fun onCreatePreferences(bundle: Bundle, s: String) {
+    override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.about)
 
         findPreference(getString(R.string.pref_about_app_version)).summary = versionName
