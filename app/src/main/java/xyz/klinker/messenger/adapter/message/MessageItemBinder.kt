@@ -30,12 +30,13 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                         .fitCenter())
                 .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
                     override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                        holder.image?.background = holder.itemView.resources
+                                .getDrawable(R.drawable.rounded_rect)
                         holder.image?.setImageDrawable(resource)
-                        holder.image?.background = ColorDrawable(Color.TRANSPARENT)
                     }
                     override fun onLoadFailed(errorDrawable: Drawable?) {
-                        holder.image?.background = ColorDrawable(
-                                holder.itemView.context.getColor(R.color.drawerBackground))
+                        holder.image?.background = holder.itemView.resources
+                                .getDrawable(R.drawable.rounded_rect_drawer_color)
                     }
                 })
     }

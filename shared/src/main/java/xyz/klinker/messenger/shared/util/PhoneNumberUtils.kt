@@ -123,8 +123,7 @@ object PhoneNumberUtils {
     /**
      * Returns the devices possible phone numbers. (Account, Lollipop method, legacy method)
      */
-    @JvmOverloads
-    fun getMyPossiblePhoneNumbers(context: Context, useSettings: Boolean = true): List<String> {
+    fun getMyPossiblePhoneNumbers(context: Context?, useSettings: Boolean = true): List<String> {
         val numbers = ArrayList<String>()
 
         if (useSettings) {
@@ -135,7 +134,7 @@ object PhoneNumberUtils {
         }
 
         val account = Account
-        if (account.exists()) {
+        if (account.exists() && account.myPhoneNumber != null && !account.myPhoneNumber!!.isEmpty()) {
             numbers.add(account.myPhoneNumber!!)
         }
 
@@ -156,7 +155,7 @@ object PhoneNumberUtils {
         return numbers
     }
 
-    private fun getLollipopPhoneNumber(context: Context): String? {
+    private fun getLollipopPhoneNumber(context: Context?): String? {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 val manager = SubscriptionManager.from(context)
