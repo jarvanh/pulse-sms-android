@@ -65,7 +65,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
     fun getViewAtPosition(position: Int): View = recyclerView.findViewHolderForAdapterPosition(position).itemView
 
     private fun getCursorSafely() = when {
-        fragment is ArchivedConversationListFragment -> DataSource.getArchivedConversationsAsList(fragment.activity)
+        fragment is ArchivedConversationListFragment && fragment.activity != null -> DataSource.getArchivedConversationsAsList(fragment.activity)
         fragment.activity != null -> DataSource.getUnarchivedConversationsAsList(fragment.activity)
         else -> emptyList()
     }

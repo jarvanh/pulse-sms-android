@@ -174,18 +174,26 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
                 for (i in names.indices) {
                     val name = names[i]
                     val number = numbers[i]
-                    val image = ContactUtils.findImageUri(number, activity)!! + "/photo"
+                    val image = ContactUtils.findImageUri(number, activity)
 
-                    contactEntry.submitItem(name, number, Uri.parse(image))
+                    if (image != null) {
+                        contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                    } else {
+                        contactEntry.submitItem(name, number)
+                    }
                 }
             } else {
                 // case 2
                 for (i in numbers.indices) {
                     val number = numbers[i]
                     val name = ContactUtils.findContactNames(number, activity)
-                    val image = ContactUtils.findImageUri(number, activity) + "/photo"
+                    val image = ContactUtils.findImageUri(number, activity)
 
-                    contactEntry.submitItem(name, number, Uri.parse(image))
+                    if (image != null) {
+                        contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                    } else {
+                        contactEntry.submitItem(name, number)
+                    }
                 }
             }
         }

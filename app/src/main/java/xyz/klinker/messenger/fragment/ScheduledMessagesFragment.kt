@@ -61,7 +61,7 @@ import java.util.*
 class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
-    private val progress: ProgressBar by lazy { view!!.findViewById<View>(R.id.progress) as ProgressBar }
+    private val progress: ProgressBar? by lazy { view!!.findViewById<View>(R.id.progress) as ProgressBar? }
     private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
 
@@ -150,7 +150,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun setMessages(messages: List<ScheduledMessage>) {
-        progress.visibility = View.GONE
+        progress?.visibility = View.GONE
         list.adapter = ScheduledMessagesAdapter(messages, this)
 
         if (list.adapter.itemCount == 0) {

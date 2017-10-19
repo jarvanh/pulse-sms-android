@@ -43,7 +43,7 @@ object DualSimUtils {
     }
 
     fun getSubscriptionInfo(simSubscription: Int?): SubscriptionInfo? {
-        if (simSubscription == null || simSubscription == 0 || simSubscription == -1) {
+        if (simSubscription == null || simSubscription == 0 || simSubscription == -1 || !canHandleDualSim()) {
             return null
         }
 
@@ -51,6 +51,9 @@ object DualSimUtils {
     }
 
     fun getNumberFromSimSlot(simSlot: Int): String? {
+        if (!canHandleDualSim()) {
+            return null
+        }
 
         return availableSims
                 .firstOrNull { it.simSlotIndex == simSlot }
@@ -64,7 +67,7 @@ object DualSimUtils {
     }
 
     fun getPhoneNumberFromSimSubscription(simSubscription: Int): String? {
-        if (simSubscription == 0 || simSubscription == -1) {
+        if (simSubscription == 0 || simSubscription == -1 || !canHandleDualSim()) {
             return null
         }
 

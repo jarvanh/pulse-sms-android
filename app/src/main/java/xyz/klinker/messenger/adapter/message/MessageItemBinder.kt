@@ -2,6 +2,9 @@ package xyz.klinker.messenger.adapter.message
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import com.bumptech.glide.Glide
@@ -25,7 +28,16 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                         .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .fitCenter())
-                .into(holder.image)
+                .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
+                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                        holder.image?.setImageDrawable(resource)
+                        holder.image?.background = ColorDrawable(Color.TRANSPARENT)
+                    }
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        holder.image?.background = ColorDrawable(
+                                holder.itemView.context.getColor(R.color.drawerBackground))
+                    }
+                })
     }
 
     fun animatedGif(holder: MessageViewHolder) {
