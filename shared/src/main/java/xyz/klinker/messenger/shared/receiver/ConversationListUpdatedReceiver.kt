@@ -63,7 +63,8 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
             return
         }
 
-        val adapter = fragment.adapter
+        val adapter = fragment.adapter ?: return
+
         val adapterPosition = adapter.findPositionForConversationId(conversationId)
         val insertToday = adapter.getCountForSection(SectionType.TODAY) == 0
         val pinnedCount = adapter.getCountForSection(SectionType.PINNED)

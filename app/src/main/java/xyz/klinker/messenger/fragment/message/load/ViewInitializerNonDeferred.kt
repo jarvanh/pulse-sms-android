@@ -42,7 +42,8 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         messageEntry.highlightColor = accent
 
         val firstName = if (argManager.title.isEmpty()) {
-            argManager.title.split(" ".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()[0]
+            val name = argManager.title.split(" ".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+            if (name.isNotEmpty()) name[0] else ""
         } else {
             ""
         }

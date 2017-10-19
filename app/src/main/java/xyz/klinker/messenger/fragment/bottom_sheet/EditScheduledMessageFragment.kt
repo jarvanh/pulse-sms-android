@@ -25,6 +25,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 
+@Suppress("DEPRECATION")
 class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() {
 
     private var fragment: ScheduledMessagesFragment? = null

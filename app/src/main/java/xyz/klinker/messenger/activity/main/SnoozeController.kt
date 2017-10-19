@@ -12,6 +12,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.CustomSnoozeFragment
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 
+@Suppress("DEPRECATION")
 class SnoozeController(private val activity: MessengerActivity) {
 
     fun initSnooze() {

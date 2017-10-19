@@ -121,8 +121,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
     }
 
     private fun clickConversationWithId(id: Long) {
-        val conversationPosition = fragment.adapter.findPositionForConversationId(id)
-
+        val conversationPosition = fragment.adapter?.findPositionForConversationId(id) ?: return
         if (conversationPosition != -1) {
             fragment.recyclerManager.scrollToPosition(conversationPosition)
             clickConversationAtPosition(conversationPosition)

@@ -200,7 +200,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             fragment.onBackPressed()
 
             Handler().postDelayed({
-                val adapter = fragment.adapter
+                val adapter = fragment.adapter ?: return@postDelayed
                 val position = adapter.findPositionForConversationId(conversationId)
                 if (position != -1) {
                     adapter.deleteItem(position)
@@ -220,7 +220,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             fragment.onBackPressed()
 
             Handler().postDelayed({
-                val adapter = fragment.adapter
+                val adapter = fragment.adapter ?: return@postDelayed
                 val position = adapter.findPositionForConversationId(conversationId)
                 if (position != -1) {
                     adapter.archiveItem(position)

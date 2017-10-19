@@ -34,6 +34,7 @@ import xyz.klinker.messenger.R
  * will be shown around the outside of the button so that the user can see what the theme will
  * look like.
  */
+@Suppress("DEPRECATION")
 @SuppressLint("ClickableViewAccessibility")
 class ColorPreviewButton : View {
 

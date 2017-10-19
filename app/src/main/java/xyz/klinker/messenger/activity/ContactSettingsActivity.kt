@@ -48,10 +48,7 @@ class ContactSettingsActivity : AbstractSettingsActivity() {
 
     public override fun onStart() {
         super.onStart()
-
-        if (fragment.conversation != null) {
-            ActivityUtils.setTaskDescription(this, fragment.conversation.title!!, fragment.conversation.colors.color)
-        }
+        ActivityUtils.setTaskDescription(this, fragment.conversation.title!!, fragment.conversation.colors.color)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

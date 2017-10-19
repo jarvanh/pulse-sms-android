@@ -54,7 +54,7 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
  */
 class MessageViewHolder(private val fragment: MessageListFragment?, itemView: View, color: Int, private val type: Int,
                         private val messageDeletedListener: MessageDeletedListener?)
-    : SwappingHolder(itemView, if (fragment == null || fragment.multiSelect == null) MultiSelector() else fragment.multiSelect) {
+    : SwappingHolder(itemView, if (fragment == null) MultiSelector() else fragment.multiSelect) {
 
     private val timestampHeight: Int by lazy { DensityUtil.spToPx(itemView.context, Settings.mediumFont + 2)}
 
@@ -285,7 +285,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
         }
 
         if (MimeType.isExpandedMedia(mimeType) || message != null && message!!.visibility == View.VISIBLE && type != Message.TYPE_ERROR &&
-                fragment.multiSelect != null && type != Message.TYPE_INFO) {
+                type != Message.TYPE_INFO) {
 
             if (!fragment.multiSelect.isSelectable) {
                 // start the multi-select

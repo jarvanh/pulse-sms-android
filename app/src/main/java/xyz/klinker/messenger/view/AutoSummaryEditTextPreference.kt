@@ -17,7 +17,7 @@ class AutoSummaryEditTextPreference : EditTextPreference {
         }
     }
 
-    override fun getSummary(): CharSequence {
+    override fun getSummary(): CharSequence? {
         return text
     }
 }

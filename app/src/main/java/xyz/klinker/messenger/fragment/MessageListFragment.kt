@@ -170,7 +170,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         }
 
         draftManager.createDrafts()
-        multiSelect?.clearActionMode()
+        multiSelect.clearActionMode()
     }
 
     override fun onDetach() {

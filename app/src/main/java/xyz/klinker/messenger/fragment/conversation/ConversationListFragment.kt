@@ -121,8 +121,12 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
         SnackbarAnimationFix.apply(snackbar)
         snackbar.show()
 
-        val allConversations = adapter.conversations
+        val allConversations = adapter?.conversations
         val markAsRead = ArrayList<Conversation>()
+
+        if (allConversations == null) {
+            return
+        }
 
         val handler = Handler()
         Thread {
@@ -159,8 +163,8 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     override val isFragmentAdded: Boolean
         get() = !isDetached
 
-    override val adapter: ConversationListAdapter
-        get() = recyclerManager.adapter!!
+    override val adapter: ConversationListAdapter?
+        get() = recyclerManager.adapter
 
     override val expandedId: Long
         get() = if (isExpanded)  messageListManager.expandedConversation!!.conversation!!.id else 0

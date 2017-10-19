@@ -54,6 +54,7 @@ import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
 import java.util.*
 
+@Suppress("DEPRECATION")
 /**
  * Fragment for displaying scheduled messages.
  */
