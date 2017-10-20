@@ -55,10 +55,11 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
     internal fun showConversation(phoneNumbers: String) {
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 
-        if (conversationId == null && activity.contactsProvider.getRecipients().size == 1) {
-            conversationId = DataSource.findConversationIdByTitle(activity,
-                    activity.contactsProvider.getRecipients()[0].entry.displayName)
-        }
+        // we only want to match on phone number, not by name. This was probably silly?
+//        if (conversationId == null && activity.contactsProvider.getRecipients().size == 1) {
+//            conversationId = DataSource.findConversationIdByTitle(activity,
+//                    activity.contactsProvider.getRecipients()[0].entry.displayName)
+//        }
 
         if (conversationId == null) {
             val message = Message()
