@@ -24,8 +24,8 @@ object NotificationUtils {
     val MEDIA_PARSE_CHANNEL_ID = "media-parsing"
     val GENERAL_CHANNEL_ID = "general"
 
-    fun cancelGroupedNotificationWithNoContent(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    fun cancelGroupedNotificationWithNoContent(context: Context?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
             val map = mutableMapOf<String, Int>()
 
             val manager = context.getSystemService(

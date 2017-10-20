@@ -1,7 +1,6 @@
 package xyz.klinker.messenger.fragment.message
 
 import android.os.Bundle
-import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.shared.data.model.Conversation
 
 class MessageInstanceManager(private val fragment: MessageListFragment) {

@@ -27,7 +27,7 @@ import java.util.*
 @Suppress("DEPRECATION")
 class ConversationsMultiSelectDelegate(private val fragment: ConversationListFragment) : MultiSelector() {
 
-    private val activity: AppCompatActivity by lazy { fragment.activity as AppCompatActivity }
+    private val activity: AppCompatActivity? by lazy { fragment.activity as AppCompatActivity? }
     private var adapter: ConversationListAdapter? = null
 
     private var mode: ActionMode? = null
@@ -36,12 +36,12 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             super.onCreateActionMode(actionMode, menu)
 
             if (fragment is ArchivedConversationListFragment) {
-                activity.menuInflater.inflate(R.menu.action_mode_archive_list, menu)
+                activity?.menuInflater?.inflate(R.menu.action_mode_archive_list, menu)
 
                 val unarchive = menu!!.findItem(R.id.menu_archive_conversation)
                 fixMenuItemLongClickCrash(actionMode, unarchive, R.drawable.ic_unarchive, R.string.menu_move_to_inbox)
             } else {
-                activity.menuInflater.inflate(R.menu.action_mode_conversation_list, menu)
+                activity?.menuInflater?.inflate(R.menu.action_mode_conversation_list, menu)
 
                 val archive = menu!!.findItem(R.id.menu_archive_conversation)
                 val pin = menu.findItem(R.id.menu_pin_conversation)
@@ -156,7 +156,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
                     for (conversation in selectedConversations) {
                         conversation.mute = !conversation.mute
-                        source.updateConversationSettings(activity, conversation)
+                        source.updateConversationSettings(activity!!, conversation)
                     }
 
                     fragment.recyclerManager.loadConversations()
@@ -166,7 +166,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
                     for (conversation in selectedConversations) {
                         conversation.pinned = !conversation.pinned
-                        source.updateConversationSettings(activity, conversation)
+                        source.updateConversationSettings(activity!!, conversation)
                     }
 
                     fragment.recyclerManager.loadConversations()
@@ -183,7 +183,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
     }
 
     fun startActionMode() {
-        mode = activity.startSupportActionMode(actionMode)
+        mode = activity?.startSupportActionMode(actionMode)
     }
 
     fun clearActionMode() {
@@ -203,7 +203,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
         val isActivated = mSelections.get(holder.adapterPosition)
         val states = if (isActivated) {
-            ColorStateList.valueOf(activity.resources.getColor(R.color.actionModeBackground))
+            ColorStateList.valueOf(activity!!.resources.getColor(R.color.actionModeBackground))
         } else {
             ColorStateList.valueOf(Color.BLACK)
         }

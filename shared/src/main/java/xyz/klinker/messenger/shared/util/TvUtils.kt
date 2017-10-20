@@ -23,7 +23,11 @@ import android.content.Context
  */
 object TvUtils {
 
-    fun hasTouchscreen(context: Context): Boolean {
+    fun hasTouchscreen(context: Context?): Boolean {
+        if (context == null) {
+            return false
+        }
+
         return context.packageManager.hasSystemFeature("android.hardware.touchscreen")
     }
 

@@ -127,6 +127,7 @@ public class AnalyticsHelper {
     // Other Events
     private static final String FAILED_TO_SAVE_SMS = "FAILED_TO_SAVE_SMS";
     private static final String UPDATING_FCM_TOKEN = "UPDATING_FCM_TOKEN";
+    private static final String CAUGHT_EXCEPTION = "CAUGHT_EXCEPTION";
 
     public static void failedToSaveSms(Context context, String error) {
         Bundle bundle = new Bundle();
@@ -137,6 +138,14 @@ public class AnalyticsHelper {
 
     public static void updatingFcmToken(Context context) {
         logEvent(context, UPDATING_FCM_TOKEN);
+    }
+
+    public static void caughtForceClose(Context context, String message, Exception e) {
+        Bundle bundle = new Bundle();
+        bundle.putString("message", message);
+        bundle.putString("error", e.getMessage());
+
+        logEvent(context, CAUGHT_EXCEPTION, bundle);
     }
 
 }

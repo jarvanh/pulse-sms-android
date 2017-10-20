@@ -2,6 +2,7 @@ package xyz.klinker.messenger.fragment.message.load
 
 import android.database.Cursor
 import android.os.Handler
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -9,7 +10,7 @@ import com.turingtechnologies.materialscrollbar.DateAndTimeIndicator
 import com.turingtechnologies.materialscrollbar.TouchScrollBar
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.ConversationInformationUpdater
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
@@ -24,9 +25,8 @@ import java.util.*
 class MessageListLoader(private val fragment: MessageListFragment) {
     
     val informationUpdater = ConversationInformationUpdater(fragment)
-    
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private val argManager
         get() = fragment.argManager
     private val draftManager
@@ -78,6 +78,10 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         Thread {
             PerformanceProfiler.logEvent("loading messages")
 
+            if (activity == null) {
+                return@Thread
+            }
+
             try {
                 listRefreshMonitor.incrementRefreshThreadsCount()
                 draftManager.loadDrafts()
@@ -90,7 +94,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                     // So, if we send a message, or a message is received, we should increment the number of messages
                     // that we are reading from the database, to account for this.
 
-                    cursor = DataSource.getMessageCursorWithLimit(activity, argManager.conversationId,
+                    cursor = DataSource.getMessageCursorWithLimit(activity!!, argManager.conversationId,
                             when {
                                 messageLoadedCount == -1 -> MESSAGE_LIMIT
                                 addedNewMessage -> messageLoadedCount + 1
@@ -105,7 +109,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                         limitMessagesBasedOnPreviousSize = false
                     }
                 } else {
-                    cursor = DataSource.getMessages(activity, argManager.conversationId)
+                    cursor = DataSource.getMessages(activity!!, argManager.conversationId)
                 }
 
                 messageLoadedCount = cursor.count
@@ -114,8 +118,8 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                 val title = argManager.title
 
                 if (contactMap == null || contactByNameMap == null) {
-                    val contacts = DataSource.getContacts(activity, numbers)
-                    val contactsByName = DataSource.getContactsByNames(activity, title)
+                    val contacts = DataSource.getContacts(activity!!, numbers)
+                    val contactsByName = DataSource.getContactsByNames(activity!!, title)
                     contactMap = fillMapByNumber(numbers, contacts)
                     contactByNameMap = fillMapByName(title, contactsByName)
                 }
@@ -165,7 +169,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         }
 
     private fun fillMapByNumber(numbers: String, contacts: List<Contact>) = try {
-        ContactUtils.getMessageFromMapping(numbers, contacts, DataSource, activity)
+        ContactUtils.getMessageFromMapping(numbers, contacts, DataSource, activity!!)
     } catch (e: Exception) {
         HashMap<String, Contact>()
     }

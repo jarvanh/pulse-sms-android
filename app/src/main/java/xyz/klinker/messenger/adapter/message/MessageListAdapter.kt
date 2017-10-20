@@ -21,6 +21,7 @@ import android.content.Context
 import android.database.Cursor
 import android.os.Build
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ import com.turingtechnologies.materialscrollbar.IDateableAdapter
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
@@ -48,18 +49,20 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                          private val fragment: MessageListFragment)
     : RecyclerView.Adapter<MessageViewHolder>(), MessageDeletedListener, IDateableAdapter {
 
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private var ignoreSendingStatus: Boolean = false
-    private var timestampHeight = DensityUtil.spToPx(fragment.activity, Settings.mediumFont + 2)
+    private var timestampHeight = DensityUtil.spToPx(activity, Settings.mediumFont + 2)
 
     private val dataProvider: MessageListDataProvider = MessageListDataProvider(this, fragment, messages)
     private val itemBinder: MessageItemBinder = MessageItemBinder(this)
     private val colorHelper: MessageColorHelper = MessageColorHelper()
-    private val stylingHelper: MessageListStylingHelper = MessageListStylingHelper(fragment.activity)
+    private val stylingHelper: MessageListStylingHelper = MessageListStylingHelper(activity)
     private val linkApplier: MessageLinkApplier = MessageLinkApplier(fragment, accentColor, receivedColor)
     private val emojiEnlarger: MessageEmojiEnlarger = MessageEmojiEnlarger()
 
-    private val imageHeight: Int = DensityUtil.toPx(fragment.activity, 350)
-    private val imageWidth: Int = DensityUtil.toPx(fragment.activity, 350)
+    private val imageHeight: Int = DensityUtil.toPx(activity, 350)
+    private val imageWidth: Int = DensityUtil.toPx(activity, 350)
 
     var snackbar: Snackbar? = null
 

@@ -1,17 +1,17 @@
 package xyz.klinker.messenger.fragment.message.load
 
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.EditText
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.util.DualSimApplication
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
 import xyz.klinker.messenger.view.ImageKeyboardEditText
 
 class ViewInitializerDeferred(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
 
     val dragDismissFrameLayout: ElasticDragDismissFrameLayout by lazy { fragment.rootView as ElasticDragDismissFrameLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
@@ -26,7 +26,7 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
             override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float, rawOffset: Float, rawOffsetPixels: Float) { }
             override fun onDragDismissed() {
                 fragment.dismissKeyboard()
-                activity.onBackPressed()
+                activity?.onBackPressed()
             }
         })
 

@@ -34,19 +34,16 @@ import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.adapter.message.MessageListAdapter;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.model.Message;
-import xyz.klinker.messenger.fragment.MessageListFragment;
+import xyz.klinker.messenger.fragment.message.MessageListFragment;
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

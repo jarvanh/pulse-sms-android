@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v13.view.inputmethod.InputConnectionCompat
 import android.support.v13.view.inputmethod.InputContentInfoCompat
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.EditText
@@ -17,7 +18,7 @@ import com.afollestad.materialcamera.MaterialCamera
 import com.yalantis.ucrop.UCrop
 import xyz.klinker.giphy.Giphy
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.util.ImageUtils
 import xyz.klinker.messenger.shared.util.VCardWriter
@@ -31,9 +32,8 @@ class AttachmentListener(private val fragment: MessageListFragment)
         InputConnectionCompat.OnCommitContentListener {
 
     private val videoEncoder = MessageVideoEncoder(fragment)
+    private val activity: FragmentActivity? by lazy { fragment.activity }
 
-    private val activity
-        get() = fragment.activity
     private val attachManager
         get() = fragment.attachManager
     private val selectedImageUris
@@ -47,13 +47,17 @@ class AttachmentListener(private val fragment: MessageListFragment)
 
     @SuppressLint("SetTextI18n")
     override fun onContactAttached(firstName: String, lastName: String, phone: String) {
+        if (activity == null) {
+            return
+        }
+
         fragment.onBackPressed()
 
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity!!)
             .setItems(R.array.attach_contact_options) { _, i ->
                 when (i) {
                     0 -> try {
-                        val contactFile = VCardWriter.writeContactCard(activity, firstName, lastName, phone)
+                        val contactFile = VCardWriter.writeContactCard(activity!!, firstName, lastName, phone)
                         attachManager.attachContact(contactFile)
                     } catch (e: Exception) {
                     }
@@ -131,7 +135,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_GALLERY_PICKER_REQUEST)
+        activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_GALLERY_PICKER_REQUEST)
     }
 
     override fun isCurrentlySelected(uri: Uri, mimeType: String) =
@@ -201,7 +205,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
             val uriString = data.dataString
             var mimeType: String? = MimeType.IMAGE_JPEG
             if (uriString!!.contains("content://")) {
-                mimeType = activity.contentResolver.getType(uri!!)
+                mimeType = activity?.contentResolver?.getType(uri!!)
             }
 
             attachManager.attachImage(uri)
@@ -212,8 +216,8 @@ class AttachmentListener(private val fragment: MessageListFragment)
 
             attachManager.selectedImageUris.clear()
             selectedImageCount.visibility = View.GONE
-        } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
-            val uri = ImageUtils.getUriForLatestPhoto(activity)
+        } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK && activity != null) {
+            val uri = ImageUtils.getUriForLatestPhoto(activity!!)
             fragment.onBackPressed()
             attachManager.attachImage(uri)
 

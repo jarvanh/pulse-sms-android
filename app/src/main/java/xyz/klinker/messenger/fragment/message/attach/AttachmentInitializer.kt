@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import xyz.klinker.giphy.Giphy
 import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.Camera2BasicFragment
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
@@ -34,8 +35,7 @@ import xyz.klinker.messenger.view.RecordAudioView
 @Suppress("DEPRECATION")
 class AttachmentInitializer(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
     private val argManager 
         get() = fragment.argManager
     private val attachListener
@@ -140,15 +140,15 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     internal fun attachImage(alwaysOpen: Boolean) {
-        if (!alwaysOpen && getBoldedAttachHolderPosition() == 0) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 0 || activity == null) {
             return
         }
 
         try {
             prepareAttachHolder(0)
-            if (ContextCompat.checkSelfPermission(activity,
+            if (ContextCompat.checkSelfPermission(activity!!,
                     Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                attachHolder.addView(AttachImageView(activity, attachListener,
+                attachHolder.addView(AttachImageView(activity!!, attachListener,
                         if (Settings.useGlobalThemeColor)  Settings.mainColorSet.color else argManager.color))
             } else {
                 attachPermissionRequest(PermissionHelper.PERMISSION_STORAGE_REQUEST,
@@ -168,7 +168,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         prepareAttachHolder(1)
 
         val fragment = Camera2BasicFragment.newInstance()
-        activity.supportFragmentManager.beginTransaction().add(R.id.attach_holder, fragment).commit()
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fragment)?.commit()
         fragment.attachImageSelectedListener(attachListener)
     }
 
@@ -184,14 +184,14 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     private fun recordVideo() {
-        if (getBoldedAttachHolderPosition() == 3) {
+        if (getBoldedAttachHolderPosition() == 3 || activity == null) {
             return
         }
 
         prepareAttachHolder(3)
 
-        val camera = MaterialCamera(activity)
-                .saveDir(activity.filesDir.path)
+        val camera = MaterialCamera(activity!!)
+                .saveDir(activity!!.filesDir.path)
                 .qualityProfile(MaterialCamera.QUALITY_LOW)
                 .maxAllowedFileSize(MmsSettings.maxImageSize)
                 .allowRetry(false)
@@ -212,15 +212,15 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     internal fun recordAudio(alwaysOpen: Boolean) {
-        if (!alwaysOpen && getBoldedAttachHolderPosition() == 4) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 4 || activity == null) {
             return
         }
 
         prepareAttachHolder(4)
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity,
+        if (ContextCompat.checkSelfPermission(activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(RecordAudioView(activity, attachListener,
+            attachHolder.addView(RecordAudioView(activity!!, attachListener,
                     if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent))
         } else {
             attachPermissionRequest(PermissionHelper.PERMISSION_AUDIO_REQUEST,
@@ -233,15 +233,15 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     internal fun attachLocation(alwaysOpen: Boolean) {
-        if (!alwaysOpen && getBoldedAttachHolderPosition() == 5) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 5 || activity == null) {
             return
         }
 
         prepareAttachHolder(5)
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity,
+        if (ContextCompat.checkSelfPermission(activity!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(AttachLocationView(activity, fragment.attachListener, attachListener,
+            attachHolder.addView(AttachLocationView(activity!!, fragment.attachListener, attachListener,
                     if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent))
         } else {
             attachPermissionRequest(PermissionHelper.PERMISSION_LOCATION_REQUEST,
@@ -251,14 +251,14 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     private fun attachContact() {
-        if (getBoldedAttachHolderPosition() == 6) {
+        if (getBoldedAttachHolderPosition() == 6 || activity == null) {
             return
         }
 
         prepareAttachHolder(6)
-        if (ContextCompat.checkSelfPermission(activity,
+        if (ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            attachHolder.addView(AttachContactView(activity, attachListener,
+            attachHolder.addView(AttachContactView(activity!!, attachListener,
                     if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else argManager.color))
         } else {
             attachPermissionRequest(PermissionHelper.PERMISSION_AUDIO_REQUEST,

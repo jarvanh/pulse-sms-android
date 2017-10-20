@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Parcelable
 import android.util.Log
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
 import xyz.klinker.messenger.shared.util.FileUtils
@@ -22,11 +23,15 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             return
         }
 
-        when {
-            intent.action == ComposeConstants.ACTION_EDIT_RECIPIENTS -> changeGroupMessageParticipants(intent)
-            intent.action == Intent.ACTION_SENDTO -> shareDirectlyToSms(intent)
-            intent.action == Intent.ACTION_VIEW -> viewIntent(intent)
-            intent.action == Intent.ACTION_SEND -> shareContent(intent)
+        try {
+            when {
+                intent.action == ComposeConstants.ACTION_EDIT_RECIPIENTS -> changeGroupMessageParticipants(intent)
+                intent.action == Intent.ACTION_SENDTO -> shareDirectlyToSms(intent)
+                intent.action == Intent.ACTION_VIEW -> viewIntent(intent)
+                intent.action == Intent.ACTION_SEND -> shareContent(intent)
+            }
+        } catch (e: Exception) {
+            AnalyticsHelper.caughtForceClose(activity, "caught when sharing to compose activity", e)
         }
     }
 

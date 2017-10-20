@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.fragment.conversation
 
+import android.support.v4.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
@@ -7,6 +8,7 @@ import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 
 class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
 
+    private val activity: FragmentActivity? by lazy { fragment.activity }
     private val updatedReceiver: ConversationListUpdatedReceiver = ConversationListUpdatedReceiver(fragment)
 
     var newConversationTitle: String? = null
@@ -30,19 +32,19 @@ class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
                 fragment.getString(R.string.you) + ": " + m.data, true)
     }
 
-    fun createReceiver() { fragment.activity.registerReceiver(updatedReceiver, ConversationListUpdatedReceiver.intentFilter) }
-    fun destroyReceiver() { fragment.activity.unregisterReceiver(updatedReceiver) }
+    fun createReceiver() { activity?.registerReceiver(updatedReceiver, ConversationListUpdatedReceiver.intentFilter) }
+    fun destroyReceiver() { activity?.unregisterReceiver(updatedReceiver) }
 
     fun broadcastUpdateInfo() {
         if (updateInfo != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(fragment.activity, updateInfo!!)
+            ConversationListUpdatedReceiver.sendBroadcast(activity, updateInfo!!)
             updateInfo = null
         }
     }
 
     fun broadcastTitleChange(contractedId: Long) {
         if (newConversationTitle != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(fragment.activity, contractedId, newConversationTitle!!)
+            ConversationListUpdatedReceiver.sendBroadcast(activity, contractedId, newConversationTitle!!)
             newConversationTitle = null
         }
     }

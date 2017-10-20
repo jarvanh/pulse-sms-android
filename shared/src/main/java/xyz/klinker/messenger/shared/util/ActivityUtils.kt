@@ -20,13 +20,11 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.view.View
 
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
 
 /**
@@ -47,27 +45,27 @@ object ActivityUtils {
         return intent
     }
 
-    fun setTaskDescription(activity: Activity) {
-        val bm = BitmapFactory.decodeResource(activity.resources, R.mipmap.ic_launcher)
+    fun setTaskDescription(activity: Activity?) {
+        val bm = BitmapFactory.decodeResource(activity?.resources, R.mipmap.ic_launcher)
         val td = ActivityManager.TaskDescription(
-                activity.getString(R.string.app_name), bm, Settings.mainColorSet.color)
+                activity?.getString(R.string.app_name), bm, Settings.mainColorSet.color)
 
-        activity.setTaskDescription(td)
+        activity?.setTaskDescription(td)
     }
 
-    fun setTaskDescription(activity: Activity, title: String, color: Int) {
+    fun setTaskDescription(activity: Activity?, title: String, color: Int) {
         val td = ActivityManager.TaskDescription(
                 title, null, color)
 
-        activity.setTaskDescription(td)
+        activity?.setTaskDescription(td)
     }
 
-    fun setStatusBarColor(activity: Activity, color: Int) {
-        activity.window.statusBarColor = color
+    fun setStatusBarColor(activity: Activity?, color: Int) {
+        activity?.window?.statusBarColor = color
         setUpLightStatusBar(activity, color)
     }
 
-    fun setUpLightStatusBar(activity: Activity, color: Int) {
+    fun setUpLightStatusBar(activity: Activity?, color: Int) {
         if (!ColorUtils.isColorDark(color)) {
             activateLightStatusBar(activity, true)
         } else {
@@ -75,8 +73,8 @@ object ActivityUtils {
         }
     }
 
-    private fun activateLightStatusBar(activity: Activity, activate: Boolean) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+    private fun activateLightStatusBar(activity: Activity?, activate: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || activity == null) {
             return
         }
 

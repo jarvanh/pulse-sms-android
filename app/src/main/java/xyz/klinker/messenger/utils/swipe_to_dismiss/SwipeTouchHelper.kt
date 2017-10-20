@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.utils.swipe_to_dismiss
 
-import android.content.Context
 import android.support.v7.widget.helper.ItemTouchHelper
 
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
@@ -27,7 +26,7 @@ import xyz.klinker.messenger.shared.data.Settings
  */
 class SwipeTouchHelper : ItemTouchHelper {
 
-    constructor(adapter: ConversationListAdapter, context: Context)
+    constructor(adapter: ConversationListAdapter)
             : super(if (Settings.swipeDelete) SwipeDeleteSimpleCallback(adapter) else SwipeSimpleCallback(adapter))
 
     constructor(callback: SwipeSimpleCallback) : super(callback)

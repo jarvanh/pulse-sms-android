@@ -1,20 +1,19 @@
 package xyz.klinker.messenger.fragment.message
 
 import android.net.Uri
+import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Draft
 
 class DraftManager(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
     private val attachManager
         get() = fragment.attachManager
     private val argManager
@@ -30,7 +29,7 @@ class DraftManager(private val fragment: MessageListFragment) {
 
     fun applyDrafts() { if (pullDrafts) setDrafts(drafts) else pullDrafts = true }
     fun loadDrafts() {
-        drafts = DataSource.getDrafts(activity, argManager.conversationId)
+        if (activity != null) drafts = DataSource.getDrafts(activity!!, argManager.conversationId)
     }
 
     fun watchDraftChanges() {
@@ -46,15 +45,15 @@ class DraftManager(private val fragment: MessageListFragment) {
 
     fun createDrafts() {
         if (sendProgress.visibility != View.VISIBLE && messageEntry.text != null && messageEntry.text.isNotEmpty() && textChanged) {
-            if (drafts.isNotEmpty()) {
-                DataSource.deleteDrafts(activity, argManager.conversationId)
+            if (drafts.isNotEmpty() && activity != null) {
+                DataSource.deleteDrafts(activity!!, argManager.conversationId)
             }
 
             DataSource.insertDraft(activity, argManager.conversationId,
                     messageEntry.text.toString(), MimeType.TEXT_PLAIN)
         } else if (messageEntry.text != null && messageEntry.text.isEmpty() && textChanged) {
-            if (drafts.isNotEmpty()) {
-                DataSource.deleteDrafts(activity, argManager.conversationId)
+            if (drafts.isNotEmpty() && activity != null) {
+                DataSource.deleteDrafts(activity!!, argManager.conversationId)
             }
         }
 

@@ -24,6 +24,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.ChangelogAdapter
@@ -36,6 +37,8 @@ import xyz.klinker.messenger.shared.util.xml.OpenSourceParser
  */
 class AboutFragment : MaterialPreferenceFragmentCompat() {
 
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
+
     /**
      * Gets the version name associated with the current build.
      *
@@ -43,8 +46,9 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
      */
     val versionName: String?
         get() = try {
-            activity.packageManager
-                    .getPackageInfo(activity.packageName, 0).versionName
+            fragmentActivity?.packageManager
+                    ?.getPackageInfo(fragmentActivity?.packageName, 0)
+                    ?.versionName
         } catch (e: Exception) {
             null
         }
@@ -113,10 +117,10 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
      * Copy app version to clipboard
      */
     private fun copyToClipboard(text: String?) {
-        val clipboard = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard = fragmentActivity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         val clip = ClipData.newPlainText("app_version", text)
-        clipboard.primaryClip = clip
-        Toast.makeText(activity, R.string.message_copied_to_clipboard,
+        clipboard?.primaryClip = clip
+        Toast.makeText(fragmentActivity, R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show()
     }
 
@@ -124,11 +128,13 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
      * Shows the apps changelog in a dialog box.
      */
     private fun displayChangelog() {
-        val activity = activity
+        if (fragmentActivity == null) {
+            return
+        }
 
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setTitle(R.string.changelog)
-                .setAdapter(ChangelogAdapter(activity, ChangelogParser.parse(activity)!!), null)
+                .setAdapter(ChangelogAdapter(fragmentActivity!!, ChangelogParser.parse(fragmentActivity!!)!!), null)
                 .setPositiveButton(android.R.string.ok, null)
                 .show()
     }
@@ -137,10 +143,12 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
      * Displays information from the open source libraries used in the project.
      */
     private fun displayOpenSource() {
-        val activity = activity
+        if (fragmentActivity == null) {
+            return
+        }
 
-        AlertDialog.Builder(activity)
-                .setAdapter(OpenSourceAdapter(activity, OpenSourceParser.parse(activity)!!), null)
+        AlertDialog.Builder(fragmentActivity!!)
+                .setAdapter(OpenSourceAdapter(fragmentActivity!!, OpenSourceParser.parse(fragmentActivity!!)!!), null)
                 .setPositiveButton(android.R.string.ok, null)
                 .show()
     }

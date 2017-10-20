@@ -15,7 +15,7 @@ import com.bignerdranch.android.multiselector.SelectableHolder
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment
 import xyz.klinker.messenger.shared.data.ArticlePreview
@@ -29,7 +29,7 @@ import java.util.*
 @Suppress("DEPRECATION")
 class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : MultiSelector() {
 
-    private val activity: AppCompatActivity by lazy { fragment.activity as AppCompatActivity }
+    private val activity: AppCompatActivity? by lazy { fragment.activity as AppCompatActivity? }
     private var adapter: MessageListAdapter? = null
 
     private var mode: ActionMode? = null
@@ -38,7 +38,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             clearSelections()
             isSelectable = true
 
-            activity.menuInflater.inflate(R.menu.action_mode_message_list, menu)
+            activity?.menuInflater?.inflate(R.menu.action_mode_message_list, menu)
 
             val delete = menu.findItem(R.id.menu_delete_messages)
             val share = menu.findItem(R.id.menu_share_message)
@@ -125,32 +125,32 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                     handled = true
 
                     for (id in selectedIds) {
-                        DataSource.deleteMessage(activity, id)
+                        DataSource.deleteMessage(activity!!, id)
                     }
 
-                    adapter!!.onMessageDeleted(activity, fragment.conversationId, highestKey)
+                    adapter!!.onMessageDeleted(activity!!, fragment.conversationId, highestKey)
                     fragment.loadMessages()
                 }
                 item.itemId == R.id.menu_share_message -> {
                     handled = true
-                    val message = DataSource.getMessage(activity, selectedIds[0])
+                    val message = DataSource.getMessage(activity!!, selectedIds[0])
 
                     val fragment = MessageShareFragment()
                     fragment.setMessage(message)
-                    fragment.show(activity.supportFragmentManager, "")
+                    fragment.show(activity!!.supportFragmentManager, "")
                 }
                 item.itemId == R.id.menu_copy_message -> {
                     handled = true
-                    val message = DataSource.getMessage(activity, selectedIds[0])
+                    val message = DataSource.getMessage(activity!!, selectedIds[0])
                     val text = MessageMultiSelectDelegate.getMessageContent(message)
 
                     val fragment = CopyMessageTextFragment(text!!)
-                    fragment.show(activity.supportFragmentManager, "")
+                    fragment.show(activity!!.supportFragmentManager, "")
                 }
                 else -> {
                     handled = true
-                    AlertDialog.Builder(activity)
-                            .setMessage(DataSource.getMessageDetails(activity, selectedIds[0]))
+                    AlertDialog.Builder(activity!!)
+                            .setMessage(DataSource.getMessageDetails(activity!!, selectedIds[0]))
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
                 }
@@ -166,7 +166,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
     }
 
     fun startActionMode() {
-        mode = activity.startSupportActionMode(actionMode)
+        mode = activity!!.startSupportActionMode(actionMode)
     }
 
     fun clearActionMode() {
@@ -187,7 +187,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
         when {
             isActivated -> {
-                states = ColorStateList.valueOf(activity.resources.getColor(R.color.actionModeBackground))
+                states = ColorStateList.valueOf(activity!!.resources.getColor(R.color.actionModeBackground))
                 textColor = Color.WHITE
             }
             message.color != Integer.MIN_VALUE -> {
@@ -195,8 +195,8 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 textColor = message.textColor
             }
             else -> {
-                states = ColorStateList.valueOf(activity.resources.getColor(R.color.drawerBackground))
-                textColor = activity.resources.getColor(R.color.primaryText)
+                states = ColorStateList.valueOf(activity!!.resources.getColor(R.color.drawerBackground))
+                textColor = activity!!.resources.getColor(R.color.primaryText)
             }
         }
 
@@ -213,19 +213,19 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
     private fun fixMenuItemLongClickCrash(mode: ActionMode, item: MenuItem, icon: Int, text: Int) {
         try {
-            val image = ImageView(activity)
+            val image = ImageView(activity!!)
             image.setImageResource(icon)
-            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0)
+            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity!!, 24), 0)
             image.imageTintList = ColorStateList.valueOf(Color.WHITE)
             image.alpha = 1.0f
 
             item.actionView = image
-            TooltipCompat.setTooltipText(item.actionView, activity.getString(text))
+            TooltipCompat.setTooltipText(item.actionView, activity!!.getString(text))
 
             image.setOnClickListener { actionMode.onActionItemClicked(mode, item) }
 
             image.setOnLongClickListener {
-                Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity!!, text, Toast.LENGTH_SHORT).show()
                 true
             }
         } catch (e: Exception) {

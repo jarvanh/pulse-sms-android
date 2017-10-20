@@ -171,8 +171,12 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
          */
-        fun sendBroadcast(context: Context, conversationId: Long, snippet: String?,
+        fun sendBroadcast(context: Context?, conversationId: Long, snippet: String?,
                           read: Boolean) {
+            if (context == null) {
+                return
+            }
+
             var snippet = snippet
             try {
                 if (snippet == null) {
@@ -196,18 +200,18 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
          */
-        fun sendBroadcast(context: Context, conversationId: Long, title: String) {
+        fun sendBroadcast(context: Context?, conversationId: Long, title: String) {
             val intent = Intent(ACTION_UPDATED)
             intent.putExtra(EXTRA_CONVERSATION_ID, conversationId)
             intent.putExtra(EXTRA_TITLE, title)
-            context.sendBroadcast(intent)
+            context?.sendBroadcast(intent)
             Log.v("conversation_broadcast", "broadcasting new title: " + title)
         }
 
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
          */
-        fun sendBroadcast(context: Context, updateInfo: ConversationUpdateInfo) {
+        fun sendBroadcast(context: Context?, updateInfo: ConversationUpdateInfo) {
             sendBroadcast(context, updateInfo.conversationId, updateInfo.snippet, updateInfo.read)
             Log.v("conversation_broadcast", "broadcasting new update info: " + updateInfo.snippet)
         }

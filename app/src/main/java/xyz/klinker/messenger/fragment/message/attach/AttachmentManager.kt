@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Handler
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,15 +14,15 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.yalantis.ucrop.UCrop
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import java.io.File
 
 class AttachmentManager(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private val argManager
         get() = fragment.argManager
 
@@ -40,6 +41,10 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     fun setupHelperViews() {
         editImage?.setBackgroundColor(argManager.colorAccent)
         editImage?.setOnClickListener {
+            if (activity == null) {
+                return@setOnClickListener
+            }
+
             try {
                 val options = UCrop.Options()
                 options.setToolbarColor(argManager.color)
@@ -48,10 +53,10 @@ class AttachmentManager(private val fragment: MessageListFragment) {
                 options.setCompressionFormat(Bitmap.CompressFormat.JPEG)
                 options.setCompressionQuality(100)
 
-                val destination = File.createTempFile("ucrop", "jpg", activity.cacheDir)
+                val destination = File.createTempFile("ucrop", "jpg", activity!!.cacheDir)
                 UCrop.of(attachedUri!!, Uri.fromFile(destination))
                         .withOptions(options)
-                        .start(activity)
+                        .start(activity!!)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -73,7 +78,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
 
     fun clearAttachedData() {
         if (activity != null) {
-            DataSource.deleteDrafts(activity, argManager.conversationId)
+            DataSource.deleteDrafts(activity!!, argManager.conversationId)
         }
 
         attachedImage.setImageDrawable(null)

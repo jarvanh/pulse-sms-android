@@ -79,6 +79,10 @@ object AnimationUtils {
     fun contractConversationListItem(itemView: View) {
         PerformanceProfiler.logEvent("contracting conversation item")
 
+        if (itemView.parent !is RecyclerView) {
+            return
+        }
+
         val recyclerView = itemView.parent as RecyclerView
         val realScreenHeight = Resources.getSystem().displayMetrics.heightPixels
         val recyclerHeight = itemView.rootView.height

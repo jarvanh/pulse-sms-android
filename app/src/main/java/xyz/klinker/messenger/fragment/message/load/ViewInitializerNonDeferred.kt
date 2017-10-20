@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.TooltipCompat
 import android.view.View
@@ -16,15 +17,15 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.*
 
 @Suppress("DEPRECATION")
 class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private val argManager
         get() = fragment.argManager
 
@@ -56,7 +57,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         }
 
         if (Settings.rounderBubbles) {
-            messageEntry.background = activity.resources.getDrawable(R.drawable.message_circle)
+            messageEntry.background = activity?.resources?.getDrawable(R.drawable.message_circle)
         }
 
         if (Settings.useGlobalThemeColor) {
@@ -83,8 +84,8 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
         if (!fragment.resources.getBoolean(R.bool.pin_drawer)) {
             // phone
-            val drawerLayout = activity.findViewById<View>(R.id.drawer_layout) as DrawerLayout
-            drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            val drawerLayout = activity?.findViewById<View>(R.id.drawer_layout) as DrawerLayout?
+            drawerLayout?.addDrawerListener(object : DrawerLayout.DrawerListener {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
                 override fun onDrawerClosed(drawerView: View) {}
                 override fun onDrawerStateChanged(newState: Int) {}
@@ -96,7 +97,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             toolbar.setNavigationIcon(R.drawable.ic_collapse)
             toolbar.setNavigationOnClickListener {
                 fragment.dismissKeyboard()
-                activity.onBackPressed()
+                activity?.onBackPressed()
             }
         } else {
             setNameAndDrawerColor()
@@ -115,7 +116,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 image.setImageResource(R.drawable.ic_call)
                 image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 12), 0)
                 callItem.actionView = image
-                TooltipCompat.setTooltipText(callItem.actionView, activity.getString(R.string.menu_call))
+                TooltipCompat.setTooltipText(callItem.actionView, activity?.getString(R.string.menu_call))
 
                 image.setOnClickListener {
                     fragment.dismissKeyboard()
@@ -161,9 +162,9 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         val isGroup = argManager.isGroup
         val imageUri = argManager.imageUri
 
-        val nameView = activity.findViewById<View>(R.id.drawer_header_reveal_name) as TextView?
-        val phoneNumberView = activity.findViewById<View>(R.id.drawer_header_reveal_phone_number) as TextView?
-        val image = activity.findViewById<View>(R.id.drawer_header_reveal_image) as ImageView?
+        val nameView = activity?.findViewById<View>(R.id.drawer_header_reveal_name) as TextView?
+        val phoneNumberView = activity?.findViewById<View>(R.id.drawer_header_reveal_phone_number) as TextView?
+        val image = activity?.findViewById<View>(R.id.drawer_header_reveal_image) as ImageView?
 
         // could be null when rotating the device
         if (nameView != null) {
@@ -186,9 +187,9 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity)
         }
 
-        val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
+        val nav = activity?.findViewById<View>(R.id.navigation_view) as NavigationView?
         if (argManager.isArchived) {
-            val navItem = nav.menu.findItem(R.id.drawer_archive_conversation)
+            val navItem = nav?.menu?.findItem(R.id.drawer_archive_conversation)
             val toolbarItem = toolbar.menu.findItem(R.id.menu_archive_conversation)
 
             navItem?.setTitle(R.string.menu_move_to_inbox)

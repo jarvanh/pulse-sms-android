@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,8 @@ import java.util.*
  * open conversations.
  */
 open class ConversationListFragment : Fragment(), SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener, IConversationListFragment {
+
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
 
     val messageListManager: MessageListManager by lazy { MessageListManager(this) }
     val swipeHelper: ConversationSwipeHelper by lazy { ConversationSwipeHelper(this) }
@@ -82,15 +85,15 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
         }
 
         if (messageListManager.messageListFragment != null && !messageListManager.messageListFragment!!.isAdded) {
-            val main = Intent(activity, MessengerActivity::class.java)
+            val main = Intent(fragmentActivity, MessengerActivity::class.java)
             main.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID,
                     messageListManager.messageListFragment!!.conversationId)
 
-            activity.overridePendingTransition(0, 0)
-            activity.finish()
+            fragmentActivity?.overridePendingTransition(0, 0)
+            fragmentActivity?.finish()
 
-            activity.overridePendingTransition(0, 0)
-            activity.startActivity(main)
+            fragmentActivity?.overridePendingTransition(0, 0)
+            fragmentActivity?.startActivity(main)
         }
     }
 
@@ -113,7 +116,7 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     }
 
     override fun onShowMarkAsRead(sectionText: String) {
-        Toast.makeText(activity, getString(R.string.mark_section_as_read, sectionText.toLowerCase(Locale.US)), Toast.LENGTH_LONG).show()
+        Toast.makeText(fragmentActivity, getString(R.string.mark_section_as_read, sectionText.toLowerCase(Locale.US)), Toast.LENGTH_LONG).show()
     }
 
     override fun onMarkSectionAsRead(sectionText: String, sectionType: Int) {
@@ -145,7 +148,9 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
                 }
             }
 
-            DataSource.readConversations(activity, markAsRead)
+            if (fragmentActivity != null) {
+                DataSource.readConversations(fragmentActivity!!, markAsRead)
+            }
             handler.post { recyclerManager.loadConversations() }
         }.start()
     }

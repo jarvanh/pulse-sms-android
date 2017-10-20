@@ -3,6 +3,7 @@ package xyz.klinker.messenger.fragment.conversation
 import android.app.Activity
 import android.os.Handler
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
@@ -18,6 +19,9 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.UnarchiveSwipeSimpleCallback
 import java.util.ArrayList
 
 class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
+
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private val pendingDelete = mutableListOf<Conversation>()
     private var pendingArchive = mutableListOf<Conversation>()
 
@@ -27,7 +31,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     fun getSwipeTouchHelper(adapter: ConversationListAdapter): ItemTouchHelper {
         return if (fragment is ArchivedConversationListFragment)
             SwipeTouchHelper(UnarchiveSwipeSimpleCallback(adapter))
-        else SwipeTouchHelper(adapter, fragment.activity)
+        else SwipeTouchHelper(adapter)
     }
 
     fun clearPending() {
@@ -40,7 +44,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         val currentSize = pendingDelete.size
 
         if (fragment.isDetached) {
-            dismissDeleteSnackbar(fragment.activity, currentSize)
+            dismissDeleteSnackbar(activity, currentSize)
             return
         }
 
@@ -54,13 +58,13 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(snackbar: Snackbar?, event: Int) {
                         super.onDismissed(snackbar, event)
-                        dismissDeleteSnackbar(fragment.activity, currentSize)
+                        dismissDeleteSnackbar(activity, currentSize)
                     }
                 })
         SnackbarAnimationFix.apply(deleteSnackbar!!)
         deleteSnackbar?.show()
 
-        NotificationManagerCompat.from(fragment.activity).cancel(conversation.id.toInt())
+        NotificationManagerCompat.from(activity).cancel(conversation.id.toInt())
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -72,7 +76,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         val currentSize = pendingArchive.size
 
         if (fragment.isDetached) {
-            dismissArchiveSnackbar(fragment.activity, currentSize)
+            dismissArchiveSnackbar(activity, currentSize)
             return
         }
 
@@ -87,13 +91,13 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(snackbar: Snackbar?, event: Int) {
                         super.onDismissed(snackbar, event)
-                        dismissArchiveSnackbar(fragment.activity, currentSize)
+                        dismissArchiveSnackbar(activity, currentSize)
                     }
                 })
         SnackbarAnimationFix.apply(archiveSnackbar!!)
         archiveSnackbar?.show()
 
-        NotificationManagerCompat.from(fragment.activity).cancel(conversation.id.toInt())
+        NotificationManagerCompat.from(activity).cancel(conversation.id.toInt())
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -148,18 +152,18 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     }
 
     private fun performDeleteOperation(conversation: Conversation) {
-        if (fragment.activity != null) {
-            DataSource.deleteConversation(fragment.activity, conversation)
-            SmsMmsUtils.deleteConversation(fragment.activity, conversation.phoneNumbers!!)
+        if (activity != null) {
+            DataSource.deleteConversation(activity!!, conversation)
+            SmsMmsUtils.deleteConversation(activity, conversation.phoneNumbers!!)
         }
     }
 
     private fun performArchiveOperation(conversation: Conversation) {
-        if (fragment.activity != null) {
+        if (activity != null) {
             if (fragment is ArchivedConversationListFragment) {
-                DataSource.unarchiveConversation(fragment.activity, conversation.id)
+                DataSource.unarchiveConversation(activity!!, conversation.id)
             } else {
-                DataSource.archiveConversation(fragment.activity, conversation.id)
+                DataSource.archiveConversation(activity!!, conversation.id)
             }
         }
     }

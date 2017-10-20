@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -44,6 +45,8 @@ import xyz.klinker.messenger.shared.util.listener.BlacklistClickedListener
  */
 class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
+
     private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
     private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
@@ -56,7 +59,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.layoutManager = LinearLayoutManager(activity)
+        list.layoutManager = LinearLayoutManager(fragmentActivity!!)
         fab.setOnClickListener { addBlacklist() }
 
         emptyView.setBackgroundColor(Settings.mainColorSet.colorLight)
@@ -73,11 +76,11 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
     private fun loadBlacklists() {
         val handler = Handler()
         Thread {
-            if (activity == null) {
+            if (fragmentActivity == null) {
                 return@Thread
             }
 
-            val blacklists = DataSource.getBlacklistsAsList(activity!!)
+            val blacklists = DataSource.getBlacklistsAsList(fragmentActivity!!)
             handler.post { setBlacklists(blacklists) }
         }.start()
     }
@@ -94,12 +97,12 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
     }
 
     private fun addBlacklist() {
-        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null, false)
+        val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_edit_text, null, false)
         val editText = layout.findViewById<View>(R.id.edit_text) as EditText
         editText.setHint(R.string.blacklist_hint)
         editText.inputType = InputType.TYPE_CLASS_PHONE
 
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ -> addBlacklist(editText.text.toString()) }
                 .setNegativeButton(android.R.string.cancel, null)
@@ -111,21 +114,21 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         val formatted = PhoneNumberUtils.format(cleared)
 
         if (cleared.isEmpty()) {
-            AlertDialog.Builder(activity)
+            AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(R.string.blacklist_need_number)
                     .setPositiveButton(android.R.string.ok) { _, _ -> addBlacklist() }
                     .show()
         } else {
             val message = getString(R.string.add_blacklist, formatted)
 
-            AlertDialog.Builder(activity!!)
+            AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         val blacklist = Blacklist()
                         blacklist.phoneNumber = cleared
 
-                        if (activity != null) {
-                            DataSource.insertBlacklist(activity, blacklist)
+                        if (fragmentActivity != null) {
+                            DataSource.insertBlacklist(fragmentActivity!!, blacklist)
                         }
 
                         loadBlacklists()
@@ -138,10 +141,10 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
     private fun removeBlacklist(id: Long, number: String?) {
         val message = getString(R.string.remove_blacklist, PhoneNumberUtils.format(number))
 
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    DataSource.deleteBlacklist(activity, id)
+                    DataSource.deleteBlacklist(fragmentActivity!!, id)
                     loadBlacklists()
                 }
                 .setNegativeButton(android.R.string.no, null)

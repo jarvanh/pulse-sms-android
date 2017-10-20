@@ -3,17 +3,16 @@ package xyz.klinker.messenger.fragment.message
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.fragment.MessageListFragment
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
 
 class MessageListNotificationManager(private val fragment: MessageListFragment) {
     
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
     private val argManager
         get() = fragment.argManager
 
@@ -57,10 +56,10 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
     private fun notificationActive() =
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true
         else {
-            val manager = activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val notifications = manager.activeNotifications
+            val manager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+            val notifications = manager?.activeNotifications
 
             val notificationId = argManager.conversationId.toInt()
-            notifications.any { it.id == notificationId }
+            notifications?.any { it.id == notificationId } == true
         }
 }

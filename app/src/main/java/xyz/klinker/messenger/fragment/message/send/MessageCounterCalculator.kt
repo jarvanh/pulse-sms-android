@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.util.MessageCountHelper
 
 class MessageCounterCalculator(private val fragment: MessageListFragment) {

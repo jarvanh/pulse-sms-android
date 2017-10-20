@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.CursorUtil
@@ -17,6 +17,8 @@ import xyz.klinker.messenger.shared.util.SnackbarAnimationFix
 
 class MessageListDataProvider(private val adapter: MessageListAdapter, private val fragment: MessageListFragment,
                               initialCursor: Cursor) {
+
+    private val activity: MessengerActivity? by lazy { fragment.activity as MessengerActivity }
 
     var messages = initialCursor
 
@@ -70,8 +72,8 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
         val source = DataSource
 
         val messageList = source.getMessages(context, conversationId, 1)
-        if (messageList.isEmpty()) {
-            (fragment.activity as MessengerActivity).navController.drawerItemClicked(R.id.menu_delete_conversation)
+        if (messageList.isEmpty() && activity != null) {
+            activity!!.navController.drawerItemClicked(R.id.menu_delete_conversation)
         } else {
             val message = messageList[0]
 

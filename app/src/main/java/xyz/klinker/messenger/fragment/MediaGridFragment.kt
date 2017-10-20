@@ -1,8 +1,10 @@
 package xyz.klinker.messenger.fragment
 
+import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -21,8 +23,10 @@ import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener
 
 class MediaGridFragment : Fragment(), MediaSelectedListener {
 
-    val conversation: Conversation? by lazy { DataSource.getConversation(activity, arguments.getLong(ARG_CONVERSATION_ID)) }
-    private val messages: List<Message> by lazy { DataSource.getMediaMessages(activity, conversation!!.id) }
+    private val fragmentActivity: Activity? by lazy { activity }
+
+    val conversation: Conversation? by lazy { DataSource.getConversation(fragmentActivity!!, arguments.getLong(ARG_CONVERSATION_ID)) }
+    private val messages: List<Message> by lazy { DataSource.getMediaMessages(fragmentActivity!!, conversation!!.id) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,27 +38,27 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
         val root = inflater.inflate(R.layout.fragment_media_grid, container, false)
         val recyclerView = root.findViewById<View>(R.id.recycler_view) as RecyclerView
 
-        recyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.images_column_count))
+        recyclerView.layoutManager = GridLayoutManager(fragmentActivity, resources.getInteger(R.integer.images_column_count))
         recyclerView.adapter = MediaGridAdapter(messages, this)
 
         return root
     }
 
     private fun setUpToolbar() {
-        activity.title = conversation!!.title
+        fragmentActivity?.title = conversation!!.title
 
-        val toolbar = (activity as AbstractSettingsActivity).toolbar
+        val toolbar = (fragmentActivity as AbstractSettingsActivity).toolbar
         if (Settings.useGlobalThemeColor) {
             toolbar.setBackgroundColor(Settings.mainColorSet.color)
-            ActivityUtils.setStatusBarColor(activity, Settings.mainColorSet.colorDark)
+            ActivityUtils.setStatusBarColor(fragmentActivity, Settings.mainColorSet.colorDark)
         } else {
             toolbar.setBackgroundColor(conversation!!.colors.color)
-            ActivityUtils.setStatusBarColor(activity, conversation!!.colors.colorDark)
+            ActivityUtils.setStatusBarColor(fragmentActivity, conversation!!.colors.colorDark)
         }
     }
 
     override fun onSelected(messageList: List<Message>, selectedPosition: Int) {
-        val intent = Intent(activity, ImageViewerActivity::class.java)
+        val intent = Intent(fragmentActivity, ImageViewerActivity::class.java)
         intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, arguments.getLong(ARG_CONVERSATION_ID))
         intent.putExtra(ImageViewerActivity.EXTRA_MESSAGE_ID, messageList[selectedPosition].id)
         startActivity(intent)

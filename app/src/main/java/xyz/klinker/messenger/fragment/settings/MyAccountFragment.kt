@@ -25,6 +25,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.support.v7.preference.PreferenceCategory
 import android.util.Log
@@ -61,6 +62,7 @@ import xyz.klinker.messenger.shared.util.billing.PurchasedItemCallback
  */
 class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
     private var billing: BillingHelper? = null
 
     /**
@@ -74,7 +76,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.my_account)
 
-        billing = BillingHelper(activity)
+        billing = BillingHelper(fragmentActivity)
 
         if (initSetupPreference()) {
             initLifetimeSubscriberPreference()
@@ -132,7 +134,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun checkSubscriptions() {
-        val dialog = ProgressDialog(activity)
+        val dialog = ProgressDialog(fragmentActivity!!)
         dialog.setMessage(getString(R.string.checking_for_active_subscriptions))
         dialog.setCancelable(false)
         dialog.isIndeterminate = true
@@ -142,13 +144,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             val hasSubs = billing?.hasPurchasedProduct() ?: false
             dialog.dismiss()
 
-            if (activity == null) {
+            if (fragmentActivity == null) {
                 return@Thread
             }
 
-            activity.runOnUiThread {
+            fragmentActivity?.runOnUiThread {
                 if (!resources.getBoolean(R.bool.check_subscription) || hasSubs) {
-                    Toast.makeText(activity, R.string.subscription_found, Toast.LENGTH_LONG).show()
+                    Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                     startLoginActivity()
                 } else {
                     pickSubscription()
@@ -184,7 +186,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
-            val signoutTime = SignoutJob.isScheduled(activity)
+            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
             if (signoutTime != 0L) {
                 preference.title = getString(R.string.account_expiring)
                 preference.summary = getString(R.string.signout_time, Date(signoutTime).toString())
@@ -194,7 +196,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             }
 
             preference.setOnPreferenceClickListener {
-                AlertDialog.Builder(activity)
+                AlertDialog.Builder(fragmentActivity!!)
                         .setMessage(R.string.change_subscription_message)
                         .setPositiveButton(R.string.ok) { _, _ -> pickSubscription() }.show()
                 false
@@ -206,8 +208,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_message_count))
 
         val source = DataSource
-        val conversationCount = source.getConversationCount(activity)
-        val messageCount = source.getMessageCount(activity)
+        val conversationCount = source.getConversationCount(fragmentActivity!!)
+        val messageCount = source.getMessageCount(fragmentActivity!!)
 
         val title = resources.getQuantityString(R.plurals.message_count, messageCount,
                 messageCount)
@@ -222,19 +224,19 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_delete_account))
 
         preference.setOnPreferenceClickListener {
-            AlertDialog.Builder(activity)
+            AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(R.string.delete_account_confirmation)
                     .setPositiveButton(android.R.string.yes) { _, _ ->
                         val account = Account
                         val accountId = account.accountId
 
                         Thread { ApiUtils.deleteAccount(accountId) }.start()
-                        account.clearAccount(activity)
+                        account.clearAccount(fragmentActivity!!)
 
                         returnToConversationsAfterLogin()
 
-                        val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
-                        nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting)
+                        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+                        nav?.menu?.findItem(R.id.drawer_account)?.setTitle(R.string.menu_device_texting)
                     }
                     .setNegativeButton(android.R.string.no, null)
                     .show()
@@ -249,7 +251,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         if (Account.primary) {
             preference.setSummary(R.string.resync_account_summary_phone)
             preference.setOnPreferenceClickListener {
-                AlertDialog.Builder(activity)
+                AlertDialog.Builder(fragmentActivity!!)
                         .setMessage(R.string.resync_account_confirmation)
                         .setPositiveButton(android.R.string.yes) { _, _ -> cleanAccount() }
                         .setNegativeButton(android.R.string.no, null)
@@ -259,7 +261,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             }
         } else {
             preference.setOnPreferenceClickListener {
-                AlertDialog.Builder(activity)
+                AlertDialog.Builder(fragmentActivity!!)
                         .setMessage(R.string.resync_account_confirmation)
                         .setPositiveButton(android.R.string.yes) { _, _ -> restoreAccount() }
                         .setNegativeButton(android.R.string.no, null)
@@ -280,7 +282,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         preference.setOnPreferenceClickListener {
-            AlertDialog.Builder(activity)
+            AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(R.string.refresh_firebase_warning)
                     .setPositiveButton(R.string.ok) { _, _ ->
                         val account = Account
@@ -288,14 +290,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
                         Thread { ApiUtils.deleteAccount(accountId) }.start()
 
-                        startActivity(Intent(activity, RecreateAccountActivity::class.java))
+                        startActivity(Intent(fragmentActivity!!, RecreateAccountActivity::class.java))
                     }.show()
             true
         }
     }
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
-        Settings.forceUpdate(activity)
+        Settings.forceUpdate(fragmentActivity!!)
         if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
             Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId)
@@ -309,13 +311,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         } else if (!billing!!.handleOnActivityResult(requestCode, responseCode, data)) {
             if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
                 if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                    ApiUploadService.start(activity)
+                    ApiUploadService.start(fragmentActivity!!)
                     returnToConversationsAfterLogin()
 
-                    val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
+                    val nav = fragmentActivity!!.findViewById<View>(R.id.navigation_view) as NavigationView
                     nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_account)
 
-                    activity.startService(Intent(activity, SimpleLifetimeSubscriptionCheckService::class.java))
+                    fragmentActivity!!.startService(Intent(fragmentActivity!!, SimpleLifetimeSubscriptionCheckService::class.java))
                 } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
                     restoreAccount()
                 }
@@ -335,61 +337,61 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun restoreAccount() {
-        val dialog = ProgressDialog(activity)
+        val dialog = ProgressDialog(fragmentActivity!!)
         dialog.setCancelable(false)
         dialog.isIndeterminate = true
         dialog.setMessage(getString(R.string.preparing_new_account))
         dialog.show()
 
         Thread {
-            DataSource.clearTables(activity)
+            DataSource.clearTables(fragmentActivity!!)
 
-            activity.runOnUiThread {
+            fragmentActivity?.runOnUiThread {
                 dialog.dismiss()
                 returnToConversationsAfterLogin()
 
-                (activity as MessengerActivity).accountController.startResyncingAccount()
+                (fragmentActivity!! as MessengerActivity).accountController.startResyncingAccount()
 
-                val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
+                val nav = fragmentActivity!!.findViewById<View>(R.id.navigation_view) as NavigationView
                 nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_account)
             }
         }.start()
 
         // after a login, lets query the subscription status and write it to their account for them
-        activity.startService(Intent(activity, SimpleSubscriptionCheckService::class.java))
+        fragmentActivity!!.startService(Intent(fragmentActivity!!, SimpleSubscriptionCheckService::class.java))
     }
 
     private fun cleanAccount() {
         val account = Account
-        val dialog = ProgressDialog(activity)
+        val dialog = ProgressDialog(fragmentActivity!!)
         dialog.setCancelable(false)
         dialog.isIndeterminate = true
         dialog.setMessage(getString(R.string.preparing_new_account))
         dialog.show()
 
         Thread {
-            DataSource.clearTables(activity)
+            DataSource.clearTables(fragmentActivity!!)
             ApiUtils.cleanAccount(account.accountId)
 
-            activity.runOnUiThread {
+            fragmentActivity?.runOnUiThread {
                 dialog.dismiss()
 
-                val login = Intent(activity, InitialLoadActivity::class.java)
+                val login = Intent(fragmentActivity!!, InitialLoadActivity::class.java)
                 login.putExtra(InitialLoadActivity.UPLOAD_AFTER_SYNC, true)
                 login.putExtra(LoginActivity.ARG_SKIP_LOGIN, true)
                 startActivity(login)
-                activity.finish()
+                fragmentActivity?.finish()
             }
         }.start()
     }
 
     private fun returnToConversationsAfterLogin() {
-        if (activity == null) {
+        if (fragmentActivity == null) {
             return
         }
 
-        val nav = activity.findViewById<View>(R.id.navigation_view) as NavigationView
-        nav.setCheckedItem(R.id.drawer_conversation)
+        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        nav?.setCheckedItem(R.id.drawer_conversation)
 
         val account = Account
         if (account.exists() && account.primary) {
@@ -397,13 +399,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     account.subscriptionType!!.typeCode, account.subscriptionExpiration)
         }
 
-        SubscriptionExpirationCheckJob.scheduleNextRun(activity)
+        SubscriptionExpirationCheckJob.scheduleNextRun(fragmentActivity!!)
 
-        if (activity is MessengerActivity) {
-            (activity as MessengerActivity).displayConversations()
-            activity.title = StringUtils.titleize(getString(R.string.app_name))
+        if (fragmentActivity is MessengerActivity) {
+            (fragmentActivity!! as MessengerActivity).displayConversations()
+            fragmentActivity?.title = StringUtils.titleize(getString(R.string.app_name))
         } else {
-            activity.recreate()
+            fragmentActivity?.recreate()
         }
     }
 
@@ -413,21 +415,21 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun pickSubscription() {
-        startActivityForResult(Intent(activity, AccountPurchaseActivity::class.java), PURCHASE_REQUEST)
+        startActivityForResult(Intent(fragmentActivity!!, AccountPurchaseActivity::class.java), PURCHASE_REQUEST)
     }
 
     private fun purchaseProduct(product: ProductAvailable) {
-        billing!!.purchaseItem(activity, product, object : PurchasedItemCallback {
+        billing!!.purchaseItem(fragmentActivity!!, product, object : PurchasedItemCallback {
             override fun onItemPurchased(productId: String) {
-                if (activity != null) {
-                    AnalyticsHelper.accountCompetedPurchase(activity)
-                    AnalyticsHelper.userSubscribed(activity, productId)
+                if (fragmentActivity != null) {
+                    AnalyticsHelper.accountCompetedPurchase(fragmentActivity!!)
+                    AnalyticsHelper.userSubscribed(fragmentActivity!!, productId)
                 }
 
                 if (Account.accountId == null) {
                     // write lifetime here, just so they don't think it is a trial..
                     if (product.productId.contains("lifetime")) {
-                        Account.updateSubscription(activity, Account.SubscriptionType.LIFETIME, Date(1))
+                        Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(1))
                     }
 
                     startLoginActivity()
@@ -436,9 +438,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     val newExperation = ProductPurchased.getExpiration(product.productId)
 
                     if (product.productId.contains("lifetime")) {
-                        Account.updateSubscription(activity, Account.SubscriptionType.LIFETIME, Date(newExperation))
+                        Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(newExperation))
                     } else {
-                        Account.updateSubscription(activity, Account.SubscriptionType.SUBSCRIBER, Date(newExperation))
+                        Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, Date(newExperation))
                     }
 
                     returnToConversationsAfterLogin()
@@ -446,8 +448,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             }
 
             override fun onPurchaseError(message: String) {
-                AnalyticsHelper.purchaseError(activity)
-                activity.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
+                AnalyticsHelper.purchaseError(fragmentActivity!!)
+                fragmentActivity?.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
             }
         })
     }

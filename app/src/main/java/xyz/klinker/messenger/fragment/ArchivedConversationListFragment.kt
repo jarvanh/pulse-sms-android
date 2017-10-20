@@ -19,10 +19,10 @@ class ArchivedConversationListFragment : ConversationListFragment() {
     // always consume the back event and send us to the conversation list
     override fun onBackPressed(): Boolean {
         if (!super.onBackPressed()) {
-            val navView = activity.findViewById<View>(R.id.navigation_view) as NavigationView
-            navView.menu.getItem(1).isChecked = true
+            val navView = activity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+            navView?.menu?.getItem(1)?.isChecked = true
 
-            activity.title = getString(R.string.app_title)
+            activity?.title = getString(R.string.app_title)
             (activity as MessengerActivity).displayConversations()
         }
 
@@ -32,7 +32,7 @@ class ArchivedConversationListFragment : ConversationListFragment() {
     override fun onConversationContracted(viewHolder: ConversationViewHolder) {
         super.onConversationContracted(viewHolder)
 
-        val navView = activity.findViewById<View>(R.id.navigation_view) as NavigationView
-        navView.menu.getItem(2).isChecked = true
+        val navView = activity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        navView?.menu?.getItem(2)?.isChecked = true
     }
 }

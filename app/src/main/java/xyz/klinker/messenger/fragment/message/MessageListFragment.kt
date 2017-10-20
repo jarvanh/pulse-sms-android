@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.fragment
+package xyz.klinker.messenger.fragment.message
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -55,6 +56,8 @@ import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
  * Fragment for displaying messages for a certain conversation.
  */
 class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
+
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
 
     val argManager: MessageInstanceManager by lazy { MessageInstanceManager(this) }
     val attachManager: AttachmentManager by lazy { AttachmentManager(this) }
@@ -117,7 +120,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updatedReceiver = MessageListUpdatedReceiver(this)
-        activity.registerReceiver(updatedReceiver,
+        fragmentActivity?.registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.intentFilter)
 
         if (extraMarginLeft != 0 || extraMarginTop != 0) {
@@ -132,7 +135,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         notificationManager.onStart()
 
         Handler().postDelayed({
-            if (activity != null) Thread { DataSource.readConversation(activity, conversationId) }.start()
+            if (fragmentActivity != null) Thread { DataSource.readConversation(fragmentActivity!!, conversationId) }.start()
         }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
     }
 
@@ -151,7 +154,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         notificationManager.dismissNotification = false
 
         Handler().postDelayed({
-            if (activity != null) Thread { DataSource.readConversation(activity, conversationId) }.start()
+            if (fragmentActivity != null) Thread { DataSource.readConversation(fragmentActivity!!, conversationId) }.start()
         }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
     }
 
@@ -165,7 +168,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         super.onDestroyView()
 
         if (updatedReceiver != null) {
-            activity.unregisterReceiver(updatedReceiver)
+            fragmentActivity?.unregisterReceiver(updatedReceiver)
             updatedReceiver = null
         }
 
@@ -216,7 +219,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
 
         sendManager.sendDelayedMessage()
         if (updatedReceiver != null) {
-            activity.unregisterReceiver(updatedReceiver)
+            fragmentActivity?.unregisterReceiver(updatedReceiver)
             updatedReceiver = null
         }
 
@@ -225,8 +228,8 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
 
     fun dismissKeyboard() {
         try {
-            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(activity.findViewById<View>(android.R.id.content).windowToken, 0)
+            val imm = fragmentActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.hideSoftInputFromWindow(fragmentActivity?.findViewById<View>(android.R.id.content)?.windowToken, 0)
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -1,10 +1,11 @@
 package xyz.klinker.messenger.fragment.conversation
 
 import android.os.Handler
+import android.support.v4.app.FragmentActivity
 import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.Settings
@@ -19,6 +20,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         internal val ARG_MESSAGE_TO_OPEN_ID = "message_to_open"
     }
 
+    private val activity: FragmentActivity? by lazy { fragment.activity }
     private val clickHandler: Handler by lazy { Handler() }
 
     var expandedConversation: ConversationViewHolder? = null
@@ -27,14 +29,14 @@ class MessageListManager(private val fragment: ConversationListFragment) {
     fun onConversationExpanded(viewHolder: ConversationViewHolder): Boolean {
         fragment.updateHelper.updateInfo = null
 
-        if (expandedConversation != null) {
+        if (expandedConversation != null || activity == null) {
             return false
         }
 
-        fragment.swipeHelper.dismissSnackbars(fragment.activity)
+        fragment.swipeHelper.dismissSnackbars(activity)
 
         expandedConversation = viewHolder
-        AnimationUtils.expandActivityForConversation(fragment.activity)
+        AnimationUtils.expandActivityForConversation(activity!!)
 
         if (fragment.arguments != null && fragment.arguments.containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!,
@@ -45,22 +47,22 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         }
 
         try {
-            fragment.activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.message_list_container, messageListFragment)
-                    .commit()
+            activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.message_list_container, messageListFragment)
+                    ?.commit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
 
         if (!Settings.useGlobalThemeColor) {
-            ActivityUtils.setTaskDescription(fragment.activity,
+            ActivityUtils.setTaskDescription(activity,
                     viewHolder.conversation!!.title!!, viewHolder.conversation!!.colors.color)
         }
 
         fragment.recyclerManager.canScroll(false)
 
-        fragment.activity?.intent?.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
+        activity?.intent?.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
         fragment.arguments?.putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
 
         return true
@@ -68,7 +70,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
 
     fun onConversationContracted() {
         expandedConversation = null
-        AnimationUtils.contractActivityFromConversation(fragment.activity)
+        AnimationUtils.contractActivityFromConversation(activity)
 
         if (messageListFragment == null) {
             return
@@ -79,14 +81,12 @@ class MessageListManager(private val fragment: ConversationListFragment) {
 
         try {
             Handler().postDelayed({
-                if (fragment.activity != null) {
-                    try {
-                        fragment.activity.supportFragmentManager.beginTransaction()
-                                .remove(messageListFragment)
-                                .commit()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                try {
+                    activity?.supportFragmentManager?.beginTransaction()
+                            ?.remove(messageListFragment)
+                            ?.commit()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
 
                 messageListFragment = null
@@ -95,11 +95,11 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         }
 
         val color = Settings.mainColorSet
-        ColorUtils.adjustStatusBarColor(color.colorDark, fragment.activity)
-        ColorUtils.adjustDrawerColor(color.colorDark, fragment.activity)
+        ColorUtils.adjustStatusBarColor(color.colorDark, activity)
+        ColorUtils.adjustDrawerColor(color.colorDark, activity)
 
         ColorUtils.changeRecyclerOverscrollColors(fragment.recyclerView, color.color)
-        ActivityUtils.setTaskDescription(fragment.activity)
+        ActivityUtils.setTaskDescription(activity)
 
         fragment.updateHelper.broadcastUpdateInfo()
         fragment.updateHelper.broadcastTitleChange(contractedId)

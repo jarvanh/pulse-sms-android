@@ -23,6 +23,7 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.view.HapticFeedbackConstants
 import android.view.View
@@ -36,7 +37,7 @@ import com.bignerdranch.android.multiselector.SwappingHolder
 import xyz.klinker.android.article.ArticleIntent
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.ImageViewerActivity
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
@@ -54,8 +55,9 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
  */
 class MessageViewHolder(private val fragment: MessageListFragment?, itemView: View, color: Int, private val type: Int,
                         private val messageDeletedListener: MessageDeletedListener?)
-    : SwappingHolder(itemView, if (fragment == null) MultiSelector() else fragment.multiSelect) {
+    : SwappingHolder(itemView, fragment?.multiSelect ?: MultiSelector()) {
 
+    private val activity: FragmentActivity? by lazy { fragment?.activity }
     private val timestampHeight: Int by lazy { DensityUtil.spToPx(itemView.context, Settings.mediumFont + 2)}
 
     val title: TextView by lazy { itemView.findViewById<View>(R.id.title) as TextView }
@@ -331,7 +333,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
                             which == 1 -> deleteMessage()
                             which == 2 && image?.visibility == View.VISIBLE -> shareImage(messageId)
                             which == 2 -> copyMessageText()
-                            which == 3 && image?.visibility == View.VISIBLE -> MediaSaver(fragment.activity).saveMedia(messageId)
+                            which == 3 && image?.visibility == View.VISIBLE -> MediaSaver(activity).saveMedia(messageId)
                             which == 3 -> shareText(messageId)
                             which == 4 -> resendMessage()
                         }

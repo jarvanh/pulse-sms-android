@@ -33,7 +33,7 @@ class MediaSaver {
     private var activity: Activity? = null
     private var context: Context? = null
 
-    constructor(activity: Activity) {
+    constructor(activity: Activity?) {
         this.activity = activity
         this.context = activity
     }

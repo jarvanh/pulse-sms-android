@@ -5,13 +5,14 @@ package xyz.klinker.messenger.fragment.message.attach
 import android.app.ProgressDialog
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.Toast
 import net.ypresto.androidtranscoder.MediaTranscoder
 import net.ypresto.androidtranscoder.format.AndroidStandardFormatStrategy
 import net.ypresto.androidtranscoder.format.MediaFormatStrategyPresets
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.MessageListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.util.ImageUtils
@@ -21,8 +22,8 @@ import java.io.IOException
 
 class MessageVideoEncoder(private val fragment: MessageListFragment) {
 
-    private val activity
-        get() = fragment.activity
+    private val activity: FragmentActivity? by lazy { fragment.activity }
+
     private val attachManager
         get() = fragment.attachManager
 
@@ -41,7 +42,7 @@ class MessageVideoEncoder(private val fragment: MessageListFragment) {
         } else {
             val file: File
             try {
-                val outputDir = File(activity.getExternalFilesDir(null), "outputs")
+                val outputDir = File(activity?.getExternalFilesDir(null), "outputs")
                 outputDir.mkdir()
 
                 file = File.createTempFile("transcode_video", ".mp4", outputDir)
@@ -50,10 +51,10 @@ class MessageVideoEncoder(private val fragment: MessageListFragment) {
                 return
             }
 
-            val resolver = activity.contentResolver
+            val resolver = activity?.contentResolver
             val parcelFileDescriptor: ParcelFileDescriptor?
             try {
-                parcelFileDescriptor = resolver.openFileDescriptor(uri, "r")
+                parcelFileDescriptor = resolver?.openFileDescriptor(uri, "r")
             } catch (e: FileNotFoundException) {
                 Toast.makeText(activity, "File not found.", Toast.LENGTH_LONG).show()
                 return
@@ -62,7 +63,7 @@ class MessageVideoEncoder(private val fragment: MessageListFragment) {
             val progressDialog = ProgressDialog(activity)
             progressDialog.setCancelable(false)
             progressDialog.isIndeterminate = true
-            progressDialog.setMessage(activity.getString(R.string.preparing_video))
+            progressDialog.setMessage(activity?.getString(R.string.preparing_video))
 
             if (parcelFileDescriptor == null) {
                 return

@@ -21,6 +21,7 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.*
 import android.support.annotation.RequiresApi
+import android.support.v4.app.FragmentActivity
 import android.text.InputType
 import android.util.Log
 import xyz.klinker.messenger.R

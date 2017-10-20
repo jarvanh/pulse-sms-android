@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -41,6 +42,8 @@ import xyz.klinker.messenger.shared.util.listener.SearchListener
  */
 class SearchFragment : Fragment(), SearchListener {
 
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
+
     private var query: String? = null
 
     private var list: RecyclerView? = null
@@ -52,7 +55,7 @@ class SearchFragment : Fragment(), SearchListener {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         list = inflater.inflate(R.layout.fragment_search, parent, false) as RecyclerView
 
-        list?.layoutManager = LinearLayoutManager(activity)
+        list?.layoutManager = LinearLayoutManager(fragmentActivity)
         list?.adapter = adapter
 
         return list
@@ -67,12 +70,12 @@ class SearchFragment : Fragment(), SearchListener {
         val handler = Handler()
 
         Thread {
-            val conversations = if (activity != null) {
-                DataSource.searchConversationsAsList(activity, query, 60).toMutableList()
+            val conversations = if (fragmentActivity != null) {
+                DataSource.searchConversationsAsList(fragmentActivity!!, query, 60).toMutableList()
             } else mutableListOf()
 
-            val messages = if (activity != null) {
-                DataSource.searchMessagesAsList(activity, query, 60).toMutableList()
+            val messages = if (fragmentActivity != null) {
+                DataSource.searchMessagesAsList(fragmentActivity!!, query, 60).toMutableList()
             } else mutableListOf()
 
             handler.post { setSearchResults(conversations, messages) }
@@ -86,26 +89,26 @@ class SearchFragment : Fragment(), SearchListener {
     override fun onSearchSelected(message: Message) {
         dismissKeyboard()
 
-        DataSource.archiveConversation(activity!!, message.conversationId, false)
+        DataSource.archiveConversation(fragmentActivity!!, message.conversationId, false)
 
-        val intent = Intent(activity, MessengerActivity::class.java)
+        val intent = Intent(fragmentActivity, MessengerActivity::class.java)
         intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, message.conversationId)
         intent.putExtra(MessengerActivityExtras.EXTRA_MESSAGE_ID, message.id)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        activity!!.startActivity(intent)
+        fragmentActivity?.startActivity(intent)
     }
 
     override fun onSearchSelected(conversation: Conversation) {
         dismissKeyboard()
 
-        if (conversation.archive) {
-            DataSource.archiveConversation(activity, conversation.id, false)
+        if (conversation.archive && fragmentActivity != null) {
+            DataSource.archiveConversation(fragmentActivity!!, conversation.id, false)
         }
 
-        val intent = Intent(activity, MessengerActivity::class.java)
+        val intent = Intent(fragmentActivity, MessengerActivity::class.java)
         intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        activity?.startActivity(intent)
+        fragmentActivity?.startActivity(intent)
     }
 
     private fun dismissKeyboard() {

@@ -177,7 +177,11 @@ object ContactUtils {
      * @param context the current application context.
      * @return a space separated list of names.
      */
-    fun findContactNames(numbers: String?, context: Context): String {
+    fun findContactNames(numbers: String?, context: Context?): String {
+        if (context == null) {
+            return ""
+        }
+
         var names = ""
         val number: Array<String>
 
@@ -287,7 +291,11 @@ object ContactUtils {
      * @param context the current application context.
      * @return the image uri or null if one could not be found.
      */
-    fun findImageUri(number: String?, context: Context): String? {
+    fun findImageUri(number: String?, context: Context?): String? {
+        if (context == null) {
+            return null
+        }
+
         var uri: String? = null
 
         if (number == null || number.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().size > 1) {

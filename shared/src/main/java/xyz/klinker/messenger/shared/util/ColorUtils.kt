@@ -133,7 +133,7 @@ object ColorUtils {
      * @param color    the color for the header.
      * @param activity the activity to find the views in.
      */
-    fun adjustDrawerColor(color: Int, activity: Activity) {
+    fun adjustDrawerColor(color: Int, activity: Activity?) {
         try {
             adjustDrawerColor(color, false, activity)
         } catch (e: IllegalStateException) {
@@ -150,7 +150,11 @@ object ColorUtils {
      * some of the text will be changed and the call option will be hidden.
      * @param activity the activity to find the views in.
      */
-    fun adjustDrawerColor(color: Int, isGroup: Boolean, activity: Activity) {
+    fun adjustDrawerColor(color: Int, isGroup: Boolean, activity: Activity?) {
+        if (activity == null) {
+            return
+        }
+
         var color = color
         if (Settings.useGlobalThemeColor) {
             color = Settings.mainColorSet.colorDark

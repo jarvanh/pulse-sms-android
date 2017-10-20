@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -60,6 +61,8 @@ import java.util.*
  */
 class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
+    private val fragmentActivity: FragmentActivity? by lazy { activity }
+
     private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
     private val progress: ProgressBar? by lazy { view!!.findViewById<View>(R.id.progress) as ProgressBar? }
     private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
@@ -74,7 +77,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     // samsung messed up the date picker in some languages on Lollipop 5.0 and 5.1. Ugh.
     // fixes this issue: http://stackoverflow.com/a/34853067
     private val contextToFixDatePickerCrash: ContextWrapper
-        get() = object : ContextWrapper(activity) {
+        get() = object : ContextWrapper(fragmentActivity!!) {
             private var wrappedResources: Resources? = null
             override fun getResources(): Resources {
                 val r = super.getResources()
@@ -104,7 +107,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list.layoutManager = LinearLayoutManager(activity)
+        list.layoutManager = LinearLayoutManager(fragmentActivity)
         fab.setOnClickListener { startSchedulingMessage() }
 
         emptyView.setBackgroundColor(Settings.mainColorSet.colorLight)
@@ -124,7 +127,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     override fun onStart() {
         super.onStart()
-        activity?.registerReceiver(scheduledMessageSent,
+        fragmentActivity?.registerReceiver(scheduledMessageSent,
                 IntentFilter(ScheduledMessageJob.BROADCAST_SCHEDULED_SENT))
     }
 
@@ -132,18 +135,18 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         super.onStop()
 
         try {
-            activity?.unregisterReceiver(scheduledMessageSent)
+            fragmentActivity?.unregisterReceiver(scheduledMessageSent)
         } catch (e: Exception) {
         }
 
-        ScheduledMessageJob.scheduleNextRun(activity!!)
+        ScheduledMessageJob.scheduleNextRun(fragmentActivity!!)
     }
 
     fun loadMessages() {
         val handler = Handler()
         Thread {
-            if (activity != null) {
-                val messages = DataSource.getScheduledMessagesAsList(activity!!)
+            if (fragmentActivity != null) {
+                val messages = DataSource.getScheduledMessagesAsList(fragmentActivity!!)
                 handler.post { setMessages(messages) }
             }
         }.start()
@@ -164,7 +167,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         val fragment = EditScheduledMessageFragment()
         fragment.setMessage(message)
         fragment.setFragment(this)
-        fragment.show(activity?.supportFragmentManager, "")
+        fragment.show(fragmentActivity?.supportFragmentManager, "")
     }
 
     private fun startSchedulingMessage() {
@@ -173,16 +176,16 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun displayNameDialog(message: ScheduledMessage) {
-        val layout = LayoutInflater.from(activity)
+        val layout = LayoutInflater.from(fragmentActivity)
                 .inflate(R.layout.dialog_recipient_edit_text, null, false)
         val editText = layout.findViewById<View>(R.id.edit_text) as RecipientEditTextView
         editText.setHint(R.string.scheduled_to_hint)
         editText.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
-        val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, activity!!)
+        val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, fragmentActivity!!)
         adapter.isShowMobileOnly = Settings.mobileOnly
         editText.setAdapter(adapter)
 
-        val dialog = AlertDialog.Builder(activity!!)
+        val dialog = AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     when {
@@ -227,7 +230,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         var context: Context? = contextToFixDatePickerCrash
 
         if (context == null) {
-            context = activity
+            context = fragmentActivity
         }
 
         if (context == null) {
@@ -247,36 +250,36 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun displayTimeDialog(message: ScheduledMessage) {
-        if (activity == null) {
+        if (fragmentActivity == null) {
             return
         }
 
         val calendar = Calendar.getInstance()
-        TimePickerDialog(activity, { _, hourOfDay, minute ->
+        TimePickerDialog(fragmentActivity, { _, hourOfDay, minute ->
             message.timestamp = message.timestamp + 1000 * 60 * 60 * hourOfDay
             message.timestamp = message.timestamp + 1000 * 60 * minute
 
             if (message.timestamp > System.currentTimeMillis()) {
                 displayMessageDialog(message)
             } else {
-                Toast.makeText(activity, R.string.scheduled_message_in_future,
+                Toast.makeText(fragmentActivity, R.string.scheduled_message_in_future,
                         Toast.LENGTH_SHORT).show()
                 displayDateDialog(message)
             }
         },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
-                DateFormat.is24HourFormat(activity))
+                DateFormat.is24HourFormat(fragmentActivity))
                 .show()
     }
 
     private fun displayMessageDialog(message: ScheduledMessage) {
 
-        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null, false)
+        val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_edit_text, null, false)
         val editText = layout.findViewById<View>(R.id.edit_text) as EditText
         editText.setHint(R.string.scheduled_message_hint)
 
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ ->
                     if (editText.text.isNotEmpty()) {
@@ -292,7 +295,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun saveMessage(message: ScheduledMessage) {
-        DataSource.insertScheduledMessage(activity!!, message)
+        DataSource.insertScheduledMessage(fragmentActivity!!, message)
         loadMessages()
     }
 
@@ -302,7 +305,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         }
 
         try {
-            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = fragmentActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
         } catch (e: Exception) {
         }
