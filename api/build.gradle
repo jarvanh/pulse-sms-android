@@ -20,11 +20,14 @@ targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
 dependencies {
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testImplementation 'org.mockito:mockito-core:2.8.43'
+    testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
 
 test.onlyIf { Boolean.getBoolean('run.tests') }

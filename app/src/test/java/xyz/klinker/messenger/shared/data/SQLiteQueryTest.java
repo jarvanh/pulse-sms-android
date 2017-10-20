@@ -621,7 +621,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         assertEquals("1111111, 2222222", conversation.getPhoneNumbers());
     }
 
-    @Test
+    @Test @Ignore
     public void insertMessage() {
         int initialSize = source.getMessages(context, 2L).getCount();
         source.insertMessage(context, getFakeMessage(), 2, false);
