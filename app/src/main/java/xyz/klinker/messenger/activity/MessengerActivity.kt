@@ -129,7 +129,9 @@ class MessengerActivity : AppCompatActivity() {
         if (navController.closeDrawer()) {
         } else if (searchHelper.closeSearch()) {
         } else if (!navController.backPressed()) {
-            super.onBackPressed()
+            try {
+                super.onBackPressed()
+            } catch (e: Exception) { }
         }
     }
 
