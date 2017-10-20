@@ -124,23 +124,35 @@ object PhoneNumberUtils {
      * Returns the devices possible phone numbers. (Account, Lollipop method, legacy method)
      */
     fun getMyPossiblePhoneNumbers(context: Context?, useSettings: Boolean = true): List<String> {
-        val numbers = ArrayList<String>()
+        val numbers = mutableListOf<String>()
 
-        if (useSettings) {
-            val settings = xyz.klinker.messenger.shared.data.Settings
-            if (settings.phoneNumber != null) {
-                numbers.add(settings.phoneNumber!!)
+        try {
+            if (useSettings) {
+                val settings = xyz.klinker.messenger.shared.data.Settings
+                if (settings.phoneNumber != null) {
+                    numbers.add(settings.phoneNumber!!)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        val account = Account
-        if (account.exists() && account.myPhoneNumber != null && !account.myPhoneNumber!!.isEmpty()) {
-            numbers.add(account.myPhoneNumber!!)
+        try {
+            val account = Account
+            if (account.exists() && account.myPhoneNumber != null && !account.myPhoneNumber!!.isEmpty()) {
+                numbers.add(account.myPhoneNumber!!)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        val lollipopNumber = getLollipopPhoneNumber(context)
-        if (lollipopNumber != null && !lollipopNumber.isEmpty()) {
-            numbers.add(lollipopNumber)
+        try {
+            val lollipopNumber = getLollipopPhoneNumber(context)
+            if (lollipopNumber != null && !lollipopNumber.isEmpty()) {
+                numbers.add(lollipopNumber)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         try {
@@ -148,7 +160,7 @@ object PhoneNumberUtils {
             if (legacyNumber != null && !legacyNumber.isEmpty()) {
                 numbers.add(legacyNumber)
             }
-        } catch (e: SecurityException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 

@@ -64,7 +64,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     private val fragmentActivity: FragmentActivity? by lazy { activity }
 
     private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
-    private val progress: ProgressBar? by lazy { view!!.findViewById<View>(R.id.progress) as ProgressBar? }
+    private val progress: ProgressBar? by lazy { view?.findViewById<View>(R.id.progress) as ProgressBar? }
     private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
 
