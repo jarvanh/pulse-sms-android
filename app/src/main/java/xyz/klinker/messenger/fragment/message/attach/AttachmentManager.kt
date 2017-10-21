@@ -83,11 +83,9 @@ class AttachmentManager(private val fragment: MessageListFragment) {
 
         attachedImage.setImageDrawable(null)
         attachedImageHolder.visibility = View.GONE
-        selectedImageCount.visibility = View.GONE
 
         attachedUri = null
         attachedMimeType = null
-        selectedImageUris.clear()
 
         fragment.counterCalculator.updateCounterText()
     }

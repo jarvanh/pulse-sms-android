@@ -14,6 +14,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.message.MessageListFragment
@@ -42,6 +43,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     private val sendProgress: ProgressBar by lazy { fragment.rootView!!.findViewById<View>(R.id.send_progress) as ProgressBar }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
+    private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
 
     private var delayedTimer: CountDownTimer? = null
     private val delayedSendingHandler: Handler by lazy { Handler() }
@@ -249,6 +251,9 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             }
 
             attachManager.clearAttachedData()
+            attachManager.selectedImageUris.clear()
+            selectedImageCount.visibility = View.GONE
+            
             DataSource.deleteDrafts(activity!!, argManager.conversationId)
             messageEntry.text = null
 
