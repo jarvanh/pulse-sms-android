@@ -1,11 +1,11 @@
 package xyz.klinker.messenger.fragment.conversation
 
-import android.app.Activity
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
@@ -29,7 +29,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     private var archiveSnackbar: Snackbar? = null
 
     fun getSwipeTouchHelper(adapter: ConversationListAdapter): ItemTouchHelper {
-        return if (fragment is ArchivedConversationListFragment)
+        return if (activity != null && fragment is ArchivedConversationListFragment)
             SwipeTouchHelper(UnarchiveSwipeSimpleCallback(adapter))
         else SwipeTouchHelper(adapter)
     }
@@ -43,11 +43,6 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         pendingDelete.add(conversation)
         val currentSize = pendingDelete.size
 
-        if (fragment.isDetached) {
-            dismissDeleteSnackbar(activity, currentSize)
-            return
-        }
-
         val plural = fragment.resources.getQuantityString(R.plurals.conversations_deleted,
                 pendingDelete.size, pendingDelete.size)
 
@@ -58,7 +53,8 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(snackbar: Snackbar?, event: Int) {
                         super.onDismissed(snackbar, event)
-                        dismissDeleteSnackbar(activity, currentSize)
+                        dismissDeleteSnackbar(currentSize)
+                        clearPending()
                     }
                 })
         SnackbarAnimationFix.apply(deleteSnackbar!!)
@@ -75,11 +71,6 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         pendingArchive.add(conversation)
         val currentSize = pendingArchive.size
 
-        if (fragment.isDetached) {
-            dismissArchiveSnackbar(activity, currentSize)
-            return
-        }
-
         val plural = fragment.resources.getQuantityString(
                 if (fragment is ArchivedConversationListFragment) R.plurals.conversations_unarchived else R.plurals.conversations_archived,
                 pendingArchive.size, pendingArchive.size)
@@ -91,7 +82,8 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(snackbar: Snackbar?, event: Int) {
                         super.onDismissed(snackbar, event)
-                        dismissArchiveSnackbar(activity, currentSize)
+                        dismissArchiveSnackbar(currentSize)
+                        clearPending()
                     }
                 })
         SnackbarAnimationFix.apply(archiveSnackbar!!)
@@ -115,38 +107,38 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         s.show()
     }
 
-    fun dismissSnackbars(activity: Activity?) {
+    fun dismissSnackbars() {
         archiveSnackbar?.dismiss()
-        dismissArchiveSnackbar(activity, -1)
-
         deleteSnackbar?.dismiss()
-        dismissDeleteSnackbar(activity, -1)
+
+        dismissArchiveSnackbar(-1)
+        dismissDeleteSnackbar(-1)
     }
 
-    private fun dismissDeleteSnackbar(activity: Activity?, currentSize: Int) {
+    private fun dismissDeleteSnackbar(currentSize: Int) {
         deleteSnackbar = null
 
-        Thread {
-            if ((currentSize == -1 || pendingDelete.size == currentSize) && activity != null) {
-                val copiedList = ArrayList(pendingDelete)
-                copiedList.filterNotNull().forEach { performDeleteOperation(it) }
-                copiedList.clear()
+        val list = mutableListOf<Conversation>()
+        list.addAll(pendingDelete)
+        pendingDelete.clear()
 
-                clearPending()
+        Thread {
+            if ((currentSize == -1 || list.size == currentSize) && activity != null) {
+                list.forEach { performDeleteOperation(it) }
             }
         }.start()
     }
 
-    private fun dismissArchiveSnackbar(activity: Activity?, currentSize: Int) {
+    private fun dismissArchiveSnackbar(currentSize: Int) {
         archiveSnackbar = null
 
-        Thread {
-            if ((currentSize == -1 || pendingArchive.size == currentSize) && activity != null) {
-                val copiedList = ArrayList(pendingArchive)
-                copiedList.filterNotNull().forEach { performArchiveOperation(it) }
-                copiedList.clear()
+        val list = mutableListOf<Conversation>()
+        list.addAll(pendingArchive)
+        pendingArchive.clear()
 
-                clearPending()
+        Thread {
+            if ((currentSize == -1 || list.size == currentSize) && activity != null) {
+                list.forEach { performArchiveOperation(it) }
             }
         }.start()
     }

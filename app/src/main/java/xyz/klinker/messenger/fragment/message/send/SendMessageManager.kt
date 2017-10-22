@@ -40,7 +40,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         get() = fragment.messageLoader
     
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
-    private val sendProgress: ProgressBar by lazy { fragment.rootView!!.findViewById<View>(R.id.send_progress) as ProgressBar }
+    private val sendProgress: ProgressBar? by lazy { fragment.rootView?.findViewById<View>(R.id.send_progress) as ProgressBar? }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
     private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
@@ -93,10 +93,10 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         })
 
         val accent = fragment.argManager.colorAccent
-        sendProgress.progressTintList = ColorStateList.valueOf(accent)
-        sendProgress.progressBackgroundTintList = ColorStateList.valueOf(accent)
-        sendProgress.progressTintMode = PorterDuff.Mode.SRC_IN
-        sendProgress.progressTintMode = PorterDuff.Mode.SRC_IN
+        sendProgress?.progressTintList = ColorStateList.valueOf(accent)
+        sendProgress?.progressBackgroundTintList = ColorStateList.valueOf(accent)
+        sendProgress?.progressTintMode = PorterDuff.Mode.SRC_IN
+        sendProgress?.progressTintMode = PorterDuff.Mode.SRC_IN
         send.setOnClickListener{ requestPermissionThenSend() }
 
         val signature = Settings.signature
@@ -109,13 +109,13 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     }
 
     fun sendDelayedMessage() {
-        if (sendProgress.visibility == View.VISIBLE) {
+        if (sendProgress?.visibility == View.VISIBLE) {
             sendMessageOnFragmentClosed()
         }
     }
 
     fun sendOnFragmentDestroyed() {
-        if (sendProgress.visibility == View.VISIBLE) {
+        if (sendProgress?.visibility == View.VISIBLE) {
             sendMessageOnFragmentClosed()
         }
     }
@@ -137,7 +137,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     }
 
     private fun sendMessageOnFragmentClosed() {
-        sendProgress.visibility = View.GONE
+        sendProgress?.visibility = View.GONE
         delayedSendingHandler.removeCallbacksAndMessages(null)
 
         val uris = ArrayList<Uri>()
@@ -189,24 +189,24 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         delayedTimer?.cancel()
 
         if (!start) {
-            sendProgress.progress = 0
-            sendProgress.visibility = View.INVISIBLE
+            sendProgress?.progress = 0
+            sendProgress?.visibility = View.INVISIBLE
             send.setImageResource(R.drawable.ic_send)
             send.setOnClickListener { requestPermissionThenSend() }
         } else {
-            sendProgress.isIndeterminate = false
-            sendProgress.visibility = View.VISIBLE
+            sendProgress?.isIndeterminate = false
+            sendProgress?.visibility = View.VISIBLE
             send.setImageResource(R.drawable.ic_close)
             send.setOnClickListener { changeDelayedSendingComponents(false) }
 
             val delayedSendingTimeout = Settings.delayedSendingTimeout
-            sendProgress.max = delayedSendingTimeout.toInt() / 10
+            sendProgress?.max = delayedSendingTimeout.toInt() / 10
 
             delayedTimer = object : CountDownTimer(delayedSendingTimeout, 10) {
                 override fun onFinish() {}
 
                 override fun onTick(millisUntilFinished: Long) {
-                    sendProgress.progress = (delayedSendingTimeout - millisUntilFinished).toInt() / 10
+                    sendProgress?.progress = (delayedSendingTimeout - millisUntilFinished).toInt() / 10
                 }
             }.start()
         }

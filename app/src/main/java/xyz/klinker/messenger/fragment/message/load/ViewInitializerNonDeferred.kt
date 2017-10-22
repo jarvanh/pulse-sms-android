@@ -84,15 +84,17 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
         if (!fragment.resources.getBoolean(R.bool.pin_drawer)) {
             // phone
-            val drawerLayout = activity?.findViewById<View>(R.id.drawer_layout) as DrawerLayout?
-            drawerLayout?.addDrawerListener(object : DrawerLayout.DrawerListener {
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
-                override fun onDrawerClosed(drawerView: View) {}
-                override fun onDrawerStateChanged(newState: Int) {}
-                override fun onDrawerOpened(drawerView: View) {
-                    fragment.dismissKeyboard()
-                }
-            })
+            val drawerLayout = activity?.findViewById<View>(R.id.drawer_layout)
+            if (drawerLayout is DrawerLayout) {
+                drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+                    override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+                    override fun onDrawerClosed(drawerView: View) {}
+                    override fun onDrawerStateChanged(newState: Int) {}
+                    override fun onDrawerOpened(drawerView: View) {
+                        fragment.dismissKeyboard()
+                    }
+                })
+            }
 
             toolbar.setNavigationIcon(R.drawable.ic_collapse)
             toolbar.setNavigationOnClickListener {

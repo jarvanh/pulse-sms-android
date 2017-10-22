@@ -27,6 +27,10 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
     private val empty: View by lazy { fragment.rootView!!.findViewById<View>(R.id.empty_view) }
 
     fun setupViews() {
+        if (activity == null) {
+            return
+        }
+
         empty.setBackgroundColor(Settings.mainColorSet.colorLight)
         ColorUtils.changeRecyclerOverscrollColors(recyclerView, Settings.mainColorSet.color)
     }

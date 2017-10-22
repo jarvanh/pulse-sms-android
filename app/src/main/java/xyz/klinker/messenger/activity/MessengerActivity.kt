@@ -100,7 +100,7 @@ class MessengerActivity : AppCompatActivity() {
     public override fun onPause() {
         super.onPause()
         if (navController.conversationListFragment != null) {
-            navController.conversationListFragment!!.swipeHelper.dismissSnackbars(this)
+            navController.conversationListFragment!!.swipeHelper.dismissSnackbars()
         }
     }
 
@@ -126,12 +126,14 @@ class MessengerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController.closeDrawer()) {
-        } else if (searchHelper.closeSearch()) {
-        } else if (!navController.backPressed()) {
-            try {
+        try {
+            if (navController.closeDrawer()) {
+            } else if (searchHelper.closeSearch()) {
+            } else if (!navController.backPressed()) {
                 super.onBackPressed()
-            } catch (e: Exception) { }
+            }
+        } catch (e: Exception) {
+
         }
     }
 

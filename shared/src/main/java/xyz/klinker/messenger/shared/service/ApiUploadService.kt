@@ -82,7 +82,7 @@ open class ApiUploadService : Service() {
         return null
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         uploadData()
         return super.onStartCommand(intent, flags, startId)
     }

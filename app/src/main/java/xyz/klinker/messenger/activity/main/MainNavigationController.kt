@@ -120,7 +120,7 @@ class MainNavigationController(private val activity: MessengerActivity)
     }
 
     fun drawerItemClicked(id: Int): Boolean {
-        conversationListFragment?.swipeHelper?.dismissSnackbars(activity)
+        conversationListFragment?.swipeHelper?.dismissSnackbars()
 
         when (id) {
             R.id.drawer_conversation -> return conversationActionDelegate.displayConversations()

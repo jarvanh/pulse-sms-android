@@ -71,7 +71,7 @@ class SettingsActivity : AbstractSettingsActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // sets it to teal if there is no color selected
-        toolbar.setBackgroundColor(Settings.mainColorSet.color)
+        toolbar?.setBackgroundColor(Settings.mainColorSet.color)
         ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
 
         ColorUtils.checkBlackBackground(this)
@@ -86,7 +86,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     public override fun onStart() {
         super.onStart()
 
-        toolbar.setBackgroundColor(Settings.mainColorSet.color)
+        toolbar?.setBackgroundColor(Settings.mainColorSet.color)
         ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
 
         ActivityUtils.setTaskDescription(this)

@@ -1987,6 +1987,8 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(messageId)))
         }
 
+        NewMessagesCheckService.writeLastRun(context)
+
         if (useApi) {
             ApiUtils.deleteMessage(accountId(context), messageId)
         }

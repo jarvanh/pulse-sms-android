@@ -186,14 +186,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
-            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
-            if (signoutTime != 0L) {
-                preference.title = getString(R.string.account_expiring)
-                preference.summary = getString(R.string.signout_time, Date(signoutTime).toString())
-            } else {
+//            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
+//            if (signoutTime != 0L) {
+//                preference.title = getString(R.string.account_expiring)
+//                preference.summary = getString(R.string.signout_time, Date(signoutTime).toString())
+//            } else {
                 preference.setTitle(R.string.change_subscription)
                 preference.setSummary(R.string.cancel_on_the_play_store)
-            }
+//            }
 
             preference.setOnPreferenceClickListener {
                 AlertDialog.Builder(fragmentActivity!!)

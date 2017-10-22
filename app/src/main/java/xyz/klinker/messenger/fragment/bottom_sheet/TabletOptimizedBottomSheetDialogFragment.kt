@@ -25,10 +25,10 @@ abstract class TabletOptimizedBottomSheetDialogFragment : BottomSheetDialogFragm
 
     protected abstract fun createLayout(inflater: LayoutInflater): View
 
-    override fun setupDialog(dialog: Dialog, style: Int) {
+    override fun setupDialog(dialog: Dialog?, style: Int) {
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.bottom_sheet_tablet_optimized, null)
-        dialog.setContentView(contentView)
+        dialog?.setContentView(contentView)
 
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior

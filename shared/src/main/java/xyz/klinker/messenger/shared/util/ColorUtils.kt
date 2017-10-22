@@ -35,6 +35,7 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.EdgeEffect
@@ -113,7 +114,7 @@ object ColorUtils {
 
         if (!activity.resources.getBoolean(R.bool.pin_drawer)) {
             val drawerLayout = activity
-                    .findViewById<View>(R.id.drawer_layout) as DrawerLayout
+                    .findViewById<View>(R.id.drawer_layout) as DrawerLayout?
 
             drawerLayout?.setStatusBarBackgroundColor(color)
         } else {

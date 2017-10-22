@@ -62,7 +62,13 @@ class AttachmentListener(private val fragment: MessageListFragment)
                     } catch (e: Exception) {
                     }
 
-                    1 -> messageEntry.setText("$firstName $lastName: $phone")
+                    1 -> {
+                        if (messageEntry.text.isEmpty()) {
+                            messageEntry.setText("$firstName $lastName: $phone")
+                        } else {
+                            messageEntry.setText(messageEntry.text.toString() + "\n$firstName $lastName: $phone")
+                        }
+                    }
                 }
             }.show()
     }

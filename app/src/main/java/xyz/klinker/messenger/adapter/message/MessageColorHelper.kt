@@ -10,7 +10,7 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ColorUtils
 
 @Suppress("DEPRECATION")
-class MessageColorHelper() {
+class MessageColorHelper {
 
     private val fromColorMapper = mutableMapOf<String, Contact>()
     private val fromColorMapperByName = mutableMapOf<String, Contact>()
@@ -23,8 +23,8 @@ class MessageColorHelper() {
         fromColorMapperByName.putAll(fromByName)
     }
 
-    fun getColor(holder: MessageViewHolder, message: Message): Int {
-        if (Settings.useGlobalThemeColor) {
+    fun getColor(holder: MessageViewHolder?, message: Message?): Int {
+        if (Settings.useGlobalThemeColor || holder == null || message == null) {
             return Integer.MIN_VALUE
         }
 

@@ -78,14 +78,16 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         val delete = contentView.findViewById<View>(R.id.delete) as Button
         val save = contentView.findViewById<View>(R.id.save) as Button
 
-        messageText!!.setText(scheduledMessage!!.data)
-        sendDate!!.text = format!!.format(scheduledMessage!!.timestamp)
-        name.text = scheduledMessage!!.title
+        if (scheduledMessage != null) {
+            messageText?.setText(scheduledMessage!!.data)
+            sendDate?.text = format!!.format(scheduledMessage!!.timestamp)
+            name.text = scheduledMessage!!.title
+            messageText?.setSelection(messageText!!.text.length)
+        }
+
         save.setOnClickListener { save() }
         delete.setOnClickListener { delete() }
-        sendDate!!.setOnClickListener { displayDateDialog() }
-
-        messageText!!.setSelection(messageText!!.text.length)
+        sendDate?.setOnClickListener { displayDateDialog() }
 
         return contentView
     }

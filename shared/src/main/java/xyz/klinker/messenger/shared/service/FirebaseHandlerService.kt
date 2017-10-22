@@ -42,6 +42,7 @@ import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.*
 import java.io.File
@@ -267,11 +268,19 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                         if (message.mimeType == MimeType.TEXT_PLAIN) message.data else "",
                         message.type != Message.TYPE_RECEIVED)
 
-                if (message.type == Message.TYPE_RECEIVED) {
-                    context.startService(Intent(context, NotificationService::class.java))
-                } else if (isSending) {
-                    DataSource.readConversation(context, message.conversationId, false)
-                    NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
+                try {
+                    if (message.type == Message.TYPE_RECEIVED) {
+                        context.startService(Intent(context, NotificationService::class.java))
+                    } else if (isSending) {
+                        DataSource.readConversation(context, message.conversationId, false)
+                        NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
+                    }
+                } catch (e: IllegalStateException) {
+                    if (message.type == Message.TYPE_RECEIVED && AndroidVersionUtil.isAndroidO) {
+                        val foregroundNotificationService = Intent(context, NotificationService::class.java)
+                        foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
+                        context.startForegroundService(foregroundNotificationService)
+                    }
                 }
             } else {
                 Log.v(TAG, "message already exists, not doing anything with it")

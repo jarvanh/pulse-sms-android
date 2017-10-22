@@ -90,7 +90,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun shareContent(intent: Intent) {
-        var data = ""
+        var data: String? = ""
         var image = false
 
         if (intent.type == MimeType.TEXT_PLAIN) {
@@ -130,7 +130,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
             activity.shareHandler.directShare(data, intent.type)
         } else {
-            activity.sender.resetViews(data, intent.type)
+            activity.sender.resetViews(if (data == null) "" else data, intent.type)
         }
     }
 
