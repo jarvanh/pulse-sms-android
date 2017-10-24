@@ -149,11 +149,15 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             }
 
             fragmentActivity?.runOnUiThread {
-                if (!resources.getBoolean(R.bool.check_subscription) || hasSubs) {
-                    Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
-                    startLoginActivity()
-                } else {
-                    pickSubscription()
+                try {
+                    if (!resources.getBoolean(R.bool.check_subscription) || hasSubs) {
+                        Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
+                        startLoginActivity()
+                    } else {
+                        pickSubscription()
+                    }
+                } catch (e: IllegalStateException) {
+                    // resources bad, fragment destroyed
                 }
             }
         }.start()

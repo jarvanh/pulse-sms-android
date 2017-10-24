@@ -108,17 +108,24 @@ class ColorPreviewButton : View {
         if (e.action == MotionEvent.ACTION_DOWN) {
             shower.setRunning(true)
             hider.setRunning(false)
-            shower.start()
+
+            try {
+                shower.start()
+            } catch (e: IllegalThreadStateException) {
+            }
+
             return true
         } else if (e.action == MotionEvent.ACTION_CANCEL || e.action == MotionEvent.ACTION_UP) {
             shower.setRunning(false)
             hider.setRunning(true)
-            hider.start()
+
+            try {
+                hider.start()
+            } catch (e: IllegalThreadStateException) {
+            }
 
             if (e.action == MotionEvent.ACTION_UP) {
-                if (onClickListener != null) {
-                    onClickListener!!.onClick(this)
-                }
+                onClickListener?.onClick(this)
                 return false
             }
 

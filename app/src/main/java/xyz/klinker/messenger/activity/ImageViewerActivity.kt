@@ -17,14 +17,17 @@
 package xyz.klinker.messenger.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -37,12 +40,14 @@ import xyz.klinker.messenger.adapter.ImageViewerAdapter
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ActivityUtils
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.ImageUtils
 import xyz.klinker.messenger.shared.util.MediaSaver
 
 /**
  * Activity that allows you to scroll between images in a given conversation.
  */
+@SuppressLint("InlinedApi")
 class ImageViewerActivity : AppCompatActivity() {
 
     private val viewPager: ViewPager by lazy { findViewById<View>(R.id.view_pager) as ViewPager }
@@ -50,6 +55,10 @@ class ImageViewerActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AndroidVersionUtil.isAndroidO) {
+            window.colorMode = ActivityInfo.COLOR_MODE_WIDE_COLOR_GAMUT
+        }
 
         setContentView(R.layout.activity_image_viewer)
         loadMessages()
