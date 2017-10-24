@@ -125,6 +125,8 @@ configurations.all {
             details.useVersion ANDROID_SUPPORT_VERSION
         } else if (requested.group == 'com.google.firebase') {
             details.useVersion FIREBASE_VERSION
+        } else if (requested.group == 'com.github.bumptech.glide') {
+            details.useVersion GLIDE_VERSION
         }
     }
 }
