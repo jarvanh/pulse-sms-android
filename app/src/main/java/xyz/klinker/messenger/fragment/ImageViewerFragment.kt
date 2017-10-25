@@ -40,14 +40,14 @@ class ImageViewerFragment : Fragment() {
 
     private var player: EasyVideoPlayer? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_image_viewer, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_image_viewer, parent, false)
 
         player = view.findViewById<View>(R.id.player) as EasyVideoPlayer
         val photo = view.findViewById<View>(R.id.photo) as PhotoView
 
-        val data = arguments.getString(ARG_DATA_URI)
-        val mimeType = arguments.getString(ARG_DATA_MIME_TYPE)
+        val data = arguments?.getString(ARG_DATA_URI)
+        val mimeType = arguments?.getString(ARG_DATA_MIME_TYPE)
 
         if (MimeType.isStaticImage(mimeType)) {
             Glide.with(activity)

@@ -63,6 +63,8 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
         }
 
         copyText.setOnClickListener {
+            val activity = activity ?: return@setOnClickListener
+
             val clipboard = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("messenger", link)
             clipboard.primaryClip = clip

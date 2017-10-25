@@ -67,6 +67,8 @@ class SearchFragment : Fragment(), SearchListener {
         val handler = Handler()
 
         Thread {
+            val activity = activity
+
             val conversations = if (activity != null) {
                 DataSource.searchConversationsAsList(activity, query, 60).toMutableList()
             } else mutableListOf()
@@ -86,9 +88,7 @@ class SearchFragment : Fragment(), SearchListener {
     override fun onSearchSelected(message: Message) {
         dismissKeyboard()
 
-        if (activity == null) {
-            return
-        }
+        val activity = activity ?: return
 
         DataSource.archiveConversation(activity, message.conversationId, false)
 
@@ -102,9 +102,7 @@ class SearchFragment : Fragment(), SearchListener {
     override fun onSearchSelected(conversation: Conversation) {
         dismissKeyboard()
 
-        if (activity == null) {
-            return
-        }
+        val activity = activity ?: return
 
         if (conversation.archive) {
             DataSource.archiveConversation(activity, conversation.id, false)
@@ -117,8 +115,8 @@ class SearchFragment : Fragment(), SearchListener {
     }
 
     private fun dismissKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(list?.windowToken, 0)
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(list?.windowToken, 0)
     }
 
     companion object {

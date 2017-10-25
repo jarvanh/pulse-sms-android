@@ -8,20 +8,20 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
     private val arguments
         get() = fragment.arguments
 
-    val conversationId: Long by lazy { arguments.getLong(ARG_CONVERSATION_ID) }
-    val title: String by lazy { arguments.getString(ARG_TITLE) }
-    val phoneNumbers: String by lazy { arguments.getString(ARG_PHONE_NUMBERS) }
-    val imageUri: String? by lazy { arguments.getString(ARG_IMAGE_URI) }
-    val color: Int by lazy { arguments.getInt(ARG_COLOR) }
-    val colorDark: Int by lazy { arguments.getInt(ARG_COLOR_DARKER) }
-    val colorAccent: Int by lazy { arguments.getInt(ARG_COLOR_ACCENT) }
-    val isMuted: Boolean by lazy { arguments.getBoolean(ARG_MUTE_CONVERSATION) }
-    val isRead: Boolean by lazy { arguments.getBoolean(ARG_READ) }
-    val isGroup: Boolean by lazy { arguments.getBoolean(ARG_IS_GROUP) }
-    val isArchived: Boolean by lazy { arguments.getBoolean(ARG_IS_ARCHIVED) }
+    val conversationId: Long by lazy { arguments!!.getLong(ARG_CONVERSATION_ID) }
+    val title: String by lazy { arguments!!.getString(ARG_TITLE) }
+    val phoneNumbers: String by lazy { arguments!!.getString(ARG_PHONE_NUMBERS) }
+    val imageUri: String? by lazy { arguments!!.getString(ARG_IMAGE_URI) }
+    val color: Int by lazy { arguments!!.getInt(ARG_COLOR) }
+    val colorDark: Int by lazy { arguments!!.getInt(ARG_COLOR_DARKER) }
+    val colorAccent: Int by lazy { arguments!!.getInt(ARG_COLOR_ACCENT) }
+    val isMuted: Boolean by lazy { arguments!!.getBoolean(ARG_MUTE_CONVERSATION) }
+    val isRead: Boolean by lazy { arguments!!.getBoolean(ARG_READ) }
+    val isGroup: Boolean by lazy { arguments!!.getBoolean(ARG_IS_GROUP) }
+    val isArchived: Boolean by lazy { arguments!!.getBoolean(ARG_IS_ARCHIVED) }
 
-    val messageToOpen: Long by lazy { arguments.getLong(ARG_MESSAGE_TO_OPEN_ID) }
-    val limitMessages: Boolean by lazy { arguments.getBoolean(ARG_LIMIT_MESSAGES) }
+    val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID) }
+    val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) }
 
     companion object {
         val ARG_TITLE = "title"

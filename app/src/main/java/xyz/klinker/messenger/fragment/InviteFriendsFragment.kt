@@ -44,10 +44,10 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
     private val progress: ProgressBar by lazy { view!!.findViewById<View>(R.id.progress) as ProgressBar }
     private var phoneNumbers = mutableListOf<String>()
 
-    override fun onCreateView(inflater: LayoutInflater?, parent: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_invite_friends, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_invite_friends, parent, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         list.layoutManager = LinearLayoutManager(activity)
@@ -61,8 +61,8 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
     private fun loadContacts() {
         val handler = Handler()
         Thread {
-            val cursor = activity.contentResolver
-                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            val cursor = activity?.contentResolver
+                    ?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             arrayOf(ContactsContract.CommonDataKinds.Phone._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER), null, null,
                             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC")
 
@@ -130,7 +130,9 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
         }
 
         for (number in phoneNumbers) {
-            SendUtils().send(activity, getString(R.string.invite_friends_sms), number)
+            if (activity != null) {
+                SendUtils().send(activity!!, getString(R.string.invite_friends_sms), number)
+            }
         }
 
         activity?.onBackPressed()

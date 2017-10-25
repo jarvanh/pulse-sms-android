@@ -33,6 +33,8 @@ class MessageShareFragment : TabletOptimizedBottomSheetDialogFragment() {
         val copyText = contentView.findViewById<View>(R.id.copy_text)
 
         shareExternal.setOnClickListener {
+            val activity = activity ?: return@setOnClickListener
+
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.putExtra(Intent.EXTRA_TEXT, MessageMultiSelectDelegate.getMessageContent(message))

@@ -102,10 +102,10 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             }
         }
 
-    override fun onCreateView(inflater: LayoutInflater?, parent: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_schedule_messages, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_schedule_messages, parent, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list.layoutManager = LinearLayoutManager(fragmentActivity)
         fab.setOnClickListener { startSchedulingMessage() }
@@ -116,8 +116,8 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
         loadMessages()
 
-        if (arguments != null && arguments.getString(ARG_TITLE) != null &&
-                arguments.getString(ARG_PHONE_NUMBERS) != null) {
+        val arguments = arguments
+        if (arguments?.getString(ARG_TITLE) != null && arguments.getString(ARG_PHONE_NUMBERS) != null) {
             val message = ScheduledMessage()
             message.to = arguments.getString(ARG_PHONE_NUMBERS)
             message.title = arguments.getString(ARG_TITLE)

@@ -100,7 +100,7 @@ class ImageViewerActivity : AppCompatActivity() {
                 }
             }
         } else {
-            viewPager.setCurrentItem(viewPager.adapter.count - 1, false)
+            viewPager.setCurrentItem(viewPager.adapter?.count ?: 1 - 1, false)
         }
     }
 

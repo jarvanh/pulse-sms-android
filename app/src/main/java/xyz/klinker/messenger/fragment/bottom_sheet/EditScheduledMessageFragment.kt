@@ -101,6 +101,8 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     }
 
     private fun save() {
+        val activity = activity ?: return
+
         scheduledMessage!!.data = messageText!!.text.toString()
         DataSource.updateScheduledMessage(activity, scheduledMessage!!)
 
@@ -109,6 +111,8 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     }
 
     private fun delete() {
+        val activity = activity ?: return
+
         DataSource.deleteScheduledMessage(activity, scheduledMessage!!.id)
 
         dismiss()

@@ -33,7 +33,7 @@ class TvBrowseFragment : BrowseSupportFragment() {
         super.onStart()
 
         val adapter = ArrayObjectAdapter()
-        DataSource.getUnarchivedConversationsAsList(activity)
+        DataSource.getUnarchivedConversationsAsList(activity!!)
                 .forEach {
                     val customFragmentAdapter = ArrayObjectAdapter()
                     customFragmentAdapter.add(MessageInstanceManager.newInstance(it))

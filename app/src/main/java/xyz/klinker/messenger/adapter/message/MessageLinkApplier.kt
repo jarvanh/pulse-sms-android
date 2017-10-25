@@ -23,7 +23,7 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 @Suppress("DEPRECATION")
 class MessageLinkApplier(private val fragment: MessageListFragment, private val accentColor: Int, private val receivedColor: Int) {
     
-    private val activity: FragmentActivity by lazy { fragment.activity }
+    private val activity: FragmentActivity? by lazy { fragment.activity }
 
     fun apply(holder: MessageViewHolder, message: Message, backgroundColor: Int) {
         val linkColor = if (message.type == Message.TYPE_RECEIVED) {
@@ -69,7 +69,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
             val bottomSheet = LinkLongClickFragment()
             bottomSheet.setColors(receivedColor, accentColor)
             bottomSheet.setLink(link)
-            bottomSheet.show(activity.supportFragmentManager, "")
+            bottomSheet.show(activity?.supportFragmentManager, "")
         }
 
         urls.setOnClickListener { clickedText ->

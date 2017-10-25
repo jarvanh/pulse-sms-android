@@ -4,4 +4,4 @@ This release:<br/>
 - Allow attaching of a contact as plain text or vCard<br/>
 - Improvements to the contact search UI when composing a new message<br/>
 - Prep work for future features<br/>
-+ Lots of bug fixes
++ Lots of bug fixes and it is built for Android 8.1

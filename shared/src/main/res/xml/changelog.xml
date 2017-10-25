@@ -25,6 +25,7 @@
         <text>Improvements to the contact search UI when composing a new message</text>
         <text>Prep work for future features</text>
         <text>Lots of bug fixes</text>
+        <text>Build against Android 8.1</text>
     </version>
 
     <version

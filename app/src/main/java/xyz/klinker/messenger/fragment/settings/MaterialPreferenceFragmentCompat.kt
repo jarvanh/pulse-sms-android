@@ -9,7 +9,7 @@ import xyz.klinker.messenger.R
 @Suppress("DEPRECATION")
 abstract class MaterialPreferenceFragmentCompat : PreferenceFragmentCompat() {
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.setBackgroundColor(resources.getColor(R.color.drawerBackground))
     }

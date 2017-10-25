@@ -29,6 +29,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
     fun onConversationExpanded(viewHolder: ConversationViewHolder): Boolean {
         fragment.updateHelper.updateInfo = null
 
+        val activity = activity
         if (expandedConversation != null || activity == null) {
             return false
         }
@@ -36,20 +37,21 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         fragment.swipeHelper.dismissSnackbars()
 
         expandedConversation = viewHolder
-        AnimationUtils.expandActivityForConversation(activity!!)
+        AnimationUtils.expandActivityForConversation(activity)
 
-        if (fragment.arguments != null && fragment.arguments.containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
+        val args = fragment.arguments
+        if (args != null && args.containsKey(ARG_MESSAGE_TO_OPEN_ID)) {
             messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!,
-                    fragment.arguments.getLong(ARG_MESSAGE_TO_OPEN_ID))
-            fragment.arguments.remove(ARG_MESSAGE_TO_OPEN_ID)
+                    args.getLong(ARG_MESSAGE_TO_OPEN_ID))
+            args.remove(ARG_MESSAGE_TO_OPEN_ID)
         } else {
             messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!)
         }
 
         try {
-            activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.message_list_container, messageListFragment)
-                    ?.commit()
+            activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.message_list_container, messageListFragment)
+                    .commit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -62,7 +64,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
 
         fragment.recyclerManager.canScroll(false)
 
-        activity?.intent?.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
+        activity.intent?.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
         fragment.arguments?.putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
 
         return true
@@ -108,9 +110,10 @@ class MessageListManager(private val fragment: ConversationListFragment) {
     }
 
     fun tryOpeningFromArguments() {
-        if (fragment.arguments != null) {
-            val conversationToOpen = fragment.arguments.getLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
-            fragment.arguments.putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
+        val args = fragment.arguments
+        if (args != null) {
+            val conversationToOpen = args.getLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
+            args.putLong(ARG_CONVERSATION_TO_OPEN_ID, -1L)
 
             if (conversationToOpen != -1L) {
                 clickConversationWithId(conversationToOpen)

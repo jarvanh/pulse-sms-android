@@ -117,14 +117,14 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         return rootView!!
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updatedReceiver = MessageListUpdatedReceiver(this)
         fragmentActivity?.registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.intentFilter)
 
         if (extraMarginLeft != 0 || extraMarginTop != 0) {
-            val params = view!!.layoutParams as ViewGroup.MarginLayoutParams
+            val params = view.layoutParams as ViewGroup.MarginLayoutParams
             params.marginStart = extraMarginLeft
             view.invalidate()
         }
@@ -158,7 +158,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         draftManager.createDrafts()
         sendManager.sendOnFragmentDestroyed()

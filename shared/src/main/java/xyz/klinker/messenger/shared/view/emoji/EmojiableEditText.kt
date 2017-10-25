@@ -61,7 +61,7 @@ open class EmojiableEditText : AppCompatEditText {
         return if (useEmojiCompat) {
             val inputConnection = super.onCreateInputConnection(outAttrs)
             try {
-                emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)
+                emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)!!
             } catch (e: Exception) {
                 e.printStackTrace()
                 inputConnection

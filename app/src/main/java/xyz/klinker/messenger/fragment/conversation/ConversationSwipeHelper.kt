@@ -68,7 +68,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         SnackbarAnimationFix.apply(deleteSnackbar!!)
         deleteSnackbar?.show()
 
-        NotificationManagerCompat.from(activity).cancel(conversation.id.toInt())
+        NotificationManagerCompat.from(activity!!).cancel(conversation.id.toInt())
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
@@ -91,7 +91,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         SnackbarAnimationFix.apply(archiveSnackbar!!)
         archiveSnackbar?.show()
 
-        NotificationManagerCompat.from(activity).cancel(conversation.id.toInt())
+        NotificationManagerCompat.from(activity!!).cancel(conversation.id.toInt())
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed

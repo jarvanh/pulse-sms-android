@@ -22,7 +22,7 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
     fun dismissNotification() {
         try {
             if (dismissNotification && notificationActive()) {
-                NotificationManagerCompat.from(activity)
+                NotificationManagerCompat.from(activity!!)
                         .cancel(argManager.conversationId.toInt())
 
                 ApiUtils.dismissNotification(Account.accountId,
@@ -39,7 +39,7 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
 
     fun dismissOnMessageSent() {
         if (notificationActive()) {
-            NotificationManagerCompat.from(activity).cancel(argManager.conversationId.toInt())
+            NotificationManagerCompat.from(activity!!).cancel(argManager.conversationId.toInt())
             NotificationUtils.cancelGroupedNotificationWithNoContent(activity)
         }
     }

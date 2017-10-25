@@ -53,10 +53,10 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
     private var adapter: BlacklistAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, parent: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_blacklist, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_blacklist, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         list.layoutManager = LinearLayoutManager(fragmentActivity!!)
@@ -68,8 +68,8 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
         loadBlacklists()
 
-        if (arguments.containsKey(ARG_PHONE_NUMBER)) {
-            addBlacklist(arguments.getString(ARG_PHONE_NUMBER))
+        if (arguments != null && arguments!!.containsKey(ARG_PHONE_NUMBER)) {
+            addBlacklist(arguments!!.getString(ARG_PHONE_NUMBER))
         }
     }
 
