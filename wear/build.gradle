@@ -118,17 +118,4 @@ dependencies {
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            details.useVersion ANDROID_SUPPORT_VERSION
-        } else if (requested.group == 'com.google.firebase') {
-            details.useVersion FIREBASE_VERSION
-        } else if (requested.group == 'com.github.bumptech.glide') {
-            details.useVersion GLIDE_VERSION
-        }
-    }
-}
-
 apply plugin: 'com.google.gms.google-services'
