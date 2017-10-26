@@ -169,8 +169,11 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
             val label = if (holder.timestamp.layoutParams.height > 0)
                 R.string.message_from_bullet else R.string.message_from
-            holder.contact?.text = holder.itemView.resources.getString(label, message.from)
-            itemBinder.setVisible(holder.contact)
+
+            if (!MimeType.isExpandedMedia(message.mimeType)) {
+                holder.contact?.text = holder.itemView.resources.getString(label, message.from)
+                itemBinder.setVisible(holder.contact)
+            }
         }
     }
 
