@@ -102,6 +102,7 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         abortOnError true
         disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
                 'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
