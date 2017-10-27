@@ -320,14 +320,12 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 loadMessages = true
             }
 
-            if (fragment is MessageListFragment) {
-                if (loadMessages) {
-                    fragment.loadMessages(true)
-                }
-
-                AudioWrapper(activity, R.raw.message_ping).play()
-                fragment.notificationManager.dismissOnMessageSent()
+            if (loadMessages) {
+                this.fragment.loadMessages(true)
             }
+
+            AudioWrapper(activity, R.raw.message_ping).play()
+            this.fragment.notificationManager.dismissOnMessageSent()
         }
     }
 }
