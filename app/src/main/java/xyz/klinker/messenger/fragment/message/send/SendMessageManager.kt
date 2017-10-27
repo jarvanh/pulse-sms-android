@@ -24,6 +24,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
+import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.*
 import java.util.ArrayList
@@ -217,18 +218,17 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     }
 
     private fun sendMessage(uris: List<Uri>, forceNoSignature: Boolean) {
-        if (activity == null) {
-            return
-        }
+        val activity = activity ?: return
 
+        NewMessagesCheckService.writeLastRun(activity)
         changeDelayedSendingComponents(false)
 
         val message = messageEntry.text.toString().trim { it <= ' ' }
         val mimeType = if (attachManager.attachedMimeType != null)
             attachManager.attachedMimeType else MimeType.TEXT_PLAIN
 
-        if ((message.isNotEmpty() || uris.isNotEmpty()) && activity != null) {
-            val conversation = DataSource.getConversation(activity!!, argManager.conversationId)
+        if ((message.isNotEmpty() || uris.isNotEmpty())) {
+            val conversation = DataSource.getConversation(activity, argManager.conversationId)
 
             val m = Message()
             m.conversationId = argManager.conversationId
@@ -247,28 +247,26 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
 
             if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
-                DataSource.deleteMessage(activity!!, messageLoader.adapter!!.getItemId(0))
+                DataSource.deleteMessage(activity, messageLoader.adapter!!.getItemId(0))
             }
 
             attachManager.clearAttachedData()
             attachManager.selectedImageUris.clear()
             selectedImageCount.visibility = View.GONE
             
-            DataSource.deleteDrafts(activity!!, argManager.conversationId)
+            DataSource.deleteDrafts(activity, argManager.conversationId)
             messageEntry.text = null
 
-            if (activity != null) {
-                val fragment = activity!!.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
+            val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
 
-                if (fragment != null && fragment is ConversationListFragment) {
-                    fragment.notifyOfSentMessage(m)
-                }
+            if (fragment != null && fragment is ConversationListFragment) {
+                fragment.notifyOfSentMessage(m)
             }
 
             var loadMessages = false
 
             if (message.isNotEmpty()) {
-                DataSource.insertMessage(activity!!, m, m.conversationId)
+                DataSource.insertMessage(activity, m, m.conversationId)
                 loadMessages = true
             }
 
@@ -280,7 +278,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                     m.id = 0
                 }
 
-                m.id = DataSource.insertMessage(activity!!, m, m.conversationId, true)
+                m.id = DataSource.insertMessage(activity, m, m.conversationId, true)
 
                 loadMessages = true
             }
@@ -288,12 +286,12 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             Thread {
                 val imageUri = SendUtils(conversation?.simSubscriptionId)
                         .setForceNoSignature(forceNoSignature)
-                        .send(activity!!, message, argManager.phoneNumbers,
+                        .send(activity, message, argManager.phoneNumbers,
                                 if (uris.isNotEmpty()) uris[0] else null, mimeType)
                 MarkAsSentJob.scheduleNextRun(activity, m.id)
 
-                if (imageUri != null && activity != null) {
-                    DataSource.updateMessageData(activity!!, m.id, imageUri.toString())
+                if (imageUri != null) {
+                    DataSource.updateMessageData(activity, m.id, imageUri.toString())
                 }
             }.start()
 
@@ -304,17 +302,17 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                     m.mimeType = mimeType
                     m.id = 0
 
-                    val newId = DataSource.insertMessage(activity!!, m, m.conversationId, true)
+                    val newId = DataSource.insertMessage(activity, m, m.conversationId, true)
 
                     Thread {
                         val imageUri = SendUtils(conversation?.simSubscriptionId)
                                 .setForceNoSignature(forceNoSignature)
-                                .send(activity!!, message, argManager.phoneNumbers,
+                                .send(activity, message, argManager.phoneNumbers,
                                         sendUri, mimeType)
                         MarkAsSentJob.scheduleNextRun(activity, newId)
 
-                        if (imageUri != null && activity != null) {
-                            DataSource.updateMessageData(activity!!, newId, imageUri.toString())
+                        if (imageUri != null) {
+                            DataSource.updateMessageData(activity, newId, imageUri.toString())
                         }
                     }.start()
                 }
@@ -322,12 +320,14 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 loadMessages = true
             }
 
-            if (loadMessages) {
-                fragment.loadMessages(true)
-            }
+            if (fragment is MessageListFragment) {
+                if (loadMessages) {
+                    fragment.loadMessages(true)
+                }
 
-            AudioWrapper(activity!!, R.raw.message_ping).play()
-            fragment.notificationManager.dismissOnMessageSent()
+                AudioWrapper(activity, R.raw.message_ping).play()
+                fragment.notificationManager.dismissOnMessageSent()
+            }
         }
     }
 }
