@@ -13,7 +13,6 @@ class MaterialPreferenceCategory : PreferenceCategory {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context) : super(context)
 
-
     init {
         layoutResource = R.layout.preference_category_card
     }
