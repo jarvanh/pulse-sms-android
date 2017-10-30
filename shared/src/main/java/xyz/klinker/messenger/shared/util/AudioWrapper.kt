@@ -34,17 +34,17 @@ class AudioWrapper {
             val conversation = source.getConversation(context, conversationId)
 
             val tone: Uri?
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            tone = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 val channel = manager.getNotificationChannel(conversationId.toString() + "")
 
                 if (channel != null) {
-                    tone = channel.sound
+                    channel.sound
                 } else {
-                    tone = NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
+                    NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
                 }
             } else {
-                tone = NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
+                NotificationRingtoneProvider(context).getRingtone(conversation!!.ringtoneUri)
             }
 
             if (tone != null) {
@@ -66,10 +66,13 @@ class AudioWrapper {
             return
         }
 
-        mediaPlayer = MediaPlayer.create(context, resourceId, AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
-                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                .build(), 1)
+       try {
+           mediaPlayer = MediaPlayer.create(context, resourceId, AudioAttributes.Builder()
+                   .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                   .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                   .build(), 1)
+       } catch (ex: Exception) {
+       }
     }
 
     fun play() {

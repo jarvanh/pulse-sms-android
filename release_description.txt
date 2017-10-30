@@ -1,7 +1,7 @@
 This release:<br/>
 - New compose UI that allows you to search the contact groups defined in your contacts app<br/>
 - UI improvements for images and links<br/>
-- Allow attaching of a contact as plain text or vCard<br/>
+- Allow attaching contact as plain text or vCard<br/>
 - Improvements to the contact search UI when composing a new message<br/>
 - Prep work for future features<br/>
 + Lots of bug fixes and it is built for Android 8.1
