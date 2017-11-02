@@ -35,7 +35,7 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
     override fun getPages(): List<TutorialPage> {
         return listOf(object : TutorialPage(this@RateItDialog) {
             override fun initPage() {
-                setContentView(R.layout.tutorial_page_rate_it)
+                setContentView(R.layout.page_rate_it)
                 setNextButtonText(R.string.rate_it)
 
 

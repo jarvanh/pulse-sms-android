@@ -36,6 +36,8 @@ object ActivityUtils {
             "xyz.klinker.messenger" + ".activity.MessengerActivity")
     val COMPOSE_ACTIVITY = ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.compose.ComposeActivity")
+    val QUICK_SHARE_ACTIVITY = ComponentName("xyz.klinker.messenger",
+            "xyz.klinker.messenger" + ".activity.share.QuickShareActivity")
     val NOTIFICATION_REPLY = ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.notification.MarshmallowReplyActivity")
 

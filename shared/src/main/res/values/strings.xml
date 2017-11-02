@@ -470,6 +470,7 @@
     <string name="contact_card">Contact Card</string>
     <string name="conversation_with">Conversation with %1$s</string>
     <string name="send">Send</string>
+    <string name="quick_share">Quick Share</string>
 
     <!-- Other -->
     <string name="updating_database">Finding latest messages…</string>

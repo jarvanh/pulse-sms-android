@@ -164,6 +164,27 @@
         </activity>
 
         <activity
+            android:name=".activity.share.QuickShareActivity"
+            android:label="@string/quick_share"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/tutorial_FloatingTutorialTheme" >
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.SEND" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+                <!--<data android:mimeType="text/plain" />-->
+                <!--<data android:mimeType="text/vcard" />-->
+                <!--<data android:mimeType="text/x-vcard" />-->
+                <!--<data android:mimeType="image/*" />-->
+                <!--<data android:mimeType="audio/*" />-->
+                <!--<data android:mimeType="video/*" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+
+        <activity
             android:name=".activity.AccountPurchaseActivity"
             android:theme="@style/api_Theme.AppCompat.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"

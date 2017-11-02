@@ -5,6 +5,7 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.support.annotation.RequiresApi
+import xyz.klinker.messenger.shared.data.FeatureFlags
 
 import xyz.klinker.messenger.shared.util.ActivityUtils
 
@@ -13,7 +14,8 @@ class ComposeTileService : TileService() {
 
     override fun onClick() {
         try {
-            val compose = ActivityUtils.buildForComponent(ActivityUtils.COMPOSE_ACTIVITY)
+            val compose = ActivityUtils.buildForComponent(if (FeatureFlags.QUICK_COMPOSE)
+                ActivityUtils.QUICK_SHARE_ACTIVITY else ActivityUtils.COMPOSE_ACTIVITY)
             startActivityAndCollapse(compose)
         } catch (e: Exception) {
             e.printStackTrace()

@@ -15,6 +15,11 @@
             android:action="android.intent.action.VIEW"
             android:targetClass="xyz.klinker.messenger.activity.compose.ComposeActivity" />
 
+        <!--<intent-->
+            <!--android:targetPackage="xyz.klinker.messenger"-->
+            <!--android:action="android.intent.action.VIEW"-->
+            <!--android:targetClass="xyz.klinker.messenger.activity.share.QuickShareActivity" />-->
+
         <categories android:name="android.shortcut.conversation" />
 
     </shortcut>
