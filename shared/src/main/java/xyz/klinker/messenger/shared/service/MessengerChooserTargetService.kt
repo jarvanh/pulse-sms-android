@@ -71,12 +71,8 @@ class MessengerChooserTargetService : ChooserTargetService() {
         }
 
         val targetExtras = Bundle()
-        targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(
-                cursor.getColumnIndex(Conversation.COLUMN_ID)))
-
-        return ChooserTarget(conversation.title, targetIcon, 1.0f,
-                componentName, targetExtras)
-
+        targetExtras.putLong(EXTRA_CONVO_ID, cursor.getLong(cursor.getColumnIndex(Conversation.COLUMN_ID)))
+        return ChooserTarget(conversation.title, targetIcon, 1.0f, componentName, targetExtras)
     }
 
     companion object {

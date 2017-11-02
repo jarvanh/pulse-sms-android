@@ -26,7 +26,6 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
-import xyz.klinker.messenger.shared.util.NotificationServiceHelper
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import java.util.*
 
@@ -64,8 +63,7 @@ class NotificationService : IntentService("NotificationService") {
                     summaryNotifier.giveSummaryNotification(conversations, rows)
                 }
 
-                val helper = NotificationServiceHelper
-                val numberToNotify = helper.calculateNumberOfNotificationsToProvide(this, conversations)
+                val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(this, conversations)
                 for (i in 0 until numberToNotify) {
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)

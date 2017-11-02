@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.shared.util
+package xyz.klinker.messenger.shared.service.notification
 
 import android.annotation.TargetApi
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 /**
  * When creating notifications, a single new conversation will never get the group message key on it.
@@ -46,13 +44,11 @@ import xyz.klinker.messenger.shared.service.notification.NotificationService
 object NotificationServiceHelper {
 
     fun calculateNumberOfNotificationsToProvide(context: Context, conversations: List<NotificationConversation>): Int {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            return conversations.size
-        } else if (conversations.size == 2) {
-            // add one to the number of active notifications, for the new one that has yet to be notified
-            return calculateBasedOnActiveNotifications(context) + 1
-        } else {
-            return 1
+        return when {
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.N -> conversations.size
+            conversations.size == 2 -> // add one to the number of active notifications, for the new one that has yet to be notified
+                calculateBasedOnActiveNotifications(context) + 1
+            else -> 1
         }
     }
 

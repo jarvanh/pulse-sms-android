@@ -124,7 +124,6 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 e.printStackTrace()
                 tempData
             }
-
         }
 
         if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {

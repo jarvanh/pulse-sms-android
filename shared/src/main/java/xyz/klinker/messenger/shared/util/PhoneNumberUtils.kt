@@ -188,7 +188,7 @@ object PhoneNumberUtils {
      * Parses a list of addresses coming from a URI string such as sms: or smsto:.
      */
     fun parseAddress(uriAddress: String): Array<String> {
-        val number = clearFormatting(uriAddress) ?: return emptyArray()
+        val number = clearFormatting(uriAddress)
         return number.replace("sms:", "")
                 .replace("smsto:", "")
                 .replace("mms:", "")
