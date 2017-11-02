@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,40 +15,47 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/top_text"
+    <xyz.klinker.messenger.shared.view.MaxHeightScrollView
+        android:id="@+id/top_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:text="@string/rate_it_title"
-        android:textColor="@android:color/white"
+        android:layout_gravity="bottom|start"
         android:background="@color/colorPrimary"
-        android:textSize="19sp" />
+        android:padding="12dp"
+        app:max_height="220dp">
 
-    <TextView
-        android:id="@+id/bottom_text_1"
+        <com.android.ex.chips.RecipientEditTextView
+            android:id="@+id/contact_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/enter_contact_name"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/toolbarEditTextHint" />
+
+    </xyz.klinker.messenger.shared.view.MaxHeightScrollView>
+
+    <xyz.klinker.messenger.shared.view.emoji.EmojiableEditText
+        android:id="@+id/message_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="20dp"
-        android:text="@string/rate_it_summary"
-        android:textColor="@color/tutorial_light_background_indicator"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/bottom_text_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="12dp"
-        android:text="@string/rate_it_not_ready"
-        android:textColor="@color/tutorial_light_background_indicator"
-        android:textSize="16sp" />
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:textSize="15sp"
+        android:hint="@string/type_message"
+        android:background="@android:color/transparent"
+        android:gravity="start"
+        android:lines="4"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/secondaryText" />
 
 </LinearLayout>

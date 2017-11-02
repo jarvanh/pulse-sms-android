@@ -168,7 +168,8 @@
             android:label="@string/quick_share"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:theme="@style/tutorial_FloatingTutorialTheme" >
+            android:theme="@style/tutorial_FloatingTutorialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
 
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.SEND" />-->
