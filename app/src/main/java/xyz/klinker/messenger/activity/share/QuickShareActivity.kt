@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.activity.share
 
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -29,6 +30,11 @@ class QuickSharePage(activity: FloatingTutorialActivity) : TutorialPage(activity
     override fun initPage() {
         setContentView(R.layout.page_quick_share)
         setNextButtonText(R.string.send)
+        setBackgroundColorResource(R.color.background)
+
+        if (Settings.isCurrentlyDarkTheme) {
+            Handler().post { setProgressIndicatorColorResource(R.color.tutorial_dark_background_indicator) }
+        }
 
         findViewById<View>(R.id.top_background).setBackgroundColor(Settings.mainColorSet.color)
         ColorUtils.setCursorDrawableColor(messageEntry, Settings.mainColorSet.colorAccent)
