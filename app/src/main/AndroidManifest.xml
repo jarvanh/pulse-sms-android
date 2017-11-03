@@ -183,6 +183,10 @@
                 <!--<data android:mimeType="video/*" />-->
             <!--</intent-filter>-->
 
+            <!--<meta-data-->
+                <!--android:name="android.service.chooser.chooser_target_service"-->
+                <!--android:value=".shared.service.MessengerChooserTargetService" />-->
+
         </activity>
 
         <activity

@@ -1683,7 +1683,7 @@ object DataSource {
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
      * @return the conversation id that the message was inserted into.
      */
-    @JvmOverloads fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long {
+    fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long {
         return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), false, useApi)
     }
 
@@ -1748,7 +1748,7 @@ object DataSource {
      * @param message      the message to use to initialize a conversation if needed.
      * @return the conversation id to use.
      */
-    @JvmOverloads private fun updateOrCreateConversation(phoneNumbers: String, message: Message, context: Context, useApi: Boolean = true): Long {
+    private fun updateOrCreateConversation(phoneNumbers: String, message: Message, context: Context, useApi: Boolean = true): Long {
         val phoneNumbers = SmsMmsUtils.stripDuplicatePhoneNumbers(when {
             phoneNumbers.endsWith(", ") -> phoneNumbers.substring(0, phoneNumbers.length - 2)
             phoneNumbers.endsWith(",") -> phoneNumbers.substring(0, phoneNumbers.length - 1)
@@ -1816,39 +1816,6 @@ object DataSource {
             conversationId = insertConversation(context, conversation, useApi)
         }
 
-        return conversationId
-    }
-
-    /**
-     * Gets a current conversation id if one exists for the phone number, or inserts a new
-     * conversation and returns that id if one does not exist.
-     *
-     * @param conversation the conversation with the parameters we are looking for
-     * @return the conversation id to use.
-     */
-    @JvmOverloads private fun updateOrCreateConversation(context: Context, conversation: Conversation, useApi: Boolean = true): Long {
-        val cursor = try {
-            database(context).query(Conversation.TABLE,
-                    arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=?", arrayOf(conversation.idMatcher), null, null, null)
-        } catch (e: Exception) {
-            ensureActionable(context)
-            database(context).query(Conversation.TABLE,
-                    arrayOf(Conversation.COLUMN_ID, Conversation.COLUMN_ID_MATCHER),
-                    Conversation.COLUMN_ID_MATCHER + "=?", arrayOf(conversation.idMatcher), null, null, null)
-        }
-
-        val conversationId: Long
-
-        if (cursor.moveToFirst()) {
-            conversationId = cursor.getLong(0)
-            updateConversation(context, conversationId, conversation.read, conversation.timestamp,
-                    conversation.snippet, MimeType.TEXT_PLAIN, false, useApi)
-        } else {
-            conversationId = insertConversation(context, conversation, useApi)
-        }
-
-        cursor.closeSilent()
         return conversationId
     }
 

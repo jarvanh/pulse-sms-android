@@ -1,31 +1,26 @@
 package xyz.klinker.messenger.activity.share
 
+import android.os.Bundle
 import android.os.Handler
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.MultiAutoCompleteTextView
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
 import xyz.klinker.android.floating_tutorial.FloatingTutorialActivity
-import xyz.klinker.android.floating_tutorial.TutorialFinishedListener
 import xyz.klinker.android.floating_tutorial.TutorialPage
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 
-class QuickShareActivity : FloatingTutorialActivity(), TutorialFinishedListener {
+class QuickShareActivity : FloatingTutorialActivity() {
     override fun getPages(): List<TutorialPage> = listOf(QuickSharePage(this))
-    override fun onTutorialFinished() {
-
-    }
 }
 
-class QuickSharePage(activity: FloatingTutorialActivity) : TutorialPage(activity) {
+class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) {
 
-    private val contactEntry: RecipientEditTextView by lazy { findViewById<RecipientEditTextView>(R.id.contact_entry) }
-    private val messageEntry: EditText by lazy { findViewById<EditText>(R.id.message_entry) }
+    val contactEntry: RecipientEditTextView by lazy { findViewById<RecipientEditTextView>(R.id.contact_entry) }
+    val messageEntry: EditText by lazy { findViewById<EditText>(R.id.message_entry) }
 
     override fun initPage() {
         setContentView(R.layout.page_quick_share)
@@ -39,6 +34,13 @@ class QuickSharePage(activity: FloatingTutorialActivity) : TutorialPage(activity
         findViewById<View>(R.id.top_background).setBackgroundColor(Settings.mainColorSet.color)
         ColorUtils.setCursorDrawableColor(messageEntry, Settings.mainColorSet.colorAccent)
         prepareContactEntry()
+
+        findViewById<View>(R.id.tutorial_next_button).setOnClickListener {
+            if (contactEntry.recipients.isNotEmpty() && messageEntry.text.isNotEmpty()) {
+                ShareSender(this).sendMessage()
+                activity.finishAnimated()
+            }
+        }
     }
 
     private fun prepareContactEntry() {
