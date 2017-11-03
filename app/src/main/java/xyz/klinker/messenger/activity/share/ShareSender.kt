@@ -28,7 +28,7 @@ class ShareSender(private val page: QuickSharePage) {
             //MarkAsSentJob.scheduleNextRun(page.context, messageId)
         }.start()
 
-        ConversationListUpdatedReceiver.sendBroadcast(page.context, conversationId, page.context.getString(R.string.you) + ": " + message, true)
+        ConversationListUpdatedReceiver.sendBroadcast(page.context, conversationId, page.context.getString(R.string.you) + ": " + message.data, true)
         MessageListUpdatedReceiver.sendBroadcast(page.context, conversationId)
         MessengerAppWidgetProvider.refreshWidget(page.context)
     }

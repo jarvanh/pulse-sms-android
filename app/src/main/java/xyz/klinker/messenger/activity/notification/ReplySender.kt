@@ -50,7 +50,7 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
 
         sendButton.isEnabled = false
         sendButton.alpha = .5f
-        sendButton.setOnClickListener({
+        sendButton.setOnClickListener {
             sendButton.isEnabled = false
 
             hideKeyboard()
@@ -60,7 +60,7 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
             animator.alphaIn(progressBar, 200, 100)
 
             sendButton.postDelayed({ activity.onBackPressed() }, 1000)
-        })
+        }
 
         KeyboardLayoutHelper.applyLayout(messageInput)
         messageInput.hint = activity.getString(R.string.type_message)

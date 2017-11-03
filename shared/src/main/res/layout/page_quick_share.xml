@@ -44,21 +44,29 @@
 
     </xyz.klinker.messenger.shared.view.MaxHeightScrollView>
 
-    <xyz.klinker.messenger.shared.view.emoji.EmojiableEditText
+    <xyz.klinker.messenger.view.ImageKeyboardEditText
         android:id="@+id/message_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/transparent"
         android:gravity="start"
         android:hint="@string/type_message"
-        android:imeOptions="flagNoExtractUi"
+        android:imeOptions="flagNoExtractUi|actionSend"
         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-        android:lines="4"
+        android:maxLines="@integer/message_list_fragment_line_entry_count"
+        android:scrollHorizontally="false"
         android:textColor="@color/primaryText"
         android:textColorHint="@color/secondaryText"
         android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/attached_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" />
 
 </LinearLayout>
