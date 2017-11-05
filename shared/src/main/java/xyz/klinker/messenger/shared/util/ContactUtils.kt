@@ -103,55 +103,60 @@ object ContactUtils {
     }
 
     fun queryContactGroups(context: Context): List<Conversation> {
-        var cursor = context.contentResolver.query(ContactsContract.Groups.CONTENT_URI,
-                arrayOf(ContactsContract.Groups._ID, ContactsContract.Groups.TITLE), null, null, null)
+        try {
+            var cursor = context.contentResolver.query(ContactsContract.Groups.CONTENT_URI,
+                    arrayOf(ContactsContract.Groups._ID, ContactsContract.Groups.TITLE), null, null, null)
 
-        if (cursor != null && cursor.moveToFirst()) {
-            val conversations = ArrayList<Conversation>()
+            if (cursor != null && cursor.moveToFirst()) {
+                val conversations = ArrayList<Conversation>()
 
-            do {
-                val conversation = Conversation()
-                conversation.fillFromContactGroupCursor(context, cursor)
-                conversations.add(conversation)
-            } while (cursor.moveToNext())
+                do {
+                    val conversation = Conversation()
+                    conversation.fillFromContactGroupCursor(context, cursor)
+                    conversations.add(conversation)
+                } while (cursor.moveToNext())
 
-            cursor.closeSilent()
+                cursor.closeSilent()
 
-            var i = 0
-            while (i < conversations.size) {
-                cursor = context.contentResolver.query(ContactsContract.Data.CONTENT_URI,
-                        arrayOf(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID),
-                        ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "=?",
-                        arrayOf(conversations[i].id.toString() + ""), null)
+                var i = 0
+                while (i < conversations.size) {
+                    cursor = context.contentResolver.query(ContactsContract.Data.CONTENT_URI,
+                            arrayOf(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID),
+                            ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "=?",
+                            arrayOf(conversations[i].id.toString() + ""), null)
 
-                if (cursor != null && cursor.moveToFirst() && cursor.count < 150) {
-                    var phoneNumbers = ""
+                    if (cursor != null && cursor.moveToFirst() && cursor.count < 150) {
+                        var phoneNumbers = ""
 
-                    do {
-                        val num = ContactUtils.findPhoneNumberByContactId(context,
-                                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID)))
-                        if (num != null) phoneNumbers += num + ", "
-                    } while (cursor.moveToNext())
+                        do {
+                            val num = ContactUtils.findPhoneNumberByContactId(context,
+                                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID)))
+                            if (num != null) phoneNumbers += num + ", "
+                        } while (cursor.moveToNext())
 
-                    if (phoneNumbers.isNotEmpty()) {
-                        conversations[i].phoneNumbers = phoneNumbers.substring(0, phoneNumbers.length - 2)
+                        if (phoneNumbers.isNotEmpty()) {
+                            conversations[i].phoneNumbers = phoneNumbers.substring(0, phoneNumbers.length - 2)
+                        } else {
+                            conversations.removeAt(i)
+                            i--
+                        }
                     } else {
                         conversations.removeAt(i)
                         i--
                     }
-                } else {
-                    conversations.removeAt(i)
-                    i--
+
+                    cursor.closeSilent()
+                    i++
                 }
 
-                cursor.closeSilent()
-                i++
+                return conversations
             }
 
-            return conversations
+            cursor.closeSilent()
+        } catch (e: SecurityException) {
+
         }
 
-        cursor.closeSilent()
         return ArrayList()
     }
 

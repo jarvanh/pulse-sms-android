@@ -417,17 +417,18 @@ object ColorUtils {
 
     fun animateToolbarColor(activity: Activity, originalColor: Int, newColor: Int) {
         val drawable = ColorDrawable(originalColor)
-        val actionBar: ActionBar?
-        val toolbar: Toolbar?
+        var actionBar: ActionBar? = null
+        var toolbar: Toolbar? = null
 
-        if (activity is AbstractSettingsActivity) {
-            toolbar = activity.toolbar
-            toolbar!!.setBackgroundColor(originalColor)
-            actionBar = null
-        } else {
-            toolbar = null
-            actionBar = (activity as AppCompatActivity).supportActionBar
-            actionBar!!.setBackgroundDrawable(drawable)
+        try {
+            if (activity is AbstractSettingsActivity) {
+                toolbar = activity.toolbar
+                toolbar!!.setBackgroundColor(originalColor)
+            } else {
+                actionBar = (activity as AppCompatActivity).supportActionBar
+                actionBar!!.setBackgroundDrawable(drawable)
+            }
+        } catch (e: Exception) {
         }
 
         val animator = ValueAnimator.ofArgb(originalColor, newColor)
@@ -435,12 +436,13 @@ object ColorUtils {
         animator.addUpdateListener { valueAnimator ->
             val color = valueAnimator.animatedValue as Int
             if (toolbar != null) {
-                toolbar.setBackgroundColor(color)
+                toolbar?.setBackgroundColor(color)
             } else {
                 drawable.color = color
-                actionBar!!.setBackgroundDrawable(drawable)
+                actionBar?.setBackgroundDrawable(drawable)
             }
         }
+
         animator.start()
     }
 

@@ -164,7 +164,12 @@ class MainNavigationController(private val activity: MessengerActivity)
         else -> false
     }
 
-    fun onNavigationItemSelected(itemId: Int) { onNavigationItemSelected(navigationView.menu.findItem(itemId)) }
+    fun onNavigationItemSelected(itemId: Int) {
+        val item = navigationView.menu.findItem(itemId)
+        if (item != null) {
+            onNavigationItemSelected(item)
+        }
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         closeDrawer()
 

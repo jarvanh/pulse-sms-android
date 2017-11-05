@@ -69,36 +69,39 @@ class ConversationAdapterDataProvider(private val adapter: ConversationListAdapt
         var headersAbove = 1
         var currentTotal = 0
 
-        for (type in sectionCounts) {
-            currentTotal += type.count + 1 // +1 for the header above the section
+        try {
+            for (type in sectionCounts) {
+                currentTotal += type.count + 1 // +1 for the header above the section
 
-            if (position < currentTotal) {
-                position -= headersAbove
+                if (position < currentTotal) {
+                    position -= headersAbove
 
-                val section = sectionCounts[headersAbove - 1]
-                section.count = section.count - 1
+                    val section = sectionCounts[headersAbove - 1]
+                    section.count = section.count - 1
 
-                sectionCounts[headersAbove - 1] = section
-                val deletedConversation = conversations.removeAt(position)
+                    sectionCounts[headersAbove - 1] = section
+                    val deletedConversation = conversations.removeAt(position)
 
-                if (section.count == 0) {
-                    sectionCounts.removeAt(headersAbove - 1)
-                    adapter.notifyItemRangeRemoved(originalPosition - 1, 2)
-                    removedHeader = true
+                    if (section.count == 0) {
+                        sectionCounts.removeAt(headersAbove - 1)
+                        adapter.notifyItemRangeRemoved(originalPosition - 1, 2)
+                        removedHeader = true
+                    } else {
+                        adapter.notifyItemRemoved(originalPosition)
+                    }
+
+                    if (reorderType === ReorderType.DELETE) {
+                        adapter.swipeToDeleteListener.onSwipeToDelete(deletedConversation)
+                    } else if (reorderType === ReorderType.ARCHIVE) {
+                        adapter.swipeToDeleteListener.onSwipeToArchive(deletedConversation)
+                    }
+
+                    break
                 } else {
-                    adapter.notifyItemRemoved(originalPosition)
+                    headersAbove++
                 }
-
-                if (reorderType === ReorderType.DELETE) {
-                    adapter.swipeToDeleteListener.onSwipeToDelete(deletedConversation)
-                } else if (reorderType === ReorderType.ARCHIVE) {
-                    adapter.swipeToDeleteListener.onSwipeToArchive(deletedConversation)
-                }
-
-                break
-            } else {
-                headersAbove++
             }
+        } catch (e: ArrayIndexOutOfBoundsException) {
         }
 
         return removedHeader

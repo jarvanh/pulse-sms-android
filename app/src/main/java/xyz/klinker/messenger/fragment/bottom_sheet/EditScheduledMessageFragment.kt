@@ -103,11 +103,15 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     private fun save() {
         val activity = activity ?: return
 
+        if (scheduledMessage == null || messageText == null) {
+            return
+        }
+
         scheduledMessage!!.data = messageText!!.text.toString()
         DataSource.updateScheduledMessage(activity, scheduledMessage!!)
 
         dismiss()
-        fragment!!.loadMessages()
+        fragment?.loadMessages()
     }
 
     private fun delete() {
@@ -116,7 +120,7 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         DataSource.deleteScheduledMessage(activity, scheduledMessage!!.id)
 
         dismiss()
-        fragment!!.loadMessages()
+        fragment?.loadMessages()
     }
 
     private fun displayDateDialog() {

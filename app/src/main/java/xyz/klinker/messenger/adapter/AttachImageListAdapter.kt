@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder
+import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener
 import java.io.File
 
@@ -68,7 +69,9 @@ class AttachImageListAdapter(private val images: Cursor, private val callback: I
             val uri = Uri.fromFile(file)
 
             holder.image.setOnClickListener {
-                callback?.onImageSelected(holder.uri!!, holder.mimeType!!)
+                if (holder.uri != null) {
+                    callback?.onImageSelected(holder.uri!!, holder.mimeType ?: MimeType.IMAGE_JPG)
+                }
 
                 if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE) {
                     holder.selectedCheckmarkLayout.visibility = View.VISIBLE

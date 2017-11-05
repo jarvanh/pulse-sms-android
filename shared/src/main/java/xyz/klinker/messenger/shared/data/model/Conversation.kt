@@ -114,7 +114,7 @@ class Conversation : DatabaseTable {
                 this.id = cursor.getLong(i)
             } else if (column == ContactsContract.Groups.TITLE) {
                 this.title = cursor.getString(i)
-                if (title!!.contains("Group:")) {
+                if (title != null && title!!.contains("Group:")) {
                     title = title!!.substring(title!!.indexOf("Group:") + "Group:".length).trim { it <= ' ' }
                 }
             }

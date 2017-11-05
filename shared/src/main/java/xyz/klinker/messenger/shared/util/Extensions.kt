@@ -6,9 +6,9 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
-fun Cursor.closeSilent() {
+fun Cursor?.closeSilent() {
     try {
-        this.close()
+        this?.close()
     } catch (e: Exception) { }
 }
 

@@ -27,9 +27,11 @@ class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
             fragment.messageListManager.expandedConversation?.summary?.text = m.data
         }
 
-        updateInfo = ConversationUpdateInfo(
-                fragment.messageListManager.expandedConversation!!.conversation!!.id,
-                fragment.getString(R.string.you) + ": " + m.data, true)
+        if (fragment.messageListManager.expandedConversation != null && fragment.messageListManager.expandedConversation!!.conversation != null) {
+            updateInfo = ConversationUpdateInfo(
+                    fragment.messageListManager.expandedConversation!!.conversation!!.id,
+                    fragment.getString(R.string.you) + ": " + m.data, true)
+        }
     }
 
     fun createReceiver() { activity?.registerReceiver(updatedReceiver, ConversationListUpdatedReceiver.intentFilter) }

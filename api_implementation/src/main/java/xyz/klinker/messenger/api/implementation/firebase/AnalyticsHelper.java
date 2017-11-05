@@ -140,7 +140,7 @@ public class AnalyticsHelper {
         logEvent(context, UPDATING_FCM_TOKEN);
     }
 
-    public static void caughtForceClose(Context context, String message, Exception e) {
+    public static void caughtForceClose(Context context, String message, Throwable e) {
         Bundle bundle = new Bundle();
         bundle.putString("message", message);
         bundle.putString("error", e.getMessage());

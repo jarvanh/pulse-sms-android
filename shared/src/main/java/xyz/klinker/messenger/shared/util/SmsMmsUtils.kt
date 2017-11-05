@@ -80,6 +80,8 @@ object SmsMmsUtils {
                     .query(uri, projection, null, null, Telephony.ThreadsColumns.DATE + " desc")
         } catch (e: SQLException) {
             null
+        } catch (e: IllegalArgumentException) {
+            null
         } catch (e: SecurityException) {
             null
         }

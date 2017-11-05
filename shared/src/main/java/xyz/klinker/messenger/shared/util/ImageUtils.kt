@@ -352,6 +352,8 @@ object ImageUtils {
             return bmRotated
         } catch (e: Exception) {
             e.printStackTrace()
+        } catch (e: OutOfMemoryError) {
+            e.printStackTrace()
         }
 
         return bitmap

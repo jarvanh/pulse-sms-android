@@ -34,7 +34,9 @@ class ConversationSectionHeaderBinder(private val adapter: ConversationListAdapt
         }
 
         holder.headerDone?.setOnClickListener {
-            adapter.swipeToDeleteListener.onMarkSectionAsRead(text, dataProvider.sectionCounts[section].type)
+            if (dataProvider.sectionCounts.size > section) {
+                adapter.swipeToDeleteListener.onMarkSectionAsRead(text, dataProvider.sectionCounts[section].type)
+            }
         }
     }
 

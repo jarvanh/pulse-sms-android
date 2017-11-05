@@ -1220,59 +1220,63 @@ object DataSource {
      * Gets the details for a message.
      */
     fun getMessageDetails(context: Context, messageId: Long): Spanned {
-        val message = getMessage(context, messageId)
-        val builder = StringBuilder()
+        try {
+            val message = getMessage(context, messageId)
+            val builder = StringBuilder()
 
-        builder.append("<b>Date: </b>")
-        builder.append(SimpleDateFormat
-                .getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
-                .format(Date(message!!.timestamp)))
-        builder.append("<br/>")
-
-        builder.append("<b>Status: </b>")
-        when (message.type) {
-            Message.TYPE_SENT -> builder.append("Sent")
-            Message.TYPE_SENDING -> builder.append("Sending")
-            Message.TYPE_ERROR -> builder.append("Failed")
-            Message.TYPE_DELIVERED -> builder.append("Delivered")
-            Message.TYPE_RECEIVED -> builder.append("Received")
-            Message.TYPE_INFO -> builder.append("Info")
-        }
-        builder.append("<br/>")
-
-        //        builder.append("<b>Read: </b>");
-        //        builder.append(message.read);
-        //        builder.append("<br/>");
-        //
-        //        builder.append("<b>Seen: </b>");
-        //        builder.append(message.seen);
-        //        builder.append("<br/>");
-
-        if (message.from != null) {
-            builder.append("<b>From: </b>")
-            builder.append(message.from)
-            builder.append("<br/>")
-        }
-
-        if (message.mimeType != MimeType.TEXT_PLAIN) {
-            val bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType, false)
-            builder.append("<b>Size: </b>")
-            builder.append(Formatter.formatShortFileSize(context, bytes.size.toLong()))
+            builder.append("<b>Date: </b>")
+            builder.append(SimpleDateFormat
+                    .getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
+                    .format(Date(message!!.timestamp)))
             builder.append("<br/>")
 
-            builder.append("<b>Media Type: </b>")
-            builder.append(message.mimeType)
+            builder.append("<b>Status: </b>")
+            when (message.type) {
+                Message.TYPE_SENT -> builder.append("Sent")
+                Message.TYPE_SENDING -> builder.append("Sending")
+                Message.TYPE_ERROR -> builder.append("Failed")
+                Message.TYPE_DELIVERED -> builder.append("Delivered")
+                Message.TYPE_RECEIVED -> builder.append("Received")
+                Message.TYPE_INFO -> builder.append("Info")
+            }
             builder.append("<br/>")
-        }
 
-        // remove the last <br/>
-        var description = builder.toString()
-        description = description.substring(0, description.length - 5)
+            //        builder.append("<b>Read: </b>");
+            //        builder.append(message.read);
+            //        builder.append("<br/>");
+            //
+            //        builder.append("<b>Seen: </b>");
+            //        builder.append(message.seen);
+            //        builder.append("<br/>");
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(description, 0)
-        } else {
-            Html.fromHtml(description)
+            if (message.from != null) {
+                builder.append("<b>From: </b>")
+                builder.append(message.from)
+                builder.append("<br/>")
+            }
+
+            if (message.mimeType != MimeType.TEXT_PLAIN) {
+                val bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType, false)
+                builder.append("<b>Size: </b>")
+                builder.append(Formatter.formatShortFileSize(context, bytes.size.toLong()))
+                builder.append("<br/>")
+
+                builder.append("<b>Media Type: </b>")
+                builder.append(message.mimeType)
+                builder.append("<br/>")
+            }
+
+            // remove the last <br/>
+            var description = builder.toString()
+            description = description.substring(0, description.length - 5)
+
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(description, 0)
+            } else {
+                Html.fromHtml(description)
+            }
+        } catch (e: Exception) {
+            return Html.fromHtml("")
         }
     }
 

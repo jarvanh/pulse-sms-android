@@ -249,7 +249,12 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
             } else {
                 val url = Intent(Intent.ACTION_VIEW)
                 url.data = Uri.parse(preview.webUrl)
-                itemView.context.startActivity(url)
+
+                try {
+                    itemView.context.startActivity(url)
+                } catch (e: Exception) {
+
+                }
             }
         }
     }

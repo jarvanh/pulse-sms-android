@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Parcelable
-import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.MimeType
@@ -30,7 +29,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 intent.action == Intent.ACTION_VIEW -> viewIntent(intent)
                 intent.action == Intent.ACTION_SEND -> shareContent(intent)
             }
-        } catch (e: Exception) {
+        } catch (e: Error) {
             AnalyticsHelper.caughtForceClose(activity, "caught when sharing to compose activity", e)
         }
     }
@@ -136,9 +135,14 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     private fun shareVCard(intent: Intent) {
         val data = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
 
-        if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
-            activity.shareHandler.directShare(data, intent.type, true)
-        } else {
+        try {
+            if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+                activity.shareHandler.directShare(data, intent.type, true)
+            } else {
+                activity.sender.fab.setImageResource(R.drawable.ic_send)
+                activity.sender.resetViews(data, intent.type, true)
+            }
+        } catch (e: NoClassDefFoundError) {
             activity.sender.fab.setImageResource(R.drawable.ic_send)
             activity.sender.resetViews(data, intent.type, true)
         }
