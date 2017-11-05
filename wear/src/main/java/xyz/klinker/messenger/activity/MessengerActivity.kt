@@ -84,7 +84,11 @@ class MessengerActivity : AppCompatActivity(), IConversationListFragment {
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
         if (requestCode == REQUEST_LOGIN) {
-            loadConversations()
+            overridePendingTransition(0,0)
+            startActivity(Intent(this, MessengerActivity::class.java))
+
+            overridePendingTransition(0,0)
+            finish()
         }
     }
 

@@ -16,6 +16,13 @@
 
 <changelog>
 
+
+    <version
+        name="2.6.1"
+        description="November 5th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
     <version
         name="2.6.0"
         description="October 16th, 2017">
