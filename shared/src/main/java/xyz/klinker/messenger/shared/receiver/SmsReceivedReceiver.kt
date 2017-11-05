@@ -44,6 +44,8 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
+        SmsReceivedReceiver.lastReceived = System.currentTimeMillis()
+
         val handler = Handler()
         Thread {
             try {
@@ -81,9 +83,9 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
+        val conversationId = insertSms(context, handler, address, body, simSlot)
         insertInternalSms(context, address, body, date)
 
-        val conversationId = insertSms(context, handler, address, body, simSlot)
         if (conversationId != -1L) {
             context.startService(Intent(context, NotificationService::class.java))
 
@@ -150,14 +152,14 @@ class SmsReceivedReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        var lastReceived = 0L
 
         fun shouldSaveMessages(context: Context, source: DataSource, message: Message): Boolean {
             try {
-                val search = source.searchMessagesAsList(context, message.data, 1)
+                val search = source.searchMessagesAsList(context, message.data, 1, true)
                 if (!search.isEmpty()) {
                     val inDatabase = search[0]
-                    if (inDatabase.data == message.data && inDatabase.type == Message.TYPE_RECEIVED &&
-                            message.timestamp - inDatabase.timestamp < TimeUtils.MINUTE * 10) {
+                    if (inDatabase.data == message.data && message.timestamp - inDatabase.timestamp < TimeUtils.MINUTE * 10) {
                         return false
                     }
                 }

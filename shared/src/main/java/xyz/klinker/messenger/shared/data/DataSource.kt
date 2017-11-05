@@ -1567,7 +1567,7 @@ object DataSource {
                 }
             }
 
-    fun searchMessagesAsList(context: Context, query: String?, amount: Int): List<Message> {
+    fun searchMessagesAsList(context: Context, query: String?, amount: Int, recievedOnly: Boolean = false): List<Message> {
         val cursor = searchMessages(context, query)
         val messages = ArrayList<Message>()
 
@@ -1576,7 +1576,9 @@ object DataSource {
                 val message = Message()
                 message.fillFromCursor(cursor)
 
-                messages.add(message)
+                if (!recievedOnly || message.type == Message.TYPE_RECEIVED) {
+                    messages.add(message)
+                }
             } while (cursor.moveToNext() && messages.size < amount)
         }
 

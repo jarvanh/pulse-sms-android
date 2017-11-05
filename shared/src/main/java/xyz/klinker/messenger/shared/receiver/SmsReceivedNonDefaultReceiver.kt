@@ -40,16 +40,15 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
             return
         }
 
-        if (System.currentTimeMillis() - SmsReceivedNonDefaultReceiver.lastReceived < TimeUtils.SECOND * 10) {
-            return
-        } else {
-            SmsReceivedNonDefaultReceiver.lastReceived = System.currentTimeMillis()
-        }
-
         val handler = Handler()
         Thread {
             try {
                 Thread.sleep(TimeUtils.SECOND * 4)
+                if (System.currentTimeMillis() - SmsReceivedReceiver.lastReceived < TimeUtils.SECOND * 15) {
+                    // the main receiver should have handled this just fine.
+                    return@Thread
+                }
+
                 handleReceiver(context, intent, handler)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -123,11 +122,10 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        var lastReceived = 0L
 
         fun shouldSaveMessages(context: Context, source: DataSource, message: Message): Boolean {
             try {
-                val search = source.searchMessagesAsList(context, message.data, 1)
+                val search = source.searchMessagesAsList(context, message.data, 1, true)
                 if (search.isEmpty()) {
                     return true
                 }

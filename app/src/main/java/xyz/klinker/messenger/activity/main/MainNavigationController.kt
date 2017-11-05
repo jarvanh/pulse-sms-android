@@ -170,6 +170,7 @@ class MainNavigationController(private val activity: MessengerActivity)
             onNavigationItemSelected(item)
         }
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         closeDrawer()
 
