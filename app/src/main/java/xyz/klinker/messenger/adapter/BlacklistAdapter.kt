@@ -35,8 +35,10 @@ class BlacklistAdapter(private val blacklists: List<Blacklist>, private val list
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_blacklist, parent, false)
         val holder = BlacklistViewHolder(view)
 
-        view.setOnClickListener {
+        view.setOnClickListener { listener?.onClick(holder.adapterPosition) }
+        view.setOnLongClickListener {
             listener?.onClick(holder.adapterPosition)
+            true
         }
 
         return holder

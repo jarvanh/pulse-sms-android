@@ -55,6 +55,15 @@ class ScheduledMessagesAdapter(private val scheduledMessages: List<ScheduledMess
         holder.message.text = message.data
         holder.messageHolder.setOnClickListener { listener?.onClick(message) }
         holder.itemView.setOnClickListener { listener?.onClick(message) }
+
+        holder.messageHolder.setOnLongClickListener {
+            listener?.onClick(message)
+            true
+        }
+        holder.itemView.setOnLongClickListener {
+            listener?.onClick(message)
+            true
+        }
     }
 
     override fun getItemCount() = scheduledMessages.size
