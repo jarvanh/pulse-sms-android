@@ -44,11 +44,14 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
-        SmsReceivedReceiver.lastReceived = System.currentTimeMillis()
-
         val handler = Handler()
         Thread {
             try {
+                if (System.currentTimeMillis() - SmsReceivedReceiver.lastReceived < TimeUtils.SECOND * 3) {
+                    Thread.sleep(TimeUtils.SECOND)
+                }
+                SmsReceivedReceiver.lastReceived = System.currentTimeMillis()
+
                 handleReceiver(context, intent, handler)
             } catch (e: Exception) {
                 AnalyticsHelper.failedToSaveSms(context, e.message)
