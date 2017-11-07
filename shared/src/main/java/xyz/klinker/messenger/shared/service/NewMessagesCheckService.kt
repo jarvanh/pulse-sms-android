@@ -27,7 +27,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
     override fun onHandleIntent(intent: Intent?) {
         try {
-            //handle()
+            handle()
         } catch (e: Exception) {
             e.printStackTrace()
         }
