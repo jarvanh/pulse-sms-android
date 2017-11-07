@@ -31,7 +31,6 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun handle() {
@@ -114,7 +113,6 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
             } while (internalMessages.moveToNext())
 
             internalMessages.closeSilent()
-
         }
 
         val conversationsToRefresh = ArrayList<Long>()

@@ -49,7 +49,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
                     return@Thread
                 }
 
-                handleReceiver(context, intent, handler)
+                //handleReceiver(context, intent, handler)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
