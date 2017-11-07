@@ -283,28 +283,42 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 loadMessages = true
             }
 
+            val copiedUris = mutableListOf<Uri>()
+            copiedUris.addAll(uris)
+
+            val messageId = m.id
             Thread {
                 val imageUri = SendUtils(conversation?.simSubscriptionId)
                         .setForceNoSignature(forceNoSignature)
                         .send(activity, message, argManager.phoneNumbers,
-                                if (uris.isNotEmpty()) uris[0] else null, mimeType)
-                MarkAsSentJob.scheduleNextRun(activity, m.id)
+                                if (copiedUris.isNotEmpty()) copiedUris[0] else null, mimeType)
+                MarkAsSentJob.scheduleNextRun(activity, messageId)
 
                 if (imageUri != null) {
-                    DataSource.updateMessageData(activity, m.id, imageUri.toString())
+                    DataSource.updateMessageData(activity, messageId, imageUri.toString())
                 }
             }.start()
 
-            if (uris.size > 1) {
-                for (i in 1 until uris.size) {
-                    val sendUri = uris[i]
-                    m.data = sendUri.toString()
-                    m.mimeType = mimeType
-                    m.id = 0
-
-                    val newId = DataSource.insertMessage(activity, m, m.conversationId, true)
+            if (copiedUris.size > 1) {
+                for (i in 1 until copiedUris.size) {
+                    val sendUri = copiedUris[i]
+                    val imageMessage = Message()
+                    imageMessage.conversationId = argManager.conversationId
+                    imageMessage.type = Message.TYPE_SENDING
+                    imageMessage.data = sendUri.toString()
+                    imageMessage.timestamp = System.currentTimeMillis()
+                    imageMessage.mimeType = mimeType
+                    imageMessage.read = true
+                    imageMessage.seen = true
+                    imageMessage.from = null
+                    imageMessage.color = null
+                    imageMessage.simPhoneNumber = if (conversation?.simSubscriptionId != null)
+                        DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
+                    else null
+                    imageMessage.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
 
                     Thread {
+                        val newId = DataSource.insertMessage(activity, imageMessage, imageMessage.conversationId, true)
                         val imageUri = SendUtils(conversation?.simSubscriptionId)
                                 .setForceNoSignature(forceNoSignature)
                                 .send(activity, message, argManager.phoneNumbers,

@@ -100,6 +100,7 @@
             android:launchMode="singleTop"
             android:theme="@style/PulseTheme.MessengerActivity"
             android:resizeableActivity="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
