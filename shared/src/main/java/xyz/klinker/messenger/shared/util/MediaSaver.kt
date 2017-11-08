@@ -63,13 +63,13 @@ class MediaSaver {
         val directory = MmsSettings.saveDirectory
         val extension = MimeType.getExtension(message!!.mimeType!!)
         val fileName = "media-" + message.timestamp
-        var dst = File(directory, fileName + extension)
 
-        var count = 1
-        while (dst.exists()) {
-            dst = File(directory, fileName + "-" + Integer.toString(count) + extension)
-            count++
+        val directoryFile = File(directory)
+        if (!directoryFile.exists()) {
+            directoryFile.mkdirs()
         }
+
+        val dst = File(directory, fileName + extension)
 
         try {
             dst.createNewFile()
