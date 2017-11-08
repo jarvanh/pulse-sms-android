@@ -144,7 +144,6 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     private fun performDeleteOperation(conversation: Conversation) {
         if (activity != null) {
             DataSource.deleteConversation(activity, conversation)
-            SmsMmsUtils.deleteConversation(activity, conversation.phoneNumbers!!)
         }
     }
 

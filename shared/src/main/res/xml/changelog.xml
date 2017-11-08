@@ -16,6 +16,11 @@
 
 <changelog>
 
+    <version
+        name="2.6.2"
+        description="November 10th, 2017">
+        <text>Bug fixes for deleting conversations</text>
+    </version>
 
     <version
         name="2.6.1"

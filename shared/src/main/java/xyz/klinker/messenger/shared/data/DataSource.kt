@@ -610,13 +610,11 @@ object DataSource {
             if (messages.moveToFirst()) {
                 do {
                     val valuesList = SmsMmsUtils.processMessage(messages, conversationId, context)
-                    if (valuesList != null) {
-                        for (value in valuesList) {
-                            database(context).insert(Message.TABLE, null, value)
+                    for (value in valuesList) {
+                        database(context).insert(Message.TABLE, null, value)
 
-                            if (value.getAsLong(Message.COLUMN_TIMESTAMP) > latestTimestamp)
-                                latestTimestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
-                        }
+                        if (value.getAsLong(Message.COLUMN_TIMESTAMP) > latestTimestamp)
+                            latestTimestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
                     }
                 } while (messages.moveToNext() && messages.position < SmsMmsUtils.INITIAL_MESSAGE_LIMIT)
             }
@@ -691,9 +689,7 @@ object DataSource {
             } catch (x: Exception) {
                 -1L
             }
-
         }
-
     }
 
     private fun convertConversationCursorToList(cursor: Cursor): List<Conversation> {
@@ -931,7 +927,7 @@ object DataSource {
      *
      * @param conversation the conversation to delete.
      */
-    @JvmOverloads fun deleteConversation(context: Context, conversation: Conversation?, useApi: Boolean = true) {
+    fun deleteConversation(context: Context, conversation: Conversation?, useApi: Boolean = true) {
         if (conversation != null) {
             deleteConversation(context, conversation.id, useApi)
         } else {
@@ -944,7 +940,11 @@ object DataSource {
      *
      * @param conversationId the conversation id to delete.
      */
-    @JvmOverloads fun deleteConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
+    fun deleteConversation(context: Context, conversationId: Long, useApi: Boolean = true) {
+        val conversation = try {
+            getConversation(context, conversationId)
+        } catch (e: Exception) { null }
+
         try {
             database(context).delete(Message.TABLE, Message.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
@@ -961,6 +961,10 @@ object DataSource {
             ensureActionable(context)
             database(context).delete(Conversation.TABLE, Conversation.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
+        }
+
+        if (conversation != null) {
+            Thread { SmsMmsUtils.deleteConversation(context, conversation.phoneNumbers!!) }.start()
         }
 
         if (useApi) {
