@@ -75,7 +75,6 @@ object FeatureFlags {
 
     // need tested
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
-    var NEVER_SEND_FROM_WATCH: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -85,7 +84,6 @@ object FeatureFlags {
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
-        NEVER_SEND_FROM_WATCH = getValue(context, sharedPrefs, FLAG_NEVER_SEND_FROM_WATCH)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -99,7 +97,6 @@ object FeatureFlags {
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
 
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
-            FLAG_NEVER_SEND_FROM_WATCH -> NEVER_SEND_FROM_WATCH = flag
         }
     }
 

@@ -68,7 +68,7 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
         var data = data
         var mimeType = mimeType
 
-        if (FeatureFlags.NEVER_SEND_FROM_WATCH && WearableCheck.isAndroidWear(context)) {
+        if (WearableCheck.isAndroidWear(context)) {
             return data
         }
 
