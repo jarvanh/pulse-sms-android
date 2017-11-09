@@ -49,6 +49,9 @@ public interface ConversationService {
     @GET("conversations")
     Call<ConversationBody[]> list(@Query("account_id") String accountId);
 
+    @GET("conversations")
+    Call<ConversationBody[]> list(@Query("account_id") String accountId, @Query("limit") int limit);
+
     @POST("conversations/read/{device_id}")
     Call<Void> read(@Path("device_id") long deviceId, @Query("android_device") String androidDeviceId, @Query("account_id") String accountId);
 
