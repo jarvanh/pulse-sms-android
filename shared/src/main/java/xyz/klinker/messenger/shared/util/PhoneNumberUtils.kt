@@ -206,4 +206,11 @@ object PhoneNumberUtils {
         return android.telephony.PhoneNumberUtils.compare(number1, number2)
     }
 
+    fun clearFormattingAndStripStandardReplacements(number: String): String {
+        return clearFormatting(number).replace("-".toRegex(), "")
+                .replace(" ".toRegex(), "")
+                .replace("/+".toRegex(), "")
+                .replace("(", "")
+                .replace(")", "")
+    }
 }

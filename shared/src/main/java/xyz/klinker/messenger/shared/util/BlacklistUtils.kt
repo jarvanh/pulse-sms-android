@@ -49,8 +49,8 @@ object BlacklistUtils {
     }
 
     fun numbersMatch(number: String, blacklisted: String): Boolean {
-        val number = PhoneNumberUtils.clearFormatting(number).standardReplacements()
-        val blacklisted = PhoneNumberUtils.clearFormatting(blacklisted).standardReplacements()
+        val number = PhoneNumberUtils.clearFormattingAndStripStandardReplacements(number)
+        val blacklisted = PhoneNumberUtils.clearFormattingAndStripStandardReplacements(blacklisted)
 
         val numberMatchers = SmsMmsUtils.createIdMatcher(number)
         val blacklistMatchers = SmsMmsUtils.createIdMatcher(blacklisted)
@@ -66,11 +66,4 @@ object BlacklistUtils {
         }
     }
 
-    private fun String.standardReplacements(): String {
-        return this.replace("-".toRegex(), "")
-                .replace(" ".toRegex(), "")
-                .replace("/+".toRegex(), "")
-                .replace("(", "")
-                .replace(")", "")
-    }
 }

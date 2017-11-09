@@ -17,11 +17,8 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 
 import java.util.ArrayList
 import java.util.HashMap
@@ -30,7 +27,6 @@ import java.util.regex.Pattern
 
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Conversation
 
@@ -208,7 +204,7 @@ object ContactUtils {
 
                 if (phonesCursor != null && phonesCursor.moveToFirst()) {
                     names += ", " + phonesCursor.getString(0).replace(",".toRegex(), "")
-                } else if (origin.length > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                } else if (useContentFilterQuery(origin)) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                             Uri.encode(origin))
 
@@ -265,7 +261,7 @@ object ContactUtils {
                 val id = phonesCursor.getInt(0)
                 phonesCursor.close()
                 return id
-            } else if (number.length > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+            } else if (useContentFilterQuery(number)) {
                 phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                         Uri.encode(number))
 
@@ -318,7 +314,7 @@ object ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "")
                     }
-                } else if (number.length > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN) {
+                } else if (useContentFilterQuery(number)) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                             Uri.encode(number))
 
@@ -539,5 +535,17 @@ object ContactUtils {
         } else {
             number
         }
+    }
+
+    private fun useContentFilterQuery(number: String): Boolean {
+        return  number.length > MATCH_NUMBERS_WITH_SIZE_GREATER_THAN && numericCharactersOnly(number)
+    }
+
+    private fun numericCharactersOnly(number: String): Boolean {
+        val stripped = PhoneNumberUtils.clearFormattingAndStripStandardReplacements(number)
+        val removeAlpha = stripped.replace("[a-zA-Z]".toRegex(), "")
+
+        // if they are the same length, then no alpha characters were removed and it is only numberic characters
+        return removeAlpha.length == stripped.length
     }
 }
