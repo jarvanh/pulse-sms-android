@@ -103,6 +103,7 @@ class MessengerActivity : AppCompatActivity(), IConversationListFragment {
             val conversations = DataSource.getUnarchivedConversationsAsList(this)
             runOnUiThread {
                 adapter.conversations = conversations.toMutableList()
+                adapter.notifyDataSetChanged()
             }
         }.start()
     }
