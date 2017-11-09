@@ -36,7 +36,8 @@ object BlacklistUtils {
 
             do {
                 val blacklisted = cursor.getString(numberIndex)
-                if (PhoneNumberUtils.checkEquality(number, blacklisted)) {
+//                if (PhoneNumberUtils.checkEquality(number, blacklisted)) {
+                if (numbersMatch(number, blacklisted)) {
                     CursorUtil.closeSilent(cursor)
                     return true
                 }
@@ -47,4 +48,29 @@ object BlacklistUtils {
         return false
     }
 
+    fun numbersMatch(number: String, blacklisted: String): Boolean {
+        val number = PhoneNumberUtils.clearFormatting(number).standardReplacements()
+        val blacklisted = PhoneNumberUtils.clearFormatting(blacklisted).standardReplacements()
+
+        val numberMatchers = SmsMmsUtils.createIdMatcher(number)
+        val blacklistMatchers = SmsMmsUtils.createIdMatcher(blacklisted)
+
+        val shorterLength = if (number.length < blacklisted.length) number.length else blacklisted.length
+
+        return when {
+            shorterLength >= 10 -> numberMatchers.tenLetter == blacklistMatchers.tenLetter
+            shorterLength in 8..9 -> numberMatchers.eightLetter == blacklistMatchers.eightLetter
+            shorterLength == 7 -> numberMatchers.sevenLetter == blacklistMatchers.sevenLetter
+            number.length == blacklisted.length -> numberMatchers.fiveLetter == blacklistMatchers.fiveLetter
+            else -> false
+        }
+    }
+
+    private fun String.standardReplacements(): String {
+        return this.replace("-".toRegex(), "")
+                .replace(" ".toRegex(), "")
+                .replace("/+".toRegex(), "")
+                .replace("(", "")
+                .replace(")", "")
+    }
 }
