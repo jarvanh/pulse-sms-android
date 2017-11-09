@@ -103,5 +103,12 @@ public class PhoneNumberUtilsTest extends MessengerRobolectricSuite {
     public void notEqualsEmailAddress() {
         assertFalse(PhoneNumberUtils.INSTANCE.checkEquality("jklinker1@gmail.com", "+15673935130"));
     }
-
+    
+    @Test
+    public void displaysIncorrectBehavior() {
+        // this actually shows the incorrect-ness of this method. These are clearly NOT the same:
+        // https://github.com/klinker-apps/messenger-issues/issues/447
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("VM-LIFSTL", "VM-HDFCBK"));
+        assertTrue(PhoneNumberUtils.INSTANCE.checkEquality("VK-LIFSTL", "VK-HDFCBK"));
+    }
 }

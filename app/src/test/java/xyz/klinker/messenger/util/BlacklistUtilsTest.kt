@@ -33,4 +33,9 @@ class BlacklistUtilsTest : MessengerRobolectricSuite() {
         assertFalse(BlacklistUtils.numbersMatch("(515) 9911493", "5154224558"))
         assertFalse(BlacklistUtils.numbersMatch("24558", "5154224558"))
     }
+
+    @Test
+    fun blacklistsForNonNumericNumbers() {
+        assertTrue(BlacklistUtils.numbersMatch("ABCDEF", "ABCD-EF"))
+    }
 }
