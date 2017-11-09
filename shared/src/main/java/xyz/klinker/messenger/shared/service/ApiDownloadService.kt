@@ -160,7 +160,7 @@ class ApiDownloadService : Service() {
 
             Log.v(TAG, messageList.size.toString() + " messages downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (messageList.size % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
+        } while (messageList.size % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && pageNumber <= 25 && !noMessages && nullCount < 5)
 
         if (messageList.size > 0) {
             DataSource.insertMessages(this, messageList, false)
@@ -175,7 +175,7 @@ class ApiDownloadService : Service() {
     private fun downloadConversations() {
         val startTime = System.currentTimeMillis()
         val conversations = try {
-            ApiUtils.api.conversation().list(Account.accountId).execute().body()
+            ApiUtils.api.conversation().list(Account.accountId, 200).execute().body()
         } catch (e: IOException) {
             emptyArray<ConversationBody>()
         }
