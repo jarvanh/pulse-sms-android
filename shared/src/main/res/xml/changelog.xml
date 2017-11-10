@@ -21,6 +21,7 @@
         description="November 10th, 2017">
         <text>Bug fixes for deleting conversations</text>
         <text>Bug fixes around blacklists</text>
+        <text>Android Wear bug fixes</text>
     </version>
 
     <version

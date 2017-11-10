@@ -41,7 +41,7 @@ class DualSimApplication(private val switchSim: View) {
 
                 if (!set) {
                     // show one for default
-                    badger.text = "1"
+                    badger.text = ""
                 }
 
                 switchSim.setOnClickListener { _ -> showSimSelection(subscriptions, conversation, badger) }
@@ -73,10 +73,10 @@ class DualSimApplication(private val switchSim: View) {
                 .setSingleChoiceItems(active, selected) { dialogInterface, i ->
                     if (i == 0) {
                         conversation!!.simSubscriptionId = -1
-                        badger.text = "1"
+                        badger.text = ""
                     } else {
                         conversation!!.simSubscriptionId = subscriptions[i - 1].subscriptionId
-                        badger.text = i.toString()
+                        badger.text = (i - 1).toString()
                     }
 
                     DataSource.updateConversationSettings(context, conversation)

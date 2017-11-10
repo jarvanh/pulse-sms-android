@@ -354,12 +354,17 @@ class ApiDownloadService : Service() {
         }
 
         val auth = FirebaseAuth.getInstance()
-        auth.signInAnonymously()
-                .addOnSuccessListener { processMediaDownload(manager, builder) }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "failed to sign in to firebase", e)
-                    finishMediaDownload(manager)
-                }
+        try {
+            auth.signInAnonymously()
+                    .addOnSuccessListener { processMediaDownload(manager, builder) }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "failed to sign in to firebase", e)
+                        finishMediaDownload(manager)
+                    }
+        } catch (e: Exception) {
+            // android wear issue
+            finishMediaDownload(manager)
+        }
     }
 
     private fun processMediaDownload(manager: NotificationManagerCompat,
