@@ -172,21 +172,20 @@
             android:theme="@style/tutorial_FloatingTutorialTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEND" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
 
-                <!--<data android:mimeType="text/plain" />-->
-                <!--<data android:mimeType="text/vcard" />-->
-                <!--<data android:mimeType="text/x-vcard" />-->
-                <!--<data android:mimeType="image/*" />-->
-                <!--<data android:mimeType="audio/*" />-->
-                <!--<data android:mimeType="video/*" />-->
-            <!--</intent-filter>-->
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
 
-            <!--<meta-data-->
-                <!--android:name="android.service.chooser.chooser_target_service"-->
-                <!--android:value=".shared.service.MessengerChooserTargetService" />-->
+            <meta-data
+                android:name="android.service.chooser.chooser_target_service"
+                android:value=".shared.service.MessengerChooserTargetService" />
 
         </activity>
 

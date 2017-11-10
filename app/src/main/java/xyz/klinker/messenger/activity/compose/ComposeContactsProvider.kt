@@ -154,7 +154,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
     }
 
     // we have a few different cases:
-    // 1.) Single recepient (with single number)
+    // 1.) Single recipient (with single number)
     // 2.) Group convo with custom title (1 name, multiple numbers)
     // 3.) Group convo with non custom title (x names, x numbers)
     override fun onClicked(title: String, phoneNumber: String, imageUri: String?) {

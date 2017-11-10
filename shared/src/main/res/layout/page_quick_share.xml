@@ -66,6 +66,7 @@
     <ImageView
         android:id="@+id/attached_image"
         android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
         android:layout_height="200dp"
         android:visibility="gone" />
 
