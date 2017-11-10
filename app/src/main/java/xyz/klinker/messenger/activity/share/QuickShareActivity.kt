@@ -85,9 +85,16 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
                 contactEntry.post { contactEntry.submitItem(name, number) }
             }
         }
+
+        contactEntry.post { messageEntry.requestFocus() }
     }
 
-    fun setData(data: String, mimeType: String) {
+    fun setData(data: String, mimeType: String?) {
+        if (mimeType == null) {
+            // coming from launcher shortcut
+            return
+        }
+
         when {
             mimeType == MimeType.TEXT_PLAIN -> messageEntry.setText(data)
             mimeType == MimeType.IMAGE_GIF -> Glide.with(activity).asGif().apply(RequestOptions().centerCrop()).load(data).into(imagePreview)
@@ -108,6 +115,11 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
             this.mediaData = data
             this.mimeType = mimeType
         }
+
+        messageEntry.post { if (contactEntry.text.isNotEmpty()) {
+            messageEntry.requestFocus()
+            messageEntry.setSelection(messageEntry.text.length)
+        } }
     }
 
     private fun prepareContactEntry() {

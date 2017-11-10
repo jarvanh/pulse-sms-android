@@ -69,8 +69,9 @@ class ShareIntentHandler(private val page: QuickSharePage) {
             image = true
         }
 
-        if (image) {
-            val tempData = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
+        val stream = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
+        if (image && stream != null) {
+            val tempData = stream.toString()
             data = try {
                 val dst = File(page.activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
                 val `in` = page.activity.contentResolver.openInputStream(Uri.parse(tempData))

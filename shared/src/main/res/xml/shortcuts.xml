@@ -17,7 +17,7 @@
 
         <!--<intent-->
             <!--android:targetPackage="xyz.klinker.messenger"-->
-            <!--android:action="android.intent.action.VIEW"-->
+            <!--android:action="android.intent.action.SEND"-->
             <!--android:targetClass="xyz.klinker.messenger.activity.share.QuickShareActivity" />-->
 
         <categories android:name="android.shortcut.conversation" />
