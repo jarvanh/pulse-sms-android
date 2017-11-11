@@ -16,6 +16,19 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="2.7.0"-->
+        <!--description="November, 2017">-->
+        <!--<text>Quick compose: add an option to "Advanced Features" to create persistent notification for composing SMS</text>-->
+        <!--<text>Quick compose: Define "favorite contacts" for quick access in the quick compose notification</text>-->
+        <!--<text>Sharing revamp for quicker sharing to contacts, from other apps</text>-->
+        <!--<text>Use the same new sharing-style for direct share on Android 6.0 and above</text>-->
+        <!--<text>Use the quick compose layout when composing messages from the Android 7.0+ launcher shortcuts</text>-->
+        <!--<text>Use the quick compose layout when composing messages from the Android 7.0+ quick settings tile</text>-->
+        <!--<text>Improvements for Essential phone</text>-->
+        <!--<text>Bug fixes</text>-->
+    <!--</version>-->
+
     <version
         name="2.6.2"
         description="November 10th, 2017">
