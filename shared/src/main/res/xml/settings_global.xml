@@ -22,7 +22,7 @@
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_customization_category"
-        android:title="@string/theme_settings">
+        android:title="@string/theme_settings_category">
 
         <Preference
             android:key="@string/pref_theme_settings"
@@ -93,12 +93,6 @@
             android:key="@string/pref_giffgaff"
             android:title="@string/giffgaff_delivery"
             android:defaultValue="false" />
-
-
-        <SwitchPreference
-            android:key="@string/pref_internal_browser"
-            android:title="@string/use_internal_browser"
-            android:defaultValue="true" />
 
         <SwitchPreference
             android:key="@string/pref_strip_unicode"

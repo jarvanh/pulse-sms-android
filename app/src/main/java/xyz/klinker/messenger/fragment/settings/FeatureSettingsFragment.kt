@@ -19,6 +19,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
         addPreferencesFromResource(R.xml.settings_features)
         initSecurePrivateConversations()
+        initInternalBrowser()
         initQuickCompose()
         initDelayedSending()
         initCleanupOldMessages()
@@ -34,13 +35,21 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_secure_private_conversations))
         preference.setOnPreferenceChangeListener { _, o ->
             val secure = o as Boolean
-            ApiUtils.updateSecurePrivateConversations(
-                    Account.accountId, secure)
+            ApiUtils.updateSecurePrivateConversations(Account.accountId, secure)
             true
         }
 
         if (!FeatureFlags.SECURE_PRIVATE) {
             preferenceScreen.removePreference(preference)
+        }
+    }
+
+    private fun initInternalBrowser() {
+        val preference = findPreference(getString(R.string.pref_internal_browser))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val useBrowser = o as Boolean
+            ApiUtils.updateInternalBrowser(Account.accountId, useBrowser)
+            true
         }
     }
 
@@ -60,7 +69,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         }
 
         if (!FeatureFlags.QUICK_COMPOSE) {
-            preferenceScreen.removePreference(preference)
+            preferenceScreen.removePreference(findPreference(getString(R.string.pref_quick_compose_category)))
         }
     }
 

@@ -1029,6 +1029,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the internal browser setting.
+     */
+    fun updateInternalBrowser(accountId: String?, useBrowser: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "internal_browser", "boolean", useBrowser)
+        }
+    }
+
+    /**
      * Update the quick compose setting.
      */
     fun updateQuickCompose(accountId: String?, quickCompose: Boolean) {

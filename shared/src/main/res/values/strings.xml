@@ -32,6 +32,7 @@
     <string name="menu_invite">Invite friends</string>
     <string name="menu_feature_settings">Advanced features</string>
     <string name="menu_settings">Global settings</string>
+    <string name="menu_customization_settings">Customization settings</string>
     <string name="menu_mms_configuration">MMS Configuration</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>
@@ -329,6 +330,7 @@
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
     <string name="theme_settings">Customization</string>
+    <string name="theme_settings_category">Look and Feel</string>
     <string name="conversation_list_category">Conversation List</string>
     <string name="general_category">General</string>
     <string name="theme_settings_redirect">Theme</string>
@@ -393,6 +395,7 @@
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
+    <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
@@ -434,7 +437,10 @@
     <string name="cleanup_old_messages">Cleanup Old Messages</string>
     <string name="delayed_sending">Delayed Sending</string>
     <string name="quick_compose">Quick Compose</string>
-    <string name="quick_compose_summary">Always-active notification to give you the fastest access to composing a new message.</string>
+    <string name="quick_compose_notification">Show notification</string>
+    <string name="quick_compose_notification_summary">Always-active notification to give you the fastest access to composing a new message.</string>
+    <string name="quick_compose_favorites">Favorite contacts</string>
+    <string name="quick_compose_favorites_summary">These contacts will be made available on the notification actions.</string>
     <string name="secure_private_conversations">Secure Private Conversations</string>
     <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
 
