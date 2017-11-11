@@ -28,6 +28,6 @@ class MessageCounterCalculator(private val fragment: MessageListFragment) {
         return !Account.primary && (Build.MODEL == "Nexus 9" || Build.MANUFACTURER.toLowerCase() == "oneplus" ||
                 Build.MANUFACTURER.toLowerCase() == "sony" || Build.MANUFACTURER.toLowerCase() == "xiaomi" ||
                 Build.MANUFACTURER.toLowerCase() == "samsung" || Build.MANUFACTURER.toLowerCase() == "lge" ||
-                Build.MODEL.toLowerCase().contains("kindle"))
+                Build.MODEL.toLowerCase().contains("kindle") || Build.MODEL.toLowerCase().contains("YT-X703F"))
     }
 }
