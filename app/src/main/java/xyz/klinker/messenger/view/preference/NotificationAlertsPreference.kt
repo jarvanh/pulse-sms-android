@@ -1,11 +1,10 @@
-package xyz.klinker.messenger.view
+package xyz.klinker.messenger.view.preference
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -14,7 +13,6 @@ import android.preference.Preference
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
-import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -245,7 +243,6 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
     }
 
     companion object {
-
         private val RINGTONE_REQUEST = 101
     }
 }

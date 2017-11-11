@@ -31,7 +31,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.SetUtils
-import xyz.klinker.messenger.view.NotificationAlertsPreference
+import xyz.klinker.messenger.view.preference.NotificationAlertsPreference
 
 /**
  * Fragment for modifying app settings_global.

@@ -41,7 +41,7 @@
             android:key="@string/pref_quick_compose"
             android:summary="@string/quick_compose_notification_summary" />
 
-        <Preference
+        <xyz.klinker.messenger.view.preference.QuickComposeFavoriteUserPreference
             android:dependency="@string/pref_quick_compose"
             android:key="@string/pref_quick_compose_favorites"
             android:summary="@string/quick_compose_favorites_summary"

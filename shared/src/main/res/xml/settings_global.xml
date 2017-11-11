@@ -58,7 +58,7 @@
         android:key="@string/pref_notification_category"
         android:title="@string/notification_settings">
 
-        <xyz.klinker.messenger.view.NotificationAlertsPreference
+        <xyz.klinker.messenger.view.preference.NotificationAlertsPreference
             android:key="@string/pref_alert_types"
             android:title="@string/alert_types"
             android:summary="@string/alert_types_summary" />

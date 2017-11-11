@@ -394,8 +394,6 @@
     <string name="alert_types">Alert Types</string>
     <string name="alert_types_summary">Various customizations for notifications</string>
     <string name="strip_unicode">Strip Unicode</string>
-    <string name="use_internal_browser">Use Internal Web Browser</string>
-    <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
@@ -441,8 +439,11 @@
     <string name="quick_compose_notification_summary">Always-active notification to give you the fastest access to composing a new message.</string>
     <string name="quick_compose_favorites">Favorite contacts</string>
     <string name="quick_compose_favorites_summary">These contacts will be made available on the notification actions.</string>
+    <string name="quick_compose_favorites_title">Select up to 3 contacts:</string>
     <string name="secure_private_conversations">Secure Private Conversations</string>
     <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
+    <string name="use_internal_browser">Use Internal Web Browser</string>
+    <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>
