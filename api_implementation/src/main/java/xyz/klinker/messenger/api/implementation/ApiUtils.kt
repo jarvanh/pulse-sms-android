@@ -1165,6 +1165,16 @@ object ApiUtils {
         }
     }
 
+
+    /**
+     * Update the favorite users for quick compose. Numbers should be a comma separated list
+     */
+    fun updateFavoriteUserNumbers(accountId: String?, numbersString: String?) {
+        if (accountId != null) {
+            updateSetting(accountId, "quick_compose_favorites", "string", numbersString)
+        }
+    }
+
     /**
      * Dismiss a notification across all devices.
      */
