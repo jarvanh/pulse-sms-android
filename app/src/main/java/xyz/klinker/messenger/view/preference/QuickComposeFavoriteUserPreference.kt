@@ -2,6 +2,7 @@ package xyz.klinker.messenger.view.preference
 
 import android.app.AlertDialog
 import android.content.Context
+import android.net.Uri
 import android.preference.Preference
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -33,9 +34,11 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
         val contactEntryTwo = layout.findViewById<RecipientEditTextView>(R.id.contact_two)
         val contactEntryThree = layout.findViewById<RecipientEditTextView>(R.id.contact_three)
 
-        prepareContactEntry(contactEntryOne)
-        prepareContactEntry(contactEntryTwo)
-        prepareContactEntry(contactEntryThree)
+        val prefNumbers = getNumbersFromPrefs()
+
+        prepareContactEntry(contactEntryOne, if (prefNumbers.isNotEmpty()) prefNumbers[0] else null)
+        prepareContactEntry(contactEntryTwo, if (prefNumbers.size > 1) prefNumbers[1] else null)
+        prepareContactEntry(contactEntryThree, if (prefNumbers.size > 2) prefNumbers[2] else null)
 
         AlertDialog.Builder(context, R.style.SubscriptionPicker)
                 .setTitle(R.string.quick_compose_favorites_title)
@@ -49,7 +52,7 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
         return false
     }
 
-    private fun prepareContactEntry(contactEntry: RecipientEditTextView) {
+    private fun prepareContactEntry(contactEntry: RecipientEditTextView, number: String?) {
         val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, context)
         adapter.isShowMobileOnly = Settings.mobileOnly
 
@@ -57,6 +60,22 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
         contactEntry.highlightColor = Settings.mainColorSet.colorAccent
         contactEntry.setAdapter(adapter)
         contactEntry.maxChips = 1
+
+        if (number != null) {
+            val name = ContactUtils.findContactNames(number, context)
+            val photo = ContactUtils.findImageUri(number, context)
+
+            if (photo != null) {
+                contactEntry.post { contactEntry.submitItem(name, number, Uri.parse("$photo/photo")) }
+            } else {
+                contactEntry.post { contactEntry.submitItem(name, number) }
+            }
+        }
+    }
+
+    private fun getNumbersFromPrefs(): List<String> {
+        val numbers = Settings.getSharedPrefs(context).getString(context.getString(R.string.pref_quick_compose_favorites), null)
+        return numbers?.split(",".toRegex())?.filter { it.isNotBlank() } ?: emptyList()
     }
 
     private fun saveFavoritesList(vararg contactEntries: RecipientEditTextView): String? {
