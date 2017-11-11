@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.CreateNotificationChannelService
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
+import xyz.klinker.messenger.shared.service.QuickTextNotificationService
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.DynamicShortcutUtils
 import xyz.klinker.messenger.shared.util.KotlinObjectInitializers
@@ -55,6 +56,10 @@ class MessengerApplication : FirebaseApplication() {
 
         if (CreateNotificationChannelService.shouldRun(this)) {
             startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
+        }
+
+        if (Settings.quickCompose) {
+            QuickTextNotificationService.start(this)
         }
     }
 

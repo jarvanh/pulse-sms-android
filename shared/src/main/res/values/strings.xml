@@ -244,8 +244,7 @@
     <string name="quick_text_channel">Quick text notification</string>
     <string name="media_parse_text">Parsing media from previous text message…</string>
     <string name="creating_channels_text">Creating notification channels…</string>
-    <string name="write_new_message">Quick text…</string>
-
+    <string name="write_new_message">Create a new SMS…</string>
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>

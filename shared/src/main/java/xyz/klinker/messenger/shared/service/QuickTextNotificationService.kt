@@ -73,7 +73,7 @@ class QuickTextNotificationService : IntentService("QuickTextNotificationService
         }
 
         fun stop(context: Context) {
-            NotificationManagerCompat.from(context).cancel(FOREGROUND_ID)
+            NotificationManagerCompat.from(context).cancel(QUICK_TEXT_ID)
         }
     }
 }
