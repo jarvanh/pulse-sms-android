@@ -197,6 +197,7 @@
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
@@ -293,6 +294,7 @@
         <service android:name=".service.ResendFailedMessage" />
         <service android:name=".service.CreateNotificationChannelService" />
         <service android:name=".service.ContactResyncService" />
+        <service android:name=".service.QuickTextNotificationService" />
 
         <service
             android:name=".service.ComposeTileService"

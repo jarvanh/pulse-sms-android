@@ -10,6 +10,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.service.QuickTextNotificationService
 
 class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
@@ -47,8 +48,14 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_quick_compose))
         preference.setOnPreferenceChangeListener { _, o ->
             val quickCompose = o as Boolean
-            ApiUtils.updateQuickCompose(
-                    Account.accountId, quickCompose)
+            ApiUtils.updateQuickCompose(Account.accountId, quickCompose)
+
+            if (quickCompose) {
+                QuickTextNotificationService.start(activity)
+            } else {
+                QuickTextNotificationService.stop(activity)
+            }
+
             true
         }
 

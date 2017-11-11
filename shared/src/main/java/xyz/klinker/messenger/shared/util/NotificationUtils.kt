@@ -19,6 +19,7 @@ object NotificationUtils {
     val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
     val MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary"
     val FAILED_MESSAGES_CHANNEL_ID = "failed-messages"
+    val QUICK_TEXT_CHANNEL_ID = "quick-text"
     val TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications"
     val STATUS_NOTIFICATIONS_CHANNEL_ID = "status-notifications"
     val MEDIA_PARSE_CHANNEL_ID = "media-parsing"
@@ -160,6 +161,21 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
+    private fun createQuickTextChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val testChannel = NotificationChannel(QUICK_TEXT_CHANNEL_ID,
+                context.getString(R.string.quick_text_channel), NotificationManager.IMPORTANCE_MIN)
+        testChannel.setShowBadge(false)
+        testChannel.enableLights(false)
+        testChannel.enableVibration(false)
+        manager.createNotificationChannel(testChannel)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
     private fun createMessageGroupChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
@@ -191,6 +207,7 @@ object NotificationUtils {
         createFailedMessageChannel(context)
         createMessageGroupChannel(context)
         createMediaParseChannel(context)
+        createQuickTextChannel(context)
         createGeneralChannel(context)
     }
 

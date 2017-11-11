@@ -21,6 +21,8 @@ import android.content.Context
 import android.content.Intent
 
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService
+import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.service.QuickTextNotificationService
 import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob
 import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
@@ -35,13 +37,15 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         try {
-            if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
                 ScheduledMessageJob.scheduleNextRun(context)
                 CleanupOldMessagesJob.scheduleNextRun(context)
                 ContactSyncJob.scheduleNextRun(context)
                 SubscriptionExpirationCheckJob.scheduleNextRun(context)
                 SignoutJob.scheduleNextRun(context)
                 ScheduledTokenRefreshService.scheduleNextRun(context)
+
+                if (Settings.quickCompose) QuickTextNotificationService.start(context)
             }
         } catch (e: IllegalStateException) {
             e.printStackTrace()

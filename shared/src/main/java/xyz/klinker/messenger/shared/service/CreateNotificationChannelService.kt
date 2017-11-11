@@ -18,9 +18,8 @@ class CreateNotificationChannelService : IntentService("CreateNotificationChanne
     override fun onHandleIntent(intent: Intent?) {
         val notification = NotificationCompat.Builder(this,
                 NotificationUtils.GENERAL_CHANNEL_ID)
-                .setContentTitle(getString(R.string.downloading_and_decrypting))
+                .setContentTitle(getString(R.string.creating_channels_text))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setProgress(0, 0, true)
                 .setLocalOnly(true)
                 .setColor(ColorSet.DEFAULT(this).color)
                 .setOngoing(true)
@@ -35,15 +34,18 @@ class CreateNotificationChannelService : IntentService("CreateNotificationChanne
 
     companion object {
         private val FOREGROUND_ID = 1224
+        private val NOTIFICATION_CHANNEL_VERSION = 2
+        private val PREF_KEY = "needs_to_create_notification_channels_$NOTIFICATION_CHANNEL_VERSION"
+
         fun shouldRun(context: Context): Boolean {
             if (!AndroidVersionUtil.isAndroidO) {
                 return false
             }
 
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val shouldRun = prefs.getBoolean("needs_to_create_notification_channels", true)
+            val shouldRun = prefs.getBoolean(PREF_KEY, true)
 
-            if (shouldRun) prefs.edit().putBoolean("needs_to_create_notification_channels", false).apply()
+            if (shouldRun) prefs.edit().putBoolean(PREF_KEY, false).apply()
             return shouldRun
         }
     }
