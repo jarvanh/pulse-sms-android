@@ -18,8 +18,11 @@ package xyz.klinker.messenger.fragment.settings
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
 import android.support.v7.preference.Preference
+import android.support.v7.preference.PreferenceCategory
 import android.support.v7.preference.PreferenceFragmentCompat
 
 import xyz.klinker.messenger.R
@@ -68,6 +71,19 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
                     openWeb("https://github.com/klinker-apps/messenger-issues")
                     true
                 }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            findPreference(getString(R.string.pref_help_battery_optimization))
+                    .setOnPreferenceClickListener {
+                        val batteryOptimization = Intent(ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                        startActivity(batteryOptimization)
+
+                        true
+                    }
+        } else {
+            (findPreference(getString(R.string.pref_help_troubleshooting_category)) as PreferenceCategory)
+                    .removePreference(findPreference(getString(R.string.pref_help_battery_optimization)))
+        }
     }
 
     /**

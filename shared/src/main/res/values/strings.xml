@@ -410,6 +410,8 @@
     <string name="emoji_style_default">System Default</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>
     <string name="settings_phone_number">Phone Number</string>
+    <string name="disable_battery_optimization">Disable Battery Optimization</string>
+    <string name="disable_battery_optimization_summary">If messages aren\'t making it from your phone to the web, try disabling the battery optimizations for Pulse.</string>
 
 
     <!-- MMS Configuration Settings -->

@@ -17,6 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
+        android:key="@string/pref_help_troubleshooting_category"
         android:title="@string/troubleshooting">
 
         <Preference
@@ -28,9 +29,9 @@
             android:summary="@string/get_help_summary_2" />
 
         <Preference
-            android:key="@string/pref_help_issues"
-            android:title="@string/issues"
-            android:summary="@string/issues_summary" />
+            android:key="@string/pref_help_battery_optimization"
+            android:title="@string/disable_battery_optimization"
+            android:summary="@string/disable_battery_optimization_summary" />
 
         <Preference
             android:key="@string/pref_help_features"
@@ -55,6 +56,11 @@
             android:key="@string/pref_help_twitter"
             android:title="@string/twitter"
             android:summary="@string/twitter_summary" />
+
+        <Preference
+            android:key="@string/pref_help_issues"
+            android:title="@string/issues"
+            android:summary="@string/issues_summary" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
