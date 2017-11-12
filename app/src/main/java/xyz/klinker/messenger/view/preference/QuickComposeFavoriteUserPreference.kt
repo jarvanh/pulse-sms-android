@@ -48,6 +48,9 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
                 .setPositiveButton(R.string.save) { _, _ ->
                     val numbers = saveFavoritesList(contactEntryOne, contactEntryTwo, contactEntryThree)
                     ApiUtils.updateFavoriteUserNumbers(Account.accountId, numbers)
+
+                    QuickComposeNotificationService.stop(context)
+                    QuickComposeNotificationService.start(context)
                 }.show()
 
         return false
