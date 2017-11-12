@@ -725,6 +725,9 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                     } else {
                         QuickComposeNotificationService.stop(context)
                     }
+                } else if (type.toLowerCase() == "string" && pref ==context.getString(R.string.pref_quick_compose_favorites)) {
+                    QuickComposeNotificationService.stop(context)
+                    QuickComposeNotificationService.start(context)
                 }
             }
         }
