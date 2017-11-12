@@ -294,7 +294,7 @@
         <service android:name=".service.ResendFailedMessage" />
         <service android:name=".service.CreateNotificationChannelService" />
         <service android:name=".service.ContactResyncService" />
-        <service android:name=".service.QuickTextNotificationService" />
+        <service android:name=".service.QuickComposeNotificationService" />
 
         <service
             android:name=".service.ComposeTileService"

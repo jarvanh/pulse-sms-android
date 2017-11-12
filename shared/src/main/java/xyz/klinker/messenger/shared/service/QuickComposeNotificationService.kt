@@ -4,16 +4,19 @@ import android.app.IntentService
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
+import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
-class QuickTextNotificationService : IntentService("QuickTextNotificationService") {
+class QuickComposeNotificationService : IntentService("QuickComposeNotificationService") {
 
     override fun onHandleIntent(intent: Intent?) {
         val foreground = NotificationCompat.Builder(this, NotificationUtils.GENERAL_CHANNEL_ID)
@@ -51,8 +54,21 @@ class QuickTextNotificationService : IntentService("QuickTextNotificationService
     }
 
     private fun addActionsToNotification(builder: NotificationCompat.Builder) {
-        // TODO: In the future, might want to add a list of favorites for notification buttons
-        // would be a nice little addition
+        val numbers = getNumbersFromPrefs(this)
+
+        for (i in numbers.indices) {
+            val name = ContactUtils.findContactNames(numbers[i], this)
+
+            val compose = ActivityUtils.buildForComponent(ActivityUtils.QUICK_SHARE_ACTIVITY)
+            compose.data = Uri.parse("sms:${numbers[i]}")
+            compose.action = Intent.ACTION_SENDTO
+
+            val pendingCompose = PendingIntent.getActivity(this, QUICK_TEXT_ID + i,
+                    compose, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            val action = NotificationCompat.Action(R.drawable.ic_reply_white, name, pendingCompose)
+            builder.addAction(action)
+        }
     }
 
     companion object {
@@ -64,7 +80,7 @@ class QuickTextNotificationService : IntentService("QuickTextNotificationService
                 return
             }
 
-            val intent = Intent(context, QuickTextNotificationService::class.java)
+            val intent = Intent(context, QuickComposeNotificationService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
@@ -74,6 +90,11 @@ class QuickTextNotificationService : IntentService("QuickTextNotificationService
 
         fun stop(context: Context) {
             NotificationManagerCompat.from(context).cancel(QUICK_TEXT_ID)
+        }
+
+        fun getNumbersFromPrefs(context: Context): List<String> {
+            val numbers = Settings.getSharedPrefs(context).getString(context.getString(R.string.pref_quick_compose_favorites), null)
+            return numbers?.split(",".toRegex())?.filter { it.isNotBlank() } ?: emptyList()
         }
     }
 }

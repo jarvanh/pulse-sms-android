@@ -721,9 +721,9 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                 if (type.toLowerCase() == "boolean" && pref == context.getString(R.string.pref_quick_compose)) {
                     val turnOn = json.getBoolean("value")
                     if (turnOn) {
-                        QuickTextNotificationService.start(context)
+                        QuickComposeNotificationService.start(context)
                     } else {
-                        QuickTextNotificationService.stop(context)
+                        QuickComposeNotificationService.stop(context)
                     }
                 }
             }

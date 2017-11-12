@@ -13,6 +13,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 
@@ -34,7 +35,7 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
         val contactEntryTwo = layout.findViewById<RecipientEditTextView>(R.id.contact_two)
         val contactEntryThree = layout.findViewById<RecipientEditTextView>(R.id.contact_three)
 
-        val prefNumbers = getNumbersFromPrefs()
+        val prefNumbers = QuickComposeNotificationService.getNumbersFromPrefs(context)
 
         prepareContactEntry(contactEntryOne, if (prefNumbers.isNotEmpty()) prefNumbers[0] else null)
         prepareContactEntry(contactEntryTwo, if (prefNumbers.size > 1) prefNumbers[1] else null)
@@ -71,11 +72,6 @@ class QuickComposeFavoriteUserPreference : Preference, Preference.OnPreferenceCl
                 contactEntry.post { contactEntry.submitItem(name, number) }
             }
         }
-    }
-
-    private fun getNumbersFromPrefs(): List<String> {
-        val numbers = Settings.getSharedPrefs(context).getString(context.getString(R.string.pref_quick_compose_favorites), null)
-        return numbers?.split(",".toRegex())?.filter { it.isNotBlank() } ?: emptyList()
     }
 
     private fun saveFavoritesList(vararg contactEntries: RecipientEditTextView): String? {

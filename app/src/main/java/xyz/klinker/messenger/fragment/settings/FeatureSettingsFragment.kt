@@ -10,7 +10,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.service.QuickTextNotificationService
+import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 
 class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
@@ -60,9 +60,9 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             ApiUtils.updateQuickCompose(Account.accountId, quickCompose)
 
             if (quickCompose) {
-                QuickTextNotificationService.start(activity)
+                QuickComposeNotificationService.start(activity)
             } else {
-                QuickTextNotificationService.stop(activity)
+                QuickComposeNotificationService.stop(activity)
             }
 
             true
