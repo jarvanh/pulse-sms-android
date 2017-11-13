@@ -134,7 +134,7 @@ dependencies {
     api 'me.leolin:ShortcutBadger:1.1.14@aar'
     api 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     api 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    api 'com.github.codekidX:storage-chooser:1.0.30'
+    api 'com.github.codekidX:storage-chooser:2.0.3'
     api 'com.afollestad.material-dialogs:core:0.9.4.5'
     api 'com.roughike:bottom-bar:2.3.1'
 

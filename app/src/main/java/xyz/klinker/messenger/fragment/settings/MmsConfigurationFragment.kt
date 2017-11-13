@@ -108,7 +108,7 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
     private fun showStorageChooser() {
         val chooser = StorageChooser.Builder()
                 .withActivity(activity)
-                .withFragmentManager((activity as AppCompatActivity).supportFragmentManager)
+                .withFragmentManager((activity as AppCompatActivity).fragmentManager)
                 .allowCustomPath(true)
                 .setType(StorageChooser.DIRECTORY_CHOOSER)
                 .actionSave(true)
