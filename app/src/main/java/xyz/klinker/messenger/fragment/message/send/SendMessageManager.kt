@@ -44,7 +44,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     private val sendProgress: ProgressBar? by lazy { fragment.rootView?.findViewById<View>(R.id.send_progress) as ProgressBar? }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
-    private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
+    private val selectedImageCount: View by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) }
 
     private var delayedTimer: CountDownTimer? = null
     private val delayedSendingHandler: Handler by lazy { Handler() }

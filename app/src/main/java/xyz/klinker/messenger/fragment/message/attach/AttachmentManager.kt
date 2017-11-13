@@ -3,6 +3,7 @@ package xyz.klinker.messenger.fragment.message.attach
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.support.v4.app.FragmentActivity
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.yalantis.ucrop.UCrop
+import de.hdodenhof.circleimageview.CircleImageView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.DataSource
@@ -31,15 +33,18 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     val selectedImageUris = mutableListOf<String>()
 
     private val editImage: View? by lazy { fragment.rootView?.findViewById<View>(R.id.edit_image) }
+    private val editImageBackground: CircleImageView? by lazy { fragment.rootView?.findViewById<CircleImageView>(R.id.edit_image_background) }
     private val removeImage: View by lazy { fragment.rootView!!.findViewById<View>(R.id.remove_image) }
-    private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
+    private val removeImageBackground: CircleImageView by lazy { fragment.rootView!!.findViewById<CircleImageView>(R.id.remove_image_background) }
+    private val selectedImageCount: View by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) }
+    private val selectedImageCountBackground: CircleImageView by lazy { fragment.rootView!!.findViewById<CircleImageView>(R.id.selected_images_background) }
     private val attachLayout: View? by lazy { fragment.rootView?.findViewById<View>(R.id.attach_layout) }
     private val attachedImage: ImageView by lazy { fragment.rootView!!.findViewById<View>(R.id.attached_image) as ImageView }
     private val attachedImageHolder: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attached_image_holder) }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
 
     fun setupHelperViews() {
-        editImage?.setBackgroundColor(argManager.colorAccent)
+        editImageBackground?.setImageDrawable(ColorDrawable(argManager.colorAccent))
         editImage?.setOnClickListener {
             if (activity == null) {
                 return@setOnClickListener
@@ -62,7 +67,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
             }
         }
 
-        removeImage.setBackgroundColor(argManager.colorAccent)
+        removeImageBackground.setImageDrawable(ColorDrawable(argManager.colorAccent))
         removeImage.setOnClickListener {
             clearAttachedData()
             selectedImageUris.clear()
@@ -73,7 +78,8 @@ class AttachmentManager(private val fragment: MessageListFragment) {
             }
         }
 
-        selectedImageCount.setBackgroundColor(argManager.colorAccent)
+        attachedImage.clipToOutline = true
+        selectedImageCountBackground.setImageDrawable(ColorDrawable(argManager.colorAccent))
     }
 
     fun clearAttachedData() {

@@ -41,7 +41,8 @@ class AttachmentListener(private val fragment: MessageListFragment)
 
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
     private val editImage: View? by lazy { fragment.rootView!!.findViewById<View>(R.id.edit_image) }
-    private val selectedImageCount: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) as TextView }
+    private val selectedImageCount: View by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) }
+    private val selectedImageCountText: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images_text) as TextView }
     private val attachHolder: FrameLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_holder) as FrameLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
 
@@ -103,7 +104,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
                 }
                 selectedImageUris.size > 1 -> {
                     selectedImageCount.visibility = View.VISIBLE
-                    selectedImageCount.text = selectedImageUris.size.toString()
+                    selectedImageCountText.text = selectedImageUris.size.toString()
                     editImage?.visibility = View.GONE
                 }
                 else -> {
