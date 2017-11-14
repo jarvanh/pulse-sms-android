@@ -353,7 +353,7 @@ public class LoginActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             Toast.makeText(getApplicationContext(), R.string.api_device_error,
                     Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), "FCM token: " + getFirebaseId(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "FCM token: " + getFirebaseId(), Toast.LENGTH_LONG).show();
 
             recreate();
         });
