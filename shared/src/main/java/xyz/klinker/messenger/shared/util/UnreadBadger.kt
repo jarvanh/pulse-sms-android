@@ -6,20 +6,6 @@ import xyz.klinker.messenger.shared.data.DataSource
 
 class UnreadBadger(private val context: Context?) {
 
-    fun writeCountFromDatabase() {
-        if (context == null) {
-            return
-        }
-
-        try {
-            val count = DataSource.getUnreadConversationCount(context)
-            writeCount(count)
-        } catch (e: Exception) {
-
-        }
-
-    }
-
     fun clearCount() {
         writeCount(0)
     }

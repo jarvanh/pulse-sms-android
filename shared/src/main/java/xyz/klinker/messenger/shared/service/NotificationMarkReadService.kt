@@ -44,7 +44,7 @@ open class NotificationMarkReadService : IntentService("NotificationMarkReadServ
 
             ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, if (conversation == null) "" else conversation.snippet, true)
 
-            UnreadBadger(context).writeCountFromDatabase()
+            UnreadBadger(context).clearCount()
             MessengerAppWidgetProvider.refreshWidget(context)
         }
     }

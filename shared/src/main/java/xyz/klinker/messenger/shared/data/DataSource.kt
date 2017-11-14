@@ -161,6 +161,12 @@ object DataSource {
             } catch (e: Exception) {
             }
 
+    private fun clearUnreadCount(context: Context) =
+            try {
+                UnreadBadger(context).clearCount()
+            } catch (e: Exception) {
+            }
+
     /**
      * Deletes all data from the tables.
      */
@@ -973,7 +979,7 @@ object DataSource {
 
         NotificationUtils.deleteChannel(context, conversationId)
 
-        writeUnreadCount(context)
+        clearUnreadCount(context)
         NewMessagesCheckService.writeLastRun(context)
     }
 
@@ -1016,7 +1022,7 @@ object DataSource {
                 }
             }
 
-            writeUnreadCount(context)
+            clearUnreadCount(context)
         }
     }
 
@@ -1057,7 +1063,12 @@ object DataSource {
         if (updated > 0) {
             if (useApi) ApiUtils.updateConversationSnippet(accountId(context), conversationId,
                     read, archive, timestamp, snippet, encryptor(context))
-            writeUnreadCount(context)
+
+            if (read) {
+                clearUnreadCount(context)
+            } else {
+                writeUnreadCount(context)
+            }
         }
     }
 
@@ -2032,7 +2043,7 @@ object DataSource {
             ApiUtils.readConversation(accountId(context), androidDeviceId(context), conversationId)
         }
 
-        writeUnreadCount(context)
+        clearUnreadCount(context)
 
         try {
             SmsMmsUtils.markConversationRead(context, getConversation(context, conversationId)!!.phoneNumbers!!)
@@ -2083,7 +2094,7 @@ object DataSource {
                 }
             }
 
-            writeUnreadCount(context)
+            clearUnreadCount(context)
         }
 
         try {

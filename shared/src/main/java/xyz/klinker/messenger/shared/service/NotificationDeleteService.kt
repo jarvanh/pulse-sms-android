@@ -53,7 +53,7 @@ class NotificationDeleteService : IntentService("NotificationDeleteService") {
                 if (latest != null && latest.mimeType == MimeType.TEXT_PLAIN) latest.data else "",
                 true)
 
-        UnreadBadger(this).writeCountFromDatabase()
+        UnreadBadger(this).clearCount()
         MessengerAppWidgetProvider.refreshWidget(this)
     }
 
