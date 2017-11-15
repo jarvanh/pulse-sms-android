@@ -18,8 +18,6 @@ import xyz.klinker.messenger.shared.R
  */
 object FeatureFlags {
 
-    private val ALWAYS_ON_FLAGS = arrayOf<String>()
-
     private val FLAG_MESSAGING_STYLE_NOTIFICATIONS = "messaging_notifications"
     private val FLAG_ANDROID_WEAR_SECOND_PAGE = "wear_second_page"
     private val FLAG_NO_NOTIFICATION_WHEN_CONVO_OPEN = "hold_notification"
@@ -61,6 +59,10 @@ object FeatureFlags {
     private val FLAG_V_2_6_0 = "flag_v_2_6_0"
     private val FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch"
 
+
+    private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
+
+    
     // ADDING FEATURE FLAGS:
     // 1. Add the static identifiers and flag name right below here.
     // 2. Set up the flag in the constructor
@@ -100,9 +102,8 @@ object FeatureFlags {
         }
     }
 
-    private fun getValue(context: Context, sharedPrefs: SharedPreferences, key: String): Boolean {
-        return context.resources.getBoolean(R.bool.feature_flag_default) || sharedPrefs.getBoolean(key, alwaysOn(key))
-    }
+    private fun getValue(context: Context, sharedPrefs: SharedPreferences, key: String) =
+            context.resources.getBoolean(R.bool.feature_flag_default) || sharedPrefs.getBoolean(key, alwaysOn(key))
 
     private fun alwaysOn(key: String) = ALWAYS_ON_FLAGS.contains(key)
 }

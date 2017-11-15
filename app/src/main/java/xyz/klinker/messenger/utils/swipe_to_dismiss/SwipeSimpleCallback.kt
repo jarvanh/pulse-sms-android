@@ -50,9 +50,8 @@ open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : I
     private var markMargin: Int = 0
     private var initiated: Boolean = false
 
-    protected open fun getArchiveItem(context: Context): Drawable? {
-        return context.getDrawable(R.drawable.ic_archive)
-    }
+    protected open fun getArchiveItem(context: Context): Drawable? =
+            context.getDrawable(R.drawable.ic_archive)
 
     protected open fun setupEndSwipe(context: Context) {
         val set = Settings.mainColorSet
@@ -99,9 +98,7 @@ open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : I
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder): Boolean {
-        return false
-    }
+                        target: RecyclerView.ViewHolder) = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         if (direction == ItemTouchHelper.START && canDelete()) {
@@ -111,9 +108,8 @@ open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : I
         }
     }
 
-    private fun canDelete(): Boolean {
-        return this is UnarchiveSwipeSimpleCallback || this is SwipeDeleteSimpleCallback
-    }
+    private fun canDelete() =
+            this is UnarchiveSwipeSimpleCallback || this is SwipeDeleteSimpleCallback
 
     override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
         // if it is a header, don't allow swiping. if it is an item, swipe to right.
