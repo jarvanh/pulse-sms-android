@@ -1,9 +1,11 @@
 package xyz.klinker.messenger.fragment.message.load
 
 import android.support.v4.app.FragmentActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.EditText
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.util.DualSimApplication
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
@@ -16,6 +18,7 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
     val dragDismissFrameLayout: ElasticDragDismissFrameLayout by lazy { fragment.rootView as ElasticDragDismissFrameLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
     private val selectSim: View by lazy { fragment.rootView!!.findViewById<View>(R.id.select_sim) }
+    private val toolbar: Toolbar by lazy { fragment.rootView!!.findViewById<Toolbar>(R.id.toolbar) }
 
     fun init() {
         fragment.sendManager.initSendbar()
@@ -37,6 +40,10 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         try {
             DualSimApplication(selectSim).apply(fragment.argManager.conversationId)
         } catch (e: Exception) {
+        }
+
+        toolbar.setOnClickListener {
+            (activity as MessengerActivity).clickNavigationItem(R.id.drawer_view_contact)
         }
     }
 }

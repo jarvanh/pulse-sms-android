@@ -62,7 +62,7 @@ object FeatureFlags {
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
-    
+
     // ADDING FEATURE FLAGS:
     // 1. Add the static identifiers and flag name right below here.
     // 2. Set up the flag in the constructor

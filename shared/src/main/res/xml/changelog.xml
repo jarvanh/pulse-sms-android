@@ -32,9 +32,9 @@
 
     <version
         name="2.6.3"
-        description="November 15th, 2017">
+        description="November 16th, 2017">
         <text>Bug fixes around launcher badges</text>
-        <text>Various bug fixes</text>
+        <text>Various other bug fixes</text>
     </version>
 
     <version
