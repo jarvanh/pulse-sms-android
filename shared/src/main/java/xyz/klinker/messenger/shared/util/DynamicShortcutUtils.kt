@@ -52,6 +52,7 @@ class DynamicShortcutUtils(private val context: Context) {
                 infos.add(info)
             }
 
+            manager.removeAllDynamicShortcuts()
             manager.dynamicShortcuts = infos
         }
     }
