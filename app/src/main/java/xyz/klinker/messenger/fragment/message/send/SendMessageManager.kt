@@ -172,7 +172,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             uris.add(attachManager.attachedUri!!)
         }
 
-        if (PermissionsUtils.checkRequestMainPermissions(activity!!)) {
+        if ((!Account.exists() || Account.primary) && PermissionsUtils.checkRequestMainPermissions(activity!!)) {
             PermissionsUtils.startMainPermissionRequest(activity!!)
         } else if (Account.primary && !PermissionsUtils.isDefaultSmsApp(activity!!)) {
             PermissionsUtils.setDefaultSmsApp(activity!!)
