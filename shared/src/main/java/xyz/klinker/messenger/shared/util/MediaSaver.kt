@@ -62,7 +62,7 @@ class MediaSaver {
     private fun saveMessage(message: Message?) {
         val directory = MmsSettings.saveDirectory
         val extension = MimeType.getExtension(message!!.mimeType!!)
-        val fileName = "media-" + message.timestamp
+        val fileName = "media-" + System.currentTimeMillis()
 
         val directoryFile = File(directory)
         if (!directoryFile.exists()) {
