@@ -31,6 +31,12 @@
     <!--</version>-->
 
     <version
+        name="2.6.4"
+        description="November 25th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.6.3"
         description="November 16th, 2017">
         <text>Bug fixes around launcher badges</text>
