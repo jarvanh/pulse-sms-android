@@ -295,6 +295,7 @@
         <service android:name=".service.CreateNotificationChannelService" />
         <service android:name=".service.ContactResyncService" />
         <service android:name=".service.QuickComposeNotificationService" />
+        <service android:name=".service.SmsReceivedService" />
 
         <service
             android:name=".service.ComposeTileService"

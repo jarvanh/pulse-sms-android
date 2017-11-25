@@ -24,6 +24,7 @@ object NotificationUtils {
     val STATUS_NOTIFICATIONS_CHANNEL_ID = "status-notifications"
     val MEDIA_PARSE_CHANNEL_ID = "media-parsing"
     val GENERAL_CHANNEL_ID = "general"
+    val BACKGROUND_SERVICE_CHANNEL_ID = "background-service"
 
     fun cancelGroupedNotificationWithNoContent(context: Context?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
@@ -119,7 +120,19 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val statusChannel = NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_LOW)
+                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_MIN)
+        manager.createNotificationChannel(statusChannel)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun createBackgroundServiceChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val statusChannel = NotificationChannel(BACKGROUND_SERVICE_CHANNEL_ID,
+                context.getString(R.string.background_service_channel), NotificationManager.IMPORTANCE_MIN)
         manager.createNotificationChannel(statusChannel)
     }
 
@@ -204,6 +217,7 @@ object NotificationUtils {
         createDefaultChannel(context)
         createTestChannel(context)
         createStatusChannel(context)
+        createBackgroundServiceChannel(context)
         createFailedMessageChannel(context)
         createMessageGroupChannel(context)
         createMediaParseChannel(context)

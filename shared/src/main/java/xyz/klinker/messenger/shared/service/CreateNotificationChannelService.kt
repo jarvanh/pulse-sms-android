@@ -34,7 +34,7 @@ class CreateNotificationChannelService : IntentService("CreateNotificationChanne
 
     companion object {
         private val FOREGROUND_ID = 1224
-        private val NOTIFICATION_CHANNEL_VERSION = 2
+        private val NOTIFICATION_CHANNEL_VERSION = 3
         private val PREF_KEY = "needs_to_create_notification_channels_$NOTIFICATION_CHANNEL_VERSION"
 
         fun shouldRun(context: Context): Boolean {

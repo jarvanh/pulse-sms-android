@@ -1704,9 +1704,8 @@ object DataSource {
      * @param phoneNumbers the phone numbers to look up by conversation.id_matcher column.
      * @return the conversation id that the message was inserted into.
      */
-    fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long {
-        return insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), false, useApi)
-    }
+    fun insertMessage(message: Message, phoneNumbers: String, context: Context, useApi: Boolean = true): Long =
+            insertMessage(context, message, updateOrCreateConversation(phoneNumbers, message, context, useApi), false, useApi)
 
     /**
      * Checks whether or not a conversation exists for this string of phone numbers. If so, the
