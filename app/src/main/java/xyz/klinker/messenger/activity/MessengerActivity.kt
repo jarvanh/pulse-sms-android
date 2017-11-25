@@ -64,8 +64,8 @@ class MessengerActivity : AppCompatActivity() {
         fab.setOnClickListener { startActivity(Intent(applicationContext, ComposeActivity::class.java)) }
 
         colorController.configureGlobalColors()
-        navController.conversationActionDelegate.displayConversations(savedInstanceState)
         intentHandler.dismissIfFromNotification()
+        navController.conversationActionDelegate.displayConversations(savedInstanceState)
         accountController.startIntroOrLogin(savedInstanceState)
 
         val content = findViewById<View>(R.id.content)

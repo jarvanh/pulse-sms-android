@@ -21,6 +21,7 @@ class MainIntentHandler(private val activity: MessengerActivity) {
     fun newIntent(intent: Intent) {
         val handled = handleShortcutIntent(intent)
         val convoId = intent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
+
         intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
 
         if (!handled && convoId != -1L) {
@@ -91,7 +92,7 @@ class MainIntentHandler(private val activity: MessengerActivity) {
         val fromNotification = activityIntent.getBooleanExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, false)
         val convoId = activityIntent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
 
-        activityIntent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
+        activityIntent.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, false)
 
         if (fromNotification && convoId != -1L) {
             ApiUtils.dismissNotification(Account.accountId, Account.deviceId, convoId)
