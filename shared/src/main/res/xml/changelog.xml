@@ -33,6 +33,7 @@
     <version
         name="2.6.4"
         description="November 25th, 2017">
+        <text>Improvements to syncing read status and notifications across devices</text>
         <text>Bug fixes</text>
     </version>
 
