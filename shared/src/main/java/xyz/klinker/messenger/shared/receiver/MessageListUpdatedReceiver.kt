@@ -20,8 +20,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Handler
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
 
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -58,6 +62,11 @@ class MessageListUpdatedReceiver(private val fragment: IMessageListFragment) : B
             if (messageType == Message.TYPE_RECEIVED) {
                 fragment.setShouldPullDrafts(false)
                 fragment.loadMessages(true)
+
+                if (NotificationConstants.CONVERSATION_ID_OPEN == conversationId) {
+                    DataSource.readConversation(context, conversationId, true)
+                    Handler().postDelayed({ ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId) }, 1000)
+                }
             } else {
                 fragment.loadMessages(false)
             }
