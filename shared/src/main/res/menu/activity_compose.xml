@@ -7,4 +7,11 @@
         android:title="@string/menu_mobile_only"
         android:checkable="true"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_group_mms"
+        android:title="@string/use_group_mms"
+        android:checkable="true"
+        app:showAsAction="never" />
+
 </menu>

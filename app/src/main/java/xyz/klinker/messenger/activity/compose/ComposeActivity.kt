@@ -25,6 +25,7 @@ import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
@@ -66,8 +67,11 @@ class ComposeActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_compose, menu)
 
-        val item = menu.findItem(R.id.menu_mobile_only)
-        item.isChecked = Settings.mobileOnly
+        val mobileOnly = menu.findItem(R.id.menu_mobile_only)
+        mobileOnly.isChecked = Settings.mobileOnly
+
+        val groupMms = menu.findItem(R.id.menu_group_mms)
+        groupMms.isChecked = MmsSettings.groupMMS
 
         return true
     }
@@ -80,7 +84,6 @@ class ComposeActivity : AppCompatActivity() {
             }
             R.id.menu_mobile_only -> {
                 val newValue = !item.isChecked
-
                 item.isChecked = newValue
 
                 Settings.setValue(this, getString(R.string.pref_mobile_only), newValue)
@@ -89,6 +92,16 @@ class ComposeActivity : AppCompatActivity() {
                 contactsProvider.toggleMobileOnly(item.isChecked)
                 ApiUtils.updateMobileOnly(Account.accountId, newValue)
 
+                return true
+            }
+            R.id.menu_group_mms -> {
+                val newValue = !item.isChecked
+                item.isChecked = newValue
+
+                Settings.setValue(this, getString(R.string.pref_group_mms), newValue)
+                MmsSettings.forceUpdate(this)
+
+                ApiUtils.updateGroupMMS(Account.accountId, newValue)
                 return true
             }
         }
