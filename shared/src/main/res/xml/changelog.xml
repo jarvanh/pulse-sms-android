@@ -32,8 +32,9 @@
 
     <version
         name="2.6.4"
-        description="November 25th, 2017">
+        description="November 27th, 2017">
         <text>Improvements to syncing read status and notifications across devices</text>
+        <text>Add a checkbox item to the three dot overflow menu on the compose screen for whether or not to use group MMS</text>
         <text>Bug fixes</text>
     </version>
 

@@ -1,7 +1,4 @@
-This release:<br/>
-- New compose UI that allows you to search the contact groups defined in your contacts app<br/>
-- UI improvements for images and links<br/>
-- Allow attaching contact as plain text or vCard<br/>
-- Improvements to the contact search UI when composing a new message<br/>
-- Prep work for future features<br/>
-+ Lots of bug fixes and it is built for Android 8.1
+This release includes:<br/>
+- Improvements to syncing read status and notifications across devices<br/>
+- A checkbox item to the three dot overflow menu on the compose screen for whether or not to use group MMS<br/>
++ Bug fixes, dependency updates, stability improvements
