@@ -12,6 +12,7 @@ import android.telephony.SmsMessage
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.exception.SmsSaveException
@@ -116,6 +117,15 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
     }
 
     private fun insertSms(context: Context, address: String, body: String, simSlot: Int): Long {
+        var body = body
+        var address = address
+
+        if (FeatureFlags.EMAIL_RECEPTION_CONVERSION && address.length <= 5 && body.split(" ".toRegex())[0].contains("@")) {
+            // this is a text from an email address.
+            address = body.split(" ".toRegex())[0]
+            body = body.split(" ".toRegex()).drop(1).joinToString(" ")
+        }
+
         val message = Message()
         message.type = Message.TYPE_RECEIVED
         message.data = body.trim { it <= ' ' }
@@ -125,6 +135,8 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         message.seen = false
         message.simPhoneNumber = DualSimUtils.getNumberFromSimSlot(simSlot)
         message.sentDeviceId = -1L
+
+
 
         val source = DataSource
 

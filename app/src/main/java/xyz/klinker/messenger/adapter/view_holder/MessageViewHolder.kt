@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.adapter.view_holder
 
 import android.animation.ValueAnimator
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -130,7 +131,11 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
             } else if (mimeType == MimeType.MEDIA_YOUTUBE_V2) {
                 val preview = YouTubePreview.build(data!!)
                 if (preview != null) {
-                    itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(preview.url)))
+                    try {
+                        itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(preview.url)))
+                    } catch (e: ActivityNotFoundException) {
+                        // Android TV
+                    }
                 }
             } else if (mimeType == MimeType.MEDIA_ARTICLE) {
                 startArticle()

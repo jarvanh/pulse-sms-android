@@ -58,6 +58,7 @@ object FeatureFlags {
     private val FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status"
     private val FLAG_V_2_6_0 = "flag_v_2_6_0"
     private val FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch"
+    private val FLAG_EMAIL_RECEPTION_CONVERSION= "flag_email_reception_conversion"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -70,22 +71,27 @@ object FeatureFlags {
 
     val SKIP_INTRO_PAGER = true
 
+    // always on
+    var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
+
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false
     var QUICK_COMPOSE: Boolean = false
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
 
     // need tested
-    var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
+    var EMAIL_RECEPTION_CONVERSION: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         QUICK_COMPOSE = getValue(context, sharedPrefs, FLAG_QUICK_COMPOSE)
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
 
-        REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
+        EMAIL_RECEPTION_CONVERSION = getValue(context, sharedPrefs, FLAG_EMAIL_RECEPTION_CONVERSION)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
