@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.CursorUtil
 import xyz.klinker.messenger.utils.TextAnywhereConversationCardApplier
 
@@ -29,6 +30,8 @@ class MainOnStartDelegate(private val activity: MessengerActivity) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 dismissAllActiveNotifications()
             }
+
+            ScheduledMessageJob.scheduleNextRun(activity)
         }, 1000)
     }
 

@@ -106,17 +106,21 @@ class ScheduledMessageJob : BackgroundJob() {
             }
 
             val messages = source.getScheduledMessagesAsList(context)
+                    .sortedBy { it.timestamp }
+
             if (messages.isNotEmpty()) {
                 val timeout = messages[0].timestamp - Date().time
 
                 val component = ComponentName(context, ScheduledMessageJob::class.java)
                 val builder = JobInfo.Builder(JOB_ID, component)
+                        .setPersisted(true)
                         .setMinimumLatency(timeout)
                         .setOverrideDeadline(timeout + TimeUtils.MINUTE)
                         .setRequiresCharging(false)
                         .setRequiresDeviceIdle(false)
 
                 val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                jobScheduler.cancel(JOB_ID)
                 jobScheduler.schedule(builder.build())
 
                 Log.v("scheduled message", "new message scheduled")
