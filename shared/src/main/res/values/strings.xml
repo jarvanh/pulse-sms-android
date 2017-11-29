@@ -506,7 +506,7 @@
     <string name="channels">Channels</string>
     <string name="default_channel">Default Channel</string>
     <string name="channels_global_warning">Many global customizations are now only possible per-channel.</string>
-    <string name="channels_global_warning_2">With Android Oreo, apps are forced to go through <i>Notification Channels</i> to customize the ringtone, vibration, LED, and all other notification customizations.\n\n
+    <string name="channels_global_warning_2">With Android Oreo, apps are forced to go through <i>Notification Channels</i> to customize the ringtone, vibration, LED, and all other notification options.\n\n
         You can customize these options with the button below and read more about this change, in the help section of Pulse.</string>
     <string name="off">Off</string>
     <string name="on">On</string>

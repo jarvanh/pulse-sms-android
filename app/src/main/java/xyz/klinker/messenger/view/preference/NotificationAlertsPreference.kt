@@ -65,7 +65,6 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
         val builder = AlertDialog.Builder(context, R.style.SubscriptionPicker)
                 .setView(layout)
                 .setPositiveButton(R.string.ok) { _, _ ->  }
-                .setNegativeButton(R.string.test) { _, _ -> makeTestNotification() }
 
         if (AndroidVersionUtil.isAndroidO) {
             layout.findViewById<View>(R.id.vibrate).visibility = View.GONE
@@ -79,6 +78,7 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
                 context.startActivity(intent)
             }
         } else {
+            builder.setNegativeButton(R.string.test) { _, _ -> makeTestNotification() }
             layout.findViewById<View>(R.id.channels_disclaimer).visibility = View.GONE
         }
 
