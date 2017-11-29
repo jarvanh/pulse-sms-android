@@ -31,6 +31,12 @@
     <!--</version>-->
 
     <version
+        name="2.6.5"
+        description="December 5th, 2017">
+        <text>Fixes for scheduled messages</text>
+    </version>
+
+    <version
         name="2.6.4"
         description="November 27th, 2017">
         <text>Improvements to syncing read status and notifications across devices</text>
