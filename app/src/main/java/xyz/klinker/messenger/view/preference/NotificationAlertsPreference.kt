@@ -73,7 +73,7 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
             layout.findViewById<View>(R.id.heads_up).visibility = View.GONE
 
             builder.setNeutralButton(R.string.default_channel) { _, _ ->
-                val intent = Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                 intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, context.packageName)
                 intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
                 context.startActivity(intent)

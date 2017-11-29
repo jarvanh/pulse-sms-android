@@ -394,7 +394,7 @@
     <string name="after_four_messages">After four messages</string>
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
     <string name="alert_types">Alert Types</string>
-    <string name="alert_types_summary">Various customizations for notifications</string>
+    <string name="alert_types_summary">Customize the ringtone, vibration pattern and more</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
@@ -501,14 +501,13 @@
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="channel_settings">Notification Channel Settings</string>
-    <string name="channel_settings_summary">Channels are required to customize notifications for Android 8.0 and above</string>
+    <string name="channel_settings_summary">With Android Oreo, this system level setting allows you to customize the ringtone, vibration, LED, and more, for this conversation</string>
     <string name="restore_default_channel_settings">Restore Default Notification Settings</string>
     <string name="channels">Channels</string>
     <string name="default_channel">Default Channel</string>
     <string name="channels_global_warning">Many global customizations are now only possible per-channel.</string>
-    <string name="channels_global_warning_2">Android\'s <i>Notification Channels</i> are now required for most of this configuration.\n\n
-        You can customize any individual conversation alerts by creating a <i>Notification Channel</i> in that conversation\'s settings menu.
-        Use the default channel to customize any conversations that you have not created an individual channel for.</string>
+    <string name="channels_global_warning_2">With Android Oreo, apps are forced to go through <i>Notification Channels</i> to customize the ringtone, vibration, LED, and all other notification customizations.\n\n
+        You can customize these options with the button below and read more about this change, in the help section of Pulse.</string>
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
