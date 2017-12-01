@@ -40,11 +40,11 @@ public interface AccountService {
     @POST("accounts/login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("accounts/remove/{account_id}")
-    Call<Void> remove(@Path("account_id") String accountId);
+    @POST("accounts/remove_account")
+    Call<Void> remove(@Query("account_id") String accountId);
 
-    @POST("accounts/clean/{account_id}")
-    Call<Void> clean(@Path("account_id") String accountId);
+    @POST("accounts/clean_account")
+    Call<Void> clean(@Query("account_id") String accountId);
 
     @GET("accounts/count")
     Call<AccountCountResponse> count(@Query("account_id") String accountId);
