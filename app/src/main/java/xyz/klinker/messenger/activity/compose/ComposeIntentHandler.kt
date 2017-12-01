@@ -45,7 +45,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
         val builder = StringBuilder()
         for (i in phoneNumbers.indices) {
-            builder.append(phoneNumbers[i])
+            builder.append(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(phoneNumbers[i]))
             if (i != phoneNumbers.size - 1) {
                 builder.append(", ")
             }
