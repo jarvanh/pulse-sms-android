@@ -48,7 +48,7 @@
     <string name="menu_copy_phone_number">Nummer kopieren</string>
     <string name="menu_conversation_blacklist">Kontakt blockieren</string>
     <string name="menu_conversation_schedule">Nachricht planen</string>
-    <string name="menu_contact_settings">Kontakteinstellungen</string>
+    <string name="menu_contact_settings">Unterhaltungs-Einstellungen</string>
     <string name="menu_group_settings">Gruppeneinstellungen</string>
     <string name="menu_snooze_off">Aus</string>
     <string name="menu_snooze_1">1 Stunde</string>
@@ -130,7 +130,7 @@ Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
     <string name="save">Speichern</string>
     <string name="share">Teilen</string>
     <string name="share_content">Inhalt teilen...</string>
-    <string name="saved">Im /Download-Ordner gespeichert!</string>
+    <string name="saved">Im Download-Ordner gespeichert!</string>
     <string name="failed_to_save">Speichern fehlgeschlagen</string>
     <string name="start_recording_audio">Knopf drücken um Audioaufnahme zu starten!</string>
     <string name="audio_recording_error">Fehler bei der Aufnahme :(</string>
@@ -156,7 +156,7 @@ Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
     <string name="enter_contact_name">Name des Kontaktes eingeben</string>
     <string name="error_processing_vcard">Fehler bei der Verarbeitung der vCard</string>
     <!-- Onboarding Screen -->
-    <string name="permissions_needed">Die App kann ohne diese Berechtigungen nicht funktionieren! Sie müssen sie gewähren, bevor wir fortfahren können.</string>
+    <string name="permissions_needed">Die App funktioniert ohne diese Berechtigungen nicht! Bitte Zugriff gewähren, um den Vorgang fortzusetzen.</string>
     <string name="loading_messages">Optimiere...</string>
     <string name="loading_messages_summary">Wir holen nur noch Ihre Nachrichten in die App. Es dauert nicht lange!</string>
     <string name="tooltip_got_it">Alles klar!</string>
@@ -322,11 +322,11 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="delete_account_confirmation">Sind Sie sicher, dass Sie Ihren Account alles andere mit ihm löschen möchten? Sie können sich später jederzeit erneut registrieren!</string>
     <string name="change_subscription">Abo ändern</string>
     <string name="cancel_on_the_play_store">Verwalten oder beenden Sie ihr Abo im Play Store</string>
-    <string name="resync_account">Account erneut synchronisieren</string>
+    <string name="resync_account">Nachrichten erneut synchronisieren</string>
     <string name="resync_account_summary">Nachrichten fehlen? Bringen Sie hiermit ihr Gerät wieder auf den Stand des primären Gerätes.</string>
     <string name="resync_account_summary_phone">Entfernt die Inhalte Ihres Accounts und ersetzt sie mit dem derzeitigen Inhalt der internen SMS-Datenbank.</string>
     <string name="resync_account_confirmation">Dies löscht alle Nachrichten von diesem Gerät und lädt eine frische Kopie von ihrem primären Gerät herüber. Fortfahren?</string>
-    <string name="normalize_color_scheme">Oder, Sie können eine einzelne Farbe wählen, die für diesen Kontakt verwendet wird:</string>
+    <string name="normalize_color_scheme">Sie können auch eine Farbe wählen, auf der das Design basieren soll:</string>
     <string name="no_apps_found">Keine Apps für diese Aktion verfügbar</string>
     <string name="you_denied_permission">Sie haben diese Berechtigung nicht gewährt</string>
     <string name="supported_platforms">Unterstützte Plattformen</string>
@@ -346,13 +346,13 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="alert_types_summary">Benachrichtigungen personalisieren</string>
     <string name="strip_unicode">Unicode-Zeichen entfernen</string>
     <string name="use_internal_browser">Nutze den internen Browser</string>
-    <string name="strip_unicode_summary">Diese Zeichen werden aus ausgehenden Nachrichten entfernt.</string>
+    <string name="strip_unicode_summary">Diese Zeichen werden aus gesendeten Nachrichten entfernt</string>
     <string name="giffgaff_delivery">Giffgaff-Zustellberichte</string>
     <string name="notification_actions">Benachrichtigungsaktionen</string>
     <string name="notification_actions_summary">Maximal drei Aktionen können auf eine Benachrichtigung angewendet werden</string>
     <string name="mms_download_directory">Mediendownload-Ordner</string>
-    <string name="refresh_firebase">Pushbenachrichtigungen aktualisieren</string>
-    <string name="refresh_firebase_summary">Nachrichten erscheinen nicht auf diesem Gerät? Versuchen Sie es erneut, nachdem Sie diese Option gewählt haben.</string>
+    <string name="refresh_firebase">Account aktualisieren</string>
+    <string name="refresh_firebase_summary">Probleme mit dem Einloggen oder Synchronisieren Ihres Accounts? Nutzen Sie diese Option.</string>
     <string name="refreshing_notifications">Benachrichtigungs-Token wird erneuert...</string>
     <string name="refresh_firebase_warning">Wenn Sie diesen Prozess starten, <b>müssen</b> Sie ihn zu Ende führen.
 Nach dem Beenden müssen Sie sich in allen anderen Geräten neu einloggen. Fortfahren?</string>
@@ -365,7 +365,7 @@ Nach dem Beenden müssen Sie sich in allen anderen Geräten neu einloggen. Fortf
     <string name="max_mms_size">Maximale Bildgröße</string>
     <string name="use_group_mms">Nutze Gruppen-MMS</string>
     <string name="auto_save_media">Medien automatisch speichern</string>
-    <string name="auto_save_media_summary">Speichere alle MMS-Medien nach dem Empfang automatisch in den /Downloads-Ordner</string>
+    <string name="auto_save_media_summary">Speichere alle MMS-Medien nach dem Empfang automatisch im Download-Ordner</string>
     <string name="apn_configuration">APN Konfiguration</string>
     <string name="override_system_apn">System-APN-Einstellungen überschreiben</string>
     <string name="mmsc_url">MMSC URL</string>
@@ -466,7 +466,7 @@ Wenn Sie innerhalb von zwei Tagen kein neues Abo abschließen, werden Sie aus Ih
     <string name="purchase_error_cancelled">Sie haben den Kauf abgebrochen :(</string>
     <string name="purchase_error_bad_google_play">Oh oh, Google Play scheint Probleme zu haben. Wir haben eine Fehlermeldung erhalten.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Dieser Kauf passt nicht zu unseren Daten.</string>
-    <string name="subscriptions">Abos werden nach dem siebentägigen Testzeitraum berechnet und könnnen jederzeit geändert/beendet werden:</string>
+    <string name="subscriptions">Abos werden nach dem siebentägigen Testzeitraum berechnet und könnnen jederzeit geändert / gekündigt werden</string>
     <string name="billed_immediately">Dies wird sofort berechnet.</string>
     <string name="lifetime_purchase">10,99$ - Lebenslange Nutzung</string>
     <string name="lifetime_purchase_summary">Einmal zahlen - und nie wieder!</string>
@@ -478,4 +478,17 @@ Wenn Sie innerhalb von zwei Tagen kein neues Abo abschließen, werden Sie aus Ih
     <string name="monthly_purchase_summary">Nur ausprobieren? Kein Problem!</string>
     <string name="change_subscription_message">Sie möchten upgraden? Super! Nachdem Sie auf der nächsten Seite Ihre Auswahl getroffen haben sollten Sie die Play Store-App öffnen und das Abo manuell kündigen.</string>
     <string name="beautiful_powerful_instant">Schön, vielseitig, schnell.</string>
+    <string name="optimized_for_all_your_devices">Pulse ist für <b>alle</b> Ihre Geräte optimiert.
+Senden Sie Textnachrichten aus dem Web, von Ihrem PC, Ihrem Tablet, Ihrer Uhr und sogar Ihrem Fernseher.</string>
+    <string name="true_imessage_competitor">Die erste <b>echte</b> Alternative zu iMessage unter Android.</string>
+    <string name="try_it">Probieren Sie es jetzt aus!</string>
+    <string name="seven_days_free">7 Tage kostenlos!</string>
+    <string name="competition_cant_beat">Niemand schlägt uns hinsichtlich Preis, Geschwindigkeit oder Service - finden Sie es <b>in sieben Tagen</b> selbst heraus!</string>
+    <string name="select_a_trial_below">Wählen Sie eine der Optionen unten aus, um den <b>kostenlosen</b> Testzeitraum zu beginnen.</string>
+    <string name="charged_after_trial">Kosten nach Ablauf des Testzeitraums:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nMonat</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 Monate</string>
+    <string name="yearly_purchase_improved">$5.99 /\nJahr</string>
+    <string name="subscription_toast">Ihnen entstehen <b>keine Kosten</b> vor Ende des siebentägigen Testzeitraums.
+Kündigen Sie jederzeit.</string>
 </resources>

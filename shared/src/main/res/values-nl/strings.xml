@@ -153,7 +153,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <!-- Compose Screen -->
     <string name="compose_message">Stel nieuw bericht op</string>
     <string name="send_message">Verstuur bericht</string>
-    <string name="enter_contact_name">Kies contact</string>
+    <string name="enter_contact_name">Kies een contact</string>
     <string name="error_processing_vcard">Fout bij verwerken vcard</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">De app kan niet werken zonder deze permissies! Je moet ze accepteren voordat we verder kunnen gaan.</string>
@@ -341,7 +341,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="after_three_messages">Na drie berichten</string>
     <string name="after_four_messages">Na vier berichten</string>
     <string name="send_as_mms_summary">Lange berichten verzenden als MMS i.p.v. SMS</string>
-    <string name="alert_types">Types notificaties</string>
+    <string name="alert_types">Instellingen notificaties</string>
     <string name="alert_types_summary">Vele aanpassingen voor notificaties</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="use_internal_browser">Gebruik interne browser</string>
@@ -366,7 +366,7 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="auto_save_media">Auto-save media</string>
     <string name="auto_save_media_summary">Automatisch inkomende MMS-media opslaan in de Downloads-map</string>
     <string name="apn_configuration">APN Configuratie</string>
-    <string name="override_system_apn">Override system APNs</string>
+    <string name="override_system_apn">Overschrijf system APNs</string>
     <string name="mmsc_url">MMSC URL</string>
     <string name="mms_proxy">MMS proxy</string>
     <string name="mms_port">MMS port</string>
@@ -393,7 +393,7 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="scheduled_to_hint">Contact om naar te verzenden...</string>
     <string name="scheduled_message_sent">Gepland bericht met succes verstuurd</string>
     <string name="no_scheduled_messages">Geen geplande berichten</string>
-    <string name="no_scheduled_messages_summary">Plan een nieuw bericht door de plus-knop onderaan te gebruiken.</string>
+    <string name="no_scheduled_messages_summary">Plan een nieuw bericht met de plus-knop onderaan.</string>
     <string name="scheduled_message_in_future">De tijd moet in de toekomst zijn!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypteren en uploaden...</string>

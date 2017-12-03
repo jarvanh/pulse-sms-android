@@ -23,7 +23,7 @@
     <string name="api_email">Adresse courriel</string>
     <string name="api_password">Mot de passe</string>
     <string name="api_forgot_password">Mot de passe oublié ?</string>
-    <string name="api_password_confirmation">Confirmez votre mot de passe</string>
+    <string name="api_password_confirmation">Confirmation du mot de passe</string>
     <string name="api_name">Nom</string>
     <string name="api_phone_number">Numéro de téléphone</string>
     <string name="api_connecting">Connexion au serveur...</string>

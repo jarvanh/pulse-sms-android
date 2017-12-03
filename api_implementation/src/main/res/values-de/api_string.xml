@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">Einloggen</string>
+    <string name="api_login">Anmelden</string>
     <string name="api_signup">Registrieren</string>
     <string name="api_signup_failed">Einloggen auf diesem Gerät nicht möglich! Sie müssen sich zuerst mit einem Gerät einloggen, das eine Telefonnummer hat.</string>
     <string name="api_skip_signup">Oder, falls Sie die App nur auf diesem Gerät nutzen und keine Cloud-Features nutzen möchten, können Sie diesen Schritt überspringen:</string>

@@ -181,6 +181,7 @@
     <string name="start_trial">Попробовать</string>
     <string name="not_now">Не сейчас</string>
     <string name="onboarding_done">Готово</string>
+    <string name="play_store_subscription_warning">Вы будете перенаправлены в окно управления подписками Play Маркета. Оплаты <b>не будет</b> взиматься до истечения пробного периода(7 дней), можно отменить подписку в любой момент.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Новое сообщение от %1$s</string>
     <plurals name="new_conversations">
@@ -211,7 +212,10 @@
     <string name="new_message">Новое сообщение</string>
     <string name="received_new_message">Получено новое сообщение!</string>
     <string name="media">Медиа</string>
+    <string name="default_notifications_channel">Стандартные настройки уведомлений беседы.</string>
+    <string name="default_notifications_channel_description">Данные настройки будут применены во всех диалогах, где ещё не был создан собственный Канал Уведомлений.</string>
     <string name="test_notifications_channel">Тестовое уведомление</string>
+    <string name="status_notifications_channel">Уведомления состояния</string>
     <string name="general_notifications_channel">Основные</string>
     <string name="media_parse_channel">Медиа анализатор</string>
     <string name="failed_messages_channel">Неотправленные сообщения</string>
@@ -306,6 +310,7 @@
     <string name="font_size">Размер шрифта</string>
     <string name="rounder_bubbles">Закруглённые пузырьки сообщений</string>
     <string name="apply_theme_globally">Применить для всех диалогов</string>
+    <string name="apply_theme_globally_summary">Удалить все индивидуальные настройки оформления диалогов в пользу общей цветовой палитры.</string>
     <string name="swipe_delete">Удалить жестом</string>
     <string name="blacklist_hint">Номер для добавления в ч/с</string>
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
@@ -332,7 +337,7 @@
     <string name="resync_account_summary">Отсутствуют сообщения? Используйте это, чтобы синхронизировать данные с основным устройством.</string>
     <string name="resync_account_summary_phone">Сообщения на сервере будут стёрты и заменены актуальными, хранящимися непосредственно в памяти устройства.</string>
     <string name="resync_account_confirmation">Все сообщения будут удалены с этого устройства и загрузятся актуальные данные с основного. Вы уверены, что хотите этого?</string>
-    <string name="normalize_color_scheme">Или, можете выбрать единственный общий цвет для контакта:</string>
+    <string name="normalize_color_scheme">Или, можете выбрать единственный цвет общей темы:</string>
     <string name="no_apps_found">Не найдено приложений для выполнения этого действие</string>
     <string name="you_denied_permission">Вы не дали на это разрешение</string>
     <string name="supported_platforms">Поддерживаемые платформы</string>
@@ -432,8 +437,10 @@
     <string name="minutes">Минуты</string>
     <string name="test">Тест</string>
     <string name="channel_settings">Настройки каналов уведомлений</string>
+    <string name="channel_settings_summary">Каналы нужны, чтобы настраивать уведомления в Android 8 и выше.</string>
     <string name="restore_default_channel_settings">Восстановить стандартные настройки уведомлений</string>
     <string name="channels">Каналы</string>
+    <string name="default_channel">Стандартный канал</string>
     <string name="off">Не включать</string>
     <string name="on">Включать</string>
     <string name="rate_it">Оценить!</string>

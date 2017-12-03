@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
     <string name="menu_archive_conversation">أرشيف المحادثة</string>
     <string name="menu_move_to_inbox">الانتقال إلى البريد الوارد</string>
     <string name="menu_conversation_information">معلومات المحادثه</string>
+    <string name="menu_copy_phone_number">نسخ الرقم</string>
     <string name="menu_conversation_blacklist">قائمة الاتصال السوداء المحظورة</string>
     <string name="menu_conversation_schedule">جدولة الرسالة</string>
     <string name="menu_contact_settings">إعدادات المحادثة</string>
@@ -104,7 +105,7 @@
     <string name="conversations">المحادثات</string>
     <string name="messages">الرسائل</string>
     <!-- Invite Friends Screen -->
-    <string name="invite_friends_title">هل تحب’ نبض الرسائل?</string>
+    <string name="invite_friends_title">هـل تحب نبـض الرسائـل ..?</string>
     <string name="invite_friends_summary">سينجح التطبيق بجهودك وجهود الأخريين
 فكلما كان هناك الكثير من المتحمسين للمساعدة كلما استطعنا أن نقوم بتطوير منتجنا ليكون الأفضل، لذا قم بدعوة أصدقائك لتجربة التطبيق.
 ما عليك إلا اختيار الأصدقاء الذين تريد إرسال التطبيق لهم من القائمة السفلية وسيتم إرسال رسالة قصيرة لهم تحوي وصف للبرنامج وكذلك رابط لتحميله.</string>
@@ -196,6 +197,7 @@ http://messenger.klinkerapps.com</string>
     <string name="start_trial">ابدأ\nالتجربه</string>
     <string name="not_now">ليس\nالآن</string>
     <string name="onboarding_done">تم</string>
+    <string name="play_store_subscription_warning">سيتم إعادة توجيهك إلى اشتراك متجر بلاي نظام الشراء. أنت <b>سوف لن</b> يتم التغير حتى نهاية الأيام السبعة ويمكنك إلغاء في أي وقت من صفحة متجر قوقل بلاي.</string>
     <!-- Notifications -->
     <string name="notification_ticker">رسالة جديده من %1$s</string>
     <plurals name="new_conversations">
@@ -230,6 +232,9 @@ http://messenger.klinkerapps.com</string>
     <string name="new_message">رسالة جديده</string>
     <string name="received_new_message">لقد تسلمت رسالة نصية جديدة</string>
     <string name="media">الوسائط</string>
+    <string name="default_notifications_channel">إشعارات افتراضية للمحادثة</string>
+    <string name="default_notifications_channel_description">سيتم تطبيق هذه الإعدادات على أي محادثات
+حيث لم تقم بإنشاء قناة إعلام فردية للتخصيص لكل محادثة.</string>
     <string name="test_notifications_channel">تجربة الإشعارات</string>
     <string name="status_notifications_channel">إشعارات الحالة</string>
     <string name="general_notifications_channel">الإشعارات العامة</string>
@@ -245,6 +250,8 @@ http://messenger.klinkerapps.com</string>
     <string name="app_version">صفحة التطبيق</string>
     <string name="account_information">معلومات الحساب</string>
     <string name="account_actions">إجراءات الحساب</string>
+    <string name="danger_zone">منطقة الخطر</string>
+    <string name="be_careful_using_these_settings">اتبع الإرشادات وتوخ الحذر عند استخدام هذه الإجراءات.</string>
     <string name="device_id">معرّف الجهاز</string>
     <string name="device_info">معلومات الجهاز</string>
     <string name="website">عنوان موقع الويب</string>
@@ -260,7 +267,7 @@ http://messenger.klinkerapps.com</string>
     <string name="issues">متتبع المشاكل</string>
     <string name="issues_summary">يمكن استخدامها أيضًا كخارطة طريق</string>
     <string name="google_plus">جوجل بلص Google+</string>
-    <string name="google_plus_summary">مجتمع Pulse التجريبي</string>
+    <string name="google_plus_summary">نبض الرسائل للتواصل اجتماعي التجريبي</string>
     <string name="email">الايميل</string>
     <string name="email_summary">luke@klinkerapps.com</string>
     <string name="twitter">تويتر Twitter</string>
@@ -322,10 +329,16 @@ http://messenger.klinkerapps.com</string>
     <string name="sound_effects">مؤثرات صويته</string>
     <string name="delivery_reports">تقارير التسليم</string>
     <string name="theme_settings">تخصيص</string>
+    <string name="conversation_list_category">قائمة المحادثات</string>
+    <string name="general_category">العام</string>
+    <string name="theme_settings_redirect">الثيمات</string>
     <string name="base_theme">الثيم الاساسي</string>
     <string name="global_theme_color">لون الثيم</string>
     <string name="font_size">حجم الخط</string>
     <string name="rounder_bubbles">فقاعات رسالة مستديرة</string>
+    <string name="apply_theme_globally">تنفيذ على كافة المحادثات</string>
+    <string name="apply_theme_globally_summary">إزالة المظاهر لكل محادثة، لتنفيذ
+هذه مجموعة اللون العالمي.</string>
     <string name="swipe_delete">مرر سريعا للحذف</string>
     <string name="blacklist_hint">اضف الرقم إلى القائمة السوداء</string>
     <string name="add_blacklist">%1$s هل أنت متاكد من اضافة هذا الرقم إلى القائمة السوداء؟
@@ -359,7 +372,7 @@ http://messenger.klinkerapps.com</string>
     <string name="resync_account_confirmation">هذه العملية ستقوم بحذف كافة الرسائل المتواجدة على هذا الجهاز، 
 وسوف تعود النسخة الحالية خالية تمامًا من كل المواد التي يحتويها الجهاز الأساسي، 
 هل أنت واثق من رغبتك في اتخاذ هذه الخطوة</string>
-    <string name="normalize_color_scheme">أو، يمكنك اختيار لون واحد تريده لكي تؤسس الاتصال على:</string>
+    <string name="normalize_color_scheme">أو، يمكنك اختيار لون واحد الذي تريد أن يستند موضوع على:</string>
     <string name="no_apps_found">لم نجد تطبيقات للتعامل مع هذا العمل</string>
     <string name="you_denied_permission">تم رفض منح هذه التصاريح</string>
     <string name="supported_platforms">المنصات المدعومه</string>
@@ -378,7 +391,8 @@ http://messenger.klinkerapps.com</string>
     <string name="alert_types">أنواع التنبيه</string>
     <string name="alert_types_summary">الخيارات المختلفه للاخطارات.</string>
     <string name="strip_unicode">شريط اليونيكود</string>
-    <string name="strip_unicode_summary">ستتم إزالة هذه الأحرف من الرسائل الصادرة.</string>
+    <string name="use_internal_browser">استخدام المتصفح الداخلي</string>
+    <string name="strip_unicode_summary">ستتم إزالة هذه الأحرف من الرسائل الصادرة</string>
     <string name="giffgaff_delivery">Giffgaff تقارير التسليم</string>
     <string name="notification_actions">إجراءات التنبيه</string>
     <string name="notification_actions_summary">يمكن تطبيق ثلاثة إجراءات كحد أقصى على إشعار</string>
@@ -390,12 +404,14 @@ http://messenger.klinkerapps.com</string>
 بعد أن يتم ذلك، سوف تحتاج إلى تسجيل الدخول مرة أخرى، على جميع الأجهزة الأخرى الخاصة بك. هل ترغب في الاستمرار?</string>
     <string name="show_conversation_history">عرض سجل المحادثات</string>
     <string name="show_conversation_history_summary">ستعرض الإشعارات الرسائل السابقة في المحادثة</string>
+    <string name="emoji_style">نمط الرموز التعبيرية</string>
+    <string name="emoji_style_default">النظام الافتراضي</string>
+    <string name="emoji_style_android_o">نظام قوقل O</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">الحد الأقصى لحجم الصورة</string>
     <string name="use_group_mms">استخدام المجموعة MMS</string>
     <string name="auto_save_media">حفظ تلقائي  للوسائط</string>
-    <string name="auto_save_media_summary">حفظ تلقائيا MMS الوسائط في /مجلد التنزيلات عندما
-يتم التنزيل أو الرفع.</string>
+    <string name="auto_save_media_summary">حفظ تلقائيا كافة الوسائط MMS في المجلد /التنزيلات عند استلامه</string>
     <string name="apn_configuration">APN إعدادات التكوين</string>
     <string name="override_system_apn">نظام التجاوز APNs</string>
     <string name="mmsc_url">MMSC رابط</string>
@@ -449,7 +465,7 @@ http://messenger.klinkerapps.com</string>
     <string name="did_you_know">هل كنت تعلم؟</string>
     <string name="use_from_anywhere">يمكن استخدام برنامج pulse عن طريق أي جهاز متصل بشبكة الانترنت -
 لا تتأخر وقم بتجربته اليوم</string>
-    <string name="use_from_anywhere_short">يمكن استخدام برنامج Pulse على اي جهاز من الاجهزة الخاصة بك!</string>
+    <string name="use_from_anywhere_short">يمكن استخدام تطبيق نبض الرسائل على أي جهاز من الأجهزة الخاصة بك!</string>
     <string name="learn_more">تعلم أكثر</string>
     <string name="dismiss">رفض</string>
     <string name="renew">للتجديد</string>
@@ -459,15 +475,22 @@ http://messenger.klinkerapps.com</string>
     <string name="minutes">دقيقه</string>
     <string name="test">اختبار</string>
     <string name="channel_settings">إعدادات إشعار القناة</string>
+    <string name="channel_settings_summary">مطلوبة القنوات لتخصيص الإشعارات لالروبوت 8.0 وما فوق</string>
+    <string name="restore_default_channel_settings">استعادة إعدادات الإشعارات الافتراضي</string>
     <string name="channels">القنوات</string>
+    <string name="default_channel">القناة الإفتراضية</string>
     <string name="channels_global_warning">العديد من التخصيصات العالمية ليست ممكنة فقط لكل قناة.</string>
+    <string name="channels_global_warning_2">أندرويد <i>إشعار القنوات</i> هناك حاجة الآن لأكثر من هذا الضبط.\n\n
+يمكنك تخصيص أي تنبيهات المحادثة الفردية عن طريق إنشاء <i>إشعار القنوات</i> في قائمة إعدادات المحادثة هذه.
+استخدم القناة الافتراضية لتخصيص أي محادثات لم تنشئ قناة فردية لها.</string>
     <string name="off">إيقاف</string>
     <string name="on">تشغيل</string>
     <string name="rate_it">تقييم الأن!</string>
     <string name="love_pulse_question">يعجبني هذا التطبيق نبض الرسائل؟</string>
     <string name="give_a_rating">شارك بتعليق وقم بوضع ملاحظتك  أو مشاركتها مع أصدقائك!\n\n
 قم بتقيمنا بـ 5 نجوم لكي تجعلنا نستمر في التطوير :)</string>
-    <string name="share_promo">مرحبا، أنا يعجبني تطبيق نبض للرسائل النصية! جربه الأن:
+    <string name="share_promo">مرحبا، لقد أعجبني تطبيق نبض للرسائل النصية! أنصحك بتجريبه الأن:
+قم بتثبيته من المتجر العالمي قوقل بلاي Google Play
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">جار التحقق من كلمة المرور ...</string>
     <!-- Times -->

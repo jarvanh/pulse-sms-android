@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
-  ~ Copyright (C) 2017 Luke Klinker
+  ~ Copyright (C) 2016 Jacob Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -47,6 +47,8 @@
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">في المقدمه</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">على جهاز الهاتف أو جهاز الكمبيوتر.</string>
     <string name="api_activate_2_1">على الموقع الإلكتروني</string>
     <string name="api_activate_2_2">أدخل رمز التحقق من اليمين</string>
