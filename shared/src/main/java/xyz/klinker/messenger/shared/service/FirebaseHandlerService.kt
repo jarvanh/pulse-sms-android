@@ -45,6 +45,7 @@ import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.*
+import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import java.io.File
 import java.util.*
 
@@ -696,6 +697,7 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                 DataSource.readConversation(context, conversationId, false)
                 if (conversation != null && !conversation.read) {
                     ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.snippet, true)
+                    MessengerAppWidgetProvider.refreshWidget(context)
                 }
 
                 NotificationManagerCompat.from(context).cancel(conversationId.toInt())
