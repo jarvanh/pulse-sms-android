@@ -32,8 +32,9 @@
 
     <version
         name="2.6.5"
-        description="December 5th, 2017">
+        description="December 4th, 2017">
         <text>Fixes for scheduled messages</text>
+        <text>Crash fixes</text>
     </version>
 
     <version
