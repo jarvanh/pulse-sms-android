@@ -39,7 +39,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                 activity?.menuInflater?.inflate(R.menu.action_mode_archive_list, menu)
 
                 val unarchive = menu!!.findItem(R.id.menu_archive_conversation)
-                fixMenuItemLongClickCrash(actionMode, unarchive, R.drawable.ic_unarchive, R.string.menu_move_to_inbox)
+//                fixMenuItemLongClickCrash(actionMode, unarchive, R.drawable.ic_unarchive, R.string.menu_move_to_inbox)
             } else {
                 activity?.menuInflater?.inflate(R.menu.action_mode_conversation_list, menu)
 
@@ -47,13 +47,13 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                 val pin = menu.findItem(R.id.menu_pin_conversation)
                 val mute = menu.findItem(R.id.menu_mute_conversation)
 
-                fixMenuItemLongClickCrash(actionMode, archive, R.drawable.ic_archive, R.string.menu_archive_conversation)
-                fixMenuItemLongClickCrash(actionMode, pin, R.drawable.ic_pin, R.string.pin_conversation)
-                fixMenuItemLongClickCrash(actionMode, mute, R.drawable.ic_mute, R.string.mute_conversation)
+//                fixMenuItemLongClickCrash(actionMode, archive, R.drawable.ic_archive, R.string.menu_archive_conversation)
+//                fixMenuItemLongClickCrash(actionMode, pin, R.drawable.ic_pin, R.string.pin_conversation)
+//                fixMenuItemLongClickCrash(actionMode, mute, R.drawable.ic_mute, R.string.mute_conversation)
             }
 
             val delete = menu.findItem(R.id.menu_delete_conversation)
-            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.menu_delete_conversation)
+//            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.menu_delete_conversation)
 
             return true
         }

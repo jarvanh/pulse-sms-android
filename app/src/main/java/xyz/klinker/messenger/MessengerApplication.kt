@@ -29,10 +29,7 @@ import xyz.klinker.messenger.shared.service.CreateNotificationChannelService
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
-import xyz.klinker.messenger.shared.util.DynamicShortcutUtils
-import xyz.klinker.messenger.shared.util.KotlinObjectInitializers
-import xyz.klinker.messenger.shared.util.TimeUtils
+import xyz.klinker.messenger.shared.util.*
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -55,7 +52,10 @@ class MessengerApplication : FirebaseApplication() {
         }
 
         if (CreateNotificationChannelService.shouldRun(this)) {
-            startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
+            Thread {
+                NotificationUtils.createNotificationChannels(this)
+            }.start()
+//            startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
         }
 
         if (Settings.quickCompose) {

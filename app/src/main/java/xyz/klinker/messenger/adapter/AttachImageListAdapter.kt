@@ -64,40 +64,43 @@ class AttachImageListAdapter(private val images: Cursor, private val callback: I
                 holder.selectedCheckmarkLayout.visibility = View.GONE
             }
         } else {
-            images.moveToPosition(position - 1)
-            val file = File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)))
-            val uri = Uri.fromFile(file)
+            try {
+                images.moveToPosition(position - 1)
+                val file = File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)))
+                val uri = Uri.fromFile(file)
 
-            holder.image.setOnClickListener {
-                if (holder.uri != null) {
-                    callback?.onImageSelected(holder.uri!!, holder.mimeType ?: MimeType.IMAGE_JPG)
+                holder.image.setOnClickListener {
+                    if (holder.uri != null) {
+                        callback?.onImageSelected(holder.uri!!, holder.mimeType ?: MimeType.IMAGE_JPG)
+                    }
+
+                    if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE) {
+                        holder.selectedCheckmarkLayout.visibility = View.VISIBLE
+                    } else {
+                        holder.selectedCheckmarkLayout.visibility = View.GONE
+                    }
                 }
 
-                if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE) {
+                holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE))
+                holder.uri = uri
+                holder.image.setBackgroundColor(Color.TRANSPARENT)
+
+                Glide.with(holder.image.context).load(uri)
+                        .apply(RequestOptions().centerCrop())
+                        .into(holder.image)
+
+                if (holder.mimeType != null && holder.mimeType!!.contains("video") && holder.playButton.visibility == View.GONE) {
+                    holder.playButton.visibility = View.VISIBLE
+                } else if (holder.playButton.visibility != View.GONE) {
+                    holder.playButton.visibility = View.GONE
+                }
+
+                if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE && callback!!.isCurrentlySelected(holder.uri!!, holder.mimeType!!)) {
                     holder.selectedCheckmarkLayout.visibility = View.VISIBLE
-                } else {
+                } else if (holder.selectedCheckmarkLayout.visibility != View.GONE) {
                     holder.selectedCheckmarkLayout.visibility = View.GONE
                 }
-            }
-
-            holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE))
-            holder.uri = uri
-            holder.image.setBackgroundColor(Color.TRANSPARENT)
-
-            Glide.with(holder.image.context).load(uri)
-                    .apply(RequestOptions().centerCrop())
-                    .into(holder.image)
-
-            if (holder.mimeType != null && holder.mimeType!!.contains("video") && holder.playButton.visibility == View.GONE) {
-                holder.playButton.visibility = View.VISIBLE
-            } else if (holder.playButton.visibility != View.GONE) {
-                holder.playButton.visibility = View.GONE
-            }
-
-            if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE && callback!!.isCurrentlySelected(holder.uri!!, holder.mimeType!!)) {
-                holder.selectedCheckmarkLayout.visibility = View.VISIBLE
-            } else if (holder.selectedCheckmarkLayout.visibility != View.GONE) {
-                holder.selectedCheckmarkLayout.visibility = View.GONE
+            } catch (e: Exception) {
             }
         }
     }

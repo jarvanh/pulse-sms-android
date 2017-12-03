@@ -45,10 +45,10 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             val info = menu.findItem(R.id.menu_message_details)
             val copy = menu.findItem(R.id.menu_copy_message)
 
-            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.delete)
-            fixMenuItemLongClickCrash(actionMode, share, R.drawable.ic_share, R.string.share)
-            fixMenuItemLongClickCrash(actionMode, copy, R.drawable.ic_copy, R.string.copy_message)
-            fixMenuItemLongClickCrash(actionMode, info, R.drawable.ic_info, R.string.view_details)
+//            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.delete)
+//            fixMenuItemLongClickCrash(actionMode, share, R.drawable.ic_share, R.string.share)
+//            fixMenuItemLongClickCrash(actionMode, copy, R.drawable.ic_copy, R.string.copy_message)
+//            fixMenuItemLongClickCrash(actionMode, info, R.drawable.ic_info, R.string.view_details)
 
             return true
         }
