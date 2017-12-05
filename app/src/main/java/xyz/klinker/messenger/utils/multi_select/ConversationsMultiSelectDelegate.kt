@@ -5,11 +5,8 @@ import android.graphics.Color
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
-import android.support.v7.widget.TooltipCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.Toast
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.SelectableHolder
 import xyz.klinker.messenger.R
@@ -21,7 +18,6 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
-import xyz.klinker.messenger.shared.util.DensityUtil
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -37,23 +33,9 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
             if (fragment is ArchivedConversationListFragment) {
                 activity?.menuInflater?.inflate(R.menu.action_mode_archive_list, menu)
-
-                val unarchive = menu!!.findItem(R.id.menu_archive_conversation)
-//                fixMenuItemLongClickCrash(actionMode, unarchive, R.drawable.ic_unarchive, R.string.menu_move_to_inbox)
             } else {
                 activity?.menuInflater?.inflate(R.menu.action_mode_conversation_list, menu)
-
-                val archive = menu!!.findItem(R.id.menu_archive_conversation)
-                val pin = menu.findItem(R.id.menu_pin_conversation)
-                val mute = menu.findItem(R.id.menu_mute_conversation)
-
-//                fixMenuItemLongClickCrash(actionMode, archive, R.drawable.ic_archive, R.string.menu_archive_conversation)
-//                fixMenuItemLongClickCrash(actionMode, pin, R.drawable.ic_pin, R.string.pin_conversation)
-//                fixMenuItemLongClickCrash(actionMode, mute, R.drawable.ic_mute, R.string.mute_conversation)
             }
-
-            val delete = menu.findItem(R.id.menu_delete_conversation)
-//            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.menu_delete_conversation)
 
             return true
         }
@@ -221,28 +203,5 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
         }
 
         return result
-    }
-
-
-    private fun fixMenuItemLongClickCrash(mode: ActionMode?, item: MenuItem, icon: Int, text: Int) {
-        try {
-            val image = ImageView(activity)
-            image.setImageResource(icon)
-            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 24), 0)
-            image.imageTintList = ColorStateList.valueOf(Color.WHITE)
-            image.alpha = 1.0f
-
-            item.actionView = image
-            TooltipCompat.setTooltipText(item.actionView, fragment.getString(text))
-
-            image.setOnClickListener { actionMode.onActionItemClicked(mode!!, item) }
-
-            image.setOnLongClickListener {
-                Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
-                true
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 }

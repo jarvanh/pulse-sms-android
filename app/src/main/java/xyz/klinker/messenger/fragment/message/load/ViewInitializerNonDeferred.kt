@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.TooltipCompat
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -114,27 +113,6 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             if (argManager.limitMessages) {
                 toolbar.inflateMenu(if (argManager.isGroup) R.menu.fragment_messages_group else R.menu.fragment_messages)
             }
-
-//            try {
-//                val callItem = toolbar.menu.findItem(R.id.menu_call)
-//                val image = ImageView(activity)
-//                image.setImageResource(R.drawable.ic_call)
-//                image.setPaddingRelative(0, 0, DensityUtil.toDp(activity, 12), 0)
-//                callItem.actionView = image
-//                TooltipCompat.setTooltipText(callItem.actionView, activity?.getString(R.string.menu_call))
-//
-//                image.setOnClickListener {
-//                    fragment.dismissKeyboard()
-//                    (activity as MessengerActivity).navController.drawerItemClicked(R.id.menu_call)
-//                }
-//
-//                image.setOnLongClickListener {
-//                    Toast.makeText(activity, R.string.menu_call, Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//            } catch (e: Exception) {
-//                // rotation change probably
-//            }
 
             toolbar.setOnMenuItemClickListener({ item ->
                 fragment.dismissKeyboard()

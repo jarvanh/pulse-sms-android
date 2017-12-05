@@ -6,24 +6,20 @@ import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
-import android.support.v7.widget.TooltipCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.Toast
 import com.bignerdranch.android.multiselector.SelectableHolder
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
-import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.ArticlePreview
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.YouTubePreview
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.util.DensityUtil
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -39,16 +35,6 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             isSelectable = true
 
             activity?.menuInflater?.inflate(R.menu.action_mode_message_list, menu)
-
-            val delete = menu.findItem(R.id.menu_delete_messages)
-            val share = menu.findItem(R.id.menu_share_message)
-            val info = menu.findItem(R.id.menu_message_details)
-            val copy = menu.findItem(R.id.menu_copy_message)
-
-//            fixMenuItemLongClickCrash(actionMode, delete, R.drawable.ic_delete, R.string.delete)
-//            fixMenuItemLongClickCrash(actionMode, share, R.drawable.ic_share, R.string.share)
-//            fixMenuItemLongClickCrash(actionMode, copy, R.drawable.ic_copy, R.string.copy_message)
-//            fixMenuItemLongClickCrash(actionMode, info, R.drawable.ic_info, R.string.view_details)
 
             return true
         }
@@ -209,28 +195,6 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
         mode?.invalidate()
         return result
-    }
-
-    private fun fixMenuItemLongClickCrash(mode: ActionMode, item: MenuItem, icon: Int, text: Int) {
-        try {
-            val image = ImageView(activity!!)
-            image.setImageResource(icon)
-            image.setPaddingRelative(0, 0, DensityUtil.toDp(activity!!, 24), 0)
-            image.imageTintList = ColorStateList.valueOf(Color.WHITE)
-            image.alpha = 1.0f
-
-            item.actionView = image
-            TooltipCompat.setTooltipText(item.actionView, activity!!.getString(text))
-
-            image.setOnClickListener { actionMode.onActionItemClicked(mode, item) }
-
-            image.setOnLongClickListener {
-                Toast.makeText(activity!!, text, Toast.LENGTH_SHORT).show()
-                true
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     companion object {
