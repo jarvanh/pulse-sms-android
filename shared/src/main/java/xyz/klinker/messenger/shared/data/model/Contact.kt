@@ -21,6 +21,7 @@ class Contact : DatabaseTable {
     constructor()
     constructor(body: ContactBody) {
         this.phoneNumber = body.phoneNumber
+        this.idMatcher = body.idMatcher
         this.name = body.name
         this.colors.color = body.color
         this.colors.colorDark = body.colorDark
@@ -50,12 +51,14 @@ class Contact : DatabaseTable {
     override fun encrypt(utils: EncryptionUtils) {
         this.phoneNumber = utils.encrypt(this.phoneNumber)
         this.name = utils.encrypt(this.name)
+        this.idMatcher = utils.encrypt(this.idMatcher)
     }
 
     override fun decrypt(utils: EncryptionUtils) {
         try {
             this.phoneNumber = utils.decrypt(this.phoneNumber)
             this.name = utils.decrypt(this.name)
+            this.idMatcher = utils.decrypt(this.idMatcher)
         } catch (e: Exception) {
         }
     }

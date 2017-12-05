@@ -20,7 +20,7 @@ public class ContactTest extends ApiTest {
         String accountId = getAccountId();
         int originalSize = api.contact().list(accountId).execute().body().length;
 
-        ContactBody contact = new ContactBody("515", "Luke", 1, 1, 1, 1);
+        ContactBody contact = new ContactBody("515", "515", "Luke", 1, 1, 1, 1);
         AddContactRequest request = new AddContactRequest(accountId, contact);
         Object response = api.contact().add(request).execute().body();
         assertNotNull(response);

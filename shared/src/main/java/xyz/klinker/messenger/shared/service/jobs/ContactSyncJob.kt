@@ -56,7 +56,7 @@ class ContactSyncJob : BackgroundJob() {
         for (i in contactsList.indices) {
             val c = contactsList[i]
             c.encrypt(account.encryptor!!)
-            val contactBody = ContactBody(c.phoneNumber, c.name, c.colors.color,
+            val contactBody = ContactBody(c.phoneNumber, c.idMatcher, c.name, c.colors.color,
                     c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
 
             contacts[i] = contactBody

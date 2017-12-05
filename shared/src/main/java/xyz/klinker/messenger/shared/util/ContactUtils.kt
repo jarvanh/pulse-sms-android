@@ -27,6 +27,7 @@ import java.util.regex.Pattern
 
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.IdMatcher
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Conversation
 
@@ -372,8 +373,9 @@ object ContactUtils {
 
                 contact.name = cursor.getString(0)
                 contact.phoneNumber = cursor.getString(1)
+                contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
-                val colorSet = getColorsFromConversation(conversations, contact.name)
+                val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
                 if (colorSet != null) {
                     contact.colors = colorSet
                 } else {
@@ -424,8 +426,9 @@ object ContactUtils {
 
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)))
+                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
-                    val colorSet = getColorsFromConversation(conversations, contact.name)
+                    val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
                     if (colorSet != null) {
                         contact.colors = colorSet
                     } else {
@@ -451,9 +454,10 @@ object ContactUtils {
      * @param conversations all the conversations in the database
      * @return color set from the conversation if one exists, or null if one does not exist.
      */
-    private fun getColorsFromConversation(conversations: List<Conversation>, name: String?): ColorSet? {
+    private fun getColorsFromConversation(conversations: List<Conversation>, phoneNumber: String): ColorSet? {
+        val idMatcher = SmsMmsUtils.createIdMatcher(phoneNumber)
         return conversations
-                .firstOrNull { it.title == name }
+                .firstOrNull { idMatcher.allMatchers.contains(it.idMatcher) }
                 ?.colors
     }
 

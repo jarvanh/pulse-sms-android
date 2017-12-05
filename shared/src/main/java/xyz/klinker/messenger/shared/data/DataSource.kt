@@ -289,9 +289,11 @@ object DataSource {
             contact.id = generateId()
         }
 
+        contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
+
         values.put(Contact.COLUMN_ID, contact.id)
         values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-        values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default)
+        values.put(Contact.COLUMN_ID_MATCHER, contact.idMatcher)
         values.put(Contact.COLUMN_NAME, contact.name)
         values.put(Contact.COLUMN_COLOR, contact.colors.color)
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -299,8 +301,8 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
 
         if (useApi) {
-            ApiUtils.addContact(accountId(context), contact.phoneNumber, contact.name, contact.colors.color,
-                    contact.colors.colorDark, contact.colors.colorLight,
+            ApiUtils.addContact(accountId(context), contact.phoneNumber, contact.idMatcher, contact.name,
+                    contact.colors.color, contact.colors.colorDark, contact.colors.colorLight,
                     contact.colors.colorAccent, encryptor(context))
         }
 
@@ -337,7 +339,7 @@ object DataSource {
      * @return Contact from the database
      */
     fun getContact(context: Context, phoneNumber: String): Contact? {
-        val idMatcher = SmsMmsUtils.createIdMatcher(phoneNumber).sevenLetter
+        val idMatcher = SmsMmsUtils.createIdMatcher(phoneNumber).default
         val cursor = try {
             database(context).query(Contact.TABLE, null, Contact.COLUMN_ID_MATCHER + "=?",
                     arrayOf(idMatcher), null, null, null)
@@ -372,7 +374,7 @@ object DataSource {
 
         val array = numbers.split(", ".toRegex())
                 .dropLastWhile { it.isEmpty() }
-                .map { "%${SmsMmsUtils.createIdMatcher(it).sevenLetter}%" }
+                .map { "%${SmsMmsUtils.createIdMatcher(it).default}%" }
                 .toTypedArray()
 
         var where = ""
@@ -532,8 +534,9 @@ object DataSource {
      * @param colorLight     the new light color (null if we don't want to update it)
      * @param colorAccent    the new accent color (null if we don't want to update it)
      */
-    @JvmOverloads fun updateContact(context: Context, phoneNumber: String?, name: String?, color: Int?, colorDark: Int?,
-                      colorLight: Int?, colorAccent: Int?, useApi: Boolean = true) {
+    @JvmOverloads fun updateContact(context: Context, phoneNumber: String?, name: String?,
+                                    color: Int?, colorDark: Int?, colorLight: Int?, colorAccent: Int?,
+                                    useApi: Boolean = true) {
         val values = ContentValues()
 
         if (name != null) values.put(Contact.COLUMN_NAME, name)

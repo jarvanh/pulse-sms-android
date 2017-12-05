@@ -193,7 +193,7 @@ object ApiUtils {
     /**
      * Adds a new contact.
      */
-    fun addContact(accountId: String?, phoneNumber: String?, name: String?, color: Int,
+    fun addContact(accountId: String?, phoneNumber: String?, idMatcher: String?, name: String?, color: Int,
                    colorDark: Int, colorLight: Int, colorAccent: Int,
                    encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
@@ -201,8 +201,8 @@ object ApiUtils {
         }
 
         val body = ContactBody(
-                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
-                color, colorDark, colorLight, colorAccent)
+                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(idMatcher),
+                encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
         val request = AddContactRequest(accountId, body)
 
         addContact(request)
@@ -259,8 +259,8 @@ object ApiUtils {
         }
 
         val request = UpdateContactRequest(
-                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(name),
-                color, colorDark, colorLight, colorAccent)
+                encryptionUtils.encrypt(phoneNumber),
+                encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
 
         val message = "update contact"
         val call = api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request)

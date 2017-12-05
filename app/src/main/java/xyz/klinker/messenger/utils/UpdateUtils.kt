@@ -45,13 +45,13 @@ class UpdateUtils(private val context: Activity) {
             Settings.forceUpdate(context)
         }
 
-        if (sharedPreferences.getBoolean("v2.5.4.2", true)) {
+        if (sharedPreferences.getBoolean("v2.6.6.1", true)) {
             if (storedAppVersion != 0) {
                 context.startService(Intent(context, ContactResyncService::class.java))
             }
 
             sharedPreferences.edit()
-                    .putBoolean("v2.5.4.2", false)
+                    .putBoolean("v2.6.6.1", false)
                     .commit()
         }
 
