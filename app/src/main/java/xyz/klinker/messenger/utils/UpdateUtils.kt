@@ -28,32 +28,7 @@ class UpdateUtils(private val context: Activity) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         val storedAppVersion = sharedPreferences.getInt("app_version", 0)
-
-        if (sharedPreferences.getBoolean("v2.5.0.1", true)) {
-            val colorSetName = sharedPreferences.getString(context.getString(R.string.pref_global_color_theme), "default")
-            val legacyGlobalTheme = ColorSet.getFromString(context, colorSetName!!)
-
-            sharedPreferences.edit()
-                    .putBoolean("v2.5.0.1", false)
-                    .putInt(context.getString(R.string.pref_global_primary_color), legacyGlobalTheme.color)
-                    .putInt(context.getString(R.string.pref_global_primary_dark_color), legacyGlobalTheme.colorDark)
-                    .putInt(context.getString(R.string.pref_global_primary_light_color), legacyGlobalTheme.colorLight)
-                    .putInt(context.getString(R.string.pref_global_accent_color), legacyGlobalTheme.colorAccent)
-                    .putBoolean(context.getString(R.string.pref_apply_theme_globally), colorSetName != "default")
-                    .commit()
-
-            Settings.forceUpdate(context)
-        }
-
-        if (sharedPreferences.getBoolean("v2.6.6.2", true)) {
-            if (storedAppVersion != 0) {
-                context.startService(Intent(context, ContactResyncService::class.java))
-            }
-
-            sharedPreferences.edit()
-                    .putBoolean("v2.6.6.2", false)
-                    .commit()
-        }
+        ContactResyncService.runIfApplicable(context, sharedPreferences, storedAppVersion);
 
         val currentAppVersion = appVersion
 

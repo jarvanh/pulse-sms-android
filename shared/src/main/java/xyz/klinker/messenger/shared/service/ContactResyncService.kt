@@ -1,7 +1,9 @@
 package xyz.klinker.messenger.shared.service
 
 import android.app.IntentService
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
@@ -11,6 +13,18 @@ import xyz.klinker.messenger.shared.util.ContactUtils
 class ContactResyncService : IntentService("ContactResyncService") {
     companion object {
         val TAG = "ContactResyncService"
+
+        fun runIfApplicable(context: Context, sharedPreferences: SharedPreferences, storedAppVersion: Int) {
+            if (sharedPreferences.getBoolean("v2.6.6.2", true)) {
+                if (storedAppVersion != 0) {
+                    context.startService(Intent(context, ContactResyncService::class.java))
+                }
+
+                sharedPreferences.edit()
+                        .putBoolean("v2.6.6.2", false)
+                        .commit()
+            }
+        }
     }
 
     override fun onHandleIntent(intent: Intent?) {
