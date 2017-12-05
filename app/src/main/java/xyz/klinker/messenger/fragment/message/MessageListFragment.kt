@@ -32,6 +32,7 @@ import android.view.inputmethod.InputMethodManager
 import com.sgottard.sofa.ContentFragment
 
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.attach.AttachmentInitializer
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.fragment.message.attach.AttachmentManager
@@ -50,6 +51,7 @@ import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
 import xyz.klinker.messenger.shared.util.AnimationUtils
 import xyz.klinker.messenger.shared.util.CursorUtil
+import xyz.klinker.messenger.shared.util.PerformanceProfiler
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 
 /**
@@ -101,6 +103,9 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         AnimationUtils.animateConversationPeripheralIn(rootView!!.findViewById(R.id.app_bar_layout))
         AnimationUtils.animateConversationPeripheralIn(rootView!!.findViewById(R.id.send_bar))
 
+        val deferredTime = if (activity is MessengerTvActivity) 0L
+        else (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong()
+
         Handler().postDelayed({
             if (!isAdded) {
                 return@postDelayed
@@ -111,8 +116,9 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
 
             notificationManager.dismissNotification = true
             notificationManager.dismissNotification()
+        }, deferredTime)
 
-        }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong())
+        PerformanceProfiler.logEvent("MessageListFragment onCreateView")
 
         return rootView!!
     }
@@ -128,6 +134,8 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
             params.marginStart = extraMarginLeft
             view.invalidate()
         }
+
+        PerformanceProfiler.logEvent("MessageListFragment onViewCreated")
     }
 
     override fun onStart() {
@@ -137,11 +145,14 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         Handler().postDelayed({
             if (fragmentActivity != null) Thread { DataSource.readConversation(fragmentActivity!!, conversationId) }.start()
         }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
+
+        PerformanceProfiler.logEvent("MessageListFragment onStart")
     }
 
     override fun onResume() {
         super.onResume()
         NotificationConstants.CONVERSATION_ID_OPEN = conversationId
+        PerformanceProfiler.logEvent("MessageListFragment onResume")
     }
 
     override fun onPause() {

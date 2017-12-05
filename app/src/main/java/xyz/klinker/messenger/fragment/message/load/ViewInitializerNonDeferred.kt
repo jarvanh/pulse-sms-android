@@ -17,6 +17,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
+import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.*
@@ -107,6 +108,8 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
         ColorUtils.adjustStatusBarColor(colorDarker, activity)
 
+        val deferredTime = if (activity is MessengerTvActivity) 0L
+        else (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong()
         Handler().postDelayed({
             if (argManager.limitMessages) {
                 toolbar.inflateMenu(if (argManager.isGroup) R.menu.fragment_messages_group else R.menu.fragment_messages)
@@ -150,7 +153,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
             ColorUtils.setCursorDrawableColor(messageEntry, colorAccent)
             ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent)
-        }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
+        }, deferredTime)
 
         if (!TvUtils.hasTouchscreen(activity)) {
             appBarLayout.visibility = View.GONE

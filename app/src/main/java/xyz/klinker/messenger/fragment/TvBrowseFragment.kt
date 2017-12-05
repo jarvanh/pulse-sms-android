@@ -20,6 +20,7 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter
 import android.support.v17.leanback.widget.HeaderItem
 import android.support.v17.leanback.widget.ListRow
 import com.sgottard.sofa.support.BrowseSupportFragment
+import xyz.klinker.messenger.adapter.TvAdapter
 import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
 
@@ -32,15 +33,13 @@ class TvBrowseFragment : BrowseSupportFragment() {
     override fun onStart() {
         super.onStart()
 
-        val adapter = ArrayObjectAdapter()
-        DataSource.getUnarchivedConversationsAsList(activity!!)
-                .forEach {
-                    val customFragmentAdapter = ArrayObjectAdapter()
-                    customFragmentAdapter.add(MessageInstanceManager.newInstance(it))
+        val conversations = DataSource.getUnarchivedConversationsAsList(activity!!)
+        val adapter = TvAdapter(conversations)
 
-                    val customFragmentRow = ListRow(HeaderItem(it.title), customFragmentAdapter)
-                    adapter.add(customFragmentRow)
-                }
+        conversations.forEach {
+            val customFragmentRow = ListRow(HeaderItem(it.title), ArrayObjectAdapter())
+            adapter.add(customFragmentRow)
+        }
 
         setAdapter(adapter)
     }
