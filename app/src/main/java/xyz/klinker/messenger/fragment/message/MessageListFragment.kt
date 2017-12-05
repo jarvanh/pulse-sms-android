@@ -51,7 +51,6 @@ import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
 import xyz.klinker.messenger.shared.util.AnimationUtils
 import xyz.klinker.messenger.shared.util.CursorUtil
-import xyz.klinker.messenger.shared.util.PerformanceProfiler
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 
 /**
@@ -118,8 +117,6 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
             notificationManager.dismissNotification()
         }, deferredTime)
 
-        PerformanceProfiler.logEvent("MessageListFragment onCreateView")
-
         return rootView!!
     }
 
@@ -134,8 +131,6 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
             params.marginStart = extraMarginLeft
             view.invalidate()
         }
-
-        PerformanceProfiler.logEvent("MessageListFragment onViewCreated")
     }
 
     override fun onStart() {
@@ -145,14 +140,12 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         Handler().postDelayed({
             if (fragmentActivity != null) Thread { DataSource.readConversation(fragmentActivity!!, conversationId) }.start()
         }, (AnimationUtils.EXPAND_CONVERSATION_DURATION + 50).toLong())
-
-        PerformanceProfiler.logEvent("MessageListFragment onStart")
     }
 
     override fun onResume() {
         super.onResume()
         NotificationConstants.CONVERSATION_ID_OPEN = conversationId
-        PerformanceProfiler.logEvent("MessageListFragment onResume")
+
     }
 
     override fun onPause() {

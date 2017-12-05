@@ -1,13 +1,17 @@
 package xyz.klinker.messenger.fragment.message.load
 
+import android.content.Context
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.klinker.android.logger.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.util.DualSimApplication
+import xyz.klinker.messenger.shared.util.TvUtils
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
 import xyz.klinker.messenger.view.ImageKeyboardEditText
 
@@ -26,7 +30,7 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         fragment.attachInitializer.initAttachHolder()
 
         dragDismissFrameLayout.addListener(object : ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
-            override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float, rawOffset: Float, rawOffsetPixels: Float) { }
+            override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float, rawOffset: Float, rawOffsetPixels: Float) {}
             override fun onDragDismissed() {
                 fragment.dismissKeyboard()
                 activity?.onBackPressed()
@@ -35,6 +39,13 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
 
         if (messageEntry is ImageKeyboardEditText) {
             (messageEntry as ImageKeyboardEditText).setCommitContentListener(fragment.attachListener)
+        }
+
+        if (!TvUtils.hasTouchscreen(activity)) {
+            messageEntry.setOnClickListener {
+                (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?)
+                        ?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+            }
         }
 
         try {
