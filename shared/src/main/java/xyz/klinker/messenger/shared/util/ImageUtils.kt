@@ -41,6 +41,7 @@ import java.util.Date
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Contact
@@ -118,19 +119,29 @@ object ImageUtils {
      * @param context      the current context.
      */
     fun fillConversationColors(conversation: Conversation, context: Context) {
-        if (conversation.imageUri == null) {
+        if (conversation.phoneNumbers!!.contains(",")) {
             conversation.colors = ColorUtils.getRandomMaterialColor(context)
         } else {
-            val bitmap = ImageUtils.getContactImage(conversation.imageUri, context)
-            val colors = ImageUtils.extractColorSet(context, bitmap)
-
-            bitmap?.recycle()
-            conversation.colors = colors
-            conversation.imageUri = Uri
-                    .withAppendedPath(Uri.parse(conversation.imageUri),
-                            ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
-                    .toString()
+            val contact = DataSource.getContact(context, conversation.phoneNumbers!!)
+            if (contact != null) {
+                conversation.colors = contact.colors
+            } else {
+                conversation.colors = ColorUtils.getRandomMaterialColor(context)
+            }
         }
+//        if (conversation.imageUri == null) {
+//            conversation.colors = ColorUtils.getRandomMaterialColor(context)
+//        } else {
+//            val bitmap = ImageUtils.getContactImage(conversation.imageUri, context)
+//            val colors = ImageUtils.extractColorSet(context, bitmap)
+//
+//            bitmap?.recycle()
+//            conversation.colors = colors
+//            conversation.imageUri = Uri
+//                    .withAppendedPath(Uri.parse(conversation.imageUri),
+//                            ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
+//                    .toString()
+//        }
     }
 
     /**
@@ -140,15 +151,16 @@ object ImageUtils {
      * @param context      the current context.
      */
     fun fillContactColors(contact: Contact, imageUri: String?, context: Context) {
-        if (imageUri == null) {
-            contact.colors = ColorUtils.getRandomMaterialColor(context)
-        } else {
-            val bitmap = ImageUtils.getContactImage(imageUri, context)
-            val colors = ImageUtils.extractColorSet(context, bitmap)
-
-            bitmap?.recycle()
-            contact.colors = colors
-        }
+        contact.colors = ColorUtils.getRandomMaterialColor(context)
+//        if (imageUri == null) {
+//            contact.colors = ColorUtils.getRandomMaterialColor(context)
+//        } else {
+//            val bitmap = ImageUtils.getContactImage(imageUri, context)
+//            val colors = ImageUtils.extractColorSet(context, bitmap)
+//
+//            bitmap?.recycle()
+//            contact.colors = colors
+//        }
     }
 
     /**

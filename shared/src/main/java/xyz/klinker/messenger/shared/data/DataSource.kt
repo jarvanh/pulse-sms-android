@@ -1830,12 +1830,6 @@ object DataSource {
 
             ImageUtils.fillConversationColors(conversation, context)
 
-            val contacts = getContacts(context, conversation.title)
-            if (contacts.size == 1) {
-                // just one user in this conversation, so lets set the conversation color to that user's color
-                conversation.colors = contacts[0].colors
-            }
-
             conversationId = insertConversation(context, conversation, useApi)
         }
 
