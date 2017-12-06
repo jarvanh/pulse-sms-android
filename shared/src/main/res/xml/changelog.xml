@@ -31,6 +31,12 @@
     <!--</version>-->
 
     <version
+        name="2.6.6"
+        description="December 7th, 2017">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.6.5"
         description="December 4th, 2017">
         <text>Fixes for scheduled messages</text>
