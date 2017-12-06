@@ -27,9 +27,10 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
 
     fun apply(holder: MessageViewHolder, message: Message, backgroundColor: Int) {
         val linkColor = if (message.type == Message.TYPE_RECEIVED) {
-            if (ColorUtils.isColorDark(if (backgroundColor != Integer.MIN_VALUE) backgroundColor else receivedColor)) {
-                holder.itemView.context.resources.getColor(R.color.lightText)
-            } else holder.itemView.context.resources.getColor(R.color.darkText)
+//            if (ColorUtils.isColorDark(if (backgroundColor != Integer.MIN_VALUE) backgroundColor else receivedColor)) {
+//                holder.itemView.context.resources.getColor(R.color.lightText)
+//            } else holder.itemView.context.resources.getColor(R.color.darkText)
+            holder.message!!.currentTextColor
         } else accentColor
 
         holder.message?.movementMethod = TouchableMovementMethod()
