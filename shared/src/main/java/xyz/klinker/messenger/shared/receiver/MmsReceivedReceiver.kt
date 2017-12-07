@@ -53,6 +53,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
         Thread {
             try {
                 super.onReceive(context, intent)
+                Thread.sleep(1000)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
