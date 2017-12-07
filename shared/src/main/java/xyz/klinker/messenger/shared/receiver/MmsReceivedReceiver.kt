@@ -123,7 +123,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
                     message.from = null
                 }
 
-                if (SmsReceivedReceiver.shouldSaveMessages(context, source, message)) {
+                if (SmsReceivedReceiver.shouldSaveMessage(context, message, phoneNumbers)) {
                     conversationId = source.insertMessage(message, phoneNumbers, context)
 
                     val conversation = source.getConversation(context, conversationId!!)

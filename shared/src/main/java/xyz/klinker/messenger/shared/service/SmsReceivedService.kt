@@ -9,6 +9,7 @@ import android.os.Build
 import android.provider.Telephony
 import android.support.v4.app.NotificationCompat
 import android.telephony.SmsMessage
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
@@ -80,9 +81,11 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         }
 
         val conversationId = insertSms(this, address, body, simSlot)
-        insertInternalSms(this, address, body, date)
+        if (conversationId != -2L) {
+            insertInternalSms(this, address, body, date)
+        }
 
-        if (conversationId != -1L) {
+        if (conversationId != -1L && conversationId != -2L) {
             val foregroundNotificationService = Intent(this, NotificationService::class.java)
 
             if (AndroidVersionUtil.isAndroidO) {
@@ -138,6 +141,8 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
             body = body.split(" ".toRegex()).drop(1).joinToString(" ")
         }
 
+        address = PhoneNumberUtils.clearFormatting(address)
+
         val message = Message()
         message.type = Message.TYPE_RECEIVED
         message.data = body.trim { it <= ' ' }
@@ -148,16 +153,14 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         message.simPhoneNumber = DualSimUtils.getNumberFromSimSlot(simSlot)
         message.sentDeviceId = -1L
 
-
-
         val source = DataSource
 
-        if (SmsReceivedReceiver.shouldSaveMessages(context, source, message)) {
+        if (SmsReceivedReceiver.shouldSaveMessage(context, message, address)) {
             val conversationId = try {
-                source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context)
+                source.insertMessage(message, address, context)
             } catch (e: Exception) {
                 source.ensureActionable(context)
-                source.insertMessage(message, PhoneNumberUtils.clearFormatting(address), context)
+                source.insertMessage(message, address, context)
             }
 
             val conversation = source.getConversation(context, conversationId)
@@ -172,7 +175,8 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
 
             return conversationId
         } else {
-            return -1
+            AnalyticsHelper.receivedDuplicateSms(this)
+            return -2
         }
     }
 

@@ -17,22 +17,12 @@
 package xyz.klinker.messenger.shared.receiver
 
 import android.content.BroadcastReceiver
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Handler
-import android.provider.Telephony
-import android.telephony.SmsMessage
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.MediaParserService
 import xyz.klinker.messenger.shared.service.SmsReceivedService
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.*
 
 class SmsReceivedReceiver : BroadcastReceiver() {
@@ -49,19 +39,14 @@ class SmsReceivedReceiver : BroadcastReceiver() {
     companion object {
         var lastReceived = 0L
 
-        fun shouldSaveMessages(context: Context, source: DataSource, message: Message): Boolean {
-            try {
-                val search = source.searchMessagesAsList(context, message.data, 1, true)
-                if (!search.isEmpty()) {
-                    val inDatabase = search[0]
-                    if (inDatabase.data == message.data && message.timestamp - inDatabase.timestamp < TimeUtils.MINUTE * 10) {
-                        return false
-                    }
-                }
-            } catch (e: Exception) {
-            }
+        fun shouldSaveMessage(context: Context, message: Message, phoneNumbers: String): Boolean {
+            val conversationId = DataSource.findConversationId(context, phoneNumbers) ?: return true
+            val databaseMessage = DataSource.getMessages(context, conversationId, 1).firstOrNull() ?: return true
+            val isSameMessage = databaseMessage.data == message.data
+            val isSameType = databaseMessage.type == message.type
+            val areTimestampsClose = Math.abs(message.timestamp - databaseMessage.timestamp) < TimeUtils.MINUTE * 1
 
-            return true
+            return !isSameMessage || !isSameType || !areTimestampsClose
         }
     }
 

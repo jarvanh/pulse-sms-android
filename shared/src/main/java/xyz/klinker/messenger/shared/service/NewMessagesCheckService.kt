@@ -26,7 +26,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
         val foreground = if (intent.getBooleanExtra(EXTRA_FOREGROUND_NOTIFICATION, false)) {
             val notification = NotificationCompat.Builder(this,
                     NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
-                    .setContentTitle(getString(R.string.received_new_message))
+                    .setContentTitle(getString(R.string.receiving_a_message))
                     .setSmallIcon(R.drawable.ic_download)
                     .setProgress(0, 0, true)
                     .setLocalOnly(true)
