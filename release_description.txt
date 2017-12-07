@@ -1,4 +1,6 @@
 This release includes:<br/>
-- Improvements to syncing read status and notifications across devices<br/>
-- A checkbox item to the three dot overflow menu on the compose screen for whether or not to use group MMS<br/>
-+ Bug fixes, dependency updates, stability improvements
+- An option for a "Quick Compose" notification, under "Advanced Features"<br/>
+- Define "favorite contacts" for the quick compose notification<br/>
+- A quick share popup for sharing content from other apps<br/>
+- Use the quick share popup when sending messages from Nougat's quick settings tile or Marshmallow's direct share<br/>
++ Bug fixes, dependency updates, stability improvements, translation updates
