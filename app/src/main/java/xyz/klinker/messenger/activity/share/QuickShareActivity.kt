@@ -19,6 +19,7 @@ import xyz.klinker.android.floating_tutorial.TutorialPage
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
@@ -53,7 +54,7 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
 
         findViewById<View>(R.id.top_background).setBackgroundColor(Settings.mainColorSet.color)
         ColorUtils.setCursorDrawableColor(messageEntry, Settings.mainColorSet.colorAccent)
-        KeyboardLayoutHelper.applyLayout(messageEntry)
+        KeyboardLayoutHelper.applyLayout(messageEntry, KeyboardLayout.SEND)
         prepareContactEntry()
 
         val sendButton = findViewById<View>(R.id.tutorial_next_button)

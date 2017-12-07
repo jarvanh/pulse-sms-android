@@ -11,11 +11,11 @@ import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 
 object KeyboardLayoutHelper {
 
-    fun applyLayout(editText: EditText) {
+    fun applyLayout(editText: EditText, layout: KeyboardLayout = Settings.keyboardLayout) {
         var inputType = editText.inputType
         val imeOptions = editText.imeOptions
 
-        when (Settings.keyboardLayout) {
+        when (layout) {
             KeyboardLayout.DEFAULT -> inputType = inputType or InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE
             KeyboardLayout.SEND -> { }
             KeyboardLayout.ENTER -> { }

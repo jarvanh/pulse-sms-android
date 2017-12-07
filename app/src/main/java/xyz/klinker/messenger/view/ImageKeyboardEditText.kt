@@ -6,6 +6,7 @@ import android.support.v13.view.inputmethod.InputConnectionCompat
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import xyz.klinker.messenger.activity.share.QuickShareActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
@@ -27,7 +28,7 @@ class ImageKeyboardEditText : EmojiableEditText {
         val con = super.onCreateInputConnection(outAttrs)
         EditorInfoCompat.setContentMimeTypes(outAttrs, arrayOf("image/gif", "image/png"))
 
-        if (Settings.keyboardLayout === KeyboardLayout.SEND) {
+        if (Settings.keyboardLayout === KeyboardLayout.SEND || context is QuickShareActivity) {
             val imeActions = outAttrs.imeOptions and EditorInfo.IME_MASK_ACTION
             if (imeActions and EditorInfo.IME_ACTION_SEND != 0) {
                 // clear the existing action
