@@ -67,10 +67,6 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
             true
         }
-
-        if (!FeatureFlags.QUICK_COMPOSE) {
-            preferenceScreen.removePreference(findPreference(getString(R.string.pref_quick_compose_category)))
-        }
     }
 
     private fun initDelayedSending() {

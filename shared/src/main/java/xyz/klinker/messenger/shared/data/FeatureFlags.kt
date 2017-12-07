@@ -76,7 +76,6 @@ object FeatureFlags {
 
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false
-    var QUICK_COMPOSE: Boolean = false
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
 
     // need tested
@@ -88,7 +87,6 @@ object FeatureFlags {
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
-        QUICK_COMPOSE = getValue(context, sharedPrefs, FLAG_QUICK_COMPOSE)
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
 
         EMAIL_RECEPTION_CONVERSION = getValue(context, sharedPrefs, FLAG_EMAIL_RECEPTION_CONVERSION)
@@ -101,7 +99,6 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
-            FLAG_QUICK_COMPOSE -> QUICK_COMPOSE = flag
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
 
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag

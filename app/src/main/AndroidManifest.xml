@@ -135,6 +135,34 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/vcard" />
+                <data android:mimeType="text/x-vcard" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".activity.share.QuickShareActivity"
+            android:label="@string/quick_share"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/tutorial_FloatingTutorialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
+
+            <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
 
@@ -151,8 +179,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
-                <data android:mimeType="text/vcard" />
-                <data android:mimeType="text/x-vcard" />
                 <data android:mimeType="image/*" />
                 <data android:mimeType="audio/*" />
                 <data android:mimeType="video/*" />
@@ -161,61 +187,6 @@
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
                 android:value=".shared.service.MessengerChooserTargetService" />
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-
-                <!--<data android:scheme="sms" />-->
-                <!--<data android:scheme="smsto" />-->
-                <!--<data android:scheme="mms" />-->
-                <!--<data android:scheme="mmsto" />-->
-            <!--</intent-filter>-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEND" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-
-                <!--<data android:mimeType="text/vcard" />-->
-                <!--<data android:mimeType="text/x-vcard" />-->
-            <!--</intent-filter>-->
-
-        </activity>
-
-        <activity
-            android:name=".activity.share.QuickShareActivity"
-            android:label="@string/quick_share"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:theme="@style/tutorial_FloatingTutorialTheme"
-            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEND" />-->
-                <!--<action android:name="android.intent.action.SENDTO" />-->
-
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-
-                <!--<data android:scheme="sms" />-->
-                <!--<data android:scheme="smsto" />-->
-                <!--<data android:scheme="mms" />-->
-                <!--<data android:scheme="mmsto" />-->
-            <!--</intent-filter>-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEND" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-
-                <!--<data android:mimeType="text/plain" />-->
-                <!--<data android:mimeType="image/*" />-->
-                <!--<data android:mimeType="audio/*" />-->
-                <!--<data android:mimeType="video/*" />-->
-            <!--</intent-filter>-->
-
-            <!--<meta-data-->
-                <!--android:name="android.service.chooser.chooser_target_service"-->
-                <!--android:value=".shared.service.MessengerChooserTargetService" />-->
 
         </activity>
 

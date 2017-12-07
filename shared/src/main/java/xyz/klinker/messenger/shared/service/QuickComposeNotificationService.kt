@@ -76,10 +76,6 @@ class QuickComposeNotificationService : IntentService("QuickComposeNotificationS
         private val QUICK_TEXT_ID = 1226
 
         fun start(context: Context) {
-            if (!FeatureFlags.QUICK_COMPOSE) {
-                return
-            }
-
             val intent = Intent(context, QuickComposeNotificationService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
