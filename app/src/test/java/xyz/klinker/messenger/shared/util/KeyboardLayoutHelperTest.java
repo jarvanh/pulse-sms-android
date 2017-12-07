@@ -33,8 +33,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptDefaultKeyboard() {
-        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.DEFAULT);
-        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText, KeyboardLayout.DEFAULT);
 
         verify(editText).setInputType(DEFAULT_INPUT_TYPE | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
@@ -42,8 +41,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptEnterKeyboard() {
-        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.ENTER);
-        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText, KeyboardLayout.ENTER);
 
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
@@ -51,8 +49,7 @@ public class KeyboardLayoutHelperTest extends MessengerSuite {
 
     @Test
     public void shouldAcceptSendKeyboard() {
-        Settings.INSTANCE.setKeyboardLayout(KeyboardLayout.SEND);
-        KeyboardLayoutHelper.INSTANCE.applyLayout(editText);
+        KeyboardLayoutHelper.INSTANCE.applyLayout(editText, KeyboardLayout.SEND);
 
         verify(editText).setInputType(DEFAULT_INPUT_TYPE);
         verify(editText).setImeOptions(DEFAULT_IME_OPTIONS);
