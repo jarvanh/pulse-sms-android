@@ -31,10 +31,20 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         }
 
         if (intent != null) {
-            try {
+            val latestMessageOne = DataSource.getLatestMessage(this)
+
+            val wasBlacklisted = try {
                 handle(intent)
             } catch (e: Exception) {
                 throw SmsSaveException(e)
+            }
+
+            val latestMessageTwo = DataSource.getLatestMessage(this)
+
+            if (latestMessageOne?.timestamp == latestMessageTwo?.timestamp && !wasBlacklisted && FeatureFlags.RECONCILE_RECEIVED_MESSAGES) {
+                // something went wrong saving the message that was supposed to be handled?
+                NewMessagesCheckService.writeLastRun(this, System.currentTimeMillis() - TimeUtils.SECOND * 30)
+                NewMessagesCheckService.startService(this)
             }
         }
 
@@ -43,14 +53,14 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         }
     }
 
-    private fun handle(intent: Intent) {
-        val extras = intent.extras ?: return
+    private fun handle(intent: Intent): Boolean {
+        val extras = intent.extras ?: return false
 
         val simSlot = extras.getInt("slot", -1)
         var body = ""
         var address = ""
         var date = System.currentTimeMillis()
-        val smsExtra = extras.get("pdus") as Array<*>? ?: return
+        val smsExtra = extras.get("pdus") as Array<*>? ?: return false
 
         for (message in smsExtra) {
             val sms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -66,7 +76,7 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         }
 
         if (BlacklistUtils.isBlacklisted(this, address)) {
-            return
+            return true
         }
 
         val conversationId = insertSms(this, address, body, simSlot)
@@ -86,6 +96,8 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
                 MediaParserService.start(this, conversationId, body)
             }
         }
+
+        return false
     }
 
     private fun startForeground() {

@@ -58,7 +58,8 @@ object FeatureFlags {
     private val FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY = "flag_reenable_sending_status"
     private val FLAG_V_2_6_0 = "flag_v_2_6_0"
     private val FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch"
-    private val FLAG_EMAIL_RECEPTION_CONVERSION= "flag_email_reception_conversion"
+    private val FLAG_EMAIL_RECEPTION_CONVERSION = "flag_email_reception_conversion"
+    private val FLAG_RECONCILE_RECEIVED_MESSAGES = "flag_reconcile_received_messages"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -80,6 +81,7 @@ object FeatureFlags {
 
     // need tested
     var EMAIL_RECEPTION_CONVERSION: Boolean = false
+    var RECONCILE_RECEIVED_MESSAGES: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -90,6 +92,7 @@ object FeatureFlags {
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
 
         EMAIL_RECEPTION_CONVERSION = getValue(context, sharedPrefs, FLAG_EMAIL_RECEPTION_CONVERSION)
+        RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -98,10 +101,13 @@ object FeatureFlags {
                 .apply()
 
         when (identifier) {
+            FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
+
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
 
-            FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
+            FLAG_EMAIL_RECEPTION_CONVERSION -> EMAIL_RECEPTION_CONVERSION = flag
+            FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }
     }
 

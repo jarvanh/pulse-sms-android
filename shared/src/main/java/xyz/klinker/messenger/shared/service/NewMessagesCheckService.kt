@@ -2,20 +2,17 @@ package xyz.klinker.messenger.shared.service
 
 import android.app.Activity
 import android.app.IntentService
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
+import android.support.v4.app.NotificationCompat
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
-import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.util.PhoneNumberUtils
-import xyz.klinker.messenger.shared.util.SmsMmsUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
-import xyz.klinker.messenger.shared.util.closeSilent
+import xyz.klinker.messenger.shared.util.*
 import java.util.*
 
 /**
@@ -25,11 +22,30 @@ import java.util.*
  */
 class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
-    override fun onHandleIntent(intent: Intent?) {
+    override fun onHandleIntent(intent: Intent) {
+        val foreground = if (intent.getBooleanExtra(EXTRA_FOREGROUND_NOTIFICATION, false)) {
+            val notification = NotificationCompat.Builder(this,
+                    NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.received_new_message))
+                    .setSmallIcon(R.drawable.ic_download)
+                    .setProgress(0, 0, true)
+                    .setLocalOnly(true)
+                    .setColor(ColorSet.DEFAULT(this).color)
+                    .setOngoing(true)
+                    .setPriority(NotificationCompat.PRIORITY_MIN)
+                    .build()
+            startForeground(FOREGROUND_NOTIFICATION_ID, notification)
+            true
+        } else false
+
         try {
             handle()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+
+        if (foreground) {
+            stopForeground(true)
         }
     }
 
@@ -155,23 +171,33 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
     companion object {
 
+        private val FOREGROUND_NOTIFICATION_ID = 44562
+        private val EXTRA_FOREGROUND_NOTIFICATION = "extra_foreground_notification"
+        val REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST"
+
         fun startService(activity: Activity) {
-            // only safe to start from the UI because it doesn't provide a foreground notification
-            // for Android O.
             activity.startService(Intent(activity, NewMessagesCheckService::class.java))
         }
 
-        val REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST"
+        fun startService(service: Service) {
+            val intent = Intent(service, NewMessagesCheckService::class.java)
 
-        fun writeLastRun(context: Context) {
+            if (AndroidVersionUtil.isAndroidO) {
+                intent.putExtra(EXTRA_FOREGROUND_NOTIFICATION, true)
+                service.startForegroundService(intent)
+            } else {
+                service.startService(intent)
+            }
+        }
+
+        fun writeLastRun(context: Context, time: Long = System.currentTimeMillis()) {
             try {
                 Settings.getSharedPrefs(context).edit()
-                        .putLong("new_message_check_last_run", System.currentTimeMillis())
+                        .putLong("new_message_check_last_run", time)
                         .apply()
             } catch (e: Exception) {
                 // in robolectric, i don't want it to crash
             }
-
         }
 
         fun typesAreEqual(newMessageType: Int, oldMessageType: Int): Boolean {
