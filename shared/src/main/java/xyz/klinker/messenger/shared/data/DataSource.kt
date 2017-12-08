@@ -1392,13 +1392,21 @@ object DataSource {
     /**
      * Gets all messages in the database where mime type is not text/plain.
      */
-    fun getAllMediaMessages(context: Context, limit: Int): Cursor =
-            try {
-                database(context).query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain'", null, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit)
-            } catch (e: Exception) {
-                ensureActionable(context)
-                database(context).query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain'", null, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit)
-            }
+    fun getAllMediaMessages(context: Context, limit: Int): Cursor {
+        val selection =
+                Message.COLUMN_MIME_TYPE + "!=? AND " +
+                Message.COLUMN_MIME_TYPE + "!=? AND " +
+                Message.COLUMN_MIME_TYPE + "!=? AND " +
+                Message.COLUMN_MIME_TYPE + "!=?"
+        val selectionArgs = arrayOf(MimeType.TEXT_PLAIN, MimeType.MEDIA_ARTICLE, MimeType.MEDIA_YOUTUBE_V2, MimeType.MEDIA_TWITTER)
+        return try {
+            database(context).query(Message.TABLE, null, selection, selectionArgs, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).query(Message.TABLE, null, selection, selectionArgs, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit)
+        }
+    }
+
 
     /**
      * Gets all messages in the database that still need to be downloaded from firebase. When
@@ -1412,11 +1420,11 @@ object DataSource {
     fun getFirebaseMediaMessages(context: Context): Cursor {
         return try {
             database(context).query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
-                    Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, null)
+                    Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
         } catch (e: Exception) {
             ensureActionable(context)
             database(context).query(Message.TABLE, null, Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
-                    Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, null)
+                    Message.COLUMN_DATA + " LIKE 'firebase %'", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
         }
     }
 
@@ -1425,18 +1433,20 @@ object DataSource {
      */
     fun getMediaMessages(context: Context, conversationId: Long): List<Message> {
         val cursor = try {
-            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/x-vcard' AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/vcard'",
+            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'image/%' OR " +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'video/%' OR " +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'audio/%') AND " +
+                    Message.COLUMN_DATA + " NOT LIKE 'firebase %'",
                     arrayOf(java.lang.Long.toString(conversationId)), null, null,
                     Message.COLUMN_TIMESTAMP + " asc")
         } catch (e: Exception) {
             ensureActionable(context)
-            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/plain' AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/x-vcard' AND " +
-                    Message.COLUMN_MIME_TYPE + "!='text/vcard'",
+            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=? AND (" +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'image/%' OR " +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'video/%' OR " +
+                    Message.COLUMN_MIME_TYPE + " LIKE 'audio/%') AND " +
+                    Message.COLUMN_DATA + " NOT LIKE 'firebase %'",
                     arrayOf(java.lang.Long.toString(conversationId)), null, null,
                     Message.COLUMN_TIMESTAMP + " asc")
         }

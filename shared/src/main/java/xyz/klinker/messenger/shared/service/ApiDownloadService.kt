@@ -435,8 +435,8 @@ class ApiDownloadService : Service() {
         private val MESSAGE_DOWNLOAD_ID = 7237
         val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
-        val MESSAGE_DOWNLOAD_PAGE_SIZE = 300
-        val MAX_MEDIA_DOWNLOADS = 75
+        val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
+        val MAX_MEDIA_DOWNLOADS = 250
         val ARG_SHOW_NOTIFICATION = "show_notification"
 
         var IS_RUNNING = false
