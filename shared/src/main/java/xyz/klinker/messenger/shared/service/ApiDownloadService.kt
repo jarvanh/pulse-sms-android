@@ -123,7 +123,7 @@ class ApiDownloadService : Service() {
 
     private fun downloadMessages() {
         val startTime = System.currentTimeMillis()
-        val messageList = ArrayList<Message>()
+        val messageList = mutableListOf<Message>()
 
         var pageNumber = 1
         var nullCount = 0
@@ -315,24 +315,50 @@ class ApiDownloadService : Service() {
 
     private fun downloadContacts() {
         val startTime = System.currentTimeMillis()
-        val contacts = try {
-            ApiUtils.api.contact().list(Account.accountId).execute().body()
-        } catch (e: IOException) {
-            emptyArray<ContactBody>()
-        }
+        val contactList = mutableListOf<Contact>()
 
-        if (contacts != null) {
-            val contactList = ArrayList<Contact>()
+        var pageNumber = 1
+        var nullCount = 0
+        var noContacts = false
 
-            for (body in contacts) {
-                val contact = Contact(body)
-                contact.decrypt(encryptionUtils!!)
-                contactList.add(contact)
+        do {
+            val contacts = try {
+                ApiUtils.api.contact()
+                        .list(Account.accountId, CONTACTS_DOWNLOAD_PAGE_SIZE, contactList.size)
+                        .execute().body()
+            } catch (e: IOException) {
+                emptyArray<ContactBody>()
             }
 
-            DataSource.insertContacts(this, contactList, null, false)
+            if (contacts != null) {
+                if (contacts.isEmpty()) {
+                    noContacts = true
+                }
 
+                for (body in contacts) {
+                    val contact = Contact(body)
+
+                    try {
+                        contact.decrypt(encryptionUtils!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                    contactList.add(contact)
+                }
+            } else {
+                nullCount++
+            }
+
+            Log.v(TAG, contactList.size.toString() + " contacts downloaded. " + pageNumber + " pages so far.")
+            pageNumber++
+        } while (contactList.size % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && !noContacts && nullCount < 5)
+
+        if (contactList.size > 0) {
+            DataSource.insertContacts(this, contactList, null, false)
             Log.v(TAG, "contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+
+            contactList.clear()
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
@@ -436,6 +462,7 @@ class ApiDownloadService : Service() {
         val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
         val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
+        val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
         val MAX_MEDIA_DOWNLOADS = 250
         val ARG_SHOW_NOTIFICATION = "show_notification"
 

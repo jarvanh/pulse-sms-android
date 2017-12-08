@@ -30,4 +30,7 @@ public interface ContactService {
 
     @GET("contacts")
     Call<ContactBody[]> list(@Query("account_id") String accountId);
+
+    @GET("contacts")
+    Call<ContactBody[]> list(@Query("account_id") String accountId, @Query("limit") Integer limit, @Query("offset") Integer offset);
 }
