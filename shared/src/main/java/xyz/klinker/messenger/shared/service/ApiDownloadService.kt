@@ -175,7 +175,7 @@ class ApiDownloadService : Service() {
     private fun downloadConversations() {
         val startTime = System.currentTimeMillis()
         val conversations = try {
-            ApiUtils.api.conversation().list(Account.accountId).execute().body()
+            ApiUtils.api.conversation().list(Account.accountId, 100).execute().body()
         } catch (e: IOException) {
             emptyArray<ConversationBody>()
         }
