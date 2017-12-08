@@ -21,6 +21,7 @@ import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.view.View
 
@@ -75,6 +76,23 @@ object ActivityUtils {
         }
     }
 
+    fun setUpNavigationBarColor(activity: Activity?, color: Int) {
+        // TODO: this is integrated into every activity, but I honestly don't like it much
+        // I could integrate it for every user (Oreo+), or make a setting for it...
+        // I don't really know what I want to do with it, it just doesn't look good, IMO
+        if (!AndroidVersionUtil.isAndroidO || activity == null || true) {
+            return
+        }
+
+        if (color == Color.WHITE) {
+            activity.window?.navigationBarColor = Color.WHITE
+            activateLightNavigationBar(activity, true)
+        } else {
+            activity.window?.navigationBarColor = Color.BLACK
+            activateLightNavigationBar(activity, false)
+        }
+    }
+
     private fun activateLightStatusBar(activity: Activity?, activate: Boolean) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || activity == null) {
             return
@@ -86,6 +104,24 @@ object ActivityUtils {
             newSystemUiFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         } else {
             newSystemUiFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        }
+
+        if (newSystemUiFlags != oldSystemUiFlags) {
+            activity.window.decorView.systemUiVisibility = newSystemUiFlags
+        }
+    }
+
+    private fun activateLightNavigationBar(activity: Activity?, activate: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || activity == null) {
+            return
+        }
+
+        val oldSystemUiFlags = activity.window.decorView.systemUiVisibility
+        var newSystemUiFlags = oldSystemUiFlags
+        newSystemUiFlags = if (activate) {
+            newSystemUiFlags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        } else {
+            newSystemUiFlags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
         }
 
         if (newSystemUiFlags != oldSystemUiFlags) {

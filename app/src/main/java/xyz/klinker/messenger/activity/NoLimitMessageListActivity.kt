@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.util.ActivityUtils
@@ -29,6 +30,7 @@ class NoLimitMessageListActivity : AppCompatActivity() {
 
         ActivityUtils.setStatusBarColor(this, conversation.colors.colorDark)
         ActivityUtils.setTaskDescription(this, conversation.title!!, conversation.colors.color)
+        MainColorController(this).configureNavigationBarColor()
     }
 
     companion object {

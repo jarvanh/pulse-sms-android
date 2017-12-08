@@ -5,16 +5,16 @@ import android.graphics.Color
 import android.os.Build
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 
-class MainColorController(private val activity: MessengerActivity) {
+class MainColorController(private val activity: AppCompatActivity) {
 
     private val toolbar: Toolbar by lazy { activity.findViewById<View>(R.id.toolbar) as Toolbar }
     private val fab: FloatingActionButton by lazy { activity.findViewById<View>(R.id.fab) as FloatingActionButton }
@@ -51,5 +51,13 @@ class MainColorController(private val activity: MessengerActivity) {
             val header = navigationView.findViewById<View>(R.id.header)
             header?.setBackgroundColor(Settings.mainColorSet.colorDark)
         })
+    }
+
+    fun configureNavigationBarColor() {
+        if (Settings.isCurrentlyDarkTheme) {
+            ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK)
+        } else {
+            ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE)
+        }
     }
 }

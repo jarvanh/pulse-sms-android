@@ -3,6 +3,7 @@ package xyz.klinker.messenger.activity
 import android.os.Bundle
 import android.view.MenuItem
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.MediaGridFragment
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.util.ActivityUtils
@@ -22,6 +23,7 @@ class MediaGridActivity : AbstractSettingsActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         ColorUtils.checkBlackBackground(this)
+        MainColorController(this).configureNavigationBarColor()
     }
 
     public override fun onStart() {

@@ -64,6 +64,7 @@ class MessengerActivity : AppCompatActivity() {
         fab.setOnClickListener { startActivity(Intent(applicationContext, ComposeActivity::class.java)) }
 
         colorController.configureGlobalColors()
+        colorController.configureNavigationBarColor()
         intentHandler.dismissIfFromNotification()
         navController.conversationActionDelegate.displayConversations(savedInstanceState)
         accountController.startIntroOrLogin(savedInstanceState)

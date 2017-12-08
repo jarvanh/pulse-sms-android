@@ -23,6 +23,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.MmsSettings
@@ -45,6 +46,8 @@ class ComposeActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compose)
+
+        MainColorController(this).configureNavigationBarColor()
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         toolbar.setBackgroundColor(Settings.mainColorSet.color)

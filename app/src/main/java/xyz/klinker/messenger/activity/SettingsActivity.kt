@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment
 import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment
 import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment
@@ -75,6 +76,7 @@ class SettingsActivity : AbstractSettingsActivity() {
         ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
 
         ColorUtils.checkBlackBackground(this)
+        MainColorController(this).configureNavigationBarColor()
     }
 
     private fun startFragment(fragment: Fragment) {

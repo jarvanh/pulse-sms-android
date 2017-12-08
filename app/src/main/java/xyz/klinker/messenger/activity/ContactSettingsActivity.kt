@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.settings.ContactSettingsFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
@@ -44,6 +45,7 @@ class ContactSettingsActivity : AbstractSettingsActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ColorUtils.checkBlackBackground(this)
+        MainColorController(this).configureNavigationBarColor()
     }
 
     public override fun onStart() {
