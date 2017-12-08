@@ -365,22 +365,22 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getMediaMessages() {
-        when(database.query("message", null, "conversation_id=? AND mime_type!='text/plain' AND mime_type!='text/x-vcard' AND mime_type!='text/vcard'",
+        when(database.query("message", null, "conversation_id=? AND (mime_type LIKE 'image/%' OR mime_type LIKE 'video/%' OR mime_type LIKE 'audio/%') AND data NOT LIKE 'firebase %'",
                 new String[]{"1"}, null, null, "timestamp asc")).thenReturn(cursor);
         assertNotNull(source.getMediaMessages(context,1));
     }
 
     @Test
     public void getAllMediaMessages() {
-        when(database.query("message", null, "mime_type!='text/plain'", null, null, null,
+        when(database.query("message", null, "mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=?", new String[] { "text/plain", "media/web", "media/youtube-v2", "media/twitter" }, null, null,
                 "timestamp desc LIMIT 20")).thenReturn(cursor);
-        assertNotNull(source.getAllMediaMessages(context,20));
+        assertEquals(cursor, source.getAllMediaMessages(context,20));
     }
 
     @Test
     public void getFirebaseMediaMessages() {
         when(database.query("message", null, "mime_type!='text/plain' AND data LIKE 'firebase %'", null,
-                null, null, null)).thenReturn(cursor);
+                null, null, "timestamp desc")).thenReturn(cursor);
         assertEquals(cursor, source.getFirebaseMediaMessages(context));
     }
 

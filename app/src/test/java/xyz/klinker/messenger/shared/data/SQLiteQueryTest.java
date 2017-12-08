@@ -432,7 +432,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void getMediaMessages() {
         assertEquals(0, source.getMediaMessages(context, 1).size());
-        assertEquals(2, source.getMediaMessages(context, 4).size());
+        assertEquals(1, source.getMediaMessages(context, 4).size());
     }
 
     @Test
