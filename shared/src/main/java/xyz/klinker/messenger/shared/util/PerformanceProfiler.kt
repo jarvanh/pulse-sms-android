@@ -5,7 +5,7 @@ import android.util.Log
 object PerformanceProfiler {
 
     private val TAG = "PerformanceProfiler"
-    private val SHOULD_PROFILE = true
+    private val SHOULD_PROFILE = false
 
     private var lastLogTime = 0L
     private val time: Long

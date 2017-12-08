@@ -27,6 +27,7 @@ import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.main.*
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.AnimationUtils
 import xyz.klinker.messenger.shared.util.PromotionUtils
 import xyz.klinker.messenger.shared.util.UnreadBadger
@@ -156,6 +157,10 @@ class MessengerActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
+            Settings.forceUpdate(this)
+            colorController.colorActivity()
+            colorController.configureGlobalColors()
+
             resultHandler.handle(requestCode, resultCode, data)
             accountController.startLoad(requestCode)
             super.onActivityResult(requestCode, resultCode, data)
