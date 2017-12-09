@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.activity.share
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
@@ -17,12 +18,16 @@ import com.bumptech.glide.request.RequestOptions
 import xyz.klinker.android.floating_tutorial.FloatingTutorialActivity
 import xyz.klinker.android.floating_tutorial.TutorialPage
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
+import android.util.TypedValue
+import android.widget.LinearLayout
+
 
 class QuickShareActivity : FloatingTutorialActivity() {
     private val page: QuickSharePage by lazy { QuickSharePage(this) }
@@ -73,6 +78,15 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
 
             return@setOnEditorActionListener false
         })
+
+        val outValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, outValue, true)
+
+        val progressIndicator = findViewById<LinearLayout>(R.id.tutorial_progress)
+        progressIndicator.setOnClickListener {
+            activity.startActivity(Intent(activity, ComposeActivity::class.java))
+            activity.finish()
+        }
     }
 
     fun setContacts(phoneNumbers: List<String>) {
