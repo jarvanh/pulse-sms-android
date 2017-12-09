@@ -15,13 +15,13 @@ class ContactResyncService : IntentService("ContactResyncService") {
         val TAG = "ContactResyncService"
 
         fun runIfApplicable(context: Context, sharedPreferences: SharedPreferences, storedAppVersion: Int) {
-            if (sharedPreferences.getBoolean("v2.6.6.4", true)) {
+            if (sharedPreferences.getBoolean("v2.6.6.7", true)) {
                 if (storedAppVersion != 0) {
                     context.startService(Intent(context, ContactResyncService::class.java))
                 }
 
                 sharedPreferences.edit()
-                        .putBoolean("v2.6.6.4", false)
+                        .putBoolean("v2.6.6.7", false)
                         .commit()
             }
         }
