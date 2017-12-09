@@ -50,7 +50,10 @@ public interface ConversationService {
     Call<ConversationBody[]> list(@Query("account_id") String accountId);
 
     @GET("conversations")
-    Call<ConversationBody[]> list(@Query("account_id") String accountId, @Query("limit") int limit);
+    Call<ConversationBody[]> list(@Query("account_id") String accountId, @Query("limit") Integer limit);
+
+    @GET("conversations")
+    Call<ConversationBody[]> list(@Query("account_id") String accountId, @Query("limit") Integer limit, @Query("offset") Integer offset);
 
     @POST("conversations/read/{device_id}")
     Call<Void> read(@Path("device_id") long deviceId, @Query("android_device") String androidDeviceId, @Query("account_id") String accountId);

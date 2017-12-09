@@ -649,7 +649,7 @@ object DataSource {
      * Writes the initial list of conversations to the database. These are the messages that come in when
      * downloaded from the cloud.
      *
-     * @param conversations the list of conversations. See ApiDownloadService
+     * @param conversations the list of conversations. See usage in ApiDownloadService#downloadConversations
      * @param context       the application context.
      */
     fun insertRawConversations(conversations: List<Conversation>, context: Context) {
@@ -662,8 +662,7 @@ object DataSource {
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
-            val conversationId = generateId()
-            values.put(Conversation.COLUMN_ID, conversationId)
+            values.put(Conversation.COLUMN_ID, conversation.id)
             values.put(Conversation.COLUMN_COLOR, conversation.colors.color)
             values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark)
             values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight)

@@ -174,40 +174,52 @@ class ApiDownloadService : Service() {
 
     private fun downloadConversations() {
         val startTime = System.currentTimeMillis()
-        val conversations = mutableListOf<Conversation>()
-        val conversationBodies = try {
-            ApiUtils.api.conversation().list(Account.accountId).execute().body()
-        } catch (e: IOException) {
-            emptyArray<ConversationBody>()
-        }
+        val conversationList = mutableListOf<Conversation>()
 
-        if (conversationBodies != null) {
-            for (body in conversationBodies) {
-                val conversation = Conversation(body)
+        var pageNumber = 1
+        var nullCount = 0
+        var noConversations = false
 
-                try {
-                    conversation.decrypt(encryptionUtils!!)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this)
-
-                val image = ImageUtils.getContactImage(conversation.imageUri, this)
-                if (conversation.imageUri != null && image == null) {
-                    conversation.imageUri = null
-                } else if (conversation.imageUri != null) {
-                    conversation.imageUri = conversation.imageUri!! + "/photo"
-                }
-
-                image?.recycle()
-                conversations.add(conversation)
+        do {
+            val conversations = try {
+                ApiUtils.api.conversation()
+                        .list(Account.accountId, CONVERSATION_DOWNLOAD_PAGE_SIZE, conversationList.size)
+                        .execute().body()
+            } catch (e: IOException) {
+                emptyArray<ConversationBody>()
             }
 
-            DataSource.insertRawConversations(conversations, this)
+            if (conversations != null) {
+                if (conversations.isEmpty()) {
+                    noConversations = true
+                }
+
+                for (body in conversations) {
+                    val conversation = Conversation(body)
+
+                    try {
+                        conversation.decrypt(encryptionUtils!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                    conversationList.add(conversation)
+                }
+            } else {
+                nullCount++
+            }
+
+            Log.v(TAG, conversationList.size.toString() + " conversations downloaded. " + pageNumber + " pages so far.")
+            pageNumber++
+        } while (conversationList.size % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && !noConversations && nullCount < 5)
+
+        if (conversationList.size > 0) {
+            DataSource.insertRawConversations(conversationList, this)
             Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+
+            conversationList.clear()
         } else {
-            Log.v(TAG, "conversations failed to insert")
+            Log.v(TAG, "contacts failed to insert")
         }
     }
 
@@ -409,7 +421,6 @@ class ApiDownloadService : Service() {
     }
 
     companion object {
-
         fun start(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(Intent(context, ApiDownloadService::class.java))
@@ -423,6 +434,7 @@ class ApiDownloadService : Service() {
         val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
         val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
+        val CONVERSATION_DOWNLOAD_PAGE_SIZE = 100
         val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
         val MAX_MEDIA_DOWNLOADS = 250
         val ARG_SHOW_NOTIFICATION = "show_notification"
