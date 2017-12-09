@@ -646,6 +646,54 @@ object DataSource {
     }
 
     /**
+     * Writes the initial list of conversations to the database. These are the messages that come in when
+     * downloaded from the cloud.
+     *
+     * @param conversations the list of conversations. See ApiDownloadService
+     * @param context       the application context.
+     */
+    fun insertRawConversations(conversations: List<Conversation>, context: Context) {
+        beginTransaction(context)
+
+        for (i in conversations.indices) {
+            val conversation = conversations[i]
+
+            val values = ContentValues(16)
+
+            // here we are loading the id from the internal database into the conversation object
+            // but we don't want to use that so we'll just generate a new one.
+            val conversationId = generateId()
+            values.put(Conversation.COLUMN_ID, conversationId)
+            values.put(Conversation.COLUMN_COLOR, conversation.colors.color)
+            values.put(Conversation.COLUMN_COLOR_DARK, conversation.colors.colorDark)
+            values.put(Conversation.COLUMN_COLOR_LIGHT, conversation.colors.colorLight)
+            values.put(Conversation.COLUMN_COLOR_ACCENT, conversation.colors.colorAccent)
+            values.put(Conversation.COLUMN_LED_COLOR, conversation.ledColor)
+            values.put(Conversation.COLUMN_PINNED, conversation.pinned)
+            values.put(Conversation.COLUMN_READ, conversation.read)
+            values.put(Conversation.COLUMN_TITLE, conversation.title)
+            values.put(Conversation.COLUMN_PHONE_NUMBERS, conversation.phoneNumbers)
+            values.put(Conversation.COLUMN_SNIPPET, conversation.snippet)
+            values.put(Conversation.COLUMN_RINGTONE, conversation.ringtoneUri)
+            values.put(Conversation.COLUMN_IMAGE_URI, conversation.imageUri)
+            values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher)
+            values.put(Conversation.COLUMN_MUTE, conversation.mute)
+            values.put(Conversation.COLUMN_ARCHIVED, conversation.archive)
+            values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp)
+
+            try {
+                database(context).insert(Conversation.TABLE, null, values)
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).insert(Conversation.TABLE, null, values)
+            }
+        }
+
+        setTransactionSuccessful(context)
+        endTransaction(context)
+    }
+
+    /**
      * Inserts a conversation into the database.
      *
      * @param conversation the conversation to insert.
@@ -1951,16 +1999,17 @@ object DataSource {
                 database(context).insert(Message.TABLE, null, values)
             }
 
-            //            ApiUtils.addMessage(context, accountId(context), message.id, message.conversationId, message.type, message.data,
-            //                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
-            //                    message.color, getEncryptionUtils(context));
+            // these aren't relevant since this is only being done from the download service
+//            ApiUtils.addMessage(context, accountId(context), message.id, message.conversationId, message.type, message.data,
+//                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
+//                    message.color, getEncryptionUtils(context));
 
-            updateConversation(context, message.conversationId, message.read, message.timestamp,
-                    if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
-                        context.getString(R.string.you) + ": " + message.data
-                    else
-                        message.data,
-                    message.mimeType, false, useApi)
+//            updateConversation(context, message.conversationId, message.read, message.timestamp,
+//                    if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
+//                        context.getString(R.string.you) + ": " + message.data
+//                    else
+//                        message.data,
+//                    message.mimeType, false, useApi)
         }
 
         setTransactionSuccessful(context)

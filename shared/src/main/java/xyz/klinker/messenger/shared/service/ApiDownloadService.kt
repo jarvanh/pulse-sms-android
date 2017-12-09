@@ -174,24 +174,21 @@ class ApiDownloadService : Service() {
 
     private fun downloadConversations() {
         val startTime = System.currentTimeMillis()
-        val conversations = try {
+        val conversations = mutableListOf<Conversation>()
+        val conversationBodies = try {
             ApiUtils.api.conversation().list(Account.accountId).execute().body()
         } catch (e: IOException) {
             emptyArray<ConversationBody>()
         }
 
-        if (conversations != null) {
-            for (body in conversations) {
+        if (conversationBodies != null) {
+            for (body in conversationBodies) {
                 val conversation = Conversation(body)
 
                 try {
                     conversation.decrypt(encryptionUtils!!)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Log.v(TAG, "decryption error while downloading conversations. Retrying now.")
-
-                    retryConversationDownloadFromBadDecryption()
-                    return
                 }
 
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, this)
@@ -204,46 +201,10 @@ class ApiDownloadService : Service() {
                 }
 
                 image?.recycle()
-
-                DataSource.insertConversation(this, conversation, false)
+                conversations.add(conversation)
             }
 
-            Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
-        } else {
-            Log.v(TAG, "conversations failed to insert")
-        }
-    }
-
-    // a bit probably got misplaced? Lets retry. If it doesn't work still, just skip inserting
-    // that conversation
-    private fun retryConversationDownloadFromBadDecryption() {
-        val startTime = System.currentTimeMillis()
-        val conversations = try {
-            ApiUtils.api.conversation().list(Account.accountId).execute().body()
-        } catch (e: IOException) {
-            emptyArray<ConversationBody>()
-        }
-
-        if (conversations != null) {
-            conversations.map { Conversation(it) }
-                    .forEach {
-                        try {
-                            it.decrypt(encryptionUtils!!)
-                            it.imageUri = ContactUtils.findImageUri(it.phoneNumbers, this)
-
-                            if (it.imageUri != null && ImageUtils.getContactImage(it.imageUri, this) == null) {
-                                it.imageUri = null
-                            } else if (it.imageUri != null) {
-                                it.imageUri = it.imageUri!! + "/photo"
-                            }
-
-                            DataSource.insertConversation(this, it, false)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            Log.v(TAG, "error inserting conversation due to encryption. conversation_id: " + it.id)
-                        }
-                    }
-
+            DataSource.insertRawConversations(conversations, this)
             Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
         } else {
             Log.v(TAG, "conversations failed to insert")
