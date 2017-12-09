@@ -126,13 +126,14 @@ class ApiDownloadService : Service() {
         val messageList = mutableListOf<Message>()
 
         var pageNumber = 1
+        var downloaded = 0
         var nullCount = 0
         var noMessages = false
 
         do {
             val messages = try {
                 ApiUtils.api.message()
-                        .list(Account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, messageList.size)
+                        .list(Account.accountId, null, MESSAGE_DOWNLOAD_PAGE_SIZE, downloaded)
                         .execute().body()
             } catch (e: IOException) {
                 emptyArray<MessageBody>()
@@ -154,19 +155,21 @@ class ApiDownloadService : Service() {
 
                     messageList.add(message)
                 }
+
+                DataSource.insertMessages(this, messageList, false)
+                downloaded += messageList.size
+
+                messageList.clear()
             } else {
                 nullCount++
             }
 
-            Log.v(TAG, messageList.size.toString() + " messages downloaded. " + pageNumber + " pages so far.")
+            Log.v(TAG, downloaded.toString() + " messages downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (messageList.size % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
+        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
 
-        if (messageList.size > 0) {
-            DataSource.insertMessages(this, messageList, false)
-            Log.v(TAG, messageList.size.toString() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages")
-
-            messageList.clear()
+        if (downloaded > 0) {
+            Log.v(TAG, downloaded.toString() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages")
         } else {
             Log.v(TAG, "messages failed to insert")
         }
@@ -177,13 +180,14 @@ class ApiDownloadService : Service() {
         val conversationList = mutableListOf<Conversation>()
 
         var pageNumber = 1
+        var downloaded = 0
         var nullCount = 0
         var noConversations = false
 
         do {
             val conversations = try {
                 ApiUtils.api.conversation()
-                        .list(Account.accountId, CONVERSATION_DOWNLOAD_PAGE_SIZE, conversationList.size)
+                        .list(Account.accountId, CONVERSATION_DOWNLOAD_PAGE_SIZE, downloaded)
                         .execute().body()
             } catch (e: IOException) {
                 emptyArray<ConversationBody>()
@@ -213,19 +217,21 @@ class ApiDownloadService : Service() {
                     image?.recycle()
                     conversationList.add(conversation)
                 }
+
+                DataSource.insertRawConversations(conversationList, this)
+                downloaded += conversationList.size
+
+                conversationList.clear()
             } else {
                 nullCount++
             }
 
-            Log.v(TAG, conversationList.size.toString() + " conversations downloaded. " + pageNumber + " pages so far.")
+            Log.v(TAG, downloaded.toString() + " conversations downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (conversationList.size % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && !noConversations && nullCount < 5)
+        } while (downloaded % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && !noConversations && nullCount < 5)
 
-        if (conversationList.size > 0) {
-            DataSource.insertRawConversations(conversationList, this)
-            Log.v(TAG, "conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
-
-            conversationList.clear()
+        if (downloaded > 0) {
+            Log.v(TAG, downloaded.toString() + " conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
@@ -299,13 +305,14 @@ class ApiDownloadService : Service() {
         val contactList = mutableListOf<Contact>()
 
         var pageNumber = 1
+        var downloaded = 0
         var nullCount = 0
         var noContacts = false
 
         do {
             val contacts = try {
                 ApiUtils.api.contact()
-                        .list(Account.accountId, CONTACTS_DOWNLOAD_PAGE_SIZE, contactList.size)
+                        .list(Account.accountId, CONTACTS_DOWNLOAD_PAGE_SIZE, downloaded)
                         .execute().body()
             } catch (e: IOException) {
                 emptyArray<ContactBody>()
@@ -327,19 +334,21 @@ class ApiDownloadService : Service() {
 
                     contactList.add(contact)
                 }
+
+                DataSource.insertContacts(this, contactList, null, false)
+                downloaded += contactList.size
+
+                contactList.clear()
             } else {
                 nullCount++
             }
 
-            Log.v(TAG, contactList.size.toString() + " contacts downloaded. " + pageNumber + " pages so far.")
+            Log.v(TAG, downloaded.toString() + " contacts downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (contactList.size % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && !noContacts && nullCount < 5)
+        } while (downloaded % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && !noContacts && nullCount < 5)
 
-        if (contactList.size > 0) {
-            DataSource.insertContacts(this, contactList, null, false)
-            Log.v(TAG, "contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
-
-            contactList.clear()
+        if (downloaded > 0) {
+            Log.v(TAG, downloaded.toString() + " contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
@@ -442,7 +451,7 @@ class ApiDownloadService : Service() {
         val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
         val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
-        val CONVERSATION_DOWNLOAD_PAGE_SIZE = 100
+        val CONVERSATION_DOWNLOAD_PAGE_SIZE = 200
         val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
         val MAX_MEDIA_DOWNLOADS = 250
         val ARG_SHOW_NOTIFICATION = "show_notification"
