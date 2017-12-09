@@ -16,12 +16,9 @@
 
 package xyz.klinker.messenger.shared.service
 
-import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
@@ -33,8 +30,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 import java.io.File
 import java.io.IOException
-import java.util.ArrayList
-import java.util.concurrent.Executor
 
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback
 import xyz.klinker.messenger.shared.R
@@ -57,7 +52,6 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.shared.util.*
-import xyz.klinker.messenger.shared.util.listener.DirectExecutor
 
 class ApiDownloadService : Service() {
 

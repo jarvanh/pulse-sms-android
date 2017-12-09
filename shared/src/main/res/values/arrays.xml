@@ -72,6 +72,7 @@
     <string-array name="repeat">
         <item>@string/repeat_never</item>
         <item>@string/repeat_one_min</item>
+        <item>@string/repeat_two_mins</item>
         <item>@string/repeat_five_mins</item>
         <item>@string/repeat_ten_mins</item>
         <item>@string/repeat_half_hour</item>
@@ -81,6 +82,7 @@
     <string-array name="repeat_values">
         <item>never</item>
         <item>one_min</item>
+        <item>two_min</item>
         <item>five_min</item>
         <item>ten_min</item>
         <item>half_hour</item>

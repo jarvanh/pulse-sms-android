@@ -194,6 +194,7 @@ object Settings {
         when (repeatNotifications) {
             "never" -> this.repeatNotifications = -1
             "one_min" -> this.repeatNotifications = TimeUtils.MINUTE
+            "two_mins" -> this.repeatNotifications = TimeUtils.MINUTE * 2
             "five_min" -> this.repeatNotifications = TimeUtils.MINUTE * 5
             "ten_min" -> this.repeatNotifications = TimeUtils.MINUTE * 10
             "half_hour" -> this.repeatNotifications = TimeUtils.MINUTE * 30
