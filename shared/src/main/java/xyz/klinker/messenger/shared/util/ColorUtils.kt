@@ -286,7 +286,7 @@ object ColorUtils {
                     handleField.isAccessible = true
                 }
 
-                var handleDrawable: Drawable? = handleField.get(editor) as Drawable
+                var handleDrawable: Drawable? = handleField.get(editor) as Drawable?
 
                 if (handleDrawable == null) {
                     val resField = TextView::class.java.getDeclaredField(resNames[i])
@@ -304,7 +304,6 @@ object ColorUtils {
                 }
             }
         } catch (e: Exception) {
-
         }
 
     }
