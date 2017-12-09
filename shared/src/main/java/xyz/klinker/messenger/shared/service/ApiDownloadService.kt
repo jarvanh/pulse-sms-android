@@ -203,6 +203,14 @@ class ApiDownloadService : Service() {
                         e.printStackTrace()
                     }
 
+                    val image = ImageUtils.getContactImage(conversation.imageUri, this)
+                    if (conversation.imageUri != null && image == null) {
+                        conversation.imageUri = null
+                    } else if (conversation.imageUri != null) {
+                        conversation.imageUri = conversation.imageUri!! + "/photo"
+                    }
+
+                    image?.recycle()
                     conversationList.add(conversation)
                 }
             } else {
