@@ -50,6 +50,7 @@ import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.shared.service.ContactResyncService
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.billing.BillingHelper
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable
@@ -84,6 +85,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             initMessageCountPreference()
             initRemoveAccountPreference()
             initResyncAccountPreference()
+            initResyncContactsPreference()
             initFirebaseRefreshPreference()
         }
 
@@ -296,6 +298,22 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
                         startActivity(Intent(fragmentActivity!!, RecreateAccountActivity::class.java))
                     }.show()
+            true
+        }
+    }
+
+    private fun initResyncContactsPreference() {
+        val preference = findPreference(getString(R.string.pref_resync_contacts))
+        if (!Account.primary) {
+            (preferenceScreen
+                    .findPreference(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
+                    .removePreference(preference)
+            return
+        }
+
+        preference.setOnPreferenceClickListener {
+            activity?.startService(Intent(activity, ContactResyncService::class.java))
+            activity?.onBackPressed()
             true
         }
     }

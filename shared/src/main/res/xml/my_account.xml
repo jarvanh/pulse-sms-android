@@ -63,6 +63,12 @@
             android:dependency="@string/pref_enable_danger_zone"/>
 
         <Preference
+            android:key="@string/pref_resync_contacts"
+            android:title="@string/resync_contacts"
+            android:summary="@string/resync_contacts_summary"
+            android:dependency="@string/pref_enable_danger_zone"/>
+
+        <Preference
             android:key="@string/pref_delete_account"
             android:title="@string/delete_account"
             android:summary="@string/delete_account_summary"

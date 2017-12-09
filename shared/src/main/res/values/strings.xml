@@ -376,6 +376,8 @@
         what is currently in your internal SMS database.</string>
     <string name="resync_account_confirmation">This will delete all messages from this device, and
         start with a clean copy of what is currently on your primary device. Are you sure this is what you want?</string>
+    <string name="resync_contacts">Resync Contacts</string>
+    <string name="resync_contacts_summary">Immediately push any contact changes to the web.</string>
     <string name="normalize_color_scheme">Or, you can choose a single color that you want to
         base the theme on:</string>
     <string name="no_apps_found">No apps found to handle this action</string>
