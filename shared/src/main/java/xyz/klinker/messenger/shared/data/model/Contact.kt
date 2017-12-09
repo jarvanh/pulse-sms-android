@@ -20,6 +20,7 @@ class Contact : DatabaseTable {
 
     constructor()
     constructor(body: ContactBody) {
+        this.id = body.deviceId
         this.phoneNumber = body.phoneNumber
         this.idMatcher = body.idMatcher
         this.name = body.name

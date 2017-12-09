@@ -439,6 +439,7 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
         private fun updateContact(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
             try {
                 val contact = Contact()
+                contact.id = json.getLong("device_id")
                 contact.phoneNumber = encryptionUtils!!.decrypt(json.getString("phone_number"))
                 contact.name = encryptionUtils.decrypt(json.getString("name"))
                 contact.colors.color = json.getInt("color")
@@ -457,7 +458,8 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
         @Throws(JSONException::class)
         private fun removeContact(json: JSONObject,context: Context) {
             val phoneNumber = json.getString("phone_number")
-            DataSource.deleteContact(context, phoneNumber, false)
+            val deviceId = json.getLong("device_id")
+            DataSource.deleteContact(context, deviceId, phoneNumber, false)
             Log.v(TAG, "removed contact")
         }
 

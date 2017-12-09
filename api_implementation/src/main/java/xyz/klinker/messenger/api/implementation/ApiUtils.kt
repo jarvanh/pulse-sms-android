@@ -193,14 +193,14 @@ object ApiUtils {
     /**
      * Adds a new contact.
      */
-    fun addContact(accountId: String?, phoneNumber: String?, idMatcher: String?, name: String?, color: Int,
+    fun addContact(accountId: String?, id: Long, phoneNumber: String?, idMatcher: String?, name: String?, color: Int,
                    colorDark: Int, colorLight: Int, colorAccent: Int,
                    encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
 
-        val body = ContactBody(
+        val body = ContactBody(id,
                 encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(idMatcher),
                 encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
         val request = AddContactRequest(accountId, body)
@@ -221,14 +221,14 @@ object ApiUtils {
     /**
      * Deletes a contact
      */
-    fun deleteContact(accountId: String?, phoneNumber: String?,
+    fun deleteContact(accountId: String?, id: Long, phoneNumber: String?,
                       encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
 
         val message = "delete contact"
-        val call = api.contact().remove(encryptionUtils.encrypt(phoneNumber), accountId)
+        val call = api.contact().remove(encryptionUtils.encrypt(phoneNumber), id, accountId)
 
         call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
     }
@@ -250,7 +250,7 @@ object ApiUtils {
     /**
      * Updates a conversation with new settings or info.
      */
-    fun updateContact(accountId: String?, phoneNumber: String?, name: String?,
+    fun updateContact(accountId: String?, id: Long, phoneNumber: String?, name: String?,
                       color: Int?, colorDark: Int?, colorLight: Int?,
                       colorAccent: Int?,
                       encryptionUtils: EncryptionUtils?) {
@@ -263,7 +263,7 @@ object ApiUtils {
                 encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
 
         val message = "update contact"
-        val call = api.contact().update(encryptionUtils.encrypt(phoneNumber), accountId, request)
+        val call = api.contact().update(encryptionUtils.encrypt(phoneNumber), id, accountId, request)
 
         call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
     }

@@ -375,6 +375,7 @@ object ContactUtils {
             do {
                 val contact = Contact()
 
+                contact.id = DataSource.generateId()
                 contact.name = cursor.getString(0)
                 contact.phoneNumber = cursor.getString(1)
                 contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
@@ -428,6 +429,7 @@ object ContactUtils {
                 do {
                     val contact = Contact()
 
+                    contact.id = DataSource.generateId()
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)))
                     contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default

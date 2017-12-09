@@ -18,12 +18,12 @@ public interface ContactService {
     @POST("contacts/add")
     Call<Void> add(@Body AddContactRequest request);
 
-    @POST("contacts/update/{phone_number}")
-    Call<Void> update(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId,
+    @POST("contacts/update_device_id")
+    Call<Void> update(@Query("phone_number") String phoneNumber, @Query("device_id") long id, @Query("account_id") String accountId,
                   @Body UpdateContactRequest request);
 
-    @POST("contacts/remove/{phone_number}")
-    Call<Void> remove(@Path("phone_number") String phoneNumber, @Query("account_id") String accountId);
+    @POST("contacts/remove_device_id")
+    Call<Void> remove(@Query("phone_number") String phoneNumber, @Query("device_id") long id, @Query("account_id") String accountId);
 
     @POST("contacts/clear")
     Call<Void> clear(@Query("account_id") String accountId);

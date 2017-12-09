@@ -253,7 +253,7 @@ object DataSource {
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.
-            values.put(Contact.COLUMN_ID, generateId())
+            values.put(Contact.COLUMN_ID, contact.id)
             values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
             values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default)
             values.put(Contact.COLUMN_NAME, contact.name)
@@ -301,7 +301,7 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
 
         if (useApi) {
-            ApiUtils.addContact(accountId(context), contact.phoneNumber, contact.idMatcher, contact.name,
+            ApiUtils.addContact(accountId(context), contact.id, contact.phoneNumber, contact.idMatcher, contact.name,
                     contact.colors.color, contact.colors.colorDark, contact.colors.colorLight,
                     contact.colors.colorAccent, encryptor(context))
         }
@@ -461,7 +461,7 @@ object DataSource {
      *
      * @param phoneNumber the phone number to delete
      */
-    @JvmOverloads fun deleteContact(context: Context, phoneNumber: String, useApi: Boolean = true) {
+    @JvmOverloads fun deleteContact(context: Context, id: Long, phoneNumber: String, useApi: Boolean = true) {
         try {
             database(context).delete(Contact.TABLE, Contact.COLUMN_PHONE_NUMBER + "=?",
                     arrayOf(phoneNumber))
@@ -472,7 +472,7 @@ object DataSource {
         }
 
         if (useApi) {
-            ApiUtils.deleteContact(accountId(context), phoneNumber, encryptor(context))
+            ApiUtils.deleteContact(accountId(context), id, phoneNumber, encryptor(context))
         }
     }
 
@@ -520,7 +520,7 @@ object DataSource {
      * @param contact the contact with new values
      */
     @JvmOverloads fun updateContact(context: Context, contact: Contact, useApi: Boolean = true) {
-        updateContact(context, contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
+        updateContact(context, contact.id, contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
                 contact.colors.colorLight, contact.colors.colorAccent, useApi)
     }
 
@@ -534,7 +534,7 @@ object DataSource {
      * @param colorLight     the new light color (null if we don't want to update it)
      * @param colorAccent    the new accent color (null if we don't want to update it)
      */
-    @JvmOverloads fun updateContact(context: Context, phoneNumber: String?, name: String?,
+    @JvmOverloads fun updateContact(context: Context, id: Long, phoneNumber: String?, name: String?,
                                     color: Int?, colorDark: Int?, colorLight: Int?, colorAccent: Int?,
                                     useApi: Boolean = true) {
         val values = ContentValues()
@@ -555,7 +555,7 @@ object DataSource {
         }
 
         if (updated > 0 && useApi) {
-            ApiUtils.updateContact(accountId(context), phoneNumber, name, color, colorDark,
+            ApiUtils.updateContact(accountId(context), id, phoneNumber, name, color, colorDark,
                     colorLight, colorAccent, encryptor(context))
         }
     }

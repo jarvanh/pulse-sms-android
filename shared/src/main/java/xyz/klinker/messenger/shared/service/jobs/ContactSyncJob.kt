@@ -41,7 +41,7 @@ class ContactSyncJob : BackgroundJob() {
 
         val source = DataSource
 
-        val contactsList = ContactUtils.queryNewContacts(this, source, since)
+        var contactsList = ContactUtils.queryNewContacts(this, source, since)
         if (contactsList.isEmpty()) {
             writeUpdateTimestamp(sharedPrefs)
             scheduleNextRun(this)
@@ -56,7 +56,7 @@ class ContactSyncJob : BackgroundJob() {
         for (i in contactsList.indices) {
             val c = contactsList[i]
             c.encrypt(account.encryptor!!)
-            val contactBody = ContactBody(c.phoneNumber, c.idMatcher, c.name, c.colors.color,
+            val contactBody = ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.colors.color,
                     c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
 
             contacts[i] = contactBody

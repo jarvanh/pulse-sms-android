@@ -26,12 +26,12 @@ public class ContactTest extends ApiTest {
         assertNotNull(response);
 
         UpdateContactRequest update = new UpdateContactRequest(null, "jake", null, null, null, null);
-        api.contact().update("515", accountId, update).execute().body();
+        api.contact().update("515", 1, accountId, update).execute().body();
 
         ContactBody[] contacts = api.contact().list(accountId).execute().body();
         assertEquals(1, contacts.length - originalSize);
 
-        api.contact().remove("515", accountId).execute();
+        api.contact().remove("515", 1, accountId).execute();
 
         contacts = api.contact().list(accountId).execute().body();
         assertEquals(contacts.length, originalSize);

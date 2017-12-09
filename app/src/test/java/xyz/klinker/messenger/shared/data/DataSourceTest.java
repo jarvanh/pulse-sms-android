@@ -229,14 +229,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, "515", "Test", 1, 2, 3, 4, false);
+        source.updateContact(context, 1, "515","Test", 1, 2, 3, 4, false);
         verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),
                 eq(new String[]{"515"}));
     }
 
     @Test
     public void deleteContact() {
-        source.deleteContact(context, "515", false);
+        source.deleteContact(context, 1, "515", false);
         verify(database).delete("contact", "phone_number=?", new String[]{"515"});
     }
 
@@ -708,6 +708,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         List<Contact> contacts = new ArrayList<>();
 
         Contact contact = new Contact();
+        contact.setId(11);
         contact.setName("Luke Klinker");
         contact.setPhoneNumber("(515) 991-1493");
 //        contact.colors.color = resources.getColor(R.color.materialIndigo);
@@ -717,6 +718,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(12);
         contact.setName("Matt Swiontek");
         contact.setPhoneNumber("(708) 928-0846");
 //        contact.colors.color = resources.getColor(R.color.materialRed);
@@ -726,6 +728,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(13);
         contact.setName("Kris Klinker");
         contact.setPhoneNumber("(515) 419-6726");
 //        contact.colors.color = resources.getColor(R.color.materialPink);
@@ -735,6 +738,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(14);
         contact.setName("Andrew Klinker");
         contact.setPhoneNumber("(515) 991-8235");
 //        contact.colors.color = resources.getColor(R.color.materialBlue);
@@ -744,6 +748,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(15);
         contact.setName("Aaron Klinker");
         contact.setPhoneNumber("(515) 556-7749");
 //        contact.colors.color = resources.getColor(R.color.materialGreen);
@@ -753,6 +758,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(16);
         contact.setName("Mike Klinker");
         contact.setPhoneNumber("(515) 480-8532");
 //        contact.colors.color = resources.getColor(R.color.materialBrown);
@@ -762,6 +768,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         contacts.add(contact);
 
         contact = new Contact();
+        contact.setId(17);
         contact.setName("Ben Madden");
         contact.setPhoneNumber("(847) 609-0939");
 //        contact.colors.color = resources.getColor(R.color.materialPurple);

@@ -186,7 +186,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, "5159911493", "Lucas Klinker", 2, 3, 4, 5, false);
+        source.updateContact(context, 1, "5159911493", "Lucas Klinker", 2, 3, 4, 5, false);
         Contact contact = source.getContact(context, "5159911493");
         assertEquals("5159911493", contact.getPhoneNumber());
         assertEquals("Lucas Klinker", contact.getName());
@@ -205,7 +205,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void deleteContact() {
         int initialContactSize = source.getContacts(context).getCount();
-        source.deleteContact(context, "5159911493", false);
+        source.deleteContact(context, 1, "5159911493", false);
         int newContactSize = source.getContacts(context).getCount();
 
         assertEquals(-1, newContactSize - initialContactSize);
