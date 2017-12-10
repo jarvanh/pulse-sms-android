@@ -80,7 +80,6 @@ object FeatureFlags {
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
 
     // need tested
-    var EMAIL_RECEPTION_CONVERSION: Boolean = false
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
 
     fun init(context: Context) {
@@ -91,7 +90,6 @@ object FeatureFlags {
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
 
-        EMAIL_RECEPTION_CONVERSION = getValue(context, sharedPrefs, FLAG_EMAIL_RECEPTION_CONVERSION)
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
 
@@ -106,7 +104,6 @@ object FeatureFlags {
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
 
-            FLAG_EMAIL_RECEPTION_CONVERSION -> EMAIL_RECEPTION_CONVERSION = flag
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }
     }

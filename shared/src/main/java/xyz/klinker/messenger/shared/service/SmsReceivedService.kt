@@ -135,7 +135,7 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         var body = body
         var address = address
 
-        if (FeatureFlags.EMAIL_RECEPTION_CONVERSION && address.length <= 5 && body.split(" ".toRegex())[0].contains("@")) {
+        if (address.length <= 5 && body.split(" ".toRegex())[0].contains("@")) {
             // this is a text from an email address.
             address = body.split(" ".toRegex())[0]
             body = body.split(" ".toRegex()).drop(1).joinToString(" ")
