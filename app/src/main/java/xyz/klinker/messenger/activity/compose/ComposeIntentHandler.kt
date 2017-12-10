@@ -29,7 +29,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 intent.action == Intent.ACTION_VIEW -> viewIntent(intent)
                 intent.action == Intent.ACTION_SEND -> shareContent(intent)
             }
-        } catch (e: Error) {
+        } catch (e: Exception) {
             AnalyticsHelper.caughtForceClose(activity, "caught when sharing to compose activity", e)
         }
     }

@@ -114,15 +114,18 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
         val EXTRA_ITEM_ID = "xyz.klinker.messenger.shared.widget.EXTRA_ITEM_ID"
 
         fun refreshWidget(context: Context) {
-            val ids = AppWidgetManager.getInstance(context)
-                    .getAppWidgetIds(ComponentName(context, MessengerAppWidgetProvider::class.java))
+            try {
+                val ids = AppWidgetManager.getInstance(context)
+                        .getAppWidgetIds(ComponentName(context, MessengerAppWidgetProvider::class.java))
 
-            val intent = Intent(context, MessengerAppWidgetProvider::class.java)
-            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                val intent = Intent(context, MessengerAppWidgetProvider::class.java)
+                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
 
-            context.sendBroadcast(intent)
-            context.sendBroadcast(Intent(REFRESH_ACTION)) // send to dashclock
+                context.sendBroadcast(intent)
+                context.sendBroadcast(Intent(REFRESH_ACTION)) // send to dashclock
+            } catch (e: Exception) {
+            }
         }
     }
 

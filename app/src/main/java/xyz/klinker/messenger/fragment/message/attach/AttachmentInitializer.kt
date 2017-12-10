@@ -49,6 +49,8 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private val attachButtonHolder: LinearLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_button_holder) as LinearLayout }
     private val dragDismissFrameLayout: View by lazy { fragment.rootView!! }
 
+    private var cameraFragment: Camera2BasicFragment? = null
+
     fun initAttachHolder() {
         if (!TvUtils.hasTouchscreen(activity)) {
             attach.visibility = View.GONE
@@ -167,9 +169,9 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 
         prepareAttachHolder(1)
 
-        val fragment = Camera2BasicFragment.newInstance()
-        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fragment)?.commit()
-        fragment.attachImageSelectedListener(attachListener)
+        cameraFragment = Camera2BasicFragment.newInstance()
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, cameraFragment)?.commit()
+        cameraFragment?.attachImageSelectedListener(attachListener)
     }
 
     private fun attachGif() {

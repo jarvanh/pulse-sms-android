@@ -22,8 +22,8 @@ import java.util.*
  */
 class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
-    override fun onHandleIntent(intent: Intent) {
-        val foreground = if (intent.getBooleanExtra(EXTRA_FOREGROUND_NOTIFICATION, false)) {
+    override fun onHandleIntent(intent: Intent?) {
+        val foreground = if (intent != null && intent.getBooleanExtra(EXTRA_FOREGROUND_NOTIFICATION, false)) {
             val notification = NotificationCompat.Builder(this,
                     NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
                     .setContentTitle(getString(R.string.receiving_a_message))

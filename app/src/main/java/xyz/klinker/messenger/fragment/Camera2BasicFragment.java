@@ -672,7 +672,7 @@ public class Camera2BasicFragment extends Fragment
     /**
      * Closes the current {@link CameraDevice}.
      */
-    private void closeCamera() {
+    public void closeCamera() {
         try {
             mCameraOpenCloseLock.acquire();
             if (null != mCaptureSession) {
@@ -1029,13 +1029,7 @@ public class Camera2BasicFragment extends Fragment
                 }
 
                 mFragment.closeCamera();
-
-                mFragment.getUiHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.INSTANCE.getIMAGE_JPEG());
-                    }
-                });
+                mFragment.getUiHandler().post(() -> mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.INSTANCE.getIMAGE_JPEG()));
             }
         }
 

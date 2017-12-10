@@ -52,9 +52,7 @@ class MessengerApplication : FirebaseApplication() {
         }
 
         if (CreateNotificationChannelService.shouldRun(this)) {
-            Thread {
-                NotificationUtils.createNotificationChannels(this)
-            }.start()
+            NotificationUtils.createNotificationChannels(this)
 //            startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
         }
 
