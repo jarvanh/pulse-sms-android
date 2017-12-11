@@ -71,6 +71,10 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
             appSignature = ""
         }
 
+        if (Settings.stripUnicode) {
+            return
+        }
+
         // grab the latest 60 messages from Pulse's database
         // grab the latest 20 messages from the the internal SMS/MMS database
         // iterate over the internal messages and see if they are in the list from Pulse's database (search by text is fine)
