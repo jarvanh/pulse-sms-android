@@ -46,6 +46,8 @@ class AttachmentListener(private val fragment: MessageListFragment)
     private val attachHolder: FrameLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_holder) as FrameLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
 
+    var attachingFromCamera = false
+
     @SuppressLint("SetTextI18n")
     override fun onContactAttached(firstName: String, lastName: String, phone: String) {
         if (activity == null) {
@@ -79,7 +81,11 @@ class AttachmentListener(private val fragment: MessageListFragment)
     }
 
     override fun onImageSelected(uri: Uri, mimeType: String) {
-        if (selectedImageUris.size == 0) {
+        onImageSelected(uri, mimeType, false)
+    }
+
+    override fun onImageSelected(uri: Uri, mimeType: String, attachingFromCamera: Boolean) {
+        if (selectedImageUris.size == 0 || attachingFromCamera) {
             // auto close the attach view after selecting the first image
             fragment.onBackPressed()
         }

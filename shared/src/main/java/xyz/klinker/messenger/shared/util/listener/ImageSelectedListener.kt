@@ -23,6 +23,7 @@ import android.net.Uri
  */
 interface ImageSelectedListener {
     fun onImageSelected(uri: Uri, mimeType: String)
+    fun onImageSelected(uri: Uri, mimeType: String, attachingFromCamera: Boolean)
     fun onGalleryPicker()
     fun isCurrentlySelected(uri: Uri, mimeType: String): Boolean
 }

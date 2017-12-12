@@ -675,23 +675,33 @@ public class Camera2BasicFragment extends Fragment
     public void closeCamera() {
         try {
             mCameraOpenCloseLock.acquire();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
+        }
+
+        try {
             if (null != mCaptureSession) {
                 mCaptureSession.close();
                 mCaptureSession = null;
             }
+        } catch (Exception e) {
+        }
+        try {
             if (null != mCameraDevice) {
                 mCameraDevice.close();
                 mCameraDevice = null;
             }
+        } catch (Exception e) {
+        }
+        try {
             if (null != mImageReader) {
                 mImageReader.close();
                 mImageReader = null;
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
-        } finally {
-            mCameraOpenCloseLock.release();
+        } catch (Exception e) {
         }
+
+        mCameraOpenCloseLock.release();
     }
 
     /**
@@ -1029,7 +1039,7 @@ public class Camera2BasicFragment extends Fragment
                 }
 
                 mFragment.closeCamera();
-                mFragment.getUiHandler().post(() -> mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.INSTANCE.getIMAGE_JPEG()));
+                mFragment.getUiHandler().post(() -> mCallback.onImageSelected(Uri.fromFile(mFile), MimeType.INSTANCE.getIMAGE_JPEG(), true));
             }
         }
 
