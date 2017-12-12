@@ -18,7 +18,7 @@
 
     <version
         name="2.7.0"
-        description="December 8th, 2017">
+        description="December 12th, 2017">
         <text>Sharing revamp for quicker sharing to contacts, from other apps</text>
         <text>Quick compose: add an option to "Advanced Features" to create persistent notification for composing SMS</text>
         <text>Quick compose: Define "favorite contacts" for quick access in the quick compose notification</text>
@@ -30,6 +30,7 @@
         <text>UI improvements</text>
         <text>MMS changes</text>
         <text>Bug fixes</text>
+        <text>Crash Fixes</text>
     </version>
 
     <version
