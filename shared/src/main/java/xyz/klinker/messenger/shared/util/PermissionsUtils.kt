@@ -54,16 +54,16 @@ object PermissionsUtils {
     fun processPermissionRequest(activity: Activity, requestCode: Int,
                                  permissions: Array<String>, grantResults: IntArray): Boolean {
         if (requestCode == REQUEST_MAIN_PERMISSIONS) {
-            if (grantResults.size > 0
+            return if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                return true
+                true
             } else {
                 AlertDialog.Builder(activity)
                         .setMessage(R.string.permissions_needed)
                         .setPositiveButton(android.R.string.ok) { dialogInterface, i -> startMainPermissionRequest(activity) }
                         .show()
-                return false
+                false
             }
         }
 
@@ -71,11 +71,11 @@ object PermissionsUtils {
     }
 
     fun isDefaultSmsApp(context: Context): Boolean {
-        try {
-            return context.packageName == Telephony.Sms.getDefaultSmsPackage(context)
+        return try {
+            context.packageName == Telephony.Sms.getDefaultSmsPackage(context)
         } catch (e: NullPointerException) {
             // thrown by robolectric...
-            return true
+            true
         }
 
     }

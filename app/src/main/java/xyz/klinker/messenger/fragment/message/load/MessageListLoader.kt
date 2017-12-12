@@ -87,7 +87,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                 draftManager.loadDrafts()
 
                 val cursor: Cursor
-                if (argManager.limitMessages && limitMessagesBasedOnPreviousSize) {
+                if (argManager.limitMessages && argManager.messageToOpen == -1L && limitMessagesBasedOnPreviousSize) {
                     // weird logic with the counts for this. If we just load the MESSAGE_LIMIT each time,
                     // then the adapter gets screwed up and can display the wrong messages, since recycler views
                     // are meant to be "smart" about managing state.

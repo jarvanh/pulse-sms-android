@@ -20,7 +20,7 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
     val isGroup: Boolean by lazy { arguments!!.getBoolean(ARG_IS_GROUP) }
     val isArchived: Boolean by lazy { arguments!!.getBoolean(ARG_IS_ARCHIVED) }
 
-    val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID) }
+    val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID, -1L) }
     val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) }
 
     companion object {
