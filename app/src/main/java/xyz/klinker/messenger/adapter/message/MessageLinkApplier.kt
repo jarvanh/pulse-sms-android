@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.adapter.message
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.FragmentActivity
@@ -113,7 +114,10 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
         phoneNumbers.setOnClickListener { clickedText ->
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText))
-            holder.message!!.context.startActivity(intent)
+            try {
+                holder.message!!.context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+            }
         }
 
         return phoneNumbers

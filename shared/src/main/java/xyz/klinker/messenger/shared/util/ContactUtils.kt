@@ -360,8 +360,12 @@ object ContactUtils {
         val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
 
-        var cursor = context.contentResolver.query(
-                uri, projection, null,  null, null)
+        var cursor = try {
+            context.contentResolver.query(
+                    uri, projection, null, null, null)
+        } catch (e: SecurityException) {
+            null
+        }
 
         if (cursor != null && cursor.count > 500) {
             cursor.closeSilent()

@@ -91,7 +91,10 @@ class ReplyService : IntentService("Reply Service") {
         // if there are no more notifications, cancel the summary as well
         val unseenMessages = DataSource.getUnseenMessages(this)
         if (unseenMessages.count <= 0) {
-            NotificationManagerCompat.from(this).cancelAll()
+            try {
+                NotificationManagerCompat.from(this).cancelAll()
+            } catch (e: SecurityException) {
+            }
         } else {
             NotificationManagerCompat.from(this).cancel(conversationId.toInt())
         }

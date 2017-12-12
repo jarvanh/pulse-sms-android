@@ -2,6 +2,7 @@ package xyz.klinker.messenger.activity.compose
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Parcelable
 import xyz.klinker.messenger.R
@@ -125,7 +126,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             }
         }
 
-        if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+        if (intent.extras != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
             activity.shareHandler.directShare(data, intent.type)
         } else {
             activity.sender.resetViews(if (data == null) "" else data, intent.type)

@@ -67,7 +67,10 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
             transaction.remove(messageList)
         }
 
-        transaction.commit()
+        try {
+            transaction.commit()
+        } catch (e: Exception) {
+        }
 
         return true
     }

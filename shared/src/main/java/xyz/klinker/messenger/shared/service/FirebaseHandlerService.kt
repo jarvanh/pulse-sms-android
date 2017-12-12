@@ -337,7 +337,15 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                         message.type != Message.TYPE_RECEIVED)
 
                 when (message.type) {
-                    Message.TYPE_RECEIVED -> context.startService(Intent(context, NotificationService::class.java))
+                    Message.TYPE_RECEIVED -> {
+                        if (AndroidVersionUtil.isAndroidO) {
+                            val foregroundNotificationService = Intent(context, NotificationService::class.java)
+                            foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
+                            context.startForegroundService(foregroundNotificationService)
+                        } else {
+                            context.startService(Intent(context, NotificationService::class.java))
+                        }
+                    }
                     Message.TYPE_SENDING -> {
                         DataSource.readConversation(context, message.conversationId, false)
                         NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
