@@ -60,6 +60,8 @@ object FeatureFlags {
     private val FLAG_NEVER_SEND_FROM_WATCH = "flag_never_send_from_watch"
     private val FLAG_EMAIL_RECEPTION_CONVERSION = "flag_email_reception_conversion"
     private val FLAG_RECONCILE_RECEIVED_MESSAGES = "flag_reconcile_received_messages"
+    private val FLAG_TEMPLATE_SUPPORT = "flag_template_support"
+    private val FLAG_FOLDER_SUPPORT = "flag_folder_support"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -78,6 +80,8 @@ object FeatureFlags {
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
+    var TEMPLATE_SUPPORT: Boolean = false
+    var FOLDER_SUPPORT: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -89,6 +93,8 @@ object FeatureFlags {
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
+        TEMPLATE_SUPPORT = getValue(context, sharedPrefs, FLAG_TEMPLATE_SUPPORT)
+        FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
@@ -103,6 +109,8 @@ object FeatureFlags {
 
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
+            FLAG_TEMPLATE_SUPPORT -> TEMPLATE_SUPPORT = flag
+            FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }
