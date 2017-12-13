@@ -118,6 +118,12 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                     "added_scheduled_message" -> addScheduledMessage(json, context, encryptionUtils)
                     "updated_scheduled_message" -> updatedScheduledMessage(json, context, encryptionUtils)
                     "removed_scheduled_message" -> removeScheduledMessage(json, context)
+                    "added_folder" -> addFolder(json, context, encryptionUtils)
+                    "updated_folder" -> updateFolder(json, context, encryptionUtils)
+                    "removed_folder" -> removeFolder(json, context)
+                    "added_template" -> addTemplate(json, context, encryptionUtils)
+                    "updated_template" -> updateTemplate(json, context, encryptionUtils)
+                    "removed_template" -> removeTemplate(json, context)
                     "update_setting" -> updateSetting(json, context)
                     "dismissed_notification" -> dismissNotification(json, context)
                     "update_subscription" -> updateSubscription(json, context)
@@ -513,9 +519,7 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                 conversation.ledColor = json.getInt("led_color")
                 conversation.pinned = json.getBoolean("pinned")
                 conversation.ringtoneUri = encryptionUtils.decrypt(if (json.has("ringtone"))
-                    json.getString("ringtone")
-                else
-                    null)
+                    json.getString("ringtone") else null)
                 conversation.mute = json.getBoolean("mute")
                 conversation.read = json.getBoolean("read")
                 conversation.read = json.getBoolean("read")
@@ -692,6 +696,68 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
             DataSource.deleteScheduledMessage(context, id, false)
             ScheduledMessageJob.scheduleNextRun(context, DataSource)
             Log.v(TAG, "removed scheduled message")
+        }
+
+        @Throws(JSONException::class)
+        private fun addTemplate(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val template = Template()
+            template.id = getLong(json, "device_id")
+            template.text = encryptionUtils!!.decrypt(json.getString("text"))
+
+            DataSource.insertTemplate(context, template, false)
+            Log.v(TAG, "added template")
+        }
+
+        @Throws(JSONException::class)
+        private fun updateTemplate(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val template = Template()
+            template.id = getLong(json, "device_id")
+            template.text = encryptionUtils!!.decrypt(json.getString("text"))
+
+            DataSource.updateTemplate(context, template, false)
+            Log.v(TAG, "updated template")
+        }
+
+        @Throws(JSONException::class)
+        private fun removeTemplate(json: JSONObject,context: Context) {
+            val id = getLong(json, "id")
+            DataSource.deleteTemplate(context, id, false)
+            Log.v(TAG, "removed template")
+        }
+
+        @Throws(JSONException::class)
+        private fun addFolder(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val folder = Folder()
+            folder.id = getLong(json, "device_id")
+            folder.name = encryptionUtils!!.decrypt(json.getString("name"))
+            folder.colors.color = json.getInt("color")
+            folder.colors.colorDark = json.getInt("color_dark")
+            folder.colors.colorLight = json.getInt("color_light")
+            folder.colors.colorAccent = json.getInt("color_accent")
+
+            DataSource.insertFolder(context, folder, false)
+            Log.v(TAG, "added folder")
+        }
+
+        @Throws(JSONException::class)
+        private fun updateFolder(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val folder = Folder()
+            folder.id = getLong(json, "device_id")
+            folder.name = encryptionUtils!!.decrypt(json.getString("name"))
+            folder.colors.color = json.getInt("color")
+            folder.colors.colorDark = json.getInt("color_dark")
+            folder.colors.colorLight = json.getInt("color_light")
+            folder.colors.colorAccent = json.getInt("color_accent")
+
+            DataSource.updateFolder(context, folder, false)
+            Log.v(TAG, "updated folder")
+        }
+
+        @Throws(JSONException::class)
+        private fun removeFolder(json: JSONObject,context: Context) {
+            val id = getLong(json, "id")
+            DataSource.deleteFolder(context, id, false)
+            Log.v(TAG, "removed folder")
         }
 
         @Throws(JSONException::class)
