@@ -181,6 +181,7 @@
     <string name="error_processing_vcard">Error processing vcard</string>
     <string name="compose_recents">Recents</string>
     <string name="compose_groups">Groups</string>
+    <string name="compose_all_contacts">All Contacts</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

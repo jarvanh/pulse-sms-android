@@ -34,6 +34,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
     private var conversations: List<Conversation>? = null
     private var groups: MutableList<Conversation>? = null
+    private var allContacts: List<Conversation>? = null
 
     fun getRecipients(): Array<DrawableRecipientChip> = contactEntry.recipients
     fun hasContacts() = contactEntry.text.isNotEmpty()
@@ -61,6 +62,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             when (item) {
                 R.id.tab_recents -> displayRecents()
                 R.id.tab_groups -> displayGroups()
+                R.id.tab_all_contacts -> displayAllContacts()
             }
         })
 
@@ -128,6 +130,32 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
             handler.post {
                 val adapter = ContactAdapter(if (groups == null) ArrayList() else groups!!, this)
+                recyclerView.layoutManager = LinearLayoutManager(activity)
+                recyclerView.adapter = adapter
+            }
+        }.start()
+    }
+
+    private fun displayAllContacts() {
+        val handler = Handler()
+        Thread {
+
+            if (allContacts == null) {
+                val contacts = ContactUtils.queryContacts(activity, DataSource)
+                allContacts = contacts
+                        .sortedBy { it.name }
+                        .map {
+                            val conversation = Conversation()
+                            conversation.title = it.name
+                            conversation.phoneNumbers = it.phoneNumber
+                            conversation.colors = ColorUtils.getRandomMaterialColor(activity)
+
+                            conversation
+                        }
+            }
+
+            handler.post {
+                val adapter = ContactAdapter(if (allContacts == null) ArrayList() else allContacts!!, this)
                 recyclerView.layoutManager = LinearLayoutManager(activity)
                 recyclerView.adapter = adapter
             }

@@ -67,7 +67,7 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
             if (message == null) {
                 continue
             }
-            
+
             val sms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val format = extras.getString("format")
                 SmsMessage.createFromPdu(message as ByteArray, format)
