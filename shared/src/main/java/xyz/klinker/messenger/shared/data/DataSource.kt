@@ -2641,6 +2641,120 @@ object DataSource {
     }
 
     /**
+     * Gets all folders in the database.
+     */
+    fun getFolders(context: Context): Cursor =
+            try {
+                database(context).query(Folder.TABLE, null, null, null, null, null,
+                        Folder.COLUMN_NAME + " asc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Folder.TABLE, null, null, null, null, null,
+                        Folder.COLUMN_NAME + " asc")
+            }
+
+    /**
+     * Get all folders as a list.
+     */
+    fun getFoldersAsList(context: Context): List<Folder> {
+        val cursor = getFolders(context)
+        val folders = ArrayList<Folder>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val folder = Folder()
+                folder.fillFromCursor(cursor)
+
+                folders.add(folder)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.closeSilent()
+        return folders
+    }
+
+    /**
+     * Inserts a folder into the database.
+     */
+    fun insertFolder(context: Context, folder: Folder, useApi: Boolean = true): Long {
+        val values = ContentValues(6)
+
+        if (folder.id <= 0) {
+            folder.id = generateId()
+        }
+
+        values.put(Folder.COLUMN_ID, folder.id)
+        values.put(Folder.COLUMN_NAME, folder.name)
+        values.put(Folder.COLUMN_COLOR, folder.colors.color)
+        values.put(Folder.COLUMN_COLOR_DARK, folder.colors.colorDark)
+        values.put(Folder.COLUMN_COLOR_LIGHT, folder.colors.colorLight)
+        values.put(Folder.COLUMN_COLOR_ACCENT, folder.colors.colorAccent)
+
+        if (useApi) {
+            ApiUtils.addFolder(accountId(context), folder.id, folder.name!!, folder.colors.color,
+                    folder.colors.colorDark, folder.colors.colorLight, folder.colors.colorAccent,
+                    encryptor(context))
+        }
+
+        return try {
+            database(context).insert(Folder.TABLE, null, values)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).insert(Folder.TABLE, null, values)
+        }
+    }
+
+    /**
+     * Updates the values on the folder
+     *
+     * @param template the template to update
+     */
+    fun updateFolder(context: Context, folder: Folder, useApi: Boolean = true) {
+        val values = ContentValues(6)
+
+        values.put(Folder.COLUMN_ID, folder.id)
+        values.put(Folder.COLUMN_NAME, folder.name)
+        values.put(Folder.COLUMN_COLOR, folder.colors.color)
+        values.put(Folder.COLUMN_COLOR_DARK, folder.colors.colorDark)
+        values.put(Folder.COLUMN_COLOR_LIGHT, folder.colors.colorLight)
+        values.put(Folder.COLUMN_COLOR_ACCENT, folder.colors.colorAccent)
+
+
+        try {
+            database(context).update(Folder.TABLE, values, Folder.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(folder.id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Folder.TABLE, values, Folder.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(folder.id)))
+        }
+
+        if (useApi) {
+            ApiUtils.updateFolder(accountId(context), folder.id, folder.name!!, folder.colors.color,
+                    folder.colors.colorDark, folder.colors.colorLight, folder.colors.colorAccent,
+                    encryptor(context))
+        }
+    }
+
+    /**
+     * Deletes a folder from the database.
+     */
+    fun deleteFolder(context: Context, id: Long, useApi: Boolean = true) {
+        try {
+            database(context).delete(Folder.TABLE, Folder.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(Folder.TABLE, Folder.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        }
+
+        if (useApi) {
+            ApiUtils.deleteFolder(accountId(context), id)
+        }
+    }
+
+    /**
      * Available to close the database after tests have finished running. Don't call
      * in the production application outside of test code.
      */

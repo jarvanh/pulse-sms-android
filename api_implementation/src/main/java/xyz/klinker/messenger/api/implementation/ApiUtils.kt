@@ -692,6 +692,53 @@ object ApiUtils {
     }
 
     /**
+     * Adds a folder.
+     */
+    fun addFolder(accountId: String?, deviceId: Long, name: String, color: Int, colorDark: Int,
+                  colorLight: Int, colorAccent: Int, encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val body = FolderBody(deviceId, encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
+        val request = AddFolderRequest(accountId, body)
+        val message = "add folder"
+
+        val call = api.folder().add(request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Update the text for a given folder.
+     */
+    fun updateFolder(accountId: String?, deviceId: Long, name: String, color: Int, colorDark: Int,
+                     colorLight: Int, colorAccent: Int, encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val request = UpdateFolderRequest(encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
+        val message = "update folder"
+
+        val call = api.folder().update(deviceId, accountId, request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Deletes the given template.
+     */
+    fun deleteFolder(accountId: String?, deviceId: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "delete folder"
+        val call = api.folder().remove(deviceId, accountId)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
      * Uploads a byte array of encrypted data to firebase.
      *
      * @param bytes the byte array to upload.

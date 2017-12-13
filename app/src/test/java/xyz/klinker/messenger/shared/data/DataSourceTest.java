@@ -41,6 +41,7 @@ import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
+import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
@@ -615,6 +616,37 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
         source.updateTemplate(context, template, false);
         verify(database).update(eq("template"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"1"}));
+    }
+
+    @Test
+    public void getFolders() {
+        when(database.query("folder", null, null, null, null, null, "name asc"))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getFolders(context));
+    }
+
+    @Test
+    public void insertFolder() {
+        source.insertFolder(context, new Folder(), false);
+        verify(database).insert(eq("folder"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void deleteFolder() {
+        source.deleteFolder(context, 1, false);
+        verify(database).delete("folder", "_id=?", new String[]{"1"});
+    }
+
+    @Test
+    public void updateFolder() {
+        Folder folder = new Folder();
+        folder.setId(1);
+        folder.setName("edit folder");
+
+        source.updateFolder(context, folder, false);
+        verify(database).update(eq("folder"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
     }
 

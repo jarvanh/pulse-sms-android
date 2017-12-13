@@ -32,9 +32,11 @@ import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
+import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
+import xyz.klinker.messenger.shared.util.ColorUtils;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -800,7 +802,6 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         assertEquals(1, initialSize - finalSize);
     }
 
-
     @Test
     public void getTemplates() {
         assertEquals(1, source.getTemplates(context).getCount());
@@ -834,6 +835,45 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int initialSize = source.getTemplates(context).getCount();
         source.deleteTemplate(context, 1, false);
         int finalSize = source.getTemplates(context).getCount();
+
+        assertEquals(1, initialSize - finalSize);
+    }
+
+    @Test
+    public void getFolders() {
+        assertEquals(1, source.getFolders(context).getCount());
+    }
+
+    @Test
+    public void insertFolder() {
+        Folder folder = new Folder();
+        folder.setName("test folder");
+        folder.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
+
+        int initialSize = source.getFolders(context).getCount();
+        source.insertFolder(context, folder, false);
+        int finalSize = source.getFolders(context).getCount();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void updateFolder() {
+        Folder folder = new Folder();
+        folder.setId(1);
+        folder.setName("edit folder");
+        folder.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
+
+        source.updateFolder(context, folder, false);
+
+        assertEquals("edit folder", source.getFoldersAsList(context).get(0).getName());
+    }
+
+    @Test
+    public void deleteFolder() {
+        int initialSize = source.getFolders(context).getCount();
+        source.deleteFolder(context, 1, false);
+        int finalSize = source.getFolders(context).getCount();
 
         assertEquals(1, initialSize - finalSize);
     }
