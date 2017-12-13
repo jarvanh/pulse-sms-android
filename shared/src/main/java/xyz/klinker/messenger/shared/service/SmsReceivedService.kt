@@ -64,6 +64,10 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
         val smsExtra = extras.get("pdus") as Array<*>? ?: return false
 
         for (message in smsExtra) {
+            if (message == null) {
+                continue
+            }
+            
             val sms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val format = extras.getString("format")
                 SmsMessage.createFromPdu(message as ByteArray, format)
@@ -104,16 +108,31 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
     }
 
     private fun startForeground() {
-        val notification = NotificationCompat.Builder(this,
-                NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
-                .setContentTitle(getString(R.string.receiving_a_message))
-                .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setLocalOnly(true)
-                .setColor(ColorSet.DEFAULT(this).color)
-                .setOngoing(true)
-                .build()
+        try {
+            val notification = NotificationCompat.Builder(this,
+                    NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.receiving_a_message))
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setLocalOnly(true)
+                    .setColor(ColorSet.DEFAULT(this).color)
+                    .setOngoing(true)
+                    .build()
 
-        startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
+            startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
+        } catch (e: Exception) {
+            NotificationUtils.createBackgroundServiceChannel(this)
+
+            val notification = NotificationCompat.Builder(this,
+                    NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.receiving_a_message))
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setLocalOnly(true)
+                    .setColor(ColorSet.DEFAULT(this).color)
+                    .setOngoing(true)
+                    .build()
+
+            startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
+        }
     }
 
     private fun insertInternalSms(context: Context, address: String, body: String, dateSent: Long) {

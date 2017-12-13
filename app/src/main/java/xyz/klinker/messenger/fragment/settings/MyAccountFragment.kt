@@ -369,7 +369,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             DataSource.clearTables(fragmentActivity!!)
 
             fragmentActivity?.runOnUiThread {
-                dialog.dismiss()
+                try {
+                    dialog.dismiss()
+                } catch (e: IllegalStateException) {
+                }
+
                 returnToConversationsAfterLogin()
 
                 (fragmentActivity!! as MessengerActivity).accountController.startResyncingAccount()

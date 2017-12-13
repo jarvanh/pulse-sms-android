@@ -354,49 +354,54 @@ object ContactUtils {
      * Get a list of contact objects from Android's database.
      */
     fun queryContacts(context: Context, dataSource: DataSource): List<Contact> {
-        val contacts = ArrayList<Contact>()
-        val conversations = dataSource.getAllConversationsAsList(context)
+        try {
+            val contacts = ArrayList<Contact>()
+            val conversations = dataSource.getAllConversationsAsList(context)
 
-        val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
 
-        var cursor = try {
-            context.contentResolver.query(
-                    uri, projection, null, null, null)
-        } catch (e: SecurityException) {
-            null
-        }
+            var cursor = try {
+                context.contentResolver.query(
+                        uri, projection, null, null, null)
+            } catch (e: Exception) {
+                null
+            }
 
-        if (cursor != null && cursor.count > 500) {
+            if (cursor != null && cursor.count > 500) {
+                cursor.closeSilent()
+                cursor = context.contentResolver.query(uri, projection,
+                        ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
+                        arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
+                )
+            }
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    val contact = Contact()
+
+                    contact.id = DataSource.generateId()
+                    contact.name = cursor.getString(0)
+                    contact.phoneNumber = cursor.getString(1)
+                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
+
+                    val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
+                    if (colorSet != null) {
+                        contact.colors = colorSet
+                    } else {
+                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
+                    }
+
+                    contacts.add(contact)
+                } while (cursor.moveToNext())
+            }
+
             cursor.closeSilent()
-            cursor = context.contentResolver.query(uri, projection,
-                    ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
-                    arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
-            )
+            return contacts
+        } catch (e: Exception) {
+            return emptyList()
         }
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                val contact = Contact()
-
-                contact.id = DataSource.generateId()
-                contact.name = cursor.getString(0)
-                contact.phoneNumber = cursor.getString(1)
-                contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
-
-                val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
-                if (colorSet != null) {
-                    contact.colors = colorSet
-                } else {
-                    ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
-                }
-
-                contacts.add(contact)
-            } while (cursor.moveToNext())
-        }
-
-        cursor.closeSilent()
-        return contacts
     }
 
     /**

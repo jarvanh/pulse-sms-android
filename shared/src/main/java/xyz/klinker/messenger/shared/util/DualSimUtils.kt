@@ -18,8 +18,11 @@ object DualSimUtils {
 
     val defaultPhoneNumber: String?
         get() {
-            if (manager != null && manager!!.activeSubscriptionInfoCount > 0) {
-                return manager!!.activeSubscriptionInfoList[0].number
+            try {
+                if (manager != null && manager!!.activeSubscriptionInfoCount > 0) {
+                    return manager!!.activeSubscriptionInfoList[0].number
+                }
+            } catch (e: SecurityException) {
             }
 
             return null

@@ -125,7 +125,7 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun createBackgroundServiceChannel(context: Context) {
+    fun createBackgroundServiceChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
         }

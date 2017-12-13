@@ -42,6 +42,10 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun shareDirectlyToSms(intent: Intent) {
+        if (intent.dataString == null) {
+            return
+        }
+
         val phoneNumbers = PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
 
         val builder = StringBuilder()

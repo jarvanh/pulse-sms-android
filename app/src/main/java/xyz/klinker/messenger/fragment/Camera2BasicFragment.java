@@ -256,8 +256,11 @@ public class Camera2BasicFragment extends Fragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile, callback,
-                    Camera2BasicFragment.this));
+            try {
+                mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile, callback,
+                        Camera2BasicFragment.this));
+            } catch (Exception e) {
+            }
         }
 
     };
