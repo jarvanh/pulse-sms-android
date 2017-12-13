@@ -23,6 +23,12 @@
     <!--</version>-->
 
     <version
+        name="2.7.1"
+        description="December 14th, 2017">
+        <text>Bug/crash fixes</text>
+    </version>
+
+    <version
         name="2.7.0"
         description="December 12th, 2017">
         <text>Sharing revamp for quicker sharing to contacts, from other apps</text>
