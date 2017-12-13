@@ -56,7 +56,6 @@ class ComposeActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         title = " "
 
-
         findViewById<View>(R.id.toolbar_holder).setBackgroundColor(Settings.mainColorSet.color)
         ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
         ActivityUtils.setTaskDescription(this)

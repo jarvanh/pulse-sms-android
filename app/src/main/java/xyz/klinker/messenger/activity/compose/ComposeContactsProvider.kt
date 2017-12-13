@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.MultiAutoCompleteTextView
+import android.widget.ProgressBar
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
 import com.android.ex.chips.recipientchip.DrawableRecipientChip
@@ -31,6 +32,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
     private val contactEntry: RecipientEditTextView by lazy { activity.findViewById<View>(R.id.contact_entry) as RecipientEditTextView }
     private val bottomNavigation: BottomBar by lazy { activity.findViewById<View>(R.id.bottom_navigation) as BottomBar }
     private val recyclerView: RecyclerView by lazy { activity.findViewById<View>(R.id.recent_contacts) as RecyclerView }
+    private val loadingSpinner: ProgressBar by lazy { activity.findViewById(R.id.loading) as ProgressBar }
 
     private var conversations: List<Conversation>? = null
     private var groups: MutableList<Conversation>? = null
@@ -62,7 +64,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             when (item) {
                 R.id.tab_recents -> displayRecents()
                 R.id.tab_groups -> displayGroups()
-                R.id.tab_all_contacts -> displayAllContacts()
+                //R.id.tab_all_contacts -> displayAllContacts()
             }
         })
 
@@ -100,8 +102,9 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
     private fun displayRecents() {
         val handler = Handler()
-        Thread {
+        loadingSpinner.visibility = View.GONE
 
+        Thread {
             if (conversations == null) {
                 conversations = queryConversations()
             }
@@ -116,8 +119,17 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
     private fun displayGroups() {
         val handler = Handler()
-        Thread {
 
+        if (groups == null) {
+            val adapter = ContactAdapter(ArrayList(), this)
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.adapter = adapter
+            loadingSpinner.visibility = View.VISIBLE
+        } else {
+            loadingSpinner.visibility = View.GONE
+        }
+
+        Thread {
             if (groups == null) {
                 groups = ContactUtils.queryContactGroups(activity).toMutableList()
 
@@ -129,6 +141,8 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             }
 
             handler.post {
+                loadingSpinner.visibility = View.GONE
+
                 val adapter = ContactAdapter(if (groups == null) ArrayList() else groups!!, this)
                 recyclerView.layoutManager = LinearLayoutManager(activity)
                 recyclerView.adapter = adapter
@@ -138,8 +152,17 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
     private fun displayAllContacts() {
         val handler = Handler()
-        Thread {
 
+        if (allContacts == null) {
+            val adapter = ContactAdapter(ArrayList(), this)
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.adapter = adapter
+            loadingSpinner.visibility = View.VISIBLE
+        } else {
+            loadingSpinner.visibility = View.GONE
+        }
+
+        Thread {
             if (allContacts == null) {
                 val contacts = ContactUtils.queryContacts(activity, DataSource)
                 allContacts = contacts
@@ -155,6 +178,8 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             }
 
             handler.post {
+                loadingSpinner.visibility = View.GONE
+
                 val adapter = ContactAdapter(if (allContacts == null) ArrayList() else allContacts!!, this)
                 recyclerView.layoutManager = LinearLayoutManager(activity)
                 recyclerView.adapter = adapter

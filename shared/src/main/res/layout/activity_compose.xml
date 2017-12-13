@@ -43,7 +43,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="72dp"
             android:layout_marginTop="24dp"
-            app:max_height="220dp" >
+            app:max_height="220dp">
 
             <com.android.ex.chips.RecipientEditTextView
                 android:id="@+id/contact_entry"
@@ -82,13 +82,27 @@
         android:layout_below="@+id/toolbar_holder"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recent_contacts"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginEnd="@dimen/conversation_list_padding"
-            android:layout_marginStart="@dimen/conversation_list_padding" />
+            android:layout_marginStart="@dimen/conversation_list_padding"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recent_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
         <com.roughike.bottombar.BottomBar
             android:id="@+id/bottom_navigation"
