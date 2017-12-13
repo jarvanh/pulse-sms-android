@@ -22,26 +22,26 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import xyz.klinker.messenger.api.entity.AddBlacklistRequest;
+import xyz.klinker.messenger.api.entity.AddFolderRequest;
 import xyz.klinker.messenger.api.entity.AddTemplateRequest;
-import xyz.klinker.messenger.api.entity.BlacklistBody;
+import xyz.klinker.messenger.api.entity.FolderBody;
 import xyz.klinker.messenger.api.entity.TemplateBody;
-import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest;
+import xyz.klinker.messenger.api.entity.UpdateFolderRequest;
 import xyz.klinker.messenger.api.entity.UpdateTemplateRequest;
 
-public interface TemplateService {
+public interface FolderService {
 
-    @POST("templates/add")
-    Call<Void> add(@Body AddTemplateRequest request);
+    @POST("folders/add")
+    Call<Void> add(@Body AddFolderRequest request);
 
-    @POST("templates/remove/{device_id}")
+    @POST("folders/remove/{device_id}")
     Call<Void> remove(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
-    @POST("templates/update/{device_id}")
+    @POST("folders/update/{device_id}")
     Call<Void> update(@Path("device_id") long deviceId, @Query("account_id") String accountId,
-                      @Body UpdateTemplateRequest request);
+                      @Body UpdateFolderRequest request);
 
-    @GET("templates")
-    Call<TemplateBody[]> list(@Query("account_id") String accountId);
+    @GET("folders")
+    Call<FolderBody[]> list(@Query("account_id") String accountId);
 
 }

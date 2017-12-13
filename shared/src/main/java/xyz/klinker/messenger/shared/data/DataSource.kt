@@ -731,7 +731,7 @@ object DataSource {
                     conversation.timestamp, conversation.title, conversation.phoneNumbers,
                     conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
                     conversation.mute, conversation.archive, conversation.privateNotifications,
-                    encryptor(context))
+                    conversation.folderId, encryptor(context))
 
             writeUnreadCount(context)
         }

@@ -276,7 +276,7 @@ object ApiUtils {
                         ledColor: Int, pinned: Boolean, read: Boolean, timestamp: Long,
                         title: String?, phoneNumbers: String?, snippet: String?,
                         ringtone: String?, idMatcher: String?, mute: Boolean,
-                        archive: Boolean, privateNotifications: Boolean,
+                        archive: Boolean, privateNotifications: Boolean, folderId: Long?,
                         encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
@@ -287,7 +287,7 @@ object ApiUtils {
                 pinned, read, timestamp, encryptionUtils.encrypt(title),
                 encryptionUtils.encrypt(phoneNumbers), encryptionUtils.encrypt(snippet),
                 encryptionUtils.encrypt(ringtone), null,
-                encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications)
+                encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications, folderId)
         val request = AddConversationRequest(accountId, body)
 
         val message = "add conversation"

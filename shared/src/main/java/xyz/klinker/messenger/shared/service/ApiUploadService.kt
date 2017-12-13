@@ -188,7 +188,8 @@ open class ApiUploadService : Service() {
                 c.encrypt(encryptionUtils!!)
                 val conversation = ConversationBody(c.id, c.colors.color,
                         c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.ledColor, c.pinned,
-                        c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri, null, c.idMatcher, c.mute, c.archive, c.privateNotifications)/*c.imageUri*/
+                        c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri, null,
+                        c.idMatcher, c.mute, c.archive, c.privateNotifications, c.folderId)/*c.imageUri*/
 
                 conversations[cursor.position] = conversation
             } while (cursor.moveToNext())

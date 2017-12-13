@@ -141,8 +141,7 @@ class Message : DatabaseTable {
                 COLUMN_SENT_DEVICE + " integer" +
                 ");"
 
-        private val INDEXES = arrayOf("create index if not exists conversation_id_message_index on " + TABLE +
-                " (" + COLUMN_CONVERSATION_ID + ");")
+        private val INDEXES = arrayOf("create index if not exists conversation_id_message_index on $TABLE ($COLUMN_CONVERSATION_ID);")
 
         val TYPE_RECEIVED = 0
         val TYPE_SENT = 1

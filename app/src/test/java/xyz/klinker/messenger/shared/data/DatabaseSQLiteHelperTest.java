@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
+import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
@@ -73,7 +74,9 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL(new ScheduledMessage().getCreateStatement());
         verify(database).execSQL(new Template().getCreateStatement());
         verify(database).execSQL(new Blacklist().getCreateStatement());
+        verify(database).execSQL(new Folder().getCreateStatement());
         verify(database).execSQL(new Message().getIndexStatements()[0]);
+        verify(database).execSQL(new Conversation().getIndexStatements()[0]);
         verify(database).execSQL(new Draft().getIndexStatements()[0]);
         verifyNoMoreInteractions(database);
     }
@@ -90,6 +93,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL("drop table if exists " + ScheduledMessage.Companion.getTABLE());
         verify(database).execSQL("drop table if exists " + Blacklist.Companion.getTABLE());
         verify(database).execSQL("drop table if exists " + Template.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Folder.Companion.getTABLE());
         verifyNoMoreInteractions(database);
     }
 

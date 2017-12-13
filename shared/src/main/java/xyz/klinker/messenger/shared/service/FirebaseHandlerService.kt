@@ -417,14 +417,13 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
             conversation.phoneNumbers = encryptionUtils.decrypt(json.getString("phone_numbers"))
             conversation.snippet = encryptionUtils.decrypt(json.getString("snippet"))
             conversation.ringtoneUri = encryptionUtils.decrypt(if (json.has("ringtone"))
-                json.getString("ringtone")
-            else
-                null)
+                json.getString("ringtone") else null)
             conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context)
             conversation.idMatcher = encryptionUtils.decrypt(json.getString("id_matcher"))
             conversation.mute = json.getBoolean("mute")
             conversation.archive = json.getBoolean("archive")
             conversation.simSubscriptionId = -1
+            conversation.folderId = if (json.has("folder_id")) json.getLong("folder_id") else null
 
             val image = ImageUtils.getContactImage(conversation.imageUri, context)
             if (conversation.imageUri != null && image == null) {

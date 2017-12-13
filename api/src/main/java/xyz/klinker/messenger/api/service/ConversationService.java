@@ -70,4 +70,10 @@ public interface ConversationService {
     @POST("conversations/unarchive/{device_id}")
     Call<Void> unarchive(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
+    @POST("conversations/add_to_folder/{device_id}")
+    Call<Void> addToFolder(@Path("device_id") long deviceId, @Query("folder_id") long folderId, @Query("account_id") String accountId);
+
+    @POST("conversations/remove_from_folder/{device_id}")
+    Call<Void> removeFromFolder(@Path("device_id") long deviceId, @Query("account_id") String accountId);
+
 }

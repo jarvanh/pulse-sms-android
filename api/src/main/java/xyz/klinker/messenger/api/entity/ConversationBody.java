@@ -36,11 +36,12 @@ public class ConversationBody {
     public boolean mute;
     public boolean archive;
     public boolean privateNotifications;
+    public Long folderId;
 
     public ConversationBody(long deviceId, int color, int colorDark, int colorLight, int colorAccent,
                             int ledColor, boolean pinned, boolean read, long timestamp, String title,
                             String phoneNumbers, String snippet, String ringtone, String imageUri,
-                            String idMatcher, boolean mute, boolean archive, boolean privateNotifications) {
+                            String idMatcher, boolean mute, boolean archive, boolean privateNotifications, Long folderId) {
         this.deviceId = deviceId;
         this.color = color;
         this.colorDark = colorDark;
@@ -59,6 +60,7 @@ public class ConversationBody {
         this.mute = mute;
         this.archive = archive;
         this.privateNotifications = privateNotifications;
+        this.folderId = folderId;
     }
 
     @Override
@@ -66,7 +68,7 @@ public class ConversationBody {
         return deviceId + ", " + color + ", " + colorDark + ", " + colorLight + ", " + colorAccent +
                 ", " + ledColor + ", " + pinned + ", " + read + ", " + timestamp + ", " + title + ", " +
                 phoneNumbers + ", " + snippet + ", " + ringtone + ", " + imageUri + ", " +
-                idMatcher + ", " + mute + ", " + archive + ", " + privateNotifications;
+                idMatcher + ", " + mute + ", " + archive + ", " + privateNotifications + ", " + folderId;
     }
 
 }

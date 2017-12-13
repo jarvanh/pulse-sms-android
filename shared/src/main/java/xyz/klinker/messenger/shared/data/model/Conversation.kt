@@ -48,6 +48,7 @@ class Conversation : DatabaseTable {
     var archive: Boolean = false
     var privateNotifications: Boolean = false
     var simSubscriptionId: Int? = null
+    var folderId: Long? = null
 
     val isGroup: Boolean
         get() = phoneNumbers?.contains(", ") == true
@@ -76,7 +77,7 @@ class Conversation : DatabaseTable {
 
     override fun getCreateStatement() =  DATABASE_CREATE
     override fun getTableName() = TABLE
-    override fun getIndexStatements() = emptyArray<String>()
+    override fun getIndexStatements() = INDEXES
 
     override fun fillFromCursor(cursor: Cursor) {
         for (i in 0 until cursor.columnCount) {
@@ -142,6 +143,7 @@ class Conversation : DatabaseTable {
     companion object {
 
         val TABLE = "conversation"
+
         val COLUMN_ID = "_id"
         val COLUMN_COLOR = "color"
         val COLUMN_COLOR_DARK = "color_dark"
@@ -161,7 +163,9 @@ class Conversation : DatabaseTable {
         val COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications" // created in database v4
         val COLUMN_LED_COLOR = "led_color" // created in database v5
         val COLUMN_SIM_SUBSCRIPTION_ID = "sim_subscription_id" // created in database v6
+        val COLUMN_FOLDER_ID = "folder_id" // created in database v12
 
+        val INDEXES = arrayOf("create index if not exists folder_id_conversation_index on $TABLE ($COLUMN_FOLDER_ID);")
         private val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
@@ -182,7 +186,8 @@ class Conversation : DatabaseTable {
                 COLUMN_ARCHIVED + " integer not null default 0, " +
                 COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0, " +
                 COLUMN_LED_COLOR + " integer not null default " + Color.WHITE + ", " +
-                COLUMN_SIM_SUBSCRIPTION_ID + " integer default -1" +
+                COLUMN_SIM_SUBSCRIPTION_ID + " integer default -1, " +
+                COLUMN_FOLDER_ID + " integer default -1" +
                 ");"
     }
 
