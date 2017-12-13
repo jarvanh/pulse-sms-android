@@ -22,20 +22,14 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 
-import xyz.klinker.messenger.shared.data.model.Blacklist
-import xyz.klinker.messenger.shared.data.model.Contact
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.data.model.Draft
-import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage
-import xyz.klinker.messenger.encryption.EncryptionUtils
+import xyz.klinker.messenger.shared.data.model.*
 
 /**
  * Handles creating and updating databases.
  */
 class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    private val tables = arrayOf(Contact(), Conversation(), Message(), Draft(), ScheduledMessage(), Blacklist())
+    private val tables = arrayOf(Contact(), Conversation(), Message(), Draft(), ScheduledMessage(), Blacklist(), Template())
 
     override fun onCreate(db: SQLiteDatabase) {
         for (table in tables) {
@@ -58,7 +52,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE conversation ADD COLUMN archive integer not null DEFAULT 0")
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 3) {
@@ -66,7 +59,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL(Contact().getCreateStatement())
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 4) {
@@ -74,7 +66,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE conversation ADD COLUMN private_notifications integer not null DEFAULT 0")
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 5) {
@@ -82,7 +73,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE conversation ADD COLUMN led_color integer not null DEFAULT " + Color.WHITE) // white default
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 6) {
@@ -90,7 +80,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE conversation ADD COLUMN sim_subscription_id integer DEFAULT -1")
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 8) {
@@ -98,7 +87,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE message ADD COLUMN sim_phone_number text")
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 9) {
@@ -106,7 +94,6 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE contact ADD COLUMN id_matcher text")
             } catch (e: Exception) {
             }
-
         }
 
         if (oldVersion < 10) {
@@ -114,7 +101,13 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 db.execSQL("ALTER TABLE message ADD COLUMN sent_device text")
             } catch (e: Exception) {
             }
+        }
 
+        if (oldVersion < 11) {
+            try {
+                db.execSQL(Template().getCreateStatement())
+            } catch (e: Exception) {
+            }
         }
     }
 
@@ -127,7 +120,7 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
     companion object {
 
         private val DATABASE_NAME = "messenger.db"
-        private val DATABASE_VERSION = 10
+        private val DATABASE_VERSION = 11
     }
 
 }

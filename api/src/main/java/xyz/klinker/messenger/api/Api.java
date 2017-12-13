@@ -52,6 +52,7 @@ import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.DraftService;
 import xyz.klinker.messenger.api.service.MessageService;
 import xyz.klinker.messenger.api.service.ScheduledMessageService;
+import xyz.klinker.messenger.api.service.TemplateService;
 
 /**
  * Direct access to the messenger APIs using retrofit.
@@ -233,6 +234,13 @@ public class Api {
      */
     public BlacklistService blacklist() {
         return retrofit.create(BlacklistService.class);
+    }
+
+    /**
+     * Gets a service that can be used for template requests.
+     */
+    public TemplateService template() {
+        return retrofit.create(TemplateService.class);
     }
 
     /**
