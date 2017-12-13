@@ -303,6 +303,20 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void addConversationToFolder() {
+        source.addConversationToFolder(context, 1, 2, false);
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"1"}));
+    }
+
+    @Test
+    public void removeConversationFromFolder() {
+        source.removeConversationFromFolder(context, 1, false);
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"1"}));
+    }
+
+    @Test
     public void updateConversation() {
         source.updateConversation(context, 1, true, System.currentTimeMillis(), "test", "text/plain", false, false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),

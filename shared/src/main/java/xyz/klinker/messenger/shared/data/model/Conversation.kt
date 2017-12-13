@@ -102,6 +102,7 @@ class Conversation : DatabaseTable {
                 COLUMN_ARCHIVED -> this.archive = cursor.getInt(i) == 1
                 COLUMN_PRIVATE_NOTIFICATIONS -> this.privateNotifications = cursor.getInt(i) == 1
                 COLUMN_SIM_SUBSCRIPTION_ID -> this.simSubscriptionId = if (cursor.getInt(i) == -1) null else cursor.getInt(i)
+                COLUMN_FOLDER_ID -> this.folderId = cursor.getLong(i)
             }
         }
     }

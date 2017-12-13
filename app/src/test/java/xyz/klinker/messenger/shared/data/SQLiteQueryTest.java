@@ -388,6 +388,17 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void addConversationToFolder() {
+        source.addConversationToFolder(context, 1, 2, false);
+        Conversation conversation = source.getConversation(context, 1);
+        assertEquals(2L, conversation.getFolderId().longValue());
+
+        source.removeConversationFromFolder(context, 1, false);
+        conversation = source.getConversation(context, 1);
+        assertEquals(-1L, conversation.getFolderId().longValue());
+    }
+
+    @Test
     public void updateConversation() {
         source.updateConversation(context, 1, false, System.currentTimeMillis(), "test updated message",
                 MimeType.INSTANCE.getTEXT_PLAIN(), false, false);

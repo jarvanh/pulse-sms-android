@@ -1073,6 +1073,36 @@ object DataSource {
         }
     }
 
+    fun addConversationToFolder(context: Context, conversationId: Long, folderId: Long, useApi: Boolean = true) {
+        updateConversationFolder(context, conversationId, folderId, useApi)
+    }
+
+    fun removeConversationFromFolder(context: Context, conversationId: Long, useApi: Boolean = true) {
+        updateConversationFolder(context, conversationId, -1, useApi)
+    }
+
+    private fun updateConversationFolder(context: Context, conversationId: Long, folderId: Long, useApi: Boolean = true) {
+        val values = ContentValues(1)
+        values.put(Conversation.COLUMN_FOLDER_ID, folderId)
+
+        val updated = try {
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        }
+
+        if (updated > 0 && useApi) {
+            if (folderId == -1L) {
+                ApiUtils.removeConversationFromFolder(accountId(context), conversationId)
+            } else {
+                ApiUtils.addConversationToFolder(accountId(context), conversationId, folderId)
+            }
+        }
+    }
+
     /**
      * Updates the conversation with given values.
      *

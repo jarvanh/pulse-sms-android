@@ -289,6 +289,34 @@ object ApiUtils {
     }
 
     /**
+     * Add a conversation to a folder
+     */
+    fun addConversationToFolder(accountId: String?, deviceId: Long, folderId: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "add conversation to folder"
+        val call = api.conversation().addToFolder(deviceId, folderId, accountId)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Remove a conversation from it's folder
+     */
+    fun removeConversationFromFolder(accountId: String?, deviceId: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "remove conversation from folder"
+        val call = api.conversation().removeFromFolder(deviceId, accountId)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
      * Archives a conversation.
      */
     fun archiveConversation(accountId: String?, deviceId: Long) {
