@@ -119,6 +119,8 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
                     "updated_scheduled_message" -> updatedScheduledMessage(json, context, encryptionUtils)
                     "removed_scheduled_message" -> removeScheduledMessage(json, context)
                     "added_folder" -> addFolder(json, context, encryptionUtils)
+                    "add_conversation_to_folder" -> addConversationToFolder(json, context)
+                    "remove_conversation_from_folder" -> removeConversationFromFolder(json, context)
                     "updated_folder" -> updateFolder(json, context, encryptionUtils)
                     "removed_folder" -> removeFolder(json, context)
                     "added_template" -> addTemplate(json, context, encryptionUtils)
@@ -723,6 +725,23 @@ class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
             val id = getLong(json, "id")
             DataSource.deleteTemplate(context, id, false)
             Log.v(TAG, "removed template")
+        }
+
+        @Throws(JSONException::class)
+        private fun addConversationToFolder(json: JSONObject,context: Context) {
+            val conversationId = getLong(json, "id")
+            val folderId = getLong(json, "folder_id")
+
+            DataSource.addConversationToFolder(context, conversationId, folderId, false)
+            Log.v(TAG, "added conversation to folder")
+        }
+
+        @Throws(JSONException::class)
+        private fun removeConversationFromFolder(json: JSONObject,context: Context) {
+            val conversationId = getLong(json, "id")
+
+            DataSource.removeConversationFromFolder(context, conversationId, false)
+            Log.v(TAG, "removed conversation from folder")
         }
 
         @Throws(JSONException::class)
