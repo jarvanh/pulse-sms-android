@@ -38,13 +38,8 @@ import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.BinaryUtils
-import xyz.klinker.messenger.shared.data.model.Blacklist
-import xyz.klinker.messenger.shared.data.model.Contact
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.data.model.Draft
-import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.encryption.EncryptionUtils
+import xyz.klinker.messenger.shared.data.model.*
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener
@@ -2541,6 +2536,107 @@ object DataSource {
 
         if (useApi) {
             ApiUtils.deleteScheduledMessage(accountId(context), id)
+        }
+    }
+
+    /**
+     * Gets all templates in the database.
+     */
+    fun getTemplates(context: Context): Cursor =
+            try {
+                database(context).query(Template.TABLE, null, null, null, null, null,
+                        Template.COLUMN_TEXT + " asc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Template.TABLE, null, null, null, null, null,
+                        Template.COLUMN_TEXT + " asc")
+            }
+
+    /**
+     * Get all templates as a list.
+     */
+    fun getTemplatesAsList(context: Context): List<Template> {
+        val cursor = getTemplates(context)
+        val templates = ArrayList<Template>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val template = Template()
+                template.fillFromCursor(cursor)
+
+                templates.add(template)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.closeSilent()
+        return templates
+    }
+
+    /**
+     * Inserts a template into the database.
+     */
+    fun insertTemplate(context: Context, template: Template, useApi: Boolean = true): Long {
+        val values = ContentValues(2)
+
+        if (template.id <= 0) {
+            template.id = generateId()
+        }
+
+        values.put(Template.COLUMN_ID, template.id)
+        values.put(Template.COLUMN_TEXT, template.text)
+
+        if (useApi) {
+            ApiUtils.addTemplate(accountId(context), template.id, template.text!!, encryptor(context))
+        }
+
+        return try {
+            database(context).insert(Template.TABLE, null, values)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).insert(Template.TABLE, null, values)
+        }
+    }
+
+    /**
+     * Updates the values on the template
+     *
+     * @param template the template to update
+     */
+    fun updateTemplate(context: Context, template: Template, useApi: Boolean = true) {
+        val values = ContentValues(2)
+
+        values.put(Template.COLUMN_ID, template.id)
+        values.put(Template.COLUMN_TEXT, template.text)
+
+        try {
+            database(context).update(Template.TABLE, values, Template.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(template.id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Template.TABLE, values, Template.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(template.id)))
+        }
+
+        if (useApi) {
+            ApiUtils.updateTemplate(accountId(context), template.id, template.text!!, encryptor(context))
+        }
+    }
+
+    /**
+     * Deletes a template from the database.
+     */
+    fun deleteTemplate(context: Context, id: Long, useApi: Boolean = true) {
+        try {
+            database(context).delete(Template.TABLE, Template.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(Template.TABLE, Template.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        }
+
+        if (useApi) {
+            ApiUtils.deleteTemplate(accountId(context), id)
         }
     }
 

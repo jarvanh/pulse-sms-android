@@ -43,6 +43,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
+import xyz.klinker.messenger.shared.data.model.Template;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -584,6 +585,37 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void deleteScheduledMessage() {
         source.deleteScheduledMessage(context, 1, false);
         verify(database).delete("scheduled_message", "_id=?", new String[]{"1"});
+    }
+
+    @Test
+    public void getTemplates() {
+        when(database.query("template", null, null, null, null, null, "text asc"))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getTemplates(context));
+    }
+
+    @Test
+    public void insertTemplate() {
+        source.insertTemplate(context, new Template(), false);
+        verify(database).insert(eq("template"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void deleteTemplate() {
+        source.deleteTemplate(context, 1, false);
+        verify(database).delete("template", "_id=?", new String[]{"1"});
+    }
+
+    @Test
+    public void updateTemplate() {
+        Template template = new Template();
+        template.setId(1);
+        template.setText("test text");
+
+        source.updateTemplate(context, template, false);
+        verify(database).update(eq("template"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"1"}));
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

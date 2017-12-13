@@ -31,29 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import retrofit2.Call
 import retrofit2.Response
 import xyz.klinker.messenger.api.Api
-import xyz.klinker.messenger.api.entity.AddBlacklistRequest
-import xyz.klinker.messenger.api.entity.AddContactRequest
-import xyz.klinker.messenger.api.entity.AddConversationRequest
-import xyz.klinker.messenger.api.entity.AddDeviceRequest
-import xyz.klinker.messenger.api.entity.AddDeviceResponse
-import xyz.klinker.messenger.api.entity.AddDraftRequest
-import xyz.klinker.messenger.api.entity.AddMessagesRequest
-import xyz.klinker.messenger.api.entity.AddScheduledMessageRequest
-import xyz.klinker.messenger.api.entity.BlacklistBody
-import xyz.klinker.messenger.api.entity.ContactBody
-import xyz.klinker.messenger.api.entity.ConversationBody
-import xyz.klinker.messenger.api.entity.DeviceBody
-import xyz.klinker.messenger.api.entity.DraftBody
-import xyz.klinker.messenger.api.entity.LoginRequest
-import xyz.klinker.messenger.api.entity.LoginResponse
-import xyz.klinker.messenger.api.entity.MessageBody
-import xyz.klinker.messenger.api.entity.ScheduledMessageBody
-import xyz.klinker.messenger.api.entity.SignupRequest
-import xyz.klinker.messenger.api.entity.SignupResponse
-import xyz.klinker.messenger.api.entity.UpdateContactRequest
-import xyz.klinker.messenger.api.entity.UpdateConversationRequest
-import xyz.klinker.messenger.api.entity.UpdateMessageRequest
-import xyz.klinker.messenger.api.entity.UpdateScheduledMessageRequest
+import xyz.klinker.messenger.api.entity.*
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback
 import xyz.klinker.messenger.api.implementation.retrofit.LoggingRetryableCallback
@@ -632,6 +610,9 @@ object ApiUtils {
         call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
     }
 
+    /**
+     * Update the text/date for a given scheduled message
+     */
     fun updateScheduledMessage(accountId: String?, deviceId: Long, title: String?,
                                to: String?, data: String?, mimeType: String?,
                                timestamp: Long, encryptionUtils: EncryptionUtils?) {
@@ -660,6 +641,52 @@ object ApiUtils {
 
         val message = "delete scheduled message"
         val call = api.scheduled().remove(deviceId, accountId)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Adds a template.
+     */
+    fun addTemplate(accountId: String?, deviceId: Long, text: String, encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val body = TemplateBody(deviceId, encryptionUtils.encrypt(text))
+        val request = AddTemplateRequest(accountId, body)
+        val message = "add template"
+
+        val call = api.template().add(request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Update the text for a given template.
+     */
+    fun updateTemplate(accountId: String?, deviceId: Long, text: String,
+                       encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val request = UpdateTemplateRequest(encryptionUtils.encrypt(text))
+        val message = "update template"
+
+        val call = api.template().update(deviceId, accountId, request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Deletes the given template.
+     */
+    fun deleteTemplate(accountId: String?, deviceId: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "delete template"
+        val call = api.template().remove(deviceId, accountId)
 
         call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
     }

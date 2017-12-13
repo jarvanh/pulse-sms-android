@@ -34,6 +34,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
+import xyz.klinker.messenger.shared.data.model.Template;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -795,6 +796,44 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int initialSize = source.getScheduledMessages(context).getCount();
         source.deleteScheduledMessage(context, 1, false);
         int finalSize = source.getScheduledMessages(context).getCount();
+
+        assertEquals(1, initialSize - finalSize);
+    }
+
+
+    @Test
+    public void getTemplates() {
+        assertEquals(1, source.getTemplates(context).getCount());
+    }
+
+    @Test
+    public void insertTemplate() {
+        Template template = new Template();
+        template.setText("test template");
+
+        int initialSize = source.getTemplates(context).getCount();
+        source.insertTemplate(context, template, false);
+        int finalSize = source.getTemplates(context).getCount();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void updateTemplate() {
+        Template template = new Template();
+        template.setId(1);
+        template.setText("edited template");
+
+        source.updateTemplate(context, template, false);
+
+        assertEquals("edited template", source.getTemplatesAsList(context).get(0).getText());
+    }
+
+    @Test
+    public void deleteTemplate() {
+        int initialSize = source.getTemplates(context).getCount();
+        source.deleteTemplate(context, 1, false);
+        int finalSize = source.getTemplates(context).getCount();
 
         assertEquals(1, initialSize - finalSize);
     }
