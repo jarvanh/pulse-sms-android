@@ -73,6 +73,7 @@ class Conversation : DatabaseTable {
         this.mute = body.mute
         this.archive = body.archive
         this.privateNotifications = body.privateNotifications
+        this.folderId = body.folderId
     }
 
     override fun getCreateStatement() =  DATABASE_CREATE

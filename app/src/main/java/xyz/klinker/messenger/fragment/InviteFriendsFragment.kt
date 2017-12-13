@@ -77,6 +77,7 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
                         conversation.imageUri = ContactUtils
                                 .findImageUri(conversation.phoneNumbers, activity!!)
                         conversation.simSubscriptionId = -1
+                        conversation.folderId = -1
 
                         val image = ImageUtils.getContactImage(conversation.imageUri, activity)
                         if (image == null) {

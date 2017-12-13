@@ -601,6 +601,7 @@ object DataSource {
             values.put(Conversation.COLUMN_ID_MATCHER, conversation.idMatcher)
             values.put(Conversation.COLUMN_MUTE, conversation.mute)
             values.put(Conversation.COLUMN_ARCHIVED, conversation.archive)
+            values.put(Conversation.COLUMN_FOLDER_ID, conversation.folderId)
 
             val messages = SmsMmsUtils.queryConversation(conversation.id, context) ?: continue
 
@@ -674,6 +675,7 @@ object DataSource {
             values.put(Conversation.COLUMN_MUTE, conversation.mute)
             values.put(Conversation.COLUMN_ARCHIVED, conversation.archive)
             values.put(Conversation.COLUMN_TIMESTAMP, conversation.timestamp)
+            values.put(Conversation.COLUMN_FOLDER_ID, conversation.folderId)
 
             try {
                 database(context).insert(Conversation.TABLE, null, values)
@@ -1878,6 +1880,7 @@ object DataSource {
             conversation.archive = false
             conversation.ledColor = Color.WHITE
             conversation.simSubscriptionId = -1
+            conversation.folderId = -1
 
             ImageUtils.fillConversationColors(conversation, context)
 

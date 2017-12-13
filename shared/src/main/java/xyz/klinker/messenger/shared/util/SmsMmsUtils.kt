@@ -104,6 +104,7 @@ object SmsMmsUtils {
                 conversation.ledColor = Color.WHITE
                 ImageUtils.fillConversationColors(conversation, context!!)
                 conversation.simSubscriptionId = -1
+                conversation.folderId = -1
 
                 conversations.add(conversation)
             } while (cursor.moveToNext() && conversations.size < INITIAL_CONVERSATION_LIMIT)
