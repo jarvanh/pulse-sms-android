@@ -38,34 +38,18 @@ import java.util.ArrayList
 import java.util.concurrent.Executor
 
 import retrofit2.Response
+import xyz.klinker.messenger.api.entity.*
 import xyz.klinker.messenger.api.implementation.LoginActivity
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.api.entity.AddBlacklistRequest
-import xyz.klinker.messenger.api.entity.AddContactRequest
-import xyz.klinker.messenger.api.entity.AddConversationRequest
-import xyz.klinker.messenger.api.entity.AddDraftRequest
-import xyz.klinker.messenger.api.entity.AddMessagesRequest
-import xyz.klinker.messenger.api.entity.AddScheduledMessageRequest
-import xyz.klinker.messenger.api.entity.BlacklistBody
-import xyz.klinker.messenger.api.entity.ContactBody
-import xyz.klinker.messenger.api.entity.ConversationBody
-import xyz.klinker.messenger.api.entity.DraftBody
-import xyz.klinker.messenger.api.entity.MessageBody
-import xyz.klinker.messenger.api.entity.ScheduledMessageBody
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.model.Blacklist
-import xyz.klinker.messenger.shared.data.model.Contact
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.data.model.Draft
-import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.api.implementation.BinaryUtils
+import xyz.klinker.messenger.shared.data.model.*
 import xyz.klinker.messenger.shared.util.CursorUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.PaginationUtils
@@ -113,6 +97,8 @@ open class ApiUploadService : Service() {
             uploadBlacklists()
             uploadScheduledMessages()
             uploadDrafts()
+            uploadTemplates()
+            uploadFolders()
             Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms")
 
             uploadMedia()
@@ -323,6 +309,76 @@ open class ApiUploadService : Service() {
                         (System.currentTimeMillis() - startTime) + " ms")
             } else {
                 Log.v(TAG, "drafts upload successful in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            }
+        }
+
+        cursor.closeSilent()
+    }
+
+    private fun uploadTemplates() {
+        val startTime = System.currentTimeMillis()
+        val cursor = DataSource.getTemplates(this)
+
+        if (cursor.moveToFirst()) {
+            val templates = arrayOfNulls<TemplateBody>(cursor.count)
+
+            do {
+                val t = Template()
+                t.fillFromCursor(cursor)
+                t.encrypt(encryptionUtils!!)
+                val template = TemplateBody(t.id, t.text)
+
+                templates[cursor.position] = template
+            } while (cursor.moveToNext())
+
+            val request = AddTemplateRequest(Account.accountId, templates)
+            val result = try {
+                ApiUtils.api.template().add(request).execute().body()
+            } catch (e: IOException) {
+                null
+            }
+
+            if (result == null) {
+                Log.v(TAG, "failed to upload templates in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            } else {
+                Log.v(TAG, "template upload successful in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            }
+        }
+
+        cursor.closeSilent()
+    }
+
+    private fun uploadFolders() {
+        val startTime = System.currentTimeMillis()
+        val cursor = DataSource.getFolders(this)
+
+        if (cursor.moveToFirst()) {
+            val folders = arrayOfNulls<FolderBody>(cursor.count)
+
+            do {
+                val f = Folder()
+                f.fillFromCursor(cursor)
+                f.encrypt(encryptionUtils!!)
+                val folder = FolderBody(f.id, f.name, f.colors.color, f.colors.colorDark, f.colors.colorLight, f.colors.colorAccent)
+
+                folders[cursor.position] = folder
+            } while (cursor.moveToNext())
+
+            val request = AddFolderRequest(Account.accountId, folders)
+            val result = try {
+                ApiUtils.api.folder().add(request).execute().body()
+            } catch (e: IOException) {
+                null
+            }
+
+            if (result == null) {
+                Log.v(TAG, "failed to upload folders in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            } else {
+                Log.v(TAG, "folder upload successful in " +
                         (System.currentTimeMillis() - startTime) + " ms")
             }
         }

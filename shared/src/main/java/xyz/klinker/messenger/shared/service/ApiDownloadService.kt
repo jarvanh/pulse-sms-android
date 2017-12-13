@@ -27,30 +27,20 @@ import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 
 import com.google.firebase.auth.FirebaseAuth
+import xyz.klinker.messenger.api.entity.*
 
 import java.io.File
 import java.io.IOException
 
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.api.entity.BlacklistBody
-import xyz.klinker.messenger.api.entity.ContactBody
-import xyz.klinker.messenger.api.entity.ConversationBody
-import xyz.klinker.messenger.api.entity.DraftBody
-import xyz.klinker.messenger.api.entity.MessageBody
-import xyz.klinker.messenger.api.entity.ScheduledMessageBody
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.model.Blacklist
-import xyz.klinker.messenger.shared.data.model.Contact
-import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.data.model.Draft
-import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.encryption.EncryptionUtils
+import xyz.klinker.messenger.shared.data.model.*
 import xyz.klinker.messenger.shared.util.*
 
 class ApiDownloadService : Service() {
@@ -99,6 +89,9 @@ class ApiDownloadService : Service() {
             downloadScheduledMessages()
             downloadDrafts()
             downloadContacts()
+            downloadTemplates()
+            downloadFolders()
+
             Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms")
 
             sendBroadcast(Intent(ACTION_DOWNLOAD_FINISHED))
@@ -345,6 +338,48 @@ class ApiDownloadService : Service() {
             Log.v(TAG, downloaded.toString() + " contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
         } else {
             Log.v(TAG, "contacts failed to insert")
+        }
+    }
+
+    private fun downloadTemplates() {
+        val startTime = System.currentTimeMillis()
+        val templates = try {
+            ApiUtils.api.template().list(Account.accountId).execute().body()
+        } catch (e: IOException) {
+            emptyArray<TemplateBody>()
+        }
+
+        if (templates != null) {
+            for (body in templates) {
+                val template = Template(body)
+                template.decrypt(encryptionUtils!!)
+                DataSource.insertTemplate(this, template, false)
+            }
+
+            Log.v(TAG, "templates inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+        } else {
+            Log.v(TAG, "templates failed to insert")
+        }
+    }
+
+    private fun downloadFolders() {
+        val startTime = System.currentTimeMillis()
+        val folders = try {
+            ApiUtils.api.folder().list(Account.accountId).execute().body()
+        } catch (e: IOException) {
+            emptyArray<FolderBody>()
+        }
+
+        if (folders != null) {
+            for (body in folders) {
+                val folder = Folder(body)
+                folder.decrypt(encryptionUtils!!)
+                DataSource.insertFolder(this, folder, false)
+            }
+
+            Log.v(TAG, "folders inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+        } else {
+            Log.v(TAG, "folders failed to insert")
         }
     }
 
