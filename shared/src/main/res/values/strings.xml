@@ -177,6 +177,7 @@
 
     <!-- Templates -->
     <string name="type_template_text">Type template text…</string>
+    <string name="delete_template">Are you sure you want to delete this template?</string>
 
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>

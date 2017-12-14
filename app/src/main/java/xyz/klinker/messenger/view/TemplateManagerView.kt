@@ -24,17 +24,15 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
     init {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.view_template_manager, this, true)
-
-        val templateList = findViewById<RecyclerView>(R.id.recycler_view)
         val createTemplate = findViewById<FloatingActionButton>(R.id.create_template)
 
         createTemplate.backgroundTintList = ColorStateList.valueOf(colorAccent)
-        createTemplate.setOnClickListener { createTemplate(templateList) }
+        createTemplate.setOnClickListener { createTemplate() }
 
-        loadTemplates(templateList)
+        loadTemplates()
     }
 
-    private fun createTemplate(templateList: RecyclerView) {
+    private fun createTemplate() {
         val layout = LayoutInflater.from(context).inflate(R.layout.dialog_edit_text, null, false)
         val editText = layout.findViewById<EditText>(R.id.edit_text)
 
@@ -42,21 +40,21 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
 
         AlertDialog.Builder(context)
                 .setView(layout)
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     val template = Template()
                     template.text = editText.text.toString()
                     DataSource.insertTemplate(context, template)
 
-                    loadTemplates(templateList)
-                }
-                .setNegativeButton(android.R.string.cancel) { _, _ -> }
-                .show()
+                    loadTemplates()
+                }.show()
     }
 
-    private fun loadTemplates(templateList: RecyclerView) {
+    private fun loadTemplates() {
         val templates = DataSource.getTemplatesAsList(context)
         val adapter = TemplateAdapter(templates, this)
 
+        val templateList = findViewById<RecyclerView>(R.id.recycler_view)
         templateList.layoutManager = LinearLayoutManager(context)
         templateList.adapter = adapter
     }
@@ -66,6 +64,12 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
     }
 
     override fun onLongClick(template: Template) {
-
+        AlertDialog.Builder(context)
+                .setMessage(R.string.delete_template)
+                .setNegativeButton(R.string.api_no) { _, _ -> }
+                .setPositiveButton(R.string.api_yes) { _, _ ->
+                    DataSource.deleteTemplate(context, template.id, true)
+                    loadTemplates()
+                }.show()
     }
 }
