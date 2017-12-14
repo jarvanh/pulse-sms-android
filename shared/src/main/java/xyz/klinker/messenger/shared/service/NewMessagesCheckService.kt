@@ -183,14 +183,14 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
             activity.startService(Intent(activity, NewMessagesCheckService::class.java))
         }
 
-        fun startService(service: Service) {
-            val intent = Intent(service, NewMessagesCheckService::class.java)
+        fun startService(context: Context) {
+            val intent = Intent(context, NewMessagesCheckService::class.java)
 
             if (AndroidVersionUtil.isAndroidO) {
                 intent.putExtra(EXTRA_FOREGROUND_NOTIFICATION, true)
-                service.startForegroundService(intent)
+                context.startForegroundService(intent)
             } else {
-                service.startService(intent)
+                context.startService(intent)
             }
         }
 

@@ -25,7 +25,9 @@
     <version
         name="2.7.1"
         description="December 14th, 2017">
+        <text>UI updates</text>
         <text>Bug/crash fixes</text>
+        <text>Preparation for new features</text>
     </version>
 
     <version

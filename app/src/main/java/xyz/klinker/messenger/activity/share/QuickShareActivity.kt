@@ -8,9 +8,6 @@ import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.MultiAutoCompleteTextView
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
 import com.bumptech.glide.Glide
@@ -26,7 +23,8 @@ import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
 import android.util.TypedValue
-import android.widget.LinearLayout
+import android.widget.*
+import xyz.klinker.android.floating_tutorial.util.DensityConverter
 
 
 class QuickShareActivity : FloatingTutorialActivity() {
@@ -52,6 +50,16 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
         setContentView(R.layout.page_quick_share)
         setNextButtonText(R.string.send)
         setBackgroundColorResource(R.color.background)
+
+        val frame = findViewById<FrameLayout>(R.id.tutorial_page_content)
+        val linear = frame.parent as LinearLayout
+        val card = linear.parent as View
+
+        val layoutParams = card.layoutParams as FrameLayout.LayoutParams
+        layoutParams.bottomMargin = DensityConverter.toDp(context, 72)
+
+        card.layoutParams = layoutParams
+        card.invalidate()
 
         if (Settings.isCurrentlyDarkTheme) {
             Handler().post { setProgressIndicatorColorResource(R.color.tutorial_dark_background_indicator) }
