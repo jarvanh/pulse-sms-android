@@ -16,11 +16,12 @@
 
 package xyz.klinker.messenger.shared.receiver
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.support.annotation.VisibleForTesting
+import android.util.Log
 
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
@@ -30,13 +31,7 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MediaParserService
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
-import xyz.klinker.messenger.shared.util.BlacklistUtils
-import xyz.klinker.messenger.shared.util.ContactUtils
-import xyz.klinker.messenger.shared.util.DualSimUtils
-import xyz.klinker.messenger.shared.util.MediaSaver
-import xyz.klinker.messenger.shared.util.PhoneNumberUtils
-import xyz.klinker.messenger.shared.util.SmsMmsUtils
+import xyz.klinker.messenger.shared.util.*
 
 /**
  * Receiver for notifying us when a new MMS has been received by the device. By default it will
@@ -45,114 +40,132 @@ import xyz.klinker.messenger.shared.util.SmsMmsUtils
  */
 class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver() {
 
+    private var context: Context? = null
     private var conversationId: Long? = null
     private var ignoreNotification = false
 
-    @SuppressLint("NewApi")
     override fun onReceive(context: Context, intent: Intent) {
-        Thread {
-            try {
-                super.onReceive(context, intent)
-                Thread.sleep(1000)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            val nullableOrBlankBodyText = insertMms(context)
-
-            if (!ignoreNotification) {
-                try {
-                    context.startService(Intent(context, NotificationService::class.java))
-                } catch (e: Exception) {
-                    if (AndroidVersionUtil.isAndroidO) {
-                        val foregroundNotificationService = Intent(context, NotificationService::class.java)
-                        foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-                        context.startForegroundService(foregroundNotificationService)
-                    }
-                }
-            }
-
-            if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
-                if (MediaParserService.createParser(context, nullableOrBlankBodyText.trim { it <= ' ' }) != null) {
-                    MediaParserService.start(context, conversationId!!, nullableOrBlankBodyText)
-                }
-            }
-        }.start()
+        this.context = context
+        super.onReceive(context, intent)
     }
 
-    private fun insertMms(context: Context): String? {
-        val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
+    override fun onMessageReceived(messageUri: Uri) {
+        Log.v("MmsReceivedReceiver", "message received: $messageUri")
+        val lastMessage = SmsMmsUtils.getMmsMessage(context, messageUri, null)
+        if (lastMessage != null && lastMessage.moveToFirst()) {
+            handleMms(context!!, messageUri, lastMessage)
+        } else {
+            try {
+                CursorUtil.closeSilent(lastMessage)
+            } catch (e: Exception) {
+            }
+        }
+    }
 
-        var snippet: String? = ""
+    override fun onError(error: String) {
+        Log.v("MmsReceivedReceiver", "message save error: $error")
+        val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
         if (lastMessage != null && lastMessage.moveToFirst()) {
             val uri = Uri.parse("content://mms/" + lastMessage.getLong(0))
-            val from = SmsMmsUtils.getMmsFrom(uri, context)
-
-            if (BlacklistUtils.isBlacklisted(context, from)) {
-                return null
+            handleMms(context!!, uri, lastMessage)
+        } else {
+            try {
+                CursorUtil.closeSilent(lastMessage)
+            } catch (e: Exception) {
             }
+        }
+    }
 
-            val to = SmsMmsUtils.getMmsTo(uri, context)
-            val phoneNumbers = getPhoneNumbers(from, to,
-                    PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context)
-            val values = SmsMmsUtils.processMessage(lastMessage, -1L, context)
+    private fun handleMms(context: Context, uri: Uri, lastMessage: Cursor) {
+        val nullableOrBlankBodyText = insertMms(context, uri, lastMessage)
 
-            if (isReceivingMessageFromThemself(context, from) && phoneNumbers.contains(",")) {
-                // a group message, coming from themselves, should not be saved
-                return null
-            }
-
-            val source = DataSource
-
-            for (value in values) {
-                val message = Message()
-                message.type = value.getAsInteger(Message.COLUMN_TYPE)
-                message.data = value.getAsString(Message.COLUMN_DATA).trim { it <= ' ' }
-                message.timestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
-                message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE)
-                message.read = false
-                message.seen = false
-                message.from = ContactUtils.findContactNames(from, context)
-                message.simPhoneNumber = if (DualSimUtils.availableSims.isEmpty()) null else to
-                message.sentDeviceId = -1L
-
-                if (message.mimeType == MimeType.TEXT_PLAIN) {
-                    snippet = message.data
+        if (!ignoreNotification) {
+            try {
+                context.startService(Intent(context, NotificationService::class.java))
+            } catch (e: Exception) {
+                if (AndroidVersionUtil.isAndroidO) {
+                    val foregroundNotificationService = Intent(context, NotificationService::class.java)
+                    foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
+                    context.startForegroundService(foregroundNotificationService)
                 }
-
-                if (!phoneNumbers.contains(",")) {
-                    message.from = null
-                }
-
-                if (SmsReceivedReceiver.shouldSaveMessage(context, message, phoneNumbers)) {
-                    conversationId = source.insertMessage(message, phoneNumbers, context)
-
-                    val conversation = source.getConversation(context, conversationId!!)
-                    if (conversation != null && conversation.mute) {
-                        source.seenConversation(context, conversationId!!)
-                        ignoreNotification = true
-                    }
-
-                    if (MmsSettings.autoSaveMedia && MimeType.TEXT_PLAIN != message.mimeType) {
-                        try {
-                            MediaSaver(context).saveMedia(message)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-
-                    }
-                }
-            }
-
-            if (conversationId != null) {
-                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId!!,
-                        snippet, false)
-                MessageListUpdatedReceiver.sendBroadcast(context, conversationId!!)
             }
         }
 
+        if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
+            if (MediaParserService.createParser(context, nullableOrBlankBodyText.trim { it <= ' ' }) != null) {
+                MediaParserService.start(context, conversationId!!, nullableOrBlankBodyText)
+            }
+        }
+    }
+
+    private fun insertMms(context: Context, uri: Uri, lastMessage: Cursor): String? {
+        var snippet: String? = ""
+        val from = SmsMmsUtils.getMmsFrom(uri, context)
+
+        if (BlacklistUtils.isBlacklisted(context, from)) {
+            return null
+        }
+
+        val to = SmsMmsUtils.getMmsTo(uri, context)
+        val phoneNumbers = getPhoneNumbers(from, to,
+                PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context)
+        val values = SmsMmsUtils.processMessage(lastMessage, -1L, context)
+
+        if (isReceivingMessageFromThemself(context, from) && phoneNumbers.contains(",")) {
+            // a group message, coming from themselves, should not be saved
+            return null
+        }
+
+        val source = DataSource
+
+        for (value in values) {
+            val message = Message()
+            message.type = value.getAsInteger(Message.COLUMN_TYPE)
+            message.data = value.getAsString(Message.COLUMN_DATA).trim { it <= ' ' }
+            message.timestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
+            message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE)
+            message.read = false
+            message.seen = false
+            message.from = ContactUtils.findContactNames(from, context)
+            message.simPhoneNumber = if (DualSimUtils.availableSims.isEmpty()) null else to
+            message.sentDeviceId = -1L
+
+            if (message.mimeType == MimeType.TEXT_PLAIN) {
+                snippet = message.data
+            }
+
+            if (!phoneNumbers.contains(",")) {
+                message.from = null
+            }
+
+            if (SmsReceivedReceiver.shouldSaveMessage(context, message, phoneNumbers)) {
+                conversationId = source.insertMessage(message, phoneNumbers, context)
+
+                val conversation = source.getConversation(context, conversationId!!)
+                if (conversation != null && conversation.mute) {
+                    source.seenConversation(context, conversationId!!)
+                    ignoreNotification = true
+                }
+
+                if (MmsSettings.autoSaveMedia && MimeType.TEXT_PLAIN != message.mimeType) {
+                    try {
+                        MediaSaver(context).saveMedia(message)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            }
+        }
+
+        if (conversationId != null) {
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId!!,
+                    snippet, false)
+            MessageListUpdatedReceiver.sendBroadcast(context, conversationId!!)
+        }
+
         try {
-            lastMessage!!.close()
+            CursorUtil.closeSilent(lastMessage)
         } catch (e: Exception) {
         }
 
