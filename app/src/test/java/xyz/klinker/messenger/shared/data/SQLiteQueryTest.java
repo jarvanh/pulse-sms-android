@@ -887,6 +887,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int finalSize = source.getFolders(context).getCount();
 
         assertEquals(1, initialSize - finalSize);
+
+        Conversation one = source.getConversation(context, 1);
+        assertEquals(-1, one.getFolderId().longValue());
     }
 
 }

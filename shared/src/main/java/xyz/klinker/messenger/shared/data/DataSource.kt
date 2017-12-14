@@ -2782,6 +2782,18 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(id)))
         }
 
+        val values = ContentValues(1)
+        values.put(Conversation.COLUMN_FOLDER_ID, -1)
+
+        try {
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_FOLDER_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_FOLDER_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        }
+
         if (useApi) {
             ApiUtils.deleteFolder(accountId(context), id)
         }
