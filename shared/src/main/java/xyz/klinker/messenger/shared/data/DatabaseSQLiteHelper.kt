@@ -110,21 +110,18 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
         }
 
         if (oldVersion < 12) {
-            db.execSQL(Folder().getCreateStatement())
-            db.execSQL("ALTER TABLE conversation ADD COLUMN folder_id integer not null DEFAULT -1")
-            db.execSQL("create index if not exists folder_id_conversation_index on ${Conversation.TABLE} (${Conversation.COLUMN_FOLDER_ID});")
             try {
-
+                db.execSQL(Folder().getCreateStatement())
             } catch (e: Exception) {
             }
 
             try {
-
+                db.execSQL("ALTER TABLE conversation ADD COLUMN folder_id integer not null DEFAULT -1")
             } catch (e: Exception) {
             }
 
             try {
-
+                db.execSQL("create index if not exists folder_id_conversation_index on ${Conversation.TABLE} (${Conversation.COLUMN_FOLDER_ID});")
             } catch (e: Exception) {
             }
         }

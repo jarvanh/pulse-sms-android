@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import xyz.klinker.messenger.R
@@ -51,12 +52,22 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
     }
 
     private fun loadTemplates() {
+        val templateList = findViewById<RecyclerView>(R.id.recycler_view)
+        val placeholder = findViewById<View>(R.id.placeholder)
+
         val templates = DataSource.getTemplatesAsList(context)
         val adapter = TemplateAdapter(templates, this)
 
-        val templateList = findViewById<RecyclerView>(R.id.recycler_view)
         templateList.layoutManager = LinearLayoutManager(context)
         templateList.adapter = adapter
+
+        if (templates.isEmpty()) {
+            templateList.visibility = View.GONE
+            placeholder.visibility = View.VISIBLE
+        } else {
+            templateList.visibility = View.VISIBLE
+            placeholder.visibility = View.GONE
+        }
     }
 
     override fun onClick(template: Template) {

@@ -1,25 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:animateLayoutChanges="true"
+    android:background="@color/background"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/drawerBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:alpha=".80"
+            android:src="@drawable/ic_template"
+            android:tint="@color/secondaryText" />
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:alpha=".80"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/no_templates"
+            android:textColor="@color/secondaryText"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/create_template"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:background="?selectableItemBackground"
-        android:id="@+id/create_template"
-        app:fabSize="normal"
-        app:borderWidth="0dp"/>
+        android:src="@drawable/ic_add"
+        app:borderWidth="0dp"
+        app:fabSize="normal" />
 
 </FrameLayout>
