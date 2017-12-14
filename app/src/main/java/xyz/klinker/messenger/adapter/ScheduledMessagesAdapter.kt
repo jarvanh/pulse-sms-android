@@ -53,9 +53,14 @@ class ScheduledMessagesAdapter(private val scheduledMessages: List<ScheduledMess
         }
 
         holder.message.text = message.data
+        holder.message.setOnClickListener { listener?.onClick(message) }
         holder.messageHolder.setOnClickListener { listener?.onClick(message) }
         holder.itemView.setOnClickListener { listener?.onClick(message) }
 
+        holder.message.setOnLongClickListener {
+            listener?.onClick(message)
+            true
+        }
         holder.messageHolder.setOnLongClickListener {
             listener?.onClick(message)
             true

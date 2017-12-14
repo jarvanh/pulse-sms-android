@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TvUtils
+import xyz.klinker.messenger.shared.util.listener.TextSelectedListener
 import xyz.klinker.messenger.view.*
 
 @Suppress("DEPRECATION")
@@ -279,8 +280,14 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
 
         prepareAttachHolder(7)
-        attachHolder.addView(TemplateManagerView(activity!!, attachListener,
-                if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent))
+        attachHolder.addView(TemplateManagerView(activity!!,
+                if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent,
+                object : TextSelectedListener {
+                    override fun onTextSelected(text: String) {
+                        fragment.onBackPressed()
+                        attachListener.onTextSelected(text)
+                    }
+                }))
     }
 
     private fun attachPermissionRequest(permissionRequestCode: Int, vararg permissions: String) {

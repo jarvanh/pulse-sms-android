@@ -78,6 +78,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
 
     override fun onTextSelected(text: String) {
         messageEntry.setText(text)
+        messageEntry.setSelection(messageEntry.text.length)
     }
 
     override fun onImageSelected(uri: Uri, mimeType: String) {

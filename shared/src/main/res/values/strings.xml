@@ -175,6 +175,9 @@
     <string name="attach_vcard">Attach Contact as vCard</string>
     <string name="attach_plain_text">Attach Contact as Plain Text</string>
 
+    <!-- Templates -->
+    <string name="type_template_text">Type template text…</string>
+
     <!-- Compose Screen -->
     <string name="compose_message">Compose new message</string>
     <string name="send_message">Send message</string>
