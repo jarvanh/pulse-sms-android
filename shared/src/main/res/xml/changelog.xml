@@ -19,6 +19,7 @@
     <!--<version-->
         <!--name="2.8.0"-->
         <!--description="December 12th, 2017">-->
+        <!--<text>Access and create templates from the "Attach" menu, when writing messages (TODO: remove the feature flag)</text>-->
         <!--<text>Select from a list of all contacts on the compose screen (TODO: uncomment on bottom_bar_compose and ComposeContactsProvider)</text>-->
         <!--<text>Added the ability to mute a conversation, from it's notification (TODO: uncomment mute title on arrays.xml)</text>-->
     <!--</version>-->

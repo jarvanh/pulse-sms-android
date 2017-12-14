@@ -43,5 +43,4 @@ public interface TemplateService {
 
     @GET("templates")
     Call<TemplateBody[]> list(@Query("account_id") String accountId);
-
 }
