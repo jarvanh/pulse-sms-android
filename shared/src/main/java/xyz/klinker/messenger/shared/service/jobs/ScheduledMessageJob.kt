@@ -31,6 +31,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.util.*
 import java.util.*
@@ -81,6 +82,22 @@ class ScheduledMessageJob : BackgroundJob() {
                             .build()
                     NotificationManagerCompat.from(this)
                             .notify(5555 + message.id.toInt(), notification)
+
+                    try {
+                        val conversationMessages = DataSource.getMessages(this, conversationId)
+
+                        if (conversationMessages.moveToFirst()) {
+                            val mess = Message()
+                            mess.fillFromCursor(conversationMessages)
+                            if (mess.type == Message.TYPE_INFO) {
+                                DataSource.deleteMessage(this, mess.id)
+                            }
+                        }
+
+                        CursorUtil.closeSilent(conversationMessages)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
 
                     Log.v("scheduled message", "message was sent and notification given")
                 }
