@@ -248,19 +248,23 @@ object Settings {
                 getDefaultNotificationActions(context))
 
         if (actions!!.contains("reply")) {
-            notificationActions!!.add(NotificationAction.REPLY)
+            notificationActions.add(NotificationAction.REPLY)
         }
 
         if (actions.contains("call")) {
-            notificationActions!!.add(NotificationAction.CALL)
+            notificationActions.add(NotificationAction.CALL)
         }
 
         if (actions.contains("read")) {
-            notificationActions!!.add(NotificationAction.READ)
+            notificationActions.add(NotificationAction.READ)
         }
 
         if (actions.contains("delete")) {
-            notificationActions!!.add(NotificationAction.DELETE)
+            notificationActions.add(NotificationAction.DELETE)
+        }
+
+        if (actions.contains("mute")) {
+            notificationActions.add(NotificationAction.MUTE)
         }
 
         this.mainColorSet = ColorSet.create(

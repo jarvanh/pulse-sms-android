@@ -116,6 +116,7 @@ class NotificationActionHelper(private val service: NotificationService) {
 
         if (Settings.notificationActions.contains(NotificationAction.DELETE)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_delete_dark, service.getString(R.string.delete), pendingDeleteMessage))
+            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_delete_white, service.getString(R.string.delete), pendingDeleteMessage))
         }
 
         val read = Intent(service, NotificationMarkReadService::class.java)
@@ -125,10 +126,19 @@ class NotificationActionHelper(private val service: NotificationService) {
 
         if (Settings.notificationActions.contains(NotificationAction.READ)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(R.string.read), pendingRead))
+            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(R.string.read), pendingRead))
         }
 
-        wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(R.string.read), pendingRead))
-        wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_delete_white, service.getString(R.string.delete), pendingDeleteMessage))
+        val mute = Intent(service, NotificationMuteService::class.java)
+        mute.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
+        val pendingMute = PendingIntent.getService(service, conversation.id.toInt(),
+                mute, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        if (Settings.notificationActions.contains(NotificationAction.MUTE)) {
+            builder.addAction(NotificationCompat.Action(R.drawable.ic_mute_dark, service.getString(R.string.mute), pendingMute))
+            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_mute_white, service.getString(R.string.mute), pendingMute))
+        }
+
     }
 
     fun addContentIntents(builder: NotificationCompat.Builder, conversation: NotificationConversation) {
