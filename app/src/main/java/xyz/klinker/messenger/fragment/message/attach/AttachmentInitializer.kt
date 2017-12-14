@@ -23,14 +23,12 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.Camera2BasicFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TvUtils
-import xyz.klinker.messenger.view.AttachContactView
-import xyz.klinker.messenger.view.AttachImageView
-import xyz.klinker.messenger.view.AttachLocationView
-import xyz.klinker.messenger.view.RecordAudioView
+import xyz.klinker.messenger.view.*
 
 @Suppress("DEPRECATION")
 class AttachmentInitializer(private val fragment: MessageListFragment) {
@@ -103,6 +101,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         val recordAudio = fragment.rootView!!.findViewById<View>(R.id.record_audio) as ImageButton
         val attachLocation = fragment.rootView!!.findViewById<View>(R.id.attach_location) as ImageButton
         val attachContact = fragment.rootView!!.findViewById<View>(R.id.attach_contact) as ImageButton
+        val applyTemplate = fragment.rootView!!.findViewById<View>(R.id.apply_template) as ImageButton
 
         attachImage.setOnClickListener { attachImage() }
         captureImage.setOnClickListener { captureImage() }
@@ -111,6 +110,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         recordAudio.setOnClickListener { recordAudio() }
         attachLocation.setOnClickListener { attachLocation() }
         attachContact.setOnClickListener { attachContact() }
+        applyTemplate.setOnClickListener { applyTemplate() }
+
+        if (!FeatureFlags.TEMPLATE_SUPPORT) {
+            applyTemplate.visibility = View.GONE
+        }
 
         var colorButtonsDark = false
         if (Settings.useGlobalThemeColor) {
@@ -134,6 +138,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
             recordAudio.imageTintList = list
             attachLocation.imageTintList = list
             attachContact.imageTintList = list
+            applyTemplate.imageTintList = list
         }
     }
 
@@ -266,6 +271,16 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
             attachPermissionRequest(PermissionHelper.PERMISSION_AUDIO_REQUEST,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
+    }
+
+    private fun applyTemplate() {
+        if (getBoldedAttachHolderPosition() == 7 || activity == null) {
+            return
+        }
+
+        prepareAttachHolder(7)
+        attachHolder.addView(TemplateManagerView(activity!!, attachListener,
+                if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent))
     }
 
     private fun attachPermissionRequest(permissionRequestCode: Int, vararg permissions: String) {

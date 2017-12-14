@@ -1,104 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/attach_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/attach_menu_height"
     android:orientation="vertical"
-    android:id="@+id/attach_layout"
     android:visibility="gone">
 
     <FrameLayout
+        android:id="@+id/attach_holder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/attach_holder"
         android:background="@color/drawerBackground" />
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:id="@+id/attach_button_holder"
-        android:gravity="center_horizontal"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:fillViewport="true">
 
-        <ImageButton
+        <LinearLayout
+            android:id="@+id/attach_button_holder"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/attach_image"
-            android:contentDescription="@string/attach_image"
-            android:src="@drawable/ic_image"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/capture_image"
-            android:contentDescription="@string/capture_image"
-            android:src="@drawable/ic_capture_photo"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/attach_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/attach_image"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_image"
+                android:tint="@android:color/white" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/attach_gif"
-            android:contentDescription="@string/attach_gif"
-            android:src="@drawable/ic_gif"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/capture_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/capture_image"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_capture_photo"
+                android:tint="@android:color/white" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/record_video"
-            android:contentDescription="@string/record_video"
-            android:src="@drawable/ic_record_video"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/attach_gif"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/attach_gif"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_gif"
+                android:tint="@android:color/white" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/record_audio"
-            android:contentDescription="@string/record_audio"
-            android:src="@drawable/ic_record_audio"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/record_video"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/record_video"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_record_video"
+                android:tint="@android:color/white" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/attach_location"
-            android:contentDescription="@string/attach_location"
-            android:src="@drawable/ic_location"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/record_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/record_audio"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_record_audio"
+                android:tint="@android:color/white" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
-            android:id="@+id/attach_contact"
-            android:contentDescription="@string/attach_contact"
-            android:src="@drawable/ic_contacts"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            <ImageButton
+                android:id="@+id/attach_location"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/attach_location"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_location"
+                android:tint="@android:color/white" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/attach_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/attach_contact"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_contacts"
+                android:tint="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/apply_template"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/apply_template"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_template"
+                android:tint="@android:color/white" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>

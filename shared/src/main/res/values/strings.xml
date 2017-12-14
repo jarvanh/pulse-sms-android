@@ -132,6 +132,7 @@
     <string name="attach_location">Attach Location</string>
     <string name="attach_contact">Attach Contact</string>
     <string name="attach_contact_summary">Select or enter a contact to attach to the message!</string>
+    <string name="apply_template">Apply Template</string>
     <string name="no_location_found">Could not find your location.</string>
     <string name="camera_permission_needed">The camera permission needs to be granted to take
         pictures!</string>
