@@ -15,9 +15,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryText"
             android:text="1."
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#E2000000"/>
 
         <com.android.ex.chips.RecipientEditTextView
             android:id="@+id/contact_one"
@@ -29,7 +29,8 @@
             android:hint="@string/enter_contact_name"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/secondaryText" />
+            android:textColor="#E2000000"
+            android:textColorHint="#8C000000" />
 
     </LinearLayout>
 
@@ -43,9 +44,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryText"
             android:text="2."
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#E2000000" />
 
         <com.android.ex.chips.RecipientEditTextView
             android:id="@+id/contact_two"
@@ -57,7 +58,8 @@
             android:hint="@string/enter_contact_name"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/secondaryText" />
+            android:textColor="#E2000000"
+            android:textColorHint="#8C000000" />
 
     </LinearLayout>
 
@@ -71,9 +73,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryText"
             android:text="3."
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#E2000000" />
 
         <com.android.ex.chips.RecipientEditTextView
             android:id="@+id/contact_three"
@@ -85,7 +87,8 @@
             android:hint="@string/enter_contact_name"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/secondaryText" />
+            android:textColor="#E2000000"
+            android:textColorHint="#8C000000" />
 
     </LinearLayout>
 
