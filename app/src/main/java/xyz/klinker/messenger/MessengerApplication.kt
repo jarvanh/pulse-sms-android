@@ -51,10 +51,10 @@ class MessengerApplication : FirebaseApplication() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
-        if (CreateNotificationChannelService.shouldRun(this)) {
+//        if (CreateNotificationChannelService.shouldRun(this)) {
             NotificationUtils.createNotificationChannels(this)
 //            startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
-        }
+//        }
 
         if (Settings.quickCompose) {
             QuickComposeNotificationService.start(this)

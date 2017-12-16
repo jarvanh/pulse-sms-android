@@ -19,6 +19,7 @@ package xyz.klinker.messenger.adapter.message
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
+import android.database.StaleDataException
 import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentActivity
@@ -110,7 +111,13 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        dataProvider.messages.moveToPosition(position)
+        try {
+            dataProvider.messages.moveToPosition(position)
+        } catch (e: IllegalStateException) {
+            fragment.onBackPressed()
+            return
+        }
+
         val message = Message()
         message.fillFromCursor(dataProvider.messages)
 
@@ -208,7 +215,13 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             return Date()
         }
 
-        dataProvider.messages.moveToPosition(position)
+        try {
+            dataProvider.messages.moveToPosition(position)
+        } catch (e: StaleDataException) {
+            fragment.onBackPressed()
+            return Date()
+        }
+        
         val millis = dataProvider.messages.getLong(dataProvider.messages.getColumnIndex(Message.COLUMN_TIMESTAMP))
         return Date(millis)
     }

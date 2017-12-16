@@ -144,7 +144,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         Thread {
             val hasSubs = billing?.hasPurchasedProduct() ?: false
-            dialog.dismiss()
+
+            try {
+                dialog.dismiss()
+            } catch (e: IllegalStateException) {
+            }
 
             if (fragmentActivity == null) {
                 return@Thread
@@ -400,7 +404,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             ApiUtils.cleanAccount(account.accountId)
 
             fragmentActivity?.runOnUiThread {
-                dialog.dismiss()
+                try {
+                    dialog.dismiss()
+                } catch (e: IllegalStateException) {
+                }
 
                 val login = Intent(fragmentActivity!!, InitialLoadActivity::class.java)
                 login.putExtra(InitialLoadActivity.UPLOAD_AFTER_SYNC, true)
@@ -429,7 +436,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         if (fragmentActivity is MessengerActivity) {
             (fragmentActivity!! as MessengerActivity).displayConversations()
-            fragmentActivity?.title = StringUtils.titleize(getString(R.string.app_name))
+            fragmentActivity?.title = StringUtils.titleize(fragmentActivity!!.getString(R.string.app_name))
         } else {
             fragmentActivity?.recreate()
         }

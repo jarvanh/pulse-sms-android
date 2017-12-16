@@ -39,31 +39,16 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
     }
 
     private fun startForeground() {
-        try {
-            val notification = NotificationCompat.Builder(this,
-                    NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
-                    .setContentTitle(getString(R.string.receiving_a_message))
-                    .setSmallIcon(R.drawable.ic_stat_notify_group)
-                    .setLocalOnly(true)
-                    .setColor(ColorSet.DEFAULT(this).color)
-                    .setOngoing(true)
-                    .build()
+        val notification = NotificationCompat.Builder(this,
+                NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
+                .setContentTitle(getString(R.string.receiving_a_message))
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
+                .setLocalOnly(true)
+                .setColor(ColorSet.DEFAULT(this).color)
+                .setOngoing(true)
+                .build()
 
-            startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
-        } catch (e: Exception) {
-            NotificationUtils.createBackgroundServiceChannel(this)
-
-            val notification = NotificationCompat.Builder(this,
-                    NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
-                    .setContentTitle(getString(R.string.receiving_a_message))
-                    .setSmallIcon(R.drawable.ic_stat_notify_group)
-                    .setLocalOnly(true)
-                    .setColor(ColorSet.DEFAULT(this).color)
-                    .setOngoing(true)
-                    .build()
-
-            startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
-        }
+        startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
     }
 
     companion object {

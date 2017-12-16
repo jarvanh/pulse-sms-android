@@ -29,6 +29,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.util.KotlinObjectInitializers
+import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 
 /**
@@ -50,6 +51,8 @@ class MessengerApplication : FirebaseApplication() {
         } else if (theme.isDark || TimeUtils.isNight) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
+
+        NotificationUtils.createNotificationChannels(this)
     }
 
     override fun getFirebaseMessageHandler(): FirebaseMessageHandler {

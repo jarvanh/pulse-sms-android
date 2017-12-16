@@ -38,8 +38,13 @@ class MainOnStartDelegate(private val activity: MessengerActivity) {
     private fun showTextAnywherePromotion() {
         val convoList = navController.conversationListFragment!!
         val applier = TextAnywhereConversationCardApplier(convoList)
-        val recycler = convoList.recyclerView
-        if (applier.shouldAddCardToList()) {
+        val recycler = try {
+            convoList.recyclerView
+        } catch (e: Exception) {
+            null
+        }
+
+        if (recycler != null && applier.shouldAddCardToList()) {
             val scrollToTop = recycler.layoutManager is LinearLayoutManager &&
                     (recycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0
 
@@ -62,6 +67,7 @@ class MainOnStartDelegate(private val activity: MessengerActivity) {
                 try {
                     NotificationManagerCompat.from(activity).cancelAll()
                 } catch (e: IllegalStateException) {
+                } catch (e: SecurityException) {
                 }
 
             }
