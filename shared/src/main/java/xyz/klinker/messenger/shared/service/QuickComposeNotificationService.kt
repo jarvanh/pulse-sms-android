@@ -15,6 +15,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
+import xyz.klinker.messenger.shared.util.WearableCheck
 
 class QuickComposeNotificationService : IntentService("QuickComposeNotificationService") {
 
@@ -29,19 +30,22 @@ class QuickComposeNotificationService : IntentService("QuickComposeNotificationS
                 .build()
         startForeground(FOREGROUND_ID, foreground)
 
-        val notification = NotificationCompat.Builder(this, NotificationUtils.QUICK_TEXT_CHANNEL_ID)
-                .setContentTitle(getString(R.string.write_new_message))
-                .setSmallIcon(R.drawable.ic_stat_notify_group)
-                .setLocalOnly(true)
-                .setOngoing(true)
-                .setAutoCancel(false)
-                .setPriority(NotificationCompat.PRIORITY_MIN)
-                .setWhen(0)
+        if (!WearableCheck.isAndroidWear(this)) {
+            val notification = NotificationCompat.Builder(this, NotificationUtils.QUICK_TEXT_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.write_new_message))
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setLocalOnly(true)
+                    .setOngoing(true)
+                    .setAutoCancel(false)
+                    .setPriority(NotificationCompat.PRIORITY_MIN)
+                    .setWhen(0)
 
-        addContentIntent(notification)
-        addActionsToNotification(notification)
+            addContentIntent(notification)
+            addActionsToNotification(notification)
 
-        NotificationManagerCompat.from(this).notify(QUICK_TEXT_ID, notification.build())
+            NotificationManagerCompat.from(this).notify(QUICK_TEXT_ID, notification.build())
+        }
+
         stopForeground(true)
     }
 
