@@ -76,4 +76,7 @@ public interface ConversationService {
     @POST("conversations/remove_from_folder/{device_id}")
     Call<Void> removeFromFolder(@Path("device_id") long deviceId, @Query("account_id") String accountId);
 
+    @POST("conversations/clean")
+    Call<Void> clean(@Query("account_id") String accountId);
+
 }
