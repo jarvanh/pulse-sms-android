@@ -25,6 +25,12 @@
     <!--</version>-->
 
     <version
+        name="2.7.2"
+        description="December 19th, 2017">
+        <text>Bug/crash fixes</text>
+    </version>
+
+    <version
         name="2.7.1"
         description="December 14th, 2017">
         <text>UI updates</text>

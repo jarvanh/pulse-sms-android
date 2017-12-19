@@ -611,6 +611,8 @@ object SmsMmsUtils {
                 e.printStackTrace()
             } catch (e: NullPointerException) {
                 e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }.start()
     }

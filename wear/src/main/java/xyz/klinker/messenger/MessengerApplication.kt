@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.KotlinObjectInitializers
 import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -63,7 +64,11 @@ class MessengerApplication : FirebaseApplication() {
 
             override fun handleDelete(application: Application) {
                 val handleMessage = Intent(application, FirebaseResetService::class.java)
-                startService(handleMessage)
+                if (AndroidVersionUtil.isAndroidO) {
+                    startForegroundService(handleMessage)
+                } else {
+                    startService(handleMessage)
+                }
             }
         }
     }
