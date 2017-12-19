@@ -52,7 +52,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
         showConversation(phoneNumbers)
     }
 
-    internal fun showConversation(phoneNumbers: String) {
+    internal fun showConversation(phoneNumbers: String, data: String? = null) {
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 
         // we only want to match on phone number, not by name. This was probably silly?
@@ -74,6 +74,10 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
             conversationId = DataSource.insertMessage(message, phoneNumbers, activity)
         } else {
             DataSource.unarchiveConversation(activity, conversationId)
+        }
+
+        if (data != null) {
+            DataSource.insertDraft(activity, conversationId, data, MimeType.TEXT_PLAIN)
         }
 
         val open = Intent(activity, MessengerActivity::class.java)

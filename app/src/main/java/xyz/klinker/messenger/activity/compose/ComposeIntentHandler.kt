@@ -60,7 +60,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         val data = intent.getStringExtra("sms_body")
 
         if (!numbers.isEmpty()) {
-            activity.sender.showConversation(builder.toString())
+            activity.sender.showConversation(builder.toString(), data)
         } else if (data != null) {
             activity.sender.resetViews(data, MimeType.TEXT_PLAIN, false)
         }
