@@ -77,10 +77,7 @@ object ActivityUtils {
     }
 
     fun setUpNavigationBarColor(activity: Activity?, color: Int) {
-        // TODO: this is integrated into every activity, but I honestly don't like it much
-        // I could integrate it for every user (Oreo+), or make a setting for it...
-        // I don't really know what I want to do with it, it just doesn't look good, IMO
-        if (!AndroidVersionUtil.isAndroidO || activity == null || true) {
+        if (!AndroidVersionUtil.isAndroidO || activity == null || !Settings.adjustableNavBar) {
             return
         }
 

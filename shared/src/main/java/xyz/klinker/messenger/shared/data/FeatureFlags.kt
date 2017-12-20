@@ -62,6 +62,7 @@ object FeatureFlags {
     private val FLAG_RECONCILE_RECEIVED_MESSAGES = "flag_reconcile_received_messages"
     private val FLAG_TEMPLATE_SUPPORT = "flag_template_support"
     private val FLAG_FOLDER_SUPPORT = "flag_folder_support"
+    private val FLAG_ADJUSTABLE_NAV_BAR = "flag_adjustable_nav_bar"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -82,6 +83,7 @@ object FeatureFlags {
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
     var TEMPLATE_SUPPORT: Boolean = false
     var FOLDER_SUPPORT: Boolean = false
+    var ADJUSTABLE_NAV_BAR: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -95,6 +97,7 @@ object FeatureFlags {
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
         TEMPLATE_SUPPORT = getValue(context, sharedPrefs, FLAG_TEMPLATE_SUPPORT)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
+        ADJUSTABLE_NAV_BAR = getValue(context, sharedPrefs, FLAG_ADJUSTABLE_NAV_BAR)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
@@ -111,6 +114,7 @@ object FeatureFlags {
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
             FLAG_TEMPLATE_SUPPORT -> TEMPLATE_SUPPORT = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
+            FLAG_ADJUSTABLE_NAV_BAR -> ADJUSTABLE_NAV_BAR = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }

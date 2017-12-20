@@ -1005,6 +1005,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the adjustable navigation bar setting.
+     */
+    fun updateAdjustableNavBar(accountId: String?, adjustableNavBar: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "adjustable_nav_bar", "boolean", adjustableNavBar)
+        }
+    }
+
+    /**
      * Update the notification actions setting.
      */
     fun updateNotificationActions(accountId: String?, stringified: String?) {

@@ -312,11 +312,10 @@ object ColorUtils {
      * Changes the overscroll highlight effect on a recyclerview to be the given color.
      */
     fun changeRecyclerOverscrollColors(recyclerView: RecyclerView, color: Int) {
-        val colorWithGlobalCalculated: Int
-        if (Settings.useGlobalThemeColor) {
-            colorWithGlobalCalculated = Settings.mainColorSet.color
+        val colorWithGlobalCalculated = if (Settings.useGlobalThemeColor) {
+            Settings.mainColorSet.color
         } else {
-            colorWithGlobalCalculated = color
+            color
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

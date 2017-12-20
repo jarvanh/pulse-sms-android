@@ -73,6 +73,7 @@ object Settings {
     var themeColorString: String? = null
     var baseThemeString: String? = null
     var signature: String? = null
+    var adjustableNavBar: Boolean = false
 
     // configuration
     var smallFont: Int = 0
@@ -137,6 +138,7 @@ object Settings {
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false)
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
+        this.adjustableNavBar = sharedPrefs.getBoolean(context.getString(R.string.pref_adjustable_nav_bar), false)
 
         // configuration
         if (this.ringtone == null) {

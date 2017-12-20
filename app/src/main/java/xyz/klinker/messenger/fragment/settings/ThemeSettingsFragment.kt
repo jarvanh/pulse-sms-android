@@ -1,12 +1,14 @@
 package xyz.klinker.messenger.fragment.settings
 
 import android.os.Bundle
+import android.preference.PreferenceCategory
 import android.support.v7.app.AppCompatDelegate
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.ColorSet
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
@@ -20,6 +22,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_theme)
 
         initBaseTheme()
+        initAdjustableNavBar()
         initFontSize()
         initRounderBubbles()
 
@@ -43,21 +46,34 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     }
 
-                    ApiUtils.updateBaseTheme(Account.accountId,
-                            newValue)
-
+                    ApiUtils.updateBaseTheme(Account.accountId, newValue)
                     activity.recreate()
 
                     true
                 }
     }
 
+    private fun initAdjustableNavBar() {
+        findPreference(getString(R.string.pref_adjustable_nav_bar))
+                .setOnPreferenceChangeListener { _, o ->
+                    val adjustable = o as Boolean
+                    ApiUtils.updateAdjustableNavBar(Account.accountId, adjustable)
+
+                    activity.recreate()
+                    true
+                }
+
+        if (!FeatureFlags.ADJUSTABLE_NAV_BAR) {
+            val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
+            prefCategory.removePreference(findPreference(getString(R.string.pref_adjustable_nav_bar)))
+        }
+    }
+
     private fun initFontSize() {
         findPreference(getString(R.string.pref_font_size))
                 .setOnPreferenceChangeListener { _, o ->
                     val size = o as String
-                    ApiUtils.updateFontSize(Account.accountId,
-                            size)
+                    ApiUtils.updateFontSize(Account.accountId, size)
 
                     true
                 }
@@ -67,8 +83,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_rounder_bubbles))
                 .setOnPreferenceChangeListener { _, o ->
                     val rounder = o as Boolean
-                    ApiUtils.updateRounderBubbles(Account.accountId,
-                            rounder)
+                    ApiUtils.updateRounderBubbles(Account.accountId, rounder)
                     true
                 }
     }
@@ -77,8 +92,8 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_apply_theme_globally))
                 .setOnPreferenceChangeListener { _, o ->
                     val global = o as Boolean
-                    ApiUtils.updateUseGlobalTheme(Account.accountId,
-                            global)
+                    ApiUtils.updateUseGlobalTheme(Account.accountId, global)
+
                     true
                 }
     }
@@ -94,7 +109,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
             Settings.mainColorSet.color = o
 
             ApiUtils.updatePrimaryThemeColor(Account.accountId, o)
-
             true
         }
 
@@ -111,7 +125,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
             Settings.mainColorSet.colorDark = o
 
             ApiUtils.updatePrimaryDarkThemeColor(Account.accountId, o)
-
             true
         }
 
@@ -120,7 +133,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
             Settings.mainColorSet.colorAccent = o
 
             ApiUtils.updateAccentThemeColor(Account.accountId, o)
-
             true
         }
     }
