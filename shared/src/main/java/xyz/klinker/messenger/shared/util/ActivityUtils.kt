@@ -78,6 +78,10 @@ object ActivityUtils {
 
     fun setUpNavigationBarColor(activity: Activity?, color: Int) {
         if (!AndroidVersionUtil.isAndroidO || activity == null || !Settings.adjustableNavBar) {
+            if (AndroidVersionUtil.isAndroidO_MR1) {
+                activateLightNavigationBar(activity, false)
+            }
+
             return
         }
 
