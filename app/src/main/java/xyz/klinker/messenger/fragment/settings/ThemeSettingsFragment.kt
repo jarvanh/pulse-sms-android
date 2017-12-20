@@ -10,6 +10,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
 import xyz.klinker.messenger.view.ColorPreference
@@ -63,7 +64,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                     true
                 }
 
-        if (!FeatureFlags.ADJUSTABLE_NAV_BAR) {
+        if (!AndroidVersionUtil.isAndroidO_MR1 || !FeatureFlags.ADJUSTABLE_NAV_BAR) {
             val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
             prefCategory.removePreference(findPreference(getString(R.string.pref_adjustable_nav_bar)))
         }
