@@ -30,15 +30,15 @@ public class ScheduledTokenRefreshService extends IntentService {
             return;
         }
 
-        Intent intent = new Intent(context, ScheduledTokenRefreshService.class);
-        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long currentTime = new Date().getTime();
-
-        alarmManager.cancel(pIntent);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + RUN_EVERY, pIntent);
+//        Intent intent = new Intent(context, ScheduledTokenRefreshService.class);
+//        PendingIntent pIntent = PendingIntent.getService(context, REQUEST_CODE,
+//                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//
+//        long currentTime = new Date().getTime();
+//
+//        alarmManager.cancel(pIntent);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + RUN_EVERY, pIntent);
     }
 }

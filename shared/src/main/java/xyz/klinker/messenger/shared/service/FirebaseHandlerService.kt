@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.shared.service
 
+import android.app.IntentService
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
@@ -52,9 +53,10 @@ import java.util.*
 /**
  * Receiver responsible for processing firebase data messages and persisting to the database.
  */
-class FirebaseHandlerService : WakefulIntentService("FirebaseHandlerService") {
+class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
-    override fun doWakefulWork(intent: Intent?) {
+//    override fun doWakefulWork(intent: Intent?) {
+    override fun onHandleIntent(intent: Intent?) {
         if (intent != null && intent.action != null && intent.action == MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED) {
             val operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION)
             val data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA)
