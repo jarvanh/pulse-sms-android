@@ -49,8 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/drawerBackground"
-        android:orientation="vertical"
-        android:paddingBottom="12dp">
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/ripple"
+            android:background="@drawable/pulse_ripple"
             android:clickable="true"
             android:gravity="center"
             android:orientation="horizontal"
@@ -212,9 +211,8 @@
         android:background="@color/drawerBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="24dp"
-        android:paddingEnd="12dp"
-        android:paddingStart="32dp">
+        android:paddingStart="20dp"
+        android:paddingBottom="6dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="6dp"
@@ -229,6 +227,28 @@
             android:layout_marginStart="8dp"
             android:src="@color/primaryText"
             app:civ_border_width="0dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/pulse_ripple"
+            android:clickable="true"
+            android:padding="12dp"
+            android:text="@string/have_an_account"
+            android:textColor="@color/secondaryText"
+            android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:layout_marginEnd="6dp"
+            android:paddingEnd="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

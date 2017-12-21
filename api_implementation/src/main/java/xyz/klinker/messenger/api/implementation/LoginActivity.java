@@ -66,6 +66,7 @@ import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String ARG_SKIP_LOGIN = "arg_skip_login";
+    public static final String ARG_FORCE_NO_CREATE_ACCOUNT = "arg_no_create_account";
 
     public static final int RESULT_START_NETWORK_SYNC = 32;
     public static final int RESULT_START_DEVICE_SYNC = 33;
@@ -129,6 +130,9 @@ public class LoginActivity extends AppCompatActivity {
         if (!hasTelephony(this) && (phoneNumber == null || phoneNumber.isEmpty())) {
             signup.setEnabled(false);
             signupFailed.setVisibility(View.VISIBLE);
+            findViewById(R.id.skip_holder).setVisibility(View.GONE);
+        } else if (getIntent().getBooleanExtra(ARG_FORCE_NO_CREATE_ACCOUNT, false)) {
+            signup.setEnabled(false);
             findViewById(R.id.skip_holder).setVisibility(View.GONE);
         }
 

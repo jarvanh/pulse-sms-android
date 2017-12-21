@@ -18,6 +18,7 @@ import android.widget.Toast
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.DensityUtil
@@ -73,6 +74,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
         val threeMonth = findViewById<View>(R.id.three_month)
         val yearly = findViewById<View>(R.id.yearly)
         val lifetime = findViewById<View>(R.id.lifetime)
+        val signIn = findViewById<View>(R.id.sign_in)
 
         if (!revealedPurchaseOptions) {
             val startTime: Long = 300
@@ -88,6 +90,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
         threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()) }
         yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()) }
         lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
+        signIn.setOnClickListener { startSignIn() }
     }
 
     private fun finishWithPurchaseResult(product: ProductAvailable) {
@@ -100,6 +103,13 @@ class AccountPurchaseActivity : AppCompatActivity() {
         }
 
         AnalyticsHelper.accountSelectedPurchase(this)
+        finish()
+    }
+
+    private fun startSignIn() {
+        setResult(MyAccountFragment.RESULT_SIGN_IN)
+        AnalyticsHelper.accountSignInInsteadOfPurchase(this)
+
         finish()
     }
 

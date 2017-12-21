@@ -324,7 +324,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
         Settings.forceUpdate(fragmentActivity!!)
-        if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
+        if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
+            startLoginActivity(true)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
             Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId)
 
@@ -442,8 +444,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
     }
 
-    private fun startLoginActivity() {
+    private fun startLoginActivity(signInOnly: Boolean = false) {
         val intent = Intent(context, LoginActivity::class.java)
+        intent.putExtra(LoginActivity.ARG_FORCE_NO_CREATE_ACCOUNT, signInOnly)
         startActivityForResult(intent, SETUP_REQUEST)
     }
 
@@ -491,6 +494,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val ONBOARDING_REQUEST = 54320
         val SETUP_REQUEST = 54321
         val PURCHASE_REQUEST = 54322
+
+        val RESULT_SIGN_IN = 54323
 
         val RESPONSE_START_TRIAL = 101
         val RESPONSE_SKIP_TRIAL_FOR_NOW = 102
