@@ -91,6 +91,10 @@ class AccountPurchaseActivity : AppCompatActivity() {
         yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()) }
         lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
         signIn.setOnClickListener { startSignIn() }
+
+        if (intent.getBooleanExtra(ARG_CHANGING_SUBSCRIPTION, false)) {
+            signIn.visibility = View.INVISIBLE
+        }
     }
 
     private fun finishWithPurchaseResult(product: ProductAvailable) {
@@ -259,5 +263,6 @@ class AccountPurchaseActivity : AppCompatActivity() {
 
     companion object {
         val PRODUCT_ID_EXTRA = "product_id"
+        val ARG_CHANGING_SUBSCRIPTION = "arg_changing_subscription"
     }
 }

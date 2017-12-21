@@ -208,7 +208,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             preference.setOnPreferenceClickListener {
                 AlertDialog.Builder(fragmentActivity!!)
                         .setMessage(R.string.change_subscription_message)
-                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription() }.show()
+                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
                 false
             }
        }
@@ -450,8 +450,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         startActivityForResult(intent, SETUP_REQUEST)
     }
 
-    private fun pickSubscription() {
-        startActivityForResult(Intent(fragmentActivity!!, AccountPurchaseActivity::class.java), PURCHASE_REQUEST)
+    private fun pickSubscription(changingSubscription: Boolean = false) {
+        val intent = Intent(fragmentActivity!!, AccountPurchaseActivity::class.java)
+        intent.putExtra(AccountPurchaseActivity.ARG_CHANGING_SUBSCRIPTION, changingSubscription)
+
+        startActivityForResult(intent, PURCHASE_REQUEST)
     }
 
     private fun purchaseProduct(product: ProductAvailable) {
