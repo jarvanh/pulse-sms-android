@@ -64,7 +64,7 @@ class ContactSyncJob : BackgroundJob() {
 
         // send the contacts to our backend
         val request = AddContactRequest(Account.accountId, contacts)
-        ApiUtils.addContact(request)
+        //ApiUtils.addContact(request)
 
         // set the "since" time for our change listener
         writeUpdateTimestamp(sharedPrefs)
@@ -87,7 +87,7 @@ class ContactSyncJob : BackgroundJob() {
                     .setRequiresDeviceIdle(true)
 
             val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.schedule(builder.build())
+            //jobScheduler.schedule(builder.build())
         }
     }
 }
