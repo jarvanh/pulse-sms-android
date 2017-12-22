@@ -112,6 +112,7 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
                 .allowCustomPath(true)
                 .setType(StorageChooser.DIRECTORY_CHOOSER)
                 .actionSave(true)
+                .skipOverview(true)
                 .withPreference(MmsSettings.getSharedPrefs(activity))
                 .build()
 
