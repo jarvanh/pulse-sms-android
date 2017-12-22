@@ -25,6 +25,15 @@
     <!--</version>-->
 
     <version
+        name="2.7.3"
+        description="December 22th, 2017">
+        <text>Onboarding improvements</text>
+        <text>Performance improvements</text>
+        <text>Dependency updates</text>
+        <text>Bug/crash fixes</text>
+    </version>
+
+    <version
         name="2.7.2"
         description="December 19th, 2017">
         <text>Bug/crash fixes</text>
