@@ -18,6 +18,7 @@ package xyz.klinker.messenger.shared.widget
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -25,7 +26,10 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.CursorUtil
 import xyz.klinker.messenger.shared.util.ImageUtils
@@ -106,6 +110,23 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
         rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.title))
         rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet))
         rv.setImageViewBitmap(R.id.picture, image)
+
+        if (FeatureFlags.WIDGET_THEMEING) {
+            when (Settings.baseTheme) {
+                BaseTheme.ALWAYS_DARK -> {
+                    rv.setTextColor(R.id.conversation_title, Color.WHITE)
+                    rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+                }
+                BaseTheme.BLACK -> {
+                    rv.setTextColor(R.id.conversation_title, Color.WHITE)
+                    rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+                }
+                else -> {
+                    rv.setTextColor(R.id.conversation_title, context.resources.getColor(R.color.primaryText))
+                    rv.setTextColor(R.id.conversation_summary, context.resources.getColor(R.color.secondaryText))
+                }
+            }
+        }
 
         if (item.read) {
             rv.setViewVisibility(R.id.unread_indicator, View.GONE)

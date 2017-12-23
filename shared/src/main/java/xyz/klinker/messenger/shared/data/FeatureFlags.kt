@@ -63,6 +63,7 @@ object FeatureFlags {
     private val FLAG_TEMPLATE_SUPPORT = "flag_template_support"
     private val FLAG_FOLDER_SUPPORT = "flag_folder_support"
     private val FLAG_ADJUSTABLE_NAV_BAR = "flag_adjustable_nav_bar"
+    private val FLAG_WIDGET_THEMEING = "flag_widget_themeing"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -84,6 +85,7 @@ object FeatureFlags {
     var TEMPLATE_SUPPORT: Boolean = false
     var FOLDER_SUPPORT: Boolean = false
     var ADJUSTABLE_NAV_BAR: Boolean = false
+    var WIDGET_THEMEING: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -98,6 +100,7 @@ object FeatureFlags {
         TEMPLATE_SUPPORT = getValue(context, sharedPrefs, FLAG_TEMPLATE_SUPPORT)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         ADJUSTABLE_NAV_BAR = getValue(context, sharedPrefs, FLAG_ADJUSTABLE_NAV_BAR)
+        WIDGET_THEMEING = getValue(context, sharedPrefs, FLAG_WIDGET_THEMEING)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
@@ -115,6 +118,7 @@ object FeatureFlags {
             FLAG_TEMPLATE_SUPPORT -> TEMPLATE_SUPPORT = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_ADJUSTABLE_NAV_BAR -> ADJUSTABLE_NAV_BAR = flag
+            FLAG_WIDGET_THEMEING -> WIDGET_THEMEING = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }

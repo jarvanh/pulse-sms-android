@@ -17,6 +17,12 @@
 <changelog>
 
     <!--<version-->
+        <!--name="2.9.0"-->
+        <!--description="December 12th, 2017">-->
+        <!--<text>Adjust the widget theme to match the dark or black theme in the app (TODO: remove the feature flag)</text>-->
+    <!--</version>-->
+
+    <!--<version-->
         <!--name="2.8.0"-->
         <!--description="December 12th, 2017">-->
         <!--<text>Access and create templates from the "Attach" menu, when writing messages (TODO: remove the feature flag)</text>-->

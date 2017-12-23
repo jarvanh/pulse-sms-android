@@ -23,13 +23,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import android.widget.RemoteViews
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.MessengerActivityExtras
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ImageUtils
 
@@ -88,6 +91,14 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
             rv.setOnClickPendingIntent(R.id.title, pendingOpen)
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty)
+
+            if (FeatureFlags.WIDGET_THEMEING) {
+                when(Settings.baseTheme) {
+                    BaseTheme.ALWAYS_DARK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.parseColor("#202B30"))
+                    BaseTheme.BLACK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.BLACK)
+                    else -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.WHITE)
+                }
+            }
 
             val color = ImageUtils.createColoredBitmap(Settings.mainColorSet.color)
             rv.setImageViewBitmap(R.id.toolbar, color)
