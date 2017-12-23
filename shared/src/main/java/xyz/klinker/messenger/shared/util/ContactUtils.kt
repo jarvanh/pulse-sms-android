@@ -368,13 +368,13 @@ object ContactUtils {
                 null
             }
 
-            if (cursor != null && cursor.count > 500) {
-                cursor.closeSilent()
-                cursor = context.contentResolver.query(uri, projection,
-                        ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
-                        arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
-                )
-            }
+//            if (cursor != null && cursor.count > 500) {
+//                cursor.closeSilent()
+//                cursor = context.contentResolver.query(uri, projection,
+//                        ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
+//                        arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
+//                )
+//            }
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
