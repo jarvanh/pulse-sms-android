@@ -98,18 +98,20 @@ class SmsReceivedHandler(private val context: Context) {
 
 
     private fun insertInternalSms(context: Context, address: String, body: String, dateSent: Long) {
-        val values = ContentValues(5)
-        values.put(Telephony.Sms.ADDRESS, address)
-        values.put(Telephony.Sms.BODY, body)
-        values.put(Telephony.Sms.DATE, System.currentTimeMillis())
-        values.put(Telephony.Sms.READ, "1")
-        values.put(Telephony.Sms.DATE_SENT, dateSent)
+        Thread {
+            val values = ContentValues(5)
+            values.put(Telephony.Sms.ADDRESS, address)
+            values.put(Telephony.Sms.BODY, body)
+            values.put(Telephony.Sms.DATE, System.currentTimeMillis())
+            values.put(Telephony.Sms.READ, "1")
+            values.put(Telephony.Sms.DATE_SENT, dateSent)
 
-        try {
-            context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+            try {
+                context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
     }
 
     private fun insertSms(context: Context, address: String, body: String, simSlot: Int): Long {

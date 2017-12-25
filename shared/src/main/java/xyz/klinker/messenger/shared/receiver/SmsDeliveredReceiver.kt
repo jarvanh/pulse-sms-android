@@ -41,13 +41,6 @@ class SmsDeliveredReceiver : DeliveredReceiver() {
         Thread {
             try {
                 super.onReceive(context, intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
-
-        Thread {
-            try {
                 handleReceiver(context, intent)
             } catch (e: Exception) {
                 e.printStackTrace()
