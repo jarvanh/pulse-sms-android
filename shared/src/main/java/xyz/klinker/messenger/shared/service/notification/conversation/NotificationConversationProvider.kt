@@ -23,10 +23,7 @@ import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.NotificationSummaryProvider
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
-import xyz.klinker.messenger.shared.util.ImageUtils
-import xyz.klinker.messenger.shared.util.NotificationUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
+import xyz.klinker.messenger.shared.util.*
 
 /**
  * Displays a notification for a single conversation.
@@ -115,6 +112,10 @@ class NotificationConversationProvider(private val service: NotificationService,
     }
 
     private fun buildNotificationDefaults(conversation: NotificationConversation, conversationIndex: Int): Int {
+        if (WearableCheck.isAndroidWear(service)) {
+            return Notification.DEFAULT_ALL
+        }
+
         val vibratePattern = Settings.vibrate
         val shouldVibrate = !shouldAlertOnce(conversation.messages) && conversationIndex == 0
         var defaults = 0
@@ -213,6 +214,10 @@ class NotificationConversationProvider(private val service: NotificationService,
 
 
     private fun NotificationCompat.Builder.applyLightsSoundAndVibrate(conversation: NotificationConversation, conversationIndex: Int): NotificationCompat.Builder {
+        if (WearableCheck.isAndroidWear(service)) {
+            return this
+        }
+
         if (conversation.ledColor != Color.WHITE) {
             this.setLights(conversation.ledColor, 1000, 500)
         }
