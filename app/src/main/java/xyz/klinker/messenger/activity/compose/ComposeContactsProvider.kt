@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.activity.compose
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
@@ -59,7 +60,11 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             false
         }
 
-        bottomNavigation.setActiveTabColor(Settings.mainColorSet.colorAccent)
+        if (Settings.isCurrentlyDarkTheme && Settings.mainColorSet.colorAccent == Color.BLACK) {
+            bottomNavigation.setActiveTabColor(Color.WHITE)
+        } else {
+            bottomNavigation.setActiveTabColor(Settings.mainColorSet.colorAccent)
+        }
         bottomNavigation.setOnTabSelectListener({ item ->
             when (item) {
                 R.id.tab_recents -> displayRecents()
