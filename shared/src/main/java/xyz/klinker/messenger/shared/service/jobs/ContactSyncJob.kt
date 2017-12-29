@@ -1,12 +1,9 @@
 package xyz.klinker.messenger.shared.service.jobs
 
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.entity.AddContactRequest
 import xyz.klinker.messenger.api.entity.ContactBody
 import xyz.klinker.messenger.api.implementation.Account
@@ -16,9 +13,9 @@ import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
 
-class ContactSyncJob : BackgroundJob() {
+class ContactSyncJob : SimpleJobService() {
 
-    override fun onRunJob(parameters: JobParameters?) {
+    override fun onRunJob(job: JobParameters?): Int {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val since = sharedPrefs.getLong("last_contact_update_timestamp", -1L)
 
@@ -28,7 +25,7 @@ class ContactSyncJob : BackgroundJob() {
         if (since == -1L) {
             writeUpdateTimestamp(sharedPrefs)
             scheduleNextRun(this)
-            return
+            return 0
         }
 
         // otherwise, we should look for the contacts that have changed since the last run and
@@ -36,16 +33,16 @@ class ContactSyncJob : BackgroundJob() {
 
         val account = Account
         if (account.encryptor == null) {
-            return
+            return 0
         }
 
         val source = DataSource
 
-        var contactsList = ContactUtils.queryNewContacts(this, source, since)
+        val contactsList = ContactUtils.queryNewContacts(this, source, since)
         if (contactsList.isEmpty()) {
             writeUpdateTimestamp(sharedPrefs)
             scheduleNextRun(this)
-            return
+            return 0
         }
 
         source.insertContacts(this, contactsList, null)
@@ -69,6 +66,8 @@ class ContactSyncJob : BackgroundJob() {
         // set the "since" time for our change listener
         writeUpdateTimestamp(sharedPrefs)
         scheduleNextRun(this)
+
+        return 0
     }
 
     private fun writeUpdateTimestamp(sharedPrefs: SharedPreferences) {
@@ -77,17 +76,21 @@ class ContactSyncJob : BackgroundJob() {
 
     companion object {
 
-        private val JOB_ID = 13
+        private val JOB_ID = "contact-sync-job"
 
         fun scheduleNextRun(context: Context) {
-            val component = ComponentName(context, ContactSyncJob::class.java)
-            val builder = JobInfo.Builder(JOB_ID, component)
-                    .setMinimumLatency(TimeUtils.millisUntilHourInTheNextDay(2).toLong()) // 2 AM
-                    .setRequiresCharging(false)
-                    .setRequiresDeviceIdle(true)
+            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
+            val time = (TimeUtils.millisUntilHourInTheNextDay(2).toLong() / 1000).toInt()
+            val myJob = dispatcher.newJobBuilder()
+                    .setService(ContactSyncJob::class.java)
+                    .setTag(JOB_ID)
+                    .setRecurring(false)
+                    .setLifetime(Lifetime.FOREVER)
+                    .setTrigger(Trigger.executionWindow(time, time + (5 * TimeUtils.MINUTE.toInt() / 1000)))
+                    .setReplaceCurrent(true)
+                    .build()
 
-            val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            //jobScheduler.schedule(builder.build())
+            //dispatcher.mustSchedule(myJob)
         }
     }
 }

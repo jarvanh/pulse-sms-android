@@ -255,25 +255,50 @@
 
 
         <service
-            android:name=".service.jobs.CleanupOldMessagesJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:exported="false"
+            android:name=".service.jobs.CleanupOldMessagesJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <service
-            android:name=".service.jobs.RepeatNotificationJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:exported="false"
+            android:name=".service.jobs.RepeatNotificationJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <service
-            android:name=".service.jobs.ContactSyncJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:exported="false"
+            android:name=".service.jobs.ContactSyncJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <service
-            android:name=".service.jobs.ScheduledMessageJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:exported="false"
+            android:name=".service.jobs.ScheduledMessageJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:exported="false"
+            android:name=".service.jobs.MarkAsSentJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <service
             android:name=".service.jobs.SubscriptionExpirationCheckJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".service.jobs.SignoutJob"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".service.jobs.MarkAsSentJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name=".service.FirebaseTokenUpdateCheckService" />

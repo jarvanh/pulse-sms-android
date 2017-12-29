@@ -17,16 +17,13 @@
 package xyz.klinker.messenger.shared.service.jobs
 
 import android.app.PendingIntent
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import android.util.Log
+import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
@@ -40,9 +37,9 @@ import java.util.*
  * Service responsible for sending scheduled message that are coming up, removing that message
  * from the database and then scheduling the next one.
  */
-class ScheduledMessageJob : BackgroundJob() {
+class ScheduledMessageJob : SimpleJobService() {
 
-    override fun onRunJob(parameters: JobParameters?) {
+    override fun onRunJob(job: JobParameters?): Int {
         val source = DataSource
         val messages = source.getScheduledMessages(this)
 
@@ -108,12 +105,14 @@ class ScheduledMessageJob : BackgroundJob() {
 
         sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
         scheduleNextRun(this)
+
+        return 0
     }
 
     companion object {
 
         val BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE"
-        private val JOB_ID = 5424
+        private val JOB_ID = "scheduled-message-job"
 
         fun scheduleNextRun(context: Context, source: DataSource = DataSource) {
             val account = Account
@@ -126,19 +125,19 @@ class ScheduledMessageJob : BackgroundJob() {
                     .sortedBy { it.timestamp }
 
             if (messages.isNotEmpty()) {
-                val timeout = messages[0].timestamp - Date().time
+                val timeout = (messages[0].timestamp - Date().time).toInt() / 1000
 
-                val component = ComponentName(context, ScheduledMessageJob::class.java)
-                val builder = JobInfo.Builder(JOB_ID, component)
-                        .setPersisted(true)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout + TimeUtils.MINUTE)
-                        .setRequiresCharging(false)
-                        .setRequiresDeviceIdle(false)
+                val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
+                val myJob = dispatcher.newJobBuilder()
+                        .setService(ScheduledMessageJob::class.java)
+                        .setTag(JOB_ID)
+                        .setRecurring(false)
+                        .setLifetime(Lifetime.FOREVER)
+                        .setTrigger(Trigger.executionWindow(timeout, timeout + (TimeUtils.MINUTE.toInt() / 1000)))
+                        .setReplaceCurrent(true)
+                        .build()
 
-                val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-                jobScheduler.cancel(JOB_ID)
-                jobScheduler.schedule(builder.build())
+                dispatcher.mustSchedule(myJob)
 
                 Log.v("scheduled message", "new message scheduled")
             } else {

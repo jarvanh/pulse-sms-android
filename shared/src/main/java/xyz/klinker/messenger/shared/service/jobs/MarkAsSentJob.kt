@@ -1,27 +1,22 @@
 package xyz.klinker.messenger.shared.service.jobs
 
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
-import android.os.PersistableBundle
 import android.util.Log
+import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.TimeUtils
-import java.util.*
 
 /**
  * Some devices don't seem to ever get messages marked as sent and I don't really know why.
  * This job can be started to mark old messages that are "sending" as sent.
  */
-class MarkAsSentJob : BackgroundJob() {
+class MarkAsSentJob : SimpleJobService() {
 
-    override fun onRunJob(parameters: JobParameters?) {
+    override fun onRunJob(job: JobParameters?): Int {
         val messages = DataSource.getNewerSendingMessagesAsList(
                 this,
                 System.currentTimeMillis() - TimeUtils.MINUTE * 5)
@@ -32,34 +27,31 @@ class MarkAsSentJob : BackgroundJob() {
             DataSource.updateMessageType(this, message.id, Message.TYPE_SENT)
             MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId)
         }
+
+        return 0
     }
 
     companion object {
 
-        private val JOB_ID = 9
-        private val MESSAGE_SENDING_TIMEOUT = TimeUtils.MINUTE
-        private val EXTRA_MESSAGE_ID = "extra_message_id"
+        private val JOB_ID = "mark-as-sent"
+        private val MESSAGE_SENDING_TIMEOUT = TimeUtils.MINUTE.toInt() / 1000
 
         fun scheduleNextRun(context: Context?, messageId: Long?) {
             if (context == null || (Account.exists() && !Account.primary) || messageId == null) {
                 return
             }
 
-            val bundle = PersistableBundle()
-            bundle.putLong(EXTRA_MESSAGE_ID, messageId)
+            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
+            val myJob = dispatcher.newJobBuilder()
+                    .setService(MarkAsSentJob::class.java)
+                    .setTag(JOB_ID)
+                    .setRecurring(false)
+                    .setLifetime(Lifetime.FOREVER)
+                    .setTrigger(Trigger.executionWindow(MESSAGE_SENDING_TIMEOUT / 2, MESSAGE_SENDING_TIMEOUT))
+                    .setReplaceCurrent(true)
+                    .build()
 
-            val component = ComponentName(context, MarkAsSentJob::class.java)
-            val builder = JobInfo.Builder(JOB_ID, component)
-                    .setMinimumLatency(MESSAGE_SENDING_TIMEOUT / 2)
-                    .setOverrideDeadline(MESSAGE_SENDING_TIMEOUT)
-                    .setExtras(bundle)
-                    .setPersisted(true)
-                    .setRequiresCharging(false)
-                    .setRequiresDeviceIdle(false)
-
-            val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.cancel(JOB_ID)
-            jobScheduler.schedule(builder.build())
+            dispatcher.mustSchedule(myJob)
         }
     }
 }

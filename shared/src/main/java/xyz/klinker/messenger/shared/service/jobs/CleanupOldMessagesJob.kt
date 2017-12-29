@@ -1,37 +1,43 @@
 package xyz.klinker.messenger.shared.service.jobs
 
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
+import com.firebase.jobdispatcher.JobParameters
+import com.firebase.jobdispatcher.SimpleJobService
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.TimeUtils
+import com.firebase.jobdispatcher.GooglePlayDriver
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.Trigger
+import com.firebase.jobdispatcher.Lifetime
 
-class CleanupOldMessagesJob : BackgroundJob() {
-
-    override fun onRunJob(parameters: JobParameters?) {
+class CleanupOldMessagesJob : SimpleJobService() {
+    override fun onRunJob(job: JobParameters?): Int {
         val timeout = Settings.cleanupMessagesTimeout
         if (timeout > 0) {
             DataSource.cleanupOldMessages(this, System.currentTimeMillis() - timeout)
         }
 
         scheduleNextRun(this)
+        return 0
     }
 
     companion object {
-        private val JOB_ID = 1330
+        private val JOB_ID = "cleanup-old-messages"
 
         fun scheduleNextRun(context: Context) {
-            val component = ComponentName(context, CleanupOldMessagesJob::class.java)
-            val builder = JobInfo.Builder(JOB_ID, component)
-                    .setMinimumLatency(TimeUtils.millisUntilHourInTheNextDay(3).toLong()) // 3 AM
-                    .setRequiresCharging(true)
-                    .setRequiresDeviceIdle(true)
+            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
+            val time = (TimeUtils.millisUntilHourInTheNextDay(3).toLong() / 1000).toInt()
+            val myJob = dispatcher.newJobBuilder()
+                    .setService(CleanupOldMessagesJob::class.java)
+                    .setTag(JOB_ID)
+                    .setRecurring(false)
+                    .setLifetime(Lifetime.FOREVER)
+                    .setTrigger(Trigger.executionWindow(time, time + (TimeUtils.MINUTE.toInt() / 1000 * 5)))
+                    .setReplaceCurrent(true)
+                    .build()
 
-            val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.schedule(builder.build())
+            dispatcher.mustSchedule(myJob)
         }
     }
 }

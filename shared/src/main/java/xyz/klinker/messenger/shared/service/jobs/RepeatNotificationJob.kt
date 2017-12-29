@@ -1,12 +1,9 @@
 package xyz.klinker.messenger.shared.service.jobs
 
 import android.annotation.SuppressLint
-import android.app.job.JobInfo
-import android.app.job.JobParameters
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
@@ -14,10 +11,14 @@ import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
 
-class RepeatNotificationJob : BackgroundJob() {
+class RepeatNotificationJob : JobService() {
+
+    override fun onStopJob(job: JobParameters?): Boolean {
+        return false
+    }
 
     @SuppressLint("NewApi")
-    override fun onRunJob(parameters: JobParameters?) {
+    override fun onStartJob(job: JobParameters?): Boolean {
         val intent = Intent(this, NotificationService::class.java)
         if (!AndroidVersionUtil.isAndroidO) {
             startService(intent)
@@ -25,28 +26,33 @@ class RepeatNotificationJob : BackgroundJob() {
             intent.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
             startForegroundService(intent)
         }
+
+        return false
     }
 
     companion object {
-        private val JOB_ID = 1224
+        private val JOB_ID = "repeat-notifications"
 
         fun scheduleNextRun(context: Context, nextRun: Long) {
+            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
+
             val currentTime = Date().time
-            val timeout = nextRun - currentTime
-            val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            val timeout = (nextRun - currentTime).toInt() / 1000
 
             if (!Account.exists() || Account.exists() && Account.primary) {
-                val component = ComponentName(context, RepeatNotificationJob::class.java)
-                val builder = JobInfo.Builder(JOB_ID, component)
-                        .setMinimumLatency(timeout)
-                        .setOverrideDeadline(timeout + TimeUtils.SECOND * 15)
-                        .setRequiresCharging(false)
-                        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                        .setRequiresDeviceIdle(false)
+                val myJob = dispatcher.newJobBuilder()
+                        .setService(RepeatNotificationJob::class.java)
+                        .setTag(JOB_ID)
+                        .setRecurring(false)
+                        .setLifetime(Lifetime.FOREVER)
+                        .setTrigger(Trigger.executionWindow(timeout, timeout + TimeUtils.SECOND.toInt() * 15 / 1000))
+                        .setReplaceCurrent(true)
+                        .build()
+
                 if (currentTime < nextRun) {
-                    jobScheduler.schedule(builder.build())
+                    dispatcher.mustSchedule(myJob)
                 } else {
-                    jobScheduler.cancel(JOB_ID)
+                    dispatcher.cancel(JOB_ID)
                 }
             }
         }

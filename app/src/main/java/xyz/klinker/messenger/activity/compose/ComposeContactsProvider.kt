@@ -65,6 +65,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
         } else {
             bottomNavigation.setActiveTabColor(Settings.mainColorSet.colorAccent)
         }
+
         bottomNavigation.setOnTabSelectListener({ item ->
             when (item) {
                 R.id.tab_recents -> displayRecents()
