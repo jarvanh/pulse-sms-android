@@ -62,7 +62,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         archiveSnackbar?.dismiss()
         deleteSnackbar?.removeCallback(deleteSnackbarCallback)
 
-        deleteSnackbar = Snackbar.make(fragment.recyclerView, plural, Snackbar.LENGTH_LONG)
+        deleteSnackbar = Snackbar.make(fragment.recyclerView, plural, UNDO_DURATION)
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(deleteSnackbarCallback)
         SnackbarAnimationFix.apply(deleteSnackbar!!)
@@ -85,7 +85,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
         deleteSnackbar?.dismiss()
         archiveSnackbar?.removeCallback(archiveSnackbarCallback)
 
-        archiveSnackbar = Snackbar.make(fragment.recyclerView, plural, Snackbar.LENGTH_LONG)
+        archiveSnackbar = Snackbar.make(fragment.recyclerView, plural, UNDO_DURATION)
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(archiveSnackbarCallback)
         SnackbarAnimationFix.apply(archiveSnackbar!!)
@@ -155,5 +155,9 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 DataSource.archiveConversation(activity, conversation.id)
             }
         }
+    }
+
+    private companion object {
+        val UNDO_DURATION = 6000
     }
 }

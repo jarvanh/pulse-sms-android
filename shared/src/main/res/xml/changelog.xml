@@ -31,6 +31,14 @@
     <!--</version>-->
 
     <version
+        name="2.7.4"
+        description="January 2nd, 2017">
+        <text>Increase the "undo" duration for archiving and deleting messages</text>
+        <text>Battery improvements</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.7.3"
         description="December 22th, 2017">
         <text>Onboarding improvements</text>
