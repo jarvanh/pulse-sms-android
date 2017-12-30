@@ -420,6 +420,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }.start()
     }
 
+    private fun redirectToPlayStoreToCancel() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("https://play.google.com/store/apps/details?id=xyz.klinker.messenger")
+        startActivity(intent)
+
+        Toast.makeText(fragmentActivity, R.string.redirect_to_play_store, Toast.LENGTH_LONG).show()
+    }
+
     private fun returnToConversationsAfterLogin() {
         if (fragmentActivity == null) {
             return
@@ -483,6 +491,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     }
 
                     returnToConversationsAfterLogin()
+                    redirectToPlayStoreToCancel()
                 }
             }
 

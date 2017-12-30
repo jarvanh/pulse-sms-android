@@ -595,5 +595,6 @@
     <string name="yearly_purchase_improved">$5.99 /\nyear</string>
     <string name="subscription_toast">You <b>will not</b> be charged until the 7 day trial is finished.
         Cancel at any time.</string>
+    <string name="redirect_to_play_store">Thanks for the upgrade! Please cancel the old subscription from the <b>Play Store</b>.</string>
 
 </resources>
