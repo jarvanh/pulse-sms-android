@@ -353,7 +353,7 @@ object ContactUtils {
     /**
      * Get a list of contact objects from Android's database.
      */
-    fun queryContacts(context: Context, dataSource: DataSource): List<Contact> {
+    fun queryContacts(context: Context, dataSource: DataSource, forceAllContacts: Boolean = false): List<Contact> {
         try {
             val contacts = ArrayList<Contact>()
             val conversations = dataSource.getAllConversationsAsList(context)
@@ -368,7 +368,7 @@ object ContactUtils {
                 null
             }
 
-            if (cursor != null && cursor.count > 500) {
+            if (cursor != null && cursor.count > 500 && !forceAllContacts) {
                 cursor.closeSilent()
                 cursor = context.contentResolver.query(uri, projection,
                         ContactsContract.CommonDataKinds.Phone.TYPE + "=?",

@@ -316,7 +316,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         preference.setOnPreferenceClickListener {
-            activity?.startService(Intent(activity, ContactResyncService::class.java))
+            val intent = Intent(activity, ContactResyncService::class.java)
+            intent.putExtra(ContactResyncService.EXTRA_FORCE_SYNC_ALL_CONTACTS, true)
+            activity?.startService(intent)
             activity?.onBackPressed()
             true
         }
