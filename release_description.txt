@@ -1,6 +1,5 @@
 This release includes:<br/>
-- An option for a "Quick Compose" notification, under "Advanced Features"<br/>
-- Define "favorite contacts" for the quick compose notification<br/>
-- A quick share popup for sharing content from other apps<br/>
-- Use the quick share popup when sending messages from Nougat's quick settings tile or Marshmallow's direct share<br/>
-+ Bug fixes, dependency updates, stability improvements, translation updates, and more!
+- An increase the "undo" button duration for archiving and deleting messages<br/>
+- Battery improvements<br/>
+- Onboarding improvements<br/>
++ Bug/crash fixes
