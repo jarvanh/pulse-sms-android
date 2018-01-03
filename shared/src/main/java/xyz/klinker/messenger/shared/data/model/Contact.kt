@@ -10,7 +10,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils
 /**
  * Data object for holding information about a contact
  */
-class Contact : DatabaseTable {
+open class Contact : DatabaseTable {
 
     var id: Long = 0
     var phoneNumber: String? = null
@@ -89,4 +89,8 @@ class Contact : DatabaseTable {
                 ");"
     }
 
+}
+
+class ImageContact : Contact() {
+    var image: String? = null
 }

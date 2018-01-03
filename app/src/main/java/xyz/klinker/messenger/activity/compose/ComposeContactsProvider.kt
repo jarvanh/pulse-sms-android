@@ -20,6 +20,7 @@ import xyz.klinker.messenger.adapter.ContactAdapter
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.model.ImageContact
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.CursorUtil
@@ -173,10 +174,12 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
                 val contacts = ContactUtils.queryContacts(activity, DataSource)
                 allContacts = contacts
                         .sortedBy { it.name }
+                        .map { it as ImageContact}
                         .map {
                             val conversation = Conversation()
                             conversation.title = it.name
                             conversation.phoneNumbers = it.phoneNumber
+                            conversation.imageUri = it.image
                             conversation.colors = ColorUtils.getRandomMaterialColor(activity)
 
                             conversation

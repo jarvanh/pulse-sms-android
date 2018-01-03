@@ -30,6 +30,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.IdMatcher
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.model.ImageContact
 
 /**
  * Helper for working with Android's contact provider.
@@ -355,11 +356,11 @@ object ContactUtils {
      */
     fun queryContacts(context: Context, dataSource: DataSource, forceAllContacts: Boolean = false): List<Contact> {
         try {
-            val contacts = ArrayList<Contact>()
+            val contacts = ArrayList<ImageContact>()
             val conversations = dataSource.getAllConversationsAsList(context)
 
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
 
             var cursor = try {
                 context.contentResolver.query(
@@ -378,11 +379,16 @@ object ContactUtils {
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    val contact = Contact()
+                    val contact = ImageContact()
 
                     contact.id = DataSource.generateId()
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = cursor.getString(1)
+                    contact.image = cursor.getString(2)
+                    if (contact.image != null) {
+                        contact.image = contact.image!!.replace("/photo", "") + "/photo"
+                    }
+
                     contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
                     val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
