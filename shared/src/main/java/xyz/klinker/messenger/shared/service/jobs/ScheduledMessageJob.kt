@@ -97,6 +97,11 @@ class ScheduledMessageJob : SimpleJobService() {
                     }
 
                     Log.v("scheduled message", "message was sent and notification given")
+                } else if (timestamp < System.currentTimeMillis() - TimeUtils.HOUR) {
+                    val message = ScheduledMessage()
+                    message.fillFromCursor(messages)
+
+                    source.deleteScheduledMessage(this, message.id)
                 }
             } while (messages.moveToNext())
         }
@@ -125,7 +130,10 @@ class ScheduledMessageJob : SimpleJobService() {
                     .sortedBy { it.timestamp }
 
             if (messages.isNotEmpty()) {
-                val timeout = (messages[0].timestamp - Date().time).toInt() / 1000
+                var timeout = (messages[0].timestamp - Date().time).toInt() / 1000
+                if (timeout < 0) {
+                    timeout = 0
+                }
 
                 val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
                 val myJob = dispatcher.newJobBuilder()
