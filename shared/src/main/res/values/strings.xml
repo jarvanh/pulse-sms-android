@@ -462,6 +462,11 @@
     <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
+    <string name="message_backup">Message backup</string>
+    <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
+        messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
+        to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.
+        With Pulse, everything is smooth, easy, and completely automatic.</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>

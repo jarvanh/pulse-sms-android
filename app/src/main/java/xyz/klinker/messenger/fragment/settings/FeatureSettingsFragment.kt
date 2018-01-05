@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.fragment.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
+import xyz.klinker.messenger.shared.util.RedirectToMyAccount
 
 class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
@@ -24,6 +26,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         initDelayedSending()
         initCleanupOldMessages()
         initSignature()
+        initMessageBackup()
     }
 
     override fun onStop() {
@@ -112,6 +115,18 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
+
+            false
+        }
+    }
+
+    private fun initMessageBackup() {
+        findPreference(getString(R.string.pref_message_backup)).setOnPreferenceClickListener {
+            AlertDialog.Builder(activity)
+                    .setMessage(R.string.message_backup_summary)
+                    .setPositiveButton(R.string.try_it) { _, _ ->
+                        startActivity(Intent(activity, RedirectToMyAccount::class.java))
+                    }.show()
 
             false
         }
