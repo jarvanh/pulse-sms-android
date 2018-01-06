@@ -44,6 +44,8 @@ object Account {
     var passhash: String? = null
     var key: String? = null
 
+    var hasPurchased: Boolean = false
+
     fun init(context: Context) {
         val sharedPrefs = getSharedPrefs(context)
 
@@ -58,6 +60,8 @@ object Account {
         this.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null)
         this.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null)
         this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null)
+
+        this.hasPurchased = sharedPrefs.getBoolean(context.getString(R.string.api_pref_has_purchased), false)
 
         if (key == null && passhash != null && accountId != null && salt != null) {
             // we have all the requirements to recompute the key,
@@ -147,6 +151,14 @@ object Account {
 
         getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_device_id), deviceId)
+                .commit()
+    }
+
+    fun setHasPurchased(context: Context, hasPurchased: Boolean) {
+        this.hasPurchased = hasPurchased
+
+        getSharedPrefs(context).edit()
+                .putBoolean(context.getString(R.string.api_pref_has_purchased), hasPurchased)
                 .commit()
     }
 

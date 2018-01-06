@@ -156,7 +156,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
             fragmentActivity?.runOnUiThread {
                 try {
-                    if (!resources.getBoolean(R.bool.check_subscription) || hasSubs) {
+                    if (!resources.getBoolean(R.bool.check_subscription) || hasSubs || Account.hasPurchased) {
                         Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                         startLoginActivity()
                     } else {
@@ -473,6 +473,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 if (fragmentActivity != null) {
                     AnalyticsHelper.accountCompetedPurchase(fragmentActivity!!)
                     AnalyticsHelper.userSubscribed(fragmentActivity!!, productId)
+                    Account.setHasPurchased(fragmentActivity!!, true)
                 }
 
                 if (Account.accountId == null) {
