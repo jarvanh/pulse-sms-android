@@ -183,9 +183,12 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun viewMedia(): Boolean {
-        return if (navController.isConversationListExpanded()) {
+        return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+            val fragment = navController.getShownConversationList()
+            val conversationId = fragment!!.expandedId
+
             val intent = Intent(activity, MediaGridActivity::class.java)
-            intent.putExtra(MediaGridActivity.EXTRA_CONVERSATION_ID, navController.conversationListFragment!!.expandedId)
+            intent.putExtra(MediaGridActivity.EXTRA_CONVERSATION_ID, conversationId)
             activity.startActivity(intent)
             true
         } else {
