@@ -120,7 +120,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val statusChannel = NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_MIN)
+                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_DEFAULT)
         manager.createNotificationChannel(statusChannel)
     }
 
