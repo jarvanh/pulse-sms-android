@@ -2,6 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:key="@string/pref_message_backup"
+        android:title="@string/message_backup" />
+
+    <Preference
         android:key="@string/pref_signature"
         android:summary="@string/signature_summary"
         android:title="@string/signature" />
@@ -31,10 +35,6 @@
         android:title="@string/use_internal_browser"
         android:summary="@string/internal_browser_summary"
         android:defaultValue="true" />
-
-    <Preference
-        android:key="@string/pref_message_backup"
-        android:title="@string/message_backup" />
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_quick_compose_category"
