@@ -65,7 +65,7 @@ class ShareSender(private val page: QuickSharePage) {
         message.mimeType = mimeType
         message.read = true
         message.seen = true
-        message.simPhoneNumber = DualSimUtils.defaultPhoneNumber
+        message.simPhoneNumber = if (DualSimUtils.availableSims.size > 1) DualSimUtils.defaultPhoneNumber else null
         message.sentDeviceId = if (Account.exists()) Account.deviceId!!.toLong() else -1L
 
         return message

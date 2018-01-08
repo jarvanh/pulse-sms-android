@@ -919,7 +919,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             message.mimeType = MimeType.TEXT_PLAIN
             message.read = true
             message.seen = true
-            message.simPhoneNumber = DualSimUtils.defaultPhoneNumber
+            message.simPhoneNumber = if (DualSimUtils.availableSims.size > 1) DualSimUtils.defaultPhoneNumber else null
 
             if (json.has("sent_device")) {
                 message.sentDeviceId = json.getLong("sent_device")
