@@ -198,6 +198,10 @@
         </receiver>
 
         <receiver
+            android:name=".service.jobs.ScheduledMessageJob"
+            android:exported="false" />
+
+        <receiver
             android:name=".receiver.NotificationDismissedReceiver"
             android:exported="false" />
 
@@ -269,14 +273,6 @@
         <service
             android:exported="false"
             android:name=".service.jobs.ContactSyncJob">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.ScheduledMessageJob">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>

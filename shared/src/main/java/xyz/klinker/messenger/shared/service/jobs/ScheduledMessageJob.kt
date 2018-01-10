@@ -23,7 +23,6 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import android.util.Log
-import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
@@ -31,63 +30,70 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.util.*
-import java.util.*
+import android.app.AlarmManager
+import android.content.BroadcastReceiver
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 
 /**
  * Service responsible for sending scheduled message that are coming up, removing that message
  * from the database and then scheduling the next one.
  */
-class ScheduledMessageJob : SimpleJobService() {
+class ScheduledMessageJob : BroadcastReceiver() {
 
-    override fun onRunJob(job: JobParameters?): Int {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null) {
+            return
+        }
+
         val source = DataSource
-        val messages = source.getScheduledMessages(this)
+        val messages = source.getScheduledMessages(context)
 
         if (messages.moveToFirst()) {
             do {
                 val timestamp = messages.getLong(
                         messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP))
 
-                // if message scheduled to be sent in less than 5 mins in the future,
+                // if message scheduled to be sent in less than a half hour in the future,
                 // or more than 60 in the past
-                if (timestamp > System.currentTimeMillis() - TimeUtils.HOUR && timestamp < System.currentTimeMillis() + TimeUtils.MINUTE * 5) {
+                if (timestamp > System.currentTimeMillis() - TimeUtils.DAY && timestamp < System.currentTimeMillis() + TimeUtils.HOUR / 2) {
                     val message = ScheduledMessage()
                     message.fillFromCursor(messages)
 
                     // delete, insert and send
-                    source.deleteScheduledMessage(this, message.id)
-                    val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, this)
-                    val conversation = source.getConversation(this, conversationId)
+                    source.deleteScheduledMessage(context, message.id)
+                    val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, context)
+                    val conversation = source.getConversation(context, conversationId)
 
                     SendUtils(conversation?.simSubscriptionId)
-                            .send(this, message.data!!, message.to!!)
+                            .send(context, message.data!!, message.to!!)
 
                     // display a notification
                     val body = "<b>" + message.title + ": </b>" + message.data
                     val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
                     open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    val pendingOpen = PendingIntent.getActivity(this, 0, open,
+                    val pendingOpen = PendingIntent.getActivity(context, 0, open,
                             PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val notification = NotificationCompat.Builder(this)
+                    val notification = NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_stat_notify)
-                            .setContentTitle(getString(R.string.scheduled_message_sent))
+                            .setContentTitle(context.getString(R.string.scheduled_message_sent))
                             .setContentText(Html.fromHtml(body))
-                            .setColor(ColorSet.DEFAULT(this).color)
+                            .setColor(ColorSet.DEFAULT(context).color)
                             .setAutoCancel(true)
                             .setContentIntent(pendingOpen)
                             .build()
-                    NotificationManagerCompat.from(this)
+                    NotificationManagerCompat.from(context)
                             .notify(5555 + message.id.toInt(), notification)
 
                     try {
-                        val conversationMessages = DataSource.getMessages(this, conversationId)
+                        val conversationMessages = DataSource.getMessages(context, conversationId)
 
                         if (conversationMessages.moveToFirst()) {
                             val mess = Message()
                             mess.fillFromCursor(conversationMessages)
                             if (mess.type == Message.TYPE_INFO) {
-                                DataSource.deleteMessage(this, mess.id)
+                                DataSource.deleteMessage(context, mess.id)
                             }
                         }
 
@@ -101,23 +107,20 @@ class ScheduledMessageJob : SimpleJobService() {
                     val message = ScheduledMessage()
                     message.fillFromCursor(messages)
 
-                    source.deleteScheduledMessage(this, message.id)
+                    source.deleteScheduledMessage(context, message.id)
                 }
             } while (messages.moveToNext())
         }
 
         messages.closeSilent()
 
-        sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
-        scheduleNextRun(this)
-
-        return 0
+        context.sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
+        ScheduledMessageJob.scheduleNextRun(context)
     }
 
     companion object {
 
         val BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE"
-        private val JOB_ID = "scheduled-message-job"
 
         fun scheduleNextRun(context: Context, source: DataSource = DataSource) {
             val account = Account
@@ -130,26 +133,24 @@ class ScheduledMessageJob : SimpleJobService() {
                     .sortedBy { it.timestamp }
 
             if (messages.isNotEmpty()) {
-                var timeout = (messages[0].timestamp - Date().time).toInt() / 1000
-                if (timeout < 0) {
-                    timeout = 0
-                }
-
-                val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
-                val myJob = dispatcher.newJobBuilder()
-                        .setService(ScheduledMessageJob::class.java)
-                        .setTag(JOB_ID)
-                        .setRecurring(false)
-                        .setLifetime(Lifetime.FOREVER)
-                        .setTrigger(Trigger.executionWindow(timeout, timeout + (TimeUtils.MINUTE.toInt() / 1000)))
-                        .setReplaceCurrent(true)
-                        .build()
-
-                dispatcher.mustSchedule(myJob)
+                val intent = Intent(context, ScheduledMessageJob::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+                setAlarm(context, messages[0].timestamp, pendingIntent)
 
                 Log.v("scheduled message", "new message scheduled")
             } else {
                 Log.v("scheduled message", "no more scheduled messages")
+            }
+        }
+
+        private fun setAlarm(context: Context, time: Long, pendingIntent: PendingIntent) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
+
+            if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+            } else if (SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
             }
         }
     }
