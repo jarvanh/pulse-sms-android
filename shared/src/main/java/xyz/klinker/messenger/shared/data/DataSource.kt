@@ -1716,12 +1716,12 @@ object DataSource {
         values.put(Message.COLUMN_TYPE, type)
 
         try {
-            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>?",
-                    arrayOf(java.lang.Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED)))
+            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>? AND " + Message.COLUMN_TYPE + "<>?",
+                    arrayOf(java.lang.Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED), Integer.toString(Message.TYPE_DELIVERED)))
         } catch (e: Exception) {
             ensureActionable(context)
-            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>?",
-                    arrayOf(java.lang.Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED)))
+            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=? AND " + Message.COLUMN_TYPE + "<>? AND " + Message.COLUMN_TYPE + "<>?",
+                    arrayOf(java.lang.Long.toString(messageId), Integer.toString(Message.TYPE_RECEIVED), Integer.toString(Message.TYPE_DELIVERED)))
         }
 
         if (useApi) {
