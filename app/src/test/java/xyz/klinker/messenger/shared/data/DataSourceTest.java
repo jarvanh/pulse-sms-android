@@ -439,8 +439,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void updateMessageType() {
         source.updateMessageType(context, 1, Message.Companion.getTYPE_SENT(), false);
-        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>?"),
-                eq(new String[]{"1", "0"}));
+        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>? AND type<>?"),
+                eq(new String[]{"1", "0", "4"}));
     }
 
     @Test
