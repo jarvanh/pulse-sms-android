@@ -19,6 +19,7 @@ import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.*
 
 @Suppress("DEPRECATION")
@@ -129,8 +130,13 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 setNameAndDrawerColor()
             }
 
-            ColorUtils.setCursorDrawableColor(messageEntry, colorAccent)
-            ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent)
+            if (colorAccent == Color.BLACK && Settings.baseTheme == BaseTheme.BLACK) {
+                ColorUtils.setCursorDrawableColor(messageEntry, Color.WHITE)
+                ColorUtils.colorTextSelectionHandles(messageEntry, Color.WHITE)
+            } else {
+                ColorUtils.setCursorDrawableColor(messageEntry, colorAccent)
+                ColorUtils.colorTextSelectionHandles(messageEntry, colorAccent)
+            }
         }, deferredTime)
 
         if (!TvUtils.hasTouchscreen(activity)) {
