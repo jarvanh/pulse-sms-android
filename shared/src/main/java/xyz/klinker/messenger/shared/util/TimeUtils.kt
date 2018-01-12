@@ -19,6 +19,7 @@ package xyz.klinker.messenger.shared.util
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
+import android.util.Log
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
@@ -128,7 +129,14 @@ object TimeUtils {
         val lastMonth = Calendar.getInstance()
         lastMonth.timeInMillis = currentTime
         zeroCalendarDay(lastMonth)
-        lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH) - 1)
+
+        // if the current month is January, then we need to set the last month to be December of the previous year
+        if (lastMonth.get(Calendar.MONTH) == Calendar.JANUARY) {
+            lastMonth.set(Calendar.YEAR, lastMonth.get(Calendar.YEAR) - 1)
+            lastMonth.set(Calendar.MONTH, Calendar.DECEMBER)
+        } else {
+            lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH) - 1)
+        }
 
         return timestamp > lastMonth.timeInMillis && timestamp < currentTime
     }
