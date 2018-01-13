@@ -92,8 +92,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val defaultChannel = NotificationChannel(DEFAULT_CONVERSATION_CHANNEL_ID,
-                context.getString(R.string.default_notifications_channel),
-                if (Settings.headsUp) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT)
+                context.getString(R.string.default_notifications_channel), NotificationManager.IMPORTANCE_HIGH)
         defaultChannel.description = context.getString(R.string.default_notifications_channel_description)
         defaultChannel.group = "conversations"
         manager.createNotificationChannel(defaultChannel)
@@ -107,8 +106,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val testChannel = NotificationChannel(TEST_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.test_notifications_channel),
-                if (Settings.headsUp) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT)
+                context.getString(R.string.test_notifications_channel), NotificationManager.IMPORTANCE_HIGH)
         manager.createNotificationChannel(testChannel)
     }
 
@@ -120,7 +118,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val statusChannel = NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_DEFAULT)
+                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_LOW)
         manager.createNotificationChannel(statusChannel)
     }
 
@@ -168,8 +166,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val testChannel = NotificationChannel(FAILED_MESSAGES_CHANNEL_ID,
-                context.getString(R.string.failed_messages_channel),
-                if (Settings.headsUp) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT)
+                context.getString(R.string.failed_messages_channel), NotificationManager.IMPORTANCE_HIGH)
         manager.createNotificationChannel(testChannel)
     }
 
@@ -229,8 +226,7 @@ object NotificationUtils {
     private fun createChannel(context: Context, conversation: Conversation): NotificationChannel {
         val settings = Settings
 
-        val channel = NotificationChannel(conversation.id.toString() + "", conversation.title,
-                if (settings.headsUp) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(conversation.id.toString() + "", conversation.title, NotificationManager.IMPORTANCE_HIGH)
         channel.group = "conversations"
         channel.enableLights(true)
         channel.lightColor = conversation.ledColor
@@ -238,16 +234,8 @@ object NotificationUtils {
         channel.setShowBadge(true)
         channel.vibrationPattern = settings.vibrate.pattern
         channel.lockscreenVisibility = if (conversation.privateNotifications)
-            Notification.VISIBILITY_PRIVATE
-        else
-            Notification.VISIBILITY_PUBLIC
-
-        val ringtone = NotificationRingtoneProvider(context).getRingtone(conversation.ringtoneUri)
-        if (ringtone != null) {
-            channel.setSound(ringtone, AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION).build())
-        }
-
+            Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC
+        
         return channel
     }
 
