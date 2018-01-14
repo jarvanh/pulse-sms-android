@@ -40,7 +40,7 @@ class SmsReceivedService : IntentService("SmsReceivedService") {
 
     private fun startForeground() {
         val notification = NotificationCompat.Builder(this,
-                NotificationUtils.BACKGROUND_SERVICE_CHANNEL_ID)
+                NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
                 .setContentTitle(getString(R.string.receiving_a_message))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setLocalOnly(true)

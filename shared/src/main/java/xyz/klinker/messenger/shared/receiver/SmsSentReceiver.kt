@@ -161,7 +161,7 @@ open class SmsSentReceiver : SentReceiver() {
                 val pendingOpen = PendingIntent.getActivity(context,
                         conversationId.toInt(), open, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                val notification = NotificationCompat.Builder(context, NotificationUtils.FAILED_MESSAGES_CHANNEL_ID)
+                val notification = NotificationCompat.Builder(context, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_stat_notify)
                         .setContentTitle(context.getString(R.string.message_sending_failed))
                         .setContentText(data)

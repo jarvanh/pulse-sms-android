@@ -62,7 +62,7 @@ class ApiDownloadService : Service() {
 
     private fun downloadData() {
         val notification = NotificationCompat.Builder(this,
-                NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                NotificationUtils.ACCOUNT_ACTIVITY_CHANNEL_ID)
                 .setContentTitle(getString(R.string.downloading_and_decrypting))
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)
@@ -378,7 +378,7 @@ class ApiDownloadService : Service() {
 
     private fun downloadMedia() {
         val builder = NotificationCompat.Builder(this,
-                NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                NotificationUtils.ACCOUNT_ACTIVITY_CHANNEL_ID)
                 .setContentTitle(getString(R.string.decrypting_and_downloading_media))
                 .setSmallIcon(R.drawable.ic_download)
                 .setProgress(0, 0, true)

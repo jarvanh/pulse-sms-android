@@ -20,8 +20,8 @@ import xyz.klinker.messenger.shared.util.WearableCheck
 class QuickComposeNotificationService : IntentService("QuickComposeNotificationService") {
 
     override fun onHandleIntent(intent: Intent?) {
-        val foreground = NotificationCompat.Builder(this, NotificationUtils.GENERAL_CHANNEL_ID)
-                .setContentTitle(getString(R.string.creating_channels_text))
+        val foreground = NotificationCompat.Builder(this, NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
+                .setContentTitle(getString(R.string.write_new_message))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setLocalOnly(true)
                 .setColor(ColorSet.DEFAULT(this).color)

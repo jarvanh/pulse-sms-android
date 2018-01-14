@@ -21,7 +21,7 @@ class FirebaseResetService : IntentService("FirebaseResetService") {
 
         if (AndroidVersionUtil.isAndroidO) {
             val notification = NotificationCompat.Builder(this,
-                    NotificationUtils.GENERAL_CHANNEL_ID)
+                    NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
                     .setContentTitle(getString(R.string.media_parse_text))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setProgress(0, 0, true)

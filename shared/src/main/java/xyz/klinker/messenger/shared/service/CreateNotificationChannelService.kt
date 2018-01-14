@@ -17,7 +17,7 @@ class CreateNotificationChannelService : IntentService("CreateNotificationChanne
 
     override fun onHandleIntent(intent: Intent?) {
         val notification = NotificationCompat.Builder(this,
-                NotificationUtils.GENERAL_CHANNEL_ID)
+                NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
                 .setContentTitle(getString(R.string.creating_channels_text))
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setLocalOnly(true)

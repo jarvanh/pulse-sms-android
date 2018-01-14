@@ -251,6 +251,8 @@
     <string name="media_parse_channel">Media parser</string>
     <string name="group_summary_notifications">Message group summaries</string>
     <string name="failed_messages_channel">Failed messages</string>
+    <string name="silent_background_services">Silent background services</string>
+    <string name="account_activity_notifications">Account activity notifications</string>
     <string name="quick_text_channel">Quick text notification</string>
     <string name="media_parse_text">Parsing media from previous text message…</string>
     <string name="creating_channels_text">Creating notification channels…</string>

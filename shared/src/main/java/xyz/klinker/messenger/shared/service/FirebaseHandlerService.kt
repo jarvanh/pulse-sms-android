@@ -942,7 +942,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         private fun notifyUser(context: Context, title: String, content: String) {
-            val builder = NotificationCompat.Builder(context, NotificationUtils.GENERAL_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
                     .setContentTitle(title)
                     .setContentText(content)
                     .setStyle(NotificationCompat.BigTextStyle().setBigContentTitle(title).setSummaryText(content))

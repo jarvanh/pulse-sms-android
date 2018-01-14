@@ -17,14 +17,9 @@ import xyz.klinker.messenger.shared.service.notification.NotificationService
 object NotificationUtils {
 
     val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
-    val MESSAGE_GROUP_SUMMARY_CHANNEL_ID = "message-group-summary"
-    val FAILED_MESSAGES_CHANNEL_ID = "failed-messages"
     val QUICK_TEXT_CHANNEL_ID = "quick-text"
-    val TEST_NOTIFICATIONS_CHANNEL_ID = "test-notifications"
-    val STATUS_NOTIFICATIONS_CHANNEL_ID = "status-notifications"
-    val MEDIA_PARSE_CHANNEL_ID = "media-parsing"
-    val GENERAL_CHANNEL_ID = "general"
-    val BACKGROUND_SERVICE_CHANNEL_ID = "background-service"
+    val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
+    val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
 
     fun cancelGroupedNotificationWithNoContent(context: Context?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
@@ -99,78 +94,6 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    fun createTestChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val testChannel = NotificationChannel(TEST_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.test_notifications_channel), NotificationManager.IMPORTANCE_HIGH)
-        manager.createNotificationChannel(testChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    private fun createStatusChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val statusChannel = NotificationChannel(STATUS_NOTIFICATIONS_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_LOW)
-        manager.createNotificationChannel(statusChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    fun createBackgroundServiceChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val statusChannel = NotificationChannel(BACKGROUND_SERVICE_CHANNEL_ID,
-                context.getString(R.string.background_service_channel), NotificationManager.IMPORTANCE_MIN)
-        manager.createNotificationChannel(statusChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    private fun createMediaParseChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val statusChannel = NotificationChannel(MEDIA_PARSE_CHANNEL_ID,
-                context.getString(R.string.status_notifications_channel), NotificationManager.IMPORTANCE_MIN)
-        manager.createNotificationChannel(statusChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    private fun createGeneralChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val statusChannel = NotificationChannel(GENERAL_CHANNEL_ID,
-                context.getString(R.string.general_notifications_channel), NotificationManager.IMPORTANCE_MIN)
-        manager.createNotificationChannel(statusChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    private fun createFailedMessageChannel(context: Context) {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return
-        }
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val testChannel = NotificationChannel(FAILED_MESSAGES_CHANNEL_ID,
-                context.getString(R.string.failed_messages_channel), NotificationManager.IMPORTANCE_HIGH)
-        manager.createNotificationChannel(testChannel)
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
     private fun createQuickTextChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
@@ -186,15 +109,33 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun createMessageGroupChannel(context: Context) {
+    private fun createSilentBackgroundChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
         }
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val messageGroupChannel = NotificationChannel(MESSAGE_GROUP_SUMMARY_CHANNEL_ID,
-                context.getString(R.string.group_summary_notifications), NotificationManager.IMPORTANCE_LOW)
-        manager.createNotificationChannel(messageGroupChannel)
+        val silentBackground = NotificationChannel(SILENT_BACKGROUND_CHANNEL_ID,
+                context.getString(R.string.silent_background_services), NotificationManager.IMPORTANCE_MIN)
+        silentBackground.setShowBadge(false)
+        silentBackground.enableLights(false)
+        silentBackground.enableVibration(false)
+        manager.createNotificationChannel(silentBackground)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun createAccountActivityChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val silentBackground = NotificationChannel(ACCOUNT_ACTIVITY_CHANNEL_ID,
+                context.getString(R.string.account_activity_notifications), NotificationManager.IMPORTANCE_HIGH)
+        silentBackground.setShowBadge(false)
+        silentBackground.enableLights(false)
+        silentBackground.enableVibration(false)
+        manager.createNotificationChannel(silentBackground)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -203,23 +144,19 @@ object NotificationUtils {
             return
         }
 
+        deleteOldChannels(context)
+
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // notification channel group for conversations
-        val conversationsGroup = NotificationChannelGroup("conversations",
-                context.getString(R.string.conversations))
+        val conversationsGroup = NotificationChannelGroup("conversations", context.getString(R.string.conversations))
         manager.createNotificationChannelGroup(conversationsGroup)
 
         // channels to place the notifications in
         createDefaultChannel(context)
-        createTestChannel(context)
-        createStatusChannel(context)
-        createBackgroundServiceChannel(context)
-        createFailedMessageChannel(context)
-        createMessageGroupChannel(context)
-        createMediaParseChannel(context)
         createQuickTextChannel(context)
-        createGeneralChannel(context)
+        createSilentBackgroundChannel(context)
+        createAccountActivityChannel(context)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -235,7 +172,7 @@ object NotificationUtils {
         channel.vibrationPattern = settings.vibrate.pattern
         channel.lockscreenVisibility = if (conversation.privateNotifications)
             Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC
-        
+
         return channel
     }
 
@@ -247,6 +184,22 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.deleteNotificationChannel(conversationId.toString() + "")
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    fun deleteOldChannels(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.deleteNotificationChannel("background-service")
+        manager.deleteNotificationChannel("general")
+        manager.deleteNotificationChannel("media-parsing")
+        manager.deleteNotificationChannel("status-notifications")
+        manager.deleteNotificationChannel("test-notifications")
+        manager.deleteNotificationChannel("failed-messages")
+        manager.deleteNotificationChannel("message-group-summary")
     }
 
     @TargetApi(Build.VERSION_CODES.O)

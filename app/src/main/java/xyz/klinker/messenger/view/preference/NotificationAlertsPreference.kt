@@ -203,9 +203,7 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
     private fun makeTestNotification() {
         val vibratePattern = Settings.vibrate
 
-        NotificationUtils.createTestChannel(context)
-
-        val builder = NotificationCompat.Builder(context, NotificationUtils.TEST_NOTIFICATIONS_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setContentTitle("Test Notification")
                 .setContentText("Here is a test notification!")

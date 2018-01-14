@@ -72,7 +72,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadData() {
-        val notification = NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, NotificationUtils.ACCOUNT_ACTIVITY_CHANNEL_ID)
                 .setContentTitle(getString(R.string.encrypting_and_uploading))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)
@@ -390,7 +390,7 @@ open class ApiUploadService : Service() {
      * Media will be uploaded after the messages finish uploading
      */
     private fun uploadMedia() {
-        val builder = NotificationCompat.Builder(this, NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, NotificationUtils.ACCOUNT_ACTIVITY_CHANNEL_ID)
                 .setContentTitle(getString(R.string.encrypting_and_uploading_media))
                 .setSmallIcon(R.drawable.ic_upload)
                 .setProgress(0, 0, true)

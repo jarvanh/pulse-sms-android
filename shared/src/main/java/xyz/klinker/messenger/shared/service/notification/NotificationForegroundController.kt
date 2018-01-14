@@ -15,7 +15,7 @@ class NotificationForegroundController(private val service: NotificationService)
         if (intent != null && intent.getBooleanExtra(NotificationConstants.EXTRA_FOREGROUND, false) && AndroidVersionUtil.isAndroidO) {
             foreground = true
             val notification = NotificationCompat.Builder(service,
-                    NotificationUtils.STATUS_NOTIFICATIONS_CHANNEL_ID)
+                    NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
                     .setContentTitle(service.getString(R.string.repeat_interval))
                     .setSmallIcon(R.drawable.ic_stat_notify_group)
                     .setLocalOnly(true)
