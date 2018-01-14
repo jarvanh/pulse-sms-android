@@ -131,7 +131,7 @@ object NotificationUtils {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val silentBackground = NotificationChannel(ACCOUNT_ACTIVITY_CHANNEL_ID,
-                context.getString(R.string.account_activity_notifications), NotificationManager.IMPORTANCE_HIGH)
+                context.getString(R.string.account_activity_notifications), NotificationManager.IMPORTANCE_LOW)
         silentBackground.setShowBadge(false)
         silentBackground.enableLights(false)
         silentBackground.enableVibration(false)
