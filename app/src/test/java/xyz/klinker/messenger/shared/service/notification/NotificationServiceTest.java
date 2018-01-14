@@ -56,6 +56,8 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
     @Mock
     private MockableDataSourceWrapper source;
     @Mock
+    private NotificationForegroundController foreground;
+    @Mock
     private NotificationRingtoneProvider ringtoneProvider;
     @Mock
     private NotificationSummaryProvider summaryProvider;
@@ -106,7 +108,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         messages.add(new NotificationMessage(1, "", "", 0, ""));
         messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) + 1, ""));
 
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(false));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider, foreground).shouldAlertOnce(messages), Matchers.is(false));
     }
 
     @Test
@@ -117,7 +119,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         messages.add(new NotificationMessage(1, "", "", 0, ""));
         messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) - 100, ""));
 
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider, foreground).shouldAlertOnce(messages), Matchers.is(true));
     }
 
     @Test
@@ -125,7 +127,7 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         List<NotificationMessage> messages = new ArrayList<>();
         messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY() - 100, ""));
 
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
+        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider, foreground).shouldAlertOnce(messages), Matchers.is(true));
     }
 
     private Cursor getUnseenCursor() {
