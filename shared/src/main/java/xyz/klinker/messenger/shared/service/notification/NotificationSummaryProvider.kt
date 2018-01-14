@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
@@ -18,7 +17,7 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
  * Displays a summary notification for all conversations using the rows returned by each
  * individual notification.
  */
-class NotificationSummaryProvider(private val service: NotificationService) {
+class NotificationSummaryProvider(private val service: NotificationService, private val foreground: NotificationForegroundController) {
 
     var skipSummary = false
 
@@ -38,7 +37,7 @@ class NotificationSummaryProvider(private val service: NotificationService) {
                 .setWhen(conversations[conversations.size - 1].timestamp)
                 .setStyle(style)
 
-        NotificationManagerCompat.from(service).notify(NotificationConstants.SUMMARY_ID, applyPendingIntents(notification).build())
+        foreground.provideRegularNotification(NotificationConstants.SUMMARY_ID, applyPendingIntents(notification).build())
     }
 
     private fun buildSummary(conversations: List<NotificationConversation>): String {

@@ -40,18 +40,18 @@ class NotificationService : IntentService("NotificationService") {
     private val foreground = NotificationForegroundController(this)
     private val query = NotificationUnreadConversationQuery(this)
     private val ringtoneProvider = NotificationRingtoneProvider(this)
-    private val summaryNotifier = NotificationSummaryProvider(this)
-    private val conversationNotifier = NotificationConversationProvider(this, ringtoneProvider, summaryNotifier)
+    private val summaryNotifier = NotificationSummaryProvider(this, foreground)
+    private val conversationNotifier = NotificationConversationProvider(this, ringtoneProvider, summaryNotifier, foreground)
 
     val dataSource: MockableDataSourceWrapper
         get() = MockableDataSourceWrapper(DataSource)
 
     override fun onHandleIntent(intent: Intent?) {
-        foreground.show(intent)
-
         try {
             val snoozeTil = Settings.snooze
             if (snoozeTil > System.currentTimeMillis()) {
+                foreground.show(intent)
+                foreground.hide()
                 return
             }
 
@@ -94,6 +94,7 @@ class NotificationService : IntentService("NotificationService") {
             e.printStackTrace()
         }
 
+        foreground.show(intent)
         foreground.hide()
     }
 

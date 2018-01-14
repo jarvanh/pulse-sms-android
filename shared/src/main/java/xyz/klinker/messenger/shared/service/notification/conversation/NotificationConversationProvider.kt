@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.text.Html
 import xyz.klinker.messenger.shared.R
@@ -19,10 +18,7 @@ import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
-import xyz.klinker.messenger.shared.service.notification.NotificationService
-import xyz.klinker.messenger.shared.service.notification.NotificationSummaryProvider
+import xyz.klinker.messenger.shared.service.notification.*
 import xyz.klinker.messenger.shared.util.*
 
 /**
@@ -30,7 +26,7 @@ import xyz.klinker.messenger.shared.util.*
  */
 @Suppress("DEPRECATION")
 @SuppressLint("NewApi")
-class NotificationConversationProvider(private val service: NotificationService, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider) {
+class NotificationConversationProvider(private val service: NotificationService, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider, private val foreground: NotificationForegroundController) {
 
     private val actionHelper = NotificationActionHelper(service)
     private val carHelper = NotificationCarHelper(service)
@@ -73,7 +69,7 @@ class NotificationConversationProvider(private val service: NotificationService,
             // skip this notification since we are already on the conversation.
             summaryProvider.skipSummary = true
         } else {
-            NotificationManagerCompat.from(service).notify(conversation.id.toInt(), builder.build())
+            foreground.provideRegularNotification(conversation.id.toInt(), builder.build())
         }
     }
 
