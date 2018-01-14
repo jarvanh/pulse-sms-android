@@ -1,5 +1,6 @@
 This release includes:<br/>
 - An increase the "undo" button duration for archiving and deleting messages<br/>
+- Simplification of Android Oreo's Notification Channels<br/>
 - Battery improvements<br/>
 - Onboarding improvements<br/>
 + Bug/crash fixes
