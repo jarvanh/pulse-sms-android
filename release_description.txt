@@ -1,4 +1,5 @@
 This release includes:<br/>
+- Fixes a crash issue when dismissing notifications<br/>
 - An increase the "undo" button duration for archiving and deleting messages<br/>
 - Simplification of Android Oreo's Notification Channels<br/>
 - Battery improvements<br/>
