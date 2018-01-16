@@ -36,23 +36,32 @@ class RepeatNotificationJob : JobService() {
         fun scheduleNextRun(context: Context, nextRun: Long) {
             val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
 
+            if (nextRun == 0L) {
+                dispatcher.cancel(JOB_ID)
+                return
+            }
+            
             val currentTime = Date().time
             val timeout = (nextRun - currentTime).toInt() / 1000
 
             if (!Account.exists() || Account.exists() && Account.primary) {
-                val myJob = dispatcher.newJobBuilder()
-                        .setService(RepeatNotificationJob::class.java)
-                        .setTag(JOB_ID)
-                        .setRecurring(false)
-                        .setLifetime(Lifetime.FOREVER)
-                        .setTrigger(Trigger.executionWindow(timeout, timeout + TimeUtils.SECOND.toInt() * 15 / 1000))
-                        .setReplaceCurrent(true)
-                        .build()
+                try {
+                    val myJob = dispatcher.newJobBuilder()
+                            .setService(RepeatNotificationJob::class.java)
+                            .setTag(JOB_ID)
+                            .setRecurring(false)
+                            .setLifetime(Lifetime.FOREVER)
+                            .setTrigger(Trigger.executionWindow(timeout, timeout + TimeUtils.SECOND.toInt() * 15 / 1000))
+                            .setReplaceCurrent(true)
+                            .build()
 
-                if (currentTime < nextRun) {
-                    dispatcher.mustSchedule(myJob)
-                } else {
-                    dispatcher.cancel(JOB_ID)
+                    if (currentTime < nextRun) {
+                        dispatcher.mustSchedule(myJob)
+                    } else {
+                        dispatcher.cancel(JOB_ID)
+                    }
+                } catch (e: Throwable) {
+                    // can't schedule for less than 0
                 }
             }
         }
