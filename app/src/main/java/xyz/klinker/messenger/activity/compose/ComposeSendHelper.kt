@@ -53,6 +53,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
     }
 
     internal fun showConversation(phoneNumbers: String, data: String? = null) {
+        val phoneNumbers = phoneNumbers.replace(";", ", ")
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 
         // we only want to match on phone number, not by name. This was probably silly?

@@ -40,7 +40,6 @@ class ComposeActivity : AppCompatActivity() {
     internal val shareHandler: ComposeShareHandler by lazy { ComposeShareHandler(this) }
     internal val vCardSender: ComposeVCardSender by lazy { ComposeVCardSender(this) }
     internal val sender: ComposeSendHelper by lazy { ComposeSendHelper(this) }
-
     private val intentHandler: ComposeIntentHandler by lazy { ComposeIntentHandler(this) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
