@@ -40,15 +40,14 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.util.ArrayList
-import java.util.Collections
-import java.util.HashSet
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.IdMatcher
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
+import java.text.DecimalFormat
+import java.util.*
 
 object SmsMmsUtils {
 
@@ -102,9 +101,13 @@ object SmsMmsUtils {
                 conversation.mute = false
                 conversation.privateNotifications = false
                 conversation.ledColor = Color.WHITE
-                ImageUtils.fillConversationColors(conversation, context!!)
+                ImageUtils.fillConversationColors(conversation, context)
                 conversation.simSubscriptionId = -1
                 conversation.folderId = -1
+
+                // I used this to hide the true contact numbers, when generating conversations
+                // for the Apple App Store tester account
+                //conversation.phoneNumbers = randomNumber()
 
                 conversations.add(conversation)
             } while (cursor.moveToNext() && conversations.size < INITIAL_CONVERSATION_LIMIT)
@@ -112,6 +115,18 @@ object SmsMmsUtils {
 
         cursor?.closeSilent()
         return conversations
+    }
+
+    fun randomNumber(): String {
+        val rand = Random()
+        val num1 = (rand.nextInt(7) + 1) * 100 + rand.nextInt(8) * 10 + rand.nextInt(8)
+        val num2 = rand.nextInt(743)
+        val num3 = rand.nextInt(10000)
+
+        val df3 = DecimalFormat("000") // 3 zeros
+        val df4 = DecimalFormat("0000") // 4 zeros
+
+        return df3.format(num1) + "-" + df3.format(num2) + "-" + df4.format(num3)
     }
 
     /**
