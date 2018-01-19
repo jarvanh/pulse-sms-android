@@ -113,10 +113,6 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         attachContact.setOnClickListener { attachContact() }
         applyTemplate.setOnClickListener { applyTemplate() }
 
-        if (!FeatureFlags.TEMPLATE_SUPPORT) {
-            applyTemplate.visibility = View.GONE
-        }
-
         var colorButtonsDark = false
         if (Settings.useGlobalThemeColor) {
             attachButtonHolder.setBackgroundColor(Settings.mainColorSet.color)

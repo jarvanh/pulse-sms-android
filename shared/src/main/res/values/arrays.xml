@@ -182,7 +182,7 @@
         <item>@string/call</item>
         <item>@string/delete</item>
         <item>@string/read</item>
-        <!--<item>@string/mute_conversation</item>-->
+        <item>@string/mute_conversation</item>
     </string-array>
 
     <string-array name="notification_actions_values">

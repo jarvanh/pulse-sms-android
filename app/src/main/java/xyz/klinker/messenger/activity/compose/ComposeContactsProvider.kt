@@ -71,7 +71,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             when (item) {
                 R.id.tab_recents -> displayRecents()
                 R.id.tab_groups -> displayGroups()
-                //R.id.tab_all_contacts -> displayAllContacts()
+                R.id.tab_all_contacts -> displayAllContacts()
             }
         })
 

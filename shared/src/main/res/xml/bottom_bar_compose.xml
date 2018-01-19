@@ -11,9 +11,9 @@
         icon="@drawable/ic_group"
         title="@string/compose_groups" />
 
-    <!--<tab
+    <tab
         id="@+id/tab_all_contacts"
         icon="@drawable/ic_compose_person"
-        title="@string/compose_all_contacts" />-->
+        title="@string/compose_all_contacts" />
 
 </tabs>

@@ -82,9 +82,7 @@ object FeatureFlags {
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
-    var TEMPLATE_SUPPORT: Boolean = false
     var FOLDER_SUPPORT: Boolean = false
-    var ADJUSTABLE_NAV_BAR: Boolean = false
     var WIDGET_THEMEING: Boolean = false
 
     // need tested
@@ -97,9 +95,7 @@ object FeatureFlags {
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
-        TEMPLATE_SUPPORT = getValue(context, sharedPrefs, FLAG_TEMPLATE_SUPPORT)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
-        ADJUSTABLE_NAV_BAR = getValue(context, sharedPrefs, FLAG_ADJUSTABLE_NAV_BAR)
         WIDGET_THEMEING = getValue(context, sharedPrefs, FLAG_WIDGET_THEMEING)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
@@ -115,9 +111,7 @@ object FeatureFlags {
 
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
-            FLAG_TEMPLATE_SUPPORT -> TEMPLATE_SUPPORT = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
-            FLAG_ADJUSTABLE_NAV_BAR -> ADJUSTABLE_NAV_BAR = flag
             FLAG_WIDGET_THEMEING -> WIDGET_THEMEING = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false

@@ -64,7 +64,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                     true
                 }
 
-        if (!AndroidVersionUtil.isAndroidO_MR1 || !FeatureFlags.ADJUSTABLE_NAV_BAR) {
+        if (!AndroidVersionUtil.isAndroidO_MR1) {
             val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
             prefCategory.removePreference(findPreference(getString(R.string.pref_adjustable_nav_bar)))
         }
