@@ -110,6 +110,7 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
         if (activate) {
             (fragmentActivity as MediaGridActivity).startMultiSelect()
         } else {
+            (fragmentActivity as MediaGridActivity).stopMultiSelect()
             destroyActionMode()
         }
     }

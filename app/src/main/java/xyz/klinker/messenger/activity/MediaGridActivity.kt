@@ -17,6 +17,7 @@ class MediaGridActivity : AbstractSettingsActivity() {
     private val fragment: MediaGridFragment by lazy { MediaGridFragment.newInstance(
             intent.getLongExtra(EXTRA_CONVERSATION_ID, -1)) }
 
+    private var mode: ActionMode? = null
     private val actionMode = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             menuInflater?.inflate(R.menu.action_mode_archive_list, menu)
@@ -32,7 +33,7 @@ class MediaGridActivity : AbstractSettingsActivity() {
             when (item?.itemId) {
                 R.id.menu_delete_conversation -> {
                     fragment.deleteSelected()
-                    mode?.finish()
+                    stopMultiSelect()
                 }
             }
 
@@ -70,7 +71,11 @@ class MediaGridActivity : AbstractSettingsActivity() {
     }
 
     fun startMultiSelect() {
-        startSupportActionMode(actionMode)
+        mode = startSupportActionMode(actionMode)
+    }
+
+    fun stopMultiSelect() {
+        mode?.finish()
     }
 
     companion object {
