@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.ImageViewerActivity
+import xyz.klinker.messenger.activity.MediaGridActivity
 import xyz.klinker.messenger.adapter.MediaGridAdapter
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.DataSource
@@ -85,13 +86,31 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
         }
     }
 
+    fun destroyActionMode() {
+        adapter?.messages?.forEach { it.selected = false }
+        adapter?.notifyDataSetChanged()
+    }
+
+    fun deleteSelected() {
+        adapter?.messages
+                ?.filter { it.selected }
+                ?.forEach { DataSource.deleteMessage(fragmentActivity!!, it.message.id) }
+
+        if (adapter != null && adapter?.messages != null) {
+            adapter?.messages = adapter?.messages?.filter { !it.selected }!!
+            adapter?.notifyDataSetChanged()
+        }
+
+        selectIsActive = false
+    }
+
     private fun activateSelectMode(activate: Boolean) {
         selectIsActive = activate
 
         if (activate) {
-
+            (fragmentActivity as MediaGridActivity).startMultiSelect()
         } else {
-
+            destroyActionMode()
         }
     }
 

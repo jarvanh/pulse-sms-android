@@ -65,6 +65,10 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
+    <style name="PulseTheme.NoColors.Media" parent="@style/PulseTheme.NoColors">
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
     <style name="PulseTheme.NoActionBar.Translucent" parent="@style/PulseTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>

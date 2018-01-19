@@ -29,7 +29,7 @@ import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener
 class MediaGridAdapter(mediaMessages: List<Message>, private val callback: MediaSelectedListener?)
     : RecyclerView.Adapter<ImageViewHolder>(), IDragSelectAdapter {
 
-    val messages = mediaMessages.map { MediaMessage(it) }
+    var messages = mediaMessages.map { MediaMessage(it) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val view = LayoutInflater.from(parent.context)
