@@ -217,7 +217,7 @@
             android:theme="@style/PulseTheme.NoActionBar" />
         <activity
             android:name=".activity.MediaGridActivity"
-            android:theme="@style/PulseTheme.NoColors" />
+            android:theme="@style/PulseTheme.NoColors.Media" />
         <activity
             android:name=".activity.ContactSettingsActivity"
             android:theme="@style/PulseTheme.NoColors" />
