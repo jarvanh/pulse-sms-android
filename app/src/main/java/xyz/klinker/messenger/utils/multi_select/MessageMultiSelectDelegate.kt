@@ -15,10 +15,7 @@ import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.fragment.bottom_sheet.CopyMessageTextFragment
 import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
-import xyz.klinker.messenger.shared.data.ArticlePreview
-import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.YouTubePreview
+import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import java.util.*
 
@@ -57,7 +54,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             when {
                 checked == 0 -> clearActionMode()
                 checked > 1 -> {
-                    share.isVisible = false
+                    share.isVisible = if (FeatureFlags.SHARE_MULTIPLE_MESSAGES) true else false
                     info.isVisible = false
                     copy.isVisible = false
                 }
@@ -119,10 +116,11 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 }
                 item.itemId == R.id.menu_share_message -> {
                     handled = true
-                    val message = DataSource.getMessage(activity!!, selectedIds[0])
+                    val messages = selectedIds.map { DataSource.getMessage(activity!!, it) }
+                    val conversation = DataSource.getConversation(activity!!, this@MessageMultiSelectDelegate.fragment.conversationId)
 
                     val fragment = MessageShareFragment()
-                    fragment.setMessage(message)
+                    fragment.setMessages(messages, conversation)
                     fragment.show(activity!!.supportFragmentManager, "")
                 }
                 item.itemId == R.id.menu_copy_message -> {

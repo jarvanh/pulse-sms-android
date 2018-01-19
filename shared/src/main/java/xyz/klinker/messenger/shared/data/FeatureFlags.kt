@@ -65,6 +65,7 @@ object FeatureFlags {
     private val FLAG_ADJUSTABLE_NAV_BAR = "flag_adjustable_nav_bar"
     private val FLAG_WIDGET_THEMEING = "flag_widget_themeing"
     private val FLAG_MULTI_SELECT_MEDIA = "flag_multi_select_media"
+    private val FLAG_SHARE_MULTIPLE_MESSAGES = "flag_share_multiple_messages"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -86,6 +87,7 @@ object FeatureFlags {
     var FOLDER_SUPPORT: Boolean = false
     var WIDGET_THEMEING: Boolean = false
     var MULTI_SELECT_MEDIA: Boolean = false
+    var SHARE_MULTIPLE_MESSAGES: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -100,6 +102,7 @@ object FeatureFlags {
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         WIDGET_THEMEING = getValue(context, sharedPrefs, FLAG_WIDGET_THEMEING)
         MULTI_SELECT_MEDIA = getValue(context, sharedPrefs, FLAG_MULTI_SELECT_MEDIA)
+        SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
@@ -117,6 +120,7 @@ object FeatureFlags {
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_WIDGET_THEMEING -> WIDGET_THEMEING = flag
             FLAG_MULTI_SELECT_MEDIA -> MULTI_SELECT_MEDIA = flag
+            FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }
