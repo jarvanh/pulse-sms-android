@@ -14,6 +14,7 @@ import xyz.klinker.messenger.activity.ImageViewerActivity
 import xyz.klinker.messenger.adapter.MediaGridAdapter
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MediaMessage
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
@@ -78,12 +79,20 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
     }
 
     override fun onStartDrag(index: Int) {
-        activateSelectMode(true)
-        recyclerView?.setDragSelectActive(true, index)
+        if (FeatureFlags.MULTI_SELECT_MEDIA) {
+            activateSelectMode(true)
+            recyclerView?.setDragSelectActive(true, index)
+        }
     }
 
     private fun activateSelectMode(activate: Boolean) {
         selectIsActive = activate
+
+        if (activate) {
+
+        } else {
+
+        }
     }
 
     companion object {
