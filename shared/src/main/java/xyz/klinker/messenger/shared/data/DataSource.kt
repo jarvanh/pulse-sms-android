@@ -56,7 +56,6 @@ object DataSource {
      * user uploads 100,000 messages, so we should be safe assuming that no user will be uploading
      * that many messages.
      *
-     *
      * See https://github.com/klinker41/messenger-server/wiki/Generating-GUIDs.
      */
     private val MAX_ID = java.lang.Long.MAX_VALUE / 10000
@@ -277,7 +276,7 @@ object DataSource {
      * @param contact the new contact
      * @return id of the inserted contact or -1 if the insert failed
      */
-    @JvmOverloads fun insertContact(context: Context, contact: Contact, useApi: Boolean = true): Long {
+    fun insertContact(context: Context, contact: Contact, useApi: Boolean = true): Long {
         val values = ContentValues(8)
 
         if (contact.id <= 0) {
@@ -294,6 +293,10 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
         values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight)
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
+
+        if (getContact(context, contact.phoneNumber!!) != null) {
+            return -1
+        }
 
         if (useApi) {
             ApiUtils.addContact(accountId(context), contact.id, contact.phoneNumber, contact.idMatcher, contact.name,
