@@ -475,7 +475,7 @@ class ApiDownloadService : Service() {
         val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
         val CONVERSATION_DOWNLOAD_PAGE_SIZE = 200
         val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
-        val MAX_MEDIA_DOWNLOADS = 250
+        val MAX_MEDIA_DOWNLOADS = 400
         val ARG_SHOW_NOTIFICATION = "show_notification"
 
         var IS_RUNNING = false
