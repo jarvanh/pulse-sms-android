@@ -294,8 +294,12 @@ object DataSource {
         values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight)
         values.put(Contact.COLUMN_COLOR_ACCENT, contact.colors.colorAccent)
 
-        if (getContact(context, contact.phoneNumber!!) != null) {
-            return -1
+        try {
+            if (getContact(context, contact.phoneNumber!!) != null) {
+                return -1
+            }
+        } catch (e: Exception) {
+            // don't quit from any errors here
         }
 
         if (useApi) {
