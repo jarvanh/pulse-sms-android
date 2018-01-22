@@ -29,7 +29,7 @@
         android:layout_marginTop="12dp"
         android:id="@+id/message"
         android:hint="@string/type_message"
-        android:maxLines="6"
+        android:maxLines="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
