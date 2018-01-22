@@ -18,7 +18,7 @@
 
     <!--<version-->
         <!--name="2.9.0"-->
-        <!--description="January 19th, 2017">-->
+        <!--description="January 19th, 2018">-->
         <!--<text>Adjust the widget theme to match the dark or black theme in the app (TODO: remove the feature flag)</text>-->
         <!--<text>Long click (and drag) to select and delete images on the "View Media" page within a conversation (TODO: remove the feature flag)</text>-->
         <!--<text>Share multiple selected messages at once, instead of forcing you to share them individually (TODO: remove the feature flag)</text>-->
@@ -26,7 +26,7 @@
 
     <version
         name="2.8.0"
-        description="January 25th, 2017">
+        description="January 25th, 2018">
         <text>Access and create templates from the "Attach" menu, when writing messages</text>
         <text>Select from a list of all contacts on the compose screen</text>
         <text>Added the ability to mute a conversation, from it's notification</text>
@@ -36,26 +36,26 @@
 
     <version
         name="2.7.7"
-        description="January 15th, 2017">
+        description="January 15th, 2018">
         <text>Hotfix to fix crashes</text>
     </version>
 
     <version
         name="2.7.6"
-        description="January 15th, 2017">
+        description="January 15th, 2018">
         <text>Notification channel simplification</text>
         <text>Bug fixes</text>
     </version>
 
     <version
         name="2.7.5"
-        description="January 9th, 2017">
+        description="January 9th, 2018">
         <text>Bug fixes</text>
     </version>
 
     <version
         name="2.7.4"
-        description="January 2nd, 2017">
+        description="January 2nd, 2018">
         <text>Increase the "undo" duration for archiving and deleting messages</text>
         <text>Battery improvements</text>
         <text>Bug fixes</text>

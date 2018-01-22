@@ -69,6 +69,9 @@ class NotificationService : IntentService("NotificationService") {
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
                 }
 
+                foreground.show(intent)
+                foreground.hide()
+
                 if (conversations.size == 1) {
                     NotificationManagerCompat.from(this).cancel(NotificationConstants.SUMMARY_ID)
                 }
@@ -87,15 +90,15 @@ class NotificationService : IntentService("NotificationService") {
                     val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION")
                     wl.acquire(5000)
                 }
+            } else {
+                foreground.show(intent)
+                foreground.hide()
             }
 
             MessengerAppWidgetProvider.refreshWidget(this)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-        foreground.show(intent)
-        foreground.hide()
     }
 
     companion object {
