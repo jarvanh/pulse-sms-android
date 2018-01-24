@@ -50,7 +50,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
     }
 
     private fun handle() {
-        if (ApiDownloadService.IS_RUNNING || Account.exists() && !Account.primary) {
+        if (ApiDownloadService.IS_RUNNING || (Account.exists() && !Account.primary)) {
             return
         }
 
