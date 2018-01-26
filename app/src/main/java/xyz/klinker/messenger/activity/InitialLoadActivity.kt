@@ -195,6 +195,11 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
             AnalyticsHelper.importFinished(this, importTime)
             Log.v("initial_load", "load took $importTime ms")
 
+            try {
+                DualSimUtils.init(context)
+            } catch (e: Exception) {
+            }
+
             handler!!.postDelayed({ this.close() }, 5000)
         }.start()
     }

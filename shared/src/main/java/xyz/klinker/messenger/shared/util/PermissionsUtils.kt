@@ -57,6 +57,7 @@ object PermissionsUtils {
             return if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                DualSimUtils.init(activity)
                 true
             } else {
                 AlertDialog.Builder(activity)

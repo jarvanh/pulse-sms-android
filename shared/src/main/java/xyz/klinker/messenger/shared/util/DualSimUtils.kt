@@ -39,9 +39,9 @@ object DualSimUtils {
                     this.availableSims.clear()
                 }
             } catch (t: Throwable) {
+                t.printStackTrace()
                 this.availableSims.clear()
             }
-
         }
     }
 
